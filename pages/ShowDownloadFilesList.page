@@ -1,0 +1,9 @@
+<apex:page standardController="User" extensions="DownloadExtension"  showHeader="false" standardStylesheets="false" >
+ <apex:pageBlock >
+ <apex:outputText rendered="{!lstLog.size=0}">No downloadable file logs found</apex:outputText>
+ <apex:pageBlockTable value="{!lstLog}" var="item" width="100%" rendered="{!lstLog.size>0}">
+   <apex:column headerValue="Log Date" value="{!item.Ensemblestorage__LogDate__c}"/>
+   <apex:column headerValue="File Name" value="{!item.Ensemblestorage__File__r.Name}"/>
+   </apex:pageBlockTable>
+   </apex:pageBlock>
+</apex:page>
