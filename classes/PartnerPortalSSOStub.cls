@@ -18,7 +18,7 @@ public without sharing class PartnerPortalSSOStub
     
     public static String getSSOLink(Id uid)
     {
-        User currentUser = [select Id, UserName, Email, ContactId, Contact.FirstName, Contact.LastName, Contact.Email, 
+       /* User currentUser = [select Id, UserName, Email, ContactId, Contact.FirstName, Contact.LastName, Contact.Email, 
                             Contact.AccountId, Contact.Account.Name, Contact.Account.Description, Contact.Account.BillingCity, 
                             Contact.Account.ParentId
                             from User where Id = :uid];
@@ -82,7 +82,8 @@ public without sharing class PartnerPortalSSOStub
             
             /* To avoid dml operation before call out.*/
             // Writes lms department id back to account profile.
-            //if(!departmentValid)
+            //if(!departmentValid)*/
+            /*
             if(deptProfile.Id == null)
             {
                 Partner_Account_Profile__c accountProfile;
@@ -104,7 +105,8 @@ public without sharing class PartnerPortalSSOStub
         else
         {
             return null;
-        }
+        }*/
+           return  'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
     }
 
     public static String md5Hash(String value)

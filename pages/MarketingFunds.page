@@ -1,0 +1,350 @@
+<apex:page controller="MarketingFundsController" showheader="false" id="thePage" doctype="HTML-5.0">
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, 'jquery-1.4.3.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.NewCommunity,'/js/jquery-ui.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.NewCommunity,'/css/jquery-ui.css')}"/>
+    
+    <style>
+        body,button{
+        font-family: 'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #333;
+            background:#fff;
+        }
+        input[type='text'], textarea, select {
+            width: 100%;
+            font-family:'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
+            font-size:11px;
+        }
+        .datePicker select {
+            width: auto;
+        }
+        .datePicker div {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        input[type='text']{
+            height: 20px;
+            border: 1px solid #b8b8b8;
+        }
+        textarea{
+            border:1px solid #b8b8b8;
+        }
+        label{
+            display: inline-block;
+            max-width: 100%;
+            min-width: 100%;
+            margin-bottom: 5px;
+            font-family: 'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
+        }
+        ul.mainBody li.indent{
+            margin-left:40px;
+        }
+        ul.mainBody li { 
+            list-style:none;
+            width:64%;
+            margin: 0;
+            padding: 6px 6px 9px;
+            clear: both;
+            background-color: transparent;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        li.focused { 
+            background-color: #eef7fa;
+            border: 1px solid #9dd1ff;
+            border-radius: 4px;
+            padding: 5px 5px 8px;
+        }
+        div{
+            margin-top:4px;
+            margin-bottom:0px;
+        }
+        div.ui-tooltip-content {
+            font-weight:normal;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .displayMessage{
+            margin-top:4px;
+            color: #808080;
+            word-break: break-word;
+        }
+        form.form-horizontal {
+            margin: 20px 14px 0 14px;
+            padding: 0 0 20px 0;
+            position: relative;
+        }
+        .redMark {
+            color: red;
+        }
+        .sectionTitle {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 0px;
+            font-weight: 100;
+            font-size: 20px;
+            color: #007bbb;
+            font-family: Arial-light, sans-serif;
+            border-radius: 7px;
+            width: 97%;
+        }
+        span{
+            font-weight:100;
+        }
+        .dateFormat{
+            visibility:hidden;
+        }
+        .hiddenElement{
+            display:none;   
+        }
+        .eventTable{
+            border: solid 1px grey;
+            border-radius: 3px;
+            width: 100%;
+            border-spacing: 0px;
+        }
+        .td_right{
+            width: 25%;
+            border-left: 1px solid grey;
+            text-align: center;
+        }
+        tr{
+            height:30px;
+        }
+        .inputQuantity{
+            width:50%;
+        }
+        .table-border-radius--small{
+            width:100%;
+            border-radius: 3px;
+            padding: 5px;
+            border-spacing: 0px;
+        }
+        .border-right-fix{ 
+            width:55%;
+        }
+        .border-left-fix{ 
+            text-align:center;
+            width: 45%;
+        }
+        .input-border-radius--small{
+            width:50%;
+            display:none;
+            border-radius: 2px;
+            border: 1px solid #d8d8d8;
+            text-align:center;
+        }
+        .Enablement:hover {
+            display:none;
+        }
+        .helpIcon{
+            display: none;
+            position: fixed;
+            margin-top: 29px;
+            left: calc(64% + 1.5em);
+        }
+        .linkStyle{
+            color: #0000ee;
+            text-decoration: underline;
+            cursor:pointer;
+        }
+        .message
+        {
+            width: 100%;
+            margin: 0;
+        }
+        input:disabled {
+            border: 1px solid #DDD;
+            background-color: #F5F5F5;
+            color: #ACA899;
+        }
+        body input.btn{
+            padding: 20px 0px;
+            width: 99%;
+            font-size: 20px;
+            background-color: #007cb9;
+            background-image: none;
+            color: #FFF;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        .fieldset-radius{
+            border-radius: 7px;
+            margin-bottom:30px;
+        }
+        .btn.submitButton.disabledBtn{
+            background-color:#ccc;
+        }
+        .greyPanel{
+            background-color: #efefef;
+            display: block;
+            width: 66%;
+        }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        
+    });
+    
+    var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
+    var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+    var chunkSize = 500000;         //Maximum Javascript Remoting message size is 1,000,000 characters 
+    var files = [];
+    function uploadFile(){
+    	var invoices = $("invoice")[0].files;
+        if(invoices.length == 0){
+        	alert("please select at least one file");
+            return;
+        }else{
+        	for(var i = 0; i < invoices.length; i++){
+            	var file = invoices[i];
+                if(file.size >= maxFileSize){
+                	alertMessage("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                    return;
+                }
+            }
+        }
+    }
+    
+    function uploadOneFile(fileId, concreteFile){
+    	var fileBody = "";
+        if(concreteFile.size <= concreteFile.position + chunkSize){
+        	fileBody = concreteFile.body.substring(fileBody.position);
+            concreteFile.done = true;
+            concreteFile.Progress = 100;
+        }else{
+        	fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
+        }
+        console.log("Uploading" + concreteFile.position + " chars of " + concreteFile.size);
+        MarketingFundsController.uploadFile(
+        	fileBody, concreteFile.name, fileId, concreteFile.type,
+            function(result, event){
+                console.log(result);
+                if(event.type === 'exception'){
+                	console.log("exception");
+                    console.log(event);
+                }else if(event.status){
+                	if(result.substring(0,3) == '00p'){
+                        concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
+                        if(concreteFile.done == true){
+                        	//TODO update the progress of file uploading...
+                            console.log("Uploading completed");
+                        }else{
+                        	concreteFile.position += chunkSize;
+                            //TODO update the progress of file uploading...
+                            uploadFile(fileId, result, concreteFile);
+                        }
+                    }
+                }
+            }
+        );
+    }
+    </script>
+    <body>
+        <apex:form >
+            <ul class="mainBody">
+                <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
+                    <li class="sectionTitle">Event Results</li>
+                    <li>
+                        Please complete the form below to submit your activity results.
+                        <br/>
+                        <br/>
+                        <label>
+                            Total Attendees/Contacts Reached(Total_Attendees__c) <span class = "redMark">*</span>
+                            <div><input required="required" placeholder="Numbers only" id="attendees"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Total Opportunities Generated(Event_Results_Opportunities__c) <span class = "redMark">*</span>
+                            <div><input required="required" placeholder="Numbers only" id="opportunities"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Total Qualified Leads(Total_Qualified_Leads__c) <span class = "redMark">*</span>
+                            <div><input required="required" placeholder="Numbers only" id="leads"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Estimated Pipeline Value(Estimated_Pipeline_Value__c) <span class = "redMark">*</span>
+                            <div><input required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Campaign        
+                            <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Result Detail(Result_Detail__c) <span class = "redMark">*</span>       
+                            <div><input required="required" id="result"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Requested Reimbursement Amount(Requested_Reimbursement_Amount__c) <span class = "redMark">*</span>
+                            <div><input required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                        </label>
+                    </li>
+                </apex:outputPanel> 
+                <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
+                    <li class="sectionTitle">Partner Training Results</li>
+                    <li>
+                        Please complete the form below to submit your activity results.
+                        <br/>
+                        <br/>
+                        <label>
+                            Topic/Course <span class = "redMark">*</span>
+                            <div><apex:inputField value="{!request.Topic_Course__c}" required="true"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Total Attendees <span class = "redMark">*</span>
+                            <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Number of Certifications <span class = "redMark">*</span>
+                            <div><apex:inputField value="{!request.Number_of_Certifications__c}" required="true" html-placeholder="Numbers only"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Result Detail <span class = "redMark">*</span>
+                            <div><apex:inputField value="{!request.Result_Detail__c}" required="true"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Campaign        
+                            <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Requested Reimbursement Amount <span class = "redMark">*</span>    
+                            <div><apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
+                        </label>
+                    </li>
+                </apex:outputPanel>
+                <li>Required Documentation: please upload the following required documents to process payment:</li>
+                <li class="indent">
+                    <label>
+                        Invoice (billed to Silver Peak) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" multiple = "multiple" id = "invoice"/>
+                </li>
+                <li>
+                    <input type="button" value="Upload File" styleClass="submitButton" onclick="uploadFile();"/>
+                </li>
+            </ul>
+        </apex:form>
+    </body>
+</apex:page>

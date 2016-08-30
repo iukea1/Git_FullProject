@@ -8879,6 +8879,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MarketingFunds</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MarketingFunds_VF</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

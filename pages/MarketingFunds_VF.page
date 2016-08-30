@@ -179,7 +179,7 @@
         .greyPanel{
             background-color: #efefef;
             display: block;
-            width: 66%;
+            width: 93%;
         }
     </style>
     <body id = "iframeBody">
@@ -450,7 +450,7 @@
                         </li>             
                         <li>
                             <label>
-                                Code <span class = "redMark">*</span>
+                                Postal Code <span class = "redMark">*</span>
                                 <div><apex:inputField value="{!request.Event_Location_Zip__c}"/></div> 
                             </label>
                         </li>
@@ -654,7 +654,7 @@
                         <li>
                             <apex:commandButton value="Submit" action="{!saveApprovedMDF}" styleClass="submitButton"/>
                         </li>
-                    <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;"></li>
+                    <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
                     <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
@@ -783,7 +783,7 @@
                             <apex:outputLink value="{!URLFOR($Action.Attachment.Download, attendance.Id)}" target="_blank" rendered="{!NOT(IsBlank(attendance.Id))}">{!attendance.name}</apex:outputLink> 
                         </li>
                     </apex:outputPanel>
-                    <li style="margin-top: 10px; margin-bottom: 30px; border-bottom: solid 1px #8181e6;"></li >
+                    <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
                 <li class="sectionTitle">Details on {!request.Name}</li>
@@ -1192,7 +1192,8 @@
         }else if(type == "Enablement"){
             $("#detailsSection input,textarea,select").attr("required","");
             $("#locationSection input,#locationSection textarea,#locationSection select").attr("required","required");
-            $(".SpecificSection:not(#locationSection)").hide();
+            $(".SpecificSection").hide();
+            $("#locationSection").show();
         }else{
             $("#detailsSection input,#detailsSection textarea,#detailsSection select").attr("required","");
             $(".SpecificSection").hide();

@@ -4,7 +4,7 @@
 */
 public with sharing class MarketingFundsController 
 {
-    public MDF_Request__c request { get; set; }
+    public static MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
     public Attachment invoice { get; set; }
@@ -390,5 +390,57 @@ public with sharing class MarketingFundsController
         invoice = new Attachment(Id=invoice.Id, Name=invoice.Name);
         proof = new Attachment(Id=proof.Id, Name=proof.Name);
         attendance = new Attachment(Id=attendance.Id, Name=attendance.Name);
+    }
+    
+    public class MDF
+    {
+        public Decimal Total_Attendees { get; set; }
+        public Decimal Event_Results_Opportunities { get; set;}
+        public Decimal Total_Qualified_Leads { get; set; }
+        public Decimal Estimated_Pipeline_Value { get; set; }
+        public String Result_Detail { get; set; }
+        public Decimal Requested_Reimbursement_Amount { get; set; }
+        public String Topic_Course { get; set; }
+        public Decimal Number_of_Certifications { get; set; }
+    }
+    
+    @RemoteAction
+    public static String updateMDF(MDF mdf)
+    {
+		SavePoint sp = Database.setSavepoint();
+        try
+        {
+        	upsert convertMDF(mdf); 
+            return  convertMDF(mdf).Id;
+        }
+        catch(Exception ex)
+        {
+            Database.rollback(sp);
+            ApexPages.addMessages(ex);
+            return 'exception';
+        }
+    }
+    
+    public static MDF_Request__c convertMDF(MDF mdf)
+    {
+        request.Total_Attendees__c = mdf.Total_Attendees;
+        request.Event_Results_Opportunities__c = mdf.Event_Results_Opportunities;
+        request.Total_Qualified_Leads__c = mdf.Total_Qualified_Leads;
+        request.Estimated_Pipeline_Value__c = mdf.Estimated_Pipeline_Value;
+        request.Result_Detail__c = mdf.Result_Detail;
+        request.Requested_Reimbursement_Amount__c = mdf.Requested_Reimbursement_Amount;
+        request.Topic_Course__c = mdf.Topic_Course;
+        request.Number_of_Certifications__c = mdf.Number_of_Certifications;
+        return request;
+    }
+    
+    @RemoteAction
+    public static String uploadFile(String fileBody, String fileName, String fileId, String fileType)
+    {
+        if(String.isNotBlank(fileBody))
+        {
+            
+        }
+        return null;
     }
 }
