@@ -4,7 +4,7 @@
 */
 public with sharing class MarketingFundsController 
 {
-    public static MDF_Request__c request { get; set; }
+    public MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
     public Attachment invoice { get; set; }
@@ -59,6 +59,7 @@ public with sharing class MarketingFundsController
         {
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
         }
+        system.debug(request);
     }
     
     public PageReference saveMDF()
@@ -104,7 +105,7 @@ public with sharing class MarketingFundsController
                 upsert accountAttachment;
                 if(eventAgendaAttachment.Body != null)
                 {
-                	upsert eventAgendaAttachment;
+                    upsert eventAgendaAttachment;
                 }
                 accountAttachment = new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name);
                 eventAgendaAttachment =new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name);
@@ -242,7 +243,7 @@ public with sharing class MarketingFundsController
                 isPassed = false;
             }
         }
-		return isPassed;
+        return isPassed;
     }
     
     private MDF_Request__c getMDF(String requetId)
@@ -391,7 +392,7 @@ public with sharing class MarketingFundsController
         proof = new Attachment(Id=proof.Id, Name=proof.Name);
         attendance = new Attachment(Id=attendance.Id, Name=attendance.Name);
     }
-    
+    /*
     public class MDF
     {
         public Decimal Total_Attendees { get; set; }
@@ -407,10 +408,10 @@ public with sharing class MarketingFundsController
     @RemoteAction
     public static String updateMDF(MDF mdf)
     {
-		SavePoint sp = Database.setSavepoint();
+        SavePoint sp = Database.setSavepoint();
         try
         {
-        	upsert convertMDF(mdf); 
+            upsert convertMDF(mdf); 
             return  convertMDF(mdf).Id;
         }
         catch(Exception ex)
@@ -435,12 +436,56 @@ public with sharing class MarketingFundsController
     }
     
     @RemoteAction
-    public static String uploadFile(String fileBody, String fileName, String fileId, String fileType)
+    public static String uploadFile(String fileBody, String fileName, String fileId, String requestId)
     {
+        system.debug('Enter awesome');
         if(String.isNotBlank(fileBody))
         {
-            
+            ContentVersion cv = getDocument(fileId);
+            String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
+            newBody += fileBody;
+            cv.VersionData = EncodingUtil.base64Decode(newBody);
+            cv.Title = fileName;
+            try
+            {
+                Boolean existedLink = false;
+                if(String.isBlank(cv.Id))
+                {
+                    cv.PathOnClient = fileName;
+                    cv.IsMajorVersion = false;
+                    existedLink = true;
+                }
+                upsert cv;
+                ContentVersion newCv = [Select Id, ContentDocumentId from ContentVersion where Id =: cv.Id];
+                if(existedLink == true)
+                {
+                    ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
+                    insert cdl;
+                }
+                return cv.Id;
+            }
+            catch(Exception ex)
+            {
+                return 'Exception';
+            }
         }
-        return null;
+        else 
+        {
+            return 'File body was null';
+        }
     }
+    
+    public static ContentVersion getDocument(String fileId)
+    {
+        List<ContentVersion> cvs = [Select Id, VersionData, Title from ContentVersion where Id =: fileId];
+        if(cvs.isEmpty())
+        {
+            return new ContentVersion();
+        }
+        else
+        {
+            return cvs[0];
+        }
+    }
+    */
 }

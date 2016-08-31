@@ -18,45 +18,42 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
             
         }
     }
-    List<Asset> toUpdateAssets= new List<Asset>();
-    toUpdateAssets=[Select Id,Sync_With_Cloud_Portal__c,Status,AccountId,Account.Name from Asset where Id in: trigger.NewMap.keyset() and Product2.Family ='Product' and Product2.Name like 'EC%'];
-    if(toUpdateAssets.size()>0)
+    
+    for(Asset toUpdateAsset:Trigger.New)
     {
-        for(Asset toUpdateAsset:toUpdateAssets)
+        if(Trigger.isInsert)
         {
-            if(Trigger.isInsert)
+            string acctId=toUpdateAsset.AccountId;
+            if(acctId!=silverpeakSystemsId)
             {
-                string acctId=toUpdateAsset.Account.Id;
-                if(acctId!=silverpeakSystemsId)
+                oldAcctIds.add(toUpdateAsset.AccountId);
+            }
+            
+        }
+        else if(Trigger.isUpdate)
+        {
+            
+            Asset oldAsset = Trigger.oldMap.get(toUpdateAsset.Id);
+            // decommission asset
+            if(toUpdateAsset.AccountId == silverpeakSystemsId && oldAsset.AccountId != toUpdateAsset.AccountId)
+            {
+                oldAcctIds.add(oldAsset.AccountId);
+            }
+            //provision an existing asset to another account
+            if(oldAsset.AccountId != toUpdateAsset.AccountId && oldAsset.AccountId == silverpeakSystemsId && oldAsset.Status =='Silver Peak Inventory')
+            {
+                string acctName=toUpdateAsset.Account.Name;
+                if(!acctName.toLowerCase().contains('silver peak'))
                 {
                     oldAcctIds.add(toUpdateAsset.AccountId);
                 }
-                
             }
-            else if(Trigger.isUpdate)
-            {
-                
-                Asset oldAsset = Trigger.oldMap.get(toUpdateAsset.Id);
-                // decommission asset
-                if(toUpdateAsset.AccountId == silverpeakSystemsId && oldAsset.AccountId != toUpdateAsset.AccountId)
-                {
-                    oldAcctIds.add(oldAsset.AccountId);
-                }
-                //provision an existing asset to another account
-                if(oldAsset.AccountId != toUpdateAsset.AccountId && oldAsset.AccountId == silverpeakSystemsId && oldAsset.Status =='Silver Peak Inventory')
-                {
-                    string acctName=toUpdateAsset.Account.Name;
-                    if(!acctName.toLowerCase().contains('silver peak'))
-                    {
-                        oldAcctIds.add(toUpdateAsset.AccountId);
-                    }
-                }
-                
-                
-            }
+            
+            
         }
-        
     }
+    
+    
     System.debug( oldAcctIds.size());
     if(oldAcctIds.size()>0)
     {
@@ -81,20 +78,6 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
     {
         update assetAcctIds;
     }
-    
-    // remove sync flag 
-    /*
-    assetsToDesync=[Select Id,Sync_With_Cloud_Portal__c, Cloud_Portal_Sync_Status__c from Asset where AccountId=:silverpeakSystemsId and Sync_With_Cloud_Portal__c=true and Product2.Family ='Product' and Product2.Name like 'EC%' ];
-    if(assetsToDesync.size()>0)
-    {
-        for(Asset item: assetsToDesync)
-        {
-            item.Sync_With_Cloud_Portal__c=false;
-            item.Cloud_Portal_Sync_Status__c='';
-        }
-        
-        update assetsToDesync;
-    }*/
     
     
 }

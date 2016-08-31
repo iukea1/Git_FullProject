@@ -189,10 +189,35 @@
     
     var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
     var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
-    var chunkSize = 500000;         //Maximum Javascript Remoting message size is 1,000,000 characters 
+    var chunkSize = 100000;    		//Maximum Javascript Remoting message size is 1,000,000 characters 
     var files = [];
+	var maxFile = 0;
+    
+    function checkFileSize(){
+		var invoices = $("#invoice")[0].files;
+		if(invoices.length > 0){
+        	for(var i = 0; i < invoices.length; i++){
+                var invoice = invoices[i];
+            	if(invoice.size >= maxFileSize){
+                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                    var file = $("#invoice")
+                    file.after(file.clone().val(""));
+                    file.remove(); 
+                    return;
+                }else{
+                	invoice.fileIndex = files.length;
+                    files.push(invoice);
+                    var index = invoice.fileIndex;
+                    if(index > 0 && files[index].size >= files[maxFile].size){
+                    	maxFile = index;
+                    }
+                }
+            }
+        }
+    }
+    
     function uploadFile(){
-    	var invoices = $("invoice")[0].files;
+    	var invoices = $("#invoice")[0].files;
         if(invoices.length == 0){
         	alert("please select at least one file");
             return;
@@ -200,8 +225,36 @@
         	for(var i = 0; i < invoices.length; i++){
             	var file = invoices[i];
                 if(file.size >= maxFileSize){
-                	alertMessage("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
                     return;
+                }else{
+                    //var attachmentName = file.name;
+                    var fileReader = new FileReader();
+                    fileReader.fileName = file.name;
+                    fileReader.fileIndex = file.fileIndex;
+                    fileReader.fileType = file.type;
+                    fileReader.onloadend = function(e) {
+                        var fileName = this.fileName;
+                        var index = this.fileIndex;
+                        var type = this.fileType;
+                        var body = window.btoa(this.result);  //Base 64 encode the file before sending it
+                        //var positionIndex = 0;
+                        var fileSize = body.length;
+                        console.log("Total Attachment Length: " + fileSize);
+                        //var doneUploading = false;
+                        if(fileSize < maxStringSize) {
+                            uploadOneFile('abc', {index: index, name: fileName, body: body, position: 0, size: fileSize, progress: 0, done: false, type: type});
+                        } else {
+                            alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
+                        }
+                    }
+                    fileReader.onerror = function(e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    fileReader.onabort = function(e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    fileReader.readAsBinaryString(file);  //Read the body of the file
                 }
             }
         }
@@ -210,22 +263,23 @@
     function uploadOneFile(fileId, concreteFile){
     	var fileBody = "";
         if(concreteFile.size <= concreteFile.position + chunkSize){
-        	fileBody = concreteFile.body.substring(fileBody.position);
+        	fileBody = concreteFile.body.substring(concreteFile.position);
             concreteFile.done = true;
             concreteFile.Progress = 100;
         }else{
         	fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
         }
-        console.log("Uploading" + concreteFile.position + " chars of " + concreteFile.size);
+        console.log("Uploading " + concreteFile.position + " chars of " + concreteFile.size);
+        console.log("Uploading Size : " + fileBody.length );
         MarketingFundsController.uploadFile(
-        	fileBody, concreteFile.name, fileId, concreteFile.type,
+        	fileBody, concreteFile.name, fileId,"{!request.Id}",
             function(result, event){
                 console.log(result);
                 if(event.type === 'exception'){
                 	console.log("exception");
                     console.log(event);
                 }else if(event.status){
-                	if(result.substring(0,3) == '00p'){
+                	if(result.substring(0,3) == '068'){
                         concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
                         if(concreteFile.done == true){
                         	//TODO update the progress of file uploading...
@@ -233,11 +287,15 @@
                         }else{
                         	concreteFile.position += chunkSize;
                             //TODO update the progress of file uploading...
-                            uploadFile(fileId, result, concreteFile);
+                            uploadOneFile(result, concreteFile);
+                            if(concreteFile.index == maxFile){
+                            	console.log(concreteFile.progress);
+                            }
                         }
                     }
                 }
-            }
+            },
+			{buffer: true, escape: true, timeout: 120000}
         );
     }
     </script>
@@ -327,22 +385,22 @@
                             <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
                         </label>
                     </li>
-                    <li>
+                    <!--li>
                         <label>
                             Requested Reimbursement Amount <span class = "redMark">*</span>    
                             <div><apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
                         </label>
-                    </li>
+                    </li-->
                 </apex:outputPanel>
                 <li>Required Documentation: please upload the following required documents to process payment:</li>
                 <li class="indent">
                     <label>
                         Invoice (billed to Silver Peak) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" multiple = "multiple" id = "invoice"/>
+                    <input type="file" multiple = "multiple" id = "invoice" onchange="checkFileSize();"/>
                 </li>
                 <li>
-                    <input type="button" value="Upload File" styleClass="submitButton" onclick="uploadFile();"/>
+                    <input type="button" value="Upload File" class="submitButton" onclick="uploadFile();"/>
                 </li>
             </ul>
         </apex:form>

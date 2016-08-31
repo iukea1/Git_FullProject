@@ -1,6 +1,6 @@
 /*
- * gets a list of opportunities in the account hierarchy
- */
+* gets a list of opportunities in the account hierarchy
+*/
 public with sharing class EnterpriseOpportunityListController 
 {
     private Account account;
@@ -13,7 +13,7 @@ public with sharing class EnterpriseOpportunityListController
         allAccounts.addAll(getSubordinates(new List<Account> { account }));
         AllOpportunities = [select Id, Name, AccountId, Account.Name, StageName, Amount, CloseDate, OwnerId, Owner.Name, Type, IsClosed, IsWon from Opportunity where AccountId in :allAccounts];
     }
-
+    
     public List<Opportunity> AllOpportunities { get; set; }
     
     public Decimal EnterpriseCumulativeBookings
@@ -49,11 +49,13 @@ public with sharing class EnterpriseOpportunityListController
     {
         Account account = new Account(Name='acme');
         insert account;
+      
         Account subAccount = new Account(Name='acme', ParentId=account.Id);
         insert subAccount;
-        Opportunity opp = new Opportunity(Name='acme', StageName='Open', CloseDate=Date.today(), AccountId=account.Id, ForecastCategoryName='Best Case');
+     
+        Opportunity opp = new Opportunity(Name='acme', StageName='Open', CloseDate=Date.today(), AccountId=account.Id, ForecastCategoryName='Best Case',OwnerId=Userinfo.getUserId());
         insert opp;
-        Opportunity opp2 = new Opportunity(Name='acme', StageName='Open', CloseDate=Date.today(), AccountId=subAccount.Id, ForecastCategoryName='Best Case');
+        Opportunity opp2 = new Opportunity(Name='acme', StageName='Open', CloseDate=Date.today(), AccountId=subAccount.Id, ForecastCategoryName='Best Case',OwnerId=Userinfo.getUserId());
         insert opp2;
         
         ApexPages.StandardController ctrl = new ApexPages.StandardController(account);

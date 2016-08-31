@@ -543,10 +543,27 @@ Evaluation_Start_Date__c )</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_Cloud_Portal_Status</fullName>
+        <field>Cloud_Portal_Sync_Status__c</field>
+        <name>Clear Cloud Portal Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Clear_GMS_Upgrading</fullName>
         <field>GMS_Upgrading__c</field>
         <literalValue>0</literalValue>
         <name>Clear GMS_Upgrading</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_Sync_Flag</fullName>
+        <field>Sync_With_Cloud_Portal__c</field>
+        <literalValue>0</literalValue>
+        <name>Clear Sync Flag</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -699,7 +716,17 @@ right(Id,4))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ), NOT(Product2.Name == &quot;EC-ORCH&quot;), OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ), ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;), OR(ISNew(), ISCHANGED(License_End_Date__c), ISCHANGED(Bandwidth_Nodes__c), ISCHANGED(Licenses_Nodes__c), ISCHANGED(Status) ) )</formula>
+        <formula>AND ( 
+OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ), 
+NOT(Product2.Name == &quot;EC-ORCH&quot;), 
+OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ), 
+ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;), 
+ISBLANK(SBQQ__QuoteLine__c),
+OR(ISNew(), ISCHANGED(License_End_Date__c), 
+ISCHANGED(Bandwidth_Nodes__c), 
+ISCHANGED(Licenses_Nodes__c), 
+ISCHANGED(Status) ) 
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -735,6 +762,26 @@ right(Id,4))</formula>
             <value>GX-1100</value>
         </criteriaItems>
         <description>Clear GMS Nodes for non GX products</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ClearSyncFlagforSPAccount</fullName>
+        <actions>
+            <name>Clear_Cloud_Portal_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Clear_Sync_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND 
+( 
+Account.Name =&quot;Silver Peak Systems&quot;, 
+Sync_With_Cloud_Portal__c =true, 
+IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
+BEGINS( Product2.Name ,&quot;EC&quot;) 
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
