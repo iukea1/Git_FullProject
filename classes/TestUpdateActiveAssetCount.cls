@@ -1,7 +1,7 @@
 @IsTest
 public class TestUpdateActiveAssetCount {
     
-    @IsTest
+    @IsTest(SeeAllData=true)
     public static void AssetCountInsert()
     {
         Account acc= new Account(Name='acme');
@@ -28,7 +28,7 @@ public class TestUpdateActiveAssetCount {
         
     }
     
-    @IsTest
+        @IsTest(SeeAllData=true)
     public static void AssetCountUpd_Zero()
     {
         Account acc= new Account(Name='acme');
@@ -57,7 +57,7 @@ public class TestUpdateActiveAssetCount {
         
     }
     
-    @IsTest
+      @IsTest(SeeAllData=true)
     public static void AssetCountDel_Zero()
     {
         Account acc= new Account(Name='acme');
@@ -84,7 +84,7 @@ public class TestUpdateActiveAssetCount {
         System.assertEquals(0, actualAcc.Active_Asset_Count__c);
         
     }
-    @IsTest
+        @IsTest(SeeAllData=true)
     public static void AssetCountUnDel_Zero()
     {
         Account acc= new Account(Name='acme');
@@ -116,7 +116,7 @@ public class TestUpdateActiveAssetCount {
         
     }
     
-     @IsTest
+        @IsTest(SeeAllData=true)
     public static void AssetCountChangeAcctname_Zero()
     {
         Account acc= new Account(Name='acme');

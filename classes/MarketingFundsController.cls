@@ -2,9 +2,9 @@
 *  Controller of VF Page MarketingFunds
 *  05AUG2016 @Author Daniel Wu
 */
-public with sharing class MarketingFundsController 
+global with sharing class MarketingFundsController 
 {
-    public MDF_Request__c request { get; set; }
+    public static MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
     public Attachment invoice { get; set; }
@@ -392,8 +392,8 @@ public with sharing class MarketingFundsController
         proof = new Attachment(Id=proof.Id, Name=proof.Name);
         attendance = new Attachment(Id=attendance.Id, Name=attendance.Name);
     }
-    /*
-    public class MDF
+
+    global class MDF
     {
         public Decimal Total_Attendees { get; set; }
         public Decimal Event_Results_Opportunities { get; set;}
@@ -406,7 +406,7 @@ public with sharing class MarketingFundsController
     }
     
     @RemoteAction
-    public static String updateMDF(MDF mdf)
+    global static String updateMDF(MDF mdf)
     {
         SavePoint sp = Database.setSavepoint();
         try
@@ -422,7 +422,7 @@ public with sharing class MarketingFundsController
         }
     }
     
-    public static MDF_Request__c convertMDF(MDF mdf)
+    global static MDF_Request__c convertMDF(MDF mdf)
     {
         request.Total_Attendees__c = mdf.Total_Attendees;
         request.Event_Results_Opportunities__c = mdf.Event_Results_Opportunities;
@@ -436,9 +436,10 @@ public with sharing class MarketingFundsController
     }
     
     @RemoteAction
-    public static String uploadFile(String fileBody, String fileName, String fileId, String requestId)
+    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId)
     {
         system.debug('Enter awesome');
+        system.debug('Total:' + request.Total_Attendees__c);
         if(String.isNotBlank(fileBody))
         {
             ContentVersion cv = getDocument(fileId);
@@ -475,7 +476,7 @@ public with sharing class MarketingFundsController
         }
     }
     
-    public static ContentVersion getDocument(String fileId)
+    global static ContentVersion getDocument(String fileId)
     {
         List<ContentVersion> cvs = [Select Id, VersionData, Title from ContentVersion where Id =: fileId];
         if(cvs.isEmpty())
@@ -487,5 +488,4 @@ public with sharing class MarketingFundsController
             return cvs[0];
         }
     }
-    */
 }

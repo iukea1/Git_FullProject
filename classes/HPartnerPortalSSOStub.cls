@@ -5,7 +5,7 @@ public without sharing class HPartnerPortalSSOStub
     private static final String INVALID_CONTACT_MSG = 'Contact without account.';
     private static final String DEFAULT_PARENT_DEPARTMENT_ID = '85750';
 
-    private static String ssoBase = 'http://training.silver-peak.com/get.ashx?method=sso';
+    private static String SSOLink = 'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
     private static String adminId = 'training@silver-peak.com';
     private static String adminKey = 'a750ad20-34ff-4f05-a292-8a227c323441';
     private static String httpLoginBase='https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1/Authenticate?username=prane@silver-peak.com&password=test@2506&privateKey=a750ad20-34ff-4f05-a292-8a227c323441';
@@ -66,7 +66,6 @@ public without sharing class HPartnerPortalSSOStub
                 token = getHttpToken();
             }
             String departmentId;
-            //Boolean departmentValid = validateDepartment(currentAccount, token);
             Partner_Account_Profile__c deptProfile = validateDepartment(currentAccount, token);
             if(deptProfile.Id == null && String.isBlank(deptProfile.LmsDepartmentId__c))
             {
@@ -119,21 +118,17 @@ public without sharing class HPartnerPortalSSOStub
                 accountProfile.LmsDepartmentName__c = deptProfile.LmsDepartmentName__c;
                 upsert accountProfile;
             }
-            return ssoBase + '&SSOID=' + username + '&SSOKey=' + md5Hash(username);
+            return SSOLink;
 
         }
         else
         {
             return null;
         }
+       
     }
 
-    public static String md5Hash(String value)
-    {
-        return EncodingUtil.convertToHex(Crypto.generateDigest('MD5', Blob.valueOf(value + adminKey)));
-       
-       
-    }
+   
 
     /**
      * Return value status:
@@ -168,29 +163,7 @@ public without sharing class HPartnerPortalSSOStub
         }
         return accountProfile;
     }
-    /*
-    private static Boolean validateDepartment(Account currentAccount, String token)
-    {
-        Boolean result;
-        //Account currentAccount = [select Id, Name, Description, BillingCity, ParentId, (select Id, LmsDepartmentName__c, LmsDepartmentId__c from Partner_Accounts_Profile__r) from Account where Id = :departmentId];
-        String departmentName = currentAccount.Name;
-        if(currentAccount != null && currentAccount.Partner_Accounts_Profile__r != null 
-            && currentAccount.Partner_Accounts_Profile__r.size() > 0)
-        {
-            if(String.isNotBlank(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c))
-            {
-                return validateDepartmentById(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c, token);
-            }
-            else if(String.isNotBlank(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c))
-            {
-                departmentName = currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c;
-            }
-        }
-
-        result = validateDepartmentByName(departmentName, token);
-        return result;
-    }
-    */
+   
     private static Boolean validateDepartmentById(String departmentId, String token)
     {
         try
@@ -220,23 +193,7 @@ public without sharing class HPartnerPortalSSOStub
             throw new PartnerPortalSSOException(ex.getMessage());
         }
     }
-    /*
-    private static Boolean validateDepartmentByName(String departmentName, String token)
-    {
-        try
-        {
-            Map<String, String> params = new Map<String, String>{'departmentname'=>departmentName};
-            PartnerPortalGetDepartmentsApi getDepartmentsApi = new PartnerPortalGetDepartmentsApi(token, params);
-            getDepartmentsApi.execute();
-            return getDepartmentsApi.isSucceed;   
-        }
-        catch(Exception ex)
-        {
-            throw new PartnerPortalSSOException(ex.getMessage());
-        }
-        return false;
-    }
-    */
+   
     private static String createDepartment(Account currentAccount, Account parentAccount, String token)
     {
         Map<String, String> departmentParams = new Map<String, String>();
@@ -323,8 +280,5 @@ public without sharing class HPartnerPortalSSOStub
         }
     }
 
-    private static String hashAdminKey()
-    {
-        return md5Hash(adminId);
-    }
+   
 }

@@ -3,6 +3,8 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
     List<Asset> assetsToDesync= new List<Asset>();
     List<Account> assetAcctIds= new List<Account>();
     Set<Id> oldAcctIds= new Set<Id>();
+    Set<Id> decommissionAcctIds= new Set<Id>();
+    Set<Id> oldAcctIdsToUpdate= new Set<Id>();
     Id silverpeakSystemsId='00130000007mEjX';
     if(SilverPeakUtils.IsProduction())
     {
@@ -23,10 +25,13 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
     {
         if(Trigger.isInsert)
         {
-            string acctId=toUpdateAsset.AccountId;
-            if(acctId!=silverpeakSystemsId)
+            if(toUpdateAsset.AccountId!=null)
             {
-                oldAcctIds.add(toUpdateAsset.AccountId);
+                string acctId=toUpdateAsset.AccountId;
+                if(acctId!=silverpeakSystemsId)
+                {
+                    oldAcctIds.add(toUpdateAsset.AccountId);
+                }
             }
             
         }
@@ -37,16 +42,20 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
             // decommission asset
             if(toUpdateAsset.AccountId == silverpeakSystemsId && oldAsset.AccountId != toUpdateAsset.AccountId)
             {
-                oldAcctIds.add(oldAsset.AccountId);
+                if(oldAsset.AccountId!=null)
+                {
+                    decommissionAcctIds.add(oldAsset.AccountId);
+                }
+                
             }
             //provision an existing asset to another account
             if(oldAsset.AccountId != toUpdateAsset.AccountId && oldAsset.AccountId == silverpeakSystemsId && oldAsset.Status =='Silver Peak Inventory')
             {
-                string acctName=toUpdateAsset.Account.Name;
-                if(!acctName.toLowerCase().contains('silver peak'))
+                if(toUpdateAsset.AccountId!=null)
                 {
                     oldAcctIds.add(toUpdateAsset.AccountId);
                 }
+                
             }
             
             
@@ -54,10 +63,9 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
     }
     
     
-    System.debug( oldAcctIds.size());
     if(oldAcctIds.size()>0)
     {
-        assetIds.addAll([select Id from Asset where AccountId in:oldAcctIds and Product2.family='Product' and Product2.Name like 'EC%' and status not in ('Silver Peak Inventory','Write-Off','Obsolete RMA Unit–Supp Transferred–WO')]);
+        assetIds.addAll([select Id,AccountId from Asset where AccountId in:oldAcctIds and Product2.family='Product' and (not Account.Name like '%silver peak%') and Product2.Name like 'EC%' and status not in ('Silver Peak Inventory','Write-Off','Obsolete RMA Unit–Supp Transferred–WO')]);
     }
     if(assetIds.size()>0)
     {
@@ -65,15 +73,26 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
         {
             item.Cloud_Portal_Sync_Status__c='Pending';
             item.Sync_With_Cloud_Portal__c=true;
-            
+            oldAcctIdsToUpdate.add(item.AccountId);
         }
         
         update assetIds;
     }
-    for(Id acctId:oldAcctIds)
+    if(oldAcctIdsToUpdate.size()>0)
     {
-        assetAcctIds.add(new Account(Id=acctId,Sync_With_Cloud_Portal__c=true));
+        for(Id acctId:oldAcctIdsToUpdate)
+        {
+            assetAcctIds.add(new Account(Id=acctId,Sync_With_Cloud_Portal__c=true));
+        }
     }
+    if(decommissionAcctIds.size()>0)
+    {
+        for(Id acctId:decommissionAcctIds)
+        {
+            assetAcctIds.add(new Account(Id=acctId,Sync_With_Cloud_Portal__c=true));
+        }
+    }
+    
     if(assetAcctIds.size()>0)
     {
         update assetAcctIds;

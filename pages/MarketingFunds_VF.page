@@ -168,6 +168,7 @@
             color: #FFF;
             text-transform: uppercase;
             font-weight: 300;
+        	float: left;
         }
         .fieldset-radius{
             border-radius: 7px;
@@ -180,6 +181,12 @@
             background-color: #efefef;
             display: block;
             width: 93%;
+        }
+        .loadingIcon{
+        	display:none;
+            position: absolute;
+            float: right;
+            padding: 15px 0px 15px 0px;
         }
     </style>
     <body id = "iframeBody">
@@ -653,8 +660,9 @@
                         </li>
                         <li>
                             <apex:commandButton value="Submit" action="{!saveApprovedMDF}" styleClass="submitButton"/>
+                            <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
                         </li>
-                    <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
+                    <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
                     <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">

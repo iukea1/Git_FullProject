@@ -168,6 +168,7 @@
             color: #FFF;
             text-transform: uppercase;
             font-weight: 300;
+        	float:left;
         }
         .fieldset-radius{
             border-radius: 7px;
@@ -181,6 +182,12 @@
             display: block;
             width: 66%;
         }
+        .loadingIcon{
+        	display:none;
+            position: absolute;
+            float: right;
+            padding: 15px 0px 15px 10px;
+        }
     </style>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -193,14 +200,14 @@
     var files = [];
 	var maxFile = 0;
     
-    function checkFileSize(){
-		var invoices = $("#invoice")[0].files;
+    function checkFileSize(inputFile){
+		var invoices = $(inputFile)[0].files;
 		if(invoices.length > 0){
         	for(var i = 0; i < invoices.length; i++){
                 var invoice = invoices[i];
             	if(invoice.size >= maxFileSize){
                 	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
-                    var file = $("#invoice")
+                    var file = $(inputFile)
                     file.after(file.clone().val(""));
                     file.remove(); 
                     return;
@@ -214,16 +221,17 @@
                 }
             }
         }
+        console.log("files length: " + files.length);
+        console.log("Max file: " + maxFile);
     }
     
     function uploadFile(){
-    	var invoices = $("#invoice")[0].files;
-        if(invoices.length == 0){
+        if(files.length == 0){
         	alert("please select at least one file");
             return;
         }else{
-        	for(var i = 0; i < invoices.length; i++){
-            	var file = invoices[i];
+        	for(var i = 0; i < files.length; i++){
+            	var file = files[i];
                 if(file.size >= maxFileSize){
                 	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
                     return;
@@ -283,6 +291,7 @@
                         concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
                         if(concreteFile.done == true){
                         	//TODO update the progress of file uploading...
+                            showProgress(concreteFile.progress + "pageJumping");
                             console.log("Uploading completed");
                         }else{
                         	concreteFile.position += chunkSize;
@@ -290,6 +299,7 @@
                             uploadOneFile(result, concreteFile);
                             if(concreteFile.index == maxFile){
                             	console.log(concreteFile.progress);
+                                showProgress(concreteFile.progress);
                             }
                         }
                     }
@@ -297,6 +307,14 @@
             },
 			{buffer: true, escape: true, timeout: 120000}
         );
+    }
+    
+    function showProgress(progress){
+        if(!$(".submitButton").hasClass("disabledBtn")){
+            $(".submitButton").addClass("disabledBtn");
+            $("#loadingIcon").show();
+        }
+        $(".submitButton").attr("value",progress + "%");
     }
     </script>
     <body>
@@ -310,25 +328,25 @@
                         <br/>
                         <label>
                             Total Attendees/Contacts Reached(Total_Attendees__c) <span class = "redMark">*</span>
-                            <div><input required="required" placeholder="Numbers only" id="attendees"/></div>
+                            <div><input type="text" required="required" placeholder="Numbers only" id="attendees"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
                             Total Opportunities Generated(Event_Results_Opportunities__c) <span class = "redMark">*</span>
-                            <div><input required="required" placeholder="Numbers only" id="opportunities"/></div>
+                            <div><input type="text" required="required" placeholder="Numbers only" id="opportunities"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
                             Total Qualified Leads(Total_Qualified_Leads__c) <span class = "redMark">*</span>
-                            <div><input required="required" placeholder="Numbers only" id="leads"/></div>
+                            <div><input type="text" required="required" placeholder="Numbers only" id="leads"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
                             Estimated Pipeline Value(Estimated_Pipeline_Value__c) <span class = "redMark">*</span>
-                            <div><input required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                            <div><input type="text" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
                         </label>
                     </li>
                     <li>
@@ -340,7 +358,7 @@
                     <li>
                         <label>
                             Result Detail(Result_Detail__c) <span class = "redMark">*</span>       
-                            <div><input required="required" id="result"/></div>
+                            <div><textarea required="required" id="result" style="height:36px;"></textarea></div>
                         </label>
                     </li>
                     <li>
@@ -392,15 +410,37 @@
                         </label>
                     </li-->
                 </apex:outputPanel>
+                <li>
+                    Please complete the form below to submit your activity results.
+                    <br/>
+                    <br/>
+                    <label>
+                        Total Attendees/Contacts Reached <span class = "redMark">*</span>
+                        <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
+                    </label>
+                </li>
                 <li>Required Documentation: please upload the following required documents to process payment:</li>
                 <li class="indent">
                     <label>
                         Invoice (billed to Silver Peak) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" multiple = "multiple" id = "invoice" onchange="checkFileSize();"/>
+                    <input type="file" class="file" id = "invoice" onchange="checkFileSize(this);"/>
+                </li>
+                <li class="indent">
+                    <label>
+                        Proof of Performance (photos, print, third party receipts proving cost of the event so you will be invoiced for the correct amount, email invites, collateral, etc.You can select multiple files.) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" class="file" multiple = "multiple" id = "proof" onchange="checkFileSize(this);"/>
+                </li>
+                <li class="indent">
+                    <label>
+					Attendance Lists – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" class="file" id = "attendance" onchange="checkFileSize(this);"/>
                 </li>
                 <li>
-                    <input type="button" value="Upload File" class="submitButton" onclick="uploadFile();"/>
+                    <input type="button" value="Upload File" class="btn submitButton" onclick="uploadFile();"/>
+                    <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
                 </li>
             </ul>
         </apex:form>

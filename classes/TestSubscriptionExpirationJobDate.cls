@@ -1,7 +1,7 @@
 @isTest
 public class TestSubscriptionExpirationJobDate {
      private static final Date customDate = Date.newInstance(2015, 09, 18);
-    @isTest
+     @isTest(SeeAllData=true)
     static void test()
     {
         
@@ -30,7 +30,7 @@ public class TestSubscriptionExpirationJobDate {
         
     }
     
-     @isTest
+       @isTest(SeeAllData=true)
     static void test_CustomerEvaluationAssets()
     {
         Account acc = new Account(Name='acme');
@@ -51,7 +51,7 @@ public class TestSubscriptionExpirationJobDate {
         Test.stopTest();
     }
     
-     @isTest
+      @isTest(SeeAllData=true)
     static void test_CustomerSubscriptionAssets()
     {
         Account acc = new Account(Name='acme');
