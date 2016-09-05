@@ -9,6 +9,7 @@
         <entityUrl>https://silverpeaksystems-migration.sandbox.myabsorb.com/Account/SAML</entityUrl>
         <issuer>https://silverpeaksystems--full.cs51.my.salesforce.com</issuer>
         <samlNameIdFormat>Unspecified</samlNameIdFormat>
-        <samlSubjectType>FederationId</samlSubjectType>
+        <samlSubjectCustomAttr>EmailAddressFormula</samlSubjectCustomAttr>
+        <samlSubjectType>CustomAttribute</samlSubjectType>
     </samlConfig>
 </ConnectedApp>

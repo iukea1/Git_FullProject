@@ -190,10 +190,6 @@
         }
     </style>
     <script type="text/javascript">
-    $(document).ready(function(){
-        
-    });
-    
     var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
     var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
     var chunkSize = 100000;    		//Maximum Javascript Remoting message size is 1,000,000 characters 
@@ -224,10 +220,36 @@
         console.log("files length: " + files.length);
         console.log("Max file: " + maxFile);
     }
+
+    function updateMDF(){
+        MarketingFundsController.updateMDF(
+            {"Total_Attendees" : $("#attendees").val(), "Event_Results_Opportunities" : $("#opportunities").val(), "Total_Qualified_Leads" : $("#leads").val(), "Estimated_Pipeline_Value" : $("#pipeline").val(), 
+             "Result_Detail" : $("#result").val(), "Requested_Reimbursement_Amount" : $("#amount").val(), "Topic_Course" : $("#topic").val(), "Number_of_Certifications" : $("#certifications").val()},"{!request.Id}",
+            function(result, event){
+                if(event.type === 'exception'){
+                    console.log("exception");
+					showReminder(event);
+                    return;
+                }else if(event.status){
+                    if(result.substring(0,3) == 'a38'){
+                    	uploadFile();
+                        console.log("Success:");
+                    }else{
+                    	console.log(result);
+                    }
+                }
+            },
+            {buffer: true, escape: true, timeout: 120000}
+        );
+    }
+    
+    function showReminder(showMsg){
+    	$("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
+    }
     
     function uploadFile(){
         if(files.length == 0){
-        	alert("please select at least one file");
+            //alert("please select at least one file");
             return;
         }else{
         	for(var i = 0; i < files.length; i++){
@@ -293,6 +315,7 @@
                         	//TODO update the progress of file uploading...
                             showProgress(concreteFile.progress + "pageJumping");
                             console.log("Uploading completed");
+                            top.location.onload();
                         }else{
                         	concreteFile.position += chunkSize;
                             //TODO update the progress of file uploading...
@@ -316,10 +339,41 @@
         }
         $(".submitButton").attr("value",progress + "%");
     }
+    
+    function validateForm(){
+        var isValid = true;
+        var errorMsg = "Invalid number";
+    	$(".number").each(function(){
+            if(isNaN($(this).val())){
+                if($(this).hasClass("currency")){
+                	errorMsg = "Invalid currency";
+                }
+                if(!$(this).next().hasClass("errorMsg")){
+            		$(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errorMsg +'</div>');
+                }
+                isValid = false;
+            }else{
+            	if($(this).next().hasClass("errorMsg")){
+            		$(this).next().remove();
+                }
+            }
+        });
+		$(".errorMsg:first").prev().focus();
+        $(".required").each(function(){
+			if(!!!$(this).val()){
+            	isValid = false;
+            }
+        });
+		if(isValid){
+        	updateMDF();
+        }
+    }
     </script>
     <body>
-        <apex:form >
+        <form onsubmit="validateForm(); return false;" id="theFrom">
             <ul class="mainBody">
+                <li style="width:90%;" id="reminder">
+                </li>
                 <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
                     <li class="sectionTitle">Event Results</li>
                     <li>
@@ -327,26 +381,26 @@
                         <br/>
                         <br/>
                         <label>
-                            Total Attendees/Contacts Reached(Total_Attendees__c) <span class = "redMark">*</span>
-                            <div><input type="text" required="required" placeholder="Numbers only" id="attendees"/></div>
+                            Total Attendees/Contacts Reached <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Total Opportunities Generated(Event_Results_Opportunities__c) <span class = "redMark">*</span>
-                            <div><input type="text" required="required" placeholder="Numbers only" id="opportunities"/></div>
+                            Total Opportunities Generated <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="opportunities"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Total Qualified Leads(Total_Qualified_Leads__c) <span class = "redMark">*</span>
-                            <div><input type="text" required="required" placeholder="Numbers only" id="leads"/></div>
+                            Total Qualified Leads <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="leads"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Estimated Pipeline Value(Estimated_Pipeline_Value__c) <span class = "redMark">*</span>
-                            <div><input type="text" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                            Estimated Pipeline Value <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
                         </label>
                     </li>
                     <li>
@@ -358,13 +412,13 @@
                     <li>
                         <label>
                             Result Detail(Result_Detail__c) <span class = "redMark">*</span>       
-                            <div><textarea required="required" id="result" style="height:36px;"></textarea></div>
+                            <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Requested Reimbursement Amount(Requested_Reimbursement_Amount__c) <span class = "redMark">*</span>
-                            <div><input required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                            Requested Reimbursement Amount <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
                         </label>
                     </li>
                 </apex:outputPanel> 
@@ -375,26 +429,26 @@
                         <br/>
                         <br/>
                         <label>
-                            Topic/Course <span class = "redMark">*</span>
-                            <div><apex:inputField value="{!request.Topic_Course__c}" required="true"/></div>
+							Topic/Course <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="topic"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Total Attendees <span class = "redMark">*</span>
-                            <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
+							Total Attendees <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Number of Certifications <span class = "redMark">*</span>
-                            <div><apex:inputField value="{!request.Number_of_Certifications__c}" required="true" html-placeholder="Numbers only"/></div>
+							Number of Certifications <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="certifications"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-                            Result Detail <span class = "redMark">*</span>
-                            <div><apex:inputField value="{!request.Result_Detail__c}" required="true"/></div>
+                            Result Detail <span class = "redMark">*</span>       
+                            <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
                         </label>
                     </li>
                     <li>
@@ -403,46 +457,37 @@
                             <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
                         </label>
                     </li>
-                    <!--li>
+                    <li>
                         <label>
-                            Requested Reimbursement Amount <span class = "redMark">*</span>    
-                            <div><apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
+                            Requested Reimbursement Amount(Requested_Reimbursement_Amount__c) <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
                         </label>
-                    </li-->
+                    </li>
                 </apex:outputPanel>
-                <li>
-                    Please complete the form below to submit your activity results.
-                    <br/>
-                    <br/>
-                    <label>
-                        Total Attendees/Contacts Reached <span class = "redMark">*</span>
-                        <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
-                    </label>
-                </li>
                 <li>Required Documentation: please upload the following required documents to process payment:</li>
                 <li class="indent">
                     <label>
                         Invoice (billed to Silver Peak) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file" id = "invoice" onchange="checkFileSize(this);"/>
+                    <input type="file" class="file required" id = "invoice" onchange="checkFileSize(this);" required="required"/>
                 </li>
                 <li class="indent">
                     <label>
                         Proof of Performance (photos, print, third party receipts proving cost of the event so you will be invoiced for the correct amount, email invites, collateral, etc.You can select multiple files.) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file" multiple = "multiple" id = "proof" onchange="checkFileSize(this);"/>
+                    <input type="file" class="file required" multiple = "multiple" id = "proof" onchange="checkFileSize(this);" required="required"/>
                 </li>
                 <li class="indent">
                     <label>
 					Attendance Lists – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file" id = "attendance" onchange="checkFileSize(this);"/>
+                    <input type="file" class="file required" id = "attendance" onchange="checkFileSize(this);" required="required"/>
                 </li>
                 <li>
-                    <input type="button" value="Upload File" class="btn submitButton" onclick="uploadFile();"/>
+                    <input type="submit" value="Upload File" class="btn submitButton" onclick="$('#theFrom')[0].onsubmit();"/>
                     <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
                 </li>
             </ul>
-        </apex:form>
+        </form>
     </body>
 </apex:page>

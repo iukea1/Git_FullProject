@@ -882,7 +882,6 @@
         <relatedList>LMS_Course_Certification__c.Learner_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>Partner_Account_Profile__c.Account__c</relatedList>
     </relatedLists>

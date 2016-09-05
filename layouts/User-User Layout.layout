@@ -88,6 +88,10 @@
                 <behavior>Edit</behavior>
                 <field>Week_1_Pipeline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Reseller_Agreement_Acknowledged__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -4,7 +4,7 @@
 */
 global with sharing class MarketingFundsController 
 {
-    public static MDF_Request__c request { get; set; }
+    public MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
     public Attachment invoice { get; set; }
@@ -59,7 +59,6 @@ global with sharing class MarketingFundsController
         {
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
         }
-        system.debug(request);
     }
     
     public PageReference saveMDF()
@@ -339,18 +338,6 @@ global with sharing class MarketingFundsController
                         {
                             eventAgendaAttachment = att;
                         }
-                        else if(att.Description == 'invoice')
-                        {
-                            invoice = att;
-                        }
-                        else if(att.Description == 'proof')
-                        {
-                            proof = att;
-                        }
-                        else if(att.Description == 'attendance')
-                        {
-                            attendance = att;
-                        }
                     }
                 }
             }
@@ -395,51 +382,78 @@ global with sharing class MarketingFundsController
 
     global class MDF
     {
-        public Decimal Total_Attendees { get; set; }
-        public Decimal Event_Results_Opportunities { get; set;}
-        public Decimal Total_Qualified_Leads { get; set; }
-        public Decimal Estimated_Pipeline_Value { get; set; }
+        public String Total_Attendees { get; set; }
+        public String Event_Results_Opportunities { get; set;}
+        public String Total_Qualified_Leads { get; set; }
+        public String Estimated_Pipeline_Value { get; set; }
         public String Result_Detail { get; set; }
-        public Decimal Requested_Reimbursement_Amount { get; set; }
+        public String Requested_Reimbursement_Amount { get; set; }
         public String Topic_Course { get; set; }
-        public Decimal Number_of_Certifications { get; set; }
+        public String Number_of_Certifications { get; set; }
+        public Integer invoice { get; set; }
+        public Integer proof { get; set; }
+        public Integer attendance { get; set; }
     }
     
+    static SavePoint sp;
     @RemoteAction
-    global static String updateMDF(MDF mdf)
+    global static String updateMDF(MDF mdf,String requestId)
     {
-        SavePoint sp = Database.setSavepoint();
-        try
+        sp = Database.setSavepoint();
+        if(String.isNotBlank(requestId))
         {
-            upsert convertMDF(mdf); 
-            return  convertMDF(mdf).Id;
+            MDF_Request__c req = [Select Id,Type_of_Program__c from MDF_Request__c where Id =: requestId];
+            String errorMsg = validateMDF(mdf, req);
+            if(String.isNotBlank(errorMsg))
+            {
+				return 'Error' + errorMsg;		 
+            }
+            else
+            {
+                try
+                {
+                    upsert convertMDF(mdf, req);
+                    return  convertMDF(mdf, req).Id;
+                }
+                catch(Exception ex)
+                {
+                    Database.rollback(sp);
+                    ApexPages.addMessages(ex);
+                    return 'exception';
+                } 
+            } 
         }
-        catch(Exception ex)
+        else
         {
             Database.rollback(sp);
-            ApexPages.addMessages(ex);
             return 'exception';
         }
     }
     
-    global static MDF_Request__c convertMDF(MDF mdf)
+    global static MDF_Request__c convertMDF(MDF mdf, MDF_Request__c request)
     {
-        request.Total_Attendees__c = mdf.Total_Attendees;
-        request.Event_Results_Opportunities__c = mdf.Event_Results_Opportunities;
-        request.Total_Qualified_Leads__c = mdf.Total_Qualified_Leads;
-        request.Estimated_Pipeline_Value__c = mdf.Estimated_Pipeline_Value;
+		if(request.Type_of_Program__c != 'Enablement')
+        {
+            request.Event_Results_Opportunities__c = Decimal.valueOf(mdf.Event_Results_Opportunities);
+            request.Total_Qualified_Leads__c = Decimal.valueOf(mdf.Total_Qualified_Leads);
+            request.Estimated_Pipeline_Value__c = Decimal.valueOf(mdf.Estimated_Pipeline_Value);
+        }
+        else
+        {
+            request.Topic_Course__c = mdf.Topic_Course;
+        	request.Number_of_Certifications__c = Decimal.valueOf(mdf.Number_of_Certifications);
+        }
+        request.Total_Attendees__c = Decimal.valueOf(mdf.Total_Attendees);
         request.Result_Detail__c = mdf.Result_Detail;
-        request.Requested_Reimbursement_Amount__c = mdf.Requested_Reimbursement_Amount;
-        request.Topic_Course__c = mdf.Topic_Course;
-        request.Number_of_Certifications__c = mdf.Number_of_Certifications;
+        request.Requested_Reimbursement_Amount__c = Decimal.valueOf(mdf.Requested_Reimbursement_Amount);
+		request.Activity_Complete__c = true;
+		request.Feedback_Complete__c = true;
         return request;
     }
     
     @RemoteAction
-    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId)
+    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription)
     {
-        system.debug('Enter awesome');
-        system.debug('Total:' + request.Total_Attendees__c);
         if(String.isNotBlank(fileBody))
         {
             ContentVersion cv = getDocument(fileId);
@@ -454,6 +468,7 @@ global with sharing class MarketingFundsController
                 {
                     cv.PathOnClient = fileName;
                     cv.IsMajorVersion = false;
+                    cv.Description = fileDescription;
                     existedLink = true;
                 }
                 upsert cv;
@@ -466,12 +481,14 @@ global with sharing class MarketingFundsController
                 return cv.Id;
             }
             catch(Exception ex)
-            {
+            {   
+                Database.rollback(sp);
                 return 'Exception';
             }
         }
         else 
         {
+            Database.rollback(sp);
             return 'File body was null';
         }
     }
@@ -487,5 +504,48 @@ global with sharing class MarketingFundsController
         {
             return cvs[0];
         }
+    }
+    
+    global static String validateMDF(MDF mdf, MDF_Request__c request)
+    {
+        String errorMsg = '';
+        String reminderMsg = 'Invalid number;';
+        String reminderCur = 'Invalid currency;';
+		if(request.Type_of_Program__c != 'Enablement')
+        {
+            errorMsg = handleNumber(mdf.Event_Results_Opportunities, 'opportunities', reminderMsg) + handleNumber(mdf.Total_Qualified_Leads, 'leads', reminderMsg) + handleNumber(mdf.Estimated_Pipeline_Value, 'pipeline', reminderCur);
+        }
+        else
+        {
+            errorMsg = String.isBlank(mdf.Topic_Course) ? 'topic:Cannot be blank;' : '' + handleNumber(mdf.Number_of_Certifications, 'certifications', reminderMsg);
+        }
+		errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
+        errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
+        return errorMsg;
+    }
+    
+    global static String handleNumber(String num, String elem, String reminder)
+    {
+		if(String.isBlank(num) || num == 'undifined')
+        {
+            return elem + ':' + 'Cannot be blank;';
+        }
+        else
+        {
+            try
+            {
+                Decimal d = Decimal.valueOf(num);
+                return '';
+            }
+            catch(Exception ex)
+            {
+                return elem + ':' + reminder;
+            }
+        }
+    }
+    
+    global static String haneldNumber(Integer num, String elem)
+    {
+		return num > 0 ? '' : elem + ':Cannot be blank;';
     }
 }

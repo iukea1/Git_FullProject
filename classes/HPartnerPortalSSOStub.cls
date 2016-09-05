@@ -3,17 +3,16 @@ public without sharing class HPartnerPortalSSOStub
     private static final String FAILD_TO_CREATE_DEPARTMENT_MSG = 'Failed to create a department, please contact your system administrator.';
     private static final String FAILD_TO_CREATE_LEARNER_MSG = 'Failed to create your leaner account, please contact your system administrator.';
     private static final String INVALID_CONTACT_MSG = 'Contact without account.';
-    private static final String DEFAULT_PARENT_DEPARTMENT_ID = '85750';
-
-    private static String SSOLink = 'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
-    private static String adminId = 'training@silver-peak.com';
+    private static final String DEFAULT_PARENT_DEPARTMENT_ID = '1a1f54fe-1ab0-429d-bb49-d88fd63499cf';//85750
+    
+    private static String ssoBase = 'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
     private static String adminKey = 'a750ad20-34ff-4f05-a292-8a227c323441';
     private static String httpLoginBase='https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1/Authenticate?username=prane@silver-peak.com&password=test@2506&privateKey=a750ad20-34ff-4f05-a292-8a227c323441';
-  
+    
     public static String getHttpToken()
     {
         string token='';
-      
+        
         HttpRequest request = new HttpRequest();
         request.setMethod('POST');
         request.setHeader('charset', 'UTF-8');
@@ -29,7 +28,7 @@ public without sharing class HPartnerPortalSSOStub
             
             token=response.getBody();
             token=token.substring(1,token.length()-1);
-           	System.debug('token'+token);
+            System.debug('token'+token);
         }
         else
         {
@@ -39,7 +38,7 @@ public without sharing class HPartnerPortalSSOStub
     }
     public static String getSSOLink(Id uid)
     {
-        User currentUser = [select Id, UserName, Email, ContactId, Contact.FirstName, Contact.LastName, Contact.Email, 
+       	       User currentUser = [select Id, UserName, Email, ContactId, Contact.FirstName, Contact.LastName, Contact.Email, 
                             Contact.AccountId, Contact.Account.Name, Contact.Account.Description, Contact.Account.BillingCity, 
                             Contact.Account.ParentId
                             from User where Id = :uid];
@@ -51,7 +50,7 @@ public without sharing class HPartnerPortalSSOStub
             {
                 username = currentContact.Partner_Contacts_Profile__r[0].LMSUserName__c;
             }
-
+            
             Map<Id, Account> relatedAccounts = new Map<Id, Account>([select Id, Name, Description, BillingCity, BillingCountry, GEO_Supported__c, ParentId, (select Id, LmsDepartmentName__c, LmsDepartmentId__c from Partner_Accounts_Profile__r) from Account where Id = :currentContact.AccountId or Id = :currentContact.Account.ParentId]);
             Account currentAccount = relatedAccounts.get(currentContact.AccountId);
             Account parentAccount = relatedAccounts.get(currentContact.Account.ParentId);
@@ -66,6 +65,7 @@ public without sharing class HPartnerPortalSSOStub
                 token = getHttpToken();
             }
             String departmentId;
+            //Boolean departmentValid = validateDepartment(currentAccount, token);
             Partner_Account_Profile__c deptProfile = validateDepartment(currentAccount, token);
             if(deptProfile.Id == null && String.isBlank(deptProfile.LmsDepartmentId__c))
             {
@@ -76,14 +76,15 @@ public without sharing class HPartnerPortalSSOStub
                 //departmentId  = currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c;
                 departmentId = deptProfile.LmsDepartmentId__c;
             }
-
+            
             // Creates lms user
             if(!validateLearner(username, token))
             {
-                String studentId = createLearner(currentContact, departmentId, username, token);
+                System.debug('Inside Learner');
+                String studentId = createLearner(currentContact, departmentId, username, token,currentAccount);
                 
                 // updates the student country and student location.
-                updateLearner(studentId, currentAccount.BillingCountry, currentAccount.GEO_Supported__c, token);
+                //updateLearner(studentId, currentAccount.BillingCountry, currentAccount.GEO_Supported__c, token,null);
                 
                 // writes LMS username back to SF contact. 
                 Partner_Contact_Profile__c contactProfile;
@@ -118,34 +119,34 @@ public without sharing class HPartnerPortalSSOStub
                 accountProfile.LmsDepartmentName__c = deptProfile.LmsDepartmentName__c;
                 upsert accountProfile;
             }
-            return SSOLink;
-
+            return ssoBase;
+            
         }
         else
         {
             return null;
         }
-       
+ 
     }
-
+    
    
-
+    
     /**
-     * Return value status:
-     * 1. Account profile has Id: valid LmsDepartmentId__c;
-     * 2. Account profile doesn't have Id:
-     *  2.1 has LmsDepartmentId__c: valid department name;
-     *  2.2 doesn't have has LmsDepartmentId__c: invalid department name, need to create.
-     */
+* Return value status:
+* 1. Account profile has Id: valid LmsDepartmentId__c;
+* 2. Account profile doesn't have Id:
+*  2.1 has LmsDepartmentId__c: valid department name;
+*  2.2 doesn't have has LmsDepartmentId__c: invalid department name, need to create.
+*/
     private static Partner_Account_Profile__c validateDepartment(Account currentAccount, String token)
     {
         Partner_Account_Profile__c accountProfile = new Partner_Account_Profile__c();
         String departmentName = currentAccount.Name;
         if(currentAccount != null && currentAccount.Partner_Accounts_Profile__r != null 
-            && currentAccount.Partner_Accounts_Profile__r.size() > 0)
+           && currentAccount.Partner_Accounts_Profile__r.size() > 0)
         {
             if(String.isNotBlank(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c)
-                && validateDepartmentById(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c, token))
+               && validateDepartmentById(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c, token))
             {
                 return currentAccount.Partner_Accounts_Profile__r[0];
             }
@@ -154,7 +155,7 @@ public without sharing class HPartnerPortalSSOStub
                 departmentName = currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c;
             }
         }
-
+        
         HPartnerPortalGetDepartmentsApi result = validateDepartmentByName(departmentName, token);
         accountProfile.LmsDepartmentName__c = departmentName;
         if(result.isSucceed && result.departments != null && result.departments.size() > 0)
@@ -163,14 +164,18 @@ public without sharing class HPartnerPortalSSOStub
         }
         return accountProfile;
     }
-   
+
     private static Boolean validateDepartmentById(String departmentId, String token)
     {
         try
         {
-            HPartnerPortalGetDepartmentsApi getDepartmentApi = new HPartnerPortalGetDepartmentsApi(departmentId, token);
+            HPartnerPortalGetDepartmentApi getDepartmentApi = new HPartnerPortalGetDepartmentApi(departmentId, token);
             getDepartmentApi.execute();
-            return getDepartmentApi.isSucceed;    
+            if(getDepartmentApi.department!=null)
+            {
+                return true;
+            }
+            return false;  
         }
         catch(Exception ex)
         {
@@ -178,37 +183,38 @@ public without sharing class HPartnerPortalSSOStub
         }    
         return false;
     }
-
+    
     private static HPartnerPortalGetDepartmentsApi validateDepartmentByName(String departmentName, String token)
     {
         try
         {
             //Map<String, String> params = new Map<String, String>{'departmentname'=>departmentName};
-            HPartnerPortalGetDepartmentsApi getDepartmentsApi = new HPartnerPortalGetDepartmentsApi(token, departmentName);
-            getDepartmentsApi.execute();
-            return getDepartmentsApi;   
+            HPartnerPortalGetDepartmentsApi obj = new HPartnerPortalGetDepartmentsApi(token, departmentName);
+            obj.execute();
+           	return obj;
         }
         catch(Exception ex)
         {
             throw new PartnerPortalSSOException(ex.getMessage());
         }
     }
-   
+    
+
     private static String createDepartment(Account currentAccount, Account parentAccount, String token)
     {
         Map<String, String> departmentParams = new Map<String, String>();
         departmentParams.put('name', currentAccount.Name);
         //departmentParams.put('notes', currentAccount.Description);
-        departmentParams.put('locations', currentAccount.BillingCity);
+        //departmentParams.put('locations', currentAccount.BillingCity);
         //departmentParams.put('token', token);
         
         if(parentAccount != null && parentAccount.Partner_Accounts_Profile__r != null && parentAccount.Partner_Accounts_Profile__r.size() > 0 && String.isNotBlank(parentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c))
         {
-            departmentParams.put('parentDeptId', parentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c);
+            departmentParams.put('ParentId', parentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c);
         }
         else
         {
-            departmentParams.put('parentDeptId', DEFAULT_PARENT_DEPARTMENT_ID);
+            departmentParams.put('ParentId', DEFAULT_PARENT_DEPARTMENT_ID);
         }
         
         HPartnerPortalCreateDepartmentApi createDepartmentApi = new HPartnerPortalCreateDepartmentApi(token,departmentParams);
@@ -225,15 +231,20 @@ public without sharing class HPartnerPortalSSOStub
             throw new PartnerPortalSSOException(FAILD_TO_CREATE_DEPARTMENT_MSG);
         }
     }
-
+    
     private static Boolean validateLearner(String username, String token)
     {
         try
         {
             //Map<String, String> studentParams = new Map<String, String>{'username'=>username};
-            HPartnerPortalGetStudentsApi getStudentsApi = new HPartnerPortalGetStudentsApi(token, username);
-            getStudentsApi.execute();
-            return getStudentsApi.isSucceed;
+            HPartnerPortalGetStudentsApi obj = new HPartnerPortalGetStudentsApi(token, username);
+            obj.execute();
+            System.debug('getStudents'+obj.students);
+            if(obj.students!=null && obj.students.size()>0)
+            {
+                return true;
+            }
+            return false;
         }
         catch (Exception ex)
         {
@@ -241,8 +252,8 @@ public without sharing class HPartnerPortalSSOStub
         }
         return false;
     }
-
-    private static String createLearner(Contact currentContact, String departmentId, String username, String token)
+    
+    private static String createLearner(Contact currentContact, String departmentId, String username, String token,Account acc)
     {
         Map<String, String> studentParams = new Map<String, String>();
         studentParams.put('username', username);
@@ -251,12 +262,13 @@ public without sharing class HPartnerPortalSSOStub
         studentParams.put('JobTitle', currentContact.Title);
         studentParams.put('emailAddress', username);
         studentParams.put('departmentId', departmentId);
+         studentParams.put('location', acc.GEO_Supported__c);
         //studentParams.put('token', token);
         if(currentContact.Partner_Contacts_Profile__r != null && currentContact.Partner_Contacts_Profile__r.size() > 0)
         {
             studentParams.put('extra2', currentContact.Partner_Contacts_Profile__r[0].Dell_Segment__c);
         }
-
+        
         HPartnerPortalCreateLearnerApi createLearnerApi = new HPartnerPortalCreateLearnerApi(token,studentParams);
         createLearnerApi.execute();
         if(!createLearnerApi.isSucceed)
@@ -265,20 +277,25 @@ public without sharing class HPartnerPortalSSOStub
         }
         return createLearnerApi.studentId;
     }
-
-    private static void updateLearner(String studentId, String country, String location, String token)
+    
+    private static void updateLearner(String studentId, String country, String location, String token,Contact con)
     {
         Map<String, String> studentParams = new Map<String, String>();
-        studentParams.put('studentId', studentId);
+        studentParams.put('Id', studentId);
+         studentParams.put('DepartmentId', '18a9be99-1089-468d-9099-25701197d562');
+         studentParams.put('LastName', con.LastName);
+         studentParams.put('FirstName', con.FirstName);
+         studentParams.put('EmailAddress', con.Email);
+         studentParams.put('UserName', con.Email);
         //studentParams.put('Country', country);
         studentParams.put('Location', location);
- 		HPartnerPortalUpdateLearnerApi updateLearnerApi = new HPartnerPortalUpdateLearnerApi(studentParams, token);
+        HPartnerPortalUpdateLearnerApi updateLearnerApi = new HPartnerPortalUpdateLearnerApi(studentParams, token);
         updateLearnerApi.execute();
         if(!updateLearnerApi.isSucceed)
         {
             throw new PartnerPortalSSOException(FAILD_TO_CREATE_LEARNER_MSG);
         }
     }
-
+    
    
 }

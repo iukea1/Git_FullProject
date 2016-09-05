@@ -585,6 +585,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HPartnerPortalDepartmentInfo</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HPartnerPortalEnrollment</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -625,11 +629,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HPartnerPortalLearner</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HPartnerPortalQueryResult</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HPartnerPortalSSOStub</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HPartnerPortalStudentInfo</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1670,6 +1682,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestAssetListViewControllerNxtoVX</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAssignSBPermissionSet</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

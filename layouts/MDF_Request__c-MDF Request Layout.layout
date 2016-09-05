@@ -375,6 +375,10 @@
                 <behavior>Edit</behavior>
                 <field>Result_Detail__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_Certifications__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -391,6 +395,10 @@
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Topic_Course__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

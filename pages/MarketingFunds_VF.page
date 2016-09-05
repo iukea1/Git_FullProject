@@ -186,7 +186,7 @@
         	display:none;
             position: absolute;
             float: right;
-            padding: 15px 0px 15px 0px;
+            padding: 15px 0px 0px 15px;
         }
     </style>
     <body id = "iframeBody">
@@ -197,7 +197,7 @@
                 </li>
             </ul>
         </apex:outputPanel>
-        <apex:form id="theForm" styleClass="form-horizontal" rendered="{!userProfile != '' && request.Approval_Status__c != 'Pending' && request.Approval_Status__c != 'Approved'}" onsubmit="return checkSubmit();">
+        <apex:form styleClass="form-horizontal" rendered="{!userProfile != '' && request.Approval_Status__c != 'Pending' && request.Approval_Status__c != 'Approved'}" onsubmit="return checkSubmit();">
             <ul class="mainBody">
                 <li style="width:90%;">
                     <apex:pageMessages escape="false"/>
@@ -538,131 +538,129 @@
                 </li>
             </ul>
         </apex:form>
-        <apex:form rendered="{!userProfile != '' && request.Approval_Status__c=='Pending' || request.Approval_Status__c=='Approved'}" styleClass="form-horizontal" onsubmit="return checkSubmit();">
+        <apex:outputPanel rendered="{!userProfile != '' && request.Approval_Status__c=='Pending' || request.Approval_Status__c=='Approved'}" styleClass="form-horizontal">
+            <form onsubmit="validateForm(); return false;" id="theForm">
             <ul class="mainBody">
                 <li style="width:90%;">
                     <apex:pageMessages escape="false"/>
                 </li>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && !request.Activity_Complete__c}">
-                    <!--><fieldset class="fieldset-radius">
-                        <legend class="legend-normal">Event Results</legend><-->
-                        <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
-                            <li class="sectionTitle">Event Results</li>
-                            <li>
-                                Please complete the form below to submit your activity results.
-                                <br/>
-                                <br/>
-                                <label>
-                                    Total Attendees/Contacts Reached <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Total Opportunities Generated <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Event_Results_Opportunities__c}" required="true" html-placeholder="Numbers only"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Total Qualified Leads <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Total_Qualified_Leads__c}" required="true" html-placeholder="Numbers only"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Estimated Pipeline Value <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Estimated_Pipeline_Value__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Campaign        
-                                    <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Result Detail <span class = "redMark">*</span>       
-                                    <div><apex:inputField value="{!request.Result_Detail__c}"  required="true"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Requested Reimbursement Amount <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
-                                </label>
-                            </li>
-                        </apex:outputPanel> 
-                        <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
-                            <li class="sectionTitle">Partner Training Results</li>
-                            <li>
-                                Please complete the form below to submit your activity results.
-                                <br/>
-                                <br/>
-                                <label>
-                                    Topic/Course <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Topic_Course__c}" required="true"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Total Attendees <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Total_Attendees__c}" required="true" html-placeholder="Numbers only"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Number of Certifications <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Number_of_Certifications__c}" required="true" html-placeholder="Numbers only"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Result Detail <span class = "redMark">*</span>
-                                    <div><apex:inputField value="{!request.Result_Detail__c}" required="true"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Campaign        
-                                    <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    Requested Reimbursement Amount <span class = "redMark">*</span>    
-                                    <div><apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" required="true" html-placeholder="Please input amount in USD currency"/></div>
-                                </label>
-                            </li>
-                        </apex:outputPanel>
-                        <li>Required Documentation: please upload the following required documents to process payment:</li>
-                        <li class="indent">
-                            <label>
-                                Invoice (billed to Silver Peak) <span class = "redMark">*</span>
-                            </label>
-                            <div style="margin-top:10px;"><apex:inputFile value="{!invoice.body}" fileName="{!invoice.name}" styleclass="inputFile" /></div> 
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, invoice.Id)}" target="_blank" rendered="{!NOT(IsBlank(invoice.Id))}" styleClass="displayLink">{!invoice.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Proof of Performance (photos, print, third party receipts proving cost of the event so you will be invoiced for the correct amount, email invites, collateral, etc.) <span class = "redMark">*</span>
-                            </label>
-                            <div style="margin-top:10px;"><apex:inputFile value="{!proof.body}" fileName="{!proof.name}" styleclass="inputFile" /></div> 
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, proof.Id)}" target="_blank" rendered="{!NOT(IsBlank(proof.Id))}" styleClass="displayLink">{!proof.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Attendance Lists – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
-                            </label>
-                            <div style="margin-top:10px;"><apex:inputFile value="{!attendance.body}" fileName="{!attendance.name}"  styleclass="inputFile"/></div> 
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, attendance.Id)}" target="_blank" rendered="{!NOT(IsBlank(attendance.Id))}" styleClass="displayLink">{!attendance.name}</apex:outputLink> 
-                        </li>
-                        <li>
-                            <apex:commandButton value="Submit" action="{!saveApprovedMDF}" styleClass="submitButton"/>
-                            <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
-                        </li>
-                    <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
+                        <li style="width:90%;" id="reminder">
+                </li>
+                <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
+                    <li class="sectionTitle">Event Results</li>
+                    <li>
+                        Please complete the form below to submit your activity results.
+                        <br/>
+                        <br/>
+                        <label>
+                            Total Attendees/Contacts Reached <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Total Opportunities Generated <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="opportunities"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Total Qualified Leads <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="leads"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Estimated Pipeline Value <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Campaign        
+                            <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Result Detail <span class = "redMark">*</span>       
+                            <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Requested Reimbursement Amount <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                        </label>
+                    </li>
+                </apex:outputPanel> 
+                <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
+                    <li class="sectionTitle">Partner Training Results</li>
+                    <li>
+                        Please complete the form below to submit your activity results.
+                        <br/>
+                        <br/>
+                        <label>
+							Topic/Course <span class = "redMark">*</span>
+                            <div><input type="text" class="required" required="required" placeholder="Numbers only" id="topic"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+							Total Attendees <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+							Number of Certifications <span class = "redMark">*</span>
+                            <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="certifications"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Result Detail <span class = "redMark">*</span>       
+                            <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Campaign        
+                            <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Requested Reimbursement Amount(Requested_Reimbursement_Amount__c) <span class = "redMark">*</span>
+                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                        </label>
+                    </li>
+                </apex:outputPanel>
+                <li>Required Documentation: please upload the following required documents to process payment(Each file size does not exceed 4.2MB):</li>
+                <li class="indent">
+                    <label>
+                        Invoice (billed to Silver Peak) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" class="file required" id = "invoice" onchange="checkFileSize(this);" required="required"/>
+                </li>
+                <li class="indent">
+                    <label>
+                        Proof of Performance (photos, print, third party receipts proving cost of the event so you will be invoiced for the correct amount, email invites, collateral, etc.You can select multiple files.) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" class="file required" multiple = "multiple" id = "proof" onchange="checkFileSize(this);" required="required"/>
+                </li>
+                <li class="indent">
+                    <label>
+					Attendance Lists – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
+                    </label>
+                    <input type="file" class="file required" id = "attendance" onchange="checkFileSize(this);" required="required"/>
+                </li>
+                <li>
+                    <input type="submit" value="Submit" class="btn submitButton"/>
+                    <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
+                </li>
+				<li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
                     <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
@@ -1116,9 +1114,215 @@
                 </apex:outputPanel>
                 </apex:outputPanel>
             </ul>
-        </apex:form>
+			</form>
+        </apex:outputPanel>
     </body>
     
+    <script type="text/javascript">
+    var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
+    var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+    var chunkSize = 100000;    		//Maximum Javascript Remoting message size is 1,000,000 characters 
+    var files = [];
+	var maxFile = 0;
+    
+    function checkFileSize(inputFile){
+		var invoices = $(inputFile)[0].files;
+		if(invoices.length > 0){
+        	for(var i = 0; i < invoices.length; i++){
+                var invoice = invoices[i];
+            	if(invoice.size >= maxFileSize){
+                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                    var file = $(inputFile)
+                    file.after(file.clone().val(""));
+                    file.remove(); 
+                    return;
+                }else{
+                	invoice.fileIndex = files.length;
+                    invoice.description = $(inputFile).attr("id");
+                    files.push(invoice);
+                    var index = invoice.fileIndex;
+                    if(index > 0 && files[index].size >= files[maxFile].size){
+                    	maxFile = index;
+                    }
+                }
+            }
+        }
+        console.log("files length: " + files.length);
+        console.log("Max file: " + maxFile);         
+    }
+
+    function updateMDF(){
+        MarketingFundsController.updateMDF(
+            {"Total_Attendees" : $("#attendees").val(), "Event_Results_Opportunities" : $("#opportunities").val(), "Total_Qualified_Leads" : $("#leads").val(), "Estimated_Pipeline_Value" : $("#pipeline").val(), 
+             "Result_Detail" : $("#result").val(), "Requested_Reimbursement_Amount" : $("#amount").val(), "Topic_Course" : $("#topic").val(), "Number_of_Certifications" : $("#certifications").val(), 'invoice' : $("#invoice")[0].files.length, 'proof' : $("#proof")[0].files.length, 'attendance' : $("#attendance")[0].files.length},"{!request.Id}",
+            function(result, event){
+                if(event.type === 'exception'){
+                    console.log("exception");
+					showReminder(event);
+                    return;
+                }else if(event.status){
+                    if(result.substring(0,3) == 'a38'){
+                    	uploadFiles();
+                        console.log("Success:");
+                    }else if(result.substring(0,5) == 'Error'){
+                        console.log(result.substring(5));
+                        showErrorMsg(result.substring(5));
+                    }
+                }
+            },
+            {buffer: true, escape: true, timeout: 120000}
+        );
+    }
+    
+    function showReminder(showMsg){
+    	$("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
+    }
+    
+    function uploadFiles(){
+        if(files.length == 0){
+            //alert("please select at least one file");
+            return;
+        }else{
+        	for(var i = 0; i < files.length; i++){
+            	var file = files[i];
+                if(file.size >= maxFileSize){
+                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                    return;
+                }else{
+                    //var attachmentName = file.name;
+                    var fileReader = new FileReader();
+                    fileReader.fileName = file.name;
+                    fileReader.fileIndex = file.fileIndex;
+                    fileReader.fileType = file.type;
+                    fileReader.description = file.description;
+                    fileReader.onloadend = function(e) {
+                        var fileName = this.fileName;
+                        var index = this.fileIndex;
+                        var type = this.fileType;
+                        var description = this.description;
+                        var body = window.btoa(this.result);  //Base 64 encode the file before sending it
+                        //var positionIndex = 0;
+                        var fileSize = body.length;
+                        console.log("Total Attachment Length: " + fileSize);
+                        //var doneUploading = false;
+                        if(fileSize < maxStringSize) {
+                            uploadOneFile('', {index: index, name: fileName, body: body, position: 0, size: fileSize, progress: 0, done: false, type: type, description: description});
+                        } else {
+                            alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
+                        }
+                    }
+                    fileReader.onerror = function(e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    fileReader.onabort = function(e) {
+                        alert("There was an error reading the file.  Please try again.");
+                    }
+                    fileReader.readAsBinaryString(file);  //Read the body of the file
+                }
+            }
+        }
+    }
+    
+    function uploadOneFile(fileId, concreteFile){
+    	var fileBody = "";
+        if(concreteFile.size <= concreteFile.position + chunkSize){
+        	fileBody = concreteFile.body.substring(concreteFile.position);
+            concreteFile.done = true;
+            concreteFile.Progress = 100;
+        }else{
+        	fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
+        }
+        console.log("Uploading " + concreteFile.position + " chars of " + concreteFile.size);
+        console.log("Uploading Size : " + fileBody.length );
+        MarketingFundsController.uploadFile(
+        	fileBody, concreteFile.name, fileId,"{!request.Id}", concreteFile.description,
+            function(result, event){
+                console.log(result);
+                if(event.type === 'exception'){
+                	console.log("exception");
+                    console.log(event);
+                }else if(event.status){
+                	if(result.substring(0,3) == '068'){
+                        concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
+                        if(concreteFile.done == true){
+                        	//TODO update the progress of file uploading...
+							if(concreteFile.index == maxFile){
+                                top.location.reload();
+                            }
+                        }else{
+                        	concreteFile.position += chunkSize;
+                            //TODO update the progress of file uploading...
+                            uploadOneFile(result, concreteFile);
+                            if(concreteFile.index == maxFile){
+                            	console.log(concreteFile.progress);
+                                showProgress(concreteFile.progress);
+                            }
+                        }
+                    }
+                }
+            },
+			{buffer: true, escape: true, timeout: 120000}
+        );
+    }
+    
+    function showProgress(progress){
+        if(!$(".submitButton").hasClass("disabledBtn")){
+            $(".submitButton").addClass("disabledBtn");
+            $("#loadingIcon").show();
+        }else{
+			$("#loadingIcon").show();
+        }
+        $(".submitButton").attr("value",progress + "%");
+    }
+    
+    function validateForm(){
+        var isValid = true;
+        var errorMsg = "Invalid number";
+    	$(".number").each(function(){
+            if(isNaN($(this).val())){
+                if($(this).hasClass("currency")){
+                	errorMsg = "Invalid currency";
+                }
+                if(!$(this).next().hasClass("errorMsg")){
+            		$(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errorMsg +'</div>');
+                }
+                isValid = false;
+            }else{
+            	if($(this).next().hasClass("errorMsg")){
+            		$(this).next().remove();
+                }
+            }
+        });
+		$(".errorMsg:first").prev().focus();
+        $(".required").each(function(){
+			if(!!!$(this).val()){
+            	isValid = false;
+            }
+        });
+		if(isValid && checkSubmit()){
+			updateMDF();
+        }
+        aotuAdjustHeight();
+    }
+    
+	function showErrorMsg(errorMsg){
+    	var errors = errorMsg.split(";");
+        for(var i = 0; i < errors.length - 1; i++){
+        	var eleId = errors[i].split(":")[0];
+            var errMsg = errors[i].split(":")[1];
+            if(!$("#" + eleId).next().hasClass("errorMsg")){
+                $("#" + eleId).after('<div class="errorMsg"><strong>Error:</strong>'+ errMsg +'</div>');
+            }else{
+				$("#" + eleId).next().html("<strong>Error:</strong>" + errMsg);
+            }
+        }
+        $(".errorMsg:first").prev().focus();
+		$("#loadingIcon").hide();
+        $(".submitButton").removeClass("disabledBtn");
+        $(".submitButton").attr("value","Submit");
+        aotuAdjustHeight();
+    }
+    </script>
     <script type = "text/javascript">
     $(document).ready(function(){
         showSection();
@@ -1317,6 +1521,7 @@
         if(window.confirm('After your submit, you cannot edit this form again. Are you sure you want to continue?')){
             $(".submitButton").addClass("disabledBtn");
             $(".submitButton").attr("value","Request is submitting");
+			$("#loadingIcon").show();
             return true;
         }else{
             return false;

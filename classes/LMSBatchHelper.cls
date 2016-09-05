@@ -213,7 +213,6 @@ public class LMSBatchHelper {
         List<LMS_Course_Certification__c> lstCertsToUpdate= new List<LMS_Course_Certification__c>();
         List<Contact> lstContactsToUpdate= new List<Contact>();
         List<LMS_Course_Certification__c> lstCerts= new List<LMS_Course_Certification__c>();
-        Set<Contact> setContacts = new  Set<Contact> ();
         lstCerts=[Select Id,LMS_User_Id__c,Student_Email__c from  LMS_Course_Certification__c where Student_Email__c!=null and Learner_Contact__c=null];
         Set<string> setUserEmail= new Set<String>();
         Map<string,Contact> mapUsrInfo=new  Map<string,Contact>();
@@ -228,38 +227,25 @@ public class LMSBatchHelper {
             {
                 for(Contact item:lstContact)
                 {
-                    if(!mapUsrInfo.containsKey(item.Email))
-                    {
-                         mapUsrInfo.put(item.Email,item);
-                    }
-                   
+                    mapUsrInfo.put(item.Email,item);
                 }
                 
-              for(LMS_Course_Certification__c item:lstCerts)
+                for(LMS_Course_Certification__c item:lstCerts)
                 {
                     Contact con= mapUsrInfo.get(item.Student_Email__c);
-                    if(con!=null)
-                    {
-                        item.Learner_Contact__c=con.Id;
-                        item.Learner_Account__c=con.AccountId;
-                        lstCertsToUpdate.add(item);
-                        con.LMS_User_Id__c=item.LMS_User_Id__c;
-                        if(!setContacts.contains(con))
-                        {
-                             setContacts.add(con);
-                        }
-                       
-                    }
-                    
+                    item.Learner_Contact__c=con.Id;
+                    item.Learner_Account__c=con.AccountId;
+                    lstCertsToUpdate.add(item);
+                    con.LMS_User_Id__c=item.LMS_User_Id__c;
+                    lstContactsToUpdate.add(con);
                 }
                 if(lstCertsToUpdate.size()>0)
                 {
                     update lstCertsToUpdate;
                 }
                 
-                if(setContacts.size()>0)
+                if(lstContactsToUpdate.size()>0)
                 {
-                    lstContactsToUpdate.addAll(setContacts);
                     update lstContactsToUpdate;
                 }
             }
