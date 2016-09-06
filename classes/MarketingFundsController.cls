@@ -7,9 +7,9 @@ global with sharing class MarketingFundsController
     public MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
-    public Attachment invoice { get; set; }
-    public Attachment proof { get; set; }
-    public Attachment attendance { get; set;}
+    public ContentDocumentLink invoice { get; set; }
+    public List<ContentDocumentLink> proofs { get; set; }
+    public ContentDocumentLink attendance { get; set;}
     public String EventMaterials {get; set; }
     public String eventDetails {get; set; }
     public Partner_Account_Profile__c  pap1 { get; set; } //just for data binding of the region/country fields
@@ -22,9 +22,9 @@ global with sharing class MarketingFundsController
         String requestId = apexPages.currentPage().getParameters().get('id');
         accountAttachment = new Attachment();
         eventAgendaAttachment = new Attachment();
-        invoice = new Attachment();
-        proof = new Attachment();
-        attendance = new Attachment();
+        invoice = new ContentDocumentLink();
+        proofs = new List<ContentDocumentLink>();
+        attendance = new ContentDocumentLink();
         request = new MDF_Request__c();
         EventMaterials = getEventMaterials();
         pap1 = new Partner_Account_Profile__c();
@@ -53,6 +53,10 @@ global with sharing class MarketingFundsController
             {
                 getAttcahment(requestId);
                 userProfile = 'otherUser';
+            }
+            if(request.Activity_Complete__c == true)
+            {
+                getFile(request.Id);
             }
         }
         if(String.isNotBlank(request.Id) && String.isNotBlank(request.Event_Materials_Requested__c))
@@ -121,6 +125,7 @@ global with sharing class MarketingFundsController
         }
         return null;
     }
+    /*
     public PageReference saveApprovedMDF()
     {
         SavePoint sp = Database.setSavepoint();
@@ -144,7 +149,7 @@ global with sharing class MarketingFundsController
         }
         return null;
     }
-    
+    */
     public Boolean validateFileds()
     {
         Boolean isPassed = true;
@@ -344,6 +349,29 @@ global with sharing class MarketingFundsController
         }
     }
     
+    public void getFile (String requestId)
+    {
+        List<ContentDocumentLink> cdLinks = [Select Id, ContentDocumentId, ContentDocument.Description, ContentDocument.Title, ContentDocument.LatestPublishedVersionId  from COntentDocumentLink where LinkedEntityId =: requestId];
+        if(!cdLinks.isEmpty())
+        {
+			for(ContentDocumentLink cdLink : cdLinks)
+            {
+                if(cdLink.ContentDocument.Description == 'invoice')
+                {
+                    invoice = cdLink;
+                }
+                else if (cdLink.ContentDocument.Description == 'proof')
+                {
+                    proofs.add(cdLink);
+                }
+                else if(cdLink.ContentDocument.Description == 'attendance')
+                {
+                    attendance = cdLink;
+                }
+            }
+        }
+    }
+    /*
     public void uploadFiles()
     {
         invoice.ParentId = request.Id;
@@ -379,8 +407,8 @@ global with sharing class MarketingFundsController
         proof = new Attachment(Id=proof.Id, Name=proof.Name);
         attendance = new Attachment(Id=attendance.Id, Name=attendance.Name);
     }
-
-    global class MDF
+	*/
+	global class MDF
     {
         public String Total_Attendees { get; set; }
         public String Event_Results_Opportunities { get; set;}

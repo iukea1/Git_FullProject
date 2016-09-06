@@ -637,7 +637,7 @@
                         </label>
                     </li>
                 </apex:outputPanel>
-                <li>Required Documentation: please upload the following required documents to process payment(Each file size does not exceed 4.2MB):</li>
+                <li>Required Documentation: please upload the following required documents to process payment(Each file size does not exceed 4.3MB):</li>
                 <li class="indent">
                     <label>
                         Invoice (billed to Silver Peak) <span class = "redMark">*</span>
@@ -707,27 +707,6 @@
                                 <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
                             </label>
                         </li>
-                        <li>
-                            Required documentation
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Invoice
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, invoice.Id)}" target="_blank" rendered="{!NOT(IsBlank(invoice.Id))}">{!invoice.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Proof of Performance
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, proof.Id)}" target="_blank" rendered="{!NOT(IsBlank(proof.Id))}">{!proof.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Attendance Lists
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, attendance.Id)}" target="_blank" rendered="{!NOT(IsBlank(attendance.Id))}">{!attendance.name}</apex:outputLink> 
-                        </li>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
                         <li class="sectionTitle">Partner Training Results</li>
@@ -770,25 +749,31 @@
                         <li>
                             Required documentation
                         </li>
-                        <li class="indent">
-                            <label>
-                                Invoice
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, invoice.Id)}" target="_blank" rendered="{!NOT(IsBlank(invoice.Id))}">{!invoice.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Proof of Performance
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, proof.Id)}" target="_blank" rendered="{!NOT(IsBlank(proof.Id))}">{!proof.name}</apex:outputLink> 
-                        </li>
-                        <li class="indent">
-                            <label>
-                                Attendance Lists
-                            </label>
-                            <apex:outputLink value="{!URLFOR($Action.Attachment.Download, attendance.Id)}" target="_blank" rendered="{!NOT(IsBlank(attendance.Id))}">{!attendance.name}</apex:outputLink> 
-                        </li>
                     </apex:outputPanel>
+                    <li>
+                        Required documentation
+                    </li>
+                    <li class="indent">
+                        <label>
+                            Invoice
+                        </label>
+                        <br/>
+                        <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!invoice.ContentDocument.LatestPublishedVersionId}" target="_document" rendered="{!NOT(IsBlank(invoice.Id))}">{!invoice.ContentDocument.Title}</apex:outputLink>
+                    </li>
+                    <li class="indent">
+                        <label>
+                            Proof of Performance
+                        </label>
+                        <apex:repeat value="{!proofs}" var="proof" rendered="{!proofs.size > 0}">
+                            <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!proof.ContentDocument.LatestPublishedVersionId}" target="_document" rendered="{!NOT(IsBlank(proof.Id))}">{!proof.ContentDocument.Title}<br/></apex:outputLink>
+                        </apex:repeat>
+                    </li>
+                    <li class="indent">
+                        <label>
+                            Attendance Lists
+                        </label>
+                        <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!attendance.ContentDocument.LatestPublishedVersionId}" target="_document" rendered="{!NOT(IsBlank(attendance.Id))}">{!attendance.ContentDocument.Title}</apex:outputLink> 
+                    </li>
                     <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
@@ -1243,18 +1228,19 @@
                     console.log(event);
                 }else if(event.status){
                 	if(result.substring(0,3) == '068'){
-                        concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
                         if(concreteFile.done == true){
                         	//TODO update the progress of file uploading...
 							if(concreteFile.index == maxFile){
+								showProgress(100);
                                 top.location.reload();
                             }
                         }else{
                         	concreteFile.position += chunkSize;
                             //TODO update the progress of file uploading...
                             uploadOneFile(result, concreteFile);
+                            concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
                             if(concreteFile.index == maxFile){
-                            	console.log(concreteFile.progress);
+                                console.log(concreteFile.progress);
                                 showProgress(concreteFile.progress);
                             }
                         }

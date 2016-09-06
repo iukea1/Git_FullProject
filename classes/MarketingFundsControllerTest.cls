@@ -15,7 +15,7 @@ public class MarketingFundsControllerTest {
             mfc1.pap1.State__c = 'California';
             mfc1.eventDetails = 'test;test;';
             mfc1.saveMDF();
-            mfc1.saveApprovedMDF();
+            //mfc1.saveApprovedMDF();
             
             MDF_Request__c mdf = new MDF_Request__c(Type_of_Program__c ='Awareness', Event_Materials_Requested__c = 'test\r\nmessage',
                                                     Silver_Peak_Speaking_Opportunity__c = 'Yes');
@@ -25,12 +25,6 @@ public class MarketingFundsControllerTest {
             atts.add(accountAttachment);
             Attachment eventAgendaAttachment = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'Event Agenda',ParentId = mdf.Id);
             atts.add(eventAgendaAttachment);
-            Attachment invoice = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'invoice', ParentId = mdf.Id);
-            atts.add(invoice);
-            Attachment proof = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'proof', ParentId = mdf.Id);
-            atts.add(proof);
-           	Attachment attendance = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'attendance', ParentId = mdf.Id);
-            atts.add(attendance);
             insert atts;
             Blob cryptoData = Crypto.encryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), Blob.valueOf(mdf.Id + '|' + Date.today().format()));
             String url = EncodingUtil.base64Encode(cryptoData);
@@ -39,7 +33,7 @@ public class MarketingFundsControllerTest {
             mfc.pap1.Country__c = '';
             mfc.pap1.State__c = '';
             mfc.saveMDF();
-            mfc.saveApprovedMDF();
+            //mfc.saveApprovedMDF();
             
             MarketingFundsController mfc2 = new MarketingFundsController();
             mfc2.accountAttachment.Body = Blob.valueOf('Test Data');
@@ -48,6 +42,10 @@ public class MarketingFundsControllerTest {
             mfc2.pap1.Country__c = 'USA';
             mfc2.pap1.State__c = 'California';
             system.assertEquals(true, mfc2.validateFileds());
+            mfc2.request = new MDF_Request__c(Type_of_Program__c ='Enablement');
+            mfc2.pap1.Country__c = '';
+            mfc2.pap1.State__c = '';
+            system.assertEquals(false, mfc2.validateFileds());
             try
             {
                 mfc2.saveMDF();
@@ -56,7 +54,7 @@ public class MarketingFundsControllerTest {
             {
                 ex.getMessage();
             }
-            mfc2.saveApprovedMDF();
+            //mfc2.saveApprovedMDF();
         }
     }
     
@@ -68,7 +66,7 @@ public class MarketingFundsControllerTest {
         mfc1.pap1.State__c = 'California';
         mfc1.eventDetails = 'test;test;';
         mfc1.saveMDF();
-        mfc1.saveApprovedMDF();
+        //mfc1.saveApprovedMDF();
 
         MDF_Request__c mdf = new MDF_Request__c(Type_of_Program__c ='Awareness', Event_Materials_Requested__c = 'test\r\nmessage',
                                                 Silver_Peak_Speaking_Opportunity__c = 'Yes');
@@ -77,14 +75,8 @@ public class MarketingFundsControllerTest {
         MarketingFundsController mfc = new MarketingFundsController();
         mfc.pap1.Country__c = '';
         mfc.pap1.State__c = '';
-        mfc.invoice.Body = Blob.valueOf('Test Data');
-        mfc.invoice.Name = 'test';
-        mfc.proof.Body = Blob.valueOf('Test Data');
-        mfc.proof.Name = 'Test';
-        mfc.attendance.Body = Blob.valueOf('Test Data');
-        mfc.attendance.Name = 'Test';
         mfc.saveMDF();
-        mfc.saveApprovedMDF();
+        //mfc.saveApprovedMDF();
 
         MarketingFundsController mfc2 = new MarketingFundsController();
         mfc2.accountAttachment.Body = Blob.valueOf('Test Data');
@@ -102,7 +94,89 @@ public class MarketingFundsControllerTest {
         catch(Exception ex)
         {
         }
-        mfc2.saveApprovedMDF();  
+        /*
+        public String Total_Attendees { get; set; }
+        public String Event_Results_Opportunities { get; set;}
+        public String Total_Qualified_Leads { get; set; }
+        public String Estimated_Pipeline_Value { get; set; }
+        public String Result_Detail { get; set; }
+        public String Requested_Reimbursement_Amount { get; set; }
+        public String Topic_Course { get; set; }
+        public String Number_of_Certifications { get; set; }
+        public Integer invoice { get; set; }
+        public Integer proof { get; set; }
+        public Integer attendance { get; set; }
+        global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription)
+        {
+            if(String.isNotBlank(fileBody))
+            {
+                ContentVersion cv = getDocument(fileId);
+                String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
+                newBody += fileBody;
+                cv.VersionData = EncodingUtil.base64Decode(newBody);
+                cv.Title = fileName;
+                try
+                {
+                    Boolean existedLink = false;
+                    if(String.isBlank(cv.Id))
+                    {
+                        cv.PathOnClient = fileName;
+                        cv.IsMajorVersion = false;
+                        cv.Description = fileDescription;
+                        existedLink = true;
+                    }
+                    upsert cv;
+                    ContentVersion newCv = [Select Id, ContentDocumentId from ContentVersion where Id =: cv.Id];
+                    if(existedLink == true)
+                    {
+                        ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
+                        insert cdl;
+        
+		*/
+		MarketingFundsController.MDF newMDF = new MarketingFundsController.MDF();
+        newMDF.Total_Attendees = '10';
+        newMDF.Event_Results_Opportunities = '20';
+        newMDf.Total_Qualified_Leads = '30';
+        newMDF.Estimated_Pipeline_Value = '40';
+        newMDF.Result_Detail = '50';
+        newMDF.Requested_Reimbursement_Amount = '60';
+        newMDF.Topic_Course = '70';
+        newMDF.Number_of_Certifications = '80';
+        newMDF.invoice = 1;
+        newMDF.proof = 2;
+        newMDF.attendance = 3;
+        
+        //add 3 contentVersions sample 
+		ContentVersion invoiceCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'invoice', VersionData = Blob.valueOf('Test Data'));
+        insert invoiceCv;
+		invoiceCv = [Select Id, ContentDocumentId from ContentVersion where Id =: invoiceCv.Id];
+        ContentDocumentLink invoiceLdl = new ContentDocumentLink(ContentDocumentId = invoiceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        insert invoiceLdl;
+        ContentVersion proofCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'proof', VersionData = Blob.valueOf('Test Data'));
+        insert proofCv;
+		proofCv = [Select Id, ContentDocumentId from ContentVersion where Id =: proofCv.Id];
+        ContentDocumentLink proofLdl = new ContentDocumentLink(ContentDocumentId = proofCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        insert proofLdl;
+        ContentVersion attendanceCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'attendance', VersionData = Blob.valueOf('Test Data'));
+        insert attendanceCv;
+		attendanceCv = [Select Id, ContentDocumentId from ContentVersion where Id =: attendanceCv.Id];
+        ContentDocumentLink attendanceLdl = new ContentDocumentLink(ContentDocumentId = attendanceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        insert attendanceLdl;
+		mfc2.getFile(mdf.Id);
+        MarketingFundsController.updateMDF(newMDF,'');
+        MarketingFundsController.updateMDF(newMDF, mdf.Id);
+		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice');
+        MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice');
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice');
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice');
+        MDF_Request__c eMdf = new MDF_Request__c(Type_of_Program__c ='Enablement', Event_Materials_Requested__c = 'test\r\nmessage',
+                                                Silver_Peak_Speaking_Opportunity__c = 'Yes');
+        insert eMdf;
+        MarketingFundsController.updateMDF(newMDF, eMdf.Id);
+        newMDF.Total_Attendees='';
+        newMDF.Requested_Reimbursement_Amount = 'Error Data';
+        mfc2.getFile(eMdf.Id);
+        MarketingFundsController.updateMDF(newMDF, eMdf.Id);
     }
     
     @isTest
