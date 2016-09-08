@@ -94,45 +94,7 @@ public class MarketingFundsControllerTest {
         catch(Exception ex)
         {
         }
-        /*
-        public String Total_Attendees { get; set; }
-        public String Event_Results_Opportunities { get; set;}
-        public String Total_Qualified_Leads { get; set; }
-        public String Estimated_Pipeline_Value { get; set; }
-        public String Result_Detail { get; set; }
-        public String Requested_Reimbursement_Amount { get; set; }
-        public String Topic_Course { get; set; }
-        public String Number_of_Certifications { get; set; }
-        public Integer invoice { get; set; }
-        public Integer proof { get; set; }
-        public Integer attendance { get; set; }
-        global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription)
-        {
-            if(String.isNotBlank(fileBody))
-            {
-                ContentVersion cv = getDocument(fileId);
-                String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
-                newBody += fileBody;
-                cv.VersionData = EncodingUtil.base64Decode(newBody);
-                cv.Title = fileName;
-                try
-                {
-                    Boolean existedLink = false;
-                    if(String.isBlank(cv.Id))
-                    {
-                        cv.PathOnClient = fileName;
-                        cv.IsMajorVersion = false;
-                        cv.Description = fileDescription;
-                        existedLink = true;
-                    }
-                    upsert cv;
-                    ContentVersion newCv = [Select Id, ContentDocumentId from ContentVersion where Id =: cv.Id];
-                    if(existedLink == true)
-                    {
-                        ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
-                        insert cdl;
         
-		*/
 		MarketingFundsController.MDF newMDF = new MarketingFundsController.MDF();
         newMDF.Total_Attendees = '10';
         newMDF.Event_Results_Opportunities = '20';
@@ -165,10 +127,10 @@ public class MarketingFundsControllerTest {
 		mfc2.getFile(mdf.Id);
         MarketingFundsController.updateMDF(newMDF,'');
         MarketingFundsController.updateMDF(newMDF, mdf.Id);
-		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice');
-        MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice');
-        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice');
-        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice');
+		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice', 'maxFilecompleted');
+        MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', 'maxFilecompleted');
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice', 'maxFilecompleted');
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', 'maxFilecompleted');
         MDF_Request__c eMdf = new MDF_Request__c(Type_of_Program__c ='Enablement', Event_Materials_Requested__c = 'test\r\nmessage',
                                                 Silver_Peak_Speaking_Opportunity__c = 'Yes');
         insert eMdf;

@@ -1,7 +1,7 @@
 @IsTest
 public class TestPORenewalAssetsController {
     
-    @IsTest
+    @IsTest(SeeAllData=true)
     public static void TestPoRenewalAssets_EdgeConnect()
     {
         
@@ -73,7 +73,7 @@ public class TestPORenewalAssetsController {
         
         
     }
-    @IsTest
+    @IsTest(SeeAllData=true)
     public static void TestPoRenewalAssets_EdgeConnect_Orch()
     {
         Account testAccount = new Account(Name='acme');
@@ -143,7 +143,7 @@ public class TestPORenewalAssetsController {
         System.debug('testProduct'+ testProduct );
         System.assertNotEquals(Date.today().addyears(3),asset[0].License_End_Date__c);
     }
-    @IsTest
+    @IsTest(SeeAllData=true)
     public static void TestPoRenewalAssets_WanOp()
     {
         

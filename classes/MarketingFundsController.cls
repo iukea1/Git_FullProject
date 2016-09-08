@@ -371,43 +371,7 @@ global with sharing class MarketingFundsController
             }
         }
     }
-    /*
-    public void uploadFiles()
-    {
-        invoice.ParentId = request.Id;
-        invoice.Description = 'invoice';
-        proof.ParentId = request.Id;
-        proof.Description = 'proof';
-        attendance.ParentId = request.Id;
-        attendance.Description = 'attendance';
-        Boolean validation = true;
-        if(invoice.Body == null)
-        {
-            invoice.name.addError('invoice cannot be blank');
-            validation = false;
-        }
-        if(proof.Body == null)
-        {
-            invoice.name.addError('proof cannot be blank');
-            validation = false;
-        }
-        if(attendance.Body == null)
-        {
-            invoice.name.addError('attendance cannot be blank');
-            validation = false;
-        }
-        if(!validation)
-        {
-            return;
-        }
-        upsert invoice;
-        upsert proof;
-        upsert attendance;
-        invoice = new Attachment(Id=invoice.Id, Name=invoice.Name);
-        proof = new Attachment(Id=proof.Id, Name=proof.Name);
-        attendance = new Attachment(Id=attendance.Id, Name=attendance.Name);
-    }
-	*/
+    
 	global class MDF
     {
         public String Total_Attendees { get; set; }
@@ -423,11 +387,10 @@ global with sharing class MarketingFundsController
         public Integer attendance { get; set; }
     }
     
-    static SavePoint sp;
     @RemoteAction
     global static String updateMDF(MDF mdf,String requestId)
     {
-        sp = Database.setSavepoint();
+        SavePoint sp = Database.setSavepoint();
         if(String.isNotBlank(requestId))
         {
             MDF_Request__c req = [Select Id,Type_of_Program__c from MDF_Request__c where Id =: requestId];
@@ -474,16 +437,15 @@ global with sharing class MarketingFundsController
         request.Total_Attendees__c = Decimal.valueOf(mdf.Total_Attendees);
         request.Result_Detail__c = mdf.Result_Detail;
         request.Requested_Reimbursement_Amount__c = Decimal.valueOf(mdf.Requested_Reimbursement_Amount);
-		request.Activity_Complete__c = true;
-		request.Feedback_Complete__c = true;
         return request;
     }
     
     @RemoteAction
-    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription)
+    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription, String fileCompleted)
     {
         if(String.isNotBlank(fileBody))
         {
+            SavePoint sp = Database.setSavepoint();
             ContentVersion cv = getDocument(fileId);
             String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
             newBody += fileBody;
@@ -506,17 +468,23 @@ global with sharing class MarketingFundsController
                     ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
                     insert cdl;
                 }
+				if(fileCompleted == 'maxFilecompleted')
+                {
+                    MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: requestId];
+					mdf.Activity_Complete__c = true;
+                    mdf.Feedback_Complete__c = true;
+					update mdf;
+                }
                 return cv.Id;
             }
             catch(Exception ex)
             {   
                 Database.rollback(sp);
-                return 'Exception';
+                return 'Exception ' + ex.getMessage();
             }
         }
         else 
         {
-            Database.rollback(sp);
             return 'File body was null';
         }
     }

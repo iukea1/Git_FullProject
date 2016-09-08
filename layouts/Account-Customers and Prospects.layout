@@ -161,6 +161,10 @@
                 <behavior>Edit</behavior>
                 <field>Active_Asset_Count__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsCap__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

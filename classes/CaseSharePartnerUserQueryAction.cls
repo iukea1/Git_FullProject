@@ -14,10 +14,12 @@ public class CaseSharePartnerUserQueryAction {
                 string partnerAcctName= item.Contact.Account.Name;
                 if(partnerAcctName!='')
                 {
-                    partnerAcctName=partnerAcctName.replaceAll( '-', '');
+                    partnerAcctName=partnerAcctName.replaceAll( '-', ' ');
                     partnerAcctName= partnerAcctName.replaceAll( '\\s+', '');
                     string portalRoleName= partnerAcctName+'PartnerManager';
+                    
                     portalRoleName=portalRoleName+'%';
+                    System.debug('partnerAcctName'+partnerAcctName);
                     System.debug('portalRoleName'+portalRoleName);
                     List<Group> lstGroup=[Select Id from Group where DeveloperName like:portalRoleName and Type='Role'];
                     System.debug('lstGroup'+lstGroup);
@@ -28,7 +30,7 @@ public class CaseSharePartnerUserQueryAction {
                 }
             }
             //Delete the previous manager role 
-           	List<CaseShare> delcaseShare= new List<CaseShare>();
+            List<CaseShare> delcaseShare= new List<CaseShare>();
             delcaseShare=[Select Id from CaseShare where caseId in: caseIds and RowCause='Manual' and UserOrGroupId in(Select Id from Group where DeveloperName like '%PartnerManager' and Type='Role')];
             if(delCaseShare.size()>0)
             {

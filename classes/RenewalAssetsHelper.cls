@@ -15,26 +15,54 @@ public  class RenewalAssetsHelper
         }
     }
     
-    
-    public static boolean RenewEdgeConnectLicense(List<Asset> lstAsset)
+public static boolean UpdateAssetStatus(List<Asset> lstAsset,string assetType)
     {
-        
-        List<License__c> lstLicenses= new List<License__c>();
-        List<Asset> lstAssets= new List<Asset>();
+      
+       	List<Asset>lstAssetsToUpdate=new  	List<Asset>();
         if(lstAsset!=null && lstAsset.size()>0)
         {
             for(Asset asset: lstAsset)
             {
-                string prodName= asset.Product2.Name;
-                if(prodName.startsWith('EC-BASE')||prodName.startsWith('EC-PLUS'))
+                if(asset.Status=='Customer Subscription Expired')
                 {
-                    asset.Licenses_Nodes__c= asset.Renewal_Nodes__c;
+                    if(assetType=='1')
+                    {
+                        asset.Status='Customer Subscription';
+                    }
+                    else if(assetType=='2')
+                    {
+                        asset.Status='Customer Subscription Active';
+                    }
+                    lstAssetsToUpdate.add(asset);
                 }
-                if(prodName.startsWith('EC-BOOST'))
+            }
+            try
+            {
+                if(lstAssetsToUpdate.size()>0)
                 {
-                    asset.Bandwidth_Nodes__c= asset.Renewal_Nodes__c;
+                    update lstAssetsToUpdate;
                 }
-                lstAssets.add(asset);
+            }
+            catch(Exception ex)
+            {
+                
+                ApexPages.addMessages(ex);
+                SilverPeakutils.logException(ex);
+                return false;
+            }
+            
+        }
+        
+        return true;
+    }    
+    public static boolean RenewEdgeConnectLicense(List<Asset> lstAsset)
+    {
+      
+        List<License__c> lstLicenses= new List<License__c>();
+        if(lstAsset!=null && lstAsset.size()>0)
+        {
+            for(Asset asset: lstAsset)
+            {
                 List<License__c> lstLicense=  [Select Id,Name,License_Expiration__c, AssetId__c from License__c where AssetId__c =: asset.Id];
                 if(lstLicense!=null && lstLicense.size()>0)
                 {
@@ -55,10 +83,6 @@ public  class RenewalAssetsHelper
                 {
                     update lstLicenses;
                 }
-                 if(lstAssets.size()>0)
-                {
-                    update lstAssets;
-                }
             }
             catch(Exception ex)
             {
@@ -72,15 +96,15 @@ public  class RenewalAssetsHelper
         
         return true;
     }
-    public static boolean ClearRenewalDate(List<Asset> lstAsset)
+     public static boolean ClearRenewalDate(List<Asset> lstAsset)
     {
+      
+       
         if(lstAsset!=null && lstAsset.size()>0)
         {
             for(Asset asset: lstAsset)
             {
-                asset.Renewal_Date__c=null;
-                asset.Renewal_Start_Date__c=null;
-                asset.Renewal_Nodes__c=0;
+               asset.Renewal_Date__c=null;
             }
             try
             {
@@ -100,7 +124,7 @@ public  class RenewalAssetsHelper
         
         return true;
     }
-    
+
     public static boolean CreateNewLicenses(List<Asset> lstAssets)
     {
         
@@ -135,13 +159,13 @@ public  class RenewalAssetsHelper
                         newLicense.Model__c = existingLicense.Model__c;
                         newLicense.License_Expiration__c= asset.Renewal_Date__c;
                         newLicense.SerialNumber__c = existingLicense.SerialNumber__c;
-                        
+                       
                         
                         concretLicenses.add(newLicense);
                     }
                 }
             }
-            
+           
             if(concretLicenses!=null && concretLicenses.size()>0)
             {
                 
@@ -178,7 +202,7 @@ public  class RenewalAssetsHelper
         {
             pocRenewalEmailType='WANOP Virtual Renewal Email_POC';
         }
-        
+     
         if(pocRenewalEmailType!=null)
         {
             List<EmailTemplate> template = [select Id from EmailTemplate where Name=:pocRenewalEmailType limit 1];

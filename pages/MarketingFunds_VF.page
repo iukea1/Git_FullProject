@@ -1117,7 +1117,7 @@
                 var invoice = invoices[i];
             	if(invoice.size >= maxFileSize){
                 	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
-                    var file = $(inputFile)
+                    var file = $(inputFile);
                     file.after(file.clone().val(""));
                     file.remove(); 
                     return;
@@ -1131,9 +1131,7 @@
                     }
                 }
             }
-        }
-        console.log("files length: " + files.length);
-        console.log("Max file: " + maxFile);         
+        }        
     }
 
     function updateMDF(){
@@ -1142,15 +1140,12 @@
              "Result_Detail" : $("#result").val(), "Requested_Reimbursement_Amount" : $("#amount").val(), "Topic_Course" : $("#topic").val(), "Number_of_Certifications" : $("#certifications").val(), 'invoice' : $("#invoice")[0].files.length, 'proof' : $("#proof")[0].files.length, 'attendance' : $("#attendance")[0].files.length},"{!request.Id}",
             function(result, event){
                 if(event.type === 'exception'){
-                    console.log("exception");
 					showReminder(event);
                     return;
                 }else if(event.status){
                     if(result.substring(0,3) == 'a38'){
                     	uploadFiles();
-                        console.log("Success:");
                     }else if(result.substring(0,5) == 'Error'){
-                        console.log(result.substring(5));
                         showErrorMsg(result.substring(5));
                     }
                 }
@@ -1188,10 +1183,9 @@
                         var body = window.btoa(this.result);  //Base 64 encode the file before sending it
                         //var positionIndex = 0;
                         var fileSize = body.length;
-                        console.log("Total Attachment Length: " + fileSize);
                         //var doneUploading = false;
                         if(fileSize < maxStringSize) {
-                            uploadOneFile('', {index: index, name: fileName, body: body, position: 0, size: fileSize, progress: 0, done: false, type: type, description: description});
+                            uploadOneFile('', {index: index, name: fileName, body: body, position: 0, size: fileSize, progress: 0, done: "not", type: type, description: description});
                         } else {
                             alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
                         }
@@ -1212,23 +1206,20 @@
     	var fileBody = "";
         if(concreteFile.size <= concreteFile.position + chunkSize){
         	fileBody = concreteFile.body.substring(concreteFile.position);
-            concreteFile.done = true;
+            concreteFile.done = concreteFile.index == maxFile ? 'maxFilecompleted' : 'completed';
             concreteFile.Progress = 100;
         }else{
         	fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
         }
-        console.log("Uploading " + concreteFile.position + " chars of " + concreteFile.size);
-        console.log("Uploading Size : " + fileBody.length );
         MarketingFundsController.uploadFile(
-        	fileBody, concreteFile.name, fileId,"{!request.Id}", concreteFile.description,
+        	fileBody, concreteFile.name, fileId,"{!request.Id}", concreteFile.description, concreteFile.done,
             function(result, event){
-                console.log(result);
                 if(event.type === 'exception'){
-                	console.log("exception");
-                    console.log(event);
+                    showReminder(event);
+                    return;
                 }else if(event.status){
                 	if(result.substring(0,3) == '068'){
-                        if(concreteFile.done == true){
+                        if(concreteFile.done.indexOf("completed") != -1){
                         	//TODO update the progress of file uploading...
 							if(concreteFile.index == maxFile){
 								showProgress(100);
@@ -1240,7 +1231,6 @@
                             uploadOneFile(result, concreteFile);
                             concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
                             if(concreteFile.index == maxFile){
-                                console.log(concreteFile.progress);
                                 showProgress(concreteFile.progress);
                             }
                         }

@@ -197,6 +197,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CapCaseController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseAuditBatchJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1698,6 +1702,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestCalculateQuarterForOpp</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestCapCaseController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -8255,6 +8263,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>CapWarningMessage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>CaseListOverride</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -8504,10 +8516,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>MarkParticipantsTrained</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MarketingFunds</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

@@ -127,6 +127,10 @@
                 <behavior>Readonly</behavior>
                 <field>PortalUserType__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LMS_User_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
