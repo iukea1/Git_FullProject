@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Test - Data Partner Manager</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>DirectorofIT</parentRole>
+    <parentRole>InsideSalesMgr</parentRole>
 </Role>

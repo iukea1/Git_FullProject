@@ -19,7 +19,8 @@ public class PartnerPortalUserSharing
 
             if(!newGroupMembers.isEmpty())
             {
-                Database.insert(newGroupMembers, false);
+                List<Database.SaveResult> result = Database.insert(newGroupMembers, false);
+                SilverPeakUtils.logDatabaseError(newGroupMembers, result);
             }           
         }
     }
@@ -28,7 +29,9 @@ public class PartnerPortalUserSharing
     {
         if(userIds != null && !userIds.isEmpty())
         {
-            Database.delete([select Id from GroupMember where UserOrGroupId in :userIds], false);
+            List<GroupMember> members = [select Id from GroupMember where UserOrGroupId in :userIds];
+            List<Database.DeleteResult> result = Database.delete(members, false);
+            SilverPeakUtils.logDatabaseError(members, result);
         }
     }
     

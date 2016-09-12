@@ -165,10 +165,16 @@ public with sharing class NewVirtualShipmentController
                 vasset.Asset.Evaluation_End_Date__c= virtualAsset.Asset.Evaluation_End_Date__c;
                 vasset.Asset.ContactId = TempAsset.ContactId;
                 
-                if(currAsset.Product2.Name.contains('EC-BASE')|| currAsset.Product2.Name.contains('EC-PLUS'))
-                {vasset.Asset.Licenses_Nodes__c = (currAsset.Licenses_Nodes__c + virtualAsset.Asset.Licenses_Nodes__c) ;}
+               if(currAsset.Product2.Name.contains('EC-BASE')|| currAsset.Product2.Name.contains('EC-PLUS'))
+                {
+                    vasset.Asset.EC_Old_Node_Count__c=currAsset.Licenses_Nodes__c;
+                    vasset.Asset.Licenses_Nodes__c = (currAsset.Licenses_Nodes__c + virtualAsset.Asset.Licenses_Nodes__c) ;
+                }
                 if(currAsset.Product2.Name.contains('EC-BOOST'))
-                {vasset.Asset.Bandwidth_Nodes__c = (currAsset.Bandwidth_Nodes__c + virtualAsset.Asset.Bandwidth_Nodes__c) ;}
+                {
+                    vasset.Asset.EC_Old_Node_Count__c=currAsset.Bandwidth_Nodes__c;
+                    vasset.Asset.Bandwidth_Nodes__c = (currAsset.Bandwidth_Nodes__c + virtualAsset.Asset.Bandwidth_Nodes__c) ;
+                }
                 updateAssetLines.add(vasset);
                 
             }
