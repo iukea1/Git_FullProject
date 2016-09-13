@@ -160,16 +160,17 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     }
     
     @testvisible
-    private static List<String> parseSubjectValues(String subject)
+    public static List<String> parseSubjectValues(String subject)
     {
-        Pattern subjectPattern = Pattern.compile('AUTOCASE:[\\s]*\\[(.+)\\]:\\[(.+)\\]:\\[(.+)\\]');
+        Pattern subjectPattern = Pattern.compile('AUTOCASE:[\\s]*\\[(.+)\\]:\\[(.+)\\]:\\[(.+)\\]:\\[(.+)\\]');
         Matcher subjectMatcher = subjectPattern.matcher(subject);
-        if(subjectMatcher.matches() && subjectMatcher.groupCount() == 3)
+        if(subjectMatcher.matches())
         {
             String asset = subjectMatcher.group(1);
             String email = subjectMatcher.group(2);
             String priority = subjectMatcher.group(3);
-            return new List<String> { asset, email, priority };
+            String gmsFlag = subjectMatcher.group(4);
+            return new List<String> { asset, email, priority,gmsFlag };
         }
         else
         {
