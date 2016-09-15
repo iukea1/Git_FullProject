@@ -56,7 +56,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Account_Reseller_Agreement__c</field>
+                <field>Account_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -95,6 +95,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reseller_Agreement_Acknowledged__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Account_Reseller_Agreement__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

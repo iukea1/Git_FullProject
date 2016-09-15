@@ -1714,6 +1714,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestCaseShareWithPartnerManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestCheckECSPEnabledonEnterAcc</apexClass>
         <enabled>true</enabled>
     </classAccesses>
