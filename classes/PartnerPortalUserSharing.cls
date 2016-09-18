@@ -3,6 +3,12 @@
  */
 public class PartnerPortalUserSharing
 {
+    @future
+    public static void willSharePortalUser(List<id> userIds)
+    {
+        sharePortalUser(userIds);
+    }
+    
     public static void sharePortalUser(List<Id> userIds)
     {
         Map<String, Id> groupsMap = getPublicGroups();
@@ -25,6 +31,12 @@ public class PartnerPortalUserSharing
         }
     }
     
+    @future
+    public static void willRemoveSharingPortalUser(List<Id> userIds)
+    {
+        removeSharingPortalUser(userIds);
+    }
+
     public static void removeSharingPortalUser(List<Id> userIds)
     {
         if(userIds != null && !userIds.isEmpty())

@@ -8233,6 +8233,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>FundingRequestManagement</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>GenerateGmsLicense</apexPage>
         <enabled>false</enabled>
     </pageAccesses>

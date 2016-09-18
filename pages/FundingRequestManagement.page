@@ -1,0 +1,2 @@
+<apex:page showHeader="false" standardController="MDF_Request__c">
+</apex:page>
