@@ -52,18 +52,24 @@
         <apex:form >
             <apex:pageMessages id="pageMsg" escape="false" />
             <apex:pageBlock >
-                <apex:pageBlockSection columns="1">
+                <apex:pageBlockSection columns="1" id="mainSection">
                     <table width="100%">
                         <tr>
                             <td>
                                 <apex:selectList id="assetType" style="width:20%" label="Asset Type" value="{!AssetTypeSelection}" required="false" size="1">
                                     <apex:selectOption itemvalue="1" itemLabel="Wan Op"/>
                                     <apex:selectOption itemvalue="2" itemLabel="Edge Connect"/>
-                                    <apex:actionSupport event="onchange" action="{!ResetFilter}" reRender="listSection" />
+                                    <apex:actionSupport event="onchange" action="{!ResetFilter}" reRender="listSection,mainSection" />
                                 </apex:selectList>
                             </td>
                             <td>
                                <apex:inputField label="Customer Contact" value="{!CustomerContact.Email_Contact__c}"/>
+                            </td>
+                              <td>
+                                <apex:inputField label="Renewal Start Date" value="{!RenewalAsset.Renewal_Start_Date__c}" rendered="{!AssetTypeSelection=='2'}"/>
+                            </td>
+                             <td>
+                                <apex:inputField label="Renewal End Date" value="{!RenewalAsset.Renewal_Date__c}" rendered="{!AssetTypeSelection=='2'}"/>
                             </td>
                         </tr>
                     </table>
@@ -81,12 +87,22 @@
                         <apex:column headerValue="Ship Date" value="{!item.Ship_Date__c}"></apex:column>
                         <apex:column headerValue="Status" value="{!item.Status}"></apex:column>
                         <apex:column headerValue="License Expiration" value="{!item.License_Expiration__c}"></apex:column>
-                        <apex:column id="LicenseDateCol">
+                        <apex:column id="LicenseDateCol" rendered="{!AssetTypeSelection=='1'}">
                             <apex:facet name="header">
                                 Renewal Date <img src="/s.gif" alt="Expand" class="moreArrow" title="Expand" onclick="showDatePopup()" style="cursor:pointer"/>
                             </apex:facet>
                             <apex:inputField value="{!item.Renewal_Date__c}" />
                         </apex:column>          
+                              <apex:column headerValue="License"  rendered="{!AssetTypeSelection=='2'}" >
+                            <apex:outputText value="{!item.Licenses_Nodes__c}" />
+                        </apex:column> 
+                          <apex:column headerValue="Bandwidth"  rendered="{!AssetTypeSelection=='2'}" >
+                            <apex:outputText value="{!item.Bandwidth_Nodes__c}" />
+                        </apex:column> 
+                          <apex:column headerValue="Updated Nodes"  rendered="{!AssetTypeSelection=='2'}" >
+                            <apex:inputField value="{!item.Renewal_Nodes__c}" rendered="{!IF(CONTAINS(item.Product2.Name,'EC-BOOST')||CONTAINS(item.Product2.Name,'EC-BASE')||CONTAINS(item.Product2.Name,'EC-PLUS'),true,false)}" />
+                            <apex:outputText value="{!item.Renewal_Nodes__c}" rendered="{!IF(CONTAINS(item.Product2.Name,'EC-BOOST')||CONTAINS(item.Product2.Name,'EC-BASE')||CONTAINS(item.Product2.Name,'EC-PLUS'),false,true)}" />
+                        </apex:column>  
                     </apex:pageBlockTable>
                 </apex:pageBlockSection>
                 <apex:pageBlockButtons location="Top">

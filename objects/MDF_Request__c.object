@@ -783,6 +783,16 @@ INCLUDES(Owner:User.Contact.Account.GEO_Supported__c, &quot;APAC&quot;),
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IsCAM__c</fullName>
+        <externalId>false</externalId>
+        <formula>CSM__c == $User.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IsCAM</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Portal_Request__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1896,6 +1906,23 @@ BR() &amp;
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_own_funding_requests</fullName>
+        <columns>NAME</columns>
+        <columns>Type_of_Program__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Purchasing_Request__c</columns>
+        <columns>Approval_Status__c</columns>
+        <columns>MDF_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IsCAM__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My own funding requests</label>
     </listViews>
     <listViews>
         <fullName>Pending_MDF_Requests_In_Progress</fullName>

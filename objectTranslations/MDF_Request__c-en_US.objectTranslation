@@ -311,6 +311,10 @@
         <name>Invoice_No__c</name>
     </fields>
     <fields>
+        <label><!-- IsCAM --></label>
+        <name>IsCAM__c</name>
+    </fields>
+    <fields>
         <label><!-- Is Portal Request --></label>
         <name>Is_Portal_Request__c</name>
     </fields>

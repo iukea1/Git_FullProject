@@ -1814,6 +1814,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestPORenewECAssetsBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestPORenewalAssetsController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3409,6 +3413,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Invoice_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MDF_Request__c.IsCAM__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

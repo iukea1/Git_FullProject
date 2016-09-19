@@ -1814,6 +1814,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestPORenewECAssetsBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestPORenewalAssetsController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3410,6 +3414,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Invoice_No__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MDF_Request__c.IsCAM__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9310,6 +9319,7 @@
     </pageAccesses>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>MDF_Request__c.Approved_MDF</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -9411,7 +9421,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MDF_Request__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>NX_To_VX</tab>
