@@ -128,11 +128,11 @@
         <label>Extension Justification</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Requested_End_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Extension_Justification__c</field>
             </layoutItems>
             <layoutItems>

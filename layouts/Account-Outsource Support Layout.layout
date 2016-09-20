@@ -47,6 +47,10 @@
                 <behavior>Edit</behavior>
                 <field>First_Asset_Quarter__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reseller_Agreement_Acknowledged__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

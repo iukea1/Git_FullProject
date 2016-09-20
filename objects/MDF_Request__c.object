@@ -1922,7 +1922,7 @@ BR() &amp;
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>My own funding requests</label>
+        <label>CAM Funding Requests</label>
     </listViews>
     <listViews>
         <fullName>Pending_MDF_Requests_In_Progress</fullName>

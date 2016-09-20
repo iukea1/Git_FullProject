@@ -256,6 +256,10 @@
                 <behavior>Edit</behavior>
                 <field>Own_brand_of_professional_services__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reseller_Agreement_Acknowledged__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
