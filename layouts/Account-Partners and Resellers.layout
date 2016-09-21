@@ -431,7 +431,6 @@
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <fields>Registering_Partner_Sales_Rep__c</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>Channel_Manager__c</fields>
         <fields>Deal_Reg__c</fields>
         <relatedList>Opportunity.Registering_Partner__c</relatedList>
     </relatedLists>
