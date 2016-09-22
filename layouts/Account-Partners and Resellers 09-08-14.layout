@@ -51,6 +51,10 @@
                 <behavior>Edit</behavior>
                 <field>Reseller_Agreement_Acknowledged__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Opp_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
