@@ -71,6 +71,10 @@
                 <behavior>Edit</behavior>
                 <field>Customer__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Asset_For_POC_Extended__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
