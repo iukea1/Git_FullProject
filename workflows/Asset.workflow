@@ -715,18 +715,8 @@ right(Id,4))</formula>
             <name>CPSyncStatus</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
-        <formula>AND ( 
-OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ), 
-NOT(Product2.Name == &quot;EC-ORCH&quot;), 
-OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ), 
-ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;), 
-ISBLANK(SBQQ__QuoteLine__c),
-OR(ISNew(), ISCHANGED(License_End_Date__c), 
-ISCHANGED(Bandwidth_Nodes__c), 
-ISCHANGED(Licenses_Nodes__c), 
-ISCHANGED(Status) ) 
-)</formula>
+        <active>false</active>
+        <formula>AND ( OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ), NOT(Product2.Name == &quot;EC-ORCH&quot;), OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ), ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;), OR(ISNew(), ISCHANGED(License_End_Date__c), ISCHANGED(Bandwidth_Nodes__c), ISCHANGED(Licenses_Nodes__c), ISCHANGED(Status) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

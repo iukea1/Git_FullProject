@@ -20,6 +20,7 @@ public without sharing class ConvertRmaToCmaController
 
     public Asset NxAsset { get; set; }
     public String VxModel { get; set; }
+    public String VxModelDisplayName { get; set; }
     public Boolean IsConverted { get; set; }
     public String CmaId { get; set; }
 
@@ -54,7 +55,12 @@ public without sharing class ConvertRmaToCmaController
         if(NxAsset != null && String.IsNotEmpty(NxAsset.Model__c))
         {
             VxModel = nxToVXMap.get(NxAsset.Model__c);
+            VxModelDisplayName = nxToVXMap.get(NxAsset.Model__c);
             gmsNodes=nxAsset.GMS_Nodes__c;
+            if(!string.isEmpty(gmsNodes))
+            {
+                VxModelDisplayName= String.format('{0}({1})', new String[]{VxModelDisplayName,gmsNodes});
+            }
             List<Product2> products = [select Id from Product2 where Name = :VxModel];
             if(products.size() > 0)
             {
@@ -165,11 +171,15 @@ public without sharing class ConvertRmaToCmaController
                 licenseAsModel = String.isEmpty(products[0].LicenseAsModel__c) ? products[0].Model__c : products[0].LicenseAsModel__c;
             }
         }
+        if(!string.isBlank(gmsNodes))
+        {
+            license.Quantity__c=decimal.valueOf(gmsNodes);
+        }
         license.Model__c = licenseAsModel;
         license.SerialNumber__c = asset.Name;
         license.License_Expiration__c = null;
         insert license;
-        //VirtualAssetManager.encryptLicenses(new List<String> { license.Id });
+        VirtualAssetManager.encryptLicenses(new List<String> { license.Id });
     }
 
     // NX Recycle Criteria
