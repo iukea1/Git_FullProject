@@ -178,6 +178,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AutomatePOCRenewalExtensions</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AutomatePOCShipmentHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1695,6 +1699,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestAssignSBPermissionSet</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAutomatePOCRenewalExtensions</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
