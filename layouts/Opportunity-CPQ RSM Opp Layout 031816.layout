@@ -74,6 +74,10 @@
                 <behavior>Edit</behavior>
                 <field>Reseller_Account_Manager__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>WANstart_count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -131,6 +135,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Channel_Manager__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WANstartCaseCreated__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

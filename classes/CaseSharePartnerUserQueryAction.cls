@@ -2,7 +2,7 @@ public class CaseSharePartnerUserQueryAction {
     @InvocableMethod
     public static void ShareCaseWithPartnerManager(List<Id> caseIds)
     {
-        System.debug('Case Ids');
+        System.debug('Case Ids'+caseIds);
         Map<Id,Id>setUserIds= new Map<Id,Id>();
         List<CaseShare> caseShares = new List<CaseShare>();
         if(caseIds!=null && caseIds.size()>0)
