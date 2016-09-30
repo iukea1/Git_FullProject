@@ -1850,6 +1850,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestReSyncDeletedAssetsInCP</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestSendEmailToOppOwner</apexClass>
         <enabled>false</enabled>
     </classAccesses>
