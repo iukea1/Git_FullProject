@@ -2,7 +2,7 @@ public class CaseSharePartnerUserQueryAction {
     @InvocableMethod
     public static void ShareCaseWithPartnerManager(List<Id> caseIds)
     {
-        System.debug('Case Ids'+caseIds);
+        System.debug('Case Ids');
         Map<Id,Id>setUserIds= new Map<Id,Id>();
         List<CaseShare> caseShares = new List<CaseShare>();
         if(caseIds!=null && caseIds.size()>0)
@@ -16,14 +16,14 @@ public class CaseSharePartnerUserQueryAction {
                     string partnerAcctName= item.Contact.Account.Name;
                     if(partnerAcctName!='')
                     {
-                        partnerAcctName=partnerAcctName.replaceAll( '-', ' ');
-                        partnerAcctName= partnerAcctName.replaceAll( '\\s+', '');
-                        string portalRoleName= partnerAcctName+'PartnerManager';
+                        //partnerAcctName=partnerAcctName.replaceAll( '-', ' ');
+                        //partnerAcctName= partnerAcctName.replaceAll( '\\s+', '');
+                        string portalRoleName= partnerAcctName+' Partner Manager';
                         
-                        portalRoleName=portalRoleName+'%';
-                        System.debug('partnerAcctName'+partnerAcctName);
+                        //portalRoleName=portalRoleName+'%';
+                        //System.debug('partnerAcctName'+partnerAcctName);
                         System.debug('portalRoleName'+portalRoleName);
-                        List<Group> lstGroup=[Select Id from Group where DeveloperName like:portalRoleName and Type='Role'];
+                        List<Group> lstGroup=[SELECT Id,Name,DeveloperName,Type FROM Group where RelatedId in(Select Id from UserRole where Name=:portalRoleName) and Type='Role'];
                         System.debug('lstGroup'+lstGroup);
                         if(lstGroup!=null && lstGroup.size()>0) 
                         {
