@@ -3047,7 +3047,9 @@ AND(NOT(ISBLANK(PRIORVALUE(SE_Director__c))),ISCHANGED( SE_Director__c )),
 AND(NOT(ISBLANK(PRIORVALUE(SE_Manager__c))),ISCHANGED( SE_Manager__c ))
 ),
 NOT($User.Id ==&apos;00550000001jvSe&apos;),
-NOT($User.Id ==&apos;00550000002rxts&apos;)
+NOT($User.Id ==&apos;00550000002rxts&apos;),
+NOT($User.Id ==&apos;005500000046uFt&apos;)
+
 )</errorConditionFormula>
         <errorMessage>You are not allowed to change POC Approvers.</errorMessage>
     </validationRules>
