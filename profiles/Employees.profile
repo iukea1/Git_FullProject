@@ -126,6 +126,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ApiConfigurationDataController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ArchiveDeletedOpportunityController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1690,6 +1694,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestApiConfigurationDataController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestAssetListViewControllerEC</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2220,6 +2228,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AccountWithTimeline__c.VX__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Api_Configuration__c.Endpoint_URL__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Api_Configuration__c.Environment_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Api_Configuration__c.Password__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Api_Configuration__c.UserName__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7625,7 +7653,13 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>AccountTeamMember-Account Team Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountWithTimeline__c-Timeline Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Api_Configuration__c-Api Configuration Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Asset-Asset Layout</layout>
@@ -8952,6 +8986,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Account_Summary</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Api_Configuration__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

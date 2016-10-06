@@ -228,11 +228,11 @@ public without sharing class DefineChannelQuoteController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Sorry, you cannot change the channel definition for opportunities that were initiated by the partner.  If you need to quote someone other than the registered partner, please change the partner and partner contact on the quote.'));
             isValid=false;
         }
-        if((PartnerData.RSMGEO!='NAM' && PartnerData.RSMGEO!= null && !String.isblank(PartnerData.RSMGEO)) && (PartnerData.Registered_DistributorId == null || String.isBlank(PartnerData.Registered_DistributorId) ))
+       /* if((PartnerData.RSMGEO!='NAM' && PartnerData.RSMGEO!= null && !String.isblank(PartnerData.RSMGEO)) && (PartnerData.Registered_DistributorId == null || String.isBlank(PartnerData.Registered_DistributorId) ))
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Distributor Account is mandatory for international accounts.'));
             isValid=false;
-        }   
+        }   */
         
         if(PartnerData.RSMGEO=='NAM')
         {
