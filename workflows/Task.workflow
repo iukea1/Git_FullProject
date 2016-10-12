@@ -29,6 +29,16 @@
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Send_an_email_to_BDR_for_reschedule</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>DB4SF__Update_Task_Status_on_Expiry</fullName>
+        <description>update task status to be set to Expired</description>
+        <field>Status</field>
+        <literalValue>Expired</literalValue>
+        <name>Update Task Status on Expiry</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>New BDR Meeting Feedback</fullName>
         <active>false</active>

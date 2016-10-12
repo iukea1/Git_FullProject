@@ -29,4 +29,5 @@
     <tab>standard-Opportunity</tab>
     <tab>LMS_Course__c</tab>
     <tab>Api_Configuration__c</tab>
+    <tab>AssetListView_SP</tab>
 </CustomApplication>

@@ -158,6 +158,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssetListViewController_SP</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AssetUtilities</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1703,6 +1707,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestAssetListViewControllerNxtoVX</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAssetListViewControllerSP</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -8624,6 +8632,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>AssetListView_SP</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>AssetListing</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -9567,6 +9579,10 @@
     <tabVisibilities>
         <tab>Api_Configuration__c</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>AssetListView_SP</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Customer_Satisfaction_Survey__c</tab>
