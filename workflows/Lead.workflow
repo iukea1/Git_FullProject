@@ -527,6 +527,15 @@ Sales_Rejected_Comments__c</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Lead_Set_GEO_Field</fullName>
+        <field>GEO__c</field>
+        <formula>$User.GEO_Region__c</formula>
+        <name>Lead: Set GEO Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Lead_Status_to_Rejected</fullName>
         <field>Status</field>
         <literalValue>Rejected</literalValue>
@@ -1010,6 +1019,19 @@ Sales_Rejected_Comments__c</formula>
             <value>Sales Rejected</value>
         </criteriaItems>
         <description>If a Lead&apos;s Status is Set to Sales Rejected then clear &apos;BANT Qualified&apos; &amp; &apos;Contact Us&apos;</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Lead%3A Created or Edited</fullName>
+        <actions>
+            <name>Lead_Set_GEO_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

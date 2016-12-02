@@ -2,6 +2,7 @@
 * Change Log:
 * 2016OCT18: Andy Getz - created method to query contact and account records to display better error messaging Case:20160929-192046
 * 2016OCT19: Jimmy Li - changed class access permissions from with sharing to without sharing, adjust the statement structure of method forgotPassword
+* 2016OCT24: Andy Getz - added else condition to display error message if user or contact is not found
 */
 
 public without sharing class PartnerPortalForgotPasswordController 
@@ -60,6 +61,10 @@ public without sharing class PartnerPortalForgotPasswordController
             {
                 errorMsg = 'Please apply to become a partner <a href=\"https://partners.silver-peak.com/BecomePartner\">here</a>';
             }
+        }
+        else
+        {
+            errorMsg = 'Your username or email cannot be found.';
         }
         return errorMsg;
     }

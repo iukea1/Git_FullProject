@@ -1,6 +1,8 @@
 /*
 *  Controller of VF Page MarketingFunds
 *  05AUG2016 @Author Daniel Wu
+*  @Changelog
+*  01DEC2016 Daniel - update: add upload large file(exceed 4.3M) functionality.
 */
 global with sharing class MarketingFundsController 
 {
@@ -410,14 +412,13 @@ global with sharing class MarketingFundsController
                 {
                     Database.rollback(sp);
                     ApexPages.addMessages(ex);
-                    return 'exception';
+                    return 'exception' + ex.getMessage();
                 } 
             } 
         }
         else
         {
-            Database.rollback(sp);
-            return 'exception';
+            return 'Error: requestId is null';
         }
     }
     
@@ -489,6 +490,35 @@ global with sharing class MarketingFundsController
         }
     }
     
+    @RemoteAction
+    global static String linkFileToMFR(String mfrId, String cvId, String maxFilecompleted)
+    {
+        savepoint sp = Database.setSavepoint();
+        List<ContentVersion> cv = [Select Id, ContentDocumentId from ContentVersion where Id =: cvId limit 1];
+        if(!cv.isEmpty())
+        {
+            ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = cv[0].ContentDocumentId, LinkedEntityId = mfrId, ShareType='V');
+            try
+            {
+                insert cdl;
+                if(maxFilecompleted == 'maxFilecompleted')
+                {
+                    MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: mfrId];
+                    mdf.Activity_Complete__c = true;
+                    mdf.Feedback_Complete__c = true;
+                    update mdf;
+                }
+                return 'success';
+            }
+            catch(Exception ex)
+            {
+                Database.rollback(sp);
+                return 'exception:' + ex.getMessage();
+            }
+        }
+        return null;
+    }
+    
     global static ContentVersion getDocument(String fileId)
     {
         List<ContentVersion> cvs = [Select Id, VersionData, Title from ContentVersion where Id =: fileId];
@@ -516,7 +546,7 @@ global with sharing class MarketingFundsController
             errorMsg = String.isBlank(mdf.Topic_Course) ? 'topic:Cannot be blank;' : '' + handleNumber(mdf.Number_of_Certifications, 'certifications', reminderMsg);
         }
 		errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
-        errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
+        //errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
         return errorMsg;
     }
     

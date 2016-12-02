@@ -23,6 +23,10 @@
             <section>Discount Information</section>
         </sections>
         <sections>
+            <label><!-- Quote Lines --></label>
+            <section>Quote Lines</section>
+        </sections>
+        <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
@@ -48,6 +52,10 @@
         <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Lines --></label>
+            <section>Quote Lines</section>
         </sections>
         <sections>
             <label><!-- Quote Options --></label>
@@ -79,6 +87,45 @@
         <sections>
             <label><!-- Partner Information --></label>
             <section>Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Lines --></label>
+            <section>Quote Lines</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Rep Approved</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Approvers --></label>
+            <section>Approvers</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Lines --></label>
+            <section>Quote Lines</section>
         </sections>
         <sections>
             <label><!-- Quote Options --></label>

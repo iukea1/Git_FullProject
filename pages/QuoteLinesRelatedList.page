@@ -1,0 +1,12 @@
+<apex:page standardController="SBQQ__Quote__c" extensions="QuoteLinesRelatedListExtension" docType="html-5.0" showHeader="false" sidebar="false">
+    <apex:pageBlock title="Quote Lines">
+        <apex:pageBlockTable value="{!quoteLines}" var="quoteLine">
+            <apex:repeat value="{!$ObjectType.SBQQ__QuoteLine__c.FieldSets.RelatedListFields}" var="f">
+                <apex:column headerValue="{!f.Label}">
+                    <apex:outputField value="{!quoteLine[f]}" rendered="{!f != 'Name'}"/>
+                    <apex:outputLink value="#" onclick="top.location.href = '/{!quoteLine.Id}';" rendered="{!f = 'Name'}">{!quoteLine[f]}</apex:outputLink>
+                </apex:column>
+            </apex:repeat>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

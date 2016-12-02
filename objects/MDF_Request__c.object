@@ -21,6 +21,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -1747,6 +1751,17 @@ BR() &amp;
             <value>Approved</value>
         </filters>
         <label>3) Approved Funding Requests</label>
+    </listViews>
+    <listViews>
+        <fullName>Created_Today2</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Created Today</label>
     </listViews>
     <listViews>
         <fullName>Denied_MDF_Requests_Partner</fullName>

@@ -366,8 +366,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>uki@silver-peak.com</name>
-                <type>user</type>
+                <name>RSM__c</name>
+                <type>relatedUserField</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>

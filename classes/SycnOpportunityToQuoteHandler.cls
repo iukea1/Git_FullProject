@@ -34,7 +34,7 @@ public class SycnOpportunityToQuoteHandler {
                     quote.SBQQ__StartDate__c = quote.SBQQ__Opportunity2__r.CloseDate;
                 }
             }  
-            update quotes;
+            Database.update(quotes, false);
         }
     }
 }

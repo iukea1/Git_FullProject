@@ -1454,6 +1454,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteLinesRelatedListExtension</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAListComponentController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -8837,6 +8841,10 @@
     <pageAccesses>
         <apexPage>QuoteCloneNoProducts</apexPage>
         <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>QuoteLinesRelatedList</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuotePdf</apexPage>

@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>Reseller_Account_Manager__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier3_Partner__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

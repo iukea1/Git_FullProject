@@ -1437,6 +1437,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteLinesRelatedListExtension</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAListComponentController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -8370,6 +8374,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>QuoteLinesRelatedList</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>QuotePdf</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -8803,6 +8811,10 @@
     </tabSettings>
     <tabSettings>
         <tab>RevenueRecognitionChecklist__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>SBQQ__ConfigurationAttribute__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

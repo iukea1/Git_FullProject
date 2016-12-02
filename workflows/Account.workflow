@@ -351,6 +351,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Account_Set_Type_Partner</fullName>
+        <field>Type</field>
+        <literalValue>Partner</literalValue>
+        <name>Account: Set Type = Partner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AcctRecType2Other</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Other</lookupValue>
@@ -531,6 +540,20 @@
             <timeLength>24</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Account%3A Reseller Agreement Acknowledged %3D True</fullName>
+        <actions>
+            <name>Account_Set_Type_Partner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Reseller_Agreement_Acknowledged__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ActivateExpiredAccountField</fullName>

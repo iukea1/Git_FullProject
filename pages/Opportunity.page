@@ -64,7 +64,7 @@
                     </apex:pageblockSectionItem>
                 </apex:repeat>
             </apex:pageBlockSection>
-            <!-- <c:OpportunityChannelAndTeamList opportunity="{!Opportunity.Id}" rendered="{!section.Name = 'Sales Team/Patch/Channel Information'}"/> -->
+            <c:OpportunityChannelAndTeamList opportunity="{!Opportunity.Id}" rendered="{!section.Name = 'Sales Team/Patch/Channel Information'}"/>
         </apex:repeat>
 
         <div id="stageDialog" style="display:none">

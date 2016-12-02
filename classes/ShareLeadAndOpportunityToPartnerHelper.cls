@@ -49,6 +49,12 @@ public class ShareLeadAndOpportunityToPartnerHelper
         Database.insert(newLeadShares, false);
     }
     
+    @future
+    public static void willShareOpportunities(List<Id> oppIds)
+    {
+        shareOpportunities(oppIds);
+    }
+    
     public static void shareOpportunities(List<Id> oppIds)
     {
         shareOpportunities([select Id, Registered_Distributor__c, Registering_Partner__c, Registered_Distributor_Contact__c, Registering_Partner_Sales_Rep__c from Opportunity where Id in :oppIds]);

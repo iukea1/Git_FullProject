@@ -2,193 +2,9 @@
     <apex:includeScript value="{!URLFOR($Resource.jQuery, 'jquery-1.4.3.min.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.NewCommunity,'/js/jquery-ui.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.NewCommunity,'/css/jquery-ui.css')}"/>
-    
-    <style>
-        body,button{
-        font-family: 'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
-            font-size: 14px;
-            line-height: 1.42857143;
-            color: #333;
-            background:#fff;
-        }
-        input[type='text'], textarea, select {
-            width: 100%;
-            font-family:'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
-            font-size:11px;
-        }
-        .datePicker select {
-            width: auto;
-        }
-        .datePicker div {
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-        input[type='text']{
-            height: 20px;
-            border: 1px solid #b8b8b8;
-        }
-        textarea{
-            border:1px solid #b8b8b8;
-        }
-        label{
-            display: inline-block;
-            max-width: 100%;
-            min-width: 100%;
-            margin-bottom: 5px;
-            font-family: 'GillSansMT-Regular', Arial, Helvetica, Sans-serif;
-        }
-        ul.mainBody li.indent{
-            margin-left:40px;
-        }
-        ul.mainBody li { 
-            list-style:none;
-            width:64%;
-            margin: 0;
-            padding: 6px 6px 9px;
-            clear: both;
-            background-color: transparent;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        li.focused { 
-            background-color: #eef7fa;
-            border: 1px solid #9dd1ff;
-            border-radius: 4px;
-            padding: 5px 5px 8px;
-        }
-        div{
-            margin-top:4px;
-            margin-bottom:0px;
-        }
-        div.ui-tooltip-content {
-            font-weight:normal;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-        .displayMessage{
-            margin-top:4px;
-            color: #808080;
-            word-break: break-word;
-        }
-        form.form-horizontal {
-            margin: 20px 14px 0 14px;
-            padding: 0 0 20px 0;
-            position: relative;
-        }
-        .redMark {
-            color: red;
-        }
-        .sectionTitle {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            margin-left: 0px;
-            font-weight: 100;
-            font-size: 20px;
-            color: #007bbb;
-            font-family: Arial-light, sans-serif;
-            border-radius: 7px;
-            width: 97%;
-        }
-        span{
-            font-weight:100;
-        }
-        .dateFormat{
-            visibility:hidden;
-        }
-        .hiddenElement{
-            display:none;   
-        }
-        .eventTable{
-            border: solid 1px grey;
-            border-radius: 3px;
-            width: 100%;
-            border-spacing: 0px;
-        }
-        .td_right{
-            width: 25%;
-            border-left: 1px solid grey;
-            text-align: center;
-        }
-        tr{
-            height:30px;
-        }
-        .inputQuantity{
-            width:50%;
-        }
-        .table-border-radius--small{
-            width:100%;
-            border-radius: 3px;
-            padding: 5px;
-            border-spacing: 0px;
-        }
-        .border-right-fix{ 
-            width:55%;
-        }
-        .border-left-fix{ 
-            text-align:center;
-            width: 45%;
-        }
-        .input-border-radius--small{
-            width:50%;
-            display:none;
-            border-radius: 2px;
-            border: 1px solid #d8d8d8;
-            text-align:center;
-        }
-        .Enablement:hover {
-            display:none;
-        }
-        .helpIcon{
-            display: none;
-            position: fixed;
-            margin-top: 29px;
-            left: calc(64% + 1.5em);
-        }
-        .linkStyle{
-            color: #0000ee;
-            text-decoration: underline;
-            cursor:pointer;
-        }
-        .message
-        {
-            width: 100%;
-            margin: 0;
-        }
-        input:disabled {
-            border: 1px solid #DDD;
-            background-color: #F5F5F5;
-            color: #ACA899;
-        }
-        body input.btn{
-            padding: 20px 0px;
-            width: 99%;
-            font-size: 20px;
-            background-color: #007cb9;
-            background-image: none;
-            color: #FFF;
-            text-transform: uppercase;
-            font-weight: 300;
-        	float: left;
-        }
-        .fieldset-radius{
-            border-radius: 7px;
-            margin-bottom:30px;
-        }
-        .btn.submitButton.disabledBtn{
-            background-color:#ccc;
-        }
-        .greyPanel{
-            background-color: #efefef;
-            display: block;
-            width: 93%;
-        }
-        .loadingIcon{
-        	display:none;
-            position: absolute;
-            float: right;
-            padding: 15px 0px 0px 15px;
-        }
-    </style>
+    <apex:includeScript value="{!URLFOR($Resource.MarketingFunds, 'plupload.full.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.MarketingFunds, 'forcetk.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.MarketingFunds, 'mfr.css')}"/>
     <body id = "iframeBody">
         <apex:outputPanel rendered="{!userProfile==''}" >
             <ul>
@@ -603,7 +419,7 @@
                         <br/>
                         <label>
 							Topic/Course <span class = "redMark">*</span>
-                            <div><input type="text" class="required" required="required" placeholder="Numbers only" id="topic"/></div>
+                            <div><input type="text" class="required" required="required" id="topic"/></div>
                         </label>
                     </li>
                     <li>
@@ -632,7 +448,7 @@
                     </li>
                     <li>
                         <label>
-                            Requested Reimbursement Amount(Requested_Reimbursement_Amount__c) <span class = "redMark">*</span>
+                            Requested Reimbursement Amount <span class = "redMark">*</span>
                             <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
                         </label>
                     </li>
@@ -1104,8 +920,8 @@
     </body>
     
     <script type="text/javascript">
-    var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
-    var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+    var maxStringSize = 690000000;    //Maximum String size is 6,000,000 characters
+    var maxFileSize = 500000000;      //After Base64 Encoding, this is the max file size
     var chunkSize = 100000;    		//Maximum Javascript Remoting message size is 1,000,000 characters 
     var files = [];
 	var maxFile = 0;
@@ -1116,7 +932,7 @@
         	for(var i = 0; i < invoices.length; i++){
                 var invoice = invoices[i];
             	if(invoice.size >= maxFileSize){
-                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
+                	alert("File must be under 500 MB in size. Your file is too large. Please try again.");
                     var file = $(inputFile);
                     file.after(file.clone().val(""));
                     file.remove(); 
@@ -1131,6 +947,8 @@
                     }
                 }
             }
+            console.log(files[maxFile]);
+            console.log('maxFile:' + maxFile);
         }        
     }
 
@@ -1140,14 +958,23 @@
              "Result_Detail" : $("#result").val(), "Requested_Reimbursement_Amount" : $("#amount").val(), "Topic_Course" : $("#topic").val(), "Number_of_Certifications" : $("#certifications").val(), 'invoice' : $("#invoice")[0].files.length, 'proof' : $("#proof")[0].files.length, 'attendance' : $("#attendance")[0].files.length},"{!request.Id}",
             function(result, event){
                 if(event.type === 'exception'){
-					showReminder(event);
+                    showReminder(event);
+                    console.log('error0:');
+                    console.log(event);
                     return;
                 }else if(event.status){
                     if(result.substring(0,3) == 'a38'){
-                    	uploadFiles();
+                        console.log("Enter uploadFiles:" + result);
+                        uploadFiles(result);
                     }else if(result.substring(0,5) == 'Error'){
                         showErrorMsg(result.substring(5));
+                    }else{
+						console.log('error1:');
+                        console.log(event);
                     }
+                }else{
+                	console.log('error2:');
+                    console.log(event);
                 }
             },
             {buffer: true, escape: true, timeout: 120000}
@@ -1158,50 +985,55 @@
     	$("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
     }
     
-    function uploadFiles(){
+    function uploadFiles(mfrId){
         if(files.length == 0){
             //alert("please select at least one file");
             return;
         }else{
-        	for(var i = 0; i < files.length; i++){
-            	var file = files[i];
-                if(file.size >= maxFileSize){
-                	alert("File must be under 4.3 MB in size. Your file is too large. Please try again.");
-                    return;
-                }else{
-                    //var attachmentName = file.name;
-                    var fileReader = new FileReader();
-                    fileReader.fileName = file.name;
-                    fileReader.fileIndex = file.fileIndex;
-                    fileReader.fileType = file.type;
-                    fileReader.description = file.description;
-                    fileReader.onloadend = function(e) {
-                        var fileName = this.fileName;
-                        var index = this.fileIndex;
-                        var type = this.fileType;
-                        var description = this.description;
-                        var body = window.btoa(this.result);  //Base 64 encode the file before sending it
-                        //var positionIndex = 0;
-                        var fileSize = body.length;
-                        //var doneUploading = false;
-                        if(fileSize < maxStringSize) {
-                            uploadOneFile('', {index: index, name: fileName, body: body, position: 0, size: fileSize, progress: 0, done: "not", type: type, description: description});
-                        } else {
-                            alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
-                        }
-                    }
-                    fileReader.onerror = function(e) {
-                        alert("There was an error reading the file.  Please try again.");
-                    }
-                    fileReader.onabort = function(e) {
-                        alert("There was an error reading the file.  Please try again.");
-                    }
-                    fileReader.readAsBinaryString(file);  //Read the body of the file
-                }
+            for(var i = 0; i < files.length; i++){
+                console.log("uploadFile: " + i);
+            	uploadFile(mfrId, files[i]);
             }
         }
     }
     
+    //Upload File
+    function uploadFile(mfrId, file) {
+        var client = new forcetk.Client();
+        client.setSessionToken("{!$Api.Session_ID}"); 
+    	client.createBlob('ContentVersion', {
+            Origin: 'C', // 'H' for Chatter File, 'C' for Content Document
+            "ReasonForChange" : "File Received.",
+            "Description" : file.description,
+            PathOnClient: file.name
+        }, file.name, 'VersionData', file, function(response){
+            var maxFilecompleted = file.fileIndex == maxFile ? 'maxFilecompleted' : '';
+            MarketingFundsController.linkFileToMFR(mfrId, response.id, maxFilecompleted, function(result, event){
+                if(event.type === 'exception'){
+					alert('Failed to upload file. The error message is: ' + result);
+                    showReminder(event);
+                    return;
+                }else if(event.status){
+                    if(result == 'success'){
+						if(file.fileIndex == maxFile){
+							top.location.reload();
+                        }
+                    }else if(result.substring(0,5) == 'Error'){
+                        showErrorMsg(result.substring(5));
+                        console.log(result);
+                    }
+                }
+            },{buffer: true, escape: true, timeout: 120000})
+        },function(request, status, response){
+            alert("Failed to upload file. Error message is: " + status);
+            showReminder("Failed to upload file. Error message is: " + status);
+            console.log(request);
+            console.log(status);
+            console.log(response);
+        });
+    }
+    
+    /*
     function uploadOneFile(fileId, concreteFile){
     	var fileBody = "";
         if(concreteFile.size <= concreteFile.position + chunkSize){
@@ -1240,17 +1072,14 @@
 			{buffer: true, escape: true, timeout: 120000}
         );
     }
-    
-    function showProgress(progress){
+    function showProgress(){
         if(!$(".submitButton").hasClass("disabledBtn")){
             $(".submitButton").addClass("disabledBtn");
             $("#loadingIcon").show();
         }else{
 			$("#loadingIcon").show();
         }
-        $(".submitButton").attr("value",progress + "%");
-    }
-    
+    }*/
     function validateForm(){
         var isValid = true;
         var errorMsg = "Invalid number";

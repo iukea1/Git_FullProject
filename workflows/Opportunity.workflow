@@ -563,6 +563,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Opportunity_Set_Deal_Approval_Date</fullName>
+        <field>Deal_Approved_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Opportunity: Set Deal Approval Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Opportunity_Set_Registration_Expir_Date</fullName>
+        <field>Registration_Expiration__c</field>
+        <formula>TODAY() + 90</formula>
+        <name>Opportunity: Set Registration Expir Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Set2NewBiz</fullName>
         <description>Set type filed to new business</description>
         <field>Type</field>
@@ -1014,6 +1032,23 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Opportunity%3A Created from Deal Reg Lead</fullName>
+        <actions>
+            <name>Opportunity_Set_Deal_Approval_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Opportunity_Set_Registration_Expir_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Converted_Lead_Record_Type__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Populate Account Terms on Opp</fullName>
         <active>false</active>
         <formula>ANd(
@@ -1217,6 +1252,16 @@ ISCHANGED(Registered_Distributor__c )
             <field>Opportunity.Transactional_Opportunity__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Registered Partner</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
