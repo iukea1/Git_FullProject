@@ -32,7 +32,7 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         List<MDF_Request__c> mdfs = [Select Id, Name, Owner.Name,Owner.FirstName, Owner.Email, Owner.Profile.Name, Contact__c, Contact__r.Name,Contact__r.FirstName, Contact__r.Email from MDF_Request__c where Id in: emailMdf];
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
-        List<EmailTemplate> et = [Select Id, Name, Body, HtmlValue,Subject from EmailTemplate where DeveloperName = 'New_MDF_Approved_Post_Event' limit 1];
+        List<EmailTemplate> et = [Select Id, Name, Body, HtmlValue,Subject from EmailTemplate where DeveloperName like '%New_MDF_Approved_Post_Event%' limit 1];
         if(!et.isEmpty())
         {
             String url;
@@ -70,7 +70,7 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         }
         catch(Exception ex)
         {
-            
+            SilverPeakUtils.logException(ex);
         }
     }
     

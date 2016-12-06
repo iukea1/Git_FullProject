@@ -34,7 +34,7 @@
                 <li>
                     <label>
                         Campaign/Tactic Name <span class = "redMark">*</span>
-                        <div><apex:inputField value="{!request.Event_Campaign_Name__c}" required="true" styleClass="test"/></div>
+                        <div><apex:inputField value="{!request.Event_Campaign_Name__c}" required="true"/></div>
                     </label>
                 </li>
                 <li>
@@ -350,18 +350,17 @@
                 </div>
                 <li>
                     <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton"/> 
-                    <!--apex:commandButton value="Submit" action="{!submitMDF}" styleClass="submitButton" rendered="{!request.Approval_Status__c=='Unsubmitted' || request.Approval_Status__c=='Denied'}"/-->
                 </li>
             </ul>
         </apex:form>
         <apex:outputPanel rendered="{!userProfile != '' && request.Approval_Status__c=='Pending' || request.Approval_Status__c=='Approved'}" styleClass="form-horizontal">
             <form onsubmit="validateForm(); return false;" id="theForm">
             <ul class="mainBody">
-                <li style="width:90%;">
+                <li style="width:90%;margin:0;padding:0;">
                     <apex:pageMessages escape="false"/>
                 </li>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && !request.Activity_Complete__c}">
-                        <li style="width:90%;" id="reminder">
+                        <li style="width:90%;margin:0;padding:6px;" id="reminder">
                 </li>
                 <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
                     <li class="sectionTitle">Event Results</li>
@@ -920,9 +919,8 @@
     </body>
     
     <script type="text/javascript">
-    var maxStringSize = 690000000;    //Maximum String size is 6,000,000 characters
+    var maxStringSize = 690000000;    //Maximum String size is 690,000,000 characters
     var maxFileSize = 500000000;      //After Base64 Encoding, this is the max file size
-    var chunkSize = 100000;    		//Maximum Javascript Remoting message size is 1,000,000 characters 
     var files = [];
 	var maxFile = 0;
     
@@ -937,18 +935,8 @@
                     file.after(file.clone().val(""));
                     file.remove(); 
                     return;
-                }else{
-                	invoice.fileIndex = files.length;
-                    invoice.description = $(inputFile).attr("id");
-                    files.push(invoice);
-                    var index = invoice.fileIndex;
-                    if(index > 0 && files[index].size >= files[maxFile].size){
-                    	maxFile = index;
-                    }
                 }
             }
-            console.log(files[maxFile]);
-            console.log('maxFile:' + maxFile);
         }        
     }
 
@@ -959,8 +947,6 @@
             function(result, event){
                 if(event.type === 'exception'){
                     showReminder(event);
-                    console.log('error0:');
-                    console.log(event);
                     return;
                 }else if(event.status){
                     if(result.substring(0,3) == 'a38'){
@@ -969,12 +955,10 @@
                     }else if(result.substring(0,5) == 'Error'){
                         showErrorMsg(result.substring(5));
                     }else{
-						console.log('error1:');
-                        console.log(event);
+                        showReminder(event);
                     }
                 }else{
-                	console.log('error2:');
-                    console.log(event);
+                    showReminder(event);
                 }
             },
             {buffer: true, escape: true, timeout: 120000}
@@ -983,6 +967,7 @@
     
     function showReminder(showMsg){
     	$("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
+        aotuAdjustHeight();
     }
     
     function uploadFiles(mfrId){
@@ -1105,7 +1090,7 @@
             }
         });
 		if(isValid && checkSubmit()){
-			updateMDF();
+            updateMDF();
         }
         aotuAdjustHeight();
     }
@@ -1324,6 +1309,7 @@
     }
     function checkSubmit(){
         if(window.confirm('After your submit, you cannot edit this form again. Are you sure you want to continue?')){
+            populateFiles();
             $(".submitButton").addClass("disabledBtn");
             $(".submitButton").attr("value","Request is submitting");
 			$("#loadingIcon").show();
@@ -1331,6 +1317,24 @@
         }else{
             return false;
         }
+    }
+    function populateFiles(){
+        $(".file").each(function(){
+            if($(this)[0].files){
+                var invoices = $(this)[0].files;
+                console.log(invoices.length);
+                for(var i = 0; i < invoices.length; i++){
+                    var invoice = invoices[i];
+                    invoice.fileIndex = files.length;
+                    invoice.description = $(this).attr("id");
+                    files.push(invoice);
+                    var index = invoice.fileIndex;
+                    if(index > 0 && files[index].size >= files[maxFile].size){
+                        maxFile = index;
+                    }
+                }
+            }
+        });
     }
     function showSection(){
         if($(".activityType").val() != ""){
