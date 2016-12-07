@@ -21,9 +21,12 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
                     }
                 }
             }
-            if(oldMDF.Approval_Status__c != 'Approved' && newMDf.Approval_Status__c == 'Approved' && newMDF.Campaign__c == null)
+            if(newMDF.Id == oldMDF.Id)
             {
-                updateMDF.add(newMDF);
+                if(oldMDF.Approval_Status__c != 'Approved' && newMDf.Approval_Status__c == 'Approved' && newMDF.Campaign__c == null)
+                {
+                    updateMDF.add(newMDF);
+                }
             }
         }
     }

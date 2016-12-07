@@ -356,17 +356,17 @@ global with sharing class MarketingFundsController
         List<ContentDocumentLink> cdLinks = [Select Id, ContentDocumentId, ContentDocument.Description, ContentDocument.Title, ContentDocument.LatestPublishedVersionId  from COntentDocumentLink where LinkedEntityId =: requestId];
         if(!cdLinks.isEmpty())
         {
-			for(ContentDocumentLink cdLink : cdLinks)
+            for(ContentDocumentLink cdLink : cdLinks)
             {
-                if(cdLink.ContentDocument.Description == 'invoice')
+                if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('invoice'))
                 {
                     invoice = cdLink;
                 }
-                else if (cdLink.ContentDocument.Description == 'proof')
+                else if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('proof'))
                 {
                     proofs.add(cdLink);
                 }
-                else if(cdLink.ContentDocument.Description == 'attendance')
+                else if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('attendance'))
                 {
                     attendance = cdLink;
                 }
@@ -374,7 +374,7 @@ global with sharing class MarketingFundsController
         }
     }
     
-	global class MDF
+    global class MDF
     {
         public String Total_Attendees { get; set; }
         public String Event_Results_Opportunities { get; set;}
@@ -399,7 +399,7 @@ global with sharing class MarketingFundsController
             String errorMsg = validateMDF(mdf, req);
             if(String.isNotBlank(errorMsg))
             {
-				return 'Error' + errorMsg;		 
+                return 'Error' + errorMsg;       
             }
             else
             {
@@ -424,7 +424,7 @@ global with sharing class MarketingFundsController
     
     global static MDF_Request__c convertMDF(MDF mdf, MDF_Request__c request)
     {
-		if(request.Type_of_Program__c != 'Enablement')
+        if(request.Type_of_Program__c != 'Enablement')
         {
             request.Event_Results_Opportunities__c = Decimal.valueOf(mdf.Event_Results_Opportunities);
             request.Total_Qualified_Leads__c = Decimal.valueOf(mdf.Total_Qualified_Leads);
@@ -433,7 +433,7 @@ global with sharing class MarketingFundsController
         else
         {
             request.Topic_Course__c = mdf.Topic_Course;
-        	request.Number_of_Certifications__c = Decimal.valueOf(mdf.Number_of_Certifications);
+            request.Number_of_Certifications__c = Decimal.valueOf(mdf.Number_of_Certifications);
         }
         request.Total_Attendees__c = Decimal.valueOf(mdf.Total_Attendees);
         request.Result_Detail__c = mdf.Result_Detail;
@@ -442,7 +442,7 @@ global with sharing class MarketingFundsController
     }
     
     @RemoteAction
-    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription, String fileCompleted)
+    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription, Boolean fileUploadCompleted)
     {
         if(String.isNotBlank(fileBody))
         {
@@ -469,12 +469,12 @@ global with sharing class MarketingFundsController
                     ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
                     insert cdl;
                 }
-				if(fileCompleted == 'maxFilecompleted')
+                if(fileUploadCompleted == true)
                 {
                     MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: requestId];
-					mdf.Activity_Complete__c = true;
+                    mdf.Activity_Complete__c = true;
                     mdf.Feedback_Complete__c = true;
-					update mdf;
+                    update mdf;
                 }
                 return cv.Id;
             }
@@ -491,7 +491,7 @@ global with sharing class MarketingFundsController
     }
     
     @RemoteAction
-    global static String linkFileToMFR(String mfrId, String cvId, String maxFilecompleted)
+    global static String linkFileToMFR(String mfrId, String cvId, Boolean fileUploadCompleted)
     {
         savepoint sp = Database.setSavepoint();
         List<ContentVersion> cv = [Select Id, ContentDocumentId from ContentVersion where Id =: cvId limit 1];
@@ -501,7 +501,7 @@ global with sharing class MarketingFundsController
             try
             {
                 insert cdl;
-                if(maxFilecompleted == 'maxFilecompleted')
+                if(fileUploadCompleted == true)
                 {
                     MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: mfrId];
                     mdf.Activity_Complete__c = true;
@@ -537,7 +537,7 @@ global with sharing class MarketingFundsController
         String errorMsg = '';
         String reminderMsg = 'Invalid number;';
         String reminderCur = 'Invalid currency;';
-		if(request.Type_of_Program__c != 'Enablement')
+        if(request.Type_of_Program__c != 'Enablement')
         {
             errorMsg = handleNumber(mdf.Event_Results_Opportunities, 'opportunities', reminderMsg) + handleNumber(mdf.Total_Qualified_Leads, 'leads', reminderMsg) + handleNumber(mdf.Estimated_Pipeline_Value, 'pipeline', reminderCur);
         }
@@ -545,14 +545,14 @@ global with sharing class MarketingFundsController
         {
             errorMsg = String.isBlank(mdf.Topic_Course) ? 'topic:Cannot be blank;' : '' + handleNumber(mdf.Number_of_Certifications, 'certifications', reminderMsg);
         }
-		errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
+        errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
         //errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
         return errorMsg;
     }
     
     global static String handleNumber(String num, String elem, String reminder)
     {
-		if(String.isBlank(num) || num == 'undifined')
+        if(String.isBlank(num) || num == 'undifined')
         {
             return elem + ':' + 'Cannot be blank;';
         }
@@ -572,6 +572,6 @@ global with sharing class MarketingFundsController
     
     global static String haneldNumber(Integer num, String elem)
     {
-		return num > 0 ? '' : elem + ':Cannot be blank;';
+        return num > 0 ? '' : elem + ':Cannot be blank;';
     }
 }

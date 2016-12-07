@@ -55,16 +55,16 @@ public without sharing class PartnerPortalForgotPasswordController
             Boolean conPartnerStatus = con[0].Account.isPartner;
             if(conPartnerStatus == true)
             {
-                errorMsg = 'Please request a login <a href=\" https://partners.silver-peak.com/PartnerPortalIndividualReg\">here</a>';
+                errorMsg = 'Please request a login <a href=\" https://partners.silver-peak.com/PartnerPortalIndividualReg\">here</a>.';
             }
             else
             {
-                errorMsg = 'Please apply to become a partner <a href=\"https://partners.silver-peak.com/BecomePartner\">here</a>';
+                errorMsg = 'Please apply to become a partner <a href=\"https://partners.silver-peak.com/s/BecomePartner\">here</a>.';
             }
         }
         else
         {
-            errorMsg = 'Your username or email cannot be found.';
+            errorMsg = 'Your username or email cannot be found; please apply to become a partner <a href=\"https://partners.silver-peak.com/s/BecomePartner\">here</a>.';
         }
         return errorMsg;
     }

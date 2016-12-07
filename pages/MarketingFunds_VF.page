@@ -417,19 +417,19 @@
                         <br/>
                         <br/>
                         <label>
-							Topic/Course <span class = "redMark">*</span>
+                            Topic/Course <span class = "redMark">*</span>
                             <div><input type="text" class="required" required="required" id="topic"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-							Total Attendees <span class = "redMark">*</span>
+                            Total Attendees <span class = "redMark">*</span>
                             <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
                         </label>
                     </li>
                     <li>
                         <label>
-							Number of Certifications <span class = "redMark">*</span>
+                            Number of Certifications <span class = "redMark">*</span>
                             <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="certifications"/></div>
                         </label>
                     </li>
@@ -452,30 +452,30 @@
                         </label>
                     </li>
                 </apex:outputPanel>
-                <li>Required Documentation: please upload the following required documents to process payment(Each file size does not exceed 4.3MB):</li>
+                <li>Required Documentation: please upload the following required documents to process payment(Each file size does not exceed 50MB):</li>
                 <li class="indent">
                     <label>
                         Invoice (billed to Silver Peak) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file required" id = "invoice" onchange="checkFileSize(this);" required="required"/>
+                    <input type="file" class="file required" id = "invoice" onchange="checkFileSize(this);" required="required" title="Invoice"/>
                 </li>
                 <li class="indent">
                     <label>
                         Proof of Performance (photos, print, third party receipts proving cost of the event so you will be invoiced for the correct amount, email invites, collateral, etc.You can select multiple files.) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file required" multiple = "multiple" id = "proof" onchange="checkFileSize(this);" required="required"/>
+                    <input type="file" class="file required" multiple = "multiple" id = "proof" onchange="checkFileSize(this);" required="required" title="Proof of Performance"/>
                 </li>
                 <li class="indent">
                     <label>
-					Attendance Lists – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
+                    Attendance List – leads must be identified and have contact information (contact info must include: first and last name, company, title, email, phone number, country, state, postal code) <span class = "redMark">*</span>
                     </label>
-                    <input type="file" class="file required" id = "attendance" onchange="checkFileSize(this);" required="required"/>
+                    <input type="file" class="file required" id = "attendance" onchange="checkFileSize(this);" required="required" title="Attendance List"/>
                 </li>
                 <li>
                     <input type="submit" value="Submit" class="btn submitButton"/>
                     <img src="/img/loading32.gif" id="loadingIcon" class="loadingIcon"/>
                 </li>
-				<li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
+                <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
                     <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
@@ -561,9 +561,6 @@
                                 <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
                             </label>
                         </li>
-                        <li>
-                            Required documentation
-                        </li>
                     </apex:outputPanel>
                     <li>
                         Required documentation
@@ -585,7 +582,7 @@
                     </li>
                     <li class="indent">
                         <label>
-                            Attendance Lists
+                            Attendance List
                         </label>
                         <apex:outputLink value="/sfc/servlet.shepherd/version/download/{!attendance.ContentDocument.LatestPublishedVersionId}" target="_document" rendered="{!NOT(IsBlank(attendance.Id))}">{!attendance.ContentDocument.Title}</apex:outputLink> 
                     </li>
@@ -914,7 +911,7 @@
                 </apex:outputPanel>
                 </apex:outputPanel>
             </ul>
-			</form>
+            </form>
         </apex:outputPanel>
     </body>
     
@@ -922,15 +919,16 @@
     var maxStringSize = 690000000;    //Maximum String size is 690,000,000 characters
     var maxFileSize = 500000000;      //After Base64 Encoding, this is the max file size
     var files = [];
-	var maxFile = 0;
+    var maxFile = 0;
+    var completedFiles = 0;
     
     function checkFileSize(inputFile){
-		var invoices = $(inputFile)[0].files;
-		if(invoices.length > 0){
-        	for(var i = 0; i < invoices.length; i++){
+        var invoices = $(inputFile)[0].files;
+        if(invoices.length > 0){
+            for(var i = 0; i < invoices.length; i++){
                 var invoice = invoices[i];
-            	if(invoice.size >= maxFileSize){
-                	alert("File must be under 500 MB in size. Your file is too large. Please try again.");
+                if(invoice.size >= maxFileSize){
+                    alert("File must be under 500 MB in size. Your file is too large. Please try again.");
                     var file = $(inputFile);
                     file.after(file.clone().val(""));
                     file.remove(); 
@@ -966,7 +964,7 @@
     }
     
     function showReminder(showMsg){
-    	$("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
+        $("#reminder")[0].innerHTML=('<div class="errorMsg"><strong>Error:</strong>'+ showMsg +'</div>');
         aotuAdjustHeight();
     }
     
@@ -977,7 +975,7 @@
         }else{
             for(var i = 0; i < files.length; i++){
                 console.log("uploadFile: " + i);
-            	uploadFile(mfrId, files[i]);
+                uploadFile(mfrId, files[i]);
             }
         }
     }
@@ -986,22 +984,23 @@
     function uploadFile(mfrId, file) {
         var client = new forcetk.Client();
         client.setSessionToken("{!$Api.Session_ID}"); 
-    	client.createBlob('ContentVersion', {
+        client.createBlob('ContentVersion', {
             Origin: 'C', // 'H' for Chatter File, 'C' for Content Document
-            "ReasonForChange" : "File Received.",
+            "ReasonForChange" : "MFR Approval",
             "Description" : file.description,
             PathOnClient: file.name
         }, file.name, 'VersionData', file, function(response){
-            var maxFilecompleted = file.fileIndex == maxFile ? 'maxFilecompleted' : '';
+            completedFiles++;
+            var maxFilecompleted = completedFiles == files.length;
             MarketingFundsController.linkFileToMFR(mfrId, response.id, maxFilecompleted, function(result, event){
                 if(event.type === 'exception'){
-					alert('Failed to upload file. The error message is: ' + result);
+                    alert('Failed to upload file. The error message is: ' + result);
                     showReminder(event);
                     return;
                 }else if(event.status){
                     if(result == 'success'){
-						if(file.fileIndex == maxFile){
-							top.location.reload();
+                        if(maxFilecompleted){
+                            top.location.reload();
                         }
                     }else if(result.substring(0,5) == 'Error'){
                         showErrorMsg(result.substring(5));
@@ -1020,30 +1019,30 @@
     
     /*
     function uploadOneFile(fileId, concreteFile){
-    	var fileBody = "";
+        var fileBody = "";
         if(concreteFile.size <= concreteFile.position + chunkSize){
-        	fileBody = concreteFile.body.substring(concreteFile.position);
+            fileBody = concreteFile.body.substring(concreteFile.position);
             concreteFile.done = concreteFile.index == maxFile ? 'maxFilecompleted' : 'completed';
             concreteFile.Progress = 100;
         }else{
-        	fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
+            fileBody = concreteFile.body.substring(concreteFile.position, concreteFile.position + chunkSize);
         }
         MarketingFundsController.uploadFile(
-        	fileBody, concreteFile.name, fileId,"{!request.Id}", concreteFile.description, concreteFile.done,
+            fileBody, concreteFile.name, fileId,"{!request.Id}", concreteFile.description, concreteFile.done,
             function(result, event){
                 if(event.type === 'exception'){
                     showReminder(event);
                     return;
                 }else if(event.status){
-                	if(result.substring(0,3) == '068'){
+                    if(result.substring(0,3) == '068'){
                         if(concreteFile.done.indexOf("completed") != -1){
-                        	//TODO update the progress of file uploading...
-							if(concreteFile.index == maxFile){
-								showProgress(100);
+                            //TODO update the progress of file uploading...
+                            if(concreteFile.index == maxFile){
+                                showProgress(100);
                                 top.location.reload();
                             }
                         }else{
-                        	concreteFile.position += chunkSize;
+                            concreteFile.position += chunkSize;
                             //TODO update the progress of file uploading...
                             uploadOneFile(result, concreteFile);
                             concreteFile.progress = (concreteFile.position / concreteFile.size * 100).toFixed(0);
@@ -1054,7 +1053,7 @@
                     }
                 }
             },
-			{buffer: true, escape: true, timeout: 120000}
+            {buffer: true, escape: true, timeout: 120000}
         );
     }
     function showProgress(){
@@ -1062,52 +1061,52 @@
             $(".submitButton").addClass("disabledBtn");
             $("#loadingIcon").show();
         }else{
-			$("#loadingIcon").show();
+            $("#loadingIcon").show();
         }
     }*/
     function validateForm(){
         var isValid = true;
         var errorMsg = "Invalid number";
-    	$(".number").each(function(){
+        $(".number").each(function(){
             if(isNaN($(this).val())){
                 if($(this).hasClass("currency")){
-                	errorMsg = "Invalid currency";
+                    errorMsg = "Invalid currency";
                 }
                 if(!$(this).next().hasClass("errorMsg")){
-            		$(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errorMsg +'</div>');
+                    $(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errorMsg +'</div>');
                 }
                 isValid = false;
             }else{
-            	if($(this).next().hasClass("errorMsg")){
-            		$(this).next().remove();
+                if($(this).next().hasClass("errorMsg")){
+                    $(this).next().remove();
                 }
             }
         });
-		$(".errorMsg:first").prev().focus();
+        $(".errorMsg:first").prev().focus();
         $(".required").each(function(){
-			if(!!!$(this).val()){
-            	isValid = false;
+            if(!!!$(this).val()){
+                isValid = false;
             }
         });
-		if(isValid && checkSubmit()){
+        if(isValid && checkSubmit()){
             updateMDF();
         }
         aotuAdjustHeight();
     }
     
-	function showErrorMsg(errorMsg){
-    	var errors = errorMsg.split(";");
+    function showErrorMsg(errorMsg){
+        var errors = errorMsg.split(";");
         for(var i = 0; i < errors.length - 1; i++){
-        	var eleId = errors[i].split(":")[0];
+            var eleId = errors[i].split(":")[0];
             var errMsg = errors[i].split(":")[1];
             if(!$("#" + eleId).next().hasClass("errorMsg")){
                 $("#" + eleId).after('<div class="errorMsg"><strong>Error:</strong>'+ errMsg +'</div>');
             }else{
-				$("#" + eleId).next().html("<strong>Error:</strong>" + errMsg);
+                $("#" + eleId).next().html("<strong>Error:</strong>" + errMsg);
             }
         }
         $(".errorMsg:first").prev().focus();
-		$("#loadingIcon").hide();
+        $("#loadingIcon").hide();
         $(".submitButton").removeClass("disabledBtn");
         $(".submitButton").attr("value","Submit");
         aotuAdjustHeight();
@@ -1312,7 +1311,7 @@
             populateFiles();
             $(".submitButton").addClass("disabledBtn");
             $(".submitButton").attr("value","Request is submitting");
-			$("#loadingIcon").show();
+            $("#loadingIcon").show();
             return true;
         }else{
             return false;
@@ -1326,7 +1325,7 @@
                 for(var i = 0; i < invoices.length; i++){
                     var invoice = invoices[i];
                     invoice.fileIndex = files.length;
-                    invoice.description = $(this).attr("id");
+                    invoice.description = $(this).attr("title");
                     files.push(invoice);
                     var index = invoice.fileIndex;
                     if(index > 0 && files[index].size >= files[maxFile].size){

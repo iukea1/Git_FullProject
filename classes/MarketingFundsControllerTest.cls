@@ -112,8 +112,8 @@ public class MarketingFundsControllerTest {
 		ContentVersion invoiceCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'invoice', VersionData = Blob.valueOf('Test Data'));
         insert invoiceCv;
 		invoiceCv = [Select Id, ContentDocumentId from ContentVersion where Id =: invoiceCv.Id];
-        ContentDocumentLink invoiceLdl = new ContentDocumentLink(ContentDocumentId = invoiceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
-        insert invoiceLdl;
+        //ContentDocumentLink invoiceLdl = new ContentDocumentLink(ContentDocumentId = invoiceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        //insert invoiceLdl;
         ContentVersion proofCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'proof', VersionData = Blob.valueOf('Test Data'));
         insert proofCv;
 		proofCv = [Select Id, ContentDocumentId from ContentVersion where Id =: proofCv.Id];
@@ -125,12 +125,14 @@ public class MarketingFundsControllerTest {
         ContentDocumentLink attendanceLdl = new ContentDocumentLink(ContentDocumentId = attendanceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
         insert attendanceLdl;
 		mfc2.getFile(mdf.Id);
+        MarketingFundsController.linkFileToMFR(mdf.Id, invoiceCv.Id, true);
+        MarketingFundsController.linkFileToMFR(mdf.Id, proofCv.Id, true);
         MarketingFundsController.updateMDF(newMDF,'');
         MarketingFundsController.updateMDF(newMDF, mdf.Id);
-		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice', 'maxFilecompleted');
-        MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', 'maxFilecompleted');
-        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice', 'maxFilecompleted');
-        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', 'maxFilecompleted');
+		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice', true);
+        MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', true);
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice', true);
+        MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', true);
         MDF_Request__c eMdf = new MDF_Request__c(Type_of_Program__c ='Enablement', Event_Materials_Requested__c = 'test\r\nmessage',
                                                 Silver_Peak_Speaking_Opportunity__c = 'Yes');
         insert eMdf;
