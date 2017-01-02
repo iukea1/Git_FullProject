@@ -182,6 +182,11 @@ public with sharing class NewVirtualShipmentController
                 VirtualAssetManager.VirtualAsset vasset= new VirtualAssetManager.VirtualAsset();
                 vasset.Asset = currAsset;
                 vasset.Asset.Evaluation_End_Date__c= virtualAsset.Asset.Evaluation_End_Date__c;
+                if(currAsset.Product2.Name.contains('EC-ORCH'))
+                {
+                    vasset.Asset.Evaluation_End_Date__c=null;
+                }
+                
                 vasset.Asset.ContactId = TempAsset.ContactId;
                 
                 if(currAsset.Product2.Name.contains('EC-BASE')|| currAsset.Product2.Name.contains('EC-PLUS'))
@@ -213,7 +218,10 @@ public with sharing class NewVirtualShipmentController
                 }
                 //If the EC Orchestrator is selected, then hardcode the GMS Nodes to 10000
                 if(ECProductIds!=null && ECProductIds.size()>0 && ECProductIds.containsKey(virtualAsset.Asset.Product2Id) &&  ECProductIds.get(virtualAsset.Asset.Product2Id) =='EC-ORCH' )
-                {virtualAsset.Asset.GMS_Nodes__c = '100000'; }
+                {
+                 	virtualAsset.Asset.GMS_Nodes__c = '100000';
+                     virtualAsset.Asset.Evaluation_End_Date__c = null;  
+                }
                 if(virtualAsset.Asset.Quantity == null)
                 {
                     virtualAsset.Asset.Quantity = 1;

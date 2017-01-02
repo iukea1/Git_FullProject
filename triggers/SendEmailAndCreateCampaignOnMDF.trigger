@@ -56,7 +56,7 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
     }
     if(!updateMDF.isEmpty())
     {
-        List<MDF_Request__c> mdfs = [Select Id, Campaign__c, Activity_Date__c, Event_Campaign_Name__c, Event_Location_City__c, GEO__c, Account__r.Name  from MDF_Request__c where Id in: updateMDF];
+        List<MDF_Request__c> mdfs = [Select Id, Campaign__c, Activity_Date__c, Event_Campaign_Name__c, Event_Location_City__c, Type_of_Program__c, GEO__c, Account__r.Name  from MDF_Request__c where Id in: updateMDF];
         Map<MDF_Request__c,Campaign> mdfAndCampaign = new Map<MDF_Request__c, Campaign>();
         for(MDF_Request__c mdf : mdfs)
         {
@@ -88,13 +88,32 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         if(mdf != null)
         {
             String fyfq = getQuarter(mdf.Activity_Date__c);
-            String activityDate = (mdf.Activity_Date__c == null) ? '' : mdf.Activity_Date__c.format();
-            return fyfq + '_' + mdf.GEO__c + '_' + mdf.Event_Campaign_Name__c + '_' + mdf.Account__r.Name + '_' + mdf.Event_Location_City__c + '_' + activityDate;
+            String geo = mdf.GEO__c == 'NAM' ? 'AMER' : mdf.GEO__c;
+            String activityDate = (mdf.Activity_Date__c == null) ? '' : ((String.valueOf(mdf.Activity_Date__c.year()).right(2)) + '' + (mdf.Activity_Date__c.month() < 10 ? '0' + mdf.Activity_Date__c.month() : '' + mdf.Activity_Date__c.month()) + '' + (mdf.Activity_Date__c.day() < 10 ? '0' + mdf.Activity_Date__c.day() : '' + mdf.Activity_Date__c.day()));
+            String campaignName = truncateString(fyfq, 6) + '_' + truncateString(geo, 5) + '_' + truncateString(mdf.Type_Of_Program__c, 15) + '_' + truncateString(mdf.Event_Campaign_Name__c, 15) + '_' + truncateString(mdf.Account__r.Name, 15) + '_' + truncateString(mdf.Event_Location_City__c, 12) + '_' + truncateString(activityDate, 6);
+            return campaignName.length() > 80 ? campaignName.substring(0, 80) : campaignName;
         }
         else
         {
             return null;
         }
+    }
+    
+    private String truncateString(String value, Integer length)
+    {
+        if(value == null)
+        {
+            value = '';
+        }
+        if(value.length() > length)
+        {
+            value = value.replaceAll(' ', '');
+            if(value.length() > length)
+            {
+                value = value.substring(0, length);
+            }
+        }
+        return value;
     }
     
     private String getQuarter(Date d)

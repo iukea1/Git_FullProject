@@ -20,7 +20,8 @@ public with sharing class OpportunityLayoutSetupController
             new ButtonOpt(40, 'Rev Rec Checklist', 'OpportunityRevenueRecognitionChecklist'),
             new ButtonOpt(50, 'Renewal', 'OpportunityRenewal'),
             new ButtonOpt(60, 'Merge', 'OpportunityMerge'),
-            new ButtonOpt(70, 'Define Channel on Quote', 'DefineChannelOnQuote')
+            new ButtonOpt(70, 'Define Channel on Quote', 'DefineChannelOnQuote'),
+            new ButtonOpt(80, 'Define Channel', 'OpportunityDefineChannel')
         };
 
         Sections = new List<SectionOpt> 

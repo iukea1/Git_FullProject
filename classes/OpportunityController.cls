@@ -181,7 +181,7 @@ public with sharing virtual class OpportunityController
     public List<String> PredefinedButtons
     { 
         //these are buttons embedded in section
-        get { return new List<String> {'OpportunityDefineChannel', 'OpportunityPatchOverride'}; }
+        get { return new List<String> {'DefineChannelOnQuote', 'OpportunityDefineChannel', 'OpportunityPatchOverride'}; }
     }
     
     public String PredefinedLists 

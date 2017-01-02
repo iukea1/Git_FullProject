@@ -388,7 +388,7 @@
                     <li>
                         <label>
                             Estimated Pipeline Value <span class = "redMark">*</span>
-                            <div><input type="text" class="number currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                            <div><input type="text" class="currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
                         </label>
                     </li>
                     <li>
@@ -406,7 +406,7 @@
                     <li>
                         <label>
                             Requested Reimbursement Amount <span class = "redMark">*</span>
-                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                            <div><input type="text" class="currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
                         </label>
                     </li>
                 </apex:outputPanel> 
@@ -448,7 +448,7 @@
                     <li>
                         <label>
                             Requested Reimbursement Amount <span class = "redMark">*</span>
-                            <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                            <div><input type="text" class="currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
                         </label>
                     </li>
                 </apex:outputPanel>
@@ -1067,13 +1067,36 @@
     function validateForm(){
         var isValid = true;
         var errorMsg = "Invalid number";
+        var isCurrency = function(input){
+        	if(isNaN(input))
+            {
+            	return (/^\\$(\d{1,3}(\,\d{3})*|(\d+))(\.\d{1,2})?$/.test(input));
+            }else
+            {
+            	return true;
+            }
+        };
         $(".number").each(function(){
-            if(isNaN($(this).val())){
-                if($(this).hasClass("currency")){
-                    errorMsg = "Invalid currency";
-                }
+            var input = $(this).val().trim();
+            $(this).val(input);
+            if(isNaN(input)){
                 if(!$(this).next().hasClass("errorMsg")){
                     $(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errorMsg +'</div>');
+                }
+                isValid = false;
+            }else{
+                if($(this).next().hasClass("errorMsg")){
+                    $(this).next().remove();
+                }
+            }
+        });
+        $(".currency").each(function(){
+            var errMsg = "Invalid currency, validate format is 1000.00 or $1,000.00";
+            var input = $(this).val().trim();
+            $(this).val(input);
+            if(!isCurrency(input)){
+                if(!$(this).next().hasClass("errorMsg")){
+                    $(this).after('<div class="errorMsg"><strong>Error:</strong>'+ errMsg +'</div>');
                 }
                 isValid = false;
             }else{

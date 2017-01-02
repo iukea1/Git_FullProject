@@ -6,6 +6,7 @@
  *10JUN2016: Andy Getz - set account partner type to resellers and set GEO Supported to selection from region field
  *07NOV2016: Jimmy Li - set contact lead cource to Partner Portal, at line 104, 109 and 116.
  *09NOV2016: Daniel Wu - Disable submit button while the form is being submitted
+ *22DEC2016: Zhong - updated 'illegal' to 'invalid'
  */
 public class RegisterAccountController 
 {
@@ -22,7 +23,7 @@ public class RegisterAccountController
     public String errorMessage { get; set; }
     public Map<String,String> dataBinding { get; set; }
     private List<Contact> conList = new List<Contact>();
-	private Boolean onSubmitting = false;
+    private Boolean onSubmitting = false;
 
     public RegisterAccountController(ApexPages.StandardController stdController)
     {
@@ -326,7 +327,7 @@ public class RegisterAccountController
             isPass = false;
         }else if(!Pattern.matches(regex, dataBinding.get('pcEmail')))
         {
-            errorMessage += ';pcEmail:Primary Partner Contact Email is illegal';
+            errorMessage += ';pcEmail:Primary Partner Contact Email is invalid';
             isPass = false;
         }
         if(String.isBlank(primaryContact.Title))
@@ -403,7 +404,7 @@ public class RegisterAccountController
             isPass = false;
         }else if(!Pattern.matches(regex, dataBinding.get('scEmail')))
         {
-            errorMessage += ';scEmail:Partner Signatory Contact Email is illegal';
+            errorMessage += ';scEmail:Partner Signatory Contact Email is invalid';
             isPass = false;
         }
         if(String.isBlank(signatoryContact.Title))
@@ -480,7 +481,7 @@ public class RegisterAccountController
             isPass = false;
         }else if(!Pattern.matches(regex, dataBinding.get('mcEmail')))
         {
-            errorMessage += ';mcEmail:Partner Marketing Contact Email Illegal';
+            errorMessage += ';mcEmail:Partner Marketing Contact Email invalid';
             isPass = false;
         }
         if(String.isBlank(marketingContact.Title))

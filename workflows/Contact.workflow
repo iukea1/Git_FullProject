@@ -46,6 +46,15 @@ Sales_Rejected_Comments__c</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Contact_Set_Cloudingo_Merge_False</fullName>
+        <field>Cloudingo_Merge__c</field>
+        <literalValue>0</literalValue>
+        <name>Contact: Set Cloudingo Merge = False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Disable_Allow_Self_Registration</fullName>
         <field>CanAllowPortalSelfReg</field>
         <literalValue>0</literalValue>
@@ -94,6 +103,24 @@ Sales_Rejected_Comments__c</formula>
         <active>true</active>
         <formula>AND(  ISChanged( Sales_Rejected_Comments__c ),  LEN(Sales_Rejected_Comments__c )&gt;0   )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contact%3A Cloudingo Merge %3D True</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Cloudingo_Merge__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contact_Set_Cloudingo_Merge_False</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>48</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Contact%3A Contact Role Task Reminders</fullName>
