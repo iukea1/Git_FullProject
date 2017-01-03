@@ -362,6 +362,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CommunityDealRegistrationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CommunityDealRegistrationControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CompleteSpxTrainingService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -8232,6 +8240,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>CustomPortalEditAsset</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>DealRegistration</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
