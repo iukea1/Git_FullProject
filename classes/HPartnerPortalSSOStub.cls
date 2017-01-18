@@ -7,6 +7,7 @@ public without sharing class HPartnerPortalSSOStub
     
     private static String ssoBase = 'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
     private static String adminKey = 'f72b6c56-32c2-4d4f-ac88-dae835d0bebe';
+    // prane@silver-peak.com pulsar@2505
     private static String httpLoginBase='https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1/Authenticate?username=steverussell&password=!SPvxoa1&privateKey=f72b6c56-32c2-4d4f-ac88-dae835d0bebe';
     
     public static String getHttpToken()

@@ -53,6 +53,14 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>standard__LightningSalesConsole</application>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningService</application>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>standard__Platform</application>
         <visible>false</visible>
     </applicationVisibilities>
@@ -1926,6 +1934,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestUtilities</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Throwaway</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -5885,6 +5897,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Quote__c.SteelBrick_Quote__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Quote__c.TmpApprovalRequired__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8853,10 +8870,6 @@
         <visibility>None</visibility>
     </tabSettings>
     <userLicense>Salesforce</userLicense>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EditPublicReports</name>
-    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>EditReports</name>

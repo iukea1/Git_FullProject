@@ -279,6 +279,21 @@ public class VirtualAssetManager
         }
     }
     
+    public static void encryptLicenses_Batch(List<Id> licenseIds)
+    {
+        
+        Set<Id> generateLicenseIds = new Set<Id>();
+        for(License__c item : [select Id from License__c where Id in :licenseIds])
+        {
+            generateLicenseIds.add(item.Id);
+        }
+        if(generateLicenseIds.size() > 0)
+        {
+            LicenseEncryptionJob job = new LicenseEncryptionJob();
+            job.LicenseIds = new List<Id>(generateLicenseIds);
+            System.enqueueJob(job);
+        }
+    }
     private void assignProductModel()
     {
         Set<String> productIds = new Set<String>();

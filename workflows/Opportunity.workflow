@@ -572,6 +572,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Opportunity_Set_Initl_Soln_Broadband</fullName>
+        <field>Deal_Type__c</field>
+        <literalValue>Broadband WAN</literalValue>
+        <name>Opportunity: Set Initl Soln = Broadband</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Opportunity_Set_Registration_Expir_Date</fullName>
         <field>Registration_Expiration__c</field>
         <formula>TODAY() + 90</formula>
@@ -1045,6 +1054,20 @@
         <criteriaItems>
             <field>Opportunity.Converted_Lead_Record_Type__c</field>
             <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity%3A Created with Initial Soln Interest %3D SD-WAN %28EdgeConnect%29</fullName>
+        <actions>
+            <name>Opportunity_Set_Initl_Soln_Broadband</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Deal_Type__c</field>
+            <operation>equals</operation>
+            <value>SD-WAN (EdgeConnect)</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>

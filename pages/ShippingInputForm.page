@@ -154,7 +154,7 @@
                         <apex:facet name="header">
                             Product&nbsp;<img src="/s.gif" alt="Expand" class="moreArrow" title="Expand" onclick="showDatePopup('ProList')" style="cursor:pointer"/>
                         </apex:facet>
-                        <apex:selectList id="ProList" size="1" value="{!ShipLine.SelectProductId}" rendered="{!NOT(ShipLine.AssetIsExisted)}" onchange="loadAssetsPN(this.value, {!FLOOR(index)});hideshowGMS(this.value, {!FLOOR(index)});hideshowServiceProduct(this.value, {!FLOOR(index)});">
+                        <apex:selectList id="ProList" size="1" value="{!ShipLine.SelectProductId}" rendered="{!NOT(ShipLine.AssetIsExisted)}" onchange="loadAssetsPN(this.value, {!FLOOR(index)});hideshowServiceProduct(this.value, {!FLOOR(index)});">
                             <apex:selectOptions value="{!ProductList}"/>
                         </apex:selectList>
                         <apex:outputText value="{!ShipLine.ProductCode}" rendered="{!ShipLine.AssetIsExisted}"/>
@@ -170,17 +170,12 @@ Part Number&nbsp;<img src="/s.gif" alt="Expand" class="moreArrow" title="Expand"
                         <apex:inputHidden value="{!ShipLine.PartNumber}" id="PartNumber"/>
                         <apex:outputText rendered="{!ShipLine.AssetIsExisted}">{!ShipLine.PartNumber}</apex:outputText>
                     </apex:column>
-                    <apex:column headerValue="GMS Node">
-                        <apex:inputField value="{!ShipLine.TempAsset.GMS_Nodes__c}" id="GMSNodesList"  />
-                        <apex:variable var="index" value="{!index + 1}" />
-                    </apex:column>
-                    <apex:column headerValue="Service Support Start Date" width="10%">
+                    <apex:column headerValue="Service Support Start Date">
                         <apex:inputField id="servicestartDate" value="{!ShipLine.TempAsset.Service_Support_Start_Date__c}" />
-                        <apex:variable var="index" value="{!index + 1}" />
                     </apex:column>
-                    <apex:column headerValue="Service Support End Date" width="10%">
+                        <apex:column headerValue="Service Support End Date">
                         <apex:inputField id="serviceendDate" value="{!ShipLine.TempAsset.Service_Support_End_Date__c}" />
-                        <apex:variable var="index" value="{!index + 1}" />
+                         <apex:variable var="index" value="{!index + 1}" />
                     </apex:column>
                 </apex:pageBlockTable>
             </apex:pageBlockSection> 

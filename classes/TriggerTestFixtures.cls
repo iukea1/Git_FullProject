@@ -751,10 +751,8 @@ public class TriggerTestFixtures
             Database.LeadConvert lc = new Database.LeadConvert();
             lc.setLeadId(lead.Id);
             lc.setConvertedStatus('Approved');
-            Test.startTest();
             Database.LeadConvertResult lcr = Database.convertLead(lc);
             String convertedOpportunityId = lcr.getOpportunityId();
-            Test.stopTest();
             Opportunity opportunity = [select Id, Deal_Approved_Date__c, Registration_Expiration__c from Opportunity where Id = :convertedOpportunityId];
             //system.assertEquals(Date.today(), opportunity.Deal_Approved_Date__c);
             //system.assertEquals(Date.today().addDays(90), opportunity.Registration_Expiration__c);
@@ -779,7 +777,7 @@ public class TriggerTestFixtures
         Quote_Line__c quoteLine = new Quote_Line__c(Quote__c = quote.Id, Product__c = product.Id, Unit_Price__c = 234, Quantity__c = 123, Discount_Percent__c = 35);
         insert quoteLine;
         Quote_Line__c quoteLinetest = [select ApprovalLevel__c, Id from Quote_Line__c where Id =: quoteLine.Id];
-        system.assertEquals(quoteLinetest.ApprovalLevel__c, 0);   
+        system.assertEquals(quoteLinetest.ApprovalLevel__c, 1);   
     }
     
     @isTest(SeeAllData = true)

@@ -17,6 +17,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EC_Product_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Active_EC_Base_License__c</field>
             </layoutItems>
             <layoutItems>
@@ -26,6 +30,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sync_With_Cloud_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Asset_Eligible_For_POC_Renewal_Ext__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -158,6 +166,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__QuoteLine__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Start_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Nodes__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

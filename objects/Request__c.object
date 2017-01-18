@@ -3201,6 +3201,12 @@ window.location.reload();</url>
 
 if(confirm(&quot;Once you submit this record for approval, you might not be able to edit it or recall it from the approval process depending on your settings. Continue?&quot;)) 
 { 
+var primaryQuote= sforce.connection.query(&quot;select Product_Type__c,Type from Opportunity where Id=&apos;{!Request__c.OpportunityId__c}&apos;&quot;);
+var queueNameQueryResult = primaryQuote.getArray(&quot;records&quot;);
+
+var quoteInfo= sforce.connection.query(&quot;Select Id from Quote__C where Primary__c=true and Opportunity__c =&apos;{!Request__c.OpportunityId__c}&apos; and Id in (Select Quote__c from Quote_Line__c)&quot;);
+var quoteInfoQueryResult = quoteInfo.getArray(&quot;records&quot;);
+
 var accountInfo=sforce.connection.query(&quot;select AccountId from Opportunity where Id=&apos;{!Request__c.OpportunityId__c}&apos;&quot;); 
 var accountInfoQueryResult = accountInfo.getArray(&quot;records&quot;); 
 var accId=accountInfoQueryResult[0].AccountId; 
@@ -3229,6 +3235,10 @@ if(assetInfo!=null &amp;&amp; assetInfo.size&gt;0 &amp;&amp; &apos;{!Request__c.
 { 
 alert(&quot;You cannot fulfill this POC as the customer has existing assets. Please contact operations.&quot;); 
 } 
+else if(queueNameQueryResult!=null &amp;&amp; queueNameQueryResult[0].Type!=&quot;Marketplace&quot; &amp;&amp; (quoteInfoQueryResult== null ||quoteInfoQueryResult==&apos;&apos;))
+{
+alert(&quot;POC cannot be submitted for an approval as there is no primary quote defined for this opportunity or there are no quote lines added to the quote.&quot;);
+}
 else if((&apos;{!Request__c.Status__c}&apos;==&quot;Shipped&quot; ||&apos;{!Request__c.Status__c}&apos;==&quot;Shipped - Extended&quot;) &amp;&amp;&apos;{!JSENCODE(Request__c.Extension_Justification__c)}&apos;==&quot;&quot; ) 
 { 
 alert(&quot;Extension Justification is required.&quot;); 

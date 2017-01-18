@@ -185,6 +185,13 @@ global with sharing class CommunityDealRegistrationController
         leadRecord.DealRegistrationDistributor__c  = selectedDistributorId.equalsIgnoreCase('Other')?null:String.isBlank(selectedDistributorId)?null:(ID)selectedDistributorId;
         leadRecord.Deal_Registration_Reseller__c  = selectedResellerId.equalsIgnoreCase('Other')?null:String.isBlank(selectedResellerId)?null:(ID)selectedResellerId;
         leadRecord.Deal_Registration_Reseller_Contact__c = (leadRecord.NoDealRegistrationResellerContact__c)?null:(ID)leadRecord.Deal_Registration_Reseller_Contact__c;
+        //Default Lead Values
+        leadRecord.Deal_Reg__c = true;
+        leadRecord.Deal_Reg_By_Partner_Id__c = currUser.id;
+        leadRecord.Registered_Partner__c = currUserAct.id;
+        leadRecord.Registered_Partner_Sales_Rep__c = currUserCont.id;
+        leadRecord.Trigger_Submission__c = true;
+        //Default Lead Values End
         if(validateLead(leadRecord))
         {
             SavePoint sp = Database.setSavepoint();

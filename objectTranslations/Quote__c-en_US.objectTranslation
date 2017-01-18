@@ -339,6 +339,11 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         </picklistValues>
     </fields>
     <fields>
+        <label><!-- SteelBrick Quote --></label>
+        <name>SteelBrick_Quote__c</name>
+        <relationshipLabel><!-- Silver Peak Quotes --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- TmpApprovalRequired --></label>
         <name>TmpApprovalRequired__c</name>
     </fields>

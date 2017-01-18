@@ -1639,6 +1639,7 @@ TODAY() -  DATEVALUE(CreatedDate) ,0)</formula>
         <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <webLinks>
