@@ -716,8 +716,17 @@ right(Id,4))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND (  OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),  NOT(Product2.Name == &quot;EC-ORCH&quot;),   OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),  ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  OR(ISNew(),  ISCHANGED(License_End_Date__c),  ISCHANGED(Bandwidth_Nodes__c),  ISCHANGED(Licenses_Nodes__c),  ISCHANGED( Service_Support_Start_Date__c ),  ISCHANGED( Service_Support_End_Date__c ),  ISCHANGED(Status) ) )</formula>
+        <formula>AND (  OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),  NOT(Product2.Name == &quot;EC-ORCH&quot;),   OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),  ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  OR(ISNew(),  ISCHANGED(License_End_Date__c),  ISCHANGED(Bandwidth_Nodes__c),  ISCHANGED(Licenses_Nodes__c),ISCHANGED( Service_Support_Start_Date__c ),  ISCHANGED( Service_Support_End_Date__c ),  ISCHANGED(Status) ) )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Check Account key</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Asset.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ClearGMSNodes</fullName>
@@ -767,9 +776,9 @@ right(Id,4))</formula>
         <active>true</active>
         <formula>AND 
 ( 
-Or(Account.Name =&quot;Silver Peak Systems&quot;, 
- NOT(ISBLANK(SBQQ__QuoteLine__c ))
-),
+OR(Account.Name =&quot;Silver Peak Systems&quot;,
+NOT(ISBLANK(SBQQ__QuoteLine__c ))
+), 
 Sync_With_Cloud_Portal__c =true, 
 IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
 BEGINS( Product2.Name ,&quot;EC&quot;) 
@@ -781,66 +790,6 @@ BEGINS( Product2.Name ,&quot;EC&quot;)
         <active>false</active>
         <description>This is the workflow rule that sends the velocity fulfillment email to the contact</description>
         <formula>AND  (  NOT(ISBLANK(POCRequest__c )),  Key_Generated__c ,  Marketplace_Sourced_Opp__c ==0, DATEVALUE( CreatedDate )== today(), OR(  Model__c==&quot;Velocity&quot;,  Model__c==&quot;VRX-2&quot;, Model__c==&quot;VRX-4&quot;, Model__c==&quot;VRX-6&quot;, Model__c==&quot;VRX-8&quot; )  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SendNonMarketPlaceFulfillmentEmailVelocity</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>FulfillmentForVelocity_AutoFulfill</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND (4 OR 5 OR 6 OR 7 OR 8) AND 9</booleanFilter>
-        <criteriaItems>
-            <field>Asset.Marketplace_Sourced_Opp__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Key_Generated__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.CreatedDate</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Model__c</field>
-            <operation>equals</operation>
-            <value>Velocity</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Model__c</field>
-            <operation>equals</operation>
-            <value>VRX-2</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Model__c</field>
-            <operation>equals</operation>
-            <value>VRX-4</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Model__c</field>
-            <operation>equals</operation>
-            <value>VRX-6</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.Model__c</field>
-            <operation>equals</operation>
-            <value>VRX-8</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Asset.TriggerAutoFulfillEmail__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>This is the workflow rule that sends the velocity fulfillment email to the contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -932,7 +881,10 @@ BEGINS( Product2.Name ,&quot;EC&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>And(  Hosted_GMS__c , NOT ISBLANK( IP_Address__c ), NOT( IPAddressEmailSent__c ))</formula>
+        <formula>And(
+ Hosted_GMS__c ,
+NOT ISBLANK( IP_Address__c ),
+NOT( IPAddressEmailSent__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -1208,7 +1160,9 @@ BEGINS( Product2.Name ,&quot;EC&quot;)
         </actions>
         <active>true</active>
         <description>NonVelocityFulfillment</description>
-        <formula>AND (ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  NOT(Hosted_GMS__c),  Marketplace_Sourced_Opp__c ==0,  NOT(CONTAINS(Product2.Model__c , &quot;GX&quot;) ),  OR(  Model__c==&quot;VX-0000&quot;,  Model__c==&quot;VX-1000&quot;,  Model__c==&quot;VX-500&quot;, Model__c==&quot;VX-2000&quot;,  Model__c==&quot;VX-3000&quot;,  Model__c==&quot;VX-4000&quot;, Model__c==&quot;VX-5000&quot;,  Model__c==&quot;VX-6000&quot;,  Model__c==&quot;VX-7000&quot;, Model__c==&quot;VX-8000&quot;,  Model__c==&quot;VX-9000&quot; ) )</formula>
+        <formula>AND (ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  NOT(Hosted_GMS__c),  Marketplace_Sourced_Opp__c ==0,  NOT(CONTAINS(Product2.Model__c , &quot;GX&quot;) ),  OR(  Model__c==&quot;VX-0000&quot;,  Model__c==&quot;VX-1000&quot;,  Model__c==&quot;VX-500&quot;, Model__c==&quot;VX-2000&quot;,  Model__c==&quot;VX-3000&quot;,  Model__c==&quot;VX-4000&quot;, Model__c==&quot;VX-5000&quot;,  Model__c==&quot;VX-6000&quot;,  Model__c==&quot;VX-7000&quot;, Model__c==&quot;VX-8000&quot;,  Model__c==&quot;VX-9000&quot; ),
+NOT(TriggerAutoFulfillEmail__c)
+)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

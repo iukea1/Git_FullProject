@@ -299,7 +299,7 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
         <externalId>false</externalId>
         <label>Quantity</label>
         <precision>11</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -314,7 +314,7 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
         <relationshipLabel>Quote Lines</relationshipLabel>
         <relationshipName>Quote_Lines</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -326,7 +326,7 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
         <externalId>false</externalId>
         <label>Unit Price</label>
         <precision>14</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -369,10 +369,10 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
     </nameField>
     <pluralLabel>Quote Lines</pluralLabel>
     <searchLayouts>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>

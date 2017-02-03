@@ -199,21 +199,4 @@ public class TestUtilities
         }
         return pricebookId;
     }
-    
-    public static SBQQ__QuoteLine__c createQuoteLine(Id quoteId, Id lineGroupId, Id productId)
-    {
-        //SBQQ__ListTotal__c = 0; SBQQ__NetTotal__c = 20.0; SBQQ__CustomerTotal__c = 30.0
-        SBQQ__QuoteLine__c quoteLine = new SBQQ__QuoteLine__c(SBQQ__Renewal__c = true,
-                                                              SBQQ__Existing__c = true,
-                                                              SBQQ__PriorQuantity__c = 2.00,
-                                                              SBQQ__CustomerPrice__c = 30.0,
-                                                              SBQQ__DiscountScheduleType__c = 'Slab',
-                                                              SBQQ__Quantity__c = 1.00,
-                                                              SBQQ__NetPrice__c = 20.0,
-                                                              SBQQ__Quote__c = quoteId,
-                                                              SBQQ__Group__c = lineGroupId,
-                                                              SBQQ__Product__c = productId
-                                                              );
-        return quoteLine;
-    }
 }

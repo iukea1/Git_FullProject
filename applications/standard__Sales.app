@@ -11,6 +11,7 @@
     <tab>standard-Contact</tab>
     <tab>SP_Forecasting</tab>
     <tab>Spire</tab>
+    <tab>standard-Opportunity</tab>
     <tab>standard-Case</tab>
     <tab>standard-Solution</tab>
     <tab>standard-Product2</tab>
@@ -26,8 +27,10 @@
     <tab>MDF_Request__c</tab>
     <tab>standard-Forecasting3</tab>
     <tab>LMS_Course_Certification__c</tab>
-    <tab>standard-Opportunity</tab>
-    <tab>LMS_Course__c</tab>
     <tab>Api_Configuration__c</tab>
-    <tab>AssetListView_SP</tab>
+    <tab>standard-Order</tab>
+    <tab>re10__GKOrderHeader__c</tab>
+    <tab>re10__GKOrderInterface__c</tab>
+    <tab>re10__GKOrderLine__c</tab>
+    <tab>LMS_Course__c</tab>
 </CustomApplication>

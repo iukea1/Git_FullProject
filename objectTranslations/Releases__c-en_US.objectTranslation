@@ -81,10 +81,6 @@
             <translation><!-- VXOA Release --></translation>
         </picklistValues>
     </fields>
-    <fields>
-        <label><!-- sfxId --></label>
-        <name>sfxId__c</name>
-    </fields>
     <layouts>
         <layout>Releases Layout</layout>
         <sections>

@@ -3,7 +3,6 @@
 *  05AUG2016 @Author Daniel Wu
 *  @Changelog
 *  01DEC2016 Daniel - update: add upload large file(exceed 4.3M) functionality.
-*  19DEC2016 Jimmy - Added currency format validation methods.
 */
 global with sharing class MarketingFundsController 
 {
@@ -537,79 +536,18 @@ global with sharing class MarketingFundsController
     {
         String errorMsg = '';
         String reminderMsg = 'Invalid number;';
-        String reminderCur = 'Invalid currency, Validate Currency Formats: 1000.00 / 1,000.00 / $1000.00 / $ 1000.00 / $1,000.00 / $ 1,000.00;';
+        String reminderCur = 'Invalid currency;';
         if(request.Type_of_Program__c != 'Enablement')
         {
-            errorMsg = handleNumber(mdf.Event_Results_Opportunities, 'opportunities', reminderMsg) + handleNumber(mdf.Total_Qualified_Leads, 'leads', reminderMsg);// + handleNumber(mdf.Estimated_Pipeline_Value, 'pipeline', reminderCur);
-            String pipelineErr = convertPipeline(mdf, 'pipeline', reminderCur);
-            errorMsg += pipelineErr;
+            errorMsg = handleNumber(mdf.Event_Results_Opportunities, 'opportunities', reminderMsg) + handleNumber(mdf.Total_Qualified_Leads, 'leads', reminderMsg) + handleNumber(mdf.Estimated_Pipeline_Value, 'pipeline', reminderCur);
         }
         else
         {
             errorMsg = String.isBlank(mdf.Topic_Course) ? 'topic:Cannot be blank;' : '' + handleNumber(mdf.Number_of_Certifications, 'certifications', reminderMsg);
         }
-        errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg); //handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
-        errorMsg += convertReimbursementAmount(mdf, 'amount', reminderCur);
+        errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
         //errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
         return errorMsg;
-    }
-    //
-    global static String convertPipeline(MDF mdf, String elem, String reminder)
-    {
-        String pipelineCurrency = convertToCurrency(mdf.Estimated_Pipeline_Value);
-        if(String.isNotBlank(pipelineCurrency))
-        {
-            mdf.Estimated_Pipeline_Value = pipelineCurrency;
-            return '';
-        }
-        else
-        {
-            return elem + ':' + reminder;
-        }
-    }
-    //
-    global static String convertReimbursementAmount(MDF mdf, String elem, String reminder)
-    {
-        String result = convertToCurrency(mdf.Requested_Reimbursement_Amount);
-        if(String.isNotBlank(result))
-        {
-            mdf.Requested_Reimbursement_Amount = result;
-            return '';
-        }
-        else
-        {
-            return elem + ':' + reminder;
-        }
-    }
-    //
-    global static String convertToCurrency(String input)
-    {
-        if(String.isNotBlank(input))
-        {
-            Decimal d = null;
-            String tmp = input.trim();
-            try
-            {
-                d = Decimal.valueOf(input);
-                return tmp;
-            }catch(Exception ex)
-            {
-                Pattern p = Pattern.compile('^\\$(\\d{1,3}(\\,\\d{3})*|(\\d+))(\\.\\d{1,2})?$');
-                Matcher m = p.matcher(input);
-                if(m.matches())
-                {
-                    return input.replaceAll('\\$','').replaceAll(',','').replaceAll(' ','');
-                }
-                else
-                {
-                    return '';
-                }
-            }
-        }
-        else
-        {
-            return null;
-        }
     }
     
     global static String handleNumber(String num, String elem, String reminder)

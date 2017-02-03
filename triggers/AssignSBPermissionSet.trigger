@@ -1,5 +1,5 @@
 trigger AssignSBPermissionSet on User (after insert) {
-    /*List<PermissionSetAssignment> lstPermissionSetAssignment= new List<PermissionSetAssignment>();
+    List<PermissionSetAssignment> lstPermissionSetAssignment= new List<PermissionSetAssignment>();
     Set<Id> profileIds = new Set<Id>();
     //Adding elements in Array
     profileIds.add('00e50000000vvsg');
@@ -30,5 +30,5 @@ trigger AssignSBPermissionSet on User (after insert) {
     {
         insert lstPermissionSetAssignment;
     }
-    */
+    
 }

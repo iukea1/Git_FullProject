@@ -46,7 +46,7 @@
         <externalId>false</externalId>
         <label>Layout Number</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -68,7 +68,7 @@
         <inlineHelpText>Button, Link, Field, OrderBy, Limit</inlineHelpText>
         <label>Type</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

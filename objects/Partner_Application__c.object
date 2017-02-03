@@ -58,7 +58,7 @@
         <externalId>false</externalId>
         <label>Address Line 1</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -78,7 +78,7 @@
         <externalId>false</externalId>
         <label>City</label>
         <length>25</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -88,7 +88,7 @@
         <externalId>false</externalId>
         <label>Company Domain Name</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1373,7 +1373,7 @@
         <fullName>Email__c</fullName>
         <externalId>false</externalId>
         <label>Email</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -1420,7 +1420,7 @@
         <fullName>Phone__c</fullName>
         <externalId>false</externalId>
         <label>Phone</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Phone</type>
     </fields>
@@ -1456,7 +1456,7 @@
         <externalId>false</externalId>
         <label>State</label>
         <length>25</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1505,7 +1505,7 @@
         <externalId>false</externalId>
         <label>ZIP</label>
         <length>20</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

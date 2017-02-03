@@ -68,9 +68,15 @@ public class PartnerAccountSummaryController {
                     }
                 }
                 
-                PartnerContacts=[Select Id, Name, Title,Email, Phone,CanAllowPortalSelfReg from Contact where (AccountId=:PartnerAccount.Id or Contact.AccountId=:PartnerAccount.Id)];
-                PartnerAssets=[Select Id, Name, SerialNumber,InstallDate, Quantity,Contact.Name,Status, IsCompetitorProduct from Asset where (AccountId=:PartnerAccount.Id or ContactId=:LoggedInContact.Id)];
+                PartnerContacts=[Select Id, Name, Title,Email, Phone,CanAllowPortalSelfReg from Contact where AccountId=:PartnerAccount.Id ];
+                PartnerAssets=[Select Id, Name, SerialNumber,InstallDate, Quantity,Contact.Name,Status, IsCompetitorProduct from Asset where AccountId=:PartnerAccount.Id];
                 PartnerCases=[Select Id, CaseNumber, Contact.Name,Subject, Priority,CreatedDate,Status,Owner.Name,IsClosed from Case where AccountId=:PartnerAccount.Id and IsClosed=false];
+                System.debug('Contact'+PartnerContacts.size());
+                System.debug('Assets'+PartnerAssets.size());
+                System.debug('Cases'+PartnerCases.size());
+                System.debug('Open Opps'+OpenOppsList.size());
+                System.debug('Renewal Opps'+RenewalOppsList.size());
+                System.debug('Pending Deal Opps'+PendingDealReg.size());
             }
         }
     }

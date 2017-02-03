@@ -298,6 +298,8 @@
                 <apex:inputField value="{!RMA.DOA__c}"/>
                 <apex:inputField value="{!RMA.FA_Report_Needed__c}" rendered="{!!isPortalUser}"/>
                 <apex:inputField value="{!RMA.Problem_Description__c}" style="width:560px"/>
+                   <apex:inputField value="{!RMA.Compromised_Breached__c}" />
+                <apex:inputField value="{!RMA.Reason_for_Compromise_Breach__c}"  style="width:560px"/>
             </apex:pageBlockSection>
         </apex:pageBlock>
     </apex:form>

@@ -40,23 +40,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>IsServiceProviderTeam__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>End_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>test__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>EmailAddressFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Service_Provider_Team__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Account_ID__c</field>
+                <field>Manager_Text_Field__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -77,10 +69,6 @@
                 <field>RoleGrouping__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>OverrideOpportunity__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>qbdialer__InsideSales_Admin__c</field>
             </layoutItems>
@@ -94,11 +82,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
+                <field>Override_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Account_Reseller_Agreement__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Reseller_Agreement_Acknowledged__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -112,22 +104,6 @@
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Download Log History</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>300</height>
-                <page>ShowDownloadFilesList</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
     </layoutSections>
     <relatedObjects>UserRoleId</relatedObjects>
     <relatedObjects>ProfileId</relatedObjects>

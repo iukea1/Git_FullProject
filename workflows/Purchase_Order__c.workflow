@@ -355,7 +355,9 @@
         </actions>
         <active>true</active>
         <description>when the partial shipped field is cleared</description>
-        <formula>AND( NOT( Partial_Ship__c ),  PRIORVALUE(Partial_Ship__c) = True)</formula>
+        <formula>AND(
+NOT( Partial_Ship__c ), 
+PRIORVALUE(Partial_Ship__c) = True)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -424,7 +426,8 @@
         </actions>
         <active>true</active>
         <description>When Finance signs Rev Rec Checklist, move the PO Status to To be Scheduled</description>
-        <formula>AND( ISCHANGED( OppReleased__c ) ,    OppReleased__c  )</formula>
+        <formula>AND( ISCHANGED( OppReleased__c ) ,
+   OppReleased__c  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -439,7 +442,9 @@
         </actions>
         <active>true</active>
         <description>Send when Ops enters ship date for scheduling</description>
-        <formula>NOT( ISNULL( Ship_Date__c ) ) &amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipment Scheduled&quot;)) &amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipped - Partial&quot;)) &amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipped - Complete&quot;))</formula>
+        <formula>NOT( ISNULL( Ship_Date__c ) ) &amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipment Scheduled&quot;))
+&amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipped - Partial&quot;))
+&amp;&amp; NOT(ISPICKVAL( Status__c ,&quot;Shipped - Complete&quot;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

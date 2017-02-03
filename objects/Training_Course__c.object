@@ -95,14 +95,6 @@
         <visibleLines>25</visibleLines>
     </fields>
     <label>Course</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>Course_Code__c</columns>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <label>Course Name</label>
         <type>Text</type>

@@ -20,6 +20,10 @@
                 <field>Family</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IsPOCEnabled__c</field>
             </layoutItems>
@@ -47,6 +51,10 @@
                 <behavior>Edit</behavior>
                 <field>Standard_Cost__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Steelbrick_Product_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -64,10 +72,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RMA_Primary_Replacement__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__QuantityEditable__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

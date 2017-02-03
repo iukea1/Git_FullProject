@@ -4,6 +4,10 @@
         <plural>false</plural>
         <value>Product Campaign Mapping</value>
     </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Product Campaign Mapping</value>
+    </caseValues>
     <fields>
         <label><!-- CampaignId --></label>
         <name>CampaignId__c</name>

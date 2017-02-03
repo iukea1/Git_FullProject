@@ -331,7 +331,7 @@
         <relationshipLabel>Purchase Request Lines</relationshipLabel>
         <relationshipName>Purchase_Request_Lines</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>

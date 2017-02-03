@@ -13,7 +13,7 @@
     </alerts>
     <alerts>
         <fullName>ContractExtended</fullName>
-        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <ccEmails>notifications@silver-peak.com,renewalsTeam@silver-peak.com</ccEmails>
         <description>Notify Account Manger and Customer when Contract is extended</description>
         <protected>false</protected>
         <recipients>
@@ -90,7 +90,11 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>OR( ISCHANGED( EndDate ) &amp;&amp;  ISPICKVAL( Status , &quot;Activated&quot;), ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Draft&quot;), ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Expired&quot;) )</formula>
+        <formula>OR(
+ISCHANGED( EndDate ) &amp;&amp;  ISPICKVAL( Status , &quot;Activated&quot;),
+ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Draft&quot;),
+ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Expired&quot;)
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -101,10 +105,7 @@
         </actions>
         <active>true</active>
         <description>Set&apos;s actions to occur when contracts are created from an opportunity that is quoting edgeconnect products.</description>
-        <formula>AND( 
-ISPICKVAL(SBQQ__Quote__r.Product_Type__c, &quot;EDGECONNECT&quot;), 
-NOT(SBQQ__MasterContract__c) 
-)</formula>
+        <formula>AND(  ISPICKVAL(SBQQ__Quote__r.Product_Type__c, &quot;EDGECONNECT&quot;),  NOT(SBQQ__MasterContract__c)  )</formula>
         <triggerType>onCreateOnly</triggerType>
         <workflowTimeTriggers>
             <actions>

@@ -1,6 +1,6 @@
 /*
- * Controller of NewVirtualAsset page
- */
+* Controller of NewVirtualAsset page
+*/
 public class NewVirtualAssetController
 {
     private Map<String, String> params;
@@ -133,10 +133,10 @@ public class NewVirtualAssetController
         Asset.Name = '001BBC' + toHex(Integer.valueof(mac));
         Asset.SerialNumber = Asset.Name;
         Asset.Quantity = 1;
-       	List<Product2> lstECorchProd=[Select Id,Name from Product2 where Id=:Asset.Product2Id and Name='EC-ORCH'];
+        List<Product2> lstECorchProd=[Select Id,Name from Product2 where Id=:Asset.Product2Id and Name='EC-ORCH'];
         if(lstECorchProd!=null && lstECorchProd.size()>0)
         {
-             Asset.GMS_Nodes__c = '100000';
+            Asset.GMS_Nodes__c = '100000';
         }
         Asset.Ship_Date__c = Date.today();
         
@@ -150,7 +150,7 @@ public class NewVirtualAssetController
             Apexpages.addMessages(ex);
             return null;
         }
-
+        
         assetMac.AssetId__c = Asset.Id;
         try
         {
@@ -161,7 +161,7 @@ public class NewVirtualAssetController
             Apexpages.addMessages(ex);
             return null;
         }
-
+        
         License__c license = new License__c();
         if(lstECorchProd!=null && lstECorchProd.size()>0)
         {
@@ -181,7 +181,6 @@ public class NewVirtualAssetController
         try
         {
             insert license;
-            VirtualAssetManager.encryptLicense(license.Id);
             return license;
         }
         catch(DmlException ex)
@@ -203,7 +202,7 @@ public class NewVirtualAssetController
         }
         return s;
     }
-      
+    
     private static Asset_Mac__c getAMac()
     {
         List<Asset_mac__c> macs = [select Id, Name, Used__c, AssetId__c from Asset_mac__c where Used__c = false limit 1 for update];

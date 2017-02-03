@@ -130,10 +130,10 @@ public with sharing class NewVirtualShipmentController
         try
         {
             Integer index = Integer.valueOf(rowIndex);
-            if(index>0)
+            /*if(index>0)
             {
                 index=index-1;
-            }
+            }*/
             AssetLines.remove(index);
         }
         catch(Exception ex)
@@ -281,6 +281,7 @@ public with sharing class NewVirtualShipmentController
                 }
                 else
                 {
+                    
                     InsertShippedLineRecords(shipmentRecord.Id, updateAssetLines);
                 }
                 
@@ -382,9 +383,8 @@ public with sharing class NewVirtualShipmentController
         Set<Date> setDates= new Set<Date>();
         for(VirtualAssetManager.VirtualAsset virtualAsset : AssetLines)
         {
-            if(ECProductIds.containsKey(virtualAsset.Asset.Product2Id))
+            if(ECProductIds.containsKey(virtualAsset.Asset.Product2Id) && ECProductIds.get(virtualAsset.Asset.Product2Id) !='EC-ORCH')
             {
-                System.debug('setDates'+ virtualAsset.Asset.Evaluation_End_Date__c);
                 setDates.add(virtualAsset.Asset.Evaluation_End_Date__c);
             }
         }

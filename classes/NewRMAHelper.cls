@@ -49,7 +49,6 @@ global class NewRMAHelper
             Id rmaItemRecordTypeId = [select Id from RecordType where Name = 'Eval Return' and SobjectType = 'RMA_Item__c' limit 1].Id;
             for(Asset asset : assets)
             {
-                System.debug('getNewRMAItem');
                 RMA_Item__c rmaItem = getNewRMAItem(rma.Id, asset.Id, asset.Product2Id, rmaItemRecordTypeId);
                 rmaItems.add(rmaItem);
                 asset.Status = assetStatus;

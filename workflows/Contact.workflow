@@ -14,7 +14,7 @@
     </alerts>
     <alerts>
         <fullName>Partner_Role_Updated_On_Contact</fullName>
-        <ccEmails>andy@snapbi.com</ccEmails>
+        <ccEmails>Lindsey@snapbi.com</ccEmails>
         <description>Partner Role Updated On Contact</description>
         <protected>false</protected>
         <recipients>
@@ -43,24 +43,6 @@ Sales_Rejected_Comments__c</formula>
         <name>Contact Sales Rejected Date Time Stamp</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Contact_Set_Cloudingo_Merge_False</fullName>
-        <field>Cloudingo_Merge__c</field>
-        <literalValue>0</literalValue>
-        <name>Contact: Set Cloudingo Merge = False</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Disable_Allow_Self_Registration</fullName>
-        <field>CanAllowPortalSelfReg</field>
-        <literalValue>0</literalValue>
-        <name>Disable Allow Self Registration</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <outboundMessages>
@@ -105,24 +87,6 @@ Sales_Rejected_Comments__c</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Contact%3A Cloudingo Merge %3D True</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Cloudingo_Merge__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Contact_Set_Cloudingo_Merge_False</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>48</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Contact%3A Contact Role Task Reminders</fullName>
         <actions>
             <name>Reminder_Set_Contact_Role_on_Opportunity</name>
@@ -134,7 +98,7 @@ Sales_Rejected_Comments__c</formula>
             <operation>equals</operation>
             <value>Converted into Existing Opportunity</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Partner Role is Populated</fullName>
@@ -143,18 +107,13 @@ Sales_Rejected_Comments__c</formula>
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <criteriaItems>
+            <field>Contact.Partner_Role__c</field>
+            <operation>notEqual</operation>
+            <value>,User</value>
+        </criteriaItems>
         <description>Alert to Admin that a User has been assigned a Manager or Executive Role</description>
-        <formula>OR(
-AND(
-ISPICKVAL(Partner_Role__c,&quot;User&quot;),
-CONTAINS(PortalUser__r.UserRole.Name,&quot;Manager&quot;)
-),
-AND(
-ISPICKVAL(Partner_Role__c,&quot;Manager&quot;),
-CONTAINS(PortalUser__r.UserRole.Name,&quot;User&quot;)
-)
-)</formula>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>UponSetForSelfRegister</fullName>

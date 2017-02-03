@@ -11,7 +11,7 @@ Name field is the product model.</description>
         <externalId>false</externalId>
         <label>CampaignId</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

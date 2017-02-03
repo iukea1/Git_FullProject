@@ -5,6 +5,36 @@
     <allowedSubmitters>
         <type>allInternalUsers</type>
     </allowedSubmitters>
+    <allowedSubmitters>
+        <type>creator</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>amenjivar@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>arule@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>curtisc@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>lquilici@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>mueno@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>rmarqueling@silver-peak.com</submitter>
+        <type>user</type>
+    </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Vendor_Name__c</field>

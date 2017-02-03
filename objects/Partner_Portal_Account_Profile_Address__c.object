@@ -1335,7 +1335,7 @@
         <referenceTo>Partner_Account_Profile__c</referenceTo>
         <relationshipName>Partner_Portal_Accounts_Profile_Address</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>

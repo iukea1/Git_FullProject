@@ -24,19 +24,18 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
-            <formula>AND(
-NOT(ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;&quot;)),
-OR(
-ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;West&quot;),
-ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;South&quot;),
-ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;Central&quot;)
-),
-
+            <formula>AND( 
+NOT(ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;&quot;)), 
+OR( 
+ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;West&quot;), 
+ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;South&quot;), 
+ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;Central&quot;) 
+), 
 ISPICKVAL(Opportunity__r.Owner.GEO__c,&quot;NAM&quot;))</formula>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
         <label>Region West South Central goes to Pat Gilbreath</label>
-        <name>Region_West_goes_to_Pat_Gilbreath</name>
+        <name>Region_West_South_Central_goes_to_Pat_Gilbreath</name>
     </approvalStep>
     <approvalStep>
         <allowDelegate>true</allowDelegate>
@@ -50,17 +49,17 @@ ISPICKVAL(Opportunity__r.Owner.GEO__c,&quot;NAM&quot;))</formula>
         <entryCriteria>
             <formula>OR( 
 
-ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;&quot;),
-NOT(
-AND(
+ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;&quot;), 
+NOT( 
+AND( 
 OR( 
 ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;West&quot;), 
 ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;South&quot;), 
 ISPICKVAL(Opportunity__r.Owner.Region__c,&quot;Central&quot;) 
 ), 
-ISPICKVAL(Opportunity__r.Owner.GEO__c,&quot;NAM&quot;)
-)
-)
+ISPICKVAL(Opportunity__r.Owner.GEO__c,&quot;NAM&quot;) 
+) 
+) 
 )</formula>
         </entryCriteria>
         <label>Other Region goes to Chris Helfer</label>

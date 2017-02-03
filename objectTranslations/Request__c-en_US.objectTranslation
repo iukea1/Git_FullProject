@@ -332,7 +332,7 @@
     </fields>
     <fields>
         <help><!-- Input your justification and resubmit for approval --></help>
-        <label><!-- Extension Justification --></label>
+        <label><!-- Extension Request --></label>
         <name>Extension_Justification__c</name>
     </fields>
     <fields>
@@ -622,6 +622,10 @@
         <name>RSM_Approved__c</name>
     </fields>
     <fields>
+        <label><!-- RSM Manager1 --></label>
+        <name>RSM_Manager1__c</name>
+    </fields>
+    <fields>
         <label><!-- RSM Sales Director --></label>
         <name>RSM_Manager__c</name>
         <relationshipLabel><!-- POC Requests (RSM Sales Director) --></relationshipLabel>
@@ -641,7 +645,7 @@
         <name>Requested_Delivery_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Requested End Date --></label>
+        <label><!-- Extend to Date --></label>
         <name>Requested_End_Date__c</name>
     </fields>
     <fields>
@@ -774,7 +778,7 @@
         <name>TR_Approved__c</name>
     </fields>
     <fields>
-        <label><!-- TR Email --></label>
+        <label><!-- SE Email --></label>
         <name>TR_Email__c</name>
     </fields>
     <fields>
@@ -967,6 +971,10 @@
             <section>Approvers</section>
         </sections>
         <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
             <label><!-- Contact and Comments --></label>
             <section>Contact and Comments</section>
         </sections>
@@ -977,6 +985,33 @@
         <sections>
             <label><!-- Extension Justification --></label>
             <section>Extension Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Products and Ship To --></label>
+            <section>Products and Ship To</section>
+        </sections>
+        <sections>
+            <label><!-- Success Criteria --></label>
+            <section>Success Criteria</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sys Admin Layout</layout>
+        <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
+            <label><!-- Contact and Comments --></label>
+            <section>Contact and Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- POC Approvers --></label>
+            <section>POC Approvers</section>
         </sections>
         <sections>
             <label><!-- Products and Ship To --></label>

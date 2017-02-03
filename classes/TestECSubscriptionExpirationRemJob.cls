@@ -1,7 +1,7 @@
 @isTest
 public class TestECSubscriptionExpirationRemJob
 {
-    @isTest(SeeAllData=true)
+    @isTest
     static void test()
     {
         Account acc = new Account(Name='acme');
@@ -28,7 +28,7 @@ public class TestECSubscriptionExpirationRemJob
         Test.stopTest();
     }
     
-     @isTest(SeeAllData=true)
+     @isTest
     static void test_CustomerEvaluationAssets()
     {
         Account acc = new Account(Name='acme');
@@ -49,7 +49,7 @@ public class TestECSubscriptionExpirationRemJob
         Test.stopTest();
     }
     
-     @isTest(SeeAllData=true)
+     @isTest
     static void test_CustomerSubscriptionAssets()
     {
         Account acc = new Account(Name='acme');

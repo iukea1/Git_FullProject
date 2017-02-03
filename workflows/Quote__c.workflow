@@ -198,7 +198,13 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>and( OR(ISCHANGED( Discount_Max__c ),   ISCHANGED( Service_Discount_Max__c ), ISCHANGED( Quote_Discount__c )  ,  ISCHANGED( ConsultingDiscountMax__c )  ,  ISCHANGED(  Value_At_List__c  )  , ISCHANGED(   Quote_Amount_Rollup__c   )     ), Approval_Made__c =True)</formula>
+        <formula>and(
+OR(ISCHANGED( Discount_Max__c ),   ISCHANGED( Service_Discount_Max__c ), ISCHANGED( Quote_Discount__c )  ,  ISCHANGED( ConsultingDiscountMax__c )  ,
+
+ISCHANGED(  Value_At_List__c  )  , ISCHANGED(   Quote_Amount_Rollup__c   )  
+
+
+), Approval_Made__c =True)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

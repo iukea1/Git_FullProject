@@ -1,5 +1,6 @@
 global with sharing class CommunityDealRegistrationController 
 {
+    private String regionFilters;
     private Contact currUserCont;
     private Account currUserAct;
     private User currUser { get; set; }
@@ -55,13 +56,10 @@ global with sharing class CommunityDealRegistrationController
     private void loadCurrUser()
     {
         List<User> users = [select Id, Name, ContactId from User where Id = :UserInfo.getUserId() limit 1];
-        //System.debug('UserId: '+UserInfo.getUserId());
-        //System.debug('User: '+users);
         if(users.size() > 0)
         {
             this.currUser = users[0];
         }
-        //System.debug('Users: '+currUser);
     }
     
     private void loadCurrUserContact()
@@ -87,6 +85,16 @@ global with sharing class CommunityDealRegistrationController
            if(acts.size() > 0)
            {
                currUserAct = acts[0];
+               regionFilters = '()';
+               if(String.isNotBlank(currUserAct.GEO_Supported__c))
+               {
+                   String  [] regions = currUserAct.GEO_Supported__c.split(';');
+                   for(Integer num = 0; num < regions.size(); num ++)
+                   {
+                       regions[num] = '\'' + regions[num] +'\'';
+                   }
+                   regionFilters = '(' + String.join(regions, ',') + ')'; 
+               }
            }
            //System.debug('Account: '+currUserAct);
        } 
@@ -94,9 +102,6 @@ global with sharing class CommunityDealRegistrationController
     
     private Boolean validateLead(Lead record)
     {
-        //System.debug('lead: '+record);
-        //System.debug('reseller: '+ selectedResellerId);
-        //System.debug('distributor: '+selectedDistributorId);
         Boolean isValidated = true;
             
         //Required fields
@@ -133,18 +138,9 @@ global with sharing class CommunityDealRegistrationController
         }
         if(currUserAct.Partner_Type__c == 'Distributor')
         {
-           if(String.isNotBlank(selectedResellerId) && String.isNotBlank(selectedDistributorId))
+           if(String.isNotBlank(selectedResellerId))
            {
-               if(selectedResellerId.equalsIgnoreCase('other') && selectedDistributorId.equalsIgnoreCase('other'))
-               {
-                   if(String.isBlank(record.DealReg_Distributor_Text__c) || String.isBlank(record.DealReg_Reseller_Text__c))
-                   {
-                       isValidated=false;
-                   }
-               }else if(selectedResellerId.equalsIgnoreCase('other') && String.isBlank(record.DealReg_Reseller_Text__c))
-               {
-                   isValidated = false;
-               }else if(selectedDistributorId.equalsIgnoreCase('other') && String.isBlank(record.DealReg_Distributor_Text__c))
+               if(selectedResellerId.equalsIgnoreCase('other') && String.isBlank(record.DealReg_Reseller_Text__c))
                {
                    isValidated = false;
                }
@@ -153,36 +149,12 @@ global with sharing class CommunityDealRegistrationController
                isValidated = false;
            }
         }
-        if(currUserAct.Partner_Type__c == 'Reseller')
-        {
-            if(String.isBlank(selectedDistributorId))
-            {
-                isValidated = false;
-            }else if(selectedDistributorId == 'other')
-            {
-                if(String.isBlank(record.DealReg_Distributor_Text__c))
-                {
-                    record.DealReg_Distributor_Text__c.addError('Please input the reseller name, if you choose other reseller');
-                    isValidated = false;
-                }
-            }else
-            {
-                if(String.isNotBlank(record.DealReg_Distributor_Text__c)){
-                    isValidated = false; }
-            }
-            
-        }
         return isValidated;
     }
     
     public PageReference Save()
     {
-        /*System.debug('State: '+leadRecord.State);
-        System.debug('Country: '+leadRecord.Country);
-        System.debug('Distrbitor: '+selectedDistributorId);
-        System.debug('Reseller: '+selectedResellerId);
-        System.debug('Lead: '+leadRecord);*/
-        leadRecord.DealRegistrationDistributor__c  = selectedDistributorId.equalsIgnoreCase('Other')?null:String.isBlank(selectedDistributorId)?null:(ID)selectedDistributorId;
+        leadRecord.DealRegistrationDistributor__c  = String.isBlank(selectedDistributorId)?null:selectedDistributorId.equalsIgnoreCase('Other')?null:String.isBlank(selectedDistributorId)?null:(ID)selectedDistributorId;
         leadRecord.Deal_Registration_Reseller__c  = selectedResellerId.equalsIgnoreCase('Other')?null:String.isBlank(selectedResellerId)?null:(ID)selectedResellerId;
         leadRecord.Deal_Registration_Reseller_Contact__c = (leadRecord.NoDealRegistrationResellerContact__c)?null:(ID)leadRecord.Deal_Registration_Reseller_Contact__c;
         //Default Lead Values
@@ -197,7 +169,6 @@ global with sharing class CommunityDealRegistrationController
             SavePoint sp = Database.setSavepoint();
             try
             {
-                //System.debug('lead ==>  '+leadRecord);
                 leadRecord.Id = null;
                 insert leadRecord;
                 isSavedSuccess = true;
@@ -221,9 +192,9 @@ global with sharing class CommunityDealRegistrationController
             resellers.add(new SelectOption('', '--None--'));
             if(this.currUserAct != null)
             {
-                for( Account act : [select Id, Name from Account where Partner_Type__c = 'Reseller' and GEO_Supported__c = :currUserAct.GEO_Supported__c ])
+                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Reseller\' and GEO_Supported__c includes '+regionFilters))
                 {
-                    this.resellers.add(new SelectOption(act.Id, act.Name));
+                    this.resellers.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
                 }
             }
             resellers.add(new SelectOption('other', 'Other'));
@@ -241,9 +212,9 @@ global with sharing class CommunityDealRegistrationController
             distributors.add(new SelectOption('', '--None--'));
             if(currUserAct != null)
             {
-                for(Account act : [select Id, Name from Account where Partner_Type__c = 'Distributor' and GEO_Supported__c = :currUserAct.GEO_Supported__c ])
+                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Distributor\' and GEO_Supported__c includes '+regionFilters))
                 {
-                    this.distributors.add(new SelectOption(act.Id, act.Name));
+                    this.distributors.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
                 }
             }
             distributors.add(new SelectOption('other', 'Other'));
@@ -258,12 +229,10 @@ global with sharing class CommunityDealRegistrationController
     global static List<Contact> getResellerContacts(String id)
     {
         List<Contact> contacts = new List<Contact>();
-        //System.debug('get resellers: '+id);
         if(String.isNotBlank(id) && id instanceof ID)
         {
             contacts = [select id, Name from Contact where AccountId = :id];
         }
-        //System.debug(contacts);
         return contacts;
     }
 }

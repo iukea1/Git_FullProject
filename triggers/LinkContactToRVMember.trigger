@@ -21,10 +21,10 @@ trigger LinkContactToRVMember on rvpe__RVMember__c (after insert)
         
         if(matchedEmails.contains(contact.Email))
         {
-            if(duplicatedEmails.indexOf(contact.Email) < 0)
-            {
-                duplicatedEmails += contact.Email + ' \r\n';
-            }
+        	if(duplicatedEmails.indexOf(contact.Email) < 0)
+        	{
+            	duplicatedEmails += contact.Email + ' \r\n';
+        	}
         }
         else
         {

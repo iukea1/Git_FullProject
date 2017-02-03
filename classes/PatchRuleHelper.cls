@@ -221,7 +221,14 @@ public class PatchRuleHelper
                     {
                         Database.delete([select Id from LeadShare where LeadId in :effectiveObjs], false);
                         Database.insert(getPatchSharings(effectiveObjs), false);
-                        ShareLeadAndOpportunityToPartnerHelper.shareLeads(leadIds);
+                        if(System.isFuture())
+                        {
+                        	ShareLeadAndOpportunityToPartnerHelper.shareLeads(leadIds);
+                        }
+                        else
+                        {
+                        	ShareLeadAndOpportunityToPartnerHelper.willShareLeads(leadIds);
+                        }
                     }
                 }
                 else if(objs[0] instanceOf Opportunity)

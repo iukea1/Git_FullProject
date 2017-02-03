@@ -70,7 +70,17 @@
         </actions>
         <active>true</active>
         <description>this rule is used to undispatch RMA&apos;s for countries we do not want systems to go to on replacement automatically</description>
-        <formula>AND( OR( ispickval(ShipToCountry__c, &apos;Argentina&apos;) , ispickval(ShipToCountry__c, &apos;Mexico&apos;) , ispickval(ShipToCountry__c, &apos;Hong Kong&apos;) , ispickval(ShipToCountry__c, &apos;Saudi Arabia&apos;) , ispickval(ShipToCountry__c, &apos;Indonesia&apos;) , ispickval(ShipToCountry__c, &apos;Philippines&apos;) , ispickval(ShipToCountry__c, &apos;Israel&apos;) ),  IsSystemReplacement__c =1 , ispickval( RMA__r.Status__c , &apos;Dispatched&apos;)  )</formula>
+        <formula>AND(
+OR( ispickval(ShipToCountry__c, &apos;Argentina&apos;)
+, ispickval(ShipToCountry__c, &apos;Mexico&apos;)
+, ispickval(ShipToCountry__c, &apos;Hong Kong&apos;)
+, ispickval(ShipToCountry__c, &apos;Saudi Arabia&apos;)
+, ispickval(ShipToCountry__c, &apos;Indonesia&apos;)
+, ispickval(ShipToCountry__c, &apos;Philippines&apos;)
+, ispickval(ShipToCountry__c, &apos;Israel&apos;)
+),  IsSystemReplacement__c =1
+, ispickval( RMA__r.Status__c , &apos;Dispatched&apos;)
+ )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

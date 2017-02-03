@@ -9,7 +9,7 @@
         <externalId>false</externalId>
         <label>Handler</label>
         <length>100</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -30,7 +30,7 @@
         <externalId>false</externalId>
         <label>sObject Type</label>
         <length>50</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

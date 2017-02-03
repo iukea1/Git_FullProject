@@ -161,7 +161,7 @@
     </alerts>
     <alerts>
         <fullName>Return_Shipment_Instructions</fullName>
-        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <ccEmails>notifications@silver-peak.com,returns@silver-peak.com</ccEmails>
         <description>Return Shipment Instructions</description>
         <protected>false</protected>
         <recipients>
@@ -222,7 +222,7 @@
     </alerts>
     <alerts>
         <fullName>Return_Shipment_Instructions_Non_Eval_RMA</fullName>
-        <ccEmails>cs@silver-peak.com</ccEmails>
+        <ccEmails>cs@silver-peak.com,returns@silver-peak.com</ccEmails>
         <description>Return Shipment Instructions - Non Eval RMA&apos;s</description>
         <protected>false</protected>
         <recipients>
@@ -489,7 +489,7 @@
             <name>SetRMAforDispatch</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>User.UserType</field>
             <operation>equals</operation>
@@ -539,7 +539,9 @@
         </actions>
         <active>true</active>
         <description>This rule is designed to send an email alert when the EDI order has been dispatched.</description>
-        <formula>And(  ISPICKVAL( Status__c , &apos;Initiated&apos;) ,  ISPICKVAL(PRIORVALUE( Status__c) , &apos;Dispatched&apos;) )</formula>
+        <formula>And(
+ ISPICKVAL( Status__c , &apos;Initiated&apos;) ,
+ ISPICKVAL(PRIORVALUE( Status__c) , &apos;Dispatched&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -774,7 +776,9 @@
         </actions>
         <active>true</active>
         <description>Notify Contact, Creator and Account Owner when tracking information is updated.</description>
-        <formula>AND( ISCHANGED( Tracking_Information__c ), ISPICKVAL( Status__c, &apos;Shipped&apos;))</formula>
+        <formula>AND(
+ISCHANGED( Tracking_Information__c ),
+ISPICKVAL( Status__c, &apos;Shipped&apos;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

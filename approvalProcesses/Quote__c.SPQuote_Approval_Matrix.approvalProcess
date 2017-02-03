@@ -234,7 +234,11 @@
                 <type>user</type>
             </approver>
             <approver>
-                <name>dbeckus@silver-peak.com</name>
+                <name>eyeaman@silver-peak.com</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>rbooth@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

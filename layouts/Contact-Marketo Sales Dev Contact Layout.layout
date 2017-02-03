@@ -4,8 +4,16 @@
     <customButtons>New_Opportunity</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
     <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>DisableCustomerPortal</excludeButtons>
+    <excludeButtons>DisablePartnerPortal</excludeButtons>
+    <excludeButtons>DisablePrmSuperUser</excludeButtons>
+    <excludeButtons>EnableCustomerPortal</excludeButtons>
+    <excludeButtons>EnablePartnerPortalUser</excludeButtons>
+    <excludeButtons>EnablePrmSuperUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
+    <excludeButtons>ViewCustomerPortal</excludeButtons>
+    <excludeButtons>ViewPartnerPortalUser</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -24,14 +32,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Quote_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Cloudingo_Merge__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -119,20 +119,8 @@
                 <field>Skype4SF__skype_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PortalUser__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PortalUserActive__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PortalUserType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LMS_User_Id__c</field>
+                <field>ISR_Target__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -582,9 +570,6 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -703,10 +688,6 @@
         <fields>ACCOUNT.PHONE1</fields>
         <fields>ACCOUNT.TYPE</fields>
         <relatedList>Account.Renewal_Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>MDF_Request__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -2,9 +2,9 @@
 <Role xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseAccessLevel>None</caseAccessLevel>
     <contactAccessLevel>Edit</contactAccessLevel>
-    <description>COMDAIN HOMES PTY LTD Customer User</description>
+    <description>COMDAIN CORPORATE PTY LTD Customer User</description>
     <mayForecastManagerShare>false</mayForecastManagerShare>
-    <name>COMDAIN HOMES PTY LTD Customer User</name>
+    <name>COMDAIN CORPORATE PTY LTD Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
     <parentRole>ANZADirector</parentRole>
 </Role>

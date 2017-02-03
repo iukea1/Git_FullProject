@@ -59,8 +59,9 @@ global class PocRequestNotification implements Schedulable
         insert opp;
         Request__c request = new Request__c(Opportunity__c=opp.Id, Status__c='Shipped', Target_End_Date__c=Date.today());
         insert request;
-        
+        Test.startTest();
         PocRequestNotification notify = new PocRequestNotification();
         notify.execute(null);
+        Test.stopTest();
     }
 }

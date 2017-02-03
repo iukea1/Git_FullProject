@@ -50,7 +50,7 @@
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>true</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -61,6 +61,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -72,6 +73,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account Owner</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -87,6 +89,7 @@
         <relationshipName>AltRMAProd</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -100,6 +103,7 @@
         <relationshipName>R00N30000000t2EPEAY</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -113,6 +117,7 @@
         <required>false</required>
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -123,6 +128,7 @@
         <label>Contact Email</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -136,6 +142,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -146,6 +153,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Contact Phone</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Phone</type>
     </fields>
@@ -166,6 +174,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -175,6 +184,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formula>Asset__r.Product2.ProductCode</formula>
         <label>Faulty Part #</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -188,6 +198,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -199,6 +210,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Model of Asset</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -210,6 +222,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>20</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -220,6 +233,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Notes</label>
         <length>32000</length>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>5</visibleLines>
@@ -234,6 +248,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <relationshipName>R00N30000000t2CyEAI</relationshipName>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -244,6 +259,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Replacement Part #</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -256,6 +272,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <required>false</required>
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -268,8 +285,9 @@ After change set, get from RMA header if populated, otherwise same.</description
         <relationshipLabel>RMA Items</relationshipLabel>
         <relationshipName>RMALines</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -280,6 +298,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Receive Date</label>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -289,6 +308,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Repair Date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -303,6 +323,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>SSLSCACCARRIER</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -314,6 +335,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ship2AccountName</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -326,6 +348,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Ship2ContactName</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -337,6 +360,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>40</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -349,6 +373,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>40</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -360,6 +385,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>35</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -371,6 +397,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>255</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1320,6 +1347,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1330,6 +1358,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>10</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1341,6 +1370,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>25</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1351,6 +1381,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Ship Date</label>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1364,6 +1395,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <relationshipName>R00N500000021gyXEAQ</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1373,6 +1405,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <label>Ship-To Address</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -1383,6 +1416,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <length>50</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1393,6 +1427,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <formula>Asset__r.special_processing_instructions__c</formula>
         <label>Special Processing Notes</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1426,6 +1461,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         </picklist>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1450,6 +1486,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -1462,6 +1499,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <precision>18</precision>
         <required>false</required>
         <scale>1</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -1474,6 +1512,7 @@ After change set, get from RMA header if populated, otherwise same.</description
         <inlineHelpText>Copied from the asset that this asset requires special processing, see the notes on the asset line item</inlineHelpText>
         <label>Special Processing Flag</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1483,10 +1522,12 @@ After change set, get from RMA header if populated, otherwise same.</description
         <displayFormat>RMA Item - {YYYY}{MM}{DD}-{0}</displayFormat>
         <label>RMA Item</label>
         <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>RMA Items</pluralLabel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Eval_Return</fullName>
         <active>true</active>

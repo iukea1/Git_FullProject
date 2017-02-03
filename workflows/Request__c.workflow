@@ -26,10 +26,6 @@
             <type>email</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <field>RSM_Manager__c</field>
             <type>userLookup</type>
         </recipients>
@@ -81,10 +77,6 @@
         <recipients>
             <field>CC_List_5__c</field>
             <type>email</type>
-        </recipients>
-        <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
         </recipients>
         <recipients>
             <field>RSM_Manager__c</field>
@@ -201,10 +193,6 @@
             <type>email</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <field>RSM_Manager__c</field>
             <type>userLookup</type>
         </recipients>
@@ -262,10 +250,6 @@
             <type>email</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <field>RSM_Manager__c</field>
             <type>userLookup</type>
         </recipients>
@@ -321,10 +305,6 @@
         <recipients>
             <field>CC_List_5__c</field>
             <type>email</type>
-        </recipients>
-        <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
         </recipients>
         <recipients>
             <field>RSM_Manager__c</field>
@@ -435,10 +415,6 @@
         <recipients>
             <field>CC_List_5__c</field>
             <type>email</type>
-        </recipients>
-        <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
         </recipients>
         <recipients>
             <field>RSM_Manager__c</field>
@@ -732,15 +708,6 @@ Requested_End_Date__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_the_Status</fullName>
-        <field>Status__c</field>
-        <literalValue>Open</literalValue>
-        <name>Update the Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_the_status_to_Pending_Approval</fullName>
         <field>Status__c</field>
         <literalValue>Shipped- Pending Extension Approval</literalValue>
@@ -949,7 +916,7 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
             <name>SetRMAClosed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Request__c.Sending_Reminder_Email__c</field>
             <operation>equals</operation>
@@ -978,7 +945,7 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
             <name>Clear_Sending_Reminder_Email</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Request__c.Sending_Reminder_Email__c</field>
             <operation>equals</operation>
@@ -1041,16 +1008,6 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
         </actions>
         <active>true</active>
         <formula>LastModifiedDate &gt; CreatedDate</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Trigger POC Process</fullName>
-        <actions>
-            <name>Update_the_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <formula>AND ( NOT(ISNEW()), OR(ISCHANGED( International_Shipping__c ), ISCHANGED( Expedited_Shipping__c ), ISCHANGED( Number_of_Appliances__c )), ISPICKVAL(PRIORVALUE(Status__c),&quot;Approved to Ship&quot;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

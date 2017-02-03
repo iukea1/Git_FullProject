@@ -1298,7 +1298,7 @@ return true;
     @isTest
     static void testValidECServiceProviderProducts()
     {
-        Account testAcc= new Account(name='Name',Type='Prospect',Partner_Type__c='Service Provider');
+        Account testAcc= new Account(name='Name',Type='Prospect',Partner_Type__c='Service Provider',ECSP__c=true);
         insert testAcc;
         Contact contact = new Contact(FirstName = 'AcmeFirstname', LastName = 'AcmeLastname', Phone='123456789', Email = 'acme@acme.com', AccountId=testAcc.Id );
         insert contact;

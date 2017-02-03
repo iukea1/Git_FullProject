@@ -13,6 +13,7 @@ trigger AddActiveECBaseLicenseToECHardware on Asset (after insert, after update)
             {
                 assetIds.add(asset.Id);
             }
+            
         }
     }
     
@@ -26,12 +27,12 @@ trigger AddActiveECBaseLicenseToECHardware on Asset (after insert, after update)
             if(toUpdateAsset.Product2.Product_Category__c=='Appliance' && toUpdateAsset.Product2.Family=='Product')
             {
                 
-                hardwareECAssetIds.put(toUpdateAsset.Id, toUpdateAsset.AccountId);
+                hardwareECAssetIds.put(toUpdateAsset.Id,toUpdateAsset.AccountId);
             }
             
             if(toUpdateAsset.Product2.Product_Category__c=='Subscription' && toUpdateAsset.Product2.Family=='Virtual Image' && toUpdateAsset.Product2.Name.startsWith('EC-BASE' ))
             {
-                softwareECBaseAssetIds.put(toUpdateAsset.AccountId, toUpdateAsset.Id);
+                softwareECBaseAssetIds.put(toUpdateAsset.Id,toUpdateAsset.AccountId);
             }
             
         }
@@ -39,21 +40,15 @@ trigger AddActiveECBaseLicenseToECHardware on Asset (after insert, after update)
         // Assign Base Software Base License to the Hardware asset
         if(hardwareECAssetIds.size()>0)
         {
-            List<Asset> baseLicenses = [Select Id, AccountId from Asset where AccountId in :hardwareECAssetIds.values() and Product2.Family='Virtual Image' and Status in('Customer subscription Active','Customer Evaluation') and Product2.Name like 'EC-BASE-%' order by CreatedDate asc];
-            Map<Id, Id> accId2BaseLicenseId = new Map<Id, Id>();
-            for(Asset baseLicense : baseLicenses)
-            {
-                accId2BaseLicenseId.put(baseLicense.AccountId, baseLicense.Id);
-            }
-            Asset hardwareAssetToUpdate = null;
+            Asset hardwareAssetToUpdate=null;
             lstHardwareAssetToUpdate= new List<Asset>();
             for(Id assetId : hardwareECAssetIds.keySet())
             {
                 Id acctId= hardwareECAssetIds.get(assetId);
-                Id baseLicenseId = accId2BaseLicenseId.get(acctId);
-                if(baseLicenseId != null)
+                List<Asset> lstBaseLicenses= [Select Id from Asset where AccountId=:acctId and Product2.Family='Virtual Image' and Status in('Customer subscription Active','Customer Evaluation') and Product2.Name like 'EC-BASE-%' order by CreatedDate desc];
+                if(lstBaseLicenses!=null && lstBaseLicenses.size()>0)
                 {
-                    hardwareAssetToUpdate = new Asset(Id=assetId, Active_EC_Base_License__c=baseLicenseId);
+                    hardwareAssetToUpdate = new Asset(Id=assetId,Active_EC_Base_License__c=lstBaseLicenses[0].Id);
                     lstHardwareAssetToUpdate.add(hardwareAssetToUpdate);
                 }
             }
@@ -65,13 +60,22 @@ trigger AddActiveECBaseLicenseToECHardware on Asset (after insert, after update)
         // If the EC BASE license is created, then assign this ID to all hardware asset
         if(softwareECBaseAssetIds.size()>0)
         {
+            
+            Asset hardwareAssetToUpdate=null;
             lstHardwareAssetToUpdate = new List<Asset>();
-            List<Asset> hardwareAssets = [Select Id, AccountId from Asset where AccountId in :softwareECBaseAssetIds.keyset() and Product2.Family='Product' and Product2.Name like 'EC-%' order by CreatedDate desc];
-            for(Asset hardwareAsset : hardwareAssets)
+            for(Id assetId : softwareECBaseAssetIds.keySet())
             {
-                Id acctId = hardwareAsset.AccountId;
-                Id baseLicenseid = softwareECBaseAssetIds.get(acctId);
-                lstHardwareAssetToUpdate.add(new Asset(Id=hardwareAsset.Id, Active_EC_Base_License__c=baseLicenseid));
+                Id acctId= softwareECBaseAssetIds.get(assetId);
+                Set<Id> ids = (new Map<Id, Asset>([Select Id from Asset where AccountId=:acctId and Product2.Family='Product' and Product2.Name like 'EC-%' order by CreatedDate desc])).keySet();
+                if(ids!=null && ids.size()>0)
+                {
+                    for(Id hardWareId : ids)
+                    {
+                        hardwareAssetToUpdate = new Asset(Id=hardWareId,Active_EC_Base_License__c=assetId);
+                        lstHardwareAssetToUpdate.add(hardwareAssetToUpdate);
+                    }
+                    
+                }
             }
             if(lstHardwareAssetToUpdate.size()>0)
             {

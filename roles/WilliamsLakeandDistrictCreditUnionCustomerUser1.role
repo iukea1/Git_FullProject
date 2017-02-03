@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Williams Lake and District Credit Union Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>SalesManagerWestern</parentRole>
+    <parentRole>Sales_Manager_Central</parentRole>
 </Role>

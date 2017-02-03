@@ -72,10 +72,10 @@
                     <th rowspan="2">Grand Total</th>
                 </tr>
                 <tr class="header">
-                    <td >NX/VX $</td>
-                    <td >NX/VX %</td>
-                    <td >EdgeConnect $</td>
-                    <td >EdgeConnect %</td>
+                    <td >Physical $</td>
+                    <td >Physical %</td>
+                    <td >Virtual $</td>
+                    <td >Virtual %</td>
                     <td >Total</td>
                     <td>Amount</td> 
                 </tr>               

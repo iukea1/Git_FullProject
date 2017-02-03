@@ -12,13 +12,13 @@ trigger TriggerProvisionDecomissionOnAssets on Asset (after insert,after update)
     }
     else
     {
-       /* List<Account> spAccount=[select Id from Account where Name='Silver Peak Systems'];
+        List<Account> spAccount=[select Id from Account where Name='Silver Peak Systems'];
         System.debug('SilverPeakId'+ spAccount );
         if(spAccount!=null)
         {
             silverpeakSystemsId=spAccount[0].Id;
             
-        }*/
+        }
     }
     
     for(Asset toUpdateAsset:Trigger.New)

@@ -80,10 +80,6 @@
             <translation><!-- PATCH --></translation>
         </picklistValues>
     </fields>
-    <fields>
-        <label><!-- sfxId --></label>
-        <name>sfxId__c</name>
-    </fields>
     <layouts>
         <layout>Builds Layout</layout>
         <sections>

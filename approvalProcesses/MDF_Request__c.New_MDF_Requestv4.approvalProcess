@@ -437,6 +437,7 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
+            <booleanFilter>(1 AND 2 AND 3) OR (4 AND 5 AND 6)</booleanFilter>
             <criteriaItems>
                 <field>MDF_Request__c.GEO__c</field>
                 <operation>equals</operation>
@@ -451,6 +452,21 @@
                 <field>MDF_Request__c.Approval_Status_Hidden__c</field>
                 <operation>equals</operation>
                 <value>Approval 4</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>MDF_Request__c.RSM__c</field>
+                <operation>equals</operation>
+                <value>Pierre Langlois</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>MDF_Request__c.Approval_Status_Hidden__c</field>
+                <operation>equals</operation>
+                <value>Approval 3</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>MDF_Request__c.GEO__c</field>
+                <operation>equals</operation>
+                <value>EMEA</value>
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
@@ -533,18 +549,8 @@ Change Log:
             <value>Unsubmitted,Denied</value>
         </criteriaItems>
     </entryCriteria>
-    <finalApprovalActions>
-        <action>
-            <name>Funding_Request_Set_Status_Value_Below</name>
-            <type>FieldUpdate</type>
-        </action>
-    </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
-        <action>
-            <name>Funding_Request_Set_Status_Cancelled</name>
-            <type>FieldUpdate</type>
-        </action>
         <action>
             <name>Update_Reason_Denied_to_Blank</name>
             <type>FieldUpdate</type>
@@ -557,6 +563,10 @@ Change Log:
             <type>FieldUpdate</type>
         </action>
         <action>
+            <name>Funding_Request_Send_New_Funding_Request_Submitted_Template</name>
+            <type>Alert</type>
+        </action>
+        <action>
             <name>MDF_has_been_Submitted_External</name>
             <type>Alert</type>
         </action>
@@ -565,7 +575,7 @@ Change Log:
             <type>FieldUpdate</type>
         </action>
     </initialSubmissionActions>
-    <label>New MDF Requestv4</label>
+    <label>Funding Request Approval Process</label>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

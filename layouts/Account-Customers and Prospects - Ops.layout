@@ -34,30 +34,22 @@
                 <field>Renewal_Contact__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Payment_Terms__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>First_Asset_Quarter__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ECSP__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Opp_Count__c</field>
+                <field>Oppty_Healty__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Trigger_Assignment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -169,6 +161,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Maintenance_Discount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Public_Reference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Peer_to_Peer_Reference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reference_Status__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -486,50 +490,53 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CONTRACT.NAME</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <relatedList>Contract.Silver_Peak_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CONTRACT.NAME</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <relatedList>RelatedContractList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>New_Virtual_Asset</customButtons>
-        <customButtons>Open_RMA_POC</customButtons>
         <customButtons>Open_RMA_on_Account</customButtons>
         <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
+        <fields>Product_Name_And_Nodes__c</fields>
+        <fields>Ship_Date__c</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>Contract_Number_and_Status__c</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>Contract_End__c</fields>
+        <fields>Evaluation_End_Date__c</fields>
+        <fields>End_of_Maintenance__c</fields>
+        <fields>License_End_Date__c</fields>
         <relatedList>Asset.Silver_Peak_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Open_RMA_on_Account</customButtons>
+        <customButtons>New_Virtual_Asset</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
-        <relatedList>Asset.SteelBrick_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>Custom_New_Contract</customButtons>
-        <customButtons>SBQQ__RenewContracts</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>SP_Contract_Number__c</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Product_Name_And_Nodes__c</fields>
+        <fields>Ship_Date__c</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>Contract_Number_and_Status__c</fields>
         <fields>Contract_Type__c</fields>
-        <fields>CONTRACT.STATUS</fields>
-        <fields>CONTRACT.START_DATE</fields>
-        <fields>CONTRACT.END_DATE</fields>
-        <relatedList>Contract.SteelBrick_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>Custom_New_Contract</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>SP_Contract_Number__c</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
-        <fields>Contract_Type__c</fields>
-        <fields>CONTRACT.STATUS</fields>
-        <fields>CONTRACT.START_DATE</fields>
-        <fields>CONTRACT.END_DATE</fields>
-        <relatedList>Contract.Silver_Peak_Account__c</relatedList>
+        <fields>Contract_End__c</fields>
+        <fields>Evaluation_End_Date__c</fields>
+        <fields>End_of_Maintenance__c</fields>
+        <fields>License_End_Date__c</fields>
+        <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -602,15 +609,6 @@
         <fields>CAMPAIGN.STATUS</fields>
         <fields>CAMPAIGN.START_DATE</fields>
         <relatedList>Campaign.Sponsoring_Partner_2__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
-        <relatedList>Asset.Customer__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

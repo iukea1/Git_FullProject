@@ -412,7 +412,8 @@
     </alerts>
     <alerts>
         <fullName>NewHighPriorityCaseiscreated</fullName>
-        <ccEmails>tseteam@silver-peak.com</ccEmails>
+        <ccEmails>tseteam@silver-peak.com,</ccEmails>
+        <ccEmails>SEManagers@silver-peak.com</ccEmails>
         <description>New High Priority Case is created</description>
         <protected>false</protected>
         <recipients>
@@ -440,10 +441,6 @@
         </recipients>
         <recipients>
             <recipient>dhughes@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hgelman@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1001,7 +998,7 @@
             <name>SetOwnerToTSQ</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.Type</field>
             <operation>equals</operation>
@@ -1031,7 +1028,7 @@
             <name>EngineeringSupportCaseopened</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.Type</field>
@@ -1135,7 +1132,15 @@
         </actions>
         <active>true</active>
         <description>bypass trigger for new case ownership and send one from support</description>
-        <formula>AND( ISCHANGED( OwnerId ) ,  OR( ( $RecordType.Name = &apos;Technical Support&apos;) , ( $RecordType.Name = &apos;Incoming Email&apos;)  , ( $RecordType.Name =  &apos;WANstart&apos;)  ),  NOT(Contact.Testing__c) )</formula>
+        <formula>AND( ISCHANGED( OwnerId ) ,
+
+OR( ( $RecordType.Name = &apos;Technical Support&apos;) ,
+( $RecordType.Name = &apos;Incoming Email&apos;)  ,
+( $RecordType.Name =  &apos;WANstart&apos;) 
+),
+
+NOT(Contact.Testing__c)
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -1180,6 +1185,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 AND 2 OR 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1189,6 +1195,11 @@
             <field>Case.OwnerId</field>
             <operation>contains</operation>
             <value>Technical</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Orchestrator</value>
         </criteriaItems>
         <description>Change the case record type and type Technical Support</description>
         <triggerType>onAllChanges</triggerType>
@@ -1537,8 +1548,40 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND( NOT( ISCHANGED( UpdatedBy__c )),  NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;) )</formula>
+        <formula>AND( 
+NOT( ISCHANGED( UpdatedBy__c )), 
+NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;) 
+)</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notification to Csr Answer1 when its assigned to Tier1</fullName>
+        <actions>
+            <name>SendNewCaseNotification2CSR</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Severity__c</field>
+            <operation>notEqual</operation>
+            <value>P1- Urgent</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Priority</field>
+            <operation>notEqual</operation>
+            <value>P1 - Urgent</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,Technical Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Tier1</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>NotifyQueueOwner</fullName>
@@ -1548,7 +1591,13 @@
         </actions>
         <active>true</active>
         <description>Notify the Tech Support Queue email - back up to the unchecked owner transfer from Tier1 Queue</description>
-        <formula>AND (ISCHANGED( OwnerId),   OR ( PRIORVALUE( OwnerId) = &apos;00G500000016yiB&apos;, PRIORVALUE( OwnerId) = &apos;00530000000j42G&apos; ), NOT( Contact.Testing__c ) )</formula>
+        <formula>AND (ISCHANGED( OwnerId),  
+OR (
+PRIORVALUE( OwnerId) = &apos;00G500000016yiB&apos;,
+PRIORVALUE( OwnerId) = &apos;00530000000j42G&apos;
+),
+NOT( Contact.Testing__c )
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

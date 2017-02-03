@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Custom_Clone</customButtons>
     <customButtons>Define_Channel_On_Quote</customButtons>
     <customButtons>Add_Revenue_Recognition</customButtons>
-    <customButtons>Custom_Clone</customButtons>
-    <customButtons>Define_Channel</customButtons>
+    <customButtons>Patch_Lock_Unlock</customButtons>
+    <customButtons>Patch_Override_Opp</customButtons>
+    <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
-    <excludeButtons>ChangeOwnerOne</excludeButtons>
+    <customButtons>Merge</customButtons>
+    <customButtons>BL__Find_Reference</customButtons>
+    <customButtons>Define_Channel</customButtons>
     <excludeButtons>Clone</excludeButtons>
-    <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -32,8 +35,32 @@
                 <field>Technical_Responsible__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Channel_Sales_Mgr__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISR_Comp1__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CSP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sabrina__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -45,39 +72,31 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Co_Term__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Conversion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Related_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
+                <field>On_Time_Renewal__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Description</field>
+                <field>SP_OpEx_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Fiscal_Quarter_Name__c</field>
+                <field>HDWR_AMT__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Email__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Phone__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>WANstart_count__c</field>
+                <field>Sfwr_Amt__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -90,16 +109,16 @@
                 <field>NextStep</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_End__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>CloseDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>StageName</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ForecastCategoryName</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -110,8 +129,24 @@
                 <field>Dead_Reason__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>ForecastCategoryName</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opportunity_Source__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SP_PreMQL_Agent_Notes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CampaignId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -122,27 +157,50 @@
                 <field>Product_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Virtual_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Physical_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Undefined_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Channel_Manager__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>WANstartCaseCreated__c</field>
+                <field>I_brought_this_deal_to_Silver_Peak__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ECSP_HDWR_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ECSP_SFWR_Amount__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Environment</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_branches__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Applications__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OtherEnv__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Network_Speed__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -159,8 +217,8 @@
                 <field>Patch_Locked__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>GEO_Region__c</field>
+                <behavior>Edit</behavior>
+                <field>Transactional_Opportunity__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -170,7 +228,55 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Transactional_Opportunity__c</field>
+                <field>Bypassing_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Marketplace_Fulfillment__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Sales Team/Channel Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Registered_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <height>110</height>
+                <page>PartnerList</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_CAM_Assigned__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GEO_Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_Region__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>New_Business__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -224,13 +330,16 @@
                 <behavior>Edit</behavior>
                 <field>Win_Description__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Loss_Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Winner_Deal__c</field>
+            </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -249,48 +358,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Deal_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Deal_Reg__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Registration_Expiration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Deal_Approved_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PartnerAccountId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tier1_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tier2_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tier3_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Primary_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Registered_Partner__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Registered_Distributor__c</field>
             </layoutItems>
             <layoutItems>
@@ -298,20 +365,34 @@
                 <field>Registered_Distributor_Contact__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Competition__c</field>
+                <behavior>Edit</behavior>
+                <field>Deal_Reg__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Intial_Estimated_Close_Date__c</field>
+                <field>Primary_Partner__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deal_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Project_Budget__c</field>
+                <field>Deal_Approved_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Registration_Expiration__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Project_Budgeted__c</field>
+                <field>Days_Left_Until_Expire__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Deal_Source__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -320,10 +401,48 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Revenue Recognition Checklist</label>
+        <label>Marketing Data</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>eTrigue_Link__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LeadSource</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_Campaign_Type__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Renewal_Action__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Source_Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Finance_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Revenue Recognition Checklist</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Finance_Reviewed__c</field>
             </layoutItems>
             <layoutItems>
@@ -360,32 +479,13 @@
                 <behavior>Readonly</behavior>
                 <field>Signed_At__c</field>
             </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Marketing Data</label>
-        <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LeadSource</field>
+                <behavior>Edit</behavior>
+                <field>Comp_Hold_Release__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Last_Campaign_Type__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Source_Campaign__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Opportunity_Source__c</field>
+                <field>Shipped_Complete_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -435,20 +535,57 @@
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
+    <relatedContent>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItem>
+        </relatedContentItems>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>OwnerId</field>
+            </layoutItem>
+        </relatedContentItems>
+        <relatedContentItems>
+            <layoutItem>
+                <height>200</height>
+                <page>RenewalOpportunity</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItem>
+        </relatedContentItems>
+    </relatedContent>
     <relatedLists>
-        <customButtons>NewQuoteFromOpportunity</customButtons>
+        <customButtons>New_SPS_Quote</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>Quote_Date__c</fields>
-        <fields>Quote_Valid_Until__c</fields>
-        <relatedList>Quote__c.Opportunity__c</relatedList>
+        <fields>ApprovalStatus__c</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <fields>Product_Type__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>SBQQ__QuoteDocument__c.SBQQ__Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContactRoleList</relatedList>
+        <customButtons>NewQuoteFromOpportunity</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Quote_Date__c</fields>
+        <fields>Quote_Valid_Until__c</fields>
+        <fields>Approval_Status__c</fields>
+        <fields>Primary__c</fields>
+        <fields>Quote_Amount_Rollup__c</fields>
+        <fields>PreparedFor__c</fields>
+        <relatedList>Quote__c.Opportunity__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
@@ -467,6 +604,21 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Activity_Date__c</fields>
+        <fields>Latest_Update__c</fields>
+        <fields>Type__c</fields>
+        <fields>POC_Health__c</fields>
+        <fields>Comments__c</fields>
+        <fields>Bug_Id__c</fields>
+        <fields>Related_Case__c</fields>
+        <fields>Related_RMA__c</fields>
+        <fields>Release__c</fields>
+        <fields>NAME</fields>
+        <relatedList>SE_Activity__c.Opportunity__c</relatedList>
+        <sortField>Activity_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -483,14 +635,24 @@
         <relatedList>Request__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddProduct</excludeButtons>
         <excludeButtons>EditAllProduct</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
+        <fields>DiscountPercent__c</fields>
         <fields>Quantity</fields>
-        <fields>Discount</fields>
         <fields>TotalPrice</fields>
-        <fields>Forecast_Category__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>BL__ReqID__c</fields>
+        <fields>BL__ReferenceType__c</fields>
+        <fields>BL__Status__c</fields>
+        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
+        <sortField>BL__ReqID__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
@@ -502,6 +664,9 @@
         <fields>Ensemblestorage__FormatedSize__c</fields>
         <fields>Ensemblestorage__Tag__c</fields>
         <relatedList>Ensemblestorage__EnsembleFile__c.Ensemblestorage__Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedRecordConnectionList</relatedList>
@@ -566,6 +731,14 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>SplitOwner</fields>
+        <fields>SplitType</fields>
+        <fields>SplitPercentage</fields>
+        <fields>SplitAmount</fields>
+        <fields>SplitNote</fields>
+        <relatedList>RelatedOpportunitySplits</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>ACCOUNT.NAME</fields>
@@ -576,6 +749,32 @@
         <fields>Primary_Partner__c</fields>
         <fields>Registered_Partner__c</fields>
         <relatedList>Opportunity.Related_Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>T3chAccelerator__account_id__c</fields>
+        <fields>T3chAccelerator__Last_connected__c</fields>
+        <fields>T3chAccelerator__Presented_to__c</fields>
+        <fields>T3chAccelerator__story_progress__c</fields>
+        <relatedList>T3chAccelerator__Instance__c.T3chAccelerator__opportunity_id__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>re10__OrderStage__c</fields>
+        <fields>re10__SignDate__c</fields>
+        <fields>re10__Currency__c</fields>
+        <fields>re10__BusinessUnit__c</fields>
+        <fields>re10__Status__c</fields>
+        <fields>re10__OrderTotal__c</fields>
+        <relatedList>re10__GKOrderHeader__c.re10__Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -618,9 +817,14 @@
             <posY>1</posY>
         </summaryLayoutItems>
         <summaryLayoutItems>
-            <field>Registration_Expiration__c</field>
+            <field>Registered_Partner__c</field>
             <posX>3</posX>
             <posY>0</posY>
+        </summaryLayoutItems>
+        <summaryLayoutItems>
+            <field>Registration_Expiration__c</field>
+            <posX>3</posX>
+            <posY>1</posY>
         </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>

@@ -1,6 +1,6 @@
-global without sharing class PartnerPortalController
+public without sharing class PartnerPortalController
 {
-    global Boolean IsAuthorized
+    public Boolean IsAuthorized
     {
         get
         {
@@ -9,7 +9,7 @@ global without sharing class PartnerPortalController
     }
     
     @RemoteAction
-    global static String getDownloadLink(String docNumber)
+    public static String getDownloadLink(String docNumber)
     {
         return PartnerPortalDocumentDownloadController.getDownloadUrl(docNumber);
     }

@@ -32,10 +32,6 @@
                 <behavior>Edit</behavior>
                 <field>Reference__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Is_Asset_For_POC_Extended__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -144,11 +140,13 @@
         <fields>NAME</fields>
         <fields>Start_Date__c</fields>
         <fields>License_Expiration__c</fields>
-        <fields>Key__c</fields>
         <fields>Quantity__c</fields>
+        <fields>Key__c</fields>
         <relatedList>License__c.AssetId__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Open_Case_With_Asset</customButtons>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>NAME</fields>
         <fields>CASES.SUBJECT</fields>

@@ -138,10 +138,6 @@
             <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>jcameron@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Partner_Account_Templates/New_Partner_Approved_Distributor_Alert</template>
@@ -417,6 +413,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_Account_to_ECSP</fullName>
+        <field>ECSP__c</field>
+        <literalValue>1</literalValue>
+        <name>Set Account to ECSP</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SyncEmployeeFields</fullName>
         <field>NumberOfEmployees</field>
         <formula>Number_of_Employees__c</formula>
@@ -556,6 +561,25 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Account%3A Reseller Agreement Acknowledged True</fullName>
+        <actions>
+            <name>Account_Set_Type_Partner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Reseller_Agreement_Acknowledged__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Type</field>
+            <operation>notEqual</operation>
+            <value>Partner</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ActivateExpiredAccountField</fullName>
         <actions>
             <name>Send_Email_to_Marketing_when_the_expired_customer_is_checked</name>
@@ -634,6 +658,17 @@
         <active>true</active>
         <formula>AND( ISCHANGED(Active_Asset_Count__c), Active_Asset_Count__c &gt;0, NOT(OR(ISPICKVAL(PRIORVALUE(Type),&quot;Customer&quot;),ISPICKVAL(PRIORVALUE(Type),&quot;Partner&quot;))) )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set ECSP to True</fullName>
+        <actions>
+            <name>Set_Account_to_ECSP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used to automate the ECSP value when the Parent assigned to the account is set as ECSP.  Intent is to lock the field but allow newly created accounts to get updated properly through workflow, regardless of ECSP field rights of the creator.</description>
+        <formula>Parent.ECSP__c = TRUE</formula>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SetRecordTypetoCustomer</fullName>

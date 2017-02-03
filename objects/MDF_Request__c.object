@@ -135,6 +135,7 @@
         <fullName>Activity_Complete__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Client to check the checkbox in community after the activity date</inlineHelpText>
         <label>Activity Complete</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -426,8 +427,8 @@ Owner:User.Contact.Account.BillingCountry</formula>
     <fields>
         <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>the contact of Funding Request</description>
         <externalId>false</externalId>
+        <inlineHelpText>If client doesn&apos;t have a community login (not record owner), populate contact so that he/she can get the emails.</inlineHelpText>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
         <relationshipLabel>Funding Requests (Contact)</relationshipLabel>
@@ -710,18 +711,8 @@ Owner:User.Contact.Account.BillingCountry</formula>
         <fullName>Feedback_Complete__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Code to check the checkbox after client filled the post activity information in community.</inlineHelpText>
         <label>Results Complete</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Funds_Request_locked__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <inlineHelpText>Represents if community user has submit the post activity information</inlineHelpText>
-        <label>Request locked</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -846,6 +837,10 @@ INCLUDES(Owner:User.Contact.Account.GEO_Supported__c, &quot;APAC&quot;),
             </picklistValues>
             <picklistValues>
                 <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Denied</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -1250,8 +1245,8 @@ BR() &amp;
     <fields>
         <fullName>SendReminder__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>send email to user if the checkobx is checked</description>
         <externalId>false</externalId>
+        <inlineHelpText>A time-dependent workflow to check this checkbox and send alert email to client to remind them filling up the post activity information (one day after activity date)</inlineHelpText>
         <label>Send Reminder</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -1459,19 +1454,6 @@ BR() &amp;
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Total_Contacts_Reached__c</fullName>
-        <externalId>false</externalId>
-        <label>Total Contacts Reached</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Total_Estimated_Program_Costs__c</fullName>
         <externalId>false</externalId>
         <label>Total Estimated Program Costs</label>
@@ -1621,7 +1603,7 @@ BR() &amp;
         <fullName>post_event_follow_up_plan__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>What is your post event follow up plan?</inlineHelpText>
-        <label>Post activity follow up plan</label>
+        <label>What is your post event follow up plan?</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -1651,31 +1633,6 @@ BR() &amp;
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>All_EMEA_MDF_Requests</fullName>
-        <columns>NAME</columns>
-        <columns>Reference_field__c</columns>
-        <columns>OWNER.ALIAS</columns>
-        <columns>Accounting_PoC_Email__c</columns>
-        <columns>Accounting_PoC_Name__c</columns>
-        <columns>Activity_Complete__c</columns>
-        <columns>Activity_Date__c</columns>
-        <columns>Actual_Partner_Cost__c</columns>
-        <columns>Actual_Program_Cost__c</columns>
-        <columns>Approval_Status__c</columns>
-        <columns>GEO__c</columns>
-        <columns>Requested_Reimbursement_Amount__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>GEO__c</field>
-            <operation>equals</operation>
-            <value>EMEA</value>
-        </filters>
-        <label>All EMEA Funding Requests</label>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>All_MDF_Requests_In_Progress</fullName>
         <columns>NAME</columns>
         <columns>Reference_field__c</columns>
@@ -1692,7 +1649,7 @@ BR() &amp;
         <filters>
             <field>Approval_Status__c</field>
             <operation>notEqual</operation>
-            <value>Approved,Denied,Declined,Cancelled</value>
+            <value>Approved,Denied</value>
         </filters>
         <label>All Funding Requests In Progress</label>
         <sharedTo>
@@ -1702,17 +1659,18 @@ BR() &amp;
     <listViews>
         <fullName>Approved_MDF_Requests</fullName>
         <columns>NAME</columns>
+        <columns>PO_No__c</columns>
         <columns>Reference_field__c</columns>
         <columns>Type_of_Program__c</columns>
         <columns>Event_Campaign_Name__c</columns>
         <columns>Activity_Date__c</columns>
+        <columns>Estimated_Silver_Peak_Amount__c</columns>
         <columns>Activity_Complete__c</columns>
         <columns>Purchasing_Request__c</columns>
         <columns>Partner_Account__c</columns>
         <columns>OWNER.FIRST_NAME</columns>
         <columns>OWNER.LAST_NAME</columns>
         <columns>GEO__c</columns>
-        <columns>PO_No__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Approval_Status__c</field>
@@ -1734,6 +1692,7 @@ BR() &amp;
         <fullName>Approved_MDF_Requests_Partners</fullName>
         <columns>NAME</columns>
         <columns>Reference_field__c</columns>
+        <columns>Approval_Status__c</columns>
         <columns>Type_of_Program__c</columns>
         <columns>Event_Campaign_Name__c</columns>
         <columns>Activity_Date__c</columns>
@@ -1753,19 +1712,9 @@ BR() &amp;
         <label>3) Approved Funding Requests</label>
     </listViews>
     <listViews>
-        <fullName>Created_Today2</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>Created Today</label>
-    </listViews>
-    <listViews>
         <fullName>Denied_MDF_Requests_Partner</fullName>
         <columns>NAME</columns>
+        <columns>Approval_Status__c</columns>
         <columns>Partner_Account__c</columns>
         <columns>Type_of_Program__c</columns>
         <columns>Event_Campaign_Name__c</columns>
@@ -1898,7 +1847,7 @@ BR() &amp;
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>MDFs_Uploaded_Today</fullName>
+        <fullName>MDFs_Submitted_Today</fullName>
         <columns>NAME</columns>
         <columns>Reference_field__c</columns>
         <columns>Type_of_Program__c</columns>
@@ -1915,9 +1864,49 @@ BR() &amp;
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>12/24/2014 12:00 AM</value>
+            <value>TODAY</value>
         </filters>
-        <label>Funding Requests Uploaded Today</label>
+        <label>Funding Requests Submitted Today</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MFR_Requests_Requiring_Reason_Denied</fullName>
+        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Reference_field__c</columns>
+        <columns>Type_of_Program__c</columns>
+        <columns>Event_Campaign_Name__c</columns>
+        <columns>Activity_Date__c</columns>
+        <columns>Approval_Status__c</columns>
+        <columns>Reason_Rejected__c</columns>
+        <columns>GEO__c</columns>
+        <columns>Purchasing_Request__c</columns>
+        <columns>Partner_Account__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Approval_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </filters>
+        <filters>
+            <field>Reason_Rejected__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Approval_Status_Hidden__c</field>
+            <operation>notEqual</operation>
+            <value>,Pending,Approval 1,Approval 2,Approval 3,Approval 4,Approval 5</value>
+        </filters>
+        <filters>
+            <field>Approval_Status_Hidden__c</field>
+            <operation>notEqual</operation>
+            <value>Approval 6,Approved,Channel Approval,Sales Review</value>
+        </filters>
+        <label>MFR Requests Requiring Reason Denied</label>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -1973,6 +1962,7 @@ BR() &amp;
     <listViews>
         <fullName>Pending_MDF_Requests_In_Progress_Partners</fullName>
         <columns>NAME</columns>
+        <columns>Approval_Status__c</columns>
         <columns>Type_of_Program__c</columns>
         <columns>Event_Campaign_Name__c</columns>
         <columns>Activity_Date__c</columns>
@@ -2024,64 +2014,6 @@ BR() &amp;
         <label>Requests Requiring GL Code, Dept/Proj #</label>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Requests_Requiring_Reason_Denied</fullName>
-        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-        <columns>NAME</columns>
-        <columns>Reference_field__c</columns>
-        <columns>Type_of_Program__c</columns>
-        <columns>Event_Campaign_Name__c</columns>
-        <columns>Activity_Date__c</columns>
-        <columns>Approval_Status__c</columns>
-        <columns>Reason_Rejected__c</columns>
-        <columns>GEO__c</columns>
-        <columns>Purchasing_Request__c</columns>
-        <columns>Partner_Account__c</columns>
-        <columns>OWNER.FIRST_NAME</columns>
-        <columns>OWNER.LAST_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Approval_Status__c</field>
-            <operation>equals</operation>
-            <value>Pending</value>
-        </filters>
-        <filters>
-            <field>Reason_Rejected__c</field>
-            <operation>equals</operation>
-        </filters>
-        <filters>
-            <field>Approval_Status_Hidden__c</field>
-            <operation>notEqual</operation>
-            <value>,Pending,Approval 1,Approval 2,Approval 3,Approval 4,Approval 5</value>
-        </filters>
-        <filters>
-            <field>Approval_Status_Hidden__c</field>
-            <operation>notEqual</operation>
-            <value>Approval 6,Approved,Channel Approval,Sales Review</value>
-        </filters>
-        <label>Requests Requiring &apos;Reason Denied&apos;</label>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Unsubmitted_Requests</fullName>
-        <columns>NAME</columns>
-        <columns>Type_of_Program__c</columns>
-        <columns>Event_Campaign_Name__c</columns>
-        <columns>OWNER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Approval_Status__c</field>
-            <operation>equals</operation>
-            <value>Unsubmitted</value>
-        </filters>
-        <label>1) Unsubmitted Requests</label>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-            <allPartnerUsers></allPartnerUsers>
         </sharedTo>
     </listViews>
     <nameField>
@@ -3156,29 +3088,6 @@ BR() &amp;
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Event_Materials__c</picklist>
-            <values>
-                <fullName>Brochures%2C briefs or datasheets</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Giveaways</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver Peak banner stands</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Supplies %28power strip%2C extension cord%2C tape%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Table drapes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Event_Raffle__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -3192,10 +3101,6 @@ BR() &amp;
         <picklistValues>
             <picklist>MDF_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cancelled</fullName>
                 <default>false</default>
             </values>
@@ -3204,16 +3109,12 @@ BR() &amp;
                 <default>false</default>
             </values>
             <values>
+                <fullName>Denied</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>In Progress</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>Past Due</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pending Results</fullName>
-                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -3560,7 +3461,7 @@ BR() &amp;
     <sharingModel>Private</sharingModel>
     <validationRules>
         <fullName>Leads_should_not_exceed_Attendees</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>BLANKVALUE(Expected_Number_of_Leads__c, 0) &gt; BLANKVALUE(Expected_Audience_Size__c, 0) &amp;&amp; TEXT(Approval_Status__c) == &apos;Unsubmitted&apos;</errorConditionFormula>
         <errorMessage>You cannot submit an MDF where the number of leads exceeds the number of attendees. Please fix the data and submit again.</errorMessage>
     </validationRules>
@@ -3572,6 +3473,8 @@ BR() &amp;
         <masterLabel>Send URL To User</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>window.location.href=&quot;/apex/SendMDFURLToUser?id={! MDF_Request__c.Id }&quot;</url>
+        <url>if(confirm(&quot;An email will be sent to the contact or the MFR owner, do you want to continue?&quot;)) {
+window.location.href=&quot;/apex/SendMDFURLToUser?id={! MDF_Request__c.Id }&quot;;
+}</url>
     </webLinks>
 </CustomObject>

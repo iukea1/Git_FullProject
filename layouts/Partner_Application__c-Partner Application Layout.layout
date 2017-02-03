@@ -44,7 +44,7 @@
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Address_Line_1__c</field>
             </layoutItems>
             <layoutItems>
@@ -52,19 +52,19 @@
                 <field>Address_Line_2__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>City__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>State__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>ZIP__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Phone__c</field>
             </layoutItems>
             <layoutItems>
@@ -72,7 +72,7 @@
                 <field>I_have_a_pending__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Company_Domain_Name__c</field>
             </layoutItems>
         </layoutColumns>

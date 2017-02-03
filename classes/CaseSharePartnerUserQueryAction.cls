@@ -18,7 +18,7 @@ public class CaseSharePartnerUserQueryAction {
                     {
                         //partnerAcctName=partnerAcctName.replaceAll( '-', ' ');
                         //partnerAcctName= partnerAcctName.replaceAll( '\\s+', '');
-                        string portalRoleName= partnerAcctName+' Partner Manager';
+                        string portalRoleName= partnerAcctName+'Partner Manager';
                         
                         //portalRoleName=portalRoleName+'%';
                         //System.debug('partnerAcctName'+partnerAcctName);

@@ -101,7 +101,7 @@
         <relationshipLabel>Deficiency Components</relationshipLabel>
         <relationshipName>R00N30000001Bd64EAC</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>

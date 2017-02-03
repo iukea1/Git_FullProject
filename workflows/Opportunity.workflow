@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Closed_Won_New_and_FO</fullName>
+        <description>Closed Won New and FO</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ewhite@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rbooth@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Sales/Opportunity_Won_New</template>
+    </alerts>
+    <alerts>
         <fullName>Commit_Changed</fullName>
         <description>Commit Changed</description>
         <protected>false</protected>
@@ -63,6 +83,10 @@
         <description>Email finance that RevRec is signed off by RSM</description>
         <protected>false</protected>
         <recipients>
+            <recipient>elee@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>kreichert@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -71,7 +95,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>svalenzuela@silver-peak.com</recipient>
+            <recipient>trnguyen@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -169,6 +193,10 @@
         <recipients>
             <recipient>InsideSalesMgr</recipient>
             <type>roleSubordinatesInternal</type>
+        </recipients>
+        <recipients>
+            <recipient>afuoss@silver-peak.com</recipient>
+            <type>user</type>
         </recipients>
         <recipients>
             <recipient>ewhite@silver-peak.com</recipient>
@@ -416,6 +444,10 @@
             <recipient>eyeaman@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>mmartin@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Support/oppty_closed_stage</template>
     </alerts>
@@ -518,6 +550,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check_Partner_Initated_To_True</fullName>
+        <field>Deal_Reg__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Partner Initated To True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Clear_Bypassing_Validation</fullName>
         <field>Bypassing_Validation__c</field>
         <literalValue>0</literalValue>
@@ -558,33 +599,6 @@
         <field>Next_Step_Updated__c</field>
         <formula>TODAY()</formula>
         <name>Next Step Updated Time Stamp</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Opportunity_Set_Deal_Approval_Date</fullName>
-        <field>Deal_Approved_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Opportunity: Set Deal Approval Date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Opportunity_Set_Initl_Soln_Broadband</fullName>
-        <field>Deal_Type__c</field>
-        <literalValue>Broadband WAN</literalValue>
-        <name>Opportunity: Set Initl Soln = Broadband</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Opportunity_Set_Registration_Expir_Date</fullName>
-        <field>Registration_Expiration__c</field>
-        <formula>TODAY() + 90</formula>
-        <name>Opportunity: Set Registration Expir Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -731,6 +745,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Uncheck_Partner_Initated_Flag</fullName>
+        <field>Deal_Reg__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Partner Initated Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Last_Modified_Date</fullName>
         <field>Owner_Last_Activity_Date__c</field>
         <formula>LastModifiedDate</formula>
@@ -744,33 +767,6 @@
         <field>StageName</field>
         <literalValue>Discovery</literalValue>
         <name>Update Opp Stage as Discovery RSM</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Opportunity_Source</fullName>
-        <field>Opportunity_Source__c</field>
-        <literalValue>PIO</literalValue>
-        <name>Update Opportunity Source</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Opportunity_Source_BDR</fullName>
-        <field>Opportunity_Source__c</field>
-        <literalValue>BDR-List</literalValue>
-        <name>Update Opportunity Source_BDR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Opportunity_Source_RSM</fullName>
-        <field>Opportunity_Source__c</field>
-        <literalValue>RSM</literalValue>
-        <name>Update Opportunity Source_RSM</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -874,6 +870,21 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Check Partner Initated Flag</fullName>
+        <actions>
+            <name>Check_Partner_Initated_To_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+NOT(ISNULL( AccountId)),
+Account.Is_Partner_Initiated_Account__c,
+NOT(ISPICKVAL(Type,&quot;Marketplace&quot;)),
+New_Business__c 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Clear Bypassing Validation</fullName>
         <actions>
             <name>Clear_Bypassing_Validation</name>
@@ -921,7 +932,11 @@
         </actions>
         <active>true</active>
         <description>when a marketplace opp is closed, then set a bunch of fields</description>
-        <formula>AND ( ISPICKVAL(  Type , &quot;Marketplace&quot;), ISPICKVAL(  StageName , &quot;Closed Dead&quot;), ISCHANGED(StageName) )</formula>
+        <formula>AND (
+ISPICKVAL(  Type , &quot;Marketplace&quot;),
+ISPICKVAL(  StageName , &quot;Closed Dead&quot;),
+ISCHANGED(StageName)
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -951,7 +966,7 @@
             <name>NotifyVPMarketingtoauthorizeISRcreditonOpportunity</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.ISR_Credit__c</field>
             <operation>equals</operation>
@@ -994,7 +1009,7 @@
             <name>Send_email_to_registering_partner_sales_rep</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <formula>AND( NOT(ISPICKVAL(LeadSource,&quot;Deal Registration&quot;)),  OR( IsPICKVAL(Type,&quot;New Business&quot;), IsPICKVAL(Type,&quot;Follow on Business&quot;) ), NOT(ISBLANK(Registering_Partner__c)), NOT(ISBLANK(Registering_Partner_Sales_Rep__c)),  ISCHANGED(Registering_Partner_Sales_Rep__c) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1018,6 +1033,26 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Opportunity Closed Won%28New%26FO%29</fullName>
+        <actions>
+            <name>Closed_Won_New_and_FO</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>Follow on Business,New Business</value>
+        </criteriaItems>
+        <description>Sends an email when a new and follow on  opportunity is closed/won</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Opportunity Registration Converted</fullName>
         <actions>
             <name>Deal_Reg_Converted</name>
@@ -1027,11 +1062,7 @@
             <name>Deal_Reg_Converted_Partner</name>
             <type>Alert</type>
         </actions>
-        <actions>
-            <name>SetOppSourceToDR</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Opportunity.LeadSource</field>
             <operation>equals</operation>
@@ -1039,49 +1070,6 @@
         </criteriaItems>
         <description>When a deal registration converts from a lead, setup some of the data values for the opportunity</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Opportunity%3A Created from Deal Reg Lead</fullName>
-        <actions>
-            <name>Opportunity_Set_Deal_Approval_Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Opportunity_Set_Registration_Expir_Date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Opportunity.Converted_Lead_Record_Type__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Opportunity%3A Created with Initial Soln Interest %3D SD-WAN %28EdgeConnect%29</fullName>
-        <actions>
-            <name>Opportunity_Set_Initl_Soln_Broadband</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Opportunity.Deal_Type__c</field>
-            <operation>equals</operation>
-            <value>SD-WAN (EdgeConnect)</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Populate Account Terms on Opp</fullName>
-        <active>false</active>
-        <formula>ANd(
-OR(ISCHANGED( Registering_Partner__c ),
-ISCHANGED(Registered_Distributor__c )
-)
-
-
-)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Populate Stage Discovery created by RSM</fullName>
@@ -1279,20 +1267,47 @@ ISCHANGED(Registered_Distributor__c )
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Update Registered Partner</fullName>
+        <fullName>UnCheck Partner Intiated Flag</fullName>
+        <actions>
+            <name>Uncheck_Partner_Initated_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>false</active>
-        <criteriaItems>
-            <field>Opportunity.StageName</field>
-            <operation>equals</operation>
-            <value>Closed Won</value>
-        </criteriaItems>
+        <formula>AND(
+NOT(ISNULL( AccountId)),
+Account.Is_Partner_Initiated_Account__c,
+NOT(ISPICKVAL(Type,&quot;Marketplace&quot;)),
+NOT(New_Business__c) 
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>UpdateLeadSource</fullName>
         <active>false</active>
         <description>when a lead source is null, then update it to the opportunity source when that field is set or changes</description>
-        <formula>AND( If( CASE ( 1,  IF(ISPICKVAL (LeadSource, &quot;Inbound Call&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Web- Contact us&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Web - Search Engine&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Web- Trial Request&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Web- Info Ctr Sign up&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Mktng Email blast&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Event- Trade Show&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Event- LnL / Other SPEAK&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Event- Webinar&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Promo - White Paper dwnld&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM- Rolodex&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM - Brocade Referral&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM- Cust Referral&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM- EMC Referral&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM- VAR Referral&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;RSM- Other Tech Partner Ref&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;ISR- Referral from Lead&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;ISR- Research&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Legacy/Unknown&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Deal Registration&quot;), 1,0), &quot;Used&quot;, IF(ISPICKVAL (LeadSource, &quot;Customer Referral.&quot;), 1,0), &quot;Used&quot;, &quot;UnUsed&quot;) = &quot;UnUsed&quot;, True, False),  ISCHANGED( Opportunity_Source__c ) )</formula>
+        <formula>AND( If( CASE ( 1, 
+IF(ISPICKVAL (LeadSource, &quot;Inbound Call&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Web- Contact us&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Web - Search Engine&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Web- Trial Request&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Web- Info Ctr Sign up&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Mktng Email blast&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Event- Trade Show&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Event- LnL / Other SPEAK&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Event- Webinar&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Promo - White Paper dwnld&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM- Rolodex&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM - Brocade Referral&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM- Cust Referral&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM- EMC Referral&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM- VAR Referral&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;RSM- Other Tech Partner Ref&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;ISR- Referral from Lead&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;ISR- Research&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Legacy/Unknown&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Deal Registration&quot;), 1,0), &quot;Used&quot;,
+IF(ISPICKVAL (LeadSource, &quot;Customer Referral.&quot;), 1,0), &quot;Used&quot;,
+&quot;UnUsed&quot;) = &quot;UnUsed&quot;, True, False),  ISCHANGED( Opportunity_Source__c ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

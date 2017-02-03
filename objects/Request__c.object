@@ -564,7 +564,7 @@ Target_End_Date__c- Today()
         <fullName>Extension_Justification__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Input your justification and resubmit for approval</inlineHelpText>
-        <label>Extension Justification</label>
+        <label>Extension Request</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1187,6 +1187,18 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>RSM_Manager1__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Owner.ManagerId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RSM Manager1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>RSM_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1194,7 +1206,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_RSMM</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1206,7 +1218,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_VP</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1218,7 +1230,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_RSM</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1234,7 +1246,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
     <fields>
         <fullName>Requested_End_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Requested End Date</label>
+        <label>Extend to Date</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1258,7 +1270,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_SED</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1280,7 +1292,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_SEM</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1292,7 +1304,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <referenceTo>User</referenceTo>
         <relationshipName>POC_Requests_SE</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1499,7 +1511,7 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <externalId>false</externalId>
         <formula>Opportunity__r.Technical_Responsible__r.Email</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>TR Email</label>
+        <label>SE Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2389,6 +2401,10 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
                 <fullName>Shipped - Extended</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Shipped- Pending Extension Approval</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Type__c</picklist>
@@ -3037,7 +3053,7 @@ ISPICKVAL( POC_Type__c,&quot;Service Provider&quot; )
     </validationRules>
     <validationRules>
         <fullName>POCApprovercanbechangedbyOps</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND
 (
 NOT( Trigger_POC_Approvers__c ),
@@ -3051,9 +3067,8 @@ AND(NOT(ISBLANK(PRIORVALUE(SE_Director__c))),ISCHANGED( SE_Director__c )),
 AND(NOT(ISBLANK(PRIORVALUE(SE_Manager__c))),ISCHANGED( SE_Manager__c ))
 ),
 NOT($User.Id ==&apos;00550000001jvSe&apos;),
-NOT($User.Id ==&apos;00550000002rxts&apos;),
-NOT($User.Id ==&apos;005500000046uFt&apos;)
-
+NOT($User.Id ==&apos;005500000045fp1&apos;),
+NOT($User.Id ==&apos;00550000002rxts&apos;)
 )</errorConditionFormula>
         <errorMessage>You are not allowed to change POC Approvers.</errorMessage>
     </validationRules>
@@ -3201,12 +3216,11 @@ window.location.reload();</url>
 
 if(confirm(&quot;Once you submit this record for approval, you might not be able to edit it or recall it from the approval process depending on your settings. Continue?&quot;)) 
 { 
-var primaryQuote= sforce.connection.query(&quot;select Product_Type__c,Type from Opportunity where Id=&apos;{!Request__c.OpportunityId__c}&apos;&quot;);
-var queueNameQueryResult = primaryQuote.getArray(&quot;records&quot;);
+var primaryQuote= sforce.connection.query(&quot;select Product_Type__c,Type from Opportunity where Id=&apos;{!Request__c.OpportunityId__c}&apos;&quot;); 
+var queueNameQueryResult = primaryQuote.getArray(&quot;records&quot;); 
 
-var quoteInfo= sforce.connection.query(&quot;Select Id from Quote__C where Primary__c=true and Opportunity__c =&apos;{!Request__c.OpportunityId__c}&apos; and Id in (Select Quote__c from Quote_Line__c)&quot;);
-var quoteInfoQueryResult = quoteInfo.getArray(&quot;records&quot;);
-
+var quoteInfo= sforce.connection.query(&quot;Select Id from Quote__C where Primary__c=true and Opportunity__c =&apos;{!Request__c.OpportunityId__c}&apos; and Id in (Select Quote__c from Quote_Line__c)&quot;); 
+var quoteInfoQueryResult = quoteInfo.getArray(&quot;records&quot;); 
 var accountInfo=sforce.connection.query(&quot;select AccountId from Opportunity where Id=&apos;{!Request__c.OpportunityId__c}&apos;&quot;); 
 var accountInfoQueryResult = accountInfo.getArray(&quot;records&quot;); 
 var accId=accountInfoQueryResult[0].AccountId; 
@@ -3229,16 +3243,20 @@ if(reqType==&quot;WAN Op&quot;)
 { 
 var queryData=&quot;select Id from Asset where (NOT Product2.Name like &apos;EC%&apos;) and Status in(&apos;Customer Subscription&apos;,&apos;Customer Subscription Expired&apos;) and Product2.Family=&apos;Virtual Image&apos; and AccountId=&apos;&quot;+ accId+&quot;&apos;&quot;; 
 assetInfo=sforce.connection.query(queryData); 
-
+} 
+if(reqType==&quot;EdgeConnect&quot;) 
+{ 
+var queryData=&quot;select Id from Asset where Product2.Name like &apos;EC%&apos; and Status in(&apos;Customer Subscription Active&apos;,&apos;Customer Subscription Expired&apos;) and Product2.Family=&apos;Virtual Image&apos; and Product2.Product_Type__c=&apos;EDGECONNECT&apos; and AccountId=&apos;&quot;+ accId+&quot;&apos;&quot;; 
+assetInfo=sforce.connection.query(queryData); 
 } 
 if(assetInfo!=null &amp;&amp; assetInfo.size&gt;0 &amp;&amp; &apos;{!Request__c.Allow_Fulfillment__c}&apos;== false) 
 { 
 alert(&quot;You cannot fulfill this POC as the customer has existing assets. Please contact operations.&quot;); 
 } 
-else if(queueNameQueryResult!=null &amp;&amp; queueNameQueryResult[0].Type!=&quot;Marketplace&quot; &amp;&amp; (quoteInfoQueryResult== null ||quoteInfoQueryResult==&apos;&apos;))
-{
-alert(&quot;POC cannot be submitted for an approval as there is no primary quote defined for this opportunity or there are no quote lines added to the quote.&quot;);
-}
+else if(queueNameQueryResult!=null &amp;&amp; queueNameQueryResult[0].Type!=&quot;Marketplace&quot; &amp;&amp; (quoteInfoQueryResult== null ||quoteInfoQueryResult==&apos;&apos;)) 
+{ 
+alert(&quot;POC cannot be submitted for an approval as there is no primary quote defined for this opportunity or there are no quote lines added to the quote.&quot;); 
+} 
 else if((&apos;{!Request__c.Status__c}&apos;==&quot;Shipped&quot; ||&apos;{!Request__c.Status__c}&apos;==&quot;Shipped - Extended&quot;) &amp;&amp;&apos;{!JSENCODE(Request__c.Extension_Justification__c)}&apos;==&quot;&quot; ) 
 { 
 alert(&quot;Extension Justification is required.&quot;); 

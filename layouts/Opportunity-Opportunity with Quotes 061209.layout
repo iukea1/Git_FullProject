@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Define_Channel</customButtons>
+    <customButtons>Custom_Clone</customButtons>
+    <customButtons>Define_Channel_On_Quote</customButtons>
     <customButtons>Patch_Override_Opp</customButtons>
     <customButtons>Patch_Lock_Unlock</customButtons>
     <customButtons>Add_Revenue_Recognition</customButtons>
@@ -8,8 +9,7 @@
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
     <customButtons>BL__Find_Reference</customButtons>
-    <customButtons>Custom_Clone</customButtons>
-    <customButtons>Define_Channel_On_Quote</customButtons>
+    <customButtons>Define_Channel</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -75,16 +75,12 @@
                 <field>Related_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Email__c</field>
+                <behavior>Readonly</behavior>
+                <field>On_Time_Renewal__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Phone__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager__c</field>
+                <field>SP_OpEx_Opportunity__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -115,6 +111,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CampaignId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Channel_Manager__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_CAM_Assigned__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -302,6 +306,14 @@
                 <behavior>Readonly</behavior>
                 <field>Signature_of_Opportunity_Owner__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -315,6 +327,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Signed_At__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comp_Hold_Release__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shipped_Complete_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -542,9 +562,6 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -573,6 +590,16 @@
         <relatedList>Quote__c.Opportunity__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>New_SPS_Quote</customButtons>
+        <fields>NAME</fields>
+        <fields>ApprovalStatus__c</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <fields>Product_Type__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
@@ -632,13 +659,13 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddProduct</excludeButtons>
         <excludeButtons>EditAllProduct</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
+        <fields>DiscountPercent__c</fields>
         <fields>Quantity</fields>
-        <fields>Discount</fields>
         <fields>TotalPrice</fields>
-        <fields>Forecast_Category__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -736,6 +763,10 @@
         <fields>Primary_Partner__c</fields>
         <fields>Registered_Partner__c</fields>
         <relatedList>Opportunity.Related_Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>T3chAccelerator__Instance__c.T3chAccelerator__opportunity_id__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -20,19 +20,11 @@
         <template>Support/WANstart_order_closed</template>
     </alerts>
     <fieldUpdates>
-        <fullName>Inject_Term</fullName>
-        <field>Subscription_Term__c</field>
-        <formula>SBQQ__QuoteLine__r.SBQQ__SubscriptionTerm__c</formula>
-        <name>Inject Term</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Opportunity_Product_Set_Product_Type</fullName>
-        <field>Product_Type__c</field>
-        <formula>TEXT(Product2.Product_Type__c)</formula>
-        <name>Opportunity Product: Set Product Type</name>
+        <fullName>Product_Line_ACV</fullName>
+        <description>Updates ACV on Product Line</description>
+        <field>Term__c</field>
+        <formula>Product2.Term__c</formula>
+        <name>Product Line ACV</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -61,27 +53,14 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Opportunity Product%3A Created or Edited</fullName>
+        <fullName>Set Term on Opportunity Product</fullName>
         <actions>
-            <name>Opportunity_Product_Set_Product_Type</name>
+            <name>Product_Line_ACV</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>OpportunityLineItem.CreatedDate</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Populate Subscription Price</fullName>
-        <actions>
-            <name>Inject_Term</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>NOT(ISBLANK( Opportunity.SBQQ__PrimaryQuote__c ))</formula>
-        <triggerType>onCreateOnly</triggerType>
+        <formula>Term__c = null</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>training_order</fullName>

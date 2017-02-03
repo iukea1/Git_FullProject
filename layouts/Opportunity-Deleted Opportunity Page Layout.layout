@@ -52,16 +52,8 @@
                 <field>Related_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Email__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager_Phone__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Account_Manager__c</field>
+                <behavior>Readonly</behavior>
+                <field>On_Time_Renewal__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -182,6 +182,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Term__c</field>
+            <table>Product2</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>SBQQ__BlockPricingField__c</field>
             <table>Product2</table>
         </columns>

@@ -16,7 +16,7 @@
                     <a href="/{!partner.PartnerId}">{!partner.PartnerName}</a>
                 </apex:column>
             </apex:pageBlockTable>
-           <apex:pageBlockTable value="{!RightPartners}" var="partner" rendered="{!RightPartners.size > 0}" headerClass="partnerTable" footerClass="partnerTable">
+            <apex:pageBlockTable value="{!RightPartners}" var="partner" rendered="{!RightPartners.size > 0}" headerClass="partnerTable" footerClass="partnerTable">
                 <apex:column >
                     <b>{!partner.Role}</b>  
                 </apex:column>

@@ -26,10 +26,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ECSP__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Partner_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -42,19 +38,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Payment_Terms__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Asset_Quarter__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Opp_Count__c</field>
+                <field>Oppty_Healty__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -65,6 +49,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>GEO_Supported__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsCap__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Payment_Terms__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -92,7 +88,7 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
@@ -102,26 +98,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Key_Acct__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Dell_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EMC_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>HDS_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>VAR1_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>VAR2_Contact__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -139,10 +115,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Wan_Opt_Deployed__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Customer_Size_Potential__c</field>
             </layoutItems>
             <layoutItems>
@@ -155,26 +127,37 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Product_Discount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Maintenance_Discount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Primary_Market__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Active_Asset_Count__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsCap__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Reference Info</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Peer_to_Peer_Reference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Public_Reference__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reference_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -297,22 +280,6 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Sales Accelerator</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>200</height>
-                <page>DB4SF__AccountDetail</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -447,22 +414,6 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Box Files</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>600</height>
-                <page>box__AccountBoxSection</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
     <quickActionList>
         <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
@@ -471,13 +422,10 @@
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>FeedItem.PollPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>FeedItem.LinkPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
+            <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
@@ -539,17 +487,15 @@
     </relatedLists>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>SBQQ__MasterContract__c</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
         <fields>CONTRACT.STATUS</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
-        <fields>SP_Contract_Number__c</fields>
-        <relatedList>RelatedContractList</relatedList>
+        <relatedList>Contract.Silver_Peak_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Open_RMA_on_Account</customButtons>
-        <excludeButtons>New</excludeButtons>
         <fields>ASSET.NAME</fields>
         <fields>Product_Name_And_Nodes__c</fields>
         <fields>Ship_Date__c</fields>
@@ -560,7 +506,7 @@
         <fields>Evaluation_End_Date__c</fields>
         <fields>End_of_Maintenance__c</fields>
         <fields>License_End_Date__c</fields>
-        <relatedList>RelatedAssetList</relatedList>
+        <relatedList>Asset.Silver_Peak_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Learner_Contact__c</fields>
@@ -641,15 +587,6 @@
         <fields>CAMPAIGN.STATUS</fields>
         <fields>CAMPAIGN.START_DATE</fields>
         <relatedList>Campaign.Sponsoring_Partner_2__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
-        <relatedList>Asset.Customer__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

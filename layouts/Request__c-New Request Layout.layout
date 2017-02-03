@@ -3,7 +3,6 @@
     <customButtons>Submit_for_Approval_Custom</customButtons>
     <customButtons>Virtual_POC_Fulfillment</customButtons>
     <customButtons>Renew_Virtual_Assets</customButtons>
-    <customButtons>Refresh_POC_Approvers</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -30,6 +29,14 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>POC_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Fulfillment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RSM_Manager1__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -102,7 +109,7 @@
                 <field>Expedited_Shipping__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -232,7 +239,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4B000000NNEY</masterLabel>
+        <masterLabel>00h3800000VBnQT</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

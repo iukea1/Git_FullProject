@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -60,6 +60,7 @@
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Active</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -71,6 +72,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patch_Assignments1</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -79,6 +81,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Catchall</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -87,6 +90,7 @@
         <externalId>false</externalId>
         <label>Comments</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -98,6 +102,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patch_Assignments2</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -109,6 +114,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patches_O1</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -120,6 +126,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patches_O2</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -131,6 +138,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patch_Assignments4</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -141,6 +149,7 @@
         <label>Patch Name</label>
         <length>125</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -153,6 +162,7 @@
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -165,6 +175,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patch_Assignments</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -174,6 +185,7 @@
         <label>Rule Logic</label>
         <length>200</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -186,6 +198,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Patch_Assignments3</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -196,6 +209,7 @@
         <externalId>false</externalId>
         <label>Timestamp</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -223,6 +237,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -230,6 +245,7 @@
     <nameField>
         <displayFormat>P-{000}</displayFormat>
         <label>Patch Id</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Patches</pluralLabel>

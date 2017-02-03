@@ -14,6 +14,6 @@ public class AccountSummaryControllerTest {
       AccountSummaryController ext = new AccountSummaryController(sc);
       System.assertEquals(ext.account, accounts[0]);
       List<Account> accts = AccountSummaryController.getAccounts('AT');
-     
+      
    }   
 }

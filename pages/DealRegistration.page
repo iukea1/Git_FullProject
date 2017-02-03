@@ -360,7 +360,7 @@
             }
         });
             
-        var distributorSelector = $("select[id$='distributorSelect']");
+        /*var distributorSelector = $("select[id$='distributorSelect']");
             
         if(distributorSelector.val() == '')
         {
@@ -370,7 +370,7 @@
         }else
         {
             removeError(distributorSelector);
-        }
+        }*/
         
         var flag = $("input[id$='cannotFindContact']");
         var contactSelector = $("input[id$='resellerContactHidden']");
@@ -563,9 +563,9 @@
                         <li>
                             <!--<apex:outputPanel layout="block" styleClass="" id="distributorDetailPanel" rendered="{!currUserAct.Partner_Type__c == 'Distributor'}">-->
                             <apex:outputPanel layout="block" styleClass="" id="distributorDetailPanel">
-                                <div class="reg-label require">Distributor</div>
+                                <div class="reg-label">Preferred Distributor</div>
                                 <div class="reg-input">
-                                    <apex:selectList required="true" styleClass="input required" id="distributorSelect" size="1" onchange="showOtherDistributor()" value="{!selectedDistributorId}"><apex:selectOptions value="{!distributors}"/></apex:selectList>
+                                    <apex:selectList styleClass="input" id="distributorSelect" size="1" onchange="showOtherDistributor()" value="{!selectedDistributorId}"><apex:selectOptions value="{!distributors}"/></apex:selectList>
                                 </div> 
                             </apex:outputPanel>
                             <div class="panel" id="otherDistributerPanel">
@@ -604,7 +604,7 @@
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
                                 <apex:selectOption itemLabel="SD-WAN (EdgeConnect)" itemValue="SD-WAN (EdgeConnect)"></apex:selectOption>
                                 <apex:selectOption itemLabel="Wan Op" itemValue="Wan Op"></apex:selectOption>
-                                <apex:selectOption itemLabel="Republication" itemValue="Republication"></apex:selectOption>
+                                <apex:selectOption itemLabel="Replication" itemValue="Replication"></apex:selectOption>
                                 </apex:selectList></div>
                         </li>
                         <li>

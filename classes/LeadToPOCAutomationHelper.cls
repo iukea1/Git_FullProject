@@ -497,28 +497,6 @@ public without sharing class LeadToPOCAutomationHelper
         return false;
     }
     
-    @future
-    public static void willUpdateOpportunityDealRegDate(Set<Id> oppIds)
-    {
-        updateOpportunityDealRegDate(oppIds);
-    }
-    
-    public static void updateOpportunityDealRegDate(Set<Id> oppIds)
-    {
-        if(oppIds != null && oppIds.size() > 0)
-        {
-            Date today = Date.today();
-            List<Opportunity> opportunities = new List<Opportunity>();
-            for(Id oppId : oppIds)
-            {
-                opportunities.add(new Opportunity(Id=oppId, Deal_Approved_Date__c = today, Registration_Expiration__c = today.addDays(90)));
-            }
-            SilverPeakUtils.BypassingTriggers = true;
-            update opportunities;
-            SilverPeakUtils.BypassingTriggers = false;
-        }
-    }
-    
     public class ModelInfo
     {
         public String Name { get; set; } 

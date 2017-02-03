@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>PCB Piezotronics, Inc. Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>Sales_Manager_Central</parentRole>
+    <parentRole>SalesManagerEastern</parentRole>
 </Role>

@@ -1,4 +1,4 @@
-@IsTest	
+@IsTest 
 public class TestCaseShareWithPartnerManager {
     @IsTest(SeeAllData=true)
     public static void TestSharCaseWithManager()
@@ -28,6 +28,8 @@ public class TestCaseShareWithPartnerManager {
         caseData.Origin='Web';
         caseData.Priority='P3 - Normal';
         insert caseData;
+        
+     
         
     }
 

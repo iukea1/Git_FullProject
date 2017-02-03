@@ -9,7 +9,7 @@
         <externalId>false</externalId>
         <label>Campaign</label>
         <length>255</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -20,7 +20,7 @@
         <externalId>false</externalId>
         <label>Date</label>
         <length>255</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -30,7 +30,7 @@
         <externalId>false</externalId>
         <label>Index</label>
         <precision>3</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -42,7 +42,7 @@
         <externalId>false</externalId>
         <label>Transition State</label>
         <length>255</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>

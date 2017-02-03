@@ -42,7 +42,7 @@
         <action>Permanent</action>
         <isActive>true</isActive>
         <source>/BecomePartnerLegacy</source>
-        <target>/BecomePartner</target>
+        <target>/s/BecomePartner</target>
     </siteRedirectMappings>
     <siteRedirectMappings>
         <action>Permanent</action>
@@ -55,6 +55,12 @@
         <isActive>true</isActive>
         <source>/page_not_found</source>
         <target>/PartnerLogin</target>
+    </siteRedirectMappings>
+    <siteRedirectMappings>
+        <action>Permanent</action>
+        <isActive>true</isActive>
+        <source>/register</source>
+        <target>/s/BecomePartner</target>
     </siteRedirectMappings>
     <siteTemplate>PartnerPortalTemplate</siteTemplate>
     <siteType>ChatterNetwork</siteType>

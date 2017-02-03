@@ -9,7 +9,7 @@
         <externalId>false</externalId>
         <label>Hypervisor</label>
         <length>50</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -18,7 +18,7 @@
         <fullName>Link__c</fullName>
         <externalId>false</externalId>
         <label>Link</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>

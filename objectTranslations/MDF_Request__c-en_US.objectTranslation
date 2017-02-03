@@ -38,6 +38,7 @@
         <name>Accounting_PoC_Title__c</name>
     </fields>
     <fields>
+        <help><!-- Client to check the checkbox in community after the activity date --></help>
         <label><!-- Activity Complete --></label>
         <name>Activity_Complete__c</name>
     </fields>
@@ -174,6 +175,7 @@
         <name>Company_Billing_Address__c</name>
     </fields>
     <fields>
+        <help><!-- If client doesn&apos;t have a community login (not record owner), populate contact so that he/she can get the emails. --></help>
         <label><!-- Contact --></label>
         <name>Contact__c</name>
         <relationshipLabel><!-- Funding Requests (Contact) --></relationshipLabel>
@@ -285,13 +287,9 @@
         <name>Fast_Start_Marketing_Program__c</name>
     </fields>
     <fields>
+        <help><!-- Code to check the checkbox after client filled the post activity information in community. --></help>
         <label><!-- Results Complete --></label>
         <name>Feedback_Complete__c</name>
-    </fields>
-    <fields>
-        <help><!-- Represents if community user has submit the post activity information --></help>
-        <label><!-- Request locked --></label>
-        <name>Funds_Request_locked__c</name>
     </fields>
     <fields>
         <label><!-- GEO --></label>
@@ -337,6 +335,10 @@
         <picklistValues>
             <masterLabel>Completed</masterLabel>
             <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denied</masterLabel>
+            <translation><!-- Denied --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>In Progress</masterLabel>
@@ -504,6 +506,7 @@
         <name>Result_Detail__c</name>
     </fields>
     <fields>
+        <help><!-- A time-dependent workflow to check this checkbox and send alert email to client to remind them filling up the post activity information (one day after activity date) --></help>
         <label><!-- Send Reminder --></label>
         <name>SendReminder__c</name>
     </fields>
@@ -593,10 +596,6 @@
         <name>Total_Attendees__c</name>
     </fields>
     <fields>
-        <label><!-- Total Contacts Reached --></label>
-        <name>Total_Contacts_Reached__c</name>
-    </fields>
-    <fields>
         <label><!-- Total Estimated Program Costs --></label>
         <name>Total_Estimated_Program_Costs__c</name>
     </fields>
@@ -658,7 +657,7 @@
     </fields>
     <fields>
         <help><!-- What is your post event follow up plan? --></help>
-        <label><!-- Post activity follow up plan --></label>
+        <label><!-- What is your post event follow up plan? --></label>
         <name>post_event_follow_up_plan__c</name>
     </fields>
     <layouts>

@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Rigstar Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>SalesManagerEastern</parentRole>
+    <parentRole>ChannelSalesManagerWest</parentRole>
 </Role>

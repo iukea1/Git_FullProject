@@ -22,6 +22,11 @@
                 });
              })();
           </script>
+          <style>
+              .partner-data span {
+                  float: none;
+              }
+          </style>
             <apex:form >
             <div id="main">  
               <div id="content">

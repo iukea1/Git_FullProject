@@ -400,6 +400,16 @@ AND(ISPICKVAL(Opportunity__r.Type,&apos;Training/WanStart&apos;), ConsultingDisc
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IsSelectedForApproval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsSelectedForApproval</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Level3Required__c</fullName>
         <externalId>false</externalId>
         <formula>if(
@@ -594,7 +604,7 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <externalId>false</externalId>
         <label>Primary</label>
         <trackFeedHistory>true</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -676,7 +686,7 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <description>Quote Valid Until</description>
         <externalId>false</externalId>
         <label>Quote Valid Until</label>
-        <required>false</required>
+        <required>true</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

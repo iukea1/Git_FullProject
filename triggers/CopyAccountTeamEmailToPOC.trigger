@@ -1,6 +1,6 @@
 /*
-* copy account team member email to POCRequest before updating, inserting.
-*/
+ * copy account team member email to POCRequest before updating, inserting.
+ */
 trigger CopyAccountTeamEmailToPOC on Request__c (before update, before insert) 
 {      
     List<AccountTeamMember> managerMembers = new List<AccountTeamMember>();
@@ -14,7 +14,7 @@ trigger CopyAccountTeamEmailToPOC on Request__c (before update, before insert)
         request.Account_Manager_Email_2__c = null;
         request.System_Engineer_Email_1__c = null;
         request.System_Engineer_Email_2__c = null;     
-        
+    
         Boolean firstEmailAlreadySet = false;
         for(AccountTeamMember member : managerMembers)
         {
@@ -69,21 +69,16 @@ trigger CopyAccountTeamEmailToPOC on Request__c (before update, before insert)
     
     private void classifyAccountTeamMember(List<Id> accIds, List<AccountTeamMember> managerTM, List<AccountTeamMember> engineerTM )
     {
-        List<AccountTeamMember> lstAccountTeam=[SELECT Id, AccountId, User.Email, TeamMemberRole FROM AccountTeamMember WHERE AccountId in :accIds AND (TeamMemberRole = 'Account Manager' OR TeamMemberRole = 'Systems Engineer')];
-        if(lstAccountTeam!=null && lstAccountTeam.size()>0)
+        for(AccountTeamMember member : [SELECT Id, AccountId, User.Email, TeamMemberRole FROM AccountTeamMember WHERE AccountId in :accIds AND (TeamMemberRole = 'Account Manager' OR TeamMemberRole = 'Systems Engineer')])
         {
-            for(AccountTeamMember member : lstAccountTeam )
+            if(member.TeamMemberRole == 'Account Manager')
             {
-                if(member.TeamMemberRole == 'Account Manager')
-                {
-                    managerTM.add(member);            
-                }
-                else
-                {          
-                    engineerTM.add(member);
-                }
-            }    
-        }     
-    }
-    
+                managerTM.add(member);            
+            }
+            else
+            {          
+                engineerTM.add(member);
+            }
+        }    
+    }                
 }

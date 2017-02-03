@@ -22,7 +22,7 @@ public class CommunityDealRegistrationControllerTest
         Account currAct = new Account();
         CommunityDealRegistrationController controller = null;
         System.runAs(testPartnerUser){
-            SilverPeakUtils.BypassingTriggers = true;
+            //SilverPeakUtils.BypassingTriggers = true;
             controller = new CommunityDealRegistrationController();
             List<SelectOption> resellers = controller.getResellers();
             List<Contact> resellerContact = CommunityDealRegistrationController.getResellerContacts(resellers[1].getValue());

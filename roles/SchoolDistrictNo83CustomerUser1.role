@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>School District No. 83 Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>SalesManagerWestern</parentRole>
+    <parentRole>Sales_Manager_Central</parentRole>
 </Role>

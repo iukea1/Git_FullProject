@@ -137,7 +137,7 @@
         <externalId>false</externalId>
         <label>First Order Amt</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -147,7 +147,7 @@
         <fullName>First_Order__c</fullName>
         <externalId>false</externalId>
         <label>First Order</label>
-        <required>false</required>
+        <required>true</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -193,7 +193,7 @@
         <externalId>false</externalId>
         <label>First Year Total</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -240,7 +240,7 @@
         <externalId>false</externalId>
         <label>Last Order Amount</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -250,7 +250,7 @@
         <fullName>Last_Order_Date__c</fullName>
         <externalId>false</externalId>
         <label>Last Order Date</label>
-        <required>false</required>
+        <required>true</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -298,7 +298,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>AccountsWithTimeline</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -309,7 +309,7 @@
         <externalId>false</externalId>
         <label>90 days Total</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -356,7 +356,7 @@
         <externalId>false</externalId>
         <label>Total Sales</label>
         <precision>18</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

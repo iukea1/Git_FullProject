@@ -3,5 +3,5 @@
     <description>For chatter rest api</description>
     <disableProtocolSecurity>false</disableProtocolSecurity>
     <isActive>true</isActive>
-    <url>https://cs51.salesforce.com</url>
+    <url>https://na32.salesforce.com</url>
 </RemoteSiteSetting>

@@ -3,8 +3,8 @@ public  class ContactOwnershipHelper {
     public static void UpdateContactOwnership(Id accId)
     {
         List<Contact> lstContacts= new List<Contact>();
-        Account acc =[Select Id,Type,Patch__r.RSM__c,Patch__r.CSM__c, (select Id, OwnerId from Contacts) from Account where Id=:accId limit 1];
-        List<Contact> contacts=acc.Contacts;
+        Account acc =[Select Id,Type,Patch__r.RSM__c,Patch__r.CSM__c from Account where Id=:accId];
+        List<Contact> contacts=[Select Id,OwnerId from Contact where AccountId=:accId];
         if(contacts!=null && contacts.size()>0)
         {
             for(Contact con: contacts)
@@ -16,11 +16,15 @@ public  class ContactOwnershipHelper {
                         con.OwnerId= acc.Patch__r.RSM__c;
                         lstContacts.add(con);
                     }
+                    
                 }
                 if(acc.Type=='Other' || acc.Type=='Competitor')
                 {
+                    
                     con.OwnerId= '00550000002rxts';// Evan id;
                     lstContacts.add(con);
+                    
+                    
                 }
                 else if(acc.Type=='Partner')
                 {
@@ -30,6 +34,8 @@ public  class ContactOwnershipHelper {
                         lstContacts.add(con);
                     }
                 }
+                
+                
             }
         }
         
@@ -61,8 +67,11 @@ public  class ContactOwnershipHelper {
                 }
                 if(item.Account.Type=='Other' || item.Account.Type=='Competitor')
                 {
+                    
                     item.OwnerId= '00550000002rxts';// Evan id;
                     lstContactsToUpdate.add(item);
+                    
+                    
                 }
                 else if(item.Account.Type=='Partner')
                 {
@@ -72,31 +81,37 @@ public  class ContactOwnershipHelper {
                         lstContactsToUpdate.add(item);
                     }
                 }
+                
+                
+                
+                
             }
         }
-        if(lstContactsToUpdate.size()>0)
-        {
-            update lstContactsToUpdate;
-        }
-        
-    }
-
-    @future
-    public static void DisableAllowSelfReg(Set<Id> conList)
+    if(lstContactsToUpdate.size()>0)
     {
-        List<Contact> lstConToUpdate= new List<Contact>();
-        for(Id con: conList)
-        {
-            System.debug('CanAllowPortalSelfReg');
-            Contact item= new Contact();
-            item.Id=con;
-            item.CanAllowPortalSelfReg=false;
-            lstConToUpdate.add(item);
-        }
-
-        if(lstConToUpdate.size()>0)
-        {
-            update lstConToUpdate;
-        }
+        update lstContactsToUpdate;
     }
+    
+}
+
+@future
+public static void DisableAllowSelfReg(Set<Id> conList)
+{
+    List<Contact> lstConToUpdate= new List<Contact>();
+for(Id con: conList)
+{
+System.debug('CanAllowPortalSelfReg');
+Contact item= new Contact();
+item.Id=con;
+item.CanAllowPortalSelfReg=false;
+lstConToUpdate.add(item);
+
+}
+
+if(lstConToUpdate.size()>0)
+{
+update lstConToUpdate;
+}
+}
+
 }

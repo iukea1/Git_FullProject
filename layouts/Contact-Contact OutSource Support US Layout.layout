@@ -3,8 +3,17 @@
     <customButtons>Contact_Custom_Clone</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DisableCustomerPortal</excludeButtons>
+    <excludeButtons>DisablePartnerPortal</excludeButtons>
+    <excludeButtons>DisablePrmSuperUser</excludeButtons>
+    <excludeButtons>EnableCustomerPortal</excludeButtons>
+    <excludeButtons>EnablePartnerPortalUser</excludeButtons>
+    <excludeButtons>EnablePrmSuperUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
+    <excludeButtons>ViewCustomerPortal</excludeButtons>
+    <excludeButtons>ViewPartnerPortalUser</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -75,10 +84,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Quote_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -288,9 +293,6 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -399,10 +401,6 @@
         <fields>ACCOUNT.PHONE1</fields>
         <fields>ACCOUNT.TYPE</fields>
         <relatedList>Account.Renewal_Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>MDF_Request__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

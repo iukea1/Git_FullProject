@@ -48,7 +48,6 @@
                   if($.cookie('sso') == 1){
                       return true;
                   }else{
-                     
                       $("#overlayMessage").show();
                       $("#overlayBackground").show();
                       popup = window.open("/absorb_login", "_blank", "width=400,height=200");
@@ -79,7 +78,6 @@
               });
       }
       var url = window.location.href.toLowerCase();
-	 
       if(url.indexOf('partner.silver-peak.com') > 0) {
           url = url.replace('partner.silver-peak.com', 'partners.silver-peak.com');
           window.location = url;

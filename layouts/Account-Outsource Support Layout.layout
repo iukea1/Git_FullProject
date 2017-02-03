@@ -45,15 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>First_Asset_Quarter__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reseller_Agreement_Acknowledged__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Opp_Count__c</field>
+                <field>Oppty_Healty__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -372,6 +364,9 @@
         <fields>OwnerId</fields>
         <fields>ParentId</fields>
         <relatedLists>
+            <fields>CONTRACT.CONTRACT_NUMBER</fields>
+            <fields>CONTRACT.START_DATE</fields>
+            <fields>CONTRACT.END_DATE</fields>
             <relatedList>RelatedContractList</relatedList>
         </relatedLists>
         <relatedLists>
@@ -402,17 +397,13 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
     </quickActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
-        <fields>SBQQ__MasterContract__c</fields>
-        <fields>CONTRACT.STATUS</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT.STATUS</fields>
         <fields>SP_Contract_Number__c</fields>
         <relatedList>RelatedContractList</relatedList>
     </relatedLists>
@@ -510,15 +501,6 @@
         <fields>Actor</fields>
         <fields>Comments</fields>
         <relatedList>RelatedProcessHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
-        <relatedList>Asset.Customer__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

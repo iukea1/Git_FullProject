@@ -19,16 +19,8 @@
                 <field>AboutMe</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>test__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>EmailAddressFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Service_Provider_Team__c</field>
+                <field>Manager_Text_Field__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

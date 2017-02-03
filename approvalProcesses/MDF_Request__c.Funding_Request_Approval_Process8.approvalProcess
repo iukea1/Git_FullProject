@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
-    <active>true</active>
+    <active>false</active>
     <allowRecall>false</allowRecall>
     <allowedSubmitters>
         <type>creator</type>
@@ -366,8 +366,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>RSM__c</name>
-                <type>relatedUserField</type>
+                <name>uki@silver-peak.com</name>
+                <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>

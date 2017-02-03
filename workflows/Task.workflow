@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Meeting_Feedback_RSM</fullName>
-        <description>Meeting Feedback RSM</description>
+        <fullName>Send_Feedback_email_to_RSM</fullName>
+        <description>Send Feedback email to RSM</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <type>creator</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -23,10 +22,14 @@
             <type>creator</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>mmartin@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>noreply@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Send_an_email_to_BDR_for_reschedule</template>
     </alerts>
     <fieldUpdates>
@@ -39,40 +42,33 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>NewBDROverdueDate</fullName>
+        <field>IsTaskFeedbackSent__c</field>
+        <literalValue>1</literalValue>
+        <name>NewBDROverdueDate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
     <rules>
-        <fullName>New BDR Meeting Feedback</fullName>
-        <active>false</active>
+        <fullName>NewBDRDueDateOverdue</fullName>
+        <active>true</active>
         <criteriaItems>
             <field>Task.Subject</field>
-            <operation>contains</operation>
+            <operation>equals</operation>
             <value>New BDR Meeting</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Meeting_Feedback_RSM</name>
-                <type>Alert</type>
+                <name>NewBDROverdueDate</name>
+                <type>FieldUpdate</type>
             </actions>
-            <timeLength>24</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>New BDR Meeting Feedback1</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Task.Subject</field>
-            <operation>contains</operation>
-            <value>New BDR Meeting</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Meeting_Feedback_RSM</name>
-                <type>Alert</type>
-            </actions>
+            <offsetFromField>Task.ActivityDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -82,7 +78,34 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(  OR(LastModifiedBy.Profile.Name == &quot;1.1- Regional Sales Manager&quot;, LastModifiedBy.Profile.Name == &quot;1.4- Intl Regional Sales Manager&quot; ),CONTAINS(Subject,&quot;New BDR Meeting&quot;), ISPICKVAL( Meeting_Rating__c,&quot;No Show/Cancelled&quot;)  )</formula>
+        <formula>AND( 
+OR(LastModifiedBy.Profile.Name == &quot;1.1- Regional Sales Manager&quot;, LastModifiedBy.Profile.Name == &quot;1.4- Intl Regional Sales Manager&quot; )
+,CONTAINS(Subject,&quot;New BDR Meeting&quot;), 
+ISPICKVAL( Meeting_Rating__c,&quot;No Show/Cancelled&quot;) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send New BDR Feedback</fullName>
+        <actions>
+            <name>Send_Feedback_email_to_RSM</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Task.Subject</field>
+            <operation>equals</operation>
+            <value>New BDR Meeting</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Task.IsNewBDRTaskComplete__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Task.IsTaskFeedbackSent__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

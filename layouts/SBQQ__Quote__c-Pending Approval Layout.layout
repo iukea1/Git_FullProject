@@ -2,7 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>Recall_Quote_Approvals</customButtons>
-    <customButtons>SBQQ__GenerateDocument</customButtons>
     <excludeButtons>Edit</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -17,20 +16,24 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Product_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__StartDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SBQQ__ExpirationDate__c</field>
+                <field>SBQQ__Opportunity2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reseller_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Prepared_For__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -42,53 +45,25 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Product_Type_Old__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Prepared_For__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Quote_GEO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Level_2_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Level_4_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Distributor_Partner_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Quote_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IsSelected__c</field>
+                <field>Blended_Margin__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__QuoteTemplateId__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__Primary__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ApprovalStatus__c</field>
+                <field>SBQQ__Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__Opportunity2__c</field>
+                <field>SBQQ__ExpirationDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ApprovalStatus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -104,39 +79,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBQQ__Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Non_Registered_Discount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Registered_Discount__c</field>
             </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Additional Text</label>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Trigger_Email__c</field>
+                <field>SBQQ__Notes__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Will_Buy__c</field>
-            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Discount_Justification__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X1_Year_Products__c</field>
+                <behavior>Edit</behavior>
+                <field>Terms_Justification__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X3_Year_Products__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>X5_Year_Products__c</field>
+                <behavior>Edit</behavior>
+                <field>Customer_Will_Buy__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -146,26 +116,8 @@
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>Discount Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>New_End_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Blended_Margin__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Projected_End_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Total_Gross_Profit__c</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -247,19 +199,6 @@
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Additional Text</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__Notes__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -272,50 +211,15 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Debug</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Custom_End_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Cumulative_Daily_Rate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Daily_Rate__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__MasterContract__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Days_to_Credit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Days_of_Value__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Credit_Value__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -327,30 +231,29 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Quote Lines</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>180</height>
-                <page>QuoteLinesRelatedList</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>SBQQ__ProductCode__c</fields>
+        <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__Description__c</fields>
+        <fields>SBQQ__Quantity__c</fields>
+        <fields>Program_Discount__c</fields>
+        <fields>Reseller_Discount__c</fields>
+        <fields>SBQQ__DistributorDiscount__c</fields>
+        <fields>SBQQ__NetPrice__c</fields>
+        <fields>SBQQ__NetTotal__c</fields>
+        <fields>SBQQ__Optional__c</fields>
+        <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>sbaa__Actions__c</fields>
         <fields>NAME</fields>
         <fields>sbaa__ApprovalStep__c</fields>
-        <fields>sbaa__ApprovalChain__c</fields>
         <fields>sbaa__Approver__c</fields>
         <fields>sbaa__AssignedTo__c</fields>
         <fields>sbaa__Status__c</fields>
-        <fields>sbaa__Comments__c</fields>
+        <fields>sbaa__Rule__c</fields>
+        <fields>sbaa__CommentsLong__c</fields>
         <relatedList>sbaa__Approval__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -362,7 +265,6 @@
         <fields>SBQQ__ListTotal__c</fields>
         <fields>SBQQ__CustomerTotal__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
-        <fields>GroupLicenseValue__c</fields>
         <relatedList>SBQQ__QuoteLineGroup__c.SBQQ__Quote__c</relatedList>
         <sortField>SBQQ__Number__c</sortField>
         <sortOrder>Asc</sortOrder>
@@ -408,13 +310,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Opportunity__c</fields>
-        <fields>Quote_Date__c</fields>
-        <fields>Quote_Valid_Until__c</fields>
-        <relatedList>Quote__c.SteelBrick_Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -12,6 +12,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>First_Order_Amt__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>First_Order__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>First_Year_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Last_Order_Amt__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Last_Order_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Ninety_Days_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Total_Sales__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
         </layoutColumns>
@@ -48,6 +76,13 @@
     </layoutSections>
     <miniLayout>
         <fields>Name__c</fields>
+        <fields>First_Order_Amt__c</fields>
+        <fields>First_Order__c</fields>
+        <fields>First_Year_Total__c</fields>
+        <fields>Last_Order_Amt__c</fields>
+        <fields>Last_Order_Date__c</fields>
+        <fields>Ninety_Days_Total__c</fields>
+        <fields>Total_Sales__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

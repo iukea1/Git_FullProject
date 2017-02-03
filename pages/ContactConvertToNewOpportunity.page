@@ -16,9 +16,9 @@
                 <apex:outputField value="{!Opportunity.AccountId}" />
                 <apex:inputField value="{!Opportunity.Name}" />
                 <apex:selectList value="{!Opportunity.Type}" size="1" multiselect="false">
-                    <apex:selectOption itemLabel="--None--" itemValue="null" />
                     <apex:selectOption itemLabel="New Business" itemValue="New Business" />
                     <apex:selectOption itemLabel="Follow on Business" itemValue="Follow on Business" />
+                    <apex:selectOption itemLabel="Reseller Demo/NFR" itemValue="Reseller Demo/NFR" />
                 </apex:selectList>
                 <apex:inputField value="{!Opportunity.Deal_Type__c}" required="true" />
                 <apex:pageBlockSectionItem >

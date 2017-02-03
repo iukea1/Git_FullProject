@@ -143,8 +143,7 @@ public without sharing class DefineChannelQuoteController {
         }
         String result = '[{"id":"","text":"-NONE-"},';
         List<Account> accounts = new List<Account>();
-        //Partner_Type__c should be matched, not Type
-        String soql = 'select Id, Name from Account where Partner_Type__c=\'Reseller\' and Partner_level__c!=null and ParentId=null ';
+        String soql = 'select Id, Name from Account where Type=\'Partner\' and Partner_level__c!=null and ParentId=null ';
         if(rsmUserGEO!=null)
         {
             soql += 'and GEO_Supported__c includes ( \'' + rsmUserGEO + '\') ';

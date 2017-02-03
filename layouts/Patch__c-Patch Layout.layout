@@ -126,6 +126,9 @@
         </relatedLists>
     </miniLayout>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ProcessingSequence__c</fields>
         <fields>Type__c</fields>
         <fields>Operation__c</fields>

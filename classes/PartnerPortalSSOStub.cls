@@ -83,7 +83,6 @@ public without sharing class PartnerPortalSSOStub
             /* To avoid dml operation before call out.*/
             // Writes lms department id back to account profile.
             //if(!departmentValid)
-            
             if(deptProfile.Id == null)
             {
                 Partner_Account_Profile__c accountProfile;
@@ -106,7 +105,6 @@ public without sharing class PartnerPortalSSOStub
         {
             return null;
         }
-           //return  'https://full-silverpeak.cs51.force.com/idp/login?app=0sp4B0000008OJ3';
     }
 
     public static String md5Hash(String value)

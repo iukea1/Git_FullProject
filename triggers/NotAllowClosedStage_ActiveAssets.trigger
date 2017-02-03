@@ -10,25 +10,23 @@ trigger NotAllowClosedStage_ActiveAssets on Opportunity (before update) {
         }
     }
     
-    if(setOppIds.size() > 0)
+    List<Asset> lstAssets=[Select Id,POCRequest__r.Opportunity__c from Asset where Product2.Family='Product' and POCRequest__c  in (Select Id from Request__c where Opportunity__c in :setOppIds)];
+    setOppIds= new Set<Id>();
+    if(lstAssets!=null && lstAssets.size()>0)
     {
-        List<Asset> lstAssets=[Select Id,POCRequest__r.Opportunity__c from Asset where Product2.Family='Product' and POCRequest__c  in (Select Id from Request__c where Opportunity__c in :setOppIds)];
-        setOppIds= new Set<Id>();
-        if(lstAssets!=null && lstAssets.size()>0)
+        for(Asset asset: lstAssets)
         {
-            for(Asset asset: lstAssets)
-            {
-                setOppIds.add(asset.POCRequest__r.Opportunity__c);
-            }
-        }
-        
-        for(Opportunity item: Trigger.New)
-        {
-            if(setOppIds.size()>0 && setOppIds.contains(item.Id))
-            {
-                item.addError('This selected stage cannot be updated as it has active physical assets.');
-                
-            }
+            setOppIds.add(asset.POCRequest__r.Opportunity__c);
         }
     }
+    
+    for(Opportunity item: Trigger.New)
+    {
+        if(setOppIds.size()>0 && setOppIds.contains(item.Id))
+        {
+            item.addError('This selected stage cannot be updated as it has active physical assets.');
+            
+        }
+    }
+    
 }

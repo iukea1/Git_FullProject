@@ -4,7 +4,7 @@
     <forecastingTypeSettings>
         <active>true</active>
         <adjustmentsSettings>
-            <enableAdjustments>false</enableAdjustments>
+            <enableAdjustments>true</enableAdjustments>
         </adjustmentsSettings>
         <forecastRangeSettings>
             <beginning>0</beginning>
@@ -34,14 +34,14 @@
     <forecastingTypeSettings>
         <active>true</active>
         <adjustmentsSettings>
-            <enableAdjustments>false</enableAdjustments>
+            <enableAdjustments>true</enableAdjustments>
         </adjustmentsSettings>
         <forecastRangeSettings>
             <beginning>0</beginning>
             <displaying>3</displaying>
             <periodType>Month</periodType>
         </forecastRangeSettings>
-        <name>OpportunityLineItemRevenue</name>
+        <name>OpportunityRevenue</name>
         <opportunityListFieldsSelectedSettings>
             <field>OPPORTUNITY.NAME</field>
             <field>ACCOUNT.NAME</field>

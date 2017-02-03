@@ -8,7 +8,7 @@
         <fullName>EOMDate__c</fullName>
         <externalId>false</externalId>
         <label>EOM Date</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -17,7 +17,7 @@
         <externalId>false</externalId>
         <label>Model</label>
         <length>80</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -26,7 +26,7 @@
         <fullName>ShipDate__c</fullName>
         <externalId>false</externalId>
         <label>Ship Date (Prior to)</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>

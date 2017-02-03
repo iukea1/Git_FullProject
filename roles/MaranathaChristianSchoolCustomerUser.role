@@ -6,5 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Maranatha Christian School Customer User</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>SEAPAC</parentRole>
+    <parentRole>ANZADirector</parentRole>
 </Role>
