@@ -82,6 +82,44 @@
         <template>Support/InternalCaseUpdate</template>
     </alerts>
     <alerts>
+        <fullName>Email_Facilities_Support_Case_Creation</fullName>
+        <description>Email-Facilities Support Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>facilities@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/Facilities_Case_Creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_HR_Support_Case_Creation</fullName>
+        <description>Email- HR Support Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>hrhelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/HR_Support_Case_Creation</template>
+    </alerts>
+    <alerts>
         <fullName>Email_Help_Case_Opened</fullName>
         <description>Email - Help - Case Opened</description>
         <protected>false</protected>
@@ -1285,6 +1323,26 @@ NOT(Contact.Testing__c)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Facilities Case Creation</fullName>
+        <actions>
+            <name>Email_Facilities_Support_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Facilities</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Facilities</value>
+        </criteriaItems>
+        <description>This workflow rule will send an email notification to the customer about the case creation.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Google Alert</fullName>
         <actions>
             <name>NewCaseiscreatedGoogle</name>
@@ -1319,6 +1377,26 @@ NOT(Contact.Testing__c)
         </criteriaItems>
         <description>Notify Tier1 if Google opens a case in the portal</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>HR Support Case Creation</fullName>
+        <actions>
+            <name>Email_HR_Support_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>HR Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>HR Requests</value>
+        </criteriaItems>
+        <description>This workflow rule will send an email notification to the customer about the case creation.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Help - Case Opened</fullName>

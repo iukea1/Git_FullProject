@@ -9,7 +9,7 @@
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
         <accountAccessLevel>Edit</accountAccessLevel>
-        <caseAccessLevel>Edit</caseAccessLevel>
+        <caseAccessLevel>None</caseAccessLevel>
         <contactAccessLevel>Edit</contactAccessLevel>
         <name>AllInternalUsers</name>
         <opportunityAccessLevel>None</opportunityAccessLevel>

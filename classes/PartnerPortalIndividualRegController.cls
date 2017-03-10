@@ -1,5 +1,7 @@
 /*
  * Controller of page PartnerPortalIndividualReg
+ * Change Log:
+ * 2017-03-07: SnapBI-Andy: updated user messaging per client request
  */
 public without sharing class PartnerPortalIndividualRegController
 {
@@ -39,7 +41,8 @@ public without sharing class PartnerPortalIndividualRegController
     {
         if(userIsExist())
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'Our records indicate that you already have partner portal access. Please click on the Forgot your Password link <a href="https://partners.silver-peak.com/PartnerLogin" style="font-size:100%;margin:0;text-decoration:underline">here</a>.'));
+            //Error Scenario 1
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'Our records indicate that you already have partner portal access. Please click <a href="https://partners.silver-peak.com/PartnerPortalForgotPassword" style="font-size:100%;margin:0;text-decoration:underline">here</a> to reset your password.'));
             return null;
         }
         if(PortalTC == FALSE)
@@ -74,7 +77,8 @@ public without sharing class PartnerPortalIndividualRegController
                 }
                 else if(matchedAccounts.size() == 0)
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'We did not find any matching partner in our system. Please make sure your email address is right.'));
+                    //Error Scenario 3
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'We did not find any matching partner in our system. Please make sure your email address is correct or submit a partner application form <a href="https://partners.silver-peak.com/s/BecomePartner" style="font-size:100%;margin:0;text-decoration:underline" target="null">here</a>.'));
                     return null;
                 }
             }

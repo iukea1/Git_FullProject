@@ -291,7 +291,14 @@
         <fullName>Account_Set_Registered_Discount_NX_VX</fullName>
         <description>Set NXVX Reg Discount to 0.3</description>
         <field>Registered_Discount_Product__c</field>
-        <formula>0.3</formula>
+        <formula>IF(
+OR(
+ISBLANK(Registered_Discount_Product__c),
+Registered_Discount_Product__c = 0
+),
+0.3,
+Registered_Discount_Product__c
+)</formula>
         <name>Account: Set Registered Discount NX/VX</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -301,7 +308,14 @@
         <fullName>Account_Set_Registered_Discount_Service</fullName>
         <description>Set Registered Discount Service to 0.23</description>
         <field>Registered_Discount_Service__c</field>
-        <formula>0.23</formula>
+        <formula>IF( 
+OR( 
+ISBLANK(Registered_Discount_Service__c), 
+Registered_Discount_Service__c = 0 
+), 
+0.23, 
+Registered_Discount_Service__c 
+)</formula>
         <name>Account: Set Registered Discount Service</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -311,7 +325,14 @@
         <fullName>Account_Set_Registered_Edge_Connect</fullName>
         <description>Set Registered Edge Connect to 0.22</description>
         <field>Registered_Discount_EdgeConnect__c</field>
-        <formula>0.22</formula>
+        <formula>IF( 
+OR( 
+ISBLANK(Registered_Discount_EdgeConnect__c), 
+Registered_Discount_EdgeConnect__c = 0 
+), 
+0.22, 
+Registered_Discount_EdgeConnect__c 
+)</formula>
         <name>Account: Set Registered Edge Connect</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -321,7 +342,14 @@
         <fullName>Account_Set_Standard_Discount_Edge_Conn</fullName>
         <description>Set Standard Edge Connect to 0.10</description>
         <field>Standard_Discount_EdgeConnect__c</field>
-        <formula>0.10</formula>
+        <formula>IF( 
+OR( 
+ISBLANK(Standard_Discount_EdgeConnect__c), 
+Standard_Discount_EdgeConnect__c = 0 
+), 
+0.10, 
+Standard_Discount_EdgeConnect__c 
+)</formula>
         <name>Account: Set Standard Discount Edge Conn</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -330,7 +358,14 @@
     <fieldUpdates>
         <fullName>Account_Set_Standard_Discount_NX_VX</fullName>
         <field>Standard_Discount_Product__c</field>
-        <formula>0.15</formula>
+        <formula>IF( 
+OR( 
+ISBLANK(Standard_Discount_Product__c), 
+Standard_Discount_Product__c = 0 
+), 
+0.15, 
+Standard_Discount_Product__c 
+)</formula>
         <name>Account: Set Standard Discount NX/VX</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -340,7 +375,14 @@
         <fullName>Account_Set_Standard_Discount_Service</fullName>
         <description>Set Standard Discount Service to 0.05</description>
         <field>Standard_Discount_Service__c</field>
-        <formula>0.05</formula>
+        <formula>IF( 
+OR( 
+ISBLANK(Standard_Discount_Service__c), 
+Standard_Discount_Service__c = 0 
+), 
+0.05, 
+Standard_Discount_Service__c 
+)</formula>
         <name>Account: Set Standard Discount Service</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -547,22 +589,40 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Account%3A Reseller Agreement Acknowledged %3D True</fullName>
-        <actions>
-            <name>Account_Set_Type_Partner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Reseller_Agreement_Acknowledged__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Account%3A Reseller Agreement Acknowledged True</fullName>
         <actions>
+            <name>Account_Set_Partner_Level_to_Reigstered</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Partner_Type_to_Reseller</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Registered_Discount_NX_VX</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Registered_Discount_Service</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Registered_Edge_Connect</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Standard_Discount_Edge_Conn</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Standard_Discount_NX_VX</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Account_Set_Standard_Discount_Service</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
             <name>Account_Set_Type_Partner</name>
             <type>FieldUpdate</type>
         </actions>
@@ -571,11 +631,6 @@
             <field>Account.Reseller_Agreement_Acknowledged__c</field>
             <operation>equals</operation>
             <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Type</field>
-            <operation>notEqual</operation>
-            <value>Partner</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

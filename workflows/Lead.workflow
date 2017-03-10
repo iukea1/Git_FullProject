@@ -64,11 +64,11 @@
         <description>Email Alert for ISR/CSM that RSM Approval is Pending</description>
         <protected>false</protected>
         <recipients>
-            <field>CSM__c</field>
-            <type>userLookup</type>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
         </recipients>
         <recipients>
-            <field>ISR__c</field>
+            <field>CSM__c</field>
             <type>userLookup</type>
         </recipients>
         <recipients>
@@ -282,6 +282,22 @@
         <template>Free_Trial_Offer/Domain_Restricted</template>
     </alerts>
     <alerts>
+        <fullName>Send_Deal_Reg_Denied_to_Internal_Team</fullName>
+        <description>Send Deal Reg Denied to Internal Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>CSM__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Patch_Owner__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DealRegistrations/Deal_Registration_Rejected_Before_Approval</template>
+    </alerts>
+    <alerts>
         <fullName>Send_VXX_Keys</fullName>
         <description>Send VXX Keys</description>
         <protected>false</protected>
@@ -295,6 +311,31 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Free_Trial_Offer/VXXKeys</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_to_BDR_for_review</fullName>
+        <ccEmails>mmartin@silver-peak.com</ccEmails>
+        <description>Send to BDR for review</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ISR__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>noreply@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DealRegistrations/Deal_Registration_Created</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_to_Partner_for_denied_deal_reg</fullName>
+        <description>Send to Partner for denied deal reg</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Registered_Partner_Sales_Rep__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DealRegistrations/Deal_Registration_Rejected_Before_Approval</template>
     </alerts>
     <fieldUpdates>
         <fullName>Approved_Time_Trigger_15_mins</fullName>
@@ -950,6 +991,20 @@ Sales_Rejected_Comments__c</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Deal Reg Send to BDR for qualification</fullName>
+        <actions>
+            <name>Send_to_BDR_for_review</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.LeadSource</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>Flip Trial Requests to Lead</fullName>
         <actions>
             <name>SetRecTypeToLead</name>
@@ -1456,6 +1511,43 @@ Deal_Reg__c,  DATEVALUE(CreatedDate) =  TODAY(), NOT( Trigger_Submission__c ) )<
         </criteriaItems>
         <description>When a deal reg is created by web-2-lead, the lead owner is default to lead creator (Curtis). Use this workflow to re-assign the owner.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Email To Customer for deal reg rejected before approval</fullName>
+        <actions>
+            <name>Send_Deal_Reg_Denied_to_Internal_Team</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Send_to_Partner_for_denied_deal_reg</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Deal_Reg_Denied_Checked</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Deal_Reg_Status_to_Rejected</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Lead_Rejected_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Lead_Status_to_Rejected</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+ISPICKVAL( LeadSource,&quot;Deal Registration&quot;),
+RecordTypeId=&quot;012500000005KAN&quot;,
+ISPICKVAL(Status ,&quot;Rejected&quot;),
+NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Submitted&quot;)),
+NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Approved&quot;)),
+NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Rejected&quot;))
+)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>SendBlacklistNote</fullName>

@@ -6,6 +6,11 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>HR_Help</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>Internal_Applications</application>
         <default>false</default>
         <visible>true</visible>
@@ -67,6 +72,16 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Ideas</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningSalesConsole</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningService</application>
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
@@ -223,6 +238,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CapCaseOnNewCaseTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CapCreationTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseAuditBatchJob</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -287,6 +310,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CloudPortalCaseRestAPI</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CloudPortalCreateAccountApi</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -316,6 +343,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CloudPortalProvisionAssetsJob</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CloudPortalS3FileRestAPI</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -684,6 +715,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ITrigger</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InforCardHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InformationCardController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InformationCardControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1367,6 +1410,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PatchRuleEngineBase</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PatchRuleEngineBuilder</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1583,6 +1630,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ShareLeadAndOpportunityToPartnerJob</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ShareLeadAndOpportunityToPartnerSchedule</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1767,6 +1818,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestCloudPortalCaseRestAPI</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestCloudPortalGetUpdatedAccJob</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1776,6 +1831,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestCloudPortalProvisionAssetsJob</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1931,6 +1990,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestSendEmailToDevOpsforPerpetual</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestSendEmailToOppOwner</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1968,6 +2031,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestUpdateAssetCountBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestUpdateAssetStatusWhenRMAShipped</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2457,6 +2524,111 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap_Case__c.Account_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Analysis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Case_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap_Case__c.Case_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap_Case__c.Defect__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Dupe__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.ETA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Engineer_Assigned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Engineer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Evaluating_Fix__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Fix__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap_Case__c.Fixed_In__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Issue_Identified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.QA_d__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap_Case__c.Released__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap_Case__c.Subject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap__c.Account_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap__c.Closed_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap__c.Closed_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ContentPage__c.ActualUrl__c</field>
         <readable>true</readable>
@@ -2864,6 +3036,341 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ISR_Metrics__c.New_Opps__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Are_you_an_authorized_partner_of__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Billing_City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Billing_Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Billing_Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Billing_State__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Billing_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Distributor_of_Choice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Email_Domain_Used__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Integrate_Cloud_Solns_with_Vendors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Marketing_Offerings__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Number_of_employees_in_your_org__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Number_of_sales_professionals__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Own_brand_of_profess_services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Please_Name_the_Vendors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Primary_target_market_size__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Professionals_in_org__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Professionals_in_your_org_Inside__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Provide_technical_support__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Silver_Peak_opportunity_pending__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_TOP_3_industries__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Tax_ID_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Total_annual_sales_revenues_LY__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Website__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_Years_in_Business__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_business_is_Consulting_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_business_is_Product_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACCT_business_is_Services_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.ACC_Company_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Account_CAM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Account_Data_Match__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Are_you_an_authorized_partner_of__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Billing_City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Billing_Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Billing_Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Billing_State__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Billing_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Company_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Distributor_of_Choice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Email_Domain_Used__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Integrate_Cloud_Solutions_with_Vendors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.MarketingPartnerContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Marketing_Offerings__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Number_of_employees_in_your_organization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Number_of_sales_professionals_in_org__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Own_brand_of_professional_services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Phone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Please_Name_the_Vendors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.PrimaryPartnerContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Primary_target_market_size__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Professionals_in_org__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Professionals_in_your_org_Inside_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Provide_technical_support__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.RegisteringUserContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.SignatoryPartnerContact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Silver_Peak_opportunity_pending__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.TOP_3_industries__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Tax_ID_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Total_annual_sales_revenues_last_year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Website__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.Years_in_Business__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.business_is_Consulting_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.business_is_Product_Sales__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Information_Card__c.business_is_Services_Sales__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5122,6 +5629,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Patch__c.FCMM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Patch__c.ISR__c</field>
         <readable>true</readable>
@@ -5134,6 +5646,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Patch__c.Overlay_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Patch__c.Overlay__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6552,6 +7069,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Request__c.First_POC_on_Account__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Request__c.GMS_Needed__c</field>
         <readable>true</readable>
@@ -6829,6 +7351,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Request__c.Sending_Reminder_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Request__c.Service_Provider_Account_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7663,6 +8190,12 @@
         <layout>CampaignMember-Campaign Member Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Cap_Case__c-Cap Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Cap__c-Cap Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -7747,6 +8280,9 @@
         <layout>Idea-Idea Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Information_Card__c-Information Card Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Internal_Discussion__c-Internal Discussion Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -7769,6 +8305,24 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>License__c-license Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveAgentSession-Live Agent Session Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatTranscript-Live Chat Transcript Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatTranscriptActive-Live Chat Transcript %28In Progress%29 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatTranscriptEvent-Live Chat Transcript Event Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatTranscriptWaiting-Live Chat Transcript %28Waiting%29 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LiveChatVisitor-Live Chat Visitor Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>MDF_Request__c-MDF Request Layout</layout>
@@ -7861,6 +8415,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Purchasing_Request__c-Purchasing Request Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuickText-Quick Text Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Quote_Line__c-Quote Line Layout</layout>
@@ -8091,6 +8648,24 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Cap_Case__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Cap__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ContentPage__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -8200,6 +8775,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>ISR_Metrics__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Information_Card__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -8882,6 +9466,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>InformationCardDetail</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>JumpToMDFListing</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -9514,6 +10102,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>TestPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>TrainingRegistrationTemplate</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -9624,6 +10216,14 @@
     <tabVisibilities>
         <tab>BucketContact_del__c</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Cap_Case__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Cap__c</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Clicktools</tab>
@@ -9845,6 +10445,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AssignTopics</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>AssignUserToSkill</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -10116,6 +10720,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ManageHealthCheck</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ManageInteraction</name>
     </userPermissions>
     <userPermissions>
@@ -10292,6 +10900,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>SubscribeToLightningReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>TransferAnyCase</name>
     </userPermissions>
     <userPermissions>
@@ -10337,6 +10949,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewGlobalHeader</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewHealthCheck</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

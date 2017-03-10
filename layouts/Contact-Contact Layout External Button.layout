@@ -37,6 +37,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Lead_Lifecycle_Stage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
@@ -141,6 +145,14 @@
                 <behavior>Readonly</behavior>
                 <field>ISR_Target__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cloud_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Duplicate__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -205,6 +217,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CanAllowPortalSelfReg</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CanAllowPartnerPortalSelfReg__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -284,9 +300,6 @@
     </layoutSections>
     <quickActionList>
         <quickActionListItems>
-            <quickActionName>FeedItem.TextPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
@@ -294,6 +307,12 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>FeedItem.TextPost</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <relatedContent>

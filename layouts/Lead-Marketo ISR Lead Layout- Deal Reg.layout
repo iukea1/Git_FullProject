@@ -7,8 +7,6 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Convert</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
-    <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -68,6 +66,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Patch__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -135,6 +137,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Lead_Sub_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Lead_Rejected_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

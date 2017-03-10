@@ -318,7 +318,7 @@ public class ShippingInputFormController
             }
             if(request.Status__c == 'Open' || request.Status__c == 'Approved to Ship')
             {
-                if(request.Opportunity__r.Account.Partner_Type__c=='Service Provider' && request.Opportunity__r.Account.ECSP__c)
+                if(request.Opportunity__r.Account.ECSP__c)
                 {request.Target_End_Date__c = (request.Target_End_Date__c == null) ? Shipment.Ship_Date__c.addDays(90) : request.Target_End_Date__c.addDays(90);}
                 else if(request.POC_Type__c=='EdgeConnect')
                 {request.Target_End_Date__c = (request.Target_End_Date__c == null) ? Shipment.Ship_Date__c.addDays(45) : request.Target_End_Date__c.addDays(45);}

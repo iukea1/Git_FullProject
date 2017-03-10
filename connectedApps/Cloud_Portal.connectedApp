@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>prane@silver-peak.com</contactEmail>
+    <contactPhone>4089351864</contactPhone>
+    <label>Cloud Portal</label>
+    <oauthConfig>
+        <callbackUrl>https://silverpeaksystems--full.cs62.my.salesforce.com</callbackUrl>
+        <consumerKey>3MVG9er.T8KbeePQtYViJPjdzPCqy4hn4.cQd4MTy2SJrczGGTEkRu1O5AD78aNaTi809rLQGtwWt.1jaBmY7</consumerKey>
+        <scopes>Full</scopes>
+    </oauthConfig>
+</ConnectedApp>

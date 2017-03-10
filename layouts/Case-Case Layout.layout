@@ -16,6 +16,10 @@
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Disposition__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -79,10 +83,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Case_Disposition__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Close_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -100,6 +100,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TAC_Hours__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Comment_Modified_Time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test_Case_Comment_Time__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -526,6 +534,10 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Cap_Case__c.Case_Number__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

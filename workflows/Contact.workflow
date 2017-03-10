@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Contact_Send_Partner_Contact_Welcome_Template</fullName>
+        <description>Contact: Send Partner Contact Welcome Template</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Partner_Account_Templates/Partner_Contact_Welcome</template>
+    </alerts>
+    <alerts>
         <fullName>Email_Self_Registration_has_been_Enabled</fullName>
         <description>Email - Self Registration has been Enabled</description>
         <protected>false</protected>
@@ -85,6 +97,25 @@ Sales_Rejected_Comments__c</formula>
         <active>true</active>
         <formula>AND(  ISChanged( Sales_Rejected_Comments__c ),  LEN(Sales_Rejected_Comments__c )&gt;0   )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Contact%3A Allow Partner Portal Self Registration %3D True</fullName>
+        <actions>
+            <name>Contact_Send_Partner_Contact_Welcome_Template</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.CanAllowPartnerPortalSelfReg__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.IsPartner</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Contact%3A Contact Role Task Reminders</fullName>

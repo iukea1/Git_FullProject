@@ -159,6 +159,9 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
     </quickActionList>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -181,6 +184,11 @@
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.ALLOW_PORTAL_SELF_REG</fields>
         <relatedList>RelatedContactList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>Information_Card__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

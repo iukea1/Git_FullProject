@@ -29,7 +29,7 @@ trigger RefreshTimestampOnPatchUpdate on Patch__c (before insert, before update,
     
     private Boolean hasKeyFieldsUpdated(Patch__c newPatch, Patch__c oldPatch)
     {
-        return newPatch.Active__c != oldPatch.Active__c || newPatch.ProcessingSequence__c != oldPatch.ProcessingSequence__c || newPatch.Rule_Logic__c != oldPatch.Rule_Logic__c;
+        return newPatch.Active__c != oldPatch.Active__c || newPatch.Catchall__c != oldPatch.Catchall__c || newPatch.Overlay__c != oldPatch.Overlay__c || newPatch.ProcessingSequence__c != oldPatch.ProcessingSequence__c || newPatch.Rule_Logic__c != oldPatch.Rule_Logic__c;
     }
     
     private Boolean hasSequenceUpdated(Patch__c newPatch, Patch__c oldPatch)

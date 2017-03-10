@@ -8,11 +8,10 @@
     <emailToCase>
         <enableEmailToCase>true</enableEmailToCase>
         <enableHtmlEmail>false</enableHtmlEmail>
-        <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
-        <enableThreadIDInBody>false</enableThreadIDInBody>
-        <enableThreadIDInSubject>true</enableThreadIDInSubject>
-        <notifyOwnerOnNewCaseEmail>false</notifyOwnerOnNewCaseEmail>
-        <overEmailLimitAction>Bounce</overEmailLimitAction>
+        <enableOnDemandEmailToCase>false</enableOnDemandEmailToCase>
+        <enableThreadIDInBody>true</enableThreadIDInBody>
+        <enableThreadIDInSubject>false</enableThreadIDInSubject>
+        <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
         <routingAddresses>
             <addressType>EmailToCase</addressType>
             <caseOrigin>Orchestrator</caseOrigin>
@@ -20,6 +19,15 @@
             <createTask>false</createTask>
             <emailAddress>autosupport2sfdc@silver-peak.com</emailAddress>
             <routingName>AutoSupport</routingName>
+            <saveEmailHeaders>true</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>P3 - Normal</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>facilities@silver-peak.com</emailAddress>
+            <routingName>Facilities</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>
         </routingAddresses>
         <routingAddresses>
@@ -49,7 +57,6 @@
             <routingName>TechncialSupportCases</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>
         </routingAddresses>
-        <unauthorizedSenderAction>Discard</unauthorizedSenderAction>
     </emailToCase>
     <enableCaseFeed>false</enableCaseFeed>
     <enableEarlyEscalationRuleTriggers>false</enableEarlyEscalationRuleTriggers>

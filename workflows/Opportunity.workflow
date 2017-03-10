@@ -79,6 +79,17 @@
         <template>DealRegistrations/Deal_Registration_Converted_Partner</template>
     </alerts>
     <alerts>
+        <fullName>Deal_Reg_Dead_Notify_Partner</fullName>
+        <description>Deal Reg Dead - Notify Partner</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Registering_Partner_Sales_Rep__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>DealRegistrations/TEST_Deal_Reg_Dead</template>
+    </alerts>
+    <alerts>
         <fullName>EmailFinanceOnRSMSignature</fullName>
         <description>Email finance that RevRec is signed off by RSM</description>
         <protected>false</protected>
@@ -1072,6 +1083,31 @@ ISCHANGED(StageName)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Opportunity%3A Deal Reg to Stage Closed Dead</fullName>
+        <actions>
+            <name>Deal_Reg_Dead_Notify_Partner</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.LeadSource</field>
+            <operation>equals</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Dead</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.CreatedDate</field>
+            <operation>equals</operation>
+            <value>LAST 90 DAYS</value>
+        </criteriaItems>
+        <description>Rule when a deal reg opportunity stage changed to closed dead</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Populate Stage Discovery created by RSM</fullName>
         <actions>
             <name>Update_Opp_Stage_as_Discovery_RSM</name>
@@ -1513,4 +1549,16 @@ OR(ISPICKVAL( StageName , &apos;Closed Deleted&apos;),OR(ISPICKVAL( StageName , 
         <formula>(rvpe__NotifyRVMember__c == true)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
+    <tasks>
+        <fullName>Test_Deal_Reg_Dead</fullName>
+        <assignedTo>prod.silverpeak@ensemblecrm.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Opportunity.CloseDate</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>Test Deal Reg Dead</subject>
+    </tasks>
 </Workflow>

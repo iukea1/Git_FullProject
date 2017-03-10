@@ -19,6 +19,10 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Site</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Type</field>
             </layoutItems>
@@ -29,10 +33,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Service_Provider_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ECSP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -73,6 +73,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SD_WAN_Discount_SP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsCap__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -174,11 +178,54 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Service Provider Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Account_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Admin_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Domain__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Environment_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Contracted__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Reseller Discount Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Channel_Manager__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CAM__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -500,6 +547,10 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Updated_from_Information_Card__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -572,6 +623,9 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
@@ -791,6 +845,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>T3chAccelerator__Instance__c.T3chAccelerator__account_id__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account_Data_Match__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Information_Card__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Cap__c.Account_Name__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

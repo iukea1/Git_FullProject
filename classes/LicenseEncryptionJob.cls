@@ -89,7 +89,7 @@ public class LicenseEncryptionJob implements Queueable, Database.AllowsCallouts
         }
     }
     
-    private String prepareLicenseBeforeSend(List<License__c> licenses)
+    public String prepareLicenseBeforeSend(List<License__c> licenses)
     {
         List<String> licenseToBeEncoded = new List<String>();
         for(License__c license : licenses)
@@ -212,6 +212,7 @@ public class LicenseEncryptionJob implements Queueable, Database.AllowsCallouts
                 req.setMethod('POST');
                 req.setTimeout(60000);  //60 seconds time out
                 HttpResponse response = h.send(req);
+               
             }
             catch(Exception ex)
             {

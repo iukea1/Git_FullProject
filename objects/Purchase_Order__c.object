@@ -355,6 +355,6 @@ location.reload(true);
         <masterLabel>New Renewal Shipment</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>openPopup(&quot;/apex/POAssetsRenewal?Id={!Purchase_Order__c.Id}&quot;, &quot;VirtualPOFulfillment&quot;, 800, 600, &quot;width=800, height=600, toolbar=no, status=no, directories=no, menubar=no,resizable=yes,scrollable=yes&quot;, false);</url>
+        <url>window.open(&apos;/apex/POAssetsRenewal?Id={!Purchase_Order__c.Id}&apos;,&apos;_blank&apos;,&apos;height=200,width=200&apos;);</url>
     </webLinks>
 </CustomObject>

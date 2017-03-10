@@ -18,7 +18,7 @@ global class PocRequestNotification implements Schedulable
         }
         Database.SaveResult[] results = Database.update(requests, false);
         SilverPeakUtils.logDatabaseError(requests, results);
-        
+        System.debug(Date.today().addDays(-19));
         List<Request__c> requests2 = [select Id, Opportunity__c, Opportunity__r.Account.OwnerId from Request__c where ActiveForNotices__c = 1 and Target_End_Date__c=:Date.today()];
         if(requests2!=null)
         {

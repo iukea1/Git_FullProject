@@ -26,6 +26,11 @@
         <name>Comments__c</name>
     </fields>
     <fields>
+        <label><!-- FCMM --></label>
+        <name>FCMM__c</name>
+        <relationshipLabel><!-- Patches (FCMM) --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- ISR --></label>
         <name>ISR__c</name>
         <relationshipLabel><!-- Patches (ISR) --></relationshipLabel>
@@ -39,6 +44,11 @@
         <label><!-- Overlay 2 --></label>
         <name>Overlay_2__c</name>
         <relationshipLabel><!-- Patches (Overlay 2) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- An overlay patch just add up team members to the record, but does NOT change patch assignment --></help>
+        <label><!-- Overlay --></label>
+        <name>Overlay__c</name>
     </fields>
     <fields>
         <label><!-- Patch Owner --></label>

@@ -75,18 +75,25 @@
         <fullName>Approval_Level_Needed__c</fullName>
         <description>Equals to the max approval level of the quote lines</description>
         <externalId>false</externalId>
-        <formula>if( Level3Required__c =1,3, MAX(ApprovalLevelMax__c,
+        <formula>if( Level3Required__c =1,3, 
+IF( OR(
+ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;),
+ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;),
+ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;)
+),ApprovalLevelMax__c,
+
+MAX(ApprovalLevelMax__c, 
 
 
-if(Opportunity__r.Primary_Partner__r.CreditHold__c,2,0) ,
+if(Opportunity__r.Primary_Partner__r.CreditHold__c,2,0) , 
 
 if( 
-OR(
-AND( (AND(Service_Discount_Max__c &gt; RegPartServDisc__c, Service_Discount_Max__c &gt; 0.20)) , MultiYearValue__c &lt;2),
+OR( 
+AND( (AND(Service_Discount_Max__c &gt; RegPartServDisc__c, Service_Discount_Max__c &gt; 0.20)) , MultiYearValue__c &lt;2), 
 and(Service_Discount_Max__c &gt; 0.24, MultiYearValue__c =2), 
-and(Service_Discount_Max__c &gt; 0.27, MultiYearValue__c =3))
-,3,0)
-))</formula>
+and(Service_Discount_Max__c &gt; 0.27, MultiYearValue__c =3)) 
+,3,0) 
+)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>if( Level3Required__c =1,3,
 
@@ -144,6 +151,14 @@ AND(and(Service_Discount_Max__c &gt; 0.20,MultiYearValue__c &lt;2) , Service_Dis
 OR(and(ConsultingDiscountMax__c &gt;1,Opportunity__r.Account.IsAPartner__c =0) , 
 AND(ConsultingDiscountMax__c &gt;1, Opportunity__r.Account.IsAPartner__c =1) ) 
 , Opportunity__r.Primary_Partner__r.CreditHold__c, 
+AND(
+ApprovalLevelMax__c &gt;0,
+OR(
+ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;),
+ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;),
+ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;)
+)
+),
 AND(ISPICKVAL(Opportunity__r.Type,&apos;Training/WanStart&apos;), ConsultingDiscountMax__c &gt; RegPartServDisc__c ) ) 
 ,1, 0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

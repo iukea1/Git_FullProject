@@ -658,6 +658,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_POC_Trigger_value</fullName>
+        <field>Trigger_POC_Email__c</field>
+        <literalValue>1</literalValue>
+        <name>Set POC Trigger value</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>TargetEndDateAdd60</fullName>
         <description>Add 60 days to target end date, if blank, today + 60</description>
         <field>Target_End_Date__c</field>
@@ -998,6 +1007,44 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
         <active>true</active>
         <description>Note sent to account manager when schedule ship date is entered</description>
         <formula>ISCHANGED( Estimated_Ship_Date__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Service Provider Send Expiration Notice 15days</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Request__c.POC_Type__c</field>
+            <operation>equals</operation>
+            <value>Perpetual,Metered,Perpetual-Orchestrator SP,Metered-Orchestrator SP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Request__c.Trigger_POC_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Reminder_for_expiring_POC_and_or_licenses</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>Clear_Trigger_POC_value</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Request__c.Target_End_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Service Provider Trigger POC Email</fullName>
+        <actions>
+            <name>Set_POC_Trigger_value</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  Opportunity__r.Account.ECSP__c, ISCHANGED( Target_End_Date__c )    )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

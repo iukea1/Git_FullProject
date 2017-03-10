@@ -144,7 +144,7 @@ generator.writeStringField('password', 'Yesadmin4u');
             {filterAssets.add(counter);}
             if(assetType=='CPX' && prodName=='EC-SP')
             {filterAssets.add(counter);}
-            if(assetType=='SP' && prodName.startsWith('EC-SP-')&& prodType=='EC-SP')
+            if(assetType=='SP' && prodName.startsWith('EC-SP-')&& prodType=='EC-SP-Perpetual')
             {filterAssets.add(counter);}
         }
         for(Asset item:filterAssets)

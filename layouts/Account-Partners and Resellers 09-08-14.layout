@@ -431,6 +431,11 @@
         <fields>NAME</fields>
         <relatedList>SW_Only_Asset__c.Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>Information_Card__c.Account__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

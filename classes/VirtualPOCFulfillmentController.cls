@@ -10,11 +10,12 @@ public class VirtualPOCFulfillmentController
     
     public VirtualPOCFulfillmentController(ApexPages.StandardController controller)
     {
+        System.debug('controller.getId()'+ controller.getId());
         List<Request__c> requests = [select Id, Opportunity__c,Opportunity__r.Account.Partner_Type__c,Opportunity__r.Account.ECSP__c, Opportunity__r.AccountId,POC_Type__c, POC_Contact__c, GMS_Needed__c, EvaluationProductHypervisor__c, Evaluation_Product_1__c, Evaluation_Product_2__c, Quantity_Location_1__c, Quantity_Location_2__c, Status__c, Actual_Ship_Date__c, Target_End_Date__c, VirtualProduct1__c, VirtualProduct2__c, VirtualProduct3__c, VirtualProduct4__c, VirtualProduct5__c, VirtualQuantity1__c, VirtualQuantity2__c, VirtualQuantity3__c, VirtualQuantity4__c, VirtualQuantity5__c from Request__c where Id = :controller.getId()];        
         if(!requests.isEmpty())
         {
             pocRequest = requests[0];
-            if(pocRequest.Opportunity__r.Account.Partner_Type__c=='Service Provider' && pocRequest.Opportunity__r.Account.ECSP__c)
+            if(pocRequest.Opportunity__r.Account.ECSP__c)
             {
                 LicenseDurationDays=90;
             }
@@ -224,12 +225,10 @@ public class VirtualPOCFulfillmentController
         if(pocRequest.GMS_Needed__c == 'Virtual')
         {
             addProduct(VIRTUAL_PRODUCT_NAME, 1);
-            
         }
         if(VirtualAssets.isEmpty())
         {
             addProduct(VIRTUAL_PRODUCT_NAME, 1);
-            
         }
     }
     
@@ -238,7 +237,6 @@ public class VirtualPOCFulfillmentController
         VAManager = new VirtualAssetManager();
         for(VirtualAssetInfo va : VirtualAssets)
         {
-            System.debug('va..Product2Id'+va.ProductId);
             for(Integer i = 0; i < va.Quantity; i++)
             {
                 Asset asset = new Asset(Product2Id = va.ProductId, Licenses_Nodes__c=va.LicensesNodes,Bandwidth_Nodes__c=va.BandwidthNodes, Quantity = 1, AccountId = pocRequest.Opportunity__r.AccountId, ContactId = pocRequest.POC_Contact__c, POCRequest__c = pocRequest.Id, Hosted_GMS__c = va.HostedGMS, GMS_Nodes__c = va.GMSNodes, Status = 'Customer Evaluation', Evaluation_Start_Date__c = Date.today(), Evaluation_End_Date__c = Date.today().addDays(LicenseDurationDays), Hypervisor__c=pocRequest.EvaluationProductHypervisor__c);
@@ -272,6 +270,7 @@ public class VirtualPOCFulfillmentController
     }
     private void addProduct(String productName, Decimal qty)
     {
+        System.debug('qty'+qty);
         if(productName != null)
         {
             if(qty == null)
@@ -281,12 +280,6 @@ public class VirtualPOCFulfillmentController
             Product2 prd = getProduct(productName);
             if(prd != null)
             {
-                /*
-if(prd.Name.startsWith('EC-'))
-{
-productName= prd.Name;
-}
-*/
                 VirtualAssets.add(new VirtualAssetInfo(prd.Id, productName, qty, VirtualAssets.size()));
             }
         }
@@ -327,11 +320,18 @@ productName= prd.Name;
     }
     private void SendFulfillmentEmailForServiceProviders()
     {
-        
-        if(pocRequest!=null && pocRequest.POC_Type__c=='Service Provider')
+        List<EmailTemplate> template =null;
+        if(pocRequest.Opportunity__r.Account.ECSP__c)
         {
-            List<EmailTemplate> template = [select Id from EmailTemplate where Name=:'EC POC SP Virtual Fulfillment Email' limit 1];
-            if(template.size() > 0)
+            if(pocRequest!=null && (pocRequest.POC_Type__c=='Perpetual'|| pocRequest.POC_Type__c=='Perpetual-Orchestrator SP'))
+            {
+                template = [select Id from EmailTemplate where Name=:'POC Perpetual Virtual Fulfillment Email' limit 1];
+            }
+            else if(pocRequest!=null && (pocRequest.POC_Type__c=='Metered'|| pocRequest.POC_Type__c=='Metered-Orchestrator SP'))
+            {
+                template = [select Id from EmailTemplate where Name=:'POC Metered Virtual Fulfillment Email' limit 1];
+            }    
+            if(template!=null && template.size() > 0)
             {
                 List<String> ccs = getPOCRecipients(pocRequest.Id);
                 ccs.add('notifications@silver-peak.com');
@@ -354,10 +354,11 @@ productName= prd.Name;
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Email template cannot be found. Please contact system admin.'));
                 
             }
-            
         }
         
     }
+    
+    
     private List<String> getAccountTeam(Id accId)
     {
         List<AccountTeamMember> members = [select Id, User.EMail from AccountTeamMember where AccountId=:accId and User.isActive=true];
@@ -417,6 +418,7 @@ productName= prd.Name;
     //gets product with the specified name, if non found, match by model, if more than 1 found, return the one with shortest product code (subscription product has longer code)
     private static Product2 getProduct(String productName)
     {
+        System.debug('productName'+productName);
         if(productName == 'VX-AMI')
         {
             return getProduct('VX-7000');
@@ -431,6 +433,7 @@ productName= prd.Name;
         {
             if(product.Name == productName)
             {
+                System.debug('product.Name'+product.Name);
                 return product;
             }
             else if(product.Model__c == productName)
@@ -441,7 +444,7 @@ productName= prd.Name;
                 }
             }
         }
-        
+        System.debug('productWithSameModel'+productWithSameModel);
         return productWithSameModel;
     }
     
@@ -456,7 +459,7 @@ productName= prd.Name;
             this.HostedGMS = false;
             this.GMSNodes = '10';
             this.Index = index;
-            if(prdName.startsWith('EC-'))
+            if(prdName.startsWith('EC-') && !prdName.startsWith('EC-SP-') )
             {
                 this.Quantity = 1;
             }

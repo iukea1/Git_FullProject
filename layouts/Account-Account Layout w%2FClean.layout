@@ -692,6 +692,9 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
     </quickActionList>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
@@ -881,6 +884,15 @@
         <fields>Actor</fields>
         <fields>Comments</fields>
         <relatedList>RelatedProcessHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>Information_Card__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Cap__c.Account_Name__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
