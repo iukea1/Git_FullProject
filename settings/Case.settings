@@ -8,10 +8,11 @@
     <emailToCase>
         <enableEmailToCase>true</enableEmailToCase>
         <enableHtmlEmail>false</enableHtmlEmail>
-        <enableOnDemandEmailToCase>false</enableOnDemandEmailToCase>
+        <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
         <enableThreadIDInBody>true</enableThreadIDInBody>
         <enableThreadIDInSubject>false</enableThreadIDInSubject>
         <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
+        <overEmailLimitAction>Bounce</overEmailLimitAction>
         <routingAddresses>
             <addressType>EmailToCase</addressType>
             <caseOrigin>Orchestrator</caseOrigin>
@@ -53,10 +54,20 @@
             <caseOrigin>Email</caseOrigin>
             <casePriority>P3 - Normal</casePriority>
             <createTask>false</createTask>
+            <emailAddress>labhelp@silver-peak.com</emailAddress>
+            <routingName>LabHelp</routingName>
+            <saveEmailHeaders>true</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>P3 - Normal</casePriority>
+            <createTask>false</createTask>
             <emailAddress>support@silver-peak.com</emailAddress>
             <routingName>TechncialSupportCases</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>
         </routingAddresses>
+        <unauthorizedSenderAction>Discard</unauthorizedSenderAction>
     </emailToCase>
     <enableCaseFeed>false</enableCaseFeed>
     <enableEarlyEscalationRuleTriggers>false</enableEarlyEscalationRuleTriggers>

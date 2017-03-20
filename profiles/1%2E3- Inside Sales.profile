@@ -31,6 +31,11 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>Sales_Console</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>Sales_New</application>
         <default>false</default>
         <visible>true</visible>
@@ -1774,6 +1779,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestAssignGEOFromContactOwner</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestAssignSBPermissionSet</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3260,6 +3269,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Information_Card__c.Number_of_Matching_Accounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Information_Card__c.Number_of_employees_in_your_organization__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3287,6 +3301,11 @@
         <editable>true</editable>
         <field>Information_Card__c.PrimaryPartnerContact__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Information_Card__c.Primary_Partner_First_Name__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7071,7 +7090,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Request__c.First_POC_on_Account__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

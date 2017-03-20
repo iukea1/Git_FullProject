@@ -267,7 +267,7 @@ public with sharing class AssetListViewController_SP extends AssetListViewBase
     
     private List<String> getFieldList(String listView, Boolean isServiceProvider)
     {
-        List<String> result = new List<String> {'Id', 'SerialNumber', 'Product2.Name', 'Product2.Model__c', 'License_End_Date__c', 'Customer_Notes__c','Status','Warranty_End_Date__c','Ship_Date__c','Bandwidth_Nodes__c','Licenses_Nodes__c','Account.Name','Renewal_Text__c','Service_Support_Start_Date__c','Service_Support_End_Date__c'};
+        List<String> result = new List<String> {'Id', 'SerialNumber', 'Product2.Name', 'Product2.Model__c', 'License_End_Date__c', 'Customer_Notes__c','Status','Warranty_End_Date__c','Ship_Date__c','Bandwidth_Nodes__c','Licenses_Nodes__c','Account.Name','Renewal_Text__c','Contract_Number__r.StartDate','Contract_Number__r.EndDate'};
             return result;
     }
     
@@ -329,12 +329,17 @@ public with sharing class AssetListViewController_SP extends AssetListViewBase
         private String originalAsset;
         public Asset AssetRecord { get; set; }
         public String ProductName { get; private set; }
+        public Date SupportStartDate { get; private set; }
+        public Date SupportEndDate { get; private set; }
         public String CustomerNotes { get; set; }
         
         public AssetInfo(Asset asset)
         {
             this.AssetRecord = asset;
+            System.debug('asset'+asset);
             this.ProductName = asset.Product2.Name;
+            this.SupportStartDate = asset.Contract_Number__r.StartDate;
+            this.SupportEndDate = asset.Contract_Number__r.EndDate;
             this.CustomerNotes = asset.Customer_Notes__c;
             
         }

@@ -377,33 +377,17 @@
     </alerts>
     <alerts>
         <fullName>NotifyVPMarketingtoauthorizeISRcreditonOpportunity</fullName>
-        <ccEmails>curtisc@silver-peak.com</ccEmails>
+        <ccEmails>dbeckus@silver-peak.com</ccEmails>
         <description>Notify VP Marketing to authorize ISR credit on Opportunity</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>cbaily@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dlambert@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Sales/ISR_new_oppty_alert</template>
     </alerts>
     <alerts>
         <fullName>OpportunityAdvancedfromProspecting</fullName>
-        <ccEmails>curtisc@silver-peak.com</ccEmails>
+        <ccEmails>dbeckus@silver-peak.com</ccEmails>
         <description>Opportunity Advanced from Prospecting</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>cbaily@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dlambert@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Sales/OptyProspected</template>
     </alerts>
@@ -512,7 +496,7 @@
         <description>Send me a note upon Deal Reg conversion</description>
         <protected>false</protected>
         <recipients>
-            <recipient>curtisc@silver-peak.com</recipient>
+            <recipient>dbeckus@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -797,7 +781,7 @@
         <endpointUrl>https://partner.silver-peak.com/services/SFDC-DealRegistrationApproved.ashx</endpointUrl>
         <fields>Id</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>curtisc@silver-peak.com</integrationUser>
+        <integrationUser>dbeckus@silver-peak.com</integrationUser>
         <name>Deal Registration Approved</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
@@ -808,7 +792,7 @@
         <endpointUrl>https://partner.silver-peak.com/services/SFDC-OpportunityNotifyRVMember.ashx</endpointUrl>
         <fields>Id</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>curtisc@silver-peak.com</integrationUser>
+        <integrationUser>dbeckus@silver-peak.com</integrationUser>
         <name>Notify RV Member</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>

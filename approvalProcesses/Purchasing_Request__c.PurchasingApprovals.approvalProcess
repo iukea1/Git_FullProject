@@ -20,10 +20,6 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>curtisc@silver-peak.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>lquilici@silver-peak.com</submitter>
         <type>user</type>
     </allowedSubmitters>

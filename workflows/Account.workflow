@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Account_Partner_Application_Approved</fullName>
-        <ccEmails>amenjivar@silver-peak.com</ccEmails>
+        <ccEmails>amenjivar@silver-peak.com, lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Approved</description>
         <protected>false</protected>
         <recipients>
@@ -35,10 +35,11 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Approved_Primary_Contact</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Approved Primary Contact</description>
         <protected>false</protected>
         <recipients>
-            <field>PrimaryPartnerContact__c</field>
+            <field>RegisteringUserContact__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
@@ -47,6 +48,7 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Approved_Signatory_Contact</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Approved Signatory Contact</description>
         <protected>false</protected>
         <recipients>
@@ -91,11 +93,12 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Pending</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Pending</description>
         <protected>false</protected>
         <recipients>
-            <field>Primary_Partner_Contact_E_Mail_Address__c</field>
-            <type>email</type>
+            <field>PrimaryPartnerContact__c</field>
+            <type>contactLookup</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -103,7 +106,7 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Submitted</fullName>
-        <ccEmails>channel@silver-peak.com</ccEmails>
+        <ccEmails>channel@silver-peak.com, lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Submitted</description>
         <protected>false</protected>
         <recipients>
@@ -132,6 +135,7 @@
     </alerts>
     <alerts>
         <fullName>Account_Send_New_Partner_Approved_Distributor_Alert</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Send New Partner Approved Distributor Alert</description>
         <protected>false</protected>
         <recipients>
@@ -168,6 +172,7 @@
     </alerts>
     <alerts>
         <fullName>Notify_Partner_Team_on_New_Partner_Creation</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Notify Partner Team on New Partner Creation</description>
         <protected>false</protected>
         <recipients>
@@ -445,6 +450,24 @@ Standard_Discount_Service__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_Hardware_Sync_Flag</fullName>
+        <field>Sync_with_Cloud_Portal__c</field>
+        <literalValue>0</literalValue>
+        <name>Clear Hardware Sync Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Clear_Virtual_Asset_Flag_for_Metered</fullName>
+        <field>Sync_Virtual_Assets_with_CP__c</field>
+        <literalValue>0</literalValue>
+        <name>Clear Virtual Asset Flag for Metered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SetRecTypetoReseller</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Resellers</lookupValue>
@@ -657,6 +680,35 @@ Standard_Discount_Service__c
         <active>true</active>
         <formula>ISCHANGED(LastModifiedDate) &amp;&amp; BL__SyncWithBoulderLogic__c == true</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear Cloud Portal Sync Flag for Metered</fullName>
+        <actions>
+            <name>Clear_Hardware_Sync_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Clear_Virtual_Asset_Flag_for_Metered</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Service_Provider_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>Metered,Metered-Orchestrator SP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Sync_with_Cloud_Portal__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Sync_Virtual_Assets_with_CP__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ClearFirstCustomerQuarter</fullName>

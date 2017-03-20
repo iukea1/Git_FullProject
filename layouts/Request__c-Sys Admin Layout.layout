@@ -41,6 +41,10 @@
                 <field>Second_Extension_Granted__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_POC_on_Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>RSM_Manager1__c</field>
             </layoutItems>

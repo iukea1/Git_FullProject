@@ -894,7 +894,7 @@ public class RegisterAccountController
     {
         acct.Email_Domain_Used__c = acct.Email_Domain_Used__c.startsWith('@') ? acct.Email_Domain_Used__c : '@' + acct.Email_Domain_Used__c;
         String domainPattern = '%' + acct.Email_Domain_Used__c + '%';
-        List<Account> duplicateDomainAccts = [select Id ,Email_Domain_Used__c from Account where Email_Domain_Used__c like :domainPattern and Partner_Application_Status__c !='Denied'];
+        List<Account> duplicateDomainAccts = [select Id, Email_Domain_Used__c, ParentId from Account where Email_Domain_Used__c like :domainPattern and Partner_Application_Status__c !='Denied' ORDER BY ParentId NULLS FIRST LIMIT 1];
         if(duplicateDomainAccts.size() > 0)
         {
             Map<string, Id> domain2Id = new Map<String, Id>();
@@ -918,6 +918,7 @@ public class RegisterAccountController
     private Information_Card__c populateInfoCard(Account acct)
     {
         Information_Card__c ic = new Information_Card__c();
+        ic.Number_of_Matching_Accounts__c = [select count() from Account where Email_Domain_Used__c like :acct.Email_Domain_Used__c and Partner_Application_Status__c !='Denied'];
         ic.business_is_Consulting_Sales__c = acct.business_is_Consulting_Sales__c;
         ic.business_is_Product_Sales__c = acct.business_is_Product_Sales__c;
         ic.business_is_Services_Sales__c = acct.business_is_Services_Sales__c;

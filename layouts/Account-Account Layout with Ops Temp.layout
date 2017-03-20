@@ -52,10 +52,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Service_Provider__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ECSP_Base_Discount__c</field>
             </layoutItems>
             <layoutItems>
@@ -285,6 +281,30 @@
                 <behavior>Edit</behavior>
                 <field>PrimaryPartnerContact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MarketingPartnerContact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SignatoryPartnerContact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Partner_Marketing_Contact_E_Mail_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Partner_Signatory_Contact_E_Mail_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_Partner_Contact_E_Mail_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CAMEmail__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -418,14 +438,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Own_brand_of_professional_services__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SignatoryPartnerContact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MarketingPartnerContact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

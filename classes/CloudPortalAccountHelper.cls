@@ -53,7 +53,6 @@ generator.writeStringField('password', 'Yesadmin4u');
             request.setBody(parameters);
             
             HttpResponse response = new Http().send(request);
-            
             // Process response.
             if(response.getStatusCode() >= 200 && response.getStatusCode() < 400)
             {
@@ -174,15 +173,15 @@ generator.writeStringField('password', 'Yesadmin4u');
             {
                 cp.BoostNode=((integer.valueOf(item.Bandwidth_Nodes__c)*1000)*100);
             }
-            if(item.Service_Support_Start_Date__c!=null)
+            if(item.Contract_Number__r.StartDate!=null && item.Contract_Number__r.Status=='Activated')
             {
-                DateTime dt=DateTime.newInstance(item.Service_Support_Start_Date__c,Time.newInstance(0, 0, 0, 0));
+                DateTime dt=DateTime.newInstance(item.Contract_Number__r.StartDate,Time.newInstance(0, 0, 0, 0));
                 millis=dt.getTime();
                 cp.startDate=millis;
             }
-             if(item.Service_Support_End_Date__c!=null)
+             if(item.Contract_Number__r.EndDate!=null && item.Contract_Number__r.Status=='Activated')
             {
-                DateTime dt=DateTime.newInstance(item.Service_Support_End_Date__c,Time.newInstance(0, 0, 0, 0));
+                DateTime dt=DateTime.newInstance(item.Contract_Number__r.EndDate,Time.newInstance(0, 0, 0, 0));
                 millis=dt.getTime();
                 cp.endDate=millis;
             }

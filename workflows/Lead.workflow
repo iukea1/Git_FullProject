@@ -588,6 +588,15 @@ Sales_Rejected_Comments__c</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Lead_Set_Status_Draft</fullName>
+        <field>Status</field>
+        <literalValue>Draft</literalValue>
+        <name>Lead: Set Status = Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Lead_Status_to_Rejected</fullName>
         <field>Status</field>
         <literalValue>Rejected</literalValue>
@@ -918,7 +927,7 @@ Sales_Rejected_Comments__c</formula>
         <endpointUrl>https://partner.silver-peak.com/services/SFDC-DealRegistrationDenied.ashx</endpointUrl>
         <fields>Id</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>curtisc@silver-peak.com</integrationUser>
+        <integrationUser>dbeckus@silver-peak.com</integrationUser>
         <name>Deal Registration Denied</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
@@ -929,7 +938,7 @@ Sales_Rejected_Comments__c</formula>
         <endpointUrl>https://partner.silver-peak.com/services/SFDC-LeadNotifyRVMember.ashx</endpointUrl>
         <fields>Id</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>curtisc@silver-peak.com</integrationUser>
+        <integrationUser>dbeckus@silver-peak.com</integrationUser>
         <name>Notify RV Member</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
@@ -1088,6 +1097,16 @@ Deal_Reg__c,  DATEVALUE(CreatedDate) =  TODAY(), NOT( Trigger_Submission__c ) )<
         </criteriaItems>
         <description>If a Lead&apos;s Status is Set to Sales Rejected then clear &apos;BANT Qualified&apos; &amp; &apos;Contact Us&apos;</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Lead%3A Deal Registration Created</fullName>
+        <actions>
+            <name>Lead_Set_Status_Draft</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( RecordTypeId = &quot;012500000005KAN&quot;, NOT(ISPICKVAL(Status,&quot;Draft&quot;)) )</formula>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Leads Status to Contact Status</fullName>

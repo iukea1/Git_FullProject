@@ -189,6 +189,25 @@
         <template>Support/TicketCommentUpdate</template>
     </alerts>
     <alerts>
+        <fullName>Email_LabHelp_Support_Case_Creation</fullName>
+        <description>Email- LabHelp Support Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>labhelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/LabHelp_Support_Case_Creation</template>
+    </alerts>
+    <alerts>
         <fullName>Email_Support_Case_Opened</fullName>
         <ccEmails>customerresponse@answer1.com</ccEmails>
         <description>Email - Support - Case Opened</description>
@@ -1459,6 +1478,26 @@ NOT(Contact.Testing__c)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>LabHelp Support Case Creation</fullName>
+        <actions>
+            <name>Email_LabHelp_Support_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>LabHelp</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Lab Help Requests</value>
+        </criteriaItems>
+        <description>This workflow rule will send an email notification to the customer about the case creation.</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>New Case Created</fullName>
         <actions>
             <name>SendNewCaseNotification</name>
@@ -1609,7 +1648,7 @@ NOT(Contact.Testing__c)
             <name>SetStatus</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>

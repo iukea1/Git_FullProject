@@ -14,6 +14,7 @@ trigger CapCreation on Account (after update) {
          cap.Status__c       = 'Open';
          insert cap; 
       
+         if(cap != null){
          List<Cap_Case__c> capCaseLst = new List<cap_Case__c>();
          List<Case> ascCases = [Select Id, ClosedDate, CaseNumber, LastUpdateNote__c  from Case where 
                             RecordtypeId IN ('012500000005AuO','012500000005Aui') AND ClosedDate = NULL
@@ -31,6 +32,7 @@ trigger CapCreation on Account (after update) {
          }
          if (capCaseLst.size()> 0)  
          insert capCaseLst;
+            }
        }
     }
 }

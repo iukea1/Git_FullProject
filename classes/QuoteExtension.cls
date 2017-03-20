@@ -52,7 +52,7 @@ public class QuoteExtension
                 if(lstQuote!=null && lstQuote.size()>0)
                 {
                     Quote__c quoteObj= lstQuote[0];
-                    if(Userinfo.getLastName()!='Christensen')
+                    if(Userinfo.getLastName()!='Beckus')
                     {
                         string errorMsg=ValidateApprovalEntryCriterias(quoteObj);
                         if(errorMsg!='')

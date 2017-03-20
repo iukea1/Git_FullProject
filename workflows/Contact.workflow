@@ -26,11 +26,10 @@
     </alerts>
     <alerts>
         <fullName>Partner_Role_Updated_On_Contact</fullName>
-        <ccEmails>Lindsey@snapbi.com</ccEmails>
         <description>Partner Role Updated On Contact</description>
         <protected>false</protected>
         <recipients>
-            <recipient>curtisc@silver-peak.com</recipient>
+            <recipient>dbeckus@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>

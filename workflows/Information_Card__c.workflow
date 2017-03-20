@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Information_Card_Send_Information_Card_Submitted_for_Approval</fullName>
-        <ccEmails>andy@snapbi.com</ccEmails>
+        <ccEmails>andy@snapbi.com, lauren@snapbi.com</ccEmails>
         <description>Information Card: Send Information Card Submitted for Approval</description>
         <protected>false</protected>
         <recipients>
@@ -15,14 +15,29 @@
     </alerts>
     <alerts>
         <fullName>Information_Card_Send_To_Primary_Partner_Information_Card_Submitted_Template</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Information Card: Send To Primary Partner: Information Card Submitted Template</description>
         <protected>false</protected>
         <recipients>
             <field>PrimaryPartnerContact__c</field>
             <type>contactLookup</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Partner_Account_Templates/To_Primary_Partner_Information_Card_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Information_Card_Submitted_for_Approval_cc</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
+        <description>Send Information Card Submitted for Approval cc</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>amenjivar@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Partner_Account_Templates/Information_Card_Submitted_for_Approval</template>
     </alerts>
     <fieldUpdates>
         <fullName>Info_Card_Set_Status_Child_Acct_Created</fullName>
@@ -78,4 +93,27 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>Information Card%3A Submitted %26 Primary Contact Identified</fullName>
+        <actions>
+            <name>Information_Card_Send_To_Primary_Partner_Information_Card_Submitted_Template</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+ISPICKVAL(Status__c,&quot;Submitted&quot;),
+NOT(ISBLANK(PrimaryPartnerContact__c))
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Information Card%3A Submitted with Primary Partner Contact</fullName>
+        <actions>
+            <name>Information_Card_Send_To_Primary_Partner_Information_Card_Submitted_Template</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( ISPICKVAL(Status__c,&quot;Submitted&quot;), NOT(ISBLANK(PrimaryPartnerContact__c)) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
 </Workflow>

@@ -31,7 +31,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>ewhite@silver-peak.com</name>
+                <name>curtisc@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
@@ -54,6 +54,7 @@
             </action>
         </rejectionActions>
     </approvalStep>
+    <emailTemplate>Partner_Account_Templates/Information_Card_Submitted_for_Approval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
@@ -70,11 +71,7 @@
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>Information_Card_Send_Information_Card_Submitted_for_Approval</name>
-            <type>Alert</type>
-        </action>
-        <action>
-            <name>Information_Card_Send_To_Primary_Partner_Information_Card_Submitted_Template</name>
+            <name>Send_Information_Card_Submitted_for_Approval_cc</name>
             <type>Alert</type>
         </action>
     </initialSubmissionActions>

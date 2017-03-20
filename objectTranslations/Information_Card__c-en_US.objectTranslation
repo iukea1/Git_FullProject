@@ -208,6 +208,10 @@
         </picklistValues>
     </fields>
     <fields>
+        <label><!-- Number of Matching Accounts --></label>
+        <name>Number_of_Matching_Accounts__c</name>
+    </fields>
+    <fields>
         <label><!-- Number of employees in your organization --></label>
         <name>Number_of_employees_in_your_organization__c</name>
     </fields>
@@ -235,6 +239,10 @@
         <label><!-- Primary Partner Contact --></label>
         <name>PrimaryPartnerContact__c</name>
         <relationshipLabel><!-- Information Cards (Primary Partner Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Primary Partner First Name --></label>
+        <name>Primary_Partner_First_Name__c</name>
     </fields>
     <fields>
         <label><!-- Primary target market size? --></label>

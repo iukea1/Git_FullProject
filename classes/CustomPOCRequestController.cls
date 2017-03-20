@@ -173,11 +173,14 @@ global with sharing class CustomPOCRequestController
                 
                 System.debug('Save Request '+ CurrentRequest.First_POC_on_Account__c);
                 update CurrentRequest;
+                FirstPOC=CurrentRequest.First_POC_on_Account__c;
+                CreateECPOCVirtualProduct(CurrentRequest.Id);
                 if(!isAutoSaveForEC)
                 {
                     IsEdit = false;
                     refreshPage=true;
                 }
+                
                 //return new PageReference('/apex/CustomPOCRequest?id=' + requestId);
                 
             }
@@ -193,7 +196,6 @@ global with sharing class CustomPOCRequestController
     public void editPage()
     {
         IsEdit = true; 
-        
         
     } 
     public PageReference cancelPage()
@@ -326,11 +328,14 @@ ApexPages.addMessage(myMsg);
             if(!pocRequest.First_POC_on_Account__c)
             {
                 DisableVirtualSection=false;
-            }
-            if(VirtualProducts.size()>0)
+            } 
+            if(pocRequest.POC_Type__c=='Perpetual')
             {
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Info, 'EC-ORCH will be fulfilled automatically.'); 
-                ApexPages.addMessage(myMsg);
+                if(VirtualProducts.size()>0)
+                {
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Info, 'EC-ORCH will be fulfilled automatically.'); 
+                    ApexPages.addMessage(myMsg);
+                }
             }
             
         }
@@ -347,10 +352,13 @@ ApexPages.addMessage(myMsg);
             {
                 DisableVirtualSection=false;
             }
-            if(VirtualProducts.size()>0)
+            if(pocRequest.POC_Type__c=='Metered')
             {
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Info, 'EC-ORCH will be fulfilled automatically.'); 
-                ApexPages.addMessage(myMsg);
+                if(VirtualProducts.size()>0)
+                {
+                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Info, 'EC-ORCH will be fulfilled automatically.'); 
+                    ApexPages.addMessage(myMsg);
+                }
             }
             
         }
@@ -475,7 +483,9 @@ return true;
                                      Status__c, Actual_Ship_Date__c, Target_End_Date__c,POC_Type__c,First_POC_on_Account__c  from Request__c where Id = :requestId];                                                               
         if(!requests.isEmpty())
         {
+            
             CurrentRequest = requests[0];
+            System.debug('First_POC_on_Account__c'+CurrentRequest.First_POC_on_Account__c);
             HasContact = CurrentRequest.POC_Contact__c == null ? false : true;            
             VirtualQuantity = CurrentRequest.VirtualQuantity1__c;
             

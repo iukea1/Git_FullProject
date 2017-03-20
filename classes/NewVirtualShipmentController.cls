@@ -117,7 +117,7 @@ public with sharing class NewVirtualShipmentController
     public PageReference addLine()
     {    
         VirtualAssetManager.VirtualAsset newAssetInfo = new VirtualAssetManager.VirtualAsset();
-        newAssetInfo.Asset = new Asset(Evaluation_Start_Date__c = Date.today(),Evaluation_End_Date__c = Date.today(),Service_Support_Start_Date__c=Date.today(),Service_Support_End_Date__c=Date.today());
+        newAssetInfo.Asset = new Asset(Evaluation_Start_Date__c = Date.today(),Evaluation_End_Date__c = Date.today());
         //newAssetInfo.License = new License__c();
         AssetLines.add(newAssetInfo);
         return null;
@@ -240,12 +240,6 @@ public with sharing class NewVirtualShipmentController
                 if(virtualAsset.Asset.Status == 'Customer Owned')
                 {
                     virtualAsset.Asset.Evaluation_End_Date__c = null;      
-                }
-                
-                if(SPProductIds!=null && !SPProductIds.containsKey(virtualAsset.Asset.Product2Id))
-                {
-                    virtualAsset.Asset.Service_Support_Start_Date__c = null; 
-                    virtualAsset.Asset.Service_Support_End_Date__c = null; 
                 }
                 
                 //creates the specified quantity of assets

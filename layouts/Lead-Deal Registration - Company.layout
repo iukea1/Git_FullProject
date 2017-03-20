@@ -136,6 +136,10 @@
                 <behavior>Edit</behavior>
                 <field>DealReg_Reseller_Text__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accurate_GEO__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

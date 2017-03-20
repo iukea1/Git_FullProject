@@ -16,6 +16,10 @@
                 <behavior>Edit</behavior>
                 <field>Company_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_Matching_Accounts__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -25,6 +29,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Account_Data_Match__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PrimaryPartnerContact__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

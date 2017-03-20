@@ -16,6 +16,7 @@
     <fields>
         <label><!-- Closed By --></label>
         <name>Closed_By__c</name>
+        <relationshipLabel><!-- Cap --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Closed Date --></label>

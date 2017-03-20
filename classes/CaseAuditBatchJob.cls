@@ -106,7 +106,7 @@ global class CaseAuditBatchJob implements Database.Batchable<sObject>, Database.
         if(caseCount > 0)
         {
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setToAddresses(new String[] { 'curtisc@silver-peak.com' });
+            email.setToAddresses(new String[] { 'dbeckus@silver-peak.com' });
             email.setSubject('Case Audit Daily Summary');
             email.setPlainTextBody('Totally ' + userCount + ' users get notified. \r\nIncludes ' + caseCount + ' cases.\r\n' + Date.today().format());
             if(EmailAddressId != null)

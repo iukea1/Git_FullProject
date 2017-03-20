@@ -86,8 +86,6 @@ public class SendShipmentFulfilmentEmailTest
         
         controller.AssetLines[0].Asset.Product2Id = controller.ProductsList[0].Id;
         controller.AssetLines[0].Asset.Quantity = 1;
-        controller.AssetLines[0].Asset.Service_Support_Start_Date__c = Date.today();
-        controller.AssetLines[0].Asset.Service_Support_End_Date__c = Date.today().addDays(30);
         controller.AssetLines[0].Asset.Status = 'Customer Owned';
         controller.addLine();
         
