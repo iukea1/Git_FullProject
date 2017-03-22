@@ -1,4 +1,4 @@
-global with sharing class CommunityDealRegistrationController 
+global without sharing class CommunityDealRegistrationController 
 {
     private String regionFilters;
     private Contact currUserCont;
@@ -6,6 +6,7 @@ global with sharing class CommunityDealRegistrationController
     private User currUser { get; set; }
     private List<SelectOption> resellers { get; set; }
     private List<SelectOption> distributors { get; set; }
+    private AccountFetchHelper actsHelper {get;set;}
     
     public Lead leadRecord { get; set; }
     public String selectedResellerId { get; set;}
@@ -27,6 +28,7 @@ global with sharing class CommunityDealRegistrationController
         String currUserId = UserInfo.getUserId();
         leadRecord.RecordTypeId = '012500000005KAN';
         isSavedSuccess = false;
+        actsHelper = new AccountFetchHelper();
         
         List<User> users = Database.query('select Id, Name, ContactId from User where Id = :currUserId limit 1');
         try
@@ -163,6 +165,7 @@ global with sharing class CommunityDealRegistrationController
         leadRecord.Registered_Partner__c = currUserAct.id;
         leadRecord.Registered_Partner_Sales_Rep__c = currUserCont.id;
         leadRecord.Trigger_Submission__c = true;
+        leadRecord.Status = 'Draft';
         //Default Lead Values End
         if(validateLead(leadRecord))
         {
@@ -189,16 +192,8 @@ global with sharing class CommunityDealRegistrationController
     {
         if(this.resellers.size() == 0)
         {
-            resellers.add(new SelectOption('', '--None--'));
-            if(this.currUserAct != null)
-            {
-                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Reseller\' and GEO_Supported__c includes '+regionFilters))
-                {
-                    this.resellers.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
-                }
-            }
-            resellers.add(new SelectOption('other', 'Other'));
-            return resellers;
+            this.resellers = actsHelper.getResellers(currUserAct, regionFilters);
+            return this.resellers;
         }else
         {
             return this.resellers;
@@ -207,32 +202,65 @@ global with sharing class CommunityDealRegistrationController
     
     public List<SelectOption> getDistributors()
     {
-        if(distributors.size() == 0)
+        if(this.distributors.size() == 0)
         {
-            distributors.add(new SelectOption('', '--None--'));
-            if(currUserAct != null)
-            {
-                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Distributor\' and GEO_Supported__c includes '+regionFilters))
-                {
-                    this.distributors.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
-                }
-            }
-            distributors.add(new SelectOption('other', 'Other'));
-            return distributors;
+            this.distributors = actsHelper.getDistributors(currUserAct, regionFilters);
+            return this.distributors;
         }else
         {
-            return distributors;
+            return this.distributors;
         }
     }
     
     @RemoteAction
     global static List<Contact> getResellerContacts(String id)
     {
-        List<Contact> contacts = new List<Contact>();
-        if(String.isNotBlank(id) && id instanceof ID)
+       AccountFetchHelper helper = new AccountFetchHelper();
+       return helper.getContacts(id);
+    }
+
+    global without sharing class AccountFetchHelper
+    {
+        global String regionFilters {get; private set;}
+
+        global List<SelectOption> getDistributors(Account currUserAct, String regionFilters)
         {
-            contacts = [select id, Name from Contact where AccountId = :id];
+            List<SelectOption> result = new List<SelectOption>();
+            result.add(new SelectOption('', '--None--'));
+            if(currUserAct != null && String.isNotBlank(regionFilters))
+            {
+                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Distributor\' and GEO_Supported__c includes '+regionFilters))
+                {
+                    result.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
+                }
+            }
+            result.add(new SelectOption('other', 'Other'));
+            return result;
         }
-        return contacts;
+
+        global List<SelectOption> getResellers(Account currUserAct, String regionFilters)
+        {
+            List<SelectOption> result = new List<SelectOption>();
+            result.add(new SelectOption('', '--None--'));
+            if(currUserAct != null && String.isNotBlank(regionFilters))
+            {
+                for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Reseller\' and GEO_Supported__c includes '+regionFilters))
+                {
+                    result.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
+                }
+            }
+            result.add(new SelectOption('other', 'Other'));
+            return result;
+        }
+
+        global List<Contact> getContacts(String Id)
+        {
+            List<Contact> contacts = new List<Contact>();
+            if(String.isNotBlank(id) && id instanceof ID)
+            {
+                contacts = [select id, Name from Contact where AccountId = :id];
+            }
+            return contacts;
+        }
     }
 }

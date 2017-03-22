@@ -210,6 +210,10 @@
                 <behavior>Edit</behavior>
                 <field>Deal_is_a_result_of_a_SP_funded_event__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deal_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

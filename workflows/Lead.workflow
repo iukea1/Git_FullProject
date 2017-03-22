@@ -2,6 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Deal_Reg_Denied_Partner</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Reg Denied - Partner</description>
         <protected>false</protected>
         <recipients>
@@ -13,6 +14,7 @@
     </alerts>
     <alerts>
         <fullName>Deal_Reg_is_Approved_external</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Reg is Approved (external)</description>
         <protected>false</protected>
         <recipients>
@@ -25,6 +27,7 @@
     </alerts>
     <alerts>
         <fullName>Deal_Registration_Denied_Need_Reason_Denied</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Registration Denied (Internal)</description>
         <protected>false</protected>
         <recipients>
@@ -41,6 +44,7 @@
     </alerts>
     <alerts>
         <fullName>Deal_Registration_Submitted_Email_Alert_to_Marketing</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Registration Submitted Email Alert to Marketing</description>
         <protected>false</protected>
         <recipients>
@@ -61,6 +65,7 @@
     </alerts>
     <alerts>
         <fullName>Email_Alert_for_ISR_CSM_that_RSM_Approval_is_Pending</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Email Alert for ISR/CSM that RSM Approval is Pending</description>
         <protected>false</protected>
         <recipients>
@@ -230,6 +235,7 @@
     </alerts>
     <alerts>
         <fullName>Opportunity_Registration_Acknowledgement</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Opportunity Registration Acknowledgement</description>
         <protected>false</protected>
         <recipients>
@@ -253,6 +259,7 @@
     </alerts>
     <alerts>
         <fullName>Partner_Acknowledgement</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Partner Acknowledgement</description>
         <protected>false</protected>
         <recipients>
@@ -1104,7 +1111,7 @@ Deal_Reg__c,  DATEVALUE(CreatedDate) =  TODAY(), NOT( Trigger_Submission__c ) )<
             <name>Lead_Set_Status_Draft</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( RecordTypeId = &quot;012500000005KAN&quot;, NOT(ISPICKVAL(Status,&quot;Draft&quot;)) )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>

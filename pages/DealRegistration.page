@@ -199,6 +199,7 @@
                     {
                         selector.append($("<option></option>").attr("value", result[i].Id).text(result[i].Name));
                     }
+                    selector.append($("<option></option>").attr("value", 'NoContact').text('Contact Not Listed'));
                     selector.removeAttr('disabled');
                 }else if(event.type === 'exception')
                 {
@@ -217,6 +218,7 @@
             panel.slideDown("slow", autoAdjustHeight);
             $("select[id$='resellerContactSelector']").find('option').remove();
             $("select[id$='resellerContactSelector']").append($("<option></option>").attr("value", null).text('--None--'));
+            $("select[id$='resellerContactSelector']").append($("<option></option>").attr("value", 'NoContact').text('Contact Not Listed'));
             $("input[id$='otherResellerInput']").attr("placeholder", "Please input reseller's name");
         }
         else
@@ -359,20 +361,8 @@
                 removeError(e);
             }
         });
-            
-        /*var distributorSelector = $("select[id$='distributorSelect']");
-            
-        if(distributorSelector.val() == '')
-        {
-            isValidated = false;
-            removeError(distributorSelector);
-            addError(distributorSelector, 'Distributor is required, please select/input a distributor');
-        }else
-        {
-            removeError(distributorSelector);
-        }*/
         
-        var flag = $("input[id$='cannotFindContact']");
+        var flag = $("input[id$='noContactHidden']").val();
         var contactSelector = $("input[id$='resellerContactHidden']");
         var resellerSelect = $("select[id$='resellerSelect']");
         
@@ -386,12 +376,14 @@
             resellerSelect.parent().find('.error').remove();
         }
         
-        if(flag[0].checked == false && contactSelector.val() == '' && resellerSelect.val() != 'other')
+        if(contactSelector.val() === '' && ( (flag === false && resellerSelect.val() !== 'other')
+            ||resellerSelect.val() === '') )
         {
             contactSelector.parent().find('.error').remove();
-            contactSelector.parent().append("<div class='error'>Please select a reseller contact, if unchecked cannot find contact check box</div>");
+            contactSelector.parent().append("<div class='error'>Please select a reseller contact, select 'No Contact Listed' if cannot find a contact.</div>");
             isValidated = false;
-        }else
+        }
+        else
         {
             contactSelector.parent().find('.error').remove();
         }
@@ -421,19 +413,13 @@
     function setResellerContact()
     {
         var selectorVar = $("#resellerContactSelector").val();
-        selectorVar = (selectorVar == '--None--')?'':selectorVar;
-        $("input[id$='resellerContactHidden']").val(selectorVar);
-    }
-    
-    function contactConditionReuire()
-    {
-        var flag = $("input[id$='cannotFindContact']")[0];
-        if(flag.checked == true)
+        if(selectorVar=== 'NoContact')
         {
-            if($("#contactLabel").hasClass('require')){ $("#contactLabel").removeClass('require') }
+            $("input[id$='noContactHidden']").val(true);
         }else
         {
-            $("#contactLabel").addClass('require')
+            selectorVar = (selectorVar == '--None--')?'':selectorVar;
+            $("input[id$='resellerContactHidden']").val(selectorVar);
         }
     }
     
@@ -442,6 +428,7 @@
         prepareStatePikclists();
         preSetPlaceholders();
         $("select[id$='resellerContactSelector']").append($("<option selected='selected'></option>").attr("value", null).text('Please select'));
+        $("select[id$='resellerContactSelector']").append($("<option ></option>").attr("value", 'NoContact').text('Contact Not Listed'));
         $('.dateFormat').remove();
         autoAdjustHeight();
     });
@@ -586,14 +573,11 @@
                                 <div>
                                     <div id="contactLabel" class="reg-label require">Reseller Contact</div>
                                     <div class = "reg-input">
+                                        <apex:inputHidden id="noContactHidden" value="{!leadRecord.NoDealRegistrationResellerContact__c}"/>
                                         <apex:inputHidden id="resellerContactHidden" value="{!leadRecord.Deal_Registration_Reseller_Contact__c}"/>
                                         <select id="resellerContactSelector" size="1" class="input" onchange="setResellerContact()"></select>
                                         <img id="otherResellerLoading" src="/img/loading.gif" class="hidden p-left__small"/>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="reg-label">Can't find the correct contact? Check this box</div>
-                                    <div class = "reg-input"><apex:inputField id="cannotFindContact" onchange="contactConditionReuire()" styleClass="select" value="{!leadRecord.NoDealRegistrationResellerContact__c}" /></div>
                                 </div>
                             </apex:outputPanel>
                             
@@ -602,7 +586,7 @@
                             <div class="reg-label require">Deal Type</div>
                             <div class = "reg-input"><apex:selectList size="1" required="true" styleClass="input required" value="{!leadRecord.Deal_Type__c}">
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
-                                <apex:selectOption itemLabel="SD-WAN (EdgeConnect)" itemValue="SD-WAN (EdgeConnect)"></apex:selectOption>
+                                <apex:selectOption itemLabel="SD WAN" itemValue="SD WAN"></apex:selectOption>
                                 <apex:selectOption itemLabel="Wan Op" itemValue="Wan Op"></apex:selectOption>
                                 <apex:selectOption itemLabel="Replication" itemValue="Replication"></apex:selectOption>
                                 </apex:selectList></div>
@@ -625,7 +609,7 @@
                         </li>
                         <li>
                             <div class="p-top__medium">
-                                <apex:commandButton value="Submit" action="{!Save}" styleClass="reg-submit-btn" id="submitBtn" />
+                                <apex:commandButton value="Register" action="{!Save}" styleClass="reg-submit-btn" id="submitBtn" />
                                 <img id="submitBtnLoading" style="padding-top:3%; padding-left:2%;" class="hidden" src="/img/loading.gif"/>
                             </div>
                         </li>

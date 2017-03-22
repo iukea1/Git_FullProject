@@ -54,8 +54,11 @@ public class PatchRuleHelper
                 PatchRuleEngineBase.Target target = getTarget(obj);
                 PatchRuleEngine engine = new PatchRuleEngine();
                 PatchRuleEngineBase.Match match = engine.match(target);
-                patchId = match.PatchId;
-                overlayHolder.put(obj.Id, match.OverlayMatches);
+                if(match != null)
+                {
+                    patchId = match.PatchId;
+                    overlayHolder.put(obj.Id, match.OverlayMatches);
+                }
             }
             Patch__c patch = patches.get(patchId);
             assignPatch(obj, patch);

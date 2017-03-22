@@ -28,7 +28,6 @@
     </alerts>
     <alerts>
         <fullName>Send_Information_Card_Submitted_for_Approval_cc</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Send Information Card Submitted for Approval cc</description>
         <protected>false</protected>
         <recipients>

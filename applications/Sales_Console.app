@@ -114,7 +114,9 @@
     </keyboardShortcuts>
     <label>Sales Console</label>
     <listPlacement>
-        <location>full</location>
+        <location>left</location>
+        <units>percent</units>
+        <width>25</width>
     </listPlacement>
     <listRefreshMethod>none</listRefreshMethod>
     <liveAgentConfig>
@@ -128,6 +130,7 @@
     </liveAgentConfig>
     <logo>SBQQ__SteelBrick_Assets/Silver_Peak_Logo_Color.png</logo>
     <saveUserSessions>true</saveUserSessions>
+    <tab>Sales_Development</tab>
     <tab>standard-Lead</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
@@ -137,6 +140,10 @@
             <tab>Opportunities_Partner</tab>
         </mapping>
         <mapping>
+            <tab>Sales_Development</tab>
+        </mapping>
+        <mapping>
+            <fieldName>ParentId</fieldName>
             <tab>standard-Account</tab>
         </mapping>
         <mapping>
@@ -144,6 +151,7 @@
             <tab>standard-Contact</tab>
         </mapping>
         <mapping>
+            <fieldName>CampaignId</fieldName>
             <tab>standard-Lead</tab>
         </mapping>
     </workspaceMappings>

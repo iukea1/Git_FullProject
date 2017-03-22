@@ -36,6 +36,7 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> et = [Select Id, Name, Body, HtmlValue,Subject from EmailTemplate where DeveloperName like '%New_MDF_Approved_Post_Event%' limit 1];
+        List<OrgWideEmailAddress> orgWideEmail = [Select Id from OrgWideEmailAddress where DisplayName = 'Silver Peak Channel Team' LIMIT 1];
         if(!et.isEmpty())
         {
             String url;
@@ -44,7 +45,8 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
                 url = SendMdfUrlToClientController.encryptParameter(mdf.Id);
                 String recipient = mdf.Owner.Profile.Name == '13g-SP Partner Community' ? mdf.Owner.Email : mdf.Contact__r.Email;
                 mail.setToAddresses(new String[] {recipient});
-                mail.setSenderDisplayName('The Silver Peak Team');
+                //mail.setSenderDisplayName('The Silver Peak Team');
+                mail.setOrgWideEmailAddressId(orgWideEmail[0].Id);
                 mail.setSubject(mergeEmail(et[0].Subject, mdf, url));
                 mail.setPlainTextBody(mergeEmail(et[0].Body, mdf, url));
                 mail.setBccSender(false);

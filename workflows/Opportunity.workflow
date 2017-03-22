@@ -80,6 +80,7 @@
     </alerts>
     <alerts>
         <fullName>Deal_Reg_Dead_Notify_Partner</fullName>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Reg Dead - Notify Partner</description>
         <protected>false</protected>
         <recipients>
@@ -87,7 +88,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>DealRegistrations/TEST_Deal_Reg_Dead</template>
+        <template>DealRegistrations/Deal_Reg_Closed</template>
     </alerts>
     <alerts>
         <fullName>EmailFinanceOnRSMSignature</fullName>

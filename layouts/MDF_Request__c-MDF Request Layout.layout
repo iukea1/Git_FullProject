@@ -263,6 +263,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>SendReminder__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Approval_Status_Hidden__c</field>
             </layoutItems>
             <layoutItems>
