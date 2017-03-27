@@ -527,6 +527,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EditCapCasesController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EditCapCasesControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EditQuoteLinesRedirectController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2051,6 +2059,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestUpdateCustomerDateonAccount</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestUpdateECCustomerDate</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2620,6 +2632,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Account_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cap__c.Cap_Comments__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3675,6 +3692,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead_Transition__c.Won_Business__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lesson_Learned__c.Impact__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lesson_Learned__c.Problem_Success__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lesson_Learned__c.Recommendation__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8323,6 +8355,9 @@
         <layout>Lead_Transition__c-Lead Transition Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Lesson_Learned__c-Lesson Learned Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>License__c-license Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -8768,6 +8803,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Downloads</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EditCapCaseRecords</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

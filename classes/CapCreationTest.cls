@@ -1,45 +1,95 @@
 @isTest
 private class CapCreationTest {
-   @isTest static void TestcapCreation() {  
+   // Test when isCap value is true and updated to false
+   @isTest static void IsCapFalse() {  
        //Create New Account
        Account acc  = new Account();
        acc.Name     = 'Hybrid Technologies';
        acc.Type     = 'Prospect';
-       acc.IsCap__c = FALSE; 
+       acc.IsCap__c = TRUE; 
        insert acc;
        
+       acc.IsCap__c = FALSE;
+       update acc;
+       
+       List<Cap__c> nullCap = [Select Id, Name, Account_Name__r.Id from Cap__c where Account_Name__r.Id =:acc.Id];
+       system.assertEquals(0, nullCap.size());
+   }
+    //Test when the asscociated Case is not of valid record type
+    @isTest static void InvalidCase() {
+       //Create New Account
+       Account acc1  = new Account();
+       acc1.Name     = 'Generic Solutions';
+       acc1.Type     = 'Prospect';
+       acc1.IsCap__c = FALSE; 
+       insert acc1;
+        
        //Create a new Contact and associate with the Account
        Contact con   = new Contact();
        con.FirstName = 'John';
        con.LastName  = 'Doe';
-       con.AccountId = acc.Id;
+       con.AccountId = acc1.Id;
        insert con;
        
-       //Create a new Case of Technical Support RecordType
+       //Create a second new case of IT Help request recordtype
        Case case1         = new Case();
-       case1.Subject      = 'Test Cap Creation for Account';
-       case1.AccountId    = acc.Id;
+       case1.Subject      = 'Invalid Case for Cap Creation';
+       case1.AccountId    = acc1.Id;
        case1.ContactId    = con.Id;
-       case1.RecordTypeId = '012500000005Aui';
+       case1.RecordTypeId = '012500000005HNd';
        case1.Priority     = 'P4 - Low';
-       case1.Status       = 'Unassigned';
-	   case1.Type         = 'Technical Support';
-	   case1.Origin       = 'Web';
+       case1.Status       = 'Closed';
+       case1.Type         = 'Customer Service';
+       case1.Origin       = 'Web';
        insert case1;
+      
+       acc1.IsCap__c = TRUE;
+       update acc1;  
+       
+       List<Cap__c> newCap = [Select Id, Name, Account_Name__r.Id from Cap__c where Account_Name__r.Id =:acc1.Id Limit 1];
+       system.assertEquals(1, newCap.size());
+       List<Cap_Case__c> nullCapCase = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
+                                        where Cap_Name__r.Id =: newCap[0].Id
+                                        and Case_Number__r.Id =: case1.Id];
+       system.assertEquals(0, nullCapCase.size());
+   } 
+    
+    //Test when the associated case is of valid record type
+    @isTest static void ValidCase() {
+       //Create New Account
+       Account acc2  = new Account();
+       acc2.Name     = 'Tech Networks';
+       acc2.Type     = 'Prospect';
+       acc2.IsCap__c = FALSE; 
+       insert acc2;
+        
+       //Create a new Contact and associate with the Account
+       Contact con1   = new Contact();
+       con1.FirstName = 'Tom';
+       con1.LastName  = 'Brady';
+       con1.AccountId = acc2.Id;
+       insert con1;
        
        //Create a second new case of IT Help request recordtype
        Case case2         = new Case();
-       case2.Subject      = 'Invalid Case for Cap Creation';
-       case2.AccountId    = acc.Id;
-       case2.ContactId    = con.Id;
-       case2.RecordTypeId = '012500000005HNd';
+       case2.Subject      = 'Valid Case for Cap Creation';
+       case2.AccountId    = acc2.Id;
+       case2.ContactId    = con1.Id;
+       case2.RecordTypeId = '012500000005Aui';
        case2.Priority     = 'P4 - Low';
-       case2.Status       = 'Closed';
-	   case2.Type         = 'Customer Service';
-	   case2.Origin       = 'Web';
+       case2.Status       = 'Unassigned';
+       case2.Type         = 'Technical Support';
+       case2.Origin       = 'Web';
        insert case2;
       
-	   acc.IsCap__c = TRUE;
-	   update acc;       
-   }     
+       acc2.IsCap__c = TRUE;
+       update acc2;  
+       
+       List<Cap__c> validCap = [Select Id, Name, Account_Name__r.Id from Cap__c where Account_Name__r.Id =:acc2.Id Limit 1];
+       system.assertEquals(1, validCap.size());
+       List<Cap_Case__c> validCapCase = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
+                                        where Cap_Name__r.Id =: validCap[0].Id
+                                        and Case_Number__r.Id =: case2.Id];
+       system.assertEquals(1, validCapCase.size());
+   }    
 }

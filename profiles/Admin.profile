@@ -527,6 +527,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EditCapCasesController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EditCapCasesControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EditQuoteLinesRedirectController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2051,6 +2059,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestUpdateCustomerDateonAccount</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestUpdateECCustomerDate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2624,11 +2636,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Cap__c.Cap_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Cap__c.Closed_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Cap__c.Closed_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3675,6 +3692,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead_Transition__c.Won_Business__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lesson_Learned__c.Impact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lesson_Learned__c.Problem_Success__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lesson_Learned__c.Recommendation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8323,6 +8355,9 @@
         <layout>Lead_Transition__c-Lead Transition Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Lesson_Learned__c-Lesson Learned Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>License__c-license Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -8865,6 +8900,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Lesson_Learned__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>License__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -9390,6 +9434,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Downloads</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EditCapCaseRecords</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

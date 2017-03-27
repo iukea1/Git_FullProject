@@ -321,7 +321,7 @@
     </alerts>
     <alerts>
         <fullName>Send_to_BDR_for_review</fullName>
-        <ccEmails>mmartin@silver-peak.com</ccEmails>
+        <ccEmails>mmartin@silver-peak.com, lauren@snapbi.com</ccEmails>
         <description>Send to BDR for review</description>
         <protected>false</protected>
         <recipients>

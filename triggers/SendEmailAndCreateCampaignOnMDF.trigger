@@ -91,7 +91,7 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         {
             String fyfq = getQuarter(mdf.Activity_Date__c);
             String geo = mdf.GEO__c == 'NAM' ? 'AMER' : mdf.GEO__c;
-            String activityDate = (mdf.Activity_Date__c == null) ? '' : ((String.valueOf(mdf.Activity_Date__c.year()).right(2)) + '' + (mdf.Activity_Date__c.month() < 10 ? '0' + mdf.Activity_Date__c.month() : '' + mdf.Activity_Date__c.month()) + '' + (mdf.Activity_Date__c.day() < 10 ? '0' + mdf.Activity_Date__c.day() : '' + mdf.Activity_Date__c.day()));
+            String activityDate = (mdf.Activity_Date__c == null) ? '' : ((mdf.Activity_Date__c.month() < 10 ? '0' + mdf.Activity_Date__c.month() : '' + mdf.Activity_Date__c.month()) + '' + (mdf.Activity_Date__c.day() < 10 ? '0' + mdf.Activity_Date__c.day() : '' + mdf.Activity_Date__c.day()) + '' + (String.valueOf(mdf.Activity_Date__c.year()).right(2)));
             String campaignName = truncateString(fyfq, 6) + '_' + truncateString(geo, 5) + '_' + truncateString(mdf.Type_Of_Program__c, 15) + '_' + truncateString(mdf.Event_Campaign_Name__c, 15) + '_' + truncateString(mdf.Account__r.Name, 15) + '_' + truncateString(mdf.Event_Location_City__c, 12) + '_' + truncateString(activityDate, 6);
             return campaignName.length() > 80 ? campaignName.substring(0, 80) : campaignName;
         }
@@ -123,7 +123,9 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         if(d != null)
         {
             Integer month = d.month();
-            return 'FY' + String.valueOf(d.year()).subString(2,4) + 'Q' + (Integer)Math.ceil(math.mod(month + 5, 12)/4.0);
+            String FY = 'FY' + String.valueOf((month >= 8) ? d.year() + 1 : d.year()).subString(2,4);
+            String FQ = 'Q' + (Integer)Math.ceil((month >= 8 ? month -7 : month + 5) /3.0);
+            return FY + FQ;
         }
         else
         {
