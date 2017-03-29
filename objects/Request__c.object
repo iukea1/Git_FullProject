@@ -3109,7 +3109,7 @@ ISPICKVAL( POC_Type__c,&quot;Service Provider&quot; )
     </validationRules>
     <validationRules>
         <fullName>POCApprovercanbechangedbyOps</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND
 (
 NOT( Trigger_POC_Approvers__c ),

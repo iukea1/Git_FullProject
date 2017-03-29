@@ -690,6 +690,15 @@ Requested_End_Date__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_POC_Approval_Flag</fullName>
+        <field>Trigger_POC_Approvers__c</field>
+        <literalValue>1</literalValue>
+        <name>Update POC Approval Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_POC_Record_Type</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Existing</lookupValue>
@@ -1048,6 +1057,19 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
         <active>true</active>
         <formula>LastModifiedDate &gt; CreatedDate</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Trigger POC Approvers</fullName>
+        <actions>
+            <name>Update_POC_Approval_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Request__c.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>TriggerVXFulfillmentEmail_POC</fullName>

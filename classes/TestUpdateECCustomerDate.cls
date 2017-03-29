@@ -1,3 +1,4 @@
+@IsTest
 public class TestUpdateECCustomerDate {
     
     public static void TestUpdateECCustomerDate_EC()
