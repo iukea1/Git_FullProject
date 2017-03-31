@@ -34,10 +34,10 @@ public class RenewalOpportunityController
         catch(Exception ex)
         {}
        
-        List<Pricebook2> pricebook = [select Id from Pricebook2 where Id =:opp.Pricebook2Id];
+        List<Pricebook2> pricebook = [select Id from Pricebook2 where Id=:opp.Pricebook2Id];
         
         if(pricebook.size() == 0){
-        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'No Pricebook is associate with the Parent Opportunity'));
+        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'No Pricebook is associate with the Parent Opportunity')); 
         }
         else
         {  

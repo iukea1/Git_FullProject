@@ -26,6 +26,15 @@
             <caseOrigin>Email</caseOrigin>
             <casePriority>P3 - Normal</casePriority>
             <createTask>false</createTask>
+            <emailAddress>devopshelp@silver-peak.com</emailAddress>
+            <routingName>Dev Ops Help</routingName>
+            <saveEmailHeaders>true</saveEmailHeaders>
+        </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <casePriority>P3 - Normal</casePriority>
+            <createTask>false</createTask>
             <emailAddress>facilities@silver-peak.com</emailAddress>
             <routingName>Facilities</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>

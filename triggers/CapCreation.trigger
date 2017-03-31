@@ -14,26 +14,26 @@ trigger CapCreation on Account (after update) {
             cap.Status__c       = 'Open';
             insert cap; 
             
-            if(cap != null){
-                List<Cap_Case__c> capCaseLst = new List<cap_Case__c>();
-                List<Case> ascCases = [Select Id, ClosedDate, CaseNumber, LastUpdateNote__c  from Case where 
+            if(cap.Id != null){
+                List<Cap_Case__c> lstCapCase = new List<cap_Case__c>();
+                List<Case> lstAscCases = [Select Id, ClosedDate, CaseNumber, LastUpdateNote__c  from Case where 
                                        RecordtypeId IN ('012500000005AuO','012500000005Aui') AND ClosedDate = NULL
                                        AND AccountId =:acct.Id];
                 
-                if (ascCases.size()> 0) 
+                if (lstAscCases.size()> 0) 
                 {
-                    for(Case c : ascCases)
+                    for(Case c : lstAscCases)
                     {    
                         Cap_Case__c cCase    = new Cap_Case__c();
                         cCase.Cap_Name__c    = cap.Id;
                         cCase.Case_Number__c = c.Id;
                         cCase.Comments__c    = c.LastUpdateNote__c;
                         
-                        capCaseLst.add(cCase); 
+                        lstCapCase.add(cCase); 
                     }
                 }
-                if (capCaseLst.size()> 0)  
-                    insert capCaseLst;
+                if (lstCapCase.size()> 0)  
+                    insert lstCapCase;
             }
         }
     }

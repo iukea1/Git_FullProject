@@ -6,7 +6,7 @@
        Account acc  = new Account();
        acc.Name     = 'InfoTech Solutions';
        acc.Type     = 'Customer';
-       acc.IsCap__c = TRUE; 
+       acc.IsCap__c = FALSE; 
        insert acc;
         
        Contact con   = new Contact();
@@ -31,10 +31,10 @@
        nullCase.Origin       = 'Web';
        insert nullCase;
        
-       List<Cap_Case__c> nullCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
+       List<Cap_Case__c> lstNullCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
                                         where Cap_Name__r.Id =: closedCap.Id
                                         and Case_Number__r.Id =: nullCase.Id];
-       system.assertEquals(0, nullCapCases.size());
+       system.assertEquals(0, lstNullCapCases.size());
     }
     // New Case Created with Invalid record type
     @isTest static void InvalidCase() { 
@@ -67,10 +67,10 @@
        case1.Origin       = 'Web';
        insert case1;
        
-       List<Cap_Case__c> invalidCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
+       List<Cap_Case__c> lstInvalidCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
                                         where Cap_Name__r.Id =: invalidCap.Id
                                         and Case_Number__r.Id =: case1.Id];
-       system.assertEquals(0, invalidCapCases.size());
+       system.assertEquals(0, lstInvalidCapCases.size());
     }
         
     //New Case created with valid record type
@@ -104,9 +104,9 @@
        case2.Origin       = 'Web';
        insert case2;
        
-       List<Cap_Case__c> validCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
+       List<Cap_Case__c> lstValidCapCases = [Select Id, Name, Cap_Name__r.Id, Case_Number__r.Id from Cap_Case__c
                                         where Cap_Name__r.Id =: validCap.Id
                                         and Case_Number__r.Id =: case2.Id];
-       system.assertEquals(1, validCapCases.size());
+       system.assertEquals(1, lstValidCapCases.size());
         }  
     }

@@ -82,6 +82,24 @@
         <template>Support/InternalCaseUpdate</template>
     </alerts>
     <alerts>
+        <fullName>Email_DevOps_Support_Case_Creation</fullName>
+        <description>Email- DevOps Support Case Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Support/DevOps_Support_Case_Creation</template>
+    </alerts>
+    <alerts>
         <fullName>Email_Facilities_Support_Case_Creation</fullName>
         <description>Email-Facilities Support Case Creation</description>
         <protected>false</protected>
@@ -1290,6 +1308,26 @@ NOT(Contact.Testing__c)
             <value>TODAY</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>DevOps Support Case Creation</fullName>
+        <actions>
+            <name>Email_DevOps_Support_Case_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>DevOpsHelp</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DevOps Help Requests</value>
+        </criteriaItems>
+        <description>This workflow rule will send an email notification to the customer about the case creation.</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Escalation Email</fullName>

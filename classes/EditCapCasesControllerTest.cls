@@ -291,11 +291,11 @@ public class EditCapCasesControllerTest {
        controller.getOpenCap();
        controller.getCapCasesLst();
            
-       List<EditCapCasesController.EditCapCasesWrapper> updateList = controller.WrapperCapCases;
-           controller.WrapperCapCases[1].selected =True;
-           controller.WrapperCapCases[1].ccase.Dupe__c ='456';    
+       List<EditCapCasesController.EditCapCasesWrapper> updateList = controller.lstWrapperCapCases;
+           controller.lstWrapperCapCases[1].selected =True;
+           controller.lstWrapperCapCases[1].ccase.Dupe__c ='456';    
            controller.save();
-           Cap_case__c newcc =[Select Id, Dupe__c from Cap_Case__c where Id=:controller.WrapperCapCases[1].ccase.Id];
+           Cap_case__c newcc =[Select Id, Dupe__c from Cap_Case__c where Id=:controller.lstWrapperCapCases[1].ccase.Id];
            system.assertEquals('456',newcc.Dupe__c);
            Test.stopTest();
        } 
