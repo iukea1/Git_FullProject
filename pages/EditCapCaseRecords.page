@@ -54,38 +54,38 @@
              <apex:inputcheckbox value="{!cc.selected}" id="inputId"/>
              </apex:column>
                 <apex:column style="width:5%" value="{!cc.ccase.Name}"/>
-        <apex:column style="width:15%" value="{!cc.ccase.Case_Number__r.CaseNumber}"/>
-        <apex:column style="width:10%" value="{!cc.ccase.Defect__c }"/>
+        <apex:column style="width:20%" value="{!cc.ccase.Case_Number__r.CaseNumber}"/>
+        <apex:column style="width:5%" value="{!cc.ccase.Defect__c }"/>
         <apex:column headerValue="Dupe">
-        <apex:inputField value="{!cc.ccase.Dupe__c}" style="width:70px"/> 
+        <apex:inputField value="{!cc.ccase.Dupe__c}" style="width:60px"/> 
         </apex:column>
         <apex:column headerValue="Engineer">
         <apex:inputField value="{!cc.ccase.Engineer__c}" style="width:80px"/>
         </apex:column>
         <apex:column headerValue="ETA">
-        <apex:inputField value="{!cc.ccase.ETA__c}" style="width:70px"/>
+        <apex:inputField value="{!cc.ccase.ETA__c}" style="width:60px"/>
         </apex:column>
         <apex:column style="width:40%" value="{!cc.ccase.Comments__c }"/>
         <apex:column headerValue="Issue Identified">
-        <apex:inputField value="{!cc.ccase.Issue_Identified__c}" style="width:80px"/>
+        <apex:inputField value="{!cc.ccase.Issue_Identified__c}" style="width:75px"/>
         </apex:column>
         <apex:column headerValue="Engg Assigned">
-        <apex:inputField value="{!cc.ccase.Engineer_Assigned__c}" style="width:80px"/> 
+        <apex:inputField value="{!cc.ccase.Engineer_Assigned__c}" style="width:75px"/> 
         </apex:column>
         <apex:column headerValue="Analysis">
-        <apex:inputField value="{!cc.ccase.Analysis__c}"  style="width:90px"/>
+        <apex:inputField value="{!cc.ccase.Analysis__c}"  style="width:85px"/>
         </apex:column>
         <apex:column headerValue="Evaluating Fix">
-        <apex:inputField value="{!cc.ccase.Evaluating_Fix__c}" style="width:90px"/>
+        <apex:inputField value="{!cc.ccase.Evaluating_Fix__c}" style="width:85px"/>
         </apex:column>
         <apex:column headerValue="Fix">
-        <apex:inputField value="{!cc.ccase.Fix__c}" style="width:90px"/>
+        <apex:inputField value="{!cc.ccase.Fix__c}" style="width:85px"/>
         </apex:column>
         <apex:column headerValue="QA'd">
-        <apex:inputField value="{!cc.ccase.QA_d__c}" style="width:90px"/>   
+        <apex:inputField value="{!cc.ccase.QA_d__c}" style="width:85px"/>   
         </apex:column> 
         <apex:column headerValue="Released">
-        <apex:inputField value="{!cc.ccase.Released__c}" style="width:80px"/>   
+        <apex:inputField value="{!cc.ccase.Released__c}" style="width:70px"/>   
         </apex:column>
         <apex:column style="width:10%" value="{!cc.ccase.Case_Status__c}"/>
         </apex:pageBlockTable>

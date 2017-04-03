@@ -5,7 +5,19 @@
         <description>New Comment on Cap Record</description>
         <protected>false</protected>
         <recipients>
+            <recipient>dennis@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ssheikh@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vdubey@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

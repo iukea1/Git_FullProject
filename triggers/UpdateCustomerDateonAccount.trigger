@@ -6,7 +6,7 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
     {
         for(Asset counter: Trigger.New)
         {
-            if(counter.AccountId!=null && counter.Status!='Customer Evaluation')
+            if(counter.AccountId!=null && counter.Status!='Customer Evaluation' && counter.Ship_Date__c!=null)
             {
                 setAcctIds.add(counter.AccountId);                
             }
@@ -17,12 +17,13 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
         for(Asset counter: Trigger.New)
         {
             Asset oldAsset= Trigger.oldMap.get(counter.Id);
-            if(counter.AccountId!=null && counter.Status!='Customer Evaluation' &&(counter.AccountId!=oldAsset.AccountId || counter.Ship_Date__c!=oldAsset.Ship_Date__c ))
+            if(counter.AccountId!=null && counter.Status!='Customer Evaluation' &&(counter.AccountId!=oldAsset.AccountId || counter.Ship_Date__c!=oldAsset.Ship_Date__c || counter.Status!=oldAsset.Status))
             {
+                
                 setAcctIds.add(counter.AccountId);    
                 if(counter.AccountId!=oldAsset.AccountId)
                 {
-                     setAcctIds.add(oldAsset.AccountId);    
+                    setAcctIds.add(oldAsset.AccountId);    
                 }
             }
         } 
@@ -62,14 +63,16 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
             if(mapWanOpIds.containsKey(accId))
             {
                 Date dt=mapWanOpIds.get(accId);
-                newAcc.WAN_OP_Customer_Date__c=DateTime.newInstanceGmt(dt.year(), dt.month(), dt.day(), 23, 59, 59);
+                if(dt!=null){
+                    newAcc.WAN_OP_Customer_Date__c=DateTime.newInstanceGmt(dt.year(), dt.month(), dt.day(), 23, 59, 59);}
             }
             if(mapECIds.containsKey(accId))
             {
                 Date dt=mapECIds.get(accId);
-                newAcc.EC_Customer_Date__c=DateTime.newInstanceGmt(dt.year(), dt.month(), dt.day(), 23, 59, 59);
+                if(dt!=null){
+                    newAcc.EC_Customer_Date__c=DateTime.newInstanceGmt(dt.year(), dt.month(), dt.day(), 23, 59, 59);}
             }
-           if(newAcc.EC_Customer_Date__c!=null || newAcc.WAN_OP_Customer_Date__c!=null)
+            if(newAcc.EC_Customer_Date__c!=null || newAcc.WAN_OP_Customer_Date__c!=null)
             {
                 lstAccountToUpdate.add(newAcc);
             }

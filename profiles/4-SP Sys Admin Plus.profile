@@ -2573,7 +2573,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Cap_Case__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
