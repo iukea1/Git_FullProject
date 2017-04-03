@@ -8,10 +8,11 @@
     <emailToCase>
         <enableEmailToCase>true</enableEmailToCase>
         <enableHtmlEmail>false</enableHtmlEmail>
-        <enableOnDemandEmailToCase>false</enableOnDemandEmailToCase>
+        <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
         <enableThreadIDInBody>true</enableThreadIDInBody>
         <enableThreadIDInSubject>false</enableThreadIDInSubject>
         <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
+        <overEmailLimitAction>Bounce</overEmailLimitAction>
         <routingAddresses>
             <addressType>EmailToCase</addressType>
             <caseOrigin>Orchestrator</caseOrigin>
@@ -75,6 +76,7 @@
             <routingName>TechncialSupportCases</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>
         </routingAddresses>
+        <unauthorizedSenderAction>Discard</unauthorizedSenderAction>
     </emailToCase>
     <enableCaseFeed>false</enableCaseFeed>
     <enableEarlyEscalationRuleTriggers>false</enableEarlyEscalationRuleTriggers>

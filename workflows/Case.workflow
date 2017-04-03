@@ -96,7 +96,8 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>devopshelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Support/DevOps_Support_Case_Creation</template>
     </alerts>
     <alerts>
@@ -1315,7 +1316,7 @@ NOT(Contact.Testing__c)
             <name>Email_DevOps_Support_Case_Creation</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.Type</field>
             <operation>equals</operation>
@@ -1705,7 +1706,11 @@ NOT(Contact.Testing__c)
         <active>true</active>
         <formula>AND( 
 NOT( ISCHANGED( UpdatedBy__c )), 
-NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;) 
+NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;),
+NOT(RecordType.DeveloperName = &quot;HR_Requests&quot;), 
+NOT(RecordType.DeveloperName = &quot;Facilities&quot;),
+NOT(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;), 
+NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;) 
 )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
