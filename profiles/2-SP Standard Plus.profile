@@ -9308,6 +9308,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>LiveAgentPreChatForm</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>LookupProducts</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

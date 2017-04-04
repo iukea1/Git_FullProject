@@ -62,7 +62,7 @@
         <apex:column headerValue="Engineer">
         <apex:inputField value="{!cc.ccase.Engineer__c}" style="width:80px"/>
         </apex:column>
-        <apex:column headerValue="ETA">
+        <apex:column headerValue="ETA for Fix">
         <apex:inputField value="{!cc.ccase.ETA__c}" style="width:60px"/>
         </apex:column>
         <apex:column style="width:40%" value="{!cc.ccase.Comments__c }"/>

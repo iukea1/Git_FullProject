@@ -3,6 +3,27 @@
     <customButtons>Patch_Lock_Unlock</customButtons>
     <customButtons>Patch_Override</customButtons>
     <customButtons>Update_CapCases</customButtons>
+    <customConsoleComponents>
+        <subtabComponents>
+            <containers>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>RelatedList</componentType>
+                    <relatedLists>
+                        <hideOnDetail>true</hideOnDetail>
+                        <name>Campaign.Sponsoring_Partner_2__c</name>
+                    </relatedLists>
+                    <relatedLists>
+                        <hideOnDetail>true</hideOnDetail>
+                        <name>Information_Card__c.Account__c</name>
+                    </relatedLists>
+                </sidebarComponents>
+                <style>Accordion</style>
+                <unit>Pixel</unit>
+                <width>25</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -890,7 +911,27 @@
     <summaryLayout>
         <masterLabel>00h3800000UJynu</masterLabel>
         <sizeX>4</sizeX>
-        <sizeY>0</sizeY>
+        <sizeY>2</sizeY>
+        <summaryLayoutItems>
+            <field>Name</field>
+            <posX>0</posX>
+            <posY>0</posY>
+        </summaryLayoutItems>
+        <summaryLayoutItems>
+            <field>BillingAddress</field>
+            <posX>0</posX>
+            <posY>1</posY>
+        </summaryLayoutItems>
+        <summaryLayoutItems>
+            <field>AnnualRevenue</field>
+            <posX>1</posX>
+            <posY>0</posY>
+        </summaryLayoutItems>
+        <summaryLayoutItems>
+            <field>First_Asset_Date__c</field>
+            <posX>1</posX>
+            <posY>1</posY>
+        </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>
 </Layout>

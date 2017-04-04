@@ -29,7 +29,7 @@
             <name>New_Comment_on_Cap_Record</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>This WFR sends an email notification to the users whenever comments are added.</description>
         <formula>AND(
 ISCHANGED(Cap_Comments__c),

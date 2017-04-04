@@ -10,7 +10,6 @@ trigger CapCaseOnNewCase on Case (after insert) {
             Cap_Case__c newcCase    = New Cap_Case__c ();
             newcCase.Cap_Name__c    = lstOpenCap[0].Id;
             newcCase.Case_Number__c = newCase.Id;
-            newcCase.Comments__c    = newCase.LastUpdateNote__c;
             lstNewCapCase.add(newcCase);
         }
        }

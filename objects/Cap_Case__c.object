@@ -133,12 +133,14 @@
     <fields>
         <fullName>Comments__c</fullName>
         <externalId>false</externalId>
+        <formula>Case_Number__r.CapCase_Comments__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Comments</label>
-        <length>32768</length>
-        <trackHistory>true</trackHistory>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Defect__c</fullName>
@@ -166,7 +168,7 @@
     <fields>
         <fullName>ETA__c</fullName>
         <externalId>false</externalId>
-        <label>ETA</label>
+        <label>ETA for Fix</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>

@@ -1014,6 +1014,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_CapCase_Comments_Field</fullName>
+        <field>CapCase_Comments__c</field>
+        <formula>LastUpdateNote__c</formula>
+        <name>Update CapCase Comments Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Field</fullName>
         <field>UpdatedBy__c</field>
         <name>Update Case Field</name>
@@ -1123,6 +1132,16 @@
         </criteriaItems>
         <description>Send an email when a beta case is created</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Capture Last Updated Notes to text</fullName>
+        <actions>
+            <name>Update_CapCase_Comments_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(LastUpdateNote__c )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Case Closed Internal</fullName>

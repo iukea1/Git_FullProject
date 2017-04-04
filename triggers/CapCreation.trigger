@@ -27,8 +27,7 @@ trigger CapCreation on Account (after update) {
                         Cap_Case__c cCase    = new Cap_Case__c();
                         cCase.Cap_Name__c    = cap.Id;
                         cCase.Case_Number__c = c.Id;
-                        cCase.Comments__c    = c.LastUpdateNote__c;
-                        
+                
                         lstCapCase.add(cCase); 
                     }
                 }

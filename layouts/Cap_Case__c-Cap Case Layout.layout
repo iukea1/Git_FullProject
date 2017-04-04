@@ -50,7 +50,7 @@
                 <field>Fixed_In__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Comments__c</field>
             </layoutItems>
         </layoutColumns>

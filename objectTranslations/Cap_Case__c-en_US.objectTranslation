@@ -55,7 +55,7 @@
         <name>Dupe__c</name>
     </fields>
     <fields>
-        <label><!-- ETA --></label>
+        <label><!-- ETA for Fix --></label>
         <name>ETA__c</name>
     </fields>
     <fields>
