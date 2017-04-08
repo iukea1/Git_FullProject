@@ -4,9 +4,11 @@ global without sharing class CommunityDealRegistrationController
     private Contact currUserCont;
     private Account currUserAct;
     private User currUser { get; set; }
-    private List<SelectOption> resellers { get; set; }
-    private List<SelectOption> distributors { get; set; }
-    private AccountFetchHelper actsHelper {get;set;}
+    private static Account staticCurrUserAct;
+    private static String staticRegionFilters;
+    private List<SelectOptionWrapper> resellers { get; set; }
+    private List<SelectOptionWrapper> distributors { get; set; }
+    private static AccountFetchHelper actsHelper {get;set;}
     
     public Lead leadRecord { get; set; }
     public String selectedResellerId { get; set;}
@@ -16,10 +18,17 @@ global without sharing class CommunityDealRegistrationController
     
     public Boolean isSavedSuccess {get; set;}
     
+    static 
+    {
+        actsHelper = new AccountFetchHelper();
+        staticCurrUserAct = new Account();
+        staticRegionFilters = '';
+    }
+    
     public CommunityDealRegistrationController()
     {
-        resellers = new List<SelectOption>();
-        distributors = new List<SelectOption>();
+        resellers = new List<SelectOptionWrapper>();
+        distributors = new List<SelectOptionWrapper>();
         currUserAct = new Account();
         currUserCont = new Contact();
         this.leadRecord = new Lead();
@@ -28,7 +37,6 @@ global without sharing class CommunityDealRegistrationController
         String currUserId = UserInfo.getUserId();
         leadRecord.RecordTypeId = '012500000005KAN';
         isSavedSuccess = false;
-        actsHelper = new AccountFetchHelper();
         
         List<User> users = Database.query('select Id, Name, ContactId from User where Id = :currUserId limit 1');
         try
@@ -47,11 +55,24 @@ global without sharing class CommunityDealRegistrationController
         if(currUserAct == null)
         {
             loadCurrAccount();
+            staticCurrUserAct = currUserAct;
             return currUserAct;
         }
         else
         {
             return currUserAct;
+        }
+    }
+    
+    public String getRegionFilters()
+    {
+        if(regionFilters == null)
+        {
+            loadCurrAccount();
+            return regionFilters;
+        }else
+        {
+            return regionFilters;
         }
     }
     
@@ -61,6 +82,7 @@ global without sharing class CommunityDealRegistrationController
         if(users.size() > 0)
         {
             this.currUser = users[0];
+
         }
     }
     
@@ -97,6 +119,8 @@ global without sharing class CommunityDealRegistrationController
                    }
                    regionFilters = '(' + String.join(regions, ',') + ')'; 
                }
+               staticCurrUserAct = currUserAct;
+               staticRegionFilters = regionFilters;
            }
            //System.debug('Account: '+currUserAct);
        } 
@@ -173,6 +197,8 @@ global without sharing class CommunityDealRegistrationController
             try
             {
                 leadRecord.Id = null;
+                System.debug('Save record ');
+                System.debug(leadRecord);
                 insert leadRecord;
                 isSavedSuccess = true;
             }
@@ -188,32 +214,20 @@ global without sharing class CommunityDealRegistrationController
         return null;
     }
     
-    public List<SelectOption> getResellers()
+    @RemoteAction
+    global static List<SelectOptionWrapper> getAllResellers(String filter)
     {
-        if(this.resellers.size() == 0)
-        {
-            this.resellers = actsHelper.getResellers(currUserAct, regionFilters);
-            return this.resellers;
-        }else
-        {
-            return this.resellers;
-        }
-    }
-    
-    public List<SelectOption> getDistributors()
-    {
-        if(this.distributors.size() == 0)
-        {
-            this.distributors = actsHelper.getDistributors(currUserAct, regionFilters);
-            return this.distributors;
-        }else
-        {
-            return this.distributors;
-        }
+        return actsHelper.getResellers( filter);
     }
     
     @RemoteAction
-    global static List<Contact> getResellerContacts(String id)
+    global static List<SelectOptionWrapper> getAllDistributors(String filter)
+    {
+        return actsHelper.getDistributors( filter);
+    }
+    
+    @RemoteAction
+    global static List<Contact> getAllResellerContacts(String id)
     {
        AccountFetchHelper helper = new AccountFetchHelper();
        return helper.getContacts(id);
@@ -223,33 +237,31 @@ global without sharing class CommunityDealRegistrationController
     {
         global String regionFilters {get; private set;}
 
-        global List<SelectOption> getDistributors(Account currUserAct, String regionFilters)
+        global List<SelectOptionWrapper> getDistributors(String regionFilters)
         {
-            List<SelectOption> result = new List<SelectOption>();
-            result.add(new SelectOption('', '--None--'));
-            if(currUserAct != null && String.isNotBlank(regionFilters))
+            List<SelectOptionWrapper> result = new List<SelectOptionWrapper>();
+            if(String.isNotBlank(regionFilters))
             {
                 for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Distributor\' and GEO_Supported__c includes '+regionFilters))
                 {
-                    result.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
+                    result.add(new SelectOptionWrapper((String)obj.get('Id'), (String)obj.get('Name')));
                 }
             }
-            result.add(new SelectOption('other', 'Other'));
+            result.add(new SelectOptionWrapper('other', 'Other'));
             return result;
         }
 
-        global List<SelectOption> getResellers(Account currUserAct, String regionFilters)
+        global List<SelectOptionWrapper> getResellers(String regionFilters)
         {
-            List<SelectOption> result = new List<SelectOption>();
-            result.add(new SelectOption('', '--None--'));
-            if(currUserAct != null && String.isNotBlank(regionFilters))
+            List<SelectOptionWrapper> result = new List<SelectOptionWrapper>();
+            if(String.isNotBlank(regionFilters))
             {
                 for(sObject obj : Database.query('select Id, Name from Account where Partner_Type__c = \'Reseller\' and GEO_Supported__c includes '+regionFilters))
                 {
-                    result.add(new SelectOption((String)obj.get('Id'), (String)obj.get('Name')));
+                    result.add(new SelectOptionWrapper((String)obj.get('Id'), String.escapeSingleQuotes((String)obj.get('Name')) ));
                 }
             }
-            result.add(new SelectOption('other', 'Other'));
+            result.add(new SelectOptionWrapper('other', 'Other'));
             return result;
         }
 
@@ -261,6 +273,22 @@ global without sharing class CommunityDealRegistrationController
                 contacts = [select id, Name from Contact where AccountId = :id];
             }
             return contacts;
+        }
+    }
+    
+    global class SelectOptionWrapper
+    {
+        global String label {get;set;}
+        global String value {get;set;}
+        global SelectOptionWrapper()
+        {
+            label = '';
+            value = '';
+        }
+        global SelectOptionWrapper(String valueText, String labelText)
+        {
+            label = labelText;
+            value = valueText;
         }
     }
 }

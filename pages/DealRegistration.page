@@ -58,6 +58,10 @@
             padding-top:0.3em;
             padding-bottom:0.3em;
         }
+        .reg-input-sub .input
+        {
+            width: 60%;
+        }
         .content-body .btn-disabled{
             background-color:#ccc;
             pointer-events: none;
@@ -114,11 +118,55 @@
         }
         .centerLoadingText .dealRegLoading > img
         { padding: 1em; }
+        .autoSearchContainer
+        {
+            position: relative;
+        }
+        .autoSearchResultPanel
+        {
+            position: absolute;
+            z-index: 235;
+            width: 62%;
+            background-color: #fff;
+            border: 1px solid #bfbcbc;
+            border-radius: .3em;
+            margin-top: 3px;
+            padding: 5px;
+        	max-height: 150px;
+    		overflow: auto;
+        }
+        .autoSearchOptions
+        {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        .autoSearchOptions > li
+        {
+            margin:0px;
+            padding:1px;
+            padding-left: 12px;
+        }
+        .autoSearchOption
+        {
+            cursor: pointer;
+        }
+        .autoSearchOption:hover
+        {
+            color:#fff;
+            background-color: #6bbdff;
+        }
+        .autoSearchHide 
+        {
+            display: none;
+        }
     </style>
     <script type="text/javascript">
     //if successed, redirect to deal reg success page
     var partnerType = '{!currUserAct.Partner_Type__c}';
-    var isSavedSuccess = '{!isSavedSuccess}';
+    var isSavedSuccess = "{!isSavedSuccess}";
+    var regionFilters = "{!regionFilters}";
+    var dataSets = {resellers:[],distributors:[]};
     isSavedSuccess = (isSavedSuccess == 'true')?true:false;
     if(isSavedSuccess)
     {
@@ -126,6 +174,7 @@
     }else
     {
         enableButton();
+        $("input[id$='noContactHidden']").val(false);
     }
     
     var autoAdjustHeight = function(){
@@ -159,8 +208,8 @@
     
     function showOtherDistributor()
     {
-        var distributorElem = $("select[id$='distributorSelect']");
-        var panel = $("div[id$='otherDistributerPanel']");
+        var distributorElem = $("input[id$='DistributorInputHidden']");
+        var panel = $("#otherDistributerPanel");
         if(distributorElem.val() == 'other')
         {
             panel.slideDown("slow", autoAdjustHeight);
@@ -180,10 +229,11 @@
            loading.removeClass('hidden');
            loading.addClass('show');
         }
+        var selectedReseller = $("input[id$='ResellerInputHidden']").val();
         var selector = $("select[id$='resellerContactSelector']");
         selector.attr('disabled', 'disabled');
         Visualforce.remoting.Manager.invokeAction(
-            '{!$RemoteAction.CommunityDealRegistrationController.getResellerContacts}',
+            '{!$RemoteAction.CommunityDealRegistrationController.getAllResellerContacts}',
             actId,
             function(result, event){
                 if(loading.hasClass('show'))
@@ -200,6 +250,10 @@
                         selector.append($("<option></option>").attr("value", result[i].Id).text(result[i].Name));
                     }
                     selector.append($("<option></option>").attr("value", 'NoContact').text('Contact Not Listed'));
+                    if(selectedReseller === 'other')
+                    {
+                        selector.val('NoContact');
+                    }
                     selector.removeAttr('disabled');
                 }else if(event.type === 'exception')
                 {
@@ -210,7 +264,7 @@
     
     function showOtherReseller()
     {
-        var resellerElem = $("select[id$='resellerSelect']");
+        var resellerElem = $("input[id$='ResellerInputHidden']");
         var panel = $("#otherResellerPanel");
         var actId = resellerElem.val();
         if(actId == 'other')
@@ -249,6 +303,123 @@
         var state = $("#stateSelector");
         var country = $("#countrySelector");
         var stateCountryPicks = new CountryStateDependency(country, state, "{!URLFOR($Resource.CountryStates, 'data.csv')}", { placeholder: {countryLabel: "--None--", stateLabel: "--None--"}});
+    }
+
+    function findItems(input, source, key)
+    {
+        input = input.toLowerCase();
+        var result = [];
+        if(source)
+        {
+            for(var i=0; i<source.length; i++)
+            {
+                var item = source[i];
+                if(item[key].toLowerCase().includes(input))
+                {
+                    result.push(item);
+                }
+            }
+        }
+        return result;
+    }
+
+    function hideResult(id)
+    {
+        $(id).addClass('autoSearchHide');;
+    }
+
+    function hideDistributorResult(isTimeout)
+    {
+        if(isTimeout)
+        {
+            setTimeout(function(){
+                hideResult("#Distributor_AutoSearchResultPanel");
+            }, 500);
+        }else
+        {
+            hideResult("#Distributor_AutoSearchResultPanel");
+        }
+    }
+
+    function hideResellerResult(isTimeout)
+    {
+        if(isTimeout)
+        {
+            setTimeout(function(){
+                hideResult("#Reseller_AutoSearchResultPanel");
+            }, 500);
+        }else
+        {
+          hideResult("#Reseller_AutoSearchResultPanel");
+        }
+    }
+
+    function setDistributorId(event)
+    {
+        var id = $(event.target).attr('data-id');
+        var label = $(event.target).attr('data-label');
+        $("#newDistributorInput").val(label);
+        var target = $("input[id$='DistributorInputHidden']");
+        target.val(id);
+        showOtherDistributor();
+        hideDistributorResult(false);
+    }
+
+    function setResellerId(event)
+    {
+        var id = $(event.target).attr('data-id');
+        var label = $(event.target).attr('data-label');
+        $("#newResellerInput").val(label);
+        var target = $("input[id$='ResellerInputHidden']");
+        target.val(id);
+        showOtherReseller();
+        hideResellerResult(false);
+    }
+
+    function showResult(parentId, source, functionName)
+    {
+        var parent  = $(parentId);
+        parent.children().remove();
+        for(var m=0; m<source.length; m++)
+        {
+            parent.append("<li class='autoSearchOption' onclick='"+functionName+"(event)' data-id='"+source[m].value+"' data-label='"+source[m].label+"'>"+source[m].label+"</li>");
+        }
+    }
+
+    function toggleReseult(id)
+    {
+        var elem = $(id);
+        if(elem.hasClass('autoSearchHide'))
+        {
+            elem.removeClass('autoSearchHide');
+        }else
+        {
+            elem.addClass('autoSearchHide');
+        }
+    }
+
+    function handleDistributorInput()
+    {
+        var input = $("#newDistributorInput").val();
+        var result = findItems(input, dataSets.distributors, 'label');
+        if(result.length==0)
+        {
+            result.push({'label':'Other', 'value':'other'});
+        }
+        showResult('#distributorResult', result, 'setDistributorId');
+        toggleReseult("#Distributor_AutoSearchResultPanel");
+    }
+
+    function handleResellerInput()
+    {
+        var input = $("#newResellerInput").val();
+        var result = findItems(input, dataSets.resellers, 'label');
+        if(result.length==0)
+        {
+            result.push({'label':'Other', 'value':'other'});
+        }
+        showResult('#resellerResult', result, 'setResellerId');
+        toggleReseult("#Reseller_AutoSearchResultPanel");
     }
     
     function preSetPlaceholders()
@@ -364,7 +535,7 @@
         
         var flag = $("input[id$='noContactHidden']").val();
         var contactSelector = $("input[id$='resellerContactHidden']");
-        var resellerSelect = $("select[id$='resellerSelect']");
+        var resellerSelect = $("input[id$='ResellerInputHidden']");
         
         if(resellerSelect.val() == '')
         {
@@ -418,12 +589,54 @@
             $("input[id$='noContactHidden']").val(true);
         }else
         {
+            $("input[id$='noContactHidden']").val(false);
             selectorVar = (selectorVar == '--None--')?'':selectorVar;
             $("input[id$='resellerContactHidden']").val(selectorVar);
         }
     }
+
+    function initResellers()
+    {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CommunityDealRegistrationController.getAllResellers}',
+            regionFilters
+            ,
+            function(result, event){
+                if(event.status)
+                {
+                    dataSets.resellers = result;
+                }else if(event.type === 'exception')
+                {
+                    console.log('Error: '+JSON.stringify(event));
+                }
+            });
+    }
+
+    function initDistributors()
+    {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CommunityDealRegistrationController.getAllDistributors}',
+            regionFilters
+            ,
+            function(result, event){
+                if(event.status)
+                {
+                    dataSets.distributors = result;
+                }else if(event.type === 'exception')
+                {
+                    console.log('Error: '+JSON.stringify(event));
+                }
+            });
+    }
+
+    function initData()
+    {
+        initResellers();
+        initDistributors();
+    }
     
     $(function(){
+        initData();
         displayRegForSomene();
         prepareStatePikclists();
         preSetPlaceholders();
@@ -514,6 +727,44 @@
                             <div class="reg-label require">Project Name</div>
                             <div class = "reg-input"><apex:inputField required="true" styleClass="input text" value="{!leadRecord.Project_Name__c}"/></div>
                         </li>
+                        <!-- Begin Technical Contact Detail -->
+                        <li>
+                            <div class="reg-label">Pre Sales Technical Contact</div>
+                        </li>
+                            <ul class="input-items">
+                                <li>
+                                    <div class="reg-label" text-indent="50px">Full Name</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Pre_Sales_Technical_Contact_Name__c}"/></div>
+                                </li>
+                                <li>
+                                    <div class="reg-label">Pre Sales Technical Contact Email Address</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Pre_Sales_Technical_Contact_Email__c}"/></div>
+                                </li>
+                                <li>
+                                    <div class="reg-label">Pre Sales Technical Contact Phone</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Pre_Sales_Technical_Contact_Phone__c}"/></div>
+                                </li>
+                            </ul>
+                            <li>
+                                <div class="reg-label">Support Technical Contact</div>
+                                
+                            </li>
+                            <ul class="input-items">
+                                <li>
+                                    <div class="reg-label">Full Name</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Support_Technical_Contact_Name__c}"/></div>
+                                </li>
+                                <li>
+                                    <div class="reg-label">Support Technical Contact Email Address</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Support_Technical_Contact_Email__c}"/></div>
+                                </li>
+                                <li>
+                                    <div class="reg-label ">Support Technical Contact Phone</div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Support_Technical_Contact_Phone__c}"/></div>
+                                </li>
+                            </ul>
+                        <!-- End Technical Contact Detail -->
+                        
                         <li>
                             <div class="reg-label">Estimated Close Date </div>
                             <div class = "reg-input"><apex:inputField id="estCloseDate" styleClass="input date" value="{!leadRecord.Estimated_Close_Date__c}"/></div>
@@ -552,7 +803,17 @@
                             <apex:outputPanel layout="block" styleClass="" id="distributorDetailPanel">
                                 <div class="reg-label">Preferred Distributor</div>
                                 <div class="reg-input">
-                                    <apex:selectList styleClass="input" id="distributorSelect" size="1" onchange="showOtherDistributor()" value="{!selectedDistributorId}"><apex:selectOptions value="{!distributors}"/></apex:selectList>
+                                    <!--apex:selectList styleClass="input" id="distributorSelect" size="1" onchange="showOtherDistributor()" value="{!selectedDistributorId}"><apex:selectOptions value="{!distributors}"/></apex:selectList-->
+                                   <apex:inputHidden id="DistributorInputHidden" value="{!selectedDistributorId}"/>
+                                   <div class="autoSearchContainer">
+                                        <div class="autoSearchInputPanel">
+                                            <input class="input text" id="newDistributorInput" oninput="handleDistributorInput()" onblur="hideDistributorResult(true)" autocomplete="off"/>
+                                        </div>
+                                        <div class="autoSearchResultPanel autoSearchHide" id="Distributor_AutoSearchResultPanel">
+                                            <ul id="distributorResult" class="autoSearchOptions"></ul>
+                                        </div>
+                                   </div>
+                                   
                                 </div> 
                             </apex:outputPanel>
                             <div class="panel" id="otherDistributerPanel">
@@ -563,7 +824,20 @@
                                 <div>
                                     <div class="reg-label require">Reseller</div>
                                     <div class = "reg-input">
-                                        <apex:selectList required="true" styleClass="input required" id="resellerSelect" size="1" onchange="showOtherReseller()" value="{!selectedResellerId}"><apex:selectOptions value="{!resellers}"/></apex:selectList>
+                                        <!--apex:selectList required="true" styleClass="input required" id="resellerSelect" size="1" onchange="showOtherReseller()" value="{!selectedResellerId}">
+                                            <apex:repeat value="{!resellers}" var="item">
+                                                <apex:selectOption itemLabel="{!item.label}" itemValue="{!item.value}"></apex:selectOption>
+                                            </apex:repeat>
+                                            <apex:selectOptions value="{!resellers}"/></apex:selectList-->
+                                    <apex:inputHidden id="ResellerInputHidden" value="{!selectedResellerId}"/>
+                                       <div class="autoSearchContainer">
+                                        <div class="autoSearchInputPanel">
+                                            <input class="input text" id="newResellerInput" oninput="handleResellerInput()" onblur="hideResellerResult(true)" autocomplete="off" />
+                                        </div>
+                                        <div class="autoSearchResultPanel autoSearchHide" id="Reseller_AutoSearchResultPanel">
+                                            <ul id="resellerResult" class="autoSearchOptions"></ul>
+                                        </div>
+                                       </div>
                                     </div>
                                 </div>
                                 <div class="panel" id="otherResellerPanel">

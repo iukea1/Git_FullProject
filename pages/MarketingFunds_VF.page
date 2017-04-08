@@ -1125,6 +1125,7 @@
         }
         focus();
         requiredInput();
+        setTitle();
         $(".activityType").change(function(){
             requiredInput();
             addTooltips();
@@ -1345,6 +1346,22 @@
         }else{
             $("#SpecificSection").hide();
         }
+    }
+    function setTitle(){
+    	$(".activityType").children("option").each(function(){
+            var reminder = "";
+        	var type = $(this).val();
+            if(type == "Awareness"){
+                reminder = "Activity to increase knowledge of Silver Peak (website optimization, social media, content syndication, newsletters, tradeshows or events";
+            }else if(type == "Enablement"){
+                reminder = "Activity to equip partner selling (sales training, technical training, co-branded collateral)";
+            }else if(type == "Engagement"){
+                reminder = "Activity to promote interaction between Silver Peak and partners (customer briefings, joint account planning)";
+            }else if(type == "Demand Generation"){
+                reminder = "Activity with call-to-action and that delivers qualified leads (e-marketing, promotions, telemarketing, webinars)";
+            }
+            $(this).attr("title", reminder);
+        });
     }
     </script>
 </apex:page>

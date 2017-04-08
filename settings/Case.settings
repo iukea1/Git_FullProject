@@ -11,7 +11,7 @@
         <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
         <enableThreadIDInBody>true</enableThreadIDInBody>
         <enableThreadIDInSubject>false</enableThreadIDInSubject>
-        <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
+        <notifyOwnerOnNewCaseEmail>false</notifyOwnerOnNewCaseEmail>
         <overEmailLimitAction>Bounce</overEmailLimitAction>
         <routingAddresses>
             <addressType>EmailToCase</addressType>

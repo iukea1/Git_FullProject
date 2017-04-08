@@ -547,6 +547,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EmailNotificationOnCapCommentsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EmailQuoteDocumentController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2640,6 +2644,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Cap__c.Account_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Cap__c.Cap_Comments_Recipients__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

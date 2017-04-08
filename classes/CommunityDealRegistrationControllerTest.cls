@@ -3,7 +3,7 @@ public class CommunityDealRegistrationControllerTest
 {    
     
     @testSetup
-    static void setu()
+    static void setup()
     {
         List<profile> p = [select Id from profile where name='13g-SP Partner Community' limit 1];
         Account testPortalAccount = new Account(Name='testPortalAccount', Type='Partner', Partner_Type__c='Distributor', GEO_Supported__c='APAC');
@@ -22,15 +22,18 @@ public class CommunityDealRegistrationControllerTest
         Account currAct = new Account();
         CommunityDealRegistrationController controller = null;
         System.runAs(testPartnerUser){
-            //SilverPeakUtils.BypassingTriggers = true;
+            SilverPeakUtils.BypassingTriggers = true;
             controller = new CommunityDealRegistrationController();
-            List<SelectOption> resellers = controller.getResellers();
-            List<Contact> resellerContact = CommunityDealRegistrationController.getResellerContacts(resellers[1].getValue());
-            List<SelectOption> distributors = controller.getDistributors();
+            String resellersJSON = controller.getResellers();
+            List<CommunityDealRegistrationController.SelectOptionWrapper> resellers = (List<CommunityDealRegistrationController.SelectOptionWrapper>)JSON.deserialize(resellersJSON, List<CommunityDealRegistrationController.SelectOptionWrapper>.class);
+            System.debug(resellers);
+            List<Contact> resellerContact = CommunityDealRegistrationController.getAllResellerContacts(resellers[0].Value);
+            String distributorsJSON = controller.getDistributors();
+            List<CommunityDealRegistrationController.SelectOptionWrapper> distributors = (List<CommunityDealRegistrationController.SelectOptionWrapper>)JSON.deserialize(distributorsJSON, List<CommunityDealRegistrationController.SelectOptionWrapper>.class);
             controller.leadRecord = buildLead();
             toSave(controller);
-            controller.selectedResellerId = resellers[1].getValue();
-            controller.selectedDistributorId = distributors[1].getValue();
+            controller.selectedResellerId = resellers[0].value;
+            controller.selectedDistributorId = distributors[0].value;
             controller.leadRecord.DealReg_Reseller_Text__c = 'OtherReseller';
             toSave(controller);
             currAct = controller.getCurrUserAct();

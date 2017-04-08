@@ -29,6 +29,17 @@
         <template>Support/CustomerCaseClosure</template>
     </alerts>
     <alerts>
+        <fullName>DevOps_Email_Alert_to_Case_Owner_on_New_email_Notification</fullName>
+        <description>DevOps: Email Alert to Case Owner on New email Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>devopshelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/Email_to_Case_New_Email_Notification</template>
+    </alerts>
+    <alerts>
         <fullName>Email_Case_Update_Added</fullName>
         <ccEmails>caseupdates@silver-peak.com</ccEmails>
         <description>Email - Case Update Added</description>
@@ -464,6 +475,17 @@
         <senderAddress>support@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Support/TechSupportCaseinQueue</template>
+    </alerts>
+    <alerts>
+        <fullName>LabHelp_Email_Alert_to_Case_Owner_on_New_email_Notification</fullName>
+        <description>LabHelp:Email Alert to Case Owner on New email Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>labhelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/Email_to_Case_New_Email_Notification</template>
     </alerts>
     <alerts>
         <fullName>NewCaseiscreatedGoogle</fullName>
@@ -1350,6 +1372,20 @@ NOT(Contact.Testing__c)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>DevOps-New Email Notification for Case Owner</fullName>
+        <actions>
+            <name>DevOps_Email_Alert_to_Case_Owner_on_New_email_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula>AND( 
+ISCHANGED(New_Email_Notification_Text__c), 
+(New_Email_Notification_Text__c &lt;&gt; Null),
+(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Escalation Email</fullName>
         <active>true</active>
         <criteriaItems>
@@ -1554,6 +1590,20 @@ NOT(Contact.Testing__c)
         </criteriaItems>
         <description>This workflow rule will send an email notification to the customer about the case creation.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>LabHelp-New Email Notification for Case Owner</fullName>
+        <actions>
+            <name>LabHelp_Email_Alert_to_Case_Owner_on_New_email_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula>AND( 
+ISCHANGED(New_Email_Notification_Text__c), 
+(New_Email_Notification_Text__c &lt;&gt; Null),
+(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>New Case Created</fullName>

@@ -14,6 +14,10 @@
         <relationshipLabel><!-- Cap --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Cap Comments Recipients --></label>
+        <name>Cap_Comments_Recipients__c</name>
+    </fields>
+    <fields>
         <label><!-- Cap Comments --></label>
         <name>Cap_Comments__c</name>
     </fields>
@@ -40,6 +44,10 @@
     </fields>
     <layouts>
         <layout>Cap Layout</layout>
+        <sections>
+            <label><!-- Cap Comments --></label>
+            <section>Cap Comments</section>
+        </sections>
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
