@@ -9,9 +9,17 @@ trigger EmailNotificationOnCapComments on Cap__c (before update) {
     List<Messaging.SingleEmailMessage> lstMails = new List<Messaging.SingleEmailMessage>();
        
         if((newComments !=NULL) && (oldComments != newComments) && (recipients !=NULL)){
-           List<String> lstRecipient = recipients.split('[\\s,;:]');
-           system.debug(lstRecipient.size());  
+           //Get the emails from the text into a list 
+           List<String> lstTemp = recipients.split('[;,]',0);
+           List<String> lstRecipient = new List<String>();
+            for(String temp: lstTemp){
+               temp = temp.substring(temp.indexOf('<')+1, temp.indexOf('>'));
+           	   lstRecipient.add(temp);  
+            }
+            
+           system.debug('Previous List Size:'+ lstRecipient.size()); 
            
+           //Check for email format validation 
            List<String> lstFinal = new List<String>();
            List<String> lstInvalidEmails = new List<String>();
            String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'; 
@@ -38,7 +46,7 @@ trigger EmailNotificationOnCapComments on Cap__c (before update) {
             
            if(lstFinal !=Null && lstInvalidEmails.size()==0 ){
            OrgWideEmailAddress owa = [select id, DisplayName, Address from OrgWideEmailAddress where DisplayName='No Reply' limit 1]; 
-       	   String body = 'Below new comment has been added to the Cap'+' '+ Cap.Name+ ' by ' + UserInfo.getName() + '\n' + '\n';
+       	   String body = 'A new comment has been added to the Cap'+' '+ Cap.Name+ ' by ' + UserInfo.getName() + '\n' + '\n';
            body += Cap.Cap_Comments__c;
             
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

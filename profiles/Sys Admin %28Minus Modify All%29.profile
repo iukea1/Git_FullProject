@@ -239,6 +239,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CalculateActiveAssetCountBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CapCaseController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -457,6 +461,10 @@
     <classAccesses>
         <apexClass>CustomActionTest</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CustomChatWindowController</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CustomPOCRequestController</apexClass>
@@ -873,6 +881,10 @@
     <classAccesses>
         <apexClass>LicenseEncryptionJob</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LicenseEncryptionJobTest</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>LicenseKeyForVirtualAssetController</apexClass>
@@ -1815,6 +1827,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestCalculateActiveAssetCount</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestCalculateAssetCountBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestCalculateQuarterForOpp</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2049,6 +2069,10 @@
     <classAccesses>
         <apexClass>TestSubscriptionExpirationJobDate</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestTriggerActiveAssetCountFromContract</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TestTriggerDecomissionOnAssets</apexClass>
@@ -9611,6 +9635,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>Lead_FindDuplicates</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>LeadsByCampaignName</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -10193,6 +10221,18 @@
     <pageAccesses>
         <apexPage>Template_MassUpdateCustomObject</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>TestChatPage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>TestChatPage1</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>TestChatPage2</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>TestPage</apexPage>

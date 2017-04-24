@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
-    <detailPageRefreshMethod>none</detailPageRefreshMethod>
+    <detailPageRefreshMethod>flag</detailPageRefreshMethod>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <isServiceCloudConsole>true</isServiceCloudConsole>
@@ -118,30 +118,23 @@
         <units>percent</units>
         <width>25</width>
     </listPlacement>
-    <listRefreshMethod>none</listRefreshMethod>
+    <listRefreshMethod>refreshList</listRefreshMethod>
     <liveAgentConfig>
         <enableLiveChat>true</enableLiveChat>
-        <openNewAccountSubtab>true</openNewAccountSubtab>
+        <openNewAccountSubtab>false</openNewAccountSubtab>
         <openNewCaseSubtab>false</openNewCaseSubtab>
-        <openNewContactSubtab>true</openNewContactSubtab>
-        <openNewLeadSubtab>true</openNewLeadSubtab>
+        <openNewContactSubtab>false</openNewContactSubtab>
+        <openNewLeadSubtab>false</openNewLeadSubtab>
         <openNewVFPageSubtab>false</openNewVFPageSubtab>
         <showKnowledgeArticles>false</showKnowledgeArticles>
     </liveAgentConfig>
     <logo>SBQQ__SteelBrick_Assets/Silver_Peak_Logo_Color.png</logo>
     <saveUserSessions>true</saveUserSessions>
-    <tab>Sales_Development</tab>
     <tab>standard-Lead</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
-    <tab>Opportunities_Partner</tab>
+    <tab>standard-LiveAgentSupervisor</tab>
     <workspaceMappings>
-        <mapping>
-            <tab>Opportunities_Partner</tab>
-        </mapping>
-        <mapping>
-            <tab>Sales_Development</tab>
-        </mapping>
         <mapping>
             <fieldName>ParentId</fieldName>
             <tab>standard-Account</tab>
@@ -153,6 +146,9 @@
         <mapping>
             <fieldName>CampaignId</fieldName>
             <tab>standard-Lead</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-LiveAgentSupervisor</tab>
         </mapping>
     </workspaceMappings>
 </CustomApplication>

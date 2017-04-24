@@ -2,6 +2,20 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Lead_Custom_Clone</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
+    <customConsoleComponents>
+        <primaryTabComponents>
+            <containers>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <page>Lead_FindDuplicates</page>
+                </sidebarComponents>
+                <style>Tabs</style>
+                <unit>Percentage</unit>
+                <width>40</width>
+            </containers>
+        </primaryTabComponents>
+    </customConsoleComponents>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>

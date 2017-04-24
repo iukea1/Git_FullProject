@@ -101,6 +101,7 @@ public class VirtualPOCFulfillmentController
             }
             pocRequest.Trigger_POC_Email__c=true;
             update pocRequest;
+            System.debug('Test Data');
             if(ApexPages.currentPage() != null)
             {
                 if(!isFromApex)
@@ -210,6 +211,7 @@ public class VirtualPOCFulfillmentController
             }
             catch(DmlException ex)
             {
+                System.debug(ex);
                 SilverPeakUtils.logException(ex);
                 if(!isFromApex)
                 {

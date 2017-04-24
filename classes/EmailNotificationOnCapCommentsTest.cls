@@ -44,7 +44,7 @@ public class EmailNotificationOnCapCommentsTest {
      cap.Account_Name__c = acc.Id;
      cap.Status__c = 'Open';
      cap.Cap_Comments__c = 'Test Comments';
-     cap.Cap_Comments_Recipients__c= 'pmusunuru@silver-peak.com,musunuru.p@gmailcom';
+     cap.Cap_Comments_Recipients__c= '<pmusunuru@silver-peak.com>,<musunuru.p@gmailcom>';
      insert cap;
         
      cap.Cap_Comments__c = 'Test Comments.Plz Ignore!';
@@ -53,7 +53,7 @@ public class EmailNotificationOnCapCommentsTest {
               update cap;
          }
          catch(Exception e){
-            System.assert(e.getMessage().contains('Invalid Email Format'));
+            System.assert(e.getMessage().contains('Invalid Email Format. Please check following emails:'));
          }
     } 
     
@@ -67,7 +67,7 @@ public class EmailNotificationOnCapCommentsTest {
      cap.Account_Name__c = acc.Id;
      cap.Status__c = 'Open';
      cap.Cap_Comments__c = 'Test Comments';
-     cap.Cap_Comments_Recipients__c= 'pmusunuru@silver-peak.com,musunuru.p@gmail.com';
+     cap.Cap_Comments_Recipients__c= '<pmusunuru@silver-peak.com> , <musunuru.p@gmail.com> ';
      insert cap;
         
      cap.Cap_Comments__c = 'Test Comments. Plz Ignore!';

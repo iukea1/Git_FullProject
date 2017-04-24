@@ -1,0 +1,40 @@
+<apex:page showHeader="false">
+    
+    <div id="liveagent_invite_button_5735C0000008ONF" style="display:none;">
+        <span style="cursor: pointer; width: 100px; height: 20px; padding: 5px;" onclick="liveagent.startChat('5735C0000008ONF')">Start Chat</span>
+        <span style="cursor: pointer; width: 100px; height: 20px; padding: 5px;" onclick="liveagent.rejectChat('5735C0000008ONF')">Reject Chat</span>
+    </div>
+    
+    <script type='text/javascript' src='https://d.la2-c1cs-dfw.salesforceliveagent.com/content/g/js/39.0/deployment.js'></script>
+    
+    <script type='text/javascript'>
+        
+        function buttonCallback(e) {
+        if (e == liveagent.BUTTON_EVENT.BUTTON_AVAILABLE) {
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.display = '';
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.left = '300px';
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.top = '200px';
+        }
+        
+        <!-- When the chat invitation is offline, don't display it -->
+        if (e == liveagent.BUTTON_EVENT.BUTTON_UNAVAILABLE) {
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.display = 'none';
+        }
+        if (e == liveagent.BUTTON_EVENT.BUTTON_ACCEPTED) {
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.display = 'none';
+        }
+        
+        if (e == liveagent.BUTTON_EVENT.BUTTON_REJECTED) {
+            document.getElementById('liveagent_invite_button_5735C0000008ONF').style.display = 'none';
+        }
+    }
+    liveagent.addButtonEventHandler('5735C0000008ONF', buttonCallback);
+    liveagent.setName("Michelle Martin");
+    liveagent.addCustomDetail('Product Name', 'EC Product',true).saveToTranscript('Product_Name__c');
+    liveagent.init('https://d.la2-c1cs-dfw.salesforceliveagent.com/chat', '5725C0000008OJI', '00D5C0000008i5o');
+    
+    
+    
+    </script>
+    
+</apex:page>

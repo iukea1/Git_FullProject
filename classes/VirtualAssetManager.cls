@@ -164,6 +164,7 @@ public class VirtualAssetManager
         }
         catch(DmlException ex)
         {
+            System.debug(ex);
             if(!isFromApex)
             {
                 ApexPages.addMessages(ex);
@@ -206,6 +207,7 @@ public class VirtualAssetManager
         }
         catch(DmlException ex)
         {
+            System.debug(ex);
             if(!isFromApex)
             {
                 ApexPages.addMessages(ex);
@@ -237,9 +239,19 @@ public class VirtualAssetManager
     public void AssignContractToPOCAssets(Id contractId)
     {
         List<Asset> lstAsset= new List<Asset>();
+        Id orchId=null;
+        List<Product2> lstProd= [Select Id from Product2 where Name='EC-ORCH'];
+        if(lstProd!=null && lstProd.size()>0)
+        {
+            orchId=lstProd[0].id;
+        }
         for(VirtualAsset virtualAsset : VirtualAssets)
         {
-            lstAsset.add(new Asset(Id=virtualAsset.Asset.Id,Contract_Number__c=contractId));
+            if(orchId!=null && virtualAsset.Asset.Product2Id!=orchId)
+            {
+                 lstAsset.add(new Asset(Id=virtualAsset.Asset.Id,Contract_Number__c=contractId));
+            }
+           
         }
         if(lstAsset.size()>0)
         {

@@ -737,11 +737,11 @@
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Pre_Sales_Technical_Contact_Name__c}"/></div>
                                 </li>
                                 <li>
-                                    <div class="reg-label">Pre Sales Technical Contact Email Address</div>
+                                    <div class="reg-label">Email Address</div>
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Pre_Sales_Technical_Contact_Email__c}"/></div>
                                 </li>
                                 <li>
-                                    <div class="reg-label">Pre Sales Technical Contact Phone</div>
+                                    <div class="reg-label">Phone</div>
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Pre_Sales_Technical_Contact_Phone__c}"/></div>
                                 </li>
                             </ul>
@@ -755,11 +755,11 @@
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Support_Technical_Contact_Name__c}"/></div>
                                 </li>
                                 <li>
-                                    <div class="reg-label">Support Technical Contact Email Address</div>
+                                    <div class="reg-label">Email Address</div>
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Support_Technical_Contact_Email__c}"/></div>
                                 </li>
                                 <li>
-                                    <div class="reg-label ">Support Technical Contact Phone</div>
+                                    <div class="reg-label ">Phone</div>
                                     <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Support_Technical_Contact_Phone__c}"/></div>
                                 </li>
                             </ul>
