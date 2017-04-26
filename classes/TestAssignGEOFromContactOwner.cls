@@ -1,7 +1,7 @@
 @IsTest
 public class TestAssignGEOFromContactOwner {
     
-    @IsTest(SeeAllData=true)
+   
     public static void TestAssignGeo_Insert()
     {
         
@@ -26,7 +26,7 @@ public class TestAssignGEOFromContactOwner {
         
     }
     
-    @IsTest(SeeAllData=true)
+  
     public static void TestAssignGeo_Update()
     {
         

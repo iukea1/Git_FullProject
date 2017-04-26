@@ -172,6 +172,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Health_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Support_Contact1__c</field>
             </layoutItems>
             <layoutItems>
