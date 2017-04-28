@@ -2,14 +2,14 @@ public class ContactTriggerHandler implements ITriggerHandler {
     Map<Id,string> mapGEOUsers= new Map<Id,string>();
     public ContactTriggerHandler()
     {
-        List<User> lstStandardUsers=[Select Id,GEO_Region__c from User where UserType='Standard' and IsActive=true];
+        /*List<User> lstStandardUsers=[Select Id,GEO_Region__c from User where UserType='Standard' and IsActive=true];
         if(lstStandardUsers!=null && lstStandardUsers.size()>0)
         {
             for(User usrData:lstStandardUsers)
             {
                 mapGEOUsers.put(usrData.Id,usrData.GEO_Region__c);
             }
-        }
+        }*/
     }
     public Boolean IsDisabled()
     {
@@ -25,13 +25,13 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 {
                     con.TechnicalPresalesReadyCertifiedBy__c = UserInfo.getUserId();
                 }
-                if(con.OwnerId!=null)
+              /*  if(con.OwnerId!=null)
                 {
                     if(mapGEOUsers!=null && mapGEOUsers.containsKey(con.OwnerId))
                     {
                         con.GEO__c= mapGEOUsers.get(con.OwnerId);
                     }
-                }
+                }*/
                
                 
             }
@@ -50,14 +50,14 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 {
                     newContact.TechnicalPresalesReadyCertifiedBy__c= newContact.TechnicalPresalesReady__c?UserInfo.getUserId():null;
                 }
-                if(newContact.OwnerId!=oldContact.OwnerId)
+               /* if(newContact.OwnerId!=oldContact.OwnerId)
                 {
                     if(mapGEOUsers!=null && mapGEOUsers.containsKey(newContact.OwnerId))
                     {
                         newContact.GEO__c= mapGEOUsers.get(newContact.OwnerId);
                     }
                     
-                }
+                }*/
                 
             }
         }

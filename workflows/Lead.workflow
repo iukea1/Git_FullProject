@@ -44,20 +44,12 @@
     </alerts>
     <alerts>
         <fullName>Deal_Registration_Submitted_Email_Alert_to_Marketing</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
+        <ccEmails>mchristiansen@silver-peak.com;tsiragusa@silver-peak.com</ccEmails>
         <description>Deal Registration Submitted Email Alert to Marketing</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Team Owner</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>mchristiansen@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>tsiragusa@silver-peak.com</recipient>
-            <type>user</type>
+            <field>RSM__c</field>
+            <type>userLookup</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -65,13 +57,9 @@
     </alerts>
     <alerts>
         <fullName>Email_Alert_for_ISR_CSM_that_RSM_Approval_is_Pending</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
+        <ccEmails>prane@silver-peak.com</ccEmails>
         <description>Email Alert for ISR/CSM that RSM Approval is Pending</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
         <recipients>
             <field>CSM__c</field>
             <type>userLookup</type>

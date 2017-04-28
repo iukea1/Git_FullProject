@@ -24,12 +24,9 @@ public class CommunityDealRegistrationControllerTest
         System.runAs(testPartnerUser){
             SilverPeakUtils.BypassingTriggers = true;
             controller = new CommunityDealRegistrationController();
-            String resellersJSON = controller.getResellers();
-            List<CommunityDealRegistrationController.SelectOptionWrapper> resellers = (List<CommunityDealRegistrationController.SelectOptionWrapper>)JSON.deserialize(resellersJSON, List<CommunityDealRegistrationController.SelectOptionWrapper>.class);
-            System.debug(resellers);
+            List<CommunityDealRegistrationController.SelectOptionWrapper> resellers = CommunityDealRegistrationController.getAllResellers(controller.getRegionFilters());
             List<Contact> resellerContact = CommunityDealRegistrationController.getAllResellerContacts(resellers[0].Value);
-            String distributorsJSON = controller.getDistributors();
-            List<CommunityDealRegistrationController.SelectOptionWrapper> distributors = (List<CommunityDealRegistrationController.SelectOptionWrapper>)JSON.deserialize(distributorsJSON, List<CommunityDealRegistrationController.SelectOptionWrapper>.class);
+            List<CommunityDealRegistrationController.SelectOptionWrapper> distributors = CommunityDealRegistrationController.getAllDistributors(controller.getRegionFilters());
             controller.leadRecord = buildLead();
             toSave(controller);
             controller.selectedResellerId = resellers[0].value;
