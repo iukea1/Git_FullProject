@@ -134,6 +134,7 @@
             <div style="top: 25px; left: 5px; right: 5px; bottom: 5px; position: absolute; z-index: 0;">
             <liveAgent:clientChatAlertMessage />
             <liveAgent:clientChatStatusMessage />
+           
             <table id="waitingMessage" cellpadding="0" cellspacing="0">
             <tr>
             <td>Please wait while you are connected to an available agent.</td>
@@ -147,6 +148,7 @@
                 <liveAgent:clientChatSendButton label="Send"/>
                 <liveAgent:clientChatSaveButton label="Save Chat" />
                 <liveAgent:clientChatEndButton label="End Chat" />
+                 <liveAgent:clientChatFileTransfer />
             </div>
             </div>
         </liveAgent:clientchat>

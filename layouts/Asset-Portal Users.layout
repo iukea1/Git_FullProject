@@ -32,6 +32,10 @@
                 <behavior>Edit</behavior>
                 <field>Reference__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Quote_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -71,6 +71,10 @@
                 <behavior>Edit</behavior>
                 <field>Opt_Out_Subscription_Reminder__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Quote_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

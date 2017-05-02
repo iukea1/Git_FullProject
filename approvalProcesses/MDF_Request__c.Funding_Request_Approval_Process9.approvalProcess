@@ -179,7 +179,7 @@
             <criteriaItems>
                 <field>MDF_Request__c.GEO__c</field>
                 <operation>equals</operation>
-                <value>APAC</value>
+                <value>APAC,AZN</value>
             </criteriaItems>
             <criteriaItems>
                 <field>MDF_Request__c.Approval_Status__c</field>
@@ -228,7 +228,7 @@
             <criteriaItems>
                 <field>MDF_Request__c.GEO__c</field>
                 <operation>equals</operation>
-                <value>APAC</value>
+                <value>APAC,AZN</value>
             </criteriaItems>
             <criteriaItems>
                 <field>MDF_Request__c.Approval_Status__c</field>
@@ -562,7 +562,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>ivara@silver-peak.com</name>
+                <name>amenjivar@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

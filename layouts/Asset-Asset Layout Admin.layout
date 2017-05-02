@@ -83,6 +83,10 @@
                 <behavior>Edit</behavior>
                 <field>Renewal_Nodes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Quote_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
