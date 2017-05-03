@@ -49,8 +49,8 @@
                     <apex:column value="{!lead.Registration_Expiration__c}" headerValue="DR Expiration"/>               
                 </apex:pageBlockTable>
             </apex:pageBlockSection>
-             <apex:pageBlockSection columns="1" collapsible="false" title="Rejected Deal Registrations">
-                <apex:outputText value="There are no rejected deal registrations." rendered="{!RejectedDealReg.size=0}"></apex:outputText>
+            <apex:pageBlockSection columns="1" collapsible="false" title="Approved/Rejected Deal Registrations">
+                <apex:outputText value="There are no approved/rejected deal registrations." rendered="{!RejectedDealReg.size=0}"></apex:outputText>
                 <apex:pageBlockTable value="{!RejectedDealReg}" var="lead" rendered="{!RejectedDealReg.size>0}" width="100%">
                     <apex:column value="{!lead.Company}" headerValue="Company Name"/>
                     <apex:column value="{!lead.RSM__r.Name}" headerValue="RSM"/>

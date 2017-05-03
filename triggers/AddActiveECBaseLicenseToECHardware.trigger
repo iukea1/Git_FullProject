@@ -21,7 +21,7 @@ trigger AddActiveECBaseLicenseToECHardware on Asset (after insert, after update)
         if(Trigger.IsUpdate)
         {
             Asset oldAsset= Trigger.OldMap.get(asset.Id);
-            if(oldAsset.AccountId!=asset.AccountId)
+            if(oldAsset.AccountId!=asset.AccountId || oldAsset.Status!=asset.Status)
             {
                 if(asset.Product_Quote_Type__c=='EDGECONNECT' && asset.Product_Family__c=='Product' && (asset.Status=='Customer Evaluation' || asset.Status=='Customer Owned'))
                 {

@@ -37,6 +37,10 @@
                 <field>Allow_Fulfillment__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsAllVirtual__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Second_Extension_Granted__c</field>
             </layoutItems>
