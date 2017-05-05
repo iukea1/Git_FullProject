@@ -3067,7 +3067,7 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
     <validationRules>
         <fullName>Cant_submit_until_approved</fullName>
         <active>false</active>

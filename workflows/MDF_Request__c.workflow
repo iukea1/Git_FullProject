@@ -132,6 +132,18 @@
         <template>MDF/New_MDF_Request_has_Been_Denied_Internal</template>
     </alerts>
     <alerts>
+        <fullName>New_MDF_Request_has_Been_Denied_Internal_SVP</fullName>
+        <description>New MDF Request has Been Denied (Internal) SVP</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>amenjivar@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>MDF/New_MDF_Request_has_Been_Denied_Internal</template>
+    </alerts>
+    <alerts>
         <fullName>New_MDF_Request_has_been_Denied_External</fullName>
         <ccEmails>amejivar@silver-peak.com</ccEmails>
         <description>New MDF Request has been Denied (External)</description>
