@@ -75,25 +75,11 @@
         <fullName>Approval_Level_Needed__c</fullName>
         <description>Equals to the max approval level of the quote lines</description>
         <externalId>false</externalId>
-        <formula>if( Level3Required__c =1,3, 
-IF( OR(
-ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;),
-ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;),
-ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;)
-),ApprovalLevelMax__c,
-
-MAX(ApprovalLevelMax__c, 
-
-
-if(Opportunity__r.Primary_Partner__r.CreditHold__c,2,0) , 
-
-if( 
-OR( 
-AND( (AND(Service_Discount_Max__c &gt; RegPartServDisc__c, Service_Discount_Max__c &gt; 0.20)) , MultiYearValue__c &lt;2), 
-and(Service_Discount_Max__c &gt; 0.24, MultiYearValue__c =2), 
-and(Service_Discount_Max__c &gt; 0.27, MultiYearValue__c =3)) 
-,3,0) 
-)))</formula>
+        <formula>MAX(
+if( Quote_Discount__c &lt;0,3,0),
+IF(and(ispickval( Opportunity__r.Type ,&apos;Training/WanStart&apos;), ( Opportunity__r.Account.IsAPartner__c &lt;&gt;1 )),3,0),
+ApprovalLevelMax__c
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>if( Level3Required__c =1,3,
 
@@ -142,25 +128,9 @@ and( OR( and(Service_Discount_Max__c &gt; 0.21, MultiYearValue__c =2), and(Servi
 Approval_Made__c =FALSE), OR(and(ConsultingDiscountMax__c &gt;0,Opportunity__r.Account.IsAPartner__c =0) ,AND(ConsultingDiscountMax__c &gt;0.50, Opportunity__r.Account.IsAPartner__c =1))), 
 1, 0)</description>
         <externalId>false</externalId>
-        <formula>IF(OR( 
-AND( OR( AND( ApprovalLevelMax__c &gt;0, Discount_Max__c &gt; RegPartProdDisc__c  ),  Level3Required__c =1,
-and(Service_Discount_Max__c &gt; 0.24, MultiYearValue__c =2,Service_Discount_Max__c &gt; RegPartServDisc__c), 
-and(Service_Discount_Max__c &gt; 0.27, MultiYearValue__c =3,Service_Discount_Max__c &gt; RegPartServDisc__c), 
-AND(and(Service_Discount_Max__c &gt; 0.20,MultiYearValue__c &lt;2) , Service_Discount_Max__c &gt; RegPartServDisc__c)) 
-, NOT(Approval_Made__c )), 
-OR(and(ConsultingDiscountMax__c &gt;1,Opportunity__r.Account.IsAPartner__c =0) , 
-AND(ConsultingDiscountMax__c &gt;1, Opportunity__r.Account.IsAPartner__c =1) ) 
-, Opportunity__r.Primary_Partner__r.CreditHold__c, 
-AND(
-ApprovalLevelMax__c &gt;0,
-OR(
-ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;),
-ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;),
-ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;)
-)
-),
-AND(ISPICKVAL(Opportunity__r.Type,&apos;Training/WanStart&apos;), ConsultingDiscountMax__c &gt; RegPartServDisc__c ) ) 
-,1, 0)</formula>
+        <formula>If(
+OR(Approval_Level_Needed__c &gt;0, Level3Required__c==1)
+,1,0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Approval Required</label>
         <precision>18</precision>
@@ -428,11 +398,10 @@ AND(ISPICKVAL(Opportunity__r.Type,&apos;Training/WanStart&apos;), ConsultingDisc
         <fullName>Level3Required__c</fullName>
         <externalId>false</externalId>
         <formula>if(
-Or( Quote_Discount__c &lt;0, Opportunity__r.Primary_Partner__r.CreditHold__c , not( Opportunity__r.Primary_Partner__r.Reseller_Agreement__c ), 
-and(ispickval( Opportunity__r.Type ,&apos;Training/WanStart&apos;), ( Opportunity__r.Account.IsAPartner__c &lt;&gt;1 )))
+Or(Opportunity__r.Primary_Partner__r.CreditHold__c , not( Opportunity__r.Primary_Partner__r.Reseller_Agreement__c ))
 ,1,0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Level3Required</label>
+        <label>CreditHold/Reseller Agreement Approval</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -487,6 +456,19 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Opp_Owner_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opp Owner Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Silver_Peak_Quotes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Opportunity_Amount__c</fullName>
@@ -767,6 +749,45 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reseller_EdgeConnect_Discount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_EdgeConnect__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reseller EdgeConnect Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Reseller_NX_VX_Discount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_Product__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reseller NX/VX Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Reseller_Service_Discount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_Service__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reseller Service Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
     </fields>
     <fields>
         <fullName>Service_Discount_Max__c</fullName>

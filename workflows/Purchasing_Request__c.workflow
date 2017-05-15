@@ -46,11 +46,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>lquilici@silver-peak.com</recipient>
+            <recipient>jheinlein@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>nhuapaya@silver-peak.com</recipient>
+            <recipient>lquilici@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

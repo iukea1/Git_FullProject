@@ -175,7 +175,8 @@
         <fields>Quantity__c</fields>
         <fields>Unit_Price__c</fields>
         <fields>Discount_Percent__c</fields>
-        <fields>Line_Price__c</fields>
+        <fields>Reseller_Discount__c</fields>
+        <fields>Discount_Spread__c</fields>
         <relatedList>Quote_Line__c.Quote__c</relatedList>
         <sortField>Product_Code__c</sortField>
         <sortOrder>Asc</sortOrder>

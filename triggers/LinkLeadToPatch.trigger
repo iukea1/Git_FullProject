@@ -26,8 +26,8 @@ trigger LinkLeadToPatch on Lead (before insert, after insert, before update, aft
                 if(!lead.IsConverted)
                 {
                     Lead oldLead = Trigger.oldMap.get(lead.Id);
-                    PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(lead);
-                    PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldLead);
+                    PatchRuleEngine.Target target = PatchRuleHelper.getTarget(lead);
+                    PatchRuleEngine.Target oldTarget = PatchRuleHelper.getTarget(oldLead);
                     if(lead.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget))
                     {
                         leadsNeedAssignment.add(lead);

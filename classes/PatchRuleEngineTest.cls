@@ -4,22 +4,19 @@ public class PatchRuleEngineTest
     @isTest
     static void testMatch()
     {
-        PatchRuleEngineBase.Target t = new PatchRuleEngineBase.Target();
-        PatchRuleEngine engine = new PatchRuleEngine();
-        engine.match(t);
+        PatchRuleEngine.Target t = new PatchRuleEngine.Target();
+        PatchRuleEngine.match(t);
     }
     
     @isTest
     static void testOp()
     {
-        PatchRuleEngine engine = new PatchRuleEngine();
-        System.assert(engine.opIn('a', new Set<String> {'a', 'b'}));
-        System.assert(engine.opInRange('11111', '00000', '22222'));
-        System.assert(engine.opInRange('90145', '00000', '90200'));
-        System.assert(engine.opEqual('a', 'A'));
-        System.assert(engine.opStart('abcd', new Set<String> {'a'}));
-        System.assert(engine.opEnd('dcba', new Set<String> {'a'}));
-        System.assert(engine.opContain('abcd', 'A')); 
-        System.assert(engine.opZipCode('1111', '1100~1111')); 
+        System.assert(PatchRuleEngine.opIn('a', new Set<String> {'a', 'b'}));
+        System.assert(PatchRuleEngine.opInRange('11111', '00000', '22222'));
+        System.assert(PatchRuleEngine.opInRange('90145', '00000', '90200'));
+        System.assert(PatchRuleEngine.opEqual('a', 'A'));
+        System.assert(PatchRuleEngine.opStart('abcd', new Set<String> {'a'}));
+        System.assert(PatchRuleEngine.opEnd('dcba', new Set<String> {'a'}));
+        System.assert(PatchRuleEngine.opContain('abcd', 'A')); 
     }
 }

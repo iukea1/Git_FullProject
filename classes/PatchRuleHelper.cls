@@ -4,12 +4,10 @@
 public class PatchRuleHelper
 {
     public static List<Id> leadsNeedAssignment;
-    public static Map<Id, List<Id>> overlayHolder; //this map temporarily holds the result after patch match. because assignPatch and assignTeamMember are in different method call. assignPatch puts result to the map so that assignTeamMember will read it
     
     static 
     {
         leadsNeedAssignment = new List<Id>();
-        overlayHolder = new Map<Id, List<Id>>();
     }
     
     @future
@@ -36,7 +34,7 @@ public class PatchRuleHelper
     public static void assignPatches(List<sObject> objs)
     {
         Map<Id, Patch__c> patches = new Map<Id, Patch__c>();
-        for(Patch__c patch : [select Id, Patch_Name__c, Catchall__c, Type__c, Owner__c, Owner__r.GEO__c, RSM__c, CSM__c, SE__c, ISR__c, FCMM__c, Overlay_1__c, Overlay_2__c, Active__c from Patch__c])
+        for(Patch__c patch : [select Id, Patch_Name__c, Catchall__c, Type__c, Owner__c, Owner__r.GEO__c, RSM__c, CSM__c, SE__c, ISR__c, Overlay_1__c, Overlay_2__c, Active__c from Patch__c])
         {
             patches.put(patch.Id, patch);
         }
@@ -51,14 +49,8 @@ public class PatchRuleHelper
             }
             else
             {
-                PatchRuleEngineBase.Target target = getTarget(obj);
-                PatchRuleEngine engine = new PatchRuleEngine();
-                PatchRuleEngineBase.Match match = engine.match(target);
-                if(match != null)
-                {
-                    patchId = match.PatchId;
-                    overlayHolder.put(obj.Id, match.OverlayMatches);
-                }
+                PatchRuleEngine.Target target = getTarget(obj);
+                patchId = PatchRuleEngine.match(target);
             }
             Patch__c patch = patches.get(patchId);
             assignPatch(obj, patch);
@@ -177,14 +169,11 @@ public class PatchRuleHelper
         {
             patchIds.add((Id)obj.get('Patch__c'));
         }
-        for(Id tempId : OverlayHolder.keyset())
+        Map<Id, Patch__c> patchMap = new Map<Id, Patch__c>();
+        for(Patch__c patch : [select Id, CSM__c, SE__c, ISR__c, RSM__c, Overlay_1__c, Overlay_2__c, Owner__c from Patch__c where Id in :patchIds])
         {
-            List<Id> overlayPatches = OverlayHolder.get(tempId);
-            patchIds.addAll(overlayPatches);
+            patchMap.put(patch.Id, patch);
         }
-        
-        Map<Id, Patch__c> patchMap = new Map<Id, Patch__c>([select Id, CSM__c, SE__c, ISR__c, RSM__c, FCMM__c, Overlay_1__c, Overlay_2__c, Owner__c from Patch__c where Id in :patchIds]);
-
         List<sObject> result = new List<sObject>();
         for(sObject obj : objs)
         {
@@ -197,11 +186,11 @@ public class PatchRuleHelper
         return result;
     }
     
-    /*@future
+    @future
     public static void willAssignTeamMembers(List<Id> objIds)
     {
         assignTeamMembers(objIds);
-    }*/
+    }
     
     public static void assignTeamMembers(List<Id> objIds)
     {
@@ -259,7 +248,7 @@ public class PatchRuleHelper
                         }
                         Database.SaveResult[] result = Database.insert(teamMembers, false);
                         //SilverPeakUtils.logDatabaseError(teamMembers, result);
-                        //ShareLeadAndOpportunityToPartnerHelper.willShareOpportunities(oppIds);
+                        ShareLeadAndOpportunityToPartnerHelper.willShareOpportunities(oppIds);
                     }
                 }
                 else if(objs[0] instanceOf Account)
@@ -363,9 +352,9 @@ public class PatchRuleHelper
     }
     
     //supports acc/opp/lead object
-    public static PatchRuleEngineBase.Target getTarget(sObject obj)
+    public static PatchRuleEngine.Target getTarget(sObject obj)
     {
-        PatchRuleEngineBase.Target target = new PatchRuleEngineBase.Target();
+        PatchRuleEngine.Target target = new PatchRuleEngine.Target();
         if(obj instanceOf Account)
         {
             Account acc = (Account)obj;
@@ -402,7 +391,7 @@ public class PatchRuleHelper
         return target;
     }
     
-    public static Boolean isSameTarget(PatchRuleEngineBase.Target a, PatchRuleEngineBase.Target b)
+    public static Boolean isSameTarget(PatchRuleEngine.Target a, PatchRuleEngine.Target b)
     {
         return a.Company == b.Company && a.EmailDomain == b.EmailDomain && a.Country == b.Country && a.ZipCode == b.ZipCode && a.State == b.State && a.Industry == b.Industry;
     }
@@ -497,10 +486,6 @@ public class PatchRuleHelper
                 {
                     result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=patch.SE__c, LeadAccessLevel='Edit'));
                 }
-                if(patch.FCMM__c != null && patch.FCMM__c != ld.OwnerId)
-                {
-                    result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=patch.FCMM__c, LeadAccessLevel='Edit'));
-                }
                 if(patch.Overlay_1__c != null && patch.Overlay_1__c != ld.OwnerId)
                 {
                     result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=patch.Overlay_1__c, LeadAccessLevel='Edit'));
@@ -529,10 +514,6 @@ public class PatchRuleHelper
                 {
                     result.add(new AccountTeamMember(AccountId=acc.Id, UserId=patch.SE__c, TeamMemberRole='Systems Engineer'));
                 }
-                if(patch.FCMM__c != null)
-                {
-                    result.add(new AccountTeamMember(AccountId=acc.Id, UserId=patch.FCMM__c, TeamMemberRole='Field and Channel Marketing Manager'));
-                }
             }
             else if(obj instanceOf Opportunity)
             {
@@ -552,10 +533,6 @@ public class PatchRuleHelper
                 if(patch.SE__c != null)
                 {
                     result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.SE__c, TeamMemberRole='Systems Engineer'));
-                }
-                if(patch.FCMM__c != null && !IsPartOfCoreTeam(patch,patch.FCMM__c))
-                {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.FCMM__c, TeamMemberRole='Field and Channel Marketing Manager'));
                 }
                 if(patch.Owner__c != null && !IsPartOfCoreTeam(patch,patch.Owner__c))
                 {

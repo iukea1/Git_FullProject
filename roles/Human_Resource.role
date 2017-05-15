@@ -5,6 +5,6 @@
     <description>Human Resource</description>
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Human Resource</name>
-    <opportunityAccessLevel>None</opportunityAccessLevel>
+    <opportunityAccessLevel>Edit</opportunityAccessLevel>
     <parentRole>CEO</parentRole>
 </Role>

@@ -139,6 +139,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AcctWithTimelineTestClass</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1791,7 +1795,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TEstDataClass</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TeamMemberCheck</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAccountTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1888,6 +1900,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestContactTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestCurtis</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2072,6 +2088,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestSetAccountNameFromCaseContact</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestSetApprovalLevelOnQuoteLine</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -6094,6 +6114,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Quote_Line__c.Discount_Spread__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Quote_Line__c.Include4ConsultingDisc__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6129,6 +6154,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Quote_Line__c.Maint_Year_Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Quote_Line__c.MultiYearMaint__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6158,8 +6188,18 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Line__c.Product_Quote_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quote_Line__c.Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Line__c.Reseller_Discount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6308,6 +6348,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote__c.Opp_Owner_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Quote__c.Opportunity_Amount__c</field>
         <readable>true</readable>
@@ -6395,6 +6440,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote__c.Renewal_Term__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Reseller_EdgeConnect_Discount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Reseller_NX_VX_Discount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Reseller_Service_Discount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

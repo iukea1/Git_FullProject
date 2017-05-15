@@ -49,6 +49,10 @@
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsPartner</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Target_Account__c</field>
             </layoutItems>
@@ -71,6 +75,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>First_Asset_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Asset_Quarter__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -165,6 +173,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Expired_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Override_Service_Provider_Setting__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -288,6 +300,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Focus_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SendExpirationEmail__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

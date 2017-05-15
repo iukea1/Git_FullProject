@@ -4,7 +4,7 @@
 public with sharing class PatchRulesController 
 {
     private Long deployDateInternal;
-    private static final String AdminId = '005500000045fp1'; //Dennis
+    private static final String AdminId = '005500000045fp1AAA'; //Dennis
     
     public PatchRulesController()
     {
@@ -18,7 +18,7 @@ public with sharing class PatchRulesController
         get
         {
             List<PatchInfo> result = new List<PatchInfo>();
-            for(Patch__c patch : [select Id, Name, Active__c, Overlay__c, Patch_Name__c, Catchall__c, CSM__c, CSM__r.Name, ISR__c, ISR__r.Name, Owner__c, Owner__r.Name, ProcessingSequence__c, RSM__c, RSM__r.Name, FCMM__c, FCMM__r.Name, Rule_Logic__c, SE__c, SE__r.Name, Type__c, Timestamp__c, 
+            for(Patch__c patch : [select Id, Name, Active__c, Patch_Name__c, Catchall__c, CSM__c, CSM__r.Name, ISR__c, ISR__r.Name, Owner__c, Owner__r.Name, ProcessingSequence__c, RSM__c, RSM__r.Name, Rule_Logic__c, SE__c, SE__r.Name, Type__c, Timestamp__c, 
               Overlay_1__c,Overlay_2__c,Overlay_1__r.Name,Overlay_2__r.Name,(select Id, ProcessingSequence__c, Type__c, Value__c, Operation__c, Range_Low__c, Range_High__c from Patch_Rules__r order by ProcessingSequence__c)
                          from Patch__c order by ProcessingSequence__c])
             {
@@ -70,7 +70,6 @@ public with sharing class PatchRulesController
             this.name = patch.Patch_Name__c;
             this.active = patch.Active__c;
             this.catchall = patch.Catchall__c;
-            this.overlay = patch.Overlay__c;
             this.csmId = patch.CSM__c;
             this.csmName = patch.CSM__r.Name;
             this.isrId = patch.ISR__c;
@@ -81,8 +80,6 @@ public with sharing class PatchRulesController
             this.rsmName = patch.RSM__r.Name;
             this.seId = patch.SE__c;
             this.seName = patch.SE__r.Name;
-            this.fcmmId = patch.FCMM__c;
-            this.fcmmName = patch.FCMM__r.Name;
             this.patchOverlay1Name=patch.Overlay_1__r.Name;
             this.patchOverlay2Name=patch.Overlay_2__r.Name;
             this.patchOverlay1Id=patch.Overlay_1__c;
@@ -102,7 +99,6 @@ public with sharing class PatchRulesController
         public String name { get; set; }
         public Boolean active { get; set; }
         public Boolean catchall { get; set; }
-        public Boolean overlay { get; set; }
         public String csmId { get; set; }
         public String csmName { get; set; }
         public String isrId { get; set; }
@@ -113,8 +109,6 @@ public with sharing class PatchRulesController
         public String rsmName { get; set; }
         public String seId { get; set; }
         public String seName { get; set; }
-        public String fcmmId { get; set; }
-        public String fcmmName { get; set; }
         public String patchOverlay1Name { get; set; }
         public String patchOverlay2Name { get; set; }
         public String patchOverlay1Id { get; set; }

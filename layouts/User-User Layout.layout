@@ -54,6 +54,10 @@
                 <behavior>Edit</behavior>
                 <field>EditCapCapability__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>X18digitID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

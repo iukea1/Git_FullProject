@@ -41,7 +41,7 @@ public class PatchRuleDeployController
                     '<members>PatchRuleEngine</members>' +
                     '<name>ApexClass</name>' + 
                 '</types>' + 
-                '<version>35.0</version>' + 
+                '<version>26.0</version>' + 
             '</Package>';       
     }
 
@@ -49,7 +49,7 @@ public class PatchRuleDeployController
     {
         return '<?xml version="1.0" encoding="UTF-8"?>' +
             '<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">' +
-                '<apiVersion>35.0</apiVersion>' + 
+                '<apiVersion>28.0</apiVersion>' + 
                 '<status>Active</status>' +
             '</ApexClass>';     
     }
@@ -132,9 +132,8 @@ public class PatchRuleDeployController
                 }
                 else if(deployResult.status == 'Failed')
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failled to validate/deploy the patches, error message is: ' + getDeployResultMessage(deployResult)));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failled to validate/deploy the patches, error message is:' + getDeployResultMessage(deployResult)));
                     AsyncResult = null;
-                    sendErrorMessage();
                 }
                 else if(deployResult.status == 'Canceled')
                 {
@@ -201,15 +200,4 @@ public class PatchRuleDeployController
         service.SessionHeader.sessionId = UserInfo.getSessionId();
         return service;     
     } 
-    
-    private void sendErrorMessage()
-    {
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(new List<String> {'devteam@snapbi.com'});
-        email.setSubject('Patch Rule Deployment Failed');
-        email.setPlaintextBody(getClassBody());
-        email.setUseSignature(false);
-        email.setSaveAsActivity(false);
-        Messaging.sendEmail(new List<Messaging.Email> {email});
-    }
 }
