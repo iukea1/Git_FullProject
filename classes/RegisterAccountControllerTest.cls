@@ -3,6 +3,9 @@ public class RegisterAccountControllerTest {
     @isTest
     public  Static void test()
     {
+        Account initialAcct = new Account(Name = 'testAcct', Email_Domain_Used__c='@saa.com');
+        insert initialAcct;
+        
         RegisterAccountController rac = new RegisterAccountController(null);
         Account newAcct = new Account(Name = 'testAccount',business_is_Product_Sales__c = 20,business_is_Services_Sales__c = 30,business_is_Consulting_Sales__c = 50);
         newAcct.Email_Domain_Used__c = '@saa.com';

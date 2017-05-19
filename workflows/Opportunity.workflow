@@ -582,6 +582,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>GEO_Update</fullName>
+        <field>Sales_Region__c</field>
+        <formula>Owner.Sales_Region__c</formula>
+        <name>GEO Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Next_Step_Updated_By</fullName>
         <field>Next_Step_Updated_By__c</field>
         <formula>$User.Alias</formula>

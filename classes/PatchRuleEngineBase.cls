@@ -9,9 +9,9 @@ public virtual class PatchRuleEngineBase
     Match result = null;
     return result;
   }
-  
+
   @testvisible
-  protected Boolean opIn(String value, Set<String> targetSet) 
+  protected Boolean opIn(String value, Set<String> targetSet)
   {
     value = (value == null) ? null : value.toLowerCase();
     return targetSet.contains(value);
@@ -73,6 +73,10 @@ public virtual class PatchRuleEngineBase
   protected Boolean opZipcode(String zipcode, String target)
   {
     zipcode = (zipcode == null) ? '' : zipcode.replaceAll('\\s', '');
+    if(zipcode.contains('-'))
+    {
+      zipcode = zipcode.substring(0, zipcode.indexOf('-'));
+    }
     target = (target == null) ? '' : target.replaceAll('\\s', '');
     for(String segment : target.split(','))
     {
@@ -105,7 +109,7 @@ public virtual class PatchRuleEngineBase
     public String Industry { get; set; }
     public Boolean Locked { get; set; }
   }
-  
+
   public class Match
   {
       public Match(Id patchId, List<Id> overlays)
@@ -113,7 +117,7 @@ public virtual class PatchRuleEngineBase
           this.PatchId = patchId;
           this.OverlayMatches = overlays;
       }
-      
+
       public Id PatchId { get; set; }
       public List<Id> OverlayMatches { get; set; }
   }

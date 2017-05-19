@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Lead_Custom_Clone</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
+    <customButtons>Find_Dup</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>

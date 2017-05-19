@@ -5,6 +5,7 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
     public List<CPAsset> saasAssets;
     public List<CPAsset> cpxAssets;
     public List<CPAsset> spAssets;
+    public List<CPAsset> orchAssets;
     private string cloudPortalAccId;
     
     public CloudPortalPostAssetsApi(string cloudPortalAccId)
@@ -102,6 +103,32 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
                 generator.writeObjectField('id',item.id);
                 generator.writeObjectField('name',item.name);
                 generator.writeObjectField('quantity',item.quantity);
+                generator.writeEndObject();
+            }
+            
+        }
+        generator.writeEndArray(); 
+        generator.writeFieldName('cloudOrch');
+        generator.writeStartArray();
+        if(orchAssets!=null && orchAssets.size()>0)
+        {
+            for(CPAsset item:orchAssets)
+            {
+                generator.writeStartObject();
+                generator.writeObjectField('serial',item.SerialNumber);
+                generator.writeObjectField('email',item.email);
+                generator.writeObjectField('domain',item.domain);
+                if(item.ExpiryDate!=null)
+                {
+                    generator.writeObjectField('expiry',item.ExpiryDate);
+                }
+                else
+                {
+                    generator.writeObjectField('expiry','');
+                }
+                generator.writeObjectField('size',item.size);
+                generator.writeObjectField('region',item.region);
+                generator.writeObjectField('version','');
                 generator.writeEndObject();
             }
             

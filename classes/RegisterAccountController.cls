@@ -166,8 +166,8 @@ public class RegisterAccountController
             }
             catch(Exception ex)
             {
-                SilverPeakUtils.logException(ex); // log error when updated failed
                 Database.rollback(sp);
+                SilverPeakUtils.logException(ex); // log error when updated failed
                 ApexPages.addMessages(ex);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
             }
@@ -184,7 +184,10 @@ public class RegisterAccountController
             {
                 acct1.CAM__c = patch[0].CSM__c;
                 //adding owner assignment
-                acct1.OwnerId = patch[0].CSM__c; 
+                if(String.isNotBlank(patch[0].CSM__c))
+                {
+                    acct1.OwnerId = patch[0].CSM__c; 
+                }
             }
             insertContacts(acct1);
             acct1.PrimaryPartnerContact__c = primaryContact.Id;
@@ -236,8 +239,8 @@ public class RegisterAccountController
         }
         catch(Exception ex)
         {
-            SilverPeakUtils.logException(ex); // log error when exception occur.
             Database.rollback(sp);
+            SilverPeakUtils.logException(ex); // log error when exception occur.
             ApexPages.addMessages(ex);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
         }

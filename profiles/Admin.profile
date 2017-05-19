@@ -2055,6 +2055,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestPopulatePOCApprovers</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestQuoteEmailReviewHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -7102,6 +7106,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Request__c.Account_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Request__c.Account_Manager_Email_1__c</field>
         <readable>true</readable>
@@ -7269,6 +7278,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Request__c.IsClosed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Request__c.Is_Unity_Cloud_Orchestrator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

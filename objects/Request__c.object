@@ -65,6 +65,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.AccountId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Manager_Email_1__c</fullName>
         <externalId>false</externalId>
         <label>Account Manager Email 1</label>
@@ -699,6 +711,15 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <externalId>false</externalId>
         <formula>CONTAINS(TEXT(Status__c), &apos;Closed&apos;)</formula>
         <label>Is Closed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Unity_Cloud_Orchestrator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Require Unity Cloud Orchestrator?</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3253,6 +3274,45 @@ TEXT(POC_Type__c)!=Service_Provider_Account_Type__c
         <description>Validate that only the TR can check the approval box</description>
         <errorConditionFormula>and($User.Id &lt;&gt;  Opportunity__r.Technical_Responsible__r.Id , ISCHANGED( TR_Approved__c ), TR_Approved__c =true)</errorConditionFormula>
         <errorMessage>Only the person selected as Technical Responsibility can approve this request</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Unity_Cloud_Orch_cant_be_requested</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ Is_Unity_Cloud_Orchestrator__c,
+OR(
+ ISBLANK(  Opportunity__r.Account.Unity_Orch_Admin_User__c ),
+ ISPICKVAL(  Opportunity__r.Account.Unity_Orch_Location__c,&quot;&quot;  ),
+ ISBLANK(   Opportunity__r.Account.Unity_Orch_Domain__c ))
+
+)</errorConditionFormula>
+        <errorMessage>You can only request unity cloud orchestrator provided all the fields(unity orchestrator domain, unity orchestrator admin user and unity orchestrator location ) are populated in the account. Please contact operations for any assistance.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Unity_Cloud_Orch_cant_be_requested_by_SP</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ 
+ Is_Unity_Cloud_Orchestrator__c ,
+OR(
+Opportunity__r.Account.ECSP__c,
+ISPICKVAL( POC_Type__c ,&quot;WAN Op&quot;)
+)
+
+)</errorConditionFormula>
+        <errorDisplayField>Is_Unity_Cloud_Orchestrator__c</errorDisplayField>
+        <errorMessage>You cannot request unity cloud orchestrator on a Service Provider account or WAN OP.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Unity_Orch_cant_be_changed_after_approve</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ ISCHANGED(Is_Unity_Cloud_Orchestrator__c),
+ NOT(ISPICKVAL(Status__c,&quot;Open&quot;))
+
+)</errorConditionFormula>
+        <errorDisplayField>Is_Unity_Cloud_Orchestrator__c</errorDisplayField>
+        <errorMessage>You cannot change the flag after the POC is approved or shipped.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>enforce_approval_process_to_advance</fullName>

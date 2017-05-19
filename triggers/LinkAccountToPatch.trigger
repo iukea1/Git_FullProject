@@ -29,8 +29,8 @@ trigger LinkAccountToPatch on Account (after insert, after update)
             Account oldAccount = Trigger.oldMap.get(acc.Id);
             if(acc.Patch_Locked__c == false)
             {
-                PatchRuleEngine.Target target = PatchRuleHelper.getTarget(acc);
-                PatchRuleEngine.Target oldTarget = PatchRuleHelper.getTarget(oldAccount);
+                PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(acc);
+                PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldAccount);
                 if(acc.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget))
                 {
                     accNeedsPatchAssign.add(acc.Id);
