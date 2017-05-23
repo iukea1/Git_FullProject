@@ -204,8 +204,10 @@ public class PocRequestAutomationHelper
     {
         List<Request__c> requests = [select Id, Target_End_Date__c, (select POCRequest__c from Assets__r) from Request__c where Id in :pocIds];
         List<Asset> assets = new List<Asset>();
+         
         for(Request__c request : requests)
         {
+            System.debug('POC Change'+request.Assets__r);
             for(Asset asset : request.Assets__r)
             {
                 asset.Evaluation_End_Date__c = request.Target_End_Date__c;
@@ -218,6 +220,7 @@ public class PocRequestAutomationHelper
         }
         catch(DmlException ex)
         {
+            System.debug(ex);
             throw new PocRequestAutomationException(ex.getMessage());
         }
     }

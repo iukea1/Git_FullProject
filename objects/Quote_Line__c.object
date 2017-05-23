@@ -222,10 +222,11 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
     <fields>
         <fullName>Maint_Year_Value__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-AND(
-Include4ServiceDiscount__c==1,
-Product__r.Term__c==0),
+        <formula>IF( 
+AND( 
+Include4ServiceDiscount__c==1, 
+Product__r.Term__c&lt;=1
+), 
 1, Product__r.Term__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Maint Year Value</label>

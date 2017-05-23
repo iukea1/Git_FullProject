@@ -48,6 +48,10 @@
                 <field>MultiYearMaint__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Maint_Year_Value__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Include4MultiYYear__c</field>
             </layoutItems>

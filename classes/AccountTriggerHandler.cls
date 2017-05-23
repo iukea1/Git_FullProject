@@ -47,19 +47,22 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         }
                     }
                 }
-                if(!newAccInfo.ECSP__c &&(oldAccInfo.Unity_Orch_Admin_User__c!=newAccInfo.Unity_Orch_Admin_User__c || oldAccInfo.Unity_Orch_Domain__c !=newAccInfo.Unity_Orch_Domain__c ||oldAccInfo.Unity_Orch_Location__c!=newAccInfo.Unity_Orch_Location__c))
+                if(!newAccInfo.Override_Service_Provider_Setting__c)
                 {
-                    if(newAccInfo.Cloud_Portal_Account_Id__c!=null || newAccInfo.Cloud_Portal_Account_Key__c!=null || newAccInfo.Cloud_Portal_Account_Name__c !=null)
+                    if(!newAccInfo.ECSP__c && (oldAccInfo.Unity_Orch_Admin_User__c!=newAccInfo.Unity_Orch_Admin_User__c || oldAccInfo.Unity_Orch_Domain__c !=newAccInfo.Unity_Orch_Domain__c ||oldAccInfo.Unity_Orch_Location__c!=newAccInfo.Unity_Orch_Location__c))
                     {
-                        newAccInfo.addError('You cannot modify any fields in the unity cloud orchestrator section. Please contact operations team.');
-                    }
-                    else
-                    {
-                        List<Asset> lstAssets=[Select Id from Asset where AccountId=:newAccInfo.Id and Status in ('Customer Evaluation','Customer Subscription Active') and Product2.Name like 'EC-ORCH-AAS%'];
-                        List<Request__c> lstPOCs =[Select Id from Request__c where Opportunity__r.AccountId=:newAccInfo.Id and Is_Unity_Cloud_Orchestrator__c=true];
-                        if((lstAssets!=null && lstAssets.size()>0) || (lstPOCs!=null && lstPOCs.size()>0) )
+                        if(newAccInfo.Cloud_Portal_Account_Id__c!=null || newAccInfo.Cloud_Portal_Account_Key__c!=null || newAccInfo.Cloud_Portal_Account_Name__c !=null)
                         {
                             newAccInfo.addError('You cannot modify any fields in the unity cloud orchestrator section. Please contact operations team.');
+                        }
+                        else
+                        {
+                            List<Asset> lstAssets=[Select Id from Asset where AccountId=:newAccInfo.Id and Status in ('Customer Evaluation','Customer Subscription Active') and Product2.Name like 'EC-ORCH-AAS%'];
+                            List<Request__c> lstPOCs =[Select Id from Request__c where Opportunity__r.AccountId=:newAccInfo.Id and Is_Unity_Cloud_Orchestrator__c=true];
+                            if((lstAssets!=null && lstAssets.size()>0) || (lstPOCs!=null && lstPOCs.size()>0) )
+                            {
+                                newAccInfo.addError('You cannot modify any fields in the unity cloud orchestrator section. Please contact operations team.');
+                            }
                         }
                     }
                 }

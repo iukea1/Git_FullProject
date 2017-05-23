@@ -1903,6 +1903,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestCopyECLicenseEndDateToAccount</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestCurtis</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2149,6 +2153,10 @@
     <classAccesses>
         <apexClass>TestUtilities</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestValidateUnityOrchestrtatorCanBeAdded</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TriggerDispatcher</apexClass>
@@ -3791,6 +3799,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>License__c.AccountId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>License__c.Asset_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>License__c.Contact_for_Notification__c</field>
         <readable>true</readable>
@@ -3833,6 +3851,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>License__c.Quantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>License__c.Quote_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8837,7 +8860,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Cap_Case__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -8846,7 +8869,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Cap__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -8945,7 +8968,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>ErrorLog__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -9188,7 +9211,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Patch__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -9269,7 +9292,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Request__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -10402,6 +10425,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Request__c.New</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

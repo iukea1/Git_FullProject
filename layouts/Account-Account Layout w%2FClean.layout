@@ -111,6 +111,10 @@
                 <behavior>Readonly</behavior>
                 <field>Software_Amount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EC_Term__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

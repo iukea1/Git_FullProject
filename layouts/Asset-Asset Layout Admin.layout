@@ -155,6 +155,14 @@
                 <behavior>Readonly</behavior>
                 <field>Is_Customer_Date_on_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Selected_For_Renewal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Asset_Eligible_For_POC_Renewal_Ext__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
