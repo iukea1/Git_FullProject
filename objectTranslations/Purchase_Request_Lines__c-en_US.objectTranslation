@@ -48,24 +48,24 @@
             <translation><!-- 380-Support --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>410-Marketing</masterLabel>
-            <translation><!-- 410-Marketing --></translation>
+            <masterLabel>410-Demand Gen. &amp; Communications</masterLabel>
+            <translation><!-- 410-Demand Gen. &amp; Communications --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>412-Marketing Communications</masterLabel>
-            <translation><!-- 412-Marketing Communications --></translation>
+            <masterLabel>412-Product &amp; Solutions Marketing</masterLabel>
+            <translation><!-- 412-Product &amp; Solutions Marketing --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>414-Corporate Communications</masterLabel>
-            <translation><!-- 414-Corporate Communications --></translation>
+            <masterLabel>414-Corporate Marketing</masterLabel>
+            <translation><!-- 414-Corporate Marketing --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>416-Marketing Operations</masterLabel>
             <translation><!-- 416-Marketing Operations --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>418-Channel Marketing</masterLabel>
-            <translation><!-- 418-Channel Marketing --></translation>
+            <masterLabel>418-Field &amp; Channel Marketing</masterLabel>
+            <translation><!-- 418-Field &amp; Channel Marketing --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>450-Bus Dev</masterLabel>
@@ -230,6 +230,10 @@
         <picklistValues>
             <masterLabel>100042-VMworld Partner Exchange 2015</masterLabel>
             <translation><!-- 100042-VMworld Partner Exchange 2015 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>100043-Service Provider</masterLabel>
+            <translation><!-- 100043-Service Provider --></translation>
         </picklistValues>
     </fields>
     <fields>

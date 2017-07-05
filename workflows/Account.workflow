@@ -110,6 +110,10 @@
         <description>Account: Partner Application Submitted</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <recipient>ivara@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -123,10 +127,6 @@
         </recipients>
         <recipients>
             <recipient>ltaelman@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rcury@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
@@ -403,6 +403,15 @@ Standard_Discount_Service__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Account_Set_isPartner_c_True</fullName>
+        <field>isPartner__c</field>
+        <literalValue>1</literalValue>
+        <name>Account: Set isPartner__c True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AcctRecType2Other</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Other</lookupValue>
@@ -515,6 +524,20 @@ Standard_Discount_Service__c
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
     </outboundMessages>
+    <rules>
+        <fullName>Account%3A Partner Account Enabled</fullName>
+        <actions>
+            <name>Account_Set_isPartner_c_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.IsPartner</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>Account%3A Partner Application Created</fullName>
         <actions>

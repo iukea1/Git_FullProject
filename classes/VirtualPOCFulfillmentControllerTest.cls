@@ -32,7 +32,7 @@ public class VirtualPOCFulfillmentControllerTest
         
         ApexPages.StandardController sc = new ApexPages.StandardController(pocRequest);
         VirtualPOCFulfillmentController controller = new VirtualPOCFulfillmentController(sc);
-      	controller.addAsset();
+        controller.addAsset();
         Integer maxIndex = controller.VirtualAssets.size() - 1;
         //system.debug(controller.ProductOptions);
         for(Integer i = maxIndex; i >= 0; i--)
@@ -119,13 +119,13 @@ public class VirtualPOCFulfillmentControllerTest
         Request__c pocRequest = new Request__c(POC_Contact__c = contact.Id);
         pocRequest.POC_Type__c='Perpetual';
         pocRequest.Opportunity__c= opportunity.id;
-        pocRequest.VirtualProduct1__c= 'EC-SP-50';
+        pocRequest.VirtualProduct1__c= 'EC-SP-50-B';
         pocRequest.VirtualQuantity1__c= 5;
-        pocRequest.VirtualProduct1__c= 'EC-SP-100';
+        pocRequest.VirtualProduct1__c= 'EC-SP-100-B';
         pocRequest.VirtualQuantity1__c= 5;
-        pocRequest.VirtualProduct1__c= 'EC-SP-200';
+        pocRequest.VirtualProduct1__c= 'EC-SP-200-B';
         pocRequest.VirtualQuantity1__c= 5;
-        pocRequest.VirtualProduct1__c= 'EC-SP-1000';
+        pocRequest.VirtualProduct1__c= 'EC-SP-1000-B';
         pocRequest.VirtualQuantity1__c= 5;
       
         insert pocRequest;     
@@ -186,7 +186,7 @@ public class VirtualPOCFulfillmentControllerTest
         pocRequest.Opportunity__c= opportunity.id;
         pocRequest.VirtualProduct1__c= 'EC-SP-MET';
         pocRequest.VirtualQuantity1__c= 1;
-      	
+        
         insert pocRequest;     
        
         ApexPages.StandardController sc = new ApexPages.StandardController(pocRequest);
@@ -221,15 +221,15 @@ public class VirtualPOCFulfillmentControllerTest
     {
         Id accountId = TestUtilities.createTestAccount();
         Id contactId = TestUtilities.createTestContact(accountId);
-		
+        
         Id standardPricebookId = TestUtilities.getStandardPricebookId();
         Opportunity opp = TestUtilities.createTestOpportunityRequest(accountId, standardPricebookId);
         opp.OwnerId = Userinfo.getUserId();
          
-		Lead lead= TestUtilities.CreateTestLead();
+        Lead lead= TestUtilities.CreateTestLead();
        
-      	Request__c pocReq=  VirtualPOCFulfillmentController.createPOC(contactId, lead, 'EC-BASE-1Y','prane', opp);
-       	System.assert(pocReq.Id != null);
+        Request__c pocReq=  VirtualPOCFulfillmentController.createPOC(contactId, lead, 'EC-BASE-1Y','prane', opp);
+        System.assert(pocReq.Id != null);
       
     }
 }

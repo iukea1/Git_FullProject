@@ -2,6 +2,7 @@
  * Controller of page PartnerPortalIndividualReg
  * Change Log:
  * 2017-03-07: SnapBI-Andy: updated user messaging per client request
+ * 2017-06-05: Added language for success message
  */
 public without sharing class PartnerPortalIndividualRegController
 {
@@ -89,7 +90,7 @@ public without sharing class PartnerPortalIndividualRegController
             upsertContact();
             createUser();
             finished = true;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Thanks for the signing up. Your login is enabled. We will send you an email with your login account.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Thanks for the signing up. Your login is enabled. We will send you an email with your login account. If you do not receive an email in a few minutes, please check your spam folder.'));
         }
         catch(Exception ex)
         {

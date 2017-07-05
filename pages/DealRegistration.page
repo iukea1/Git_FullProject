@@ -96,6 +96,16 @@
             margin-left: 0px;
             color: red;
         }
+        .content-body .message ul > li
+        {
+            color: black;
+        }
+        .content-body ul.message > li
+        {
+            color:black;
+            margin-left: 2.5em;
+            padding-right: 0.3em;
+        }
         .content-body .error
         {
             color: red;
@@ -132,8 +142,8 @@
             border-radius: .3em;
             margin-top: 3px;
             padding: 5px;
-        	max-height: 150px;
-    		overflow: auto;
+            max-height: 150px;
+            overflow: auto;
         }
         .autoSearchOptions
         {
@@ -224,6 +234,7 @@
     function getResellerContacts(actId)
     {
         var loading = $('#otherResellerLoading');
+        $("input[id$='noContactHidden']").val(false);
         if(loading.hasClass('hidden'))
         {
            loading.removeClass('hidden');
@@ -413,13 +424,21 @@
     function handleResellerInput()
     {
         var input = $("#newResellerInput").val();
-        var result = findItems(input, dataSets.resellers, 'label');
-        if(result.length==0)
+        if(input !== '')
         {
-            result.push({'label':'Other', 'value':'other'});
+            var result = findItems(input, dataSets.resellers, 'label');
+            if(result.length==0)
+            {
+                result.push({'label':'Other', 'value':'other'});
+            }
+            showResult('#resellerResult', result, 'setResellerId');
+            toggleReseult("#Reseller_AutoSearchResultPanel");
+        }else
+        {
+            var target = $("input[id$='ResellerInputHidden']");
+            target.val('');
+            getResellerContacts('');
         }
-        showResult('#resellerResult', result, 'setResellerId');
-        toggleReseult("#Reseller_AutoSearchResultPanel");
     }
     
     function preSetPlaceholders()
@@ -433,8 +452,8 @@
         $('.phone').each(function(elems, e){
             $(e).attr('placeholder', 'Please input valid phone numbers');
         });
-        $('.email').each(function(elems, e){
-            $(e).attr('placeholder', 'email@example.com');
+        $('.emailFmt').each(function(elems, e){
+            $(e).attr('placeholder', 'name@example.com');
         });
     }
     
@@ -462,6 +481,17 @@
             return true;
         }
     }
+
+    function isValidatedEmail(input)
+    {
+        if(input !== '')
+        {
+            return (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(input));
+        }else
+        {
+            return false;
+        }
+    }
     
     function addError(elem, msg)
     {
@@ -472,39 +502,84 @@
     {
         e.parent().parent().find('div.error').remove();
     }
+
+    var errMessager = {};
+    errMessager.errors = [];
+    errMessager.addError = function(l, e){
+        errMessager.errors.push({'label':l,'err':e});
+    };
+    errMessager.clearErros = function(){
+        errMessager.errors = [];
+    };
+    errMessager.getErrorsAsHtml = function(){
+        var str = '<ul>';
+        for(var e = 0; e < errMessager.errors.length; e += 1)
+        {
+            str += '<li><b>' + errMessager.errors[e].label + ':</b> ' + errMessager.errors[e].err + '</li>';
+        }
+        return str += '</ul>';
+    };
+    errMessager.showJsErrors = function(tagId){
+        $('#'+tagId).append(errMessager.getErrorsAsHtml());
+        $('#'+tagId).show();
+    };
     
     function validateDealReg()
     {
         setSubmitButtonDisabled();
         var isValidated = true;
+        errMessager.clearErros();
+        $("#JsValidationErrors").hide().empty();
         try
         {
+
+        var isRegForSomeone = $("input[id$='regForSomeoneCheck']").attr('checked');
+        if(isRegForSomeone === true)
+        {
+            var partnerRepName = $("input[id$='partnerRepName']").val();
+            var partnerRepPhone = $("input[id$='partnerRepPhone']").val();
+            var partnerRepEmail = $("input[id$='partnerRepEmail']").val();
+            if(partnerRepName === '')
+            {
+                isValidated = false;
+                errMessager.addError('Partner Rep Name', "Please fill out the Rep Name, if you are registering this opportunity for someone else.");
+            }
+            if(partnerRepPhone === '')
+            {
+                isValidated = false;
+                errMessager.addError('Partner Rep Phone Number', "Please fill out the Rep Phone, if you are registering this opportunity for someone else.");
+            }
+            if(partnerRepEmail.trim() === '')
+            {
+                isValidated = false;
+                errMessager.addError('Partner Rep Email', "Please fill out the Rep Email, if you are registering this opportunity for someone else.");
+            }
+            if(!isValidatedEmail(partnerRepEmail.trim()))
+            {
+                isValidated = false;
+                errMessager.addError('Partner Rep Email', "Please use invalid Email Address, example 'name@example.com'");
+            }
+        }
+
         if($("#stateSelector ").val() == '--None--')
         {
-            $("#stateSelector").parent().find('.error').remove();
-            $("#stateSelector").parent().append("<div class='error'>Please select a state</div>");
-        }else
+            //$("#stateSelector").parent().find('.error').remove();
+            //$("#stateSelector").parent().append("<div class='error'>Please select a state</div>");
+            errMessager.addError('State','Please select a state');
+        }/*else // remove error message
         {
             $("#stateSelector").parent().find('.error').remove();
-        }
+        }*/
         if($("#countrySelector").val() == '--None--')
         {
-            $("#countrySelector").parent().find('.error').remove();
-            $("#countrySelector").parent().append("<div class='error'>Please select a country</div>");
-        }else
-        {
-            $("#countrySelector").parent().find('.error').remove();
+            errMessager.addError('Country','Please select a country');
         }
         $('select.required').each(function(elems, elm){
             var e = $(elm);
             if(e.val() == '' || e.val() == 'Please Select')
             {
                 isValidated = false;
-                removeError(e);
-                addError(e, 'This field is required, please select a value');
-            }else
-            {
-              removeError(e);
+                errMessager.addError(e.data('errlabel'), e.data('errlabel')+' is required, please select a value');
             }
         });
         $('.date').each(function(elems, elm){
@@ -512,11 +587,16 @@
             var dateVar = e.val();
             if(!isDate(e.val()) && (e.hasClass('require') || dateVar != '') ){ 
                 isValidated = false;
-                removeError(e);
-                addError(e, 'Invalid date, please choose a date from the date picker');
-            }else
+                errMessager.addError(e.data('errlabel'), 'Invalid date, please choose a date from the date picker');
+            }
+        });
+        $('.email').each(function(elems, elm){
+            var e = $(elm);
+            e.val(e.val().trim());
+            if( e.val() !== '' && !isValidatedEmail(e.val()) )
             {
-                removeError(e);
+                isValidated = false;
+                errMessager.addError(e.data('errlabel'), 'Invalid Email address, please input an email address as the format \'name@email.com\'');
             }
         });
         $('.currency').each(function(elements, elem){
@@ -525,41 +605,33 @@
             if(isNaN(e.val()))
             {
                 isValidated = false;
-                removeError(e);
-                addError(e, 'Invalid currency, please input numbers without a $ sign, commas or any other special characters');
-            }else
-            {
-                removeError(e);
+                errMessager.addError(e.data('errlabel'), 'Invalid currency, please input numbers without a $ sign, commas or any other special characters');
             }
         });
         
-        var flag = $("input[id$='noContactHidden']").val();
+        var flag = ($("input[id$='noContactHidden']").val()) === 'true'?true:false;
         var contactSelector = $("input[id$='resellerContactHidden']");
         var resellerSelect = $("input[id$='ResellerInputHidden']");
         
         if(resellerSelect.val() == '')
         {
-            resellerSelect.parent().find('.error').remove();
-            resellerSelect.parent().append("<div class='error'>Please select a reseller</div>");
             isValidated = false;
-        }else
-        {
-            resellerSelect.parent().find('.error').remove();
+            errMessager.addError('Reseller', 'Please select a reseller');
         }
         
-        if(contactSelector.val() === '' && ( (flag === false && resellerSelect.val() !== 'other')
-            ||resellerSelect.val() === '') )
+        if(contactSelector.val() === '' && ( flag === false || (resellerSelect.val() !== 'other'
+          && resellerSelect.val() !== '') ) )
         {
-            contactSelector.parent().find('.error').remove();
-            contactSelector.parent().append("<div class='error'>Please select a reseller contact, select 'No Contact Listed' if cannot find a contact.</div>");
             isValidated = false;
+            errMessager.addError('Reseller Contact', "Please select a reseller contact,select 'No Contact Listed' if cannot find a contact.");
         }
-        else
-        {
-            contactSelector.parent().find('.error').remove();
+
+        if(!isValidated){ enableButton(); }
+        if(errMessager.errors.length > 0){ 
+            errMessager.showJsErrors('JsValidationErrors');
+            parent.scrollTo(150,380);
         }
         autoAdjustHeight();
-        if(!isValidated){ enableButton(); } 
         }catch(e)
         {console.log(e);}
         return isValidated;
@@ -587,10 +659,11 @@
         if(selectorVar=== 'NoContact')
         {
             $("input[id$='noContactHidden']").val(true);
+            $("input[id$='resellerContactHidden']").val('')
         }else
         {
             $("input[id$='noContactHidden']").val(false);
-            selectorVar = (selectorVar == '--None--')?'':selectorVar;
+            selectorVar = (selectorVar == '--None--' || selectorVar === 'Please select')?'':selectorVar;
             $("input[id$='resellerContactHidden']").val(selectorVar);
         }
     }
@@ -653,6 +726,7 @@
                     <ul class="input-items">
                         <li>
                             <apex:messages styleClass="message"/>
+                            <div class="message" style="display: none;" id="JsValidationErrors"></div>
                         </li>
                         <li>
                             <div class="sub-title">Company Information</div>
@@ -660,72 +734,72 @@
                         </li>
                         <li>
                             <div class="reg-label require">Customer Company Name</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input name" value="{!leadRecord.Company}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Customer Company Name" required="true" styleClass="input name" value="{!leadRecord.Company}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Customer First Name</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input name" value="{!leadRecord.FirstName}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Customer First Name" required="true" styleClass="input name" value="{!leadRecord.FirstName}"/></div>
                         </li>
                         <li>
                             <div class=" reg-label require">Customer Last Name</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input name" value="{!leadRecord.LastName}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Customer Last Name" required="true" styleClass="input name" value="{!leadRecord.LastName}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Phone</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input phone" value="{!leadRecord.Phone}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Phone" required="true" styleClass="input phone" value="{!leadRecord.Phone}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Email</div>
-                            <div class = "reg-input"><apex:inputField required="true" type="email" styleClass="input email" value="{!leadRecord.Email}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Email" required="true" type="email" styleClass="input email emailFmt" value="{!leadRecord.Email}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Address</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input" value="{!leadRecord.Street}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Address" required="true" styleClass="input" value="{!leadRecord.Street}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">City</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input" value="{!leadRecord.City}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="City" required="true" styleClass="input" value="{!leadRecord.City}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Country</div>
                             <div class = "reg-input">
-                                <apex:inputHidden id="countryHidden" required="true" value="{!leadRecord.Country}"/>
-                                <select size="1" id="countrySelector" required="required" class="input" onchange="setCountry()"></select></div>
+                                <apex:inputHidden id="countryHidden" html-data-errlabel="Country" required="true" value="{!leadRecord.Country}"/>
+                                <select size="1" id="countrySelector" html-data-errlabel="Country" required="required" class="input" onchange="setCountry()"></select></div>
                         </li>
                         <li>
                             <div class="reg-label require">State</div>
                             <div class = "reg-input">
-                                <apex:inputHidden id="stateHidden" required="true" value="{!leadRecord.State}"/>
-                                <select size="1" id="stateSelector" required="required" class="input" onchange="setState()"></select></div>
+                                <apex:inputHidden id="stateHidden" html-data-errlabel="State" required="true" value="{!leadRecord.State}"/>
+                                <select size="1" id="stateSelector" html-data-errlabel="State" required="required" class="input" onchange="setState()"></select></div>
                         </li>
                         <li>
                             <div class="reg-label require">Zip</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input" value="{!leadRecord.PostalCode}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Zip" required="true" styleClass="input" value="{!leadRecord.PostalCode}"/></div>
                         </li>
                         <li>
                             <div class="sub-title p-top__medium p-bottom__medium">Reseller Qualification Informaton</div>
                         </li>
                         <li>
                             <div class="reg-label require">Are you registering this opportunity on behalf of someone else?</div>
-                            <div class = "reg-input"><apex:inputCheckbox styleClass="select" id="regForSomeoneCheck" onchange="displayRegForSomene()" value="{!leadRecord.Are_u_registering_this_opp_for_someone__c}"/></div>
+                            <div class = "reg-input"><apex:inputCheckbox html-data-errlabel="Are you registering this opportunity on behalf of someone else?" styleClass="select" id="regForSomeoneCheck" onchange="displayRegForSomene()" value="{!leadRecord.Are_u_registering_this_opp_for_someone__c}"/></div>
                             
                             <div class="panel" id="regForSomeoneDetail">
                                 <div class="reg-label require">Partner Rep Name (First, Last)</div>
                                 <div></div>
-                                <div class="reg-input"><apex:inputField required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input name" value="{!leadRecord.Partner_Rep_Name__c}"/></div>
+                                <div class="reg-input"><apex:inputField html-data-errlabel="Partner Rep Name" required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input name" id="partnerRepName" value="{!leadRecord.Partner_Rep_Name__c}"/></div>
                                 
                                 <div class="reg-label require">Partner Rep Phone Number</div>
                                 <div></div>
-                                <div class="reg-input"><apex:inputField required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input phone" value="{!leadRecord.Partner_Rep_Phone_Number__c}"/></div>
+                                <div class="reg-input"><apex:inputField html-data-errlabel="Partner Rep Phone Number" required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input phone" id="partnerRepPhone" value="{!leadRecord.Partner_Rep_Phone_Number__c}"/></div>
                                 
                                 <div class="reg-label require">Partner Rep Email</div>
                                 <div></div>
-                                <div class="reg-input"><apex:inputField type="email" required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input email" value="{!leadRecord.Partner_Rep_Email__c}"/></div>
+                                <div class="reg-input"><apex:inputField html-data-errlabel="Partner Rep Email" type="email" required="{!leadRecord.Are_u_registering_this_opp_for_someone__c}" styleClass="input emailFmt" id="partnerRepEmail" value="{!leadRecord.Partner_Rep_Email__c}"/></div>
                             </div>
                         </li>
                         <li>
                             <div class="reg-label require">Project Name</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input text" value="{!leadRecord.Project_Name__c}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Project Name" required="true" styleClass="input text" value="{!leadRecord.Project_Name__c}"/></div>
                         </li>
                         <!-- Begin Technical Contact Detail -->
                         <li>
@@ -734,15 +808,15 @@
                             <ul class="input-items">
                                 <li>
                                     <div class="reg-label" text-indent="50px">Full Name</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Pre_Sales_Technical_Contact_Name__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Pre Sales Full Name" styleClass="input text" value="{!leadRecord.Pre_Sales_Technical_Contact_Name__c}"/></div>
                                 </li>
                                 <li>
                                     <div class="reg-label">Email Address</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Pre_Sales_Technical_Contact_Email__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Pre Sales Email Address" styleClass="input email emailFmt" value="{!leadRecord.Pre_Sales_Technical_Contact_Email__c}"/></div>
                                 </li>
                                 <li>
                                     <div class="reg-label">Phone</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Pre_Sales_Technical_Contact_Phone__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Pre Sales Phone" styleClass="input phone" value="{!leadRecord.Pre_Sales_Technical_Contact_Phone__c}"/></div>
                                 </li>
                             </ul>
                             <li>
@@ -752,46 +826,46 @@
                             <ul class="input-items">
                                 <li>
                                     <div class="reg-label">Full Name</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input text" value="{!leadRecord.Support_Technical_Contact_Name__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Support Techincal Contact Full Name" styleClass="input text" value="{!leadRecord.Support_Technical_Contact_Name__c}"/></div>
                                 </li>
                                 <li>
                                     <div class="reg-label">Email Address</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input email" value="{!leadRecord.Support_Technical_Contact_Email__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Support Techincal Contact Email Address" styleClass="input email emailFmt" value="{!leadRecord.Support_Technical_Contact_Email__c}"/></div>
                                 </li>
                                 <li>
                                     <div class="reg-label ">Phone</div>
-                                    <div class = "reg-input reg-input-sub"><apex:inputField styleClass="input phone" value="{!leadRecord.Support_Technical_Contact_Phone__c}"/></div>
+                                    <div class = "reg-input reg-input-sub"><apex:inputField html-data-errlabel="Support Technical Contact Phone" styleClass="input phone" value="{!leadRecord.Support_Technical_Contact_Phone__c}"/></div>
                                 </li>
                             </ul>
                         <!-- End Technical Contact Detail -->
                         
                         <li>
                             <div class="reg-label">Estimated Close Date </div>
-                            <div class = "reg-input"><apex:inputField id="estCloseDate" styleClass="input date" value="{!leadRecord.Estimated_Close_Date__c}"/></div>
+                            <div class = "reg-input"><apex:inputField id="estCloseDate" html-data-errlabel="Estimated Close Date" styleClass="input date" value="{!leadRecord.Estimated_Close_Date__c}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Project Description</div>
-                            <div class = "reg-input"><apex:inputField required="true" styleClass="input text" value="{!leadRecord.Project_Description__c}"/></div>
+                            <div class = "reg-input"><apex:inputField required="true" html-data-errlabel="Project Description" styleClass="input text" value="{!leadRecord.Project_Description__c}"/></div>
                         </li>
                         <li>
                             <div class="reg-label">Project Budgeted? </div>
-                            <div class = "reg-input"><apex:inputCheckbox styleClass="select" value="{!leadRecord.Project_Budgeted__c}"/></div>
+                            <div class = "reg-input"><apex:inputCheckbox html-data-errlabel="Project Budgeted" styleClass="select" value="{!leadRecord.Project_Budgeted__c}"/></div>
                         </li>
                         <li>
                             <div class="reg-label"><div class="require">Project Budget Amount ( Enter data as a number without a $ sign, commas or any other special characters. )</div></div>
-                            <div class = "reg-input"><apex:inputField styleClass="input currency" required="true" value="{!leadRecord.Project_Budget_Amount__c}" /></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Project Budget Amount" styleClass="input currency" required="true" value="{!leadRecord.Project_Budget_Amount__c}" /></div>
                         </li>
                         <li>
                             <div class="reg-label">Competitive Deal?</div>
-                            <div class = "reg-input"><apex:inputCheckbox styleClass="select" value="{!leadRecord.Competitive_Deal__c}"/></div>
+                            <div class = "reg-input"><apex:inputCheckbox html-data-errlabel="Comptitive Deal" styleClass="select" value="{!leadRecord.Competitive_Deal__c}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Competition</div>
-                            <div class = "reg-input"><apex:inputField styleClass="input" required="true" value="{!leadRecord.Competition__c}"/></div>
+                            <div class = "reg-input"><apex:inputField html-data-errlabel="Competition" styleClass="input" required="true" value="{!leadRecord.Competition__c}"/></div>
                         </li>
                         <li>
                             <div class="reg-label require">Deal Source</div>
-                            <div class = "reg-input"><apex:selectList size="1" styleClass="input required" required="true" value="{!leadRecord.Deal_Source__c}">
+                            <div class = "reg-input"><apex:selectList html-data-errlabel="Deal Source" size="1" styleClass="input required" required="true" value="{!leadRecord.Deal_Source__c}">
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
                                 <apex:selectOption itemLabel="Existing Customer" itemValue="Existing Customer"></apex:selectOption>
                                 <apex:selectOption itemLabel="New Business" itemValue="New Business"></apex:selectOption>
@@ -804,7 +878,7 @@
                                 <div class="reg-label">Preferred Distributor</div>
                                 <div class="reg-input">
                                     <!--apex:selectList styleClass="input" id="distributorSelect" size="1" onchange="showOtherDistributor()" value="{!selectedDistributorId}"><apex:selectOptions value="{!distributors}"/></apex:selectList-->
-                                   <apex:inputHidden id="DistributorInputHidden" value="{!selectedDistributorId}"/>
+                                   <apex:inputHidden id="DistributorInputHidden" html-data-errlabel="Prefered Distributor" value="{!selectedDistributorId}"/>
                                    <div class="autoSearchContainer">
                                         <div class="autoSearchInputPanel">
                                             <input class="input text" id="newDistributorInput" oninput="handleDistributorInput()" onblur="hideDistributorResult(true)" autocomplete="off"/>
@@ -818,18 +892,13 @@
                             </apex:outputPanel>
                             <div class="panel" id="otherDistributerPanel">
                                 <div class="reg-label require">Other Distributor</div>
-                                <div class="reg-input"><apex:inputField styleClass="input text" required="{!selectedDistributorId == 'other'}" id="otherDistributorInput" value="{!leadRecord.DealReg_Distributor_Text__c}"/></div>   
+                                <div class="reg-input"><apex:inputField html-data-errlabel="Other Distributor" styleClass="input text" required="{!selectedDistributorId == 'other'}" id="otherDistributorInput" value="{!leadRecord.DealReg_Distributor_Text__c}"/></div>   
                             </div>
                             <apex:outputPanel layout="block" styleClass="" id="resellerDetailPanel" rendered="{!currUserAct.Partner_Type__c != 'Reseller'}">
                                 <div>
                                     <div class="reg-label require">Reseller</div>
                                     <div class = "reg-input">
-                                        <!--apex:selectList required="true" styleClass="input required" id="resellerSelect" size="1" onchange="showOtherReseller()" value="{!selectedResellerId}">
-                                            <apex:repeat value="{!resellers}" var="item">
-                                                <apex:selectOption itemLabel="{!item.label}" itemValue="{!item.value}"></apex:selectOption>
-                                            </apex:repeat>
-                                            <apex:selectOptions value="{!resellers}"/></apex:selectList-->
-                                    <apex:inputHidden id="ResellerInputHidden" value="{!selectedResellerId}"/>
+                                    <apex:inputHidden id="ResellerInputHidden" html-data-errlabel="Reseller" value="{!selectedResellerId}"/>
                                        <div class="autoSearchContainer">
                                         <div class="autoSearchInputPanel">
                                             <input class="input text" id="newResellerInput" oninput="handleResellerInput()" onblur="hideResellerResult(true)" autocomplete="off" />
@@ -842,13 +911,13 @@
                                 </div>
                                 <div class="panel" id="otherResellerPanel">
                                     <div class="reg-label require">Other Reseller</div>
-                                    <div class="reg-input"><apex:inputField styleClass="input text" required="{!selectedResellerId == 'other'}" id="otherResellerInput" value="{!leadRecord.DealReg_Reseller_Text__c}"/></div>   
+                                    <div class="reg-input"><apex:inputField html-data-errlabel="Other Reseller" styleClass="input text" required="{!selectedResellerId == 'other'}" id="otherResellerInput" value="{!leadRecord.DealReg_Reseller_Text__c}"/></div>
                                 </div>
                                 <div>
                                     <div id="contactLabel" class="reg-label require">Reseller Contact</div>
                                     <div class = "reg-input">
-                                        <apex:inputHidden id="noContactHidden" value="{!leadRecord.NoDealRegistrationResellerContact__c}"/>
-                                        <apex:inputHidden id="resellerContactHidden" value="{!leadRecord.Deal_Registration_Reseller_Contact__c}"/>
+                                        <apex:inputHidden html-data-errlabel="No Deal Reg Reseller Contact?" id="noContactHidden" value="{!leadRecord.NoDealRegistrationResellerContact__c}"/>
+                                        <apex:inputHidden html-data-errlabel="Rseller Contact" id="resellerContactHidden" value="{!leadRecord.Deal_Registration_Reseller_Contact__c}"/>
                                         <select id="resellerContactSelector" size="1" class="input" onchange="setResellerContact()"></select>
                                         <img id="otherResellerLoading" src="/img/loading.gif" class="hidden p-left__small"/>
                                     </div>
@@ -858,7 +927,7 @@
                         </li>
                         <li>
                             <div class="reg-label require">Deal Type</div>
-                            <div class = "reg-input"><apex:selectList size="1" required="true" styleClass="input required" value="{!leadRecord.Deal_Type__c}">
+                            <div class = "reg-input"><apex:selectList html-data-errlabel="Deal Type" size="1" required="true" styleClass="input required" value="{!leadRecord.Deal_Type__c}">
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
                                 <apex:selectOption itemLabel="SD WAN" itemValue="SD WAN"></apex:selectOption>
                                 <apex:selectOption itemLabel="Wan Op" itemValue="Wan Op"></apex:selectOption>
@@ -867,7 +936,7 @@
                         </li>
                         <li>
                             <div class="reg-label require">Deal source originated by</div>
-                            <div class = "reg-input"><apex:selectList size="1" required="true" styleClass="input required" value="{!leadRecord.I_brought_this_deal_to_Silver_Peak__c}">
+                            <div class = "reg-input"><apex:selectList html-data-errlabel="Deal source originated by" size="1" required="true" styleClass="input required" value="{!leadRecord.I_brought_this_deal_to_Silver_Peak__c}">
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
                                 <apex:selectOption itemLabel="Silver Peak" itemValue="Silver Peak"></apex:selectOption>
                                 <apex:selectOption itemLabel="Us (partner)" itemValue="Us (partner)"></apex:selectOption>
@@ -875,7 +944,7 @@
                         </li>
                         <li>
                             <div class="reg-label require">Deal is a result of a Silver Peak funded activity?</div>
-                            <div class = "reg-input"><apex:selectList required="true" styleClass="input required" size="1" value="{!leadRecord.Deal_is_a_result_of_a_SP_funded_event__c}">
+                            <div class = "reg-input"><apex:selectList html-data-errlabel="Deal is a result of a Silver Peak funded activity?" required="true" styleClass="input required" size="1" value="{!leadRecord.Deal_is_a_result_of_a_SP_funded_event__c}">
                                 <apex:selectOption itemLabel="Please Select" itemValue="Please Select"></apex:selectOption>
                                 <apex:selectOption itemLabel="Yes" itemValue="Yes"></apex:selectOption>
                                 <apex:selectOption itemLabel="No" itemValue="No"></apex:selectOption>

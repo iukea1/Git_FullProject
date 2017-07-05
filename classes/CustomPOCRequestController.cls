@@ -320,10 +320,10 @@ ApexPages.addMessage(myMsg);
             if(VirtualProducts.size()==0 && !isProductsToBeAdded)
             {
                 CurrentRequest.First_POC_on_Account__c=true;
-                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-50',5));
-                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-100',5));
-                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-200',5));
-                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-1000',5));
+                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-50-B',5));
+                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-100-B',5));
+                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-200-B',5));
+                VirtualProducts.add(new VirtualProductInfo(VirtualProducts.size(),'EC-SP-1000-B',5));
             }
             if(!pocRequest.First_POC_on_Account__c)
             {
@@ -1218,10 +1218,10 @@ lstProducts= [Select Id,Name from Product2 where isActive=true and IsPocEnabled_
         controller.savePage();
         Test.stopTest();
         Request__c updatedReq=[Select VirtualProduct1__c,VirtualProduct2__c,VirtualProduct3__c,VirtualProduct4__c,VirtualProduct5__c,VirtualQuantity1__c,VirtualQuantity2__c,VirtualQuantity3__c,VirtualQuantity4__c,VirtualQuantity5__c from Request__c where Id=:request.Id ];
-        System.assertEquals(updatedReq.VirtualProduct1__c, 'EC-SP-50');
-        System.assertEquals(updatedReq.VirtualProduct2__c, 'EC-SP-100');
-        System.assertEquals(updatedReq.VirtualProduct3__c, 'EC-SP-200'); 
-        System.assertEquals(updatedReq.VirtualProduct4__c, 'EC-SP-1000');
+        System.assertEquals(updatedReq.VirtualProduct1__c, 'EC-SP-50-B');
+        System.assertEquals(updatedReq.VirtualProduct2__c, 'EC-SP-100-B');
+        System.assertEquals(updatedReq.VirtualProduct3__c, 'EC-SP-200-B'); 
+        System.assertEquals(updatedReq.VirtualProduct4__c, 'EC-SP-1000-B');
         System.assertEquals(updatedReq.VirtualQuantity1__c, 5);
         System.assertEquals(updatedReq.VirtualQuantity2__c, 5);
         System.assertEquals(updatedReq.VirtualQuantity3__c, 5); 

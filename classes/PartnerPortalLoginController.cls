@@ -1,3 +1,12 @@
+/*
+* Change Log:
+* 01JUN2017 - Andy @SnapBI - implemented normalizeSpace() function to remove leading and trailing spaces
+*     from partner submitted text
+* 01JUN2017 - Andy @SnapBI - modified getUserByEmail method to query only users with type = PowerPartner
+*     to resolve login problems when customer and partner users exist for the same person 
+*
+*/
+
 public class PartnerPortalLoginController
 {
     public PartnerPortalLoginController()
@@ -21,6 +30,8 @@ public class PartnerPortalLoginController
             String startURL = ApexPages.currentPage().getParameters().get('startURL');
             String homeURL = String.isBlank(retURL) ? (String.isBlank(startURL) ? 'champions_home' : startURL) : retURL;
             hasLoginError = false;
+            //remove all leading, trailing, or repeating space charaters
+            Username = Username.normalizeSpace();
             String formattedUsername = (Username != null && !Username.endsWith('.sp')) ? (Username + '.sp') : Username;   //To make sure username is not duplicate to other org
             User usr = getUserByEmail(new List<String> {formattedUsername, Username});
             if(usr != null)
@@ -57,7 +68,7 @@ public class PartnerPortalLoginController
     
     public static User getUserByEmail(String[] names)
     {
-        List<User> users = [select Id, Username, LastLoginDate, CreatedDate from User where Username in :names and IsActive=true and UserType in ('PowerPartner', 'CSPLitePortal', 'CustomerSuccess', 'PowerCustomerSuccess') limit 1];
+        List<User> users = [select Id, Username, LastLoginDate, CreatedDate from User where Username in :names and IsActive=true and UserType = 'PowerPartner' limit 1];
         return (users.size() > 0) ? users[0] : null;
     }
 }

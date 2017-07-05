@@ -30,6 +30,10 @@
         <description>Funding Request: Send New Funding Request Submitted Template</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <field>CSM__c</field>
             <type>userLookup</type>
         </recipients>
@@ -67,6 +71,10 @@
         <description>New MDF Approved Internal</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <field>CSM__c</field>
             <type>userLookup</type>
         </recipients>
@@ -89,6 +97,10 @@
         <description>New MDF Request has Been Denied (Internal) APAC</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <recipient>lcrawford@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -101,6 +113,10 @@
         <description>New MDF Request has Been Denied (Internal) America</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <recipient>amenjivar@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -112,6 +128,10 @@
         <fullName>New_MDF_Request_has_Been_Denied_Internal_EMEA</fullName>
         <description>New MDF Request has Been Denied  (Internal) EMEA</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
         <recipients>
             <recipient>ltaelman@silver-peak.com</recipient>
             <type>user</type>
@@ -126,6 +146,10 @@
         <protected>false</protected>
         <recipients>
             <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <recipient>Field and Channel Marketing Manager</recipient>
+            <type>accountTeam</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>

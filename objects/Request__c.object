@@ -3146,7 +3146,7 @@ ISPICKVAL( POC_Type__c,&quot;Service Provider&quot; )
         <active>true</active>
         <errorConditionFormula>AND
 (
-NOT( Trigger_POC_Approvers__c ),
+NOT(ISCHANGED(Trigger_POC_Approvers__c)),
 NOT(ISNEW()),
 OR(
 AND(NOT(ISBLANK(PRIORVALUE(RSM__c))),ISCHANGED( RSM__c )),
@@ -3158,7 +3158,9 @@ AND(NOT(ISBLANK(PRIORVALUE(SE_Manager__c))),ISCHANGED( SE_Manager__c ))
 ),
 NOT($User.Id ==&apos;00550000001jvSe&apos;),
 NOT($User.Id ==&apos;005500000045fp1&apos;),
-NOT($User.Id ==&apos;00550000002rxts&apos;)
+NOT($User.Id ==&apos;00550000002rxts&apos;),
+NOT($Profile.Name ==&quot;System Administrator&quot;),
+NOT($Profile.Name ==&quot;9-Operations Manager&quot;)
 )</errorConditionFormula>
         <errorMessage>You are not allowed to change POC Approvers.</errorMessage>
     </validationRules>

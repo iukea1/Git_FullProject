@@ -37,6 +37,15 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         List<EmailTemplate> et = [Select Id, Name, Body, HtmlValue,Subject from EmailTemplate where DeveloperName like '%New_MDF_Approved_Post_Event%' limit 1];
         List<OrgWideEmailAddress> orgWideEmail = [Select Id from OrgWideEmailAddress where DisplayName = 'Silver Peak Channel Team' LIMIT 1];
+        List<Messaging.Emailfileattachment> fileAttachments = new List<Messaging.Emailfileattachment>();
+        for(Attachment attach : [select Id, Name, Body from Attachment where parentId = :et[0].Id])
+        {
+            Messaging.Emailfileattachment efa = new Messaging.Emailfileattachment();
+            efa.setFileName(attach.Name);
+            efa.setBody(attach.Body);
+            fileAttachments.add(efa);
+        }
+         
         if(!et.isEmpty())
         {
             String url;
@@ -51,6 +60,11 @@ trigger SendEmailAndCreateCampaignOnMDF on MDF_Request__c (after Update)
                 mail.setPlainTextBody(mergeEmail(et[0].Body, mdf, url));
                 mail.setBccSender(false);
                 mail.setUseSignature(false);
+
+                if(!fileAttachments.IsEmpty())
+                {
+                    mail.setFileAttachments(fileAttachments);
+                }
                 mails.add(mail);
             }
             Messaging.sendEmail(mails);

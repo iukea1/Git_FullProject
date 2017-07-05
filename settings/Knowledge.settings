@@ -6,7 +6,7 @@
         <enableArticleCreation>true</enableArticleCreation>
     </answers>
     <cases>
-        <articlePDFCreationProfile>8-TSE Team</articlePDFCreationProfile>
+        <articlePDFCreationProfile>8-tse team</articlePDFCreationProfile>
         <assignTo>ssheikh@silver-peak.com</assignTo>
         <defaultContributionArticleType>KB</defaultContributionArticleType>
         <editor>simple</editor>
