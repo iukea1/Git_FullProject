@@ -3192,9 +3192,13 @@ ISPICKVAL(Opportunity__r.Product_Type__c,&quot;&quot;))</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>RSM_of_Oppty_Approves</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Ensure that only the oppty owner can approve</description>
-        <errorConditionFormula>and($User.Id &lt;&gt; Opportunity__r.OwnerId , ISCHANGED( RSM_Approved__c ), RSM_Approved__c =True)</errorConditionFormula>
+        <errorConditionFormula>and(
+NOT(Opportunity__r.Account.ECSP__c ),
+$User.Id &lt;&gt; Opportunity__r.OwnerId , 
+ISCHANGED( RSM_Approved__c ), 
+RSM_Approved__c =True)</errorConditionFormula>
         <errorMessage>Only the oportunity owner can approve this request</errorMessage>
     </validationRules>
     <validationRules>
@@ -3272,9 +3276,14 @@ TEXT(POC_Type__c)!=Service_Provider_Account_Type__c
     </validationRules>
     <validationRules>
         <fullName>TR_Approval_Check</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Validate that only the TR can check the approval box</description>
-        <errorConditionFormula>and($User.Id &lt;&gt;  Opportunity__r.Technical_Responsible__r.Id , ISCHANGED( TR_Approved__c ), TR_Approved__c =true)</errorConditionFormula>
+        <errorConditionFormula>and(
+NOT(Opportunity__r.Account.ECSP__c ),
+$User.Id &lt;&gt;  Opportunity__r.Technical_Responsible__r.Id , 
+
+ISCHANGED( TR_Approved__c ), 
+TR_Approved__c =true)</errorConditionFormula>
         <errorMessage>Only the person selected as Technical Responsibility can approve this request</errorMessage>
     </validationRules>
     <validationRules>

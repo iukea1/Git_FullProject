@@ -57,8 +57,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -117,8 +115,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -178,8 +174,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -251,8 +245,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -330,8 +322,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -389,8 +379,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Opportunity__c= opportunity.id;
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='VX-8000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         insert request;
@@ -470,8 +458,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='GMS-10';
         request.VirtualProduct2__c='UNITY CLOUD INTELLIGENCE';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         request.VirtualQuantity2__c=1;
@@ -557,8 +543,6 @@ public class TestAutomateVirtualPOCBatch {
         request.Status__c='Approved to Ship';
         request.VirtualProduct1__c='GMS-10';
         request.VirtualProduct2__c='VX-9000';
-        request.TR_Approved__c=true;
-        request.RSM_Approved__c=true;
         request.Submission_Condition_Satisfied__c=true;
         request.VirtualQuantity1__c=1;
         request.VirtualQuantity2__c=1;

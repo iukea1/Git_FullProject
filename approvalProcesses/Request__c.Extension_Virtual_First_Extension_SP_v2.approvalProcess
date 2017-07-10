@@ -7,6 +7,14 @@
         <type>role</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>EngineeringDirector</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>OperationsManager</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>Sales_Manager_Central</submitter>
         <type>role</type>
     </allowedSubmitters>
@@ -44,6 +52,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>SeniorSystemEngineerWest</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>Service_Provider_Sales_Manager</submitter>
         <type>role</type>
     </allowedSubmitters>
     <approvalPageFields>
@@ -99,6 +111,10 @@
                 <name>mlear@silver-peak.com</name>
                 <type>user</type>
             </approver>
+            <approver>
+                <name>mlear@silver-peak.com</name>
+                <type>user</type>
+            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>Send to Finance team</label>
@@ -115,7 +131,6 @@ ISPICKVAL( Type__c ,&apos;Evaluation&apos;),
 ISPICKVAL( Status__c , &apos;Shipped&apos;),
 len( Extension_Justification__c )&gt;0,
  IsAllVirtual__c =1,
-TR_Approved__c,
 Opportunity__r.Account.ECSP__c
 )</formula>
     </entryCriteria>

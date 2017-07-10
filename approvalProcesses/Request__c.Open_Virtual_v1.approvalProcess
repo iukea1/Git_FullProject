@@ -7,6 +7,10 @@
         <type>role</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>EngineeringDirector</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>Sales_Manager_Central</submitter>
         <type>role</type>
     </allowedSubmitters>
@@ -44,6 +48,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>SeniorSystemEngineerWest</submitter>
+        <type>role</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>Service_Provider_Sales_Manager</submitter>
         <type>role</type>
     </allowedSubmitters>
     <approvalPageFields>
@@ -117,7 +125,6 @@ NOT (BEGINS(Opportunity__r.GEO_Region__c,&quot;EMEA&quot;))
  IsAllVirtual__c =1,
 ISPICKVAL(Status__c,&quot;Open&quot;),
 ISPICKVAL(Type__c,&quot;Evaluation&quot;),
- TR_Approved__c ,
 NOT(Opportunity__r.Account.ECSP__c )
 )</formula>
     </entryCriteria>
