@@ -35,10 +35,6 @@
                 <field>Expected_Amount__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Term__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Start_Date__c</field>
             </layoutItems>

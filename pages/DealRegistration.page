@@ -612,19 +612,28 @@
         var flag = ($("input[id$='noContactHidden']").val()) === 'true'?true:false;
         var contactSelector = $("input[id$='resellerContactHidden']");
         var resellerSelect = $("input[id$='ResellerInputHidden']");
+        var otherReseller = $("input[id$='otherResellerInput']");
         
         if(resellerSelect.val() == '')
         {
             isValidated = false;
             errMessager.addError('Reseller', 'Please select a reseller');
         }
-        
-        if(contactSelector.val() === '' && ( flag === false || (resellerSelect.val() !== 'other'
-          && resellerSelect.val() !== '') ) )
+        if(resellerSelect.val() === 'other' && otherReseller.val().trim() === '')
         {
-            isValidated = false;
-            errMessager.addError('Reseller Contact', "Please select a reseller contact,select 'No Contact Listed' if cannot find a contact.");
+        	isValidated = false;
+            errMessager.addError('Other Reseller', 'Please input a reseller name');
         }
+
+        if(partnerType !== 'Reseller' && flag === false && contactSelector.val() === '')
+        {   
+            if( (resellerSelect.val() !== ''&& resellerSelect.val() !== 'other') 
+                || (resellerSelect.val() === 'other' && otherReseller.val().trim() !== '') )
+            {
+                isValidated = false;
+                errMessager.addError('Reseller Contact', "Please select a reseller contact,select 'Contact Not Listed' if cannot find a contact.");
+            }
+        }   
 
         if(!isValidated){ enableButton(); }
         if(errMessager.errors.length > 0){ 

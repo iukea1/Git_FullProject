@@ -129,7 +129,7 @@ generator.writeStringField('password', 'Yesadmin4u');
         return cpAccount;
     }
     
-    public static List<CPAsset> ConvertAssetToCpAsset(List<Asset> lstAsset, string assetType)
+        public static List<CPAsset> ConvertAssetToCpAsset(List<Asset> lstAsset, string assetType)
     {
         List<CPAsset> lstResult= new List<CPASset>();
         List<Asset> filterAssets= new List<Asset>();
