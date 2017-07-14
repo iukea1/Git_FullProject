@@ -145,8 +145,6 @@ public class ShippingInputFormController
                 {
                     updateRMAExchange(Shipment.To_Be_Swapped_Asset__c, ShippedLineList[0].AssetId, Shipment.PurchaseOrderNumber__c, Shipment.Email__c, Shipment.Secondary_Email__c, Shipment.Third_Email__c);
                 }
-                
-                
                 return new PageReference('/' + Shipment.Id);
             }
             catch(Exception ex)

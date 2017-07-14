@@ -33,4 +33,5 @@
     <tab>re10__GKOrderLine__c</tab>
     <tab>LMS_Course__c</tab>
     <tab>standard-Forecasting3</tab>
+    <tab>LeanData__LeanData</tab>
 </CustomApplication>
