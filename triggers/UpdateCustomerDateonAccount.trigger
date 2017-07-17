@@ -10,7 +10,7 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
             
             if(counter.AccountId!=null && counter.Status!='Customer Evaluation' && counter.Ship_Date__c!=null)
             {
-                if((counter.Product_Quote_Type__c=='EDGECONNECT' && counter.Product_Family__c=='Virtual Image' ) || counter.Product_Quote_Type__c=='NX/VX' )
+                if(((counter.Product_Quote_Type__c=='EDGECONNECT'|| counter.Product_Quote_Type__c=='EC-SP-Perpetual' || counter.Product_Quote_Type__c=='EC-SP-Metered') && counter.Product_Family__c=='Virtual Image' ) || counter.Product_Quote_Type__c=='NX/VX' )
                 {
                     setAcctIds.add(counter.AccountId);  
                 }
@@ -24,7 +24,7 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
             Asset oldAsset= Trigger.oldMap.get(counter.Id);
             if(counter.AccountId!=null && counter.Status!='Customer Evaluation' &&(counter.AccountId!=oldAsset.AccountId || counter.Ship_Date__c!=oldAsset.Ship_Date__c || counter.Status!=oldAsset.Status))
             {
-                if((counter.Product_Quote_Type__c=='EDGECONNECT' && counter.Product_Family__c=='Virtual Image' ) || counter.Product_Quote_Type__c=='NX/VX' )
+                if(((counter.Product_Quote_Type__c=='EDGECONNECT'|| counter.Product_Quote_Type__c=='EC-SP-Perpetual' || counter.Product_Quote_Type__c=='EC-SP-Metered') && counter.Product_Family__c=='Virtual Image' ) || counter.Product_Quote_Type__c=='NX/VX' )
                 {
                     setAcctIds.add(counter.AccountId);    
                     if(counter.AccountId!=oldAsset.AccountId)
@@ -39,7 +39,12 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
     List<account> lstAccountToUpdate= new List<Account>();
     if(setAcctIds.size()>0)
     {
-        
+        for(Id accId: setAcctIds)
+        { 
+             lstAccountToUpdate.add(new Account(Id=accId,Trigger_Active_Asset_Count__c=true));
+        }
+       
+        /*
         List<Account> lstECAccount=[Select Id, (select Id,Name,Ship_Date__c from Assets where Product2.Name like 'EC%' and Product2.Family='Virtual Image' and Status in('Customer Subscription Active','Customer Owned','Customer Subscription Expired' ) order by Ship_Date__c asc LIMIT 1) from Account where Id in:setAcctIds];
         List<Account> lstWanOpAccount=[Select Id, (select Id,Name,Ship_Date__c from Assets where Product2.Product_Type__c='NX/VX' and Status in('Customer Subscription','Customer Owned','Customer Subscription Expired' ) order by Ship_Date__c asc LIMIT 1) from Account where Id in:setAcctIds];
   
@@ -87,7 +92,7 @@ trigger UpdateCustomerDateonAccount on Asset (after insert,after update) {
                 lstAccountToUpdate.add(newAcc);
             }
             
-        }
+        }*/
         if(lstAccountToUpdate.size()>0)
         {
             update lstAccountToUpdate;
