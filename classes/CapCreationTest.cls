@@ -1,5 +1,6 @@
 @isTest
 private class CapCreationTest {
+  /* Commenting the test class till Cap Project goes live
    // Test when isCap value is true and updated to false
    @isTest static void IsCapFalse() {  
        //Create New Account
@@ -97,5 +98,6 @@ private class CapCreationTest {
                                         where Cap_Name__r.Id =: lstValidCap[0].Id
                                         and Case_Number__r.Id =: case2.Id];
        system.assertEquals(1, lstValidCapCase.size());
-   }    
+   }  
+   */  
 }

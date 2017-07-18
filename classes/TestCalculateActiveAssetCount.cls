@@ -141,7 +141,7 @@ public class TestCalculateActiveAssetCount {
         System.assertEquals(1, actualAcc.Active_Asset_Count__c);
         
     }
-    @IsTest
+  	@IsTest
     public static void AssetCountChangeAcctname_Zero()
     {
         
@@ -168,6 +168,7 @@ public class TestCalculateActiveAssetCount {
         asset.Product2Id = product.Id;
         asset.Status = 'Customer Subscription Active';
         asset.Quantity = 1;
+        
         insert asset;
         
         asset.AccountId=acc1.Id;
@@ -175,12 +176,11 @@ public class TestCalculateActiveAssetCount {
         
         List<Account> lstAcc=[Select Id from Account where Trigger_Active_Asset_Count__c=true];
         System.debug('Before Batch '+ lstAcc.size());
-        System.debug(lstAcc[0].Id);
-        System.debug(lstAcc[1].Id);
-       
+      
+       	Test.startTest();
         CalculateActiveAssetCountBatch obj= new CalculateActiveAssetCountBatch();
-        Database.executeBatch(obj,1);
-       
+        Database.executeBatch(obj);
+       	Test.stopTest();
         Account actualAcc=[Select Id,Active_Asset_Count__c from Account where Id=:acc.Id];
         System.assertEquals(0, actualAcc.Active_Asset_Count__c);
         actualAcc=[Select Id,Active_Asset_Count__c from Account where Id=:acc1.Id];

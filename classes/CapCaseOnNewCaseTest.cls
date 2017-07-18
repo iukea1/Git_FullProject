@@ -1,4 +1,5 @@
 @isTest
+   
     private class CapCaseOnNewCaseTest {
     //New Case created when Cap Status is Closed
     @isTest static void CapStatusClosed() { 
@@ -73,6 +74,7 @@
        system.assertEquals(0, lstInvalidCapCases.size());
     }
         
+   /* Commenting till Cap Project needs to go live 
     //New Case created with valid record type
     @isTest static void ValidCase() {  
   
@@ -108,5 +110,5 @@
                                         where Cap_Name__r.Id =: validCap.Id
                                         and Case_Number__r.Id =: case2.Id];
        system.assertEquals(1, lstValidCapCases.size());
-        }  
+        }  */
     }
