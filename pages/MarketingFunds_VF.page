@@ -1348,9 +1348,9 @@
         }
     }
     function setTitle(){
-    	$(".activityType").children("option").each(function(){
+        $(".activityType").children("option").each(function(){
             var reminder = "";
-        	var type = $(this).val();
+            var type = $(this).val();
             if(type == "Awareness"){
                 reminder = "Activity to increase knowledge of Silver Peak (website optimization, social media, content syndication, newsletters, tradeshows or events";
             }else if(type == "Enablement"){

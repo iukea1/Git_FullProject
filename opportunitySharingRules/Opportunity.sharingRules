@@ -7,23 +7,10 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>notEqual</operation>
-            <value>Marketplace</value>
+            <operation>equals</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <name>All Opportunities but Deleted Shared with All Internal Users</name>
-        <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    </criteriaBasedRules>
-    <criteriaBasedRules>
-        <fullName>All_Opportunities_but_Deleted_with_Employees</fullName>
-        <sharedTo>
-            <group>Employees</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>Type</field>
-            <operation>notEqual</operation>
-            <value>Marketplace</value>
-        </criteriaItems>
-        <name>All Opportunities but Deleted with Employees</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </criteriaBasedRules>
     <criteriaBasedRules>
@@ -33,8 +20,8 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>equals</operation>
-            <value>Marketplace</value>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <name>CFO &amp; Subordinates</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
@@ -46,8 +33,8 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>equals</operation>
-            <value>Marketplace</value>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <description>Marketplace Shares with VP Operations and Below</description>
         <name>Marketplace Shares with VP Operations and Below</name>
@@ -60,8 +47,8 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>equals</operation>
-            <value>Marketplace</value>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <name>Marketplace Shares with VP Product M &amp; Below</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
@@ -73,8 +60,8 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>equals</operation>
-            <value>Marketplace</value>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <description>Marketplace shares with VP of Business Development and below</description>
         <name>Marketplace Shares with VP of Business Development and Below</name>
@@ -87,11 +74,24 @@
         </sharedTo>
         <criteriaItems>
             <field>Type</field>
-            <operation>equals</operation>
-            <value>Marketplace</value>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
         </criteriaItems>
         <description>Marketplace shares with VP of Engineering and below</description>
         <name>Marketplace shares with VP of Engineering and below</name>
+        <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Sharing_to_SVP_Marketing</fullName>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SVPMarketing</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>notEqual</operation>
+            <value>Follow on Business,New Business</value>
+        </criteriaItems>
+        <name>Sharing to SVP Marketing</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </criteriaBasedRules>
     <ownerRules>
@@ -103,28 +103,6 @@
             <allPartnerUsers></allPartnerUsers>
         </sharedFrom>
         <name>AllInternalUsers</name>
-        <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    </ownerRules>
-    <ownerRules>
-        <fullName>Contractors_Opps</fullName>
-        <sharedTo>
-            <group>Employees</group>
-        </sharedTo>
-        <sharedFrom>
-            <group>Contractors_Sales</group>
-        </sharedFrom>
-        <name>Contractors Opps</name>
-        <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    </ownerRules>
-    <ownerRules>
-        <fullName>Internal_Employees</fullName>
-        <sharedTo>
-            <group>Employees</group>
-        </sharedTo>
-        <sharedFrom>
-            <group>Employees</group>
-        </sharedFrom>
-        <name>Internal Employees</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </ownerRules>
 </OpportunitySharingRules>

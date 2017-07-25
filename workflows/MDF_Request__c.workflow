@@ -15,7 +15,7 @@
     </alerts>
     <alerts>
         <fullName>Funding_Request_Send_Feedback_Needed_Template</fullName>
-        <ccEmails>andy@snapbi.com</ccEmails>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Funding Request: Send Feedback Needed Template</description>
         <protected>false</protected>
         <recipients>
