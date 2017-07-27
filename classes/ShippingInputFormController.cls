@@ -128,10 +128,15 @@ public class ShippingInputFormController
             SavePoint sp = Database.setSavepoint();
             try
             {
-                List<Account> accounts = [select Id, Owner.Email from Account where Id=:Shipment.Shipment_Account__c];
+                List<Account> accounts = [select Id, Owner.Email, (Select Id,User.Email from AccountTeamMembers where TeamMemberRole='Systems Engineer') from Account where Id=:Shipment.Shipment_Account__c];
                 if(accounts.size() > 0)
                 {
                     Shipment.AccountOwnerEmail__c = accounts[0].Owner.Email;
+                    List<AccountTeamMember> accTeamData= accounts[0].AccountTeamMembers;
+                    if(accTeamData!=null && accTeamData.size()>0)
+                    {
+                        Shipment.Third_Email__c= accTeamData[0].User.Email;
+                    }
                 }
                 upsert Shipment;
                 if(Shipment.PurchaseOrder__c != null)

@@ -6,10 +6,6 @@
         <description>Send Shipment Information to Account Owner</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Systems Engineer</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -46,7 +42,7 @@
         <fullName>SetThirdEmail</fullName>
         <description>use the third email and copy down the TR email from the PO</description>
         <field>Third_Email__c</field>
-        <formula>PurchaseOrder__r.Technical_Resposible_Email__c</formula>
+        <formula>IF (NOT(ISBLANK(PurchaseOrder__r.Technical_Resposible_Email__c)),PurchaseOrder__r.Technical_Resposible_Email__c,Third_Email__c)</formula>
         <name>SetThirdEmail</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

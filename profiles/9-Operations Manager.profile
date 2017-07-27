@@ -1564,7 +1564,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RMAListComponentController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RegisterAccountController</apexClass>

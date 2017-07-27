@@ -24,6 +24,7 @@ trigger DeleteRMAForApprovedPendRet on Request__c (after update) {
                 if(rmaIds!=null && rmaIds.size()>0)
                 {
                     List<Asset> lstAsset=[Select Id from Asset where Id in (Select Asset__c from RMA_Item__c where RMA__c in: rmaIds) and status='Pending Return – Eval'];
+                    System.debug('lstAsset'+lstAsset);
                     if(lstAsset!=null && lstAsset.size()>0)
                     {
                         for(Asset item: lstAsset)
@@ -45,6 +46,7 @@ trigger DeleteRMAForApprovedPendRet on Request__c (after update) {
             }
             if(lstAssetToUpdate.size()>0)
             {
+                System.debug(lstAssetToUpdate);
                 update lstAssetToUpdate;
             }
             if(rmaIdsToDelete.size()>0)
