@@ -1,6 +1,6 @@
 public class AssetHelper {
     
-    @future
+    
     public static void TriggerActiveAssetCount(Set<Id> acctIds)
     {
         List<Account> updatingAccounts= new List<Account>();
@@ -19,36 +19,34 @@ public class AssetHelper {
         }
     }
     
-    @future
-   public static void CalculateCustomerDate(Set<Id> acctIds)
+    
+    public static void CalculateCustomerDate(Set<Id> ecAcctIds,Set<Id> wanOpAcctIds)
     {
+        
         Map<Id,Date> mapWanOpIds= new Map<Id,Date>();
         Map<Id,Date> mapECIds= new Map<Id,Date>();
-        List<Account> lstECAccount=[Select Id, (select Id,Name,Ship_Date__c from Assets where Product2.Name like 'EC%' and Product2.Family='Virtual Image' and Status in('Customer Subscription Active','Customer Owned','Customer Subscription Expired' ) order by Ship_Date__c asc LIMIT 1) from Account where Id in:acctIds];
-        List<Account> lstWanOpAccount=[Select Id, (select Id,Name,Ship_Date__c from Assets where Product2.Product_Type__c='NX/VX' and Status in('Customer Subscription','Customer Owned','Customer Subscription Expired' ) order by Ship_Date__c asc LIMIT 1) from Account where Id in:acctIds];
+        Set<Id> acctIds= new Set<Id>();
         List<account> lstAccountToUpdate= new List<Account>();
-        if(lstECAccount!=null && lstECAccount.size()>0)
+        AggregateResult[] ecAggr=[Select AccountId, Min(Ship_Date__c)  custDate  from Asset where AccountId in:ecAcctIds and Product2.Name like 'EC%' and Product2.Family='Virtual Image' and Status in('Customer Subscription Active','Customer Owned','Customer Subscription Expired' ) GROUP BY ACCOUNTID];
+        AggregateResult[] wanOppAggr=[Select AccountId, Min(Ship_Date__c) custDate  from Asset where AccountId in:wanOpAcctIds and Product2.Product_Type__c='NX/VX' and Status in('Customer Subscription','Customer Owned','Customer Subscription Expired' ) GROUP BY ACCOUNTID];
+        if(ecAggr!=null&& ecAggr.size()>0)
         {
-            for(Account acc: lstECAccount)
+            for(AggregateResult ar: ecAggr)
             {
-                List<Asset> lstAsset = acc.Assets;
-                if(lstAsset!=null && lstAsset.size()>0)
-                {
-                    mapECIds.put(acc.Id,lstAsset[0].Ship_Date__c);
-                    System.debug(lstAsset[0].Name);
-                }
+                Id accId= (Id) ar.get('AccountId');
+                Date custDate=Date.valueOf(ar.get('custDate'));
+                mapECIds.put(accId,custDate);
+                acctIds.add(accId);
             }
         }
-        if(lstWanOpAccount!=null && lstWanOpAccount.size()>0)
+        if(wanOppAggr!=null&& wanOppAggr.size()>0)
         {
-            for(Account acc: lstWanOpAccount)
+            for(AggregateResult ar: wanOppAggr)
             {
-                List<Asset> lstAsset = acc.Assets;
-                if(lstAsset!=null && lstAsset.size()>0)
-                {
-                    mapWanOpIds.put(acc.Id,lstAsset[0].Ship_Date__c);
-                    System.debug(lstAsset[0].Name);
-                }
+                Id accId= (Id) ar.get('AccountId');
+                Date custDate=Date.valueOf(ar.get('custDate'));
+                mapWanOpIds.put(accId,custDate);
+                acctIds.add(accId);
             }
         }
         for(Id accId: acctIds)
@@ -76,6 +74,7 @@ public class AssetHelper {
         {
             update lstAccountToUpdate;
         }
+        
     }
     
 }
