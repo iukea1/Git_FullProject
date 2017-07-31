@@ -915,6 +915,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MFRUploadFileController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MarkContactsCertifiedController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -9144,6 +9148,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>LookupProducts</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MFRUploadFile</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
