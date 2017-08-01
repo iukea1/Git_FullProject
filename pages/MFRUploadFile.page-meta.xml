@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>MFRUploadFile</label>
+    <packageVersions>
+        <majorNumber>2</majorNumber>
+        <minorNumber>483</minorNumber>
+        <namespace>Ensemblestorage</namespace>
+    </packageVersions>
 </ApexPage>

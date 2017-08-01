@@ -37,7 +37,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         }
                         else
                         {
-                            List<Asset> lstAssets=[Select Id from Asset where AccountId=:newAccInfo.Id and Status in ('Customer Evaluation')];
+                            List<Asset> lstAssets=[Select Id from Asset where AccountId=:newAccInfo.Id and Status in ('Customer Evaluation','Customer Subscription Active')];
                             List<Request__c> lstPOCs =[Select Id from Request__c where Opportunity__r.AccountId=:newAccInfo.Id];
                             if((lstAssets!=null && lstAssets.size()>0) || (lstPOCs!=null && lstPOCs.size()>0) )
                             {
@@ -214,6 +214,11 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 string bodyText= string.format(templateString,arguments);
             //Send Email to DevOps Team
             Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+            List<OrgWideEmailAddress> addresses = [select Id from OrgWideEmailAddress where Address='noreply@silver-peak.com' limit 1];
+            if(addresses.size() > 0)
+            {
+                message.setOrgWideEmailAddressId(addresses[0].Id);
+            }
             message.toAddresses = new String[] {'devopshelp@silver-peak.com','notifications@silver-peak.com'};
                 message.subject = 'Please create MTO instance for this account '+ newAccInfo.Cloud_Portal_Account_Name__c;
             message.plainTextBody = bodyText;
