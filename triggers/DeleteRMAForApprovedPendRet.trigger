@@ -8,7 +8,7 @@ trigger DeleteRMAForApprovedPendRet on Request__c (after update) {
         {
             reqIdList.add(req.Id);
             mapPocContact.put(req.Id,req.POC_Contact__c);
-            
+            System.debug('req.Id'+req.Id);
         }
     }
     List<RMA__c> rmaIdsToDelete= new List<RMA__c>();
@@ -20,33 +20,32 @@ trigger DeleteRMAForApprovedPendRet on Request__c (after update) {
         {
             for(Id pocId:reqIdList)
             {
-                List<RMA__c> rmaIds = [Select Id,LineCount__c,Received_Count__c from RMA__c where Request__c =:pocId and Status__c!='Closed'];
+                List<RMA__c> rmaIds = [Select Id,LineCount__c,Received_Count__c,Account__c from RMA__c where Request__c =:pocId and status__c!='Closed'];
+                System.debug('rmaIds.Id'+rmaIds[0].Id);
                 if(rmaIds!=null && rmaIds.size()>0)
                 {
-                    List<Asset> lstAsset=[Select Id from Asset where Id in (Select Asset__c from RMA_Item__c where RMA__c in: rmaIds) and status='Pending Return – Eval'];
-                    System.debug('lstAsset'+lstAsset);
-                    if(lstAsset!=null && lstAsset.size()>0)
-                    {
-                        for(Asset item: lstAsset)
-                        {
-                            item.Status='Customer Evaluation';
-                            lstAssetToUpdate.add(item);
-                        }
-                    }
-                    SendEmailToPOCContactforRMA(pocId,mapPocContact.get(pocId));
                     for(RMA__c counter:rmaIds)
                     {
-                        if(counter.LineCount__c==counter.Received_Count__c)
+                        if(counter.Received_Count__c==0)
                         {
                             rmaIdsToDelete.add(counter);
                         }
-                    }
-                    
+                        List<Asset> lstAsset=[Select Id from Asset where Id in (Select Asset__c from RMA_Item__c where RMA__c =: counter.Id and status__c!='Received')];
+                        System.debug('lstAsset'+lstAsset);
+                        if(lstAsset!=null && lstAsset.size()>0)
+                        {
+                            for(Asset item: lstAsset)
+                            {
+                                item.Status='Customer Evaluation';
+                                lstAssetToUpdate.add(item);
+                            }
+                        }
+                    } 
                 }
+                SendEmailToPOCContactforRMA(pocId,mapPocContact.get(pocId));
             }
             if(lstAssetToUpdate.size()>0)
             {
-                System.debug(lstAssetToUpdate);
                 update lstAssetToUpdate;
             }
             if(rmaIdsToDelete.size()>0)

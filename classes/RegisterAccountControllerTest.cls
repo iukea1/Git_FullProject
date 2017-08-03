@@ -84,7 +84,6 @@ public class RegisterAccountControllerTest {
             'rcLastName' => 'rcme'           
         };
         rac.insertAccount();
-        rac.onSubmitting = false;
         rac.insertAccount();
         
         RegisterAccountController newRac = new RegisterAccountController(null);

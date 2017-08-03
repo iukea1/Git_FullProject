@@ -115,7 +115,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }
             }
-            LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, null);
+            //LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, null);
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -186,7 +186,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                     capCreationAcctId.add(newAccInfo.Id);
                 }  Cap Project */
             }
-            LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, lstOpportunity);
+            //LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, lstOpportunity);
             UpdateOppTypeforAccount(oppTypeAccIds,lstOpportunity);
             SetAccountAsPartner(lstPartnerAcctIds);
             EnforcePortalUserGroup(setPortalUserAcctId);
@@ -358,7 +358,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
         }
         
     }
-    private void LinkAccountToPatch(List<Id> accPatchIds, List<Id> accTeamIds,List<Opportunity> lstOpp)
+    /* private void LinkAccountToPatch(List<Id> accPatchIds, List<Id> accTeamIds,List<Opportunity> lstOpp)
     {
         List<Opportunity> lstFinalOpps = new List<Opportunity>();
         if(accPatchIds!=null && accPatchIds.size() > 0)
@@ -386,7 +386,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
         { 
             update lstFinalOpps;
         } 
-    }
+    } */
     private void UpdateOppTypeforAccount(Map<Id,string> mapOppType, List<Opportunity> lstOpp)
     {
         List<Opportunity> allOppsToUpdate= new List<Opportunity>();

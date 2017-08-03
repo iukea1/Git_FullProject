@@ -9,9 +9,9 @@ global with sharing class MarketingFundsController
     public MDF_Request__c request { get; set; }
     Public Attachment accountAttachment { get; set; }
     public Attachment eventAgendaAttachment { get; set; }
-    public ContentDocumentLink invoice { get; set; }
-    public List<ContentDocumentLink> proofs { get; set; }
-    public ContentDocumentLink attendance { get; set;}
+    public String invoice { get; set; }
+    public List<String> proofs { get; set; }
+    public String attendance { get; set;}
     public String EventMaterials {get; set; }
     public String eventDetails {get; set; }
     public Partner_Account_Profile__c  pap1 { get; set; } //just for data binding of the region/country fields
@@ -24,9 +24,9 @@ global with sharing class MarketingFundsController
         String requestId = apexPages.currentPage().getParameters().get('id');
         accountAttachment = new Attachment();
         eventAgendaAttachment = new Attachment();
-        invoice = new ContentDocumentLink();
-        proofs = new List<ContentDocumentLink>();
-        attendance = new ContentDocumentLink();
+        invoice = '';
+        proofs = new List<String>();
+        attendance = '';
         request = new MDF_Request__c();
         EventMaterials = getEventMaterials();
         pap1 = new Partner_Account_Profile__c();
@@ -65,6 +65,16 @@ global with sharing class MarketingFundsController
         {
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
         }
+    }
+    
+    public String getAWSConfig()
+    {
+        AWSConfig__c config = AWSConfig__c.getInstance('Active');
+        if(config != null)
+        {
+            return JSON.serialize(config);
+        }
+        return '';
     }
     
     public PageReference saveMDF()
@@ -127,31 +137,7 @@ global with sharing class MarketingFundsController
         }
         return null;
     }
-    /*
-    public PageReference saveApprovedMDF()
-    {
-        SavePoint sp = Database.setSavepoint();
-        if(request.Approval_Status__c=='Approved')
-        {
-            request.Activity_Complete__c = true;
-            request.Feedback_Complete__c = true;
-        }
-        try
-        {
-            upsert request;
-            uploadFiles();
-            String reminder = userProfile == 'siteUser' ? 'Thank you for submitting your activity results.' : 
-            'Thank you for submitting your activity results.';
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,reminder));
-        }
-        catch(Exception ex)
-        {
-            Database.rollback(sp);
-            ApexPages.AddMessages(ex);
-        }
-        return null;
-    }
-    */
+
     public Boolean validateFileds()
     {
         Boolean isPassed = true;
@@ -353,23 +339,19 @@ global with sharing class MarketingFundsController
     
     public void getFile (String requestId)
     {
-        List<ContentDocumentLink> cdLinks = [Select Id, ContentDocumentId, ContentDocument.Description, ContentDocument.Title, ContentDocument.LatestPublishedVersionId  from COntentDocumentLink where LinkedEntityId =: requestId];
-        if(!cdLinks.isEmpty())
+        for(Ensemblestorage__EnsembleFile__c file : [Select Id, Name, file_type__c from Ensemblestorage__EnsembleFile__c where Funding_Requests__c =: requestId])
         {
-            for(ContentDocumentLink cdLink : cdLinks)
+            if(file.file_type__c.containsIgnoreCase('invoice'))
             {
-                if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('invoice'))
-                {
-                    invoice = cdLink;
-                }
-                else if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('proof'))
-                {
-                    proofs.add(cdLink);
-                }
-                else if(cdLink.ContentDocument.Description != null && cdLink.ContentDocument.Description.toLowerCase().contains('attendance'))
-                {
-                    attendance = cdLink;
-                }
+                invoice = file.Name;
+            }
+            else if(file.file_type__c.containsIgnoreCase('proof'))
+            {
+                proofs.add(file.Name);
+            }
+            else if(file.file_type__c.containsIgnoreCase('Attendance List'))
+            {
+                attendance = file.Name;
             }
         }
     }
@@ -389,6 +371,50 @@ global with sharing class MarketingFundsController
         public Integer attendance { get; set; }
     }
     
+    global class AWSResponse
+    {
+        public String FileName { get; set; }
+        public String S3Key { get; set; }
+        public Decimal FileSize { get; set; }
+        public String S3Bucket { get; set; }
+        public String FileType { get; set; }
+    }
+
+
+    @RemoteAction
+    global static String linkFileToMFR(AWSResponse UploadResponse, String mdfId, Boolean allUploaded)
+    {
+        Ensemblestorage__EnsembleFile__c newFile = new Ensemblestorage__EnsembleFile__c();
+        //AWSResponse response = (AWSResponse)JSON.deserialize(UploadResponse, AWSResponse.class);
+        newFile.Name = UploadResponse.FileName;
+        newFile.Ensemblestorage__FullName__c = UploadResponse.FileName;
+        newFile.Ensemblestorage__S3Key__c = UploadResponse.S3Key;
+        newFile.Ensemblestorage__Size__c = UploadResponse.FileSize;
+        newFile.Ensemblestorage__S3Bucket__c = UploadResponse.S3Bucket;
+        newFile.file_type__c = UploadResponse.FileType;
+        newFile.Funding_Requests__c = mdfId;
+        try
+        {
+            Database.DMLOptions dml = new Database.DMLOptions();
+            dml.AllowFieldTruncation = true;
+            newFile.setOptions(dml);
+            insert newFile;
+            if(allUploaded)
+            {
+                MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: mdfId];
+                mdf.Activity_Complete__c = true;
+                mdf.Feedback_Complete__c = true;
+                update mdf;
+                return 'allUploaded';
+            }
+            return 'successUploadedOne';
+        }
+        catch(Exception ex)
+        {
+            return 'Exception ' + ex.getMessage();
+        }
+    }
+
     @RemoteAction
     global static String updateMDF(MDF mdf,String requestId)
     {
@@ -439,97 +465,6 @@ global with sharing class MarketingFundsController
         request.Result_Detail__c = mdf.Result_Detail;
         request.Requested_Reimbursement_Amount__c = Decimal.valueOf(mdf.Requested_Reimbursement_Amount);
         return request;
-    }
-    
-    @RemoteAction
-    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription, Boolean fileUploadCompleted)
-    {
-        if(String.isNotBlank(fileBody))
-        {
-            SavePoint sp = Database.setSavepoint();
-            ContentVersion cv = getDocument(fileId);
-            String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
-            newBody += fileBody;
-            cv.VersionData = EncodingUtil.base64Decode(newBody);
-            cv.Title = fileName;
-            try
-            {
-                Boolean existedLink = false;
-                if(String.isBlank(cv.Id))
-                {
-                    cv.PathOnClient = fileName;
-                    cv.IsMajorVersion = false;
-                    cv.Description = fileDescription;
-                    existedLink = true;
-                }
-                upsert cv;
-                ContentVersion newCv = [Select Id, ContentDocumentId from ContentVersion where Id =: cv.Id];
-                if(existedLink == true)
-                {
-                    ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
-                    insert cdl;
-                }
-                if(fileUploadCompleted == true)
-                {
-                    MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: requestId];
-                    mdf.Activity_Complete__c = true;
-                    mdf.Feedback_Complete__c = true;
-                    update mdf;
-                }
-                return cv.Id;
-            }
-            catch(Exception ex)
-            {   
-                Database.rollback(sp);
-                return 'Exception ' + ex.getMessage();
-            }
-        }
-        else 
-        {
-            return 'File body was null';
-        }
-    }
-    
-    @RemoteAction
-    global static String linkFileToMFR(String mfrId, String cvId, Boolean fileUploadCompleted)
-    {
-        savepoint sp = Database.setSavepoint();
-        List<ContentVersion> cv = [Select Id, ContentDocumentId from ContentVersion where Id =: cvId limit 1];
-        if(!cv.isEmpty())
-        {
-            ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = cv[0].ContentDocumentId, LinkedEntityId = mfrId, ShareType='V');
-            try
-            {
-                insert cdl;
-                if(fileUploadCompleted == true)
-                {
-                    MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: mfrId];
-                    mdf.Activity_Complete__c = true;
-                    mdf.Feedback_Complete__c = true;
-                    update mdf;
-                }
-                return 'success';
-            }
-            catch(Exception ex)
-            {
-                Database.rollback(sp);
-                return 'exception:' + ex.getMessage();
-            }
-        }
-        return null;
-    }
-    
-    global static ContentVersion getDocument(String fileId)
-    {
-        List<ContentVersion> cvs = [Select Id, VersionData, Title from ContentVersion where Id =: fileId];
-        if(cvs.isEmpty())
-        {
-            return new ContentVersion();
-        }
-        else
-        {
-            return cvs[0];
-        }
     }
     
     global static String validateMDF(MDF mdf, MDF_Request__c request)

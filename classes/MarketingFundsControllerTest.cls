@@ -76,6 +76,11 @@ public class MarketingFundsControllerTest {
         mfc.pap1.Country__c = '';
         mfc.pap1.State__c = '';
         mfc.saveMDF();
+        
+        AWSConfig__c config = new AWSConfig__c(name='Active');
+        insert config;
+        mfc.getAWSConfig();
+        mfc.getFile(mdf.Id);
         //mfc.saveApprovedMDF();
 
         MarketingFundsController mfc2 = new MarketingFundsController();
@@ -125,14 +130,24 @@ public class MarketingFundsControllerTest {
         ContentDocumentLink attendanceLdl = new ContentDocumentLink(ContentDocumentId = attendanceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
         insert attendanceLdl;
 		mfc2.getFile(mdf.Id);
-        MarketingFundsController.linkFileToMFR(mdf.Id, invoiceCv.Id, true);
-        MarketingFundsController.linkFileToMFR(mdf.Id, proofCv.Id, true);
+        
+        MarketingFundsController.AWSResponse aws = new MarketingFundsController.AWSResponse();
+        aws.FileName = 'test';
+        aws.S3Key = 'mfr/';
+		aws.FileSize = 1.231;
+        aws.S3Bucket = 'MFR';
+        aws.FileType = 'proof';
+        
+        MarketingFundsController.linkFileToMFR(aws, mdf.Id, false);
+        MarketingFundsController.linkFileToMFR(aws, mdf.Id, true);
         MarketingFundsController.updateMDF(newMDF,'');
         MarketingFundsController.updateMDF(newMDF, mdf.Id);
+        /*
 		MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', mdf.Id, 'invoice', true);
         MarketingFundsController.uploadFile('', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', true);
         MarketingFundsController.uploadFile('Test Body Data', 'Test Name', '', null, 'invoice', true);
         MarketingFundsController.uploadFile('Test Body Data', 'Test Name', invoiceCv.Id, mdf.Id, 'invoice', true);
+		*/
         MDF_Request__c eMdf = new MDF_Request__c(Type_of_Program__c ='Enablement', Event_Materials_Requested__c = 'test\r\nmessage',
                                                 Silver_Peak_Speaking_Opportunity__c = 'Yes');
         insert eMdf;

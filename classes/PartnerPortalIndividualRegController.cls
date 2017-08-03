@@ -3,6 +3,7 @@
  * Change Log:
  * 2017-03-07: SnapBI-Andy: updated user messaging per client request
  * 2017-06-05: Added language for success message
+ * 2017-08-03: Updated by Jimmy Li, added method to skip steps if the contact already have a portal user related
  */
 public without sharing class PartnerPortalIndividualRegController
 {
@@ -55,7 +56,13 @@ public without sharing class PartnerPortalIndividualRegController
         if(matchedContacts.size() == 1)
         {
             ExistingContactId = matchedContacts[0].Id;
+            //Added at 2017-08-03
+            if(hasRelatedUser(ExistingContactId))
+            {
+                ExistingContactId = null;
+            }//<== Added ends
         }
+        
         if(ExistingContactId == null)
         {
             if(SelectedAccountId == null)
@@ -101,7 +108,6 @@ public without sharing class PartnerPortalIndividualRegController
             Database.rollback(sp);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failed to process your request. Please contact your account manager.'));
             ApexPages.addMessages(ex);
-            System.assert(false, ex.getMessage());
         }
         return null;
     }
@@ -112,6 +118,13 @@ public without sharing class PartnerPortalIndividualRegController
         Integer c = [select count() from User where IsActive=true and UserType='PowerPartner' and Username=:spName limit 1];
         return c > 0;
     }
+    
+    //Added at 2017-08-03
+    private Boolean hasRelatedUser(Id ctcId)
+    {
+        Integer count = [select count() from User where IsActive=true and ContactId = :ctcId];
+        return count > 0;
+    }//<== Added ends
     
     private List<Contact> findContacts()
     {
@@ -155,6 +168,7 @@ public without sharing class PartnerPortalIndividualRegController
         //adding checkbox to track partner portal T & C agreement
         newUser.PortalTermsandConditionsAgreement__c = PortalTC;
         upsert newUser;
+        System.debug(newUser);
         
         NewUserProfile.Contact__c = newUser.Id;
         upsert NewUserProfile;

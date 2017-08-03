@@ -2,12 +2,12 @@
  * Controller of VF page BecomePartner
  *
  *@changelog
- *21APR2016 - removed commented email domains used validation and updated error messaging
+ *21APR2016: Daniel - Created, removed commented email domains used validation and updated error messaging
  *10JUN2016: Andy Getz - set account partner type to resellers and set GEO Supported to selection from region field
  *07NOV2016: Jimmy Li - set contact lead cource to Partner Portal, at line 104, 109 and 116.
  *09NOV2016: Daniel Wu - Disable submit button while the form is being submitted
  *22DEC2016: Zhong - updated 'illegal' to 'invalid'
- *12JAN 2017: Daniel - updated: create Information card when matching account found.
+ *12JAN2017: Daniel - updated: create Information card when matching account found.
  */
 public class RegisterAccountController 
 {
@@ -21,7 +21,6 @@ public class RegisterAccountController
     public String errorMessage { get; set; }
     public Map<String,String> dataBinding { get; set; }
     public Boolean isPrimaryPartner { get; set; }
-    public Boolean onSubmitting = false;
     
     public RegisterAccountController(ApexPages.StandardController stdController)
     {
@@ -59,7 +58,7 @@ public class RegisterAccountController
     public PageReference insertAccount()
     {
         errorMessage = '';
-        if(acct.Are_you_the_primary_partner_contact__c == 'Yes')
+        if(acct.Are_you_the_primary_partner_contact__c != 'No')
         {
             dataBinding.put('pcEmail', dataBinding.get('rcEmail'));
             dataBinding.put('pcLastName', dataBinding.get('rcLastName'));
@@ -69,14 +68,9 @@ public class RegisterAccountController
             primaryContact.Business_Function__c= registerContact.Business_Function__c;
             primaryContact.Job_Role__c = registerContact.Job_Role__c;
         }
-        if(validateSucceeded() == false || onSubmitting == True)
+        if(validateSucceeded() == false)
         {
-            onSubmitting = false;
             return null;
-        }
-        else
-        {
-            onSubmitting = true;
         }
         if(!String.isBlank(ppapa.Region__c))
         {
@@ -235,12 +229,13 @@ public class RegisterAccountController
             }
             update acct1;
             succeeded = true; 
-            submitToProcess(acct1.Id);            
+            submitToProcess(acct1.Id);
         }
         catch(Exception ex)
         {
             Database.rollback(sp);
             SilverPeakUtils.logException(ex); // log error when exception occur.
+            acct.Id = null;
             ApexPages.addMessages(ex);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
         }
@@ -386,11 +381,6 @@ public class RegisterAccountController
             isPass = false;
         }
         //validation for Primary Partner Contact
-        Boolean firstNamePcMark = false;
-        Boolean titlePcMark = false;
-        Boolean phonePcMark = false;
-        Boolean functionPcMark = false;
-        Boolean rolePcMark = false;
         if(String.isBlank(acct.Are_you_the_primary_partner_contact__c))
         {
             acct.Are_you_the_primary_partner_contact__c.addError('Are you the primary partner contact' + errorMessage1);
@@ -400,13 +390,11 @@ public class RegisterAccountController
         {
             if(String.isBlank(primaryContact.FirstName))
             {
-                firstNamePcMark = true;
                 primaryContact.FirstName.addError('Primary Partner Contact First Name' + errorMessage1);
                 errorMessage += ';:Primary Partner Contact First Name' + errorMessage1;
                 isPass = false;
             }else if(!primaryContact.FirstName.isAlphaSpace())
             {
-                firstNamePcMark = true;
                 primaryContact.FirstName.addError('Primary Partner Contact First Name' + errorMessage3);
                 errorMessage += ';:Primary Partner Contact First Name' + errorMessage3;
                 isPass = false;
@@ -431,40 +419,34 @@ public class RegisterAccountController
             }
             if(String.isBlank(primaryContact.Title))
             {
-                titlePcMark = true;
                 primaryContact.Title.addError('Primary Partner Contact Job Title' + errorMessage1);
                 errorMessage += ';:Primary Partner Contact Job Title' + errorMessage1;
                 isPass = false;
             }else if(!primaryContact.Title.isAlphaSpace())
             {
-                titlePcMark = true;
                 primaryContact.Title.addError('Primary Partner Contact Job Title' + errorMessage3);
                 errorMessage += ';:Primary Partner Contact Job Title' + errorMessage3;
                 isPass = false;
             }
             if(String.isBlank(primaryContact.Phone))
             {
-                phonePcMark = true;
                 primaryContact.Phone.addError('Primary Partner Contact Telephone' + errorMessage1);
                 errorMessage += ';:Primary Partner Contact Telephone' + errorMessage1;
                 isPass = false;
             }else if(!primaryContact.Phone.remove('(').remove(')').remove('-').remove(' ').isNumeric())
             {
-                phonePcMark = true;
                 primaryContact.Phone.addError('Primary Partner Contact Telephone' + errorMessage2);
                 errorMessage += ';:Primary Partner Contact Telephone' + errorMessage2;
                 isPass = false;
             }
             if(String.isBlank(primaryContact.Business_Function__c))
             {
-                functionPcMark = true;
                 primaryContact.Business_Function__c.addError('Primary Partner Contact Business Function' + errorMessage1);
                 errorMessage += ';:Primary Partner Contact Business Function' + errorMessage1;
                 isPass = false;
             }
             if(String.isBlank(primaryContact.Job_Role__c))
             {
-                rolePcMark = true;
                 primaryContact.Job_Role__c.addError('Primary Partner Contact Job Role' + errorMessage1);
                 errorMessage += ';:Primary Partner Contact Job Role' + errorMessage1;
                 isPass = false;
@@ -479,7 +461,6 @@ public class RegisterAccountController
             isPass = false;
         }else if(!registerContact.FirstName.isAlphaSpace())
         {
-            firstNamePcMark = true;
             primaryContact.FirstName.addError('Your First Name' + errorMessage3);
             errorMessage += ';:Your First Name' + errorMessage3;
             isPass = false;
@@ -537,20 +518,13 @@ public class RegisterAccountController
             isPass = false;
         }
         //validation for Partner Signatory Contact
-        Boolean firstNameScMark = false;
-        Boolean titleScMark = false;
-        Boolean phoneScMark = false;
-        Boolean functionScMark = false;
-        Boolean roleScMark = false;
         if(String.isBlank(signatoryContact.FirstName))
         {
-            firstNameScMark = true;
             signatoryContact.FirstName.addError('Partner Signatory Contact First Name' + errorMessage1);
             errorMessage += ';:Partner Signatory Contact First Name' + errorMessage1;
             isPass = false;
         }else if(!signatoryContact.FirstName.isAlphaSpace())
         {
-            firstNameScMark = true;
             signatoryContact.FirstName.addError('Partner Signatory Contact First Name' + errorMessage3);
             errorMessage += ';:Partner Signatory Contact First Name' + errorMessage3;
             isPass = false;
@@ -575,60 +549,47 @@ public class RegisterAccountController
         }
         if(String.isBlank(signatoryContact.Title))
         {
-            titleScMark = true;
             signatoryContact.Title.addError('Partner Signatory Contact Job Title' + errorMessage1);
             errorMessage += ';:Partner Signatory Contact Job Title' + errorMessage1;
             isPass = false;
         }else if(!signatoryContact.Title.isAlphaSpace())
         {
-            titleScMark = true;
             signatoryContact.Title.addError('Partner Signatory Contact Job Title' + errorMessage3);
             errorMessage += ';:Partner Signatory Contact Job Title' + errorMessage3;
             isPass = false;
         }
         if(String.isBlank(signatoryContact.Phone))
         {
-            phoneScMark = true;
             signatoryContact.Phone.addError('Partner Signatory Contact Contact Telephone' + errorMessage1);
             errorMessage += ';:Partner Signatory Contact Telephone' + errorMessage1;
             isPass = false;
         }else if(!signatoryContact.Phone.remove('(').remove(')').remove('-').remove(' ').isNumeric())
         {
-            phoneScMark = true;
             signatoryContact.Phone.addError('Partner Signatory Contact Contact Telephone' + errorMessage2);
             errorMessage += ';:Partner Signatory Contact Telephone' + errorMessage2;
             isPass = false;
         }
         if(String.isBlank(signatoryContact.Business_Function__c))
         {
-            functionScMark = true;
             signatoryContact.Business_Function__c.addError('Partner Signatory Contact Business Function' + errorMessage1);
             errorMessage += ';:Partner Signatory Contact Business Function' + errorMessage1;
             isPass = false;
         }
         if(String.isBlank(signatoryContact.Job_Role__c))
         {
-            roleScMark = true;
             signatoryContact.Job_Role__c.addError('Partner Signatory Contact Job Role' + errorMessage1);
             errorMessage += ';:Partner Signatory Contact Job Role' + errorMessage1;
             isPass = false;
         }
         
         //validation for Partner Marketing Contact
-        Boolean firstNameMcMark = false;
-        Boolean titleMcMark = false;
-        Boolean phoneMcMark = false;
-        Boolean functionMcMark = false;
-        Boolean roleMcMark = false;
         if(String.isBlank(marketingContact.FirstName))
         {
-            firstNameMcMark = true;
             marketingContact.FirstName.addError('Partner Marketing Contact First Name' + errorMessage1);
             errorMessage += ';:Partner Marketing Contact First Name' + errorMessage1;
             isPass = false;
         }else if(!marketingContact.FirstName.isAlphaSpace())
         {
-            firstNameMcMark = true;
             marketingContact.FirstName.addError('Partner Marketing Contact First Name' + errorMessage3);
             errorMessage += ';:Partner Marketing Contact First Name' + errorMessage3;
             isPass = false;
@@ -653,40 +614,36 @@ public class RegisterAccountController
         }
         if(String.isBlank(marketingContact.Title))
         {
-            titleMcMark = true;
             marketingContact.Title.addError('Partner Marketing Contact Job Title' + errorMessage1);
             errorMessage += ';:Partner Marketing Contact Job Title' + errorMessage1;
             isPass = false;
-        }else if(!marketingContact.Title.isAlphaSpace())
+        }
+        else if(!marketingContact.Title.isAlphaSpace())
         {
-            titleMcMark = true;
             marketingContact.Title.addError('Partner Marketing Contact Job Title' + errorMessage3);
             errorMessage += ';:Partner Marketing Contact Job Title' + errorMessage3;
             isPass = false;
         }
         if(String.isBlank(marketingContact.Phone))
         {
-            phoneMcMark = true;
             marketingContact.Phone.addError('Partner Marketing Contact Contact Telephone' + errorMessage1);
             errorMessage += ';:Partner Marketing Contact Telephone' + errorMessage1;
             isPass = false;
-        }else if(!marketingContact.Phone.remove('(').remove(')').remove('-').remove(' ').isNumeric())
+        }
+        else if(!marketingContact.Phone.remove('(').remove(')').remove('-').remove(' ').isNumeric())
         {
-            phoneMcMark = true;
             marketingContact.Phone.addError('Partner Marketing Contact Contact Telephone' + errorMessage2);
             errorMessage += ';:Partner Marketing Contact Telephone' + errorMessage2;
             isPass = false;
         }        
         if(String.isBlank(marketingContact.Business_Function__c))
         {
-            functionMcMark = true;
             marketingContact.Business_Function__c.addError('Partner Marketing Contact Business Function' + errorMessage1);
             errorMessage += ';:Partner Marketing Contact Business Function' + errorMessage1;
             isPass = false;
         }
         if(String.isBlank(marketingContact.Job_Role__c))
         {
-            roleMcMark = true;
             marketingContact.Job_Role__c.addError('Partner Marketing Contact Job Role' + errorMessage1);
             errorMessage += ';:Partner Marketing Contact Job Role' + errorMessage1;
             isPass = false;
@@ -901,7 +858,6 @@ public class RegisterAccountController
         if(duplicateDomainAccts.size() > 0)
         {
             Map<string, Id> domain2Id = new Map<String, Id>();
-            //Set<String> similarDomains = new Set<String>();
             for(Account duplicate : duplicateDomainAccts)
             {
                 for(String domain : duplicate.Email_Domain_Used__c.split('[;,\\s]'))
@@ -959,7 +915,6 @@ public class RegisterAccountController
     
     private void insertContacts(sObject obj)
     {
-        system.debug('#####');
         List<Contact> conList = new List<Contact>();
         primaryContact.Primary_Account_Contact__c = true;
         primaryContact.LeadSource = 'Partner Portal';//
@@ -969,8 +924,6 @@ public class RegisterAccountController
         {
             signatoryContact.LeadSource = 'Partner Portal';//
             signatoryContact.Id = null;
-            system.debug('###' + signatoryContact);
-            system.debug('###' + signatoryContact.Id);
             conList.add(signatoryContact);
         }
         if((marketingContact.Email != primaryContact.Email) && (marketingContact.Email != signatoryContact.Email))
@@ -1002,7 +955,6 @@ public class RegisterAccountController
                 }
             }
         }
-        system.debug(conList);
         insert conList;
     }
 }
