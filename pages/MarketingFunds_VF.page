@@ -352,7 +352,7 @@
                     </li>
                 </div>
                 <li>
-                    <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton"/> 
+                    <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton"/>
                 </li>
             </ul>
         </apex:form>
@@ -965,9 +965,7 @@
         });
         //&& checkSubmit()
         if(isValid && checkSubmit()){
-            console.log('test');
             updateMDF();
-            //uoloadAllFiles('');
         }
         aotuAdjustHeight();
     }

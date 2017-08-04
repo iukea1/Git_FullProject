@@ -1,8 +1,9 @@
 /*
 *  Controller of VF Page MarketingFunds
-*  05AUG2016 @Author Daniel Wu
+*  05AUG2016 @Author SNAPBI
 *  @Changelog
 *  01DEC2016 Daniel - update: add upload large file(exceed 4.3M) functionality.
+*  02AUG2017 Daniel - update: update attached file to Amazon S3 file and create a record in SFDC
 */
 global with sharing class MarketingFundsController 
 {
@@ -133,6 +134,7 @@ global with sharing class MarketingFundsController
         catch(Exception ex)
         {
             Database.rollback(sp);
+			SilverPeakUtils.logException(ex);
             ApexPages.AddMessages(ex);
         }
         return null;

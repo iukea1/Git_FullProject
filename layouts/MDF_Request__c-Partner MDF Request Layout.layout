@@ -331,8 +331,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>file_type__c</fields>
         <fields>Ensemblestorage__FormatedSize__c</fields>
-        <fields>Ensemblestorage__Tag__c</fields>
+        <fields>Download__c</fields>
         <relatedList>Ensemblestorage__EnsembleFile__c.Funding_Requests__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
