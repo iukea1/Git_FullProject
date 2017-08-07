@@ -16,17 +16,35 @@
                 </li>
             </ul>
         </apex:outputPanel>
-        <apex:form styleClass="form-horizontal" rendered="{!userProfile != '' && request.Approval_Status__c != 'Pending' && request.Approval_Status__c != 'Approved'}" onsubmit="return checkSubmit();">
+        <apex:form styleClass="form-horizontal" rendered="{!userProfile != '' && editable == true}" id="MdfForm" onsubmit="handleSubmit();">
+            <script type="javascript/text">
+            $(document).ready(function(){
+                console.log('successfully');
+                console.log({!completedMDF});
+				docReady();
+                if({!completedMDF} == true){
+                    if(files.size > 0){
+                    	uploadAllFiles("{!request.Id}");
+                    }else{
+                        console.log('Success');
+                        console.log(files);
+                        //alert('Success');
+                        //top.location = '/s/MarketingFunds?id={!request.Id}'
+                    }
+                }
+            });
+            </script>
             <ul class="mainBody">
                 <li style="width:90%;">
                     <apex:pageMessages escape="false"/>
                 </li>
+                <li style="width:90%;margin:0;padding:6px;" id="reminder"></li>
                 <li>
                     <img src="/img/msg_icons/info16.png" class="helpIcon" title="helpIcon" id="helpIcon"/>
                     <label >
                         Type of Marketing Activity <span class = "redMark">*</span>
                         <div><apex:inputField value="{!request.Type_of_Program__c}" styleClass="activityType" required="true"/></div>
-                    </label>               
+                    </label>
                 </li>
                 <li>
                     <label>
@@ -190,7 +208,8 @@
                         <div><apex:inputField value="{!request.Comments__c}"/> </div>
                     </label>
                 </li>
-                <div id="detailsSection">
+                <li style="width:100%;">
+                	<div id="detailsSection">
                     <div class="SpecificSection hiddenElement">
                         <li class="sectionTitle">Activity Specific Details</li>
                         <li>
@@ -209,8 +228,12 @@
                             <label>
                                 Target Account List <span class = "redMark">*</span>
                             </label>
+                            <input type="file" class="file requiredInput1" id="accountList" title="Target Account List"/>
+							<apex:outputText rendered="{!NOT(IsBlank(accountList))}" value="{!accountList}" styleClass="requiredDisplay1"/>
+                            <!--
                             <div style="margin-top:10px;"><apex:inputFile value="{!accountAttachment.body}" fileName="{!accountAttachment.name}" styleClass="requiredInput1"/></div> 
                             <apex:outputLink value="{!URLFOR($Action.Attachment.Download, accountAttachment.Id)}" target="_blank" rendered="{!NOT(IsBlank(accountAttachment.Id))}" styleClass="requiredDisplay1">{!accountAttachment.name}</apex:outputLink> 
+							-->
                         </li>
                         <li>
                             <label>
@@ -248,10 +271,14 @@
                             <label>
                                 Event Agenda
                             </label>
+                            <input type="file" class="file agendaInput" id="EventAgenda" title="Event Agenda"/>
+                            <apex:outputText rendered="{!NOT(IsBlank(eventAgenda))}" value="{!eventAgenda}"/>
+                            <!--
                             <div style="margin-top:10px;">
                                 <apex:inputFile value="{!eventAgendaAttachment.body}" fileName="{!eventAgendaAttachment.name}" styleClass="agendaInput" id="agenda"/>
                             </div> 
                             <apex:outputLink value="{!URLFOR($Action.Attachment.Download, eventAgendaAttachment.Id)}" target="_blank" rendered="{!NOT(IsBlank(eventAgendaAttachment.Id))}">{!eventAgendaAttachment.name}</apex:outputLink>
+							-->
                         </li>
                     </div>
                     <div class="SpecificSection hiddenElement" id="locationSection">
@@ -282,6 +309,8 @@
                         </li>
                     </div>
                     </div>
+				</li>
+                <li style="width:100%;">
                 <div class="SpecificSection hiddenElement">
                     <li class="sectionTitle">Event Materials Requested</li>
                     <li>
@@ -351,20 +380,20 @@
                         </label>
                     </li>
                 </div>
+				</li>
                 <li>
-                    <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton"/>
+                    <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton" reRender="MdfForm"/>
                 </li>
             </ul>
         </apex:form>
-        <apex:outputPanel rendered="{!userProfile != '' && request.Approval_Status__c=='Pending' || request.Approval_Status__c=='Approved'}" styleClass="form-horizontal">
+        <apex:outputPanel rendered="{!userProfile != '' && (request.Approval_Status__c=='Approved' || editable == false )}" styleClass="form-horizontal">
             <form onsubmit="validateForm(); return false;" id="theForm">
             <ul class="mainBody">
                 <li style="width:90%;margin:0;padding:0;">
                     <apex:pageMessages escape="false"/>
                 </li>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && !request.Activity_Complete__c}">
-                        <li style="width:90%;margin:0;padding:6px;" id="reminder">
-                </li>
+                	<li style="width:90%;margin:0;padding:6px;" id="reminder"></li>
                 <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
                     <li class="sectionTitle">Event Results</li>
                     <li>
@@ -793,7 +822,12 @@
                     <li>
                         <label>
                             Target Account List
-                            <div class="displayMessage"><apex:outputLink value="{!URLFOR($Action.Attachment.Download, accountAttachment.Id)}" target="_blank" rendered="{!NOT(IsBlank(accountAttachment.Id))}">{!accountAttachment.name}</apex:outputLink></div> 
+                            <div class="displayMessage">
+                                <apex:outputText rendered="{!NOT(IsBlank(accountList))}" value="{!accountList}" styleClass="requiredDisplay1"/>
+                                <!--
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, accountAttachment.Id)}" target="_blank" rendered="{!NOT(IsBlank(accountAttachment.Id))}">{!accountAttachment.name}</apex:outputLink>
+								-->
+                            </div> 
                         </label>
                     </li>
                     <li>
@@ -832,7 +866,10 @@
                         <label>
                             Event Agenda 
                             <div class="displayMessage">
+                                <apex:outputText rendered="{!NOT(IsBlank(eventAgenda))}" value="{!eventAgenda}"/>
+                                <!--
                                 <apex:outputLink value="{!URLFOR($Action.Attachment.Download, eventAgendaAttachment.Id)}" rendered="{!NOT(IsBlank(eventAgendaAttachment.Id))}" target="_blank">{!eventAgendaAttachment.name}</apex:outputLink>
+								-->
                             </div> 
                         </label>
                     </li>
@@ -930,6 +967,13 @@
                 </apex:outputPanel>
             </ul>
             </form>
+            <ul class="mainBody">
+                <li>
+                    <apex:form >
+                        <apex:commandButton value="Edit" rendered="{!request.Approval_Status__c!='Approved'}" action="{!editMDF}" styleClass="btn"/>
+                    </apex:form>
+                </li>
+            </ul>
         </apex:outputPanel>
     </body>
 
@@ -981,7 +1025,7 @@
                 }else if(event.status){
                     if(result.substring(0,3) == 'a38'){
                         console.log("Enter uploadFiles:" + result);
-                        uoloadAllFiles(result);
+                        uploadAllFiles(result);
                     }else if(result.substring(0,5) == 'Error'){
                         showErrorMsg(result.substring(5));
                     }else{
@@ -1015,6 +1059,12 @@
     </script>
     <script type = "text/javascript">
     $(document).ready(function(){
+        docReady();
+    });
+    
+    function docReady()
+    {
+        console.log('asdasd');
         showSection();
         if('{!request.Approval_Status__c}' == 'Pending' || '{!request.Approval_Status__c}' == 'Approved'){
             scrollTop();
@@ -1070,7 +1120,8 @@
         }
         controllInput();
         aotuAdjustHeight();
-    });
+    }
+    
     function focus(){
         if($("ul[class='message']").hasClass("message")){
             $(".message").attr("tabindex",-1).focus();
@@ -1100,7 +1151,7 @@
             $("#detailsSection input,#detailsSection textarea,#detailsSection select").attr("required","");
             $(".SpecificSection").hide();
         }
-        if($(".requiredInput1").is(":visible") && !$("a").hasClass("requiredDisplay1")){
+        if($(".requiredInput1").is(":visible") && !$("span").hasClass("requiredDisplay1")){
             $(".requiredInput1").attr("required","required");
         }else{
             $(".requiredInput1").attr("required","");
@@ -1202,6 +1253,13 @@
             }
         });
     }
+    function handleSubmit(){
+        populateFiles();
+        $(".submitButton").addClass("disabledBtn");
+        $(".submitButton").attr("value","Request is submitting");
+        $("#loadingIcon").show();
+        return true;
+    }
     function checkSubmit(){
         if(window.confirm('After your submit, you cannot edit this form again. Are you sure you want to continue?')){
             populateFiles();
@@ -1214,6 +1272,7 @@
         }
     }
     function populateFiles(){
+        files = [];
         $("input.file").each(function(){
             if($(this)[0].files){
                 var s3Files = $(this)[0].files;
@@ -1254,7 +1313,7 @@
     }
 
     var totalUploaded;
-    function uoloadAllFiles(mdfId){
+    function uploadAllFiles(mdfId){
         totalUploaded = 0;
         var bucket = new AWS.S3( {params: {Bucket: AWS.config.s3.params.Bucket} });
         var timeStamp = new Date().getTime();
