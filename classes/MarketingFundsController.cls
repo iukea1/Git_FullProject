@@ -27,22 +27,11 @@ global class MarketingFundsController
         eventDetails = '';
         userProfile = '';
         String requestId = apexPages.currentPage().getParameters().get('id');
-		
-        //accountAttachment = new Attachment();
-        //eventAgendaAttachment = new Attachment();
-        accountList = '';
-		eventAgenda = '';
-        invoice = '';
         proofs = new List<String>();
-        attendance = '';
         completedMDF = false;
         request = getMDF(requestId);
-        //editable = String.isBlank(request.Id);
-        editable=true;
         EventMaterials = getEventMaterials();
         pap1 = new Partner_Account_Profile__c();
-		pap1.Country__c = String.isBlank(request.Event_Location_Country__c) ? '' : request.Event_Location_Country__c;
-        pap1.State__c = String.isBlank(request.Event_Location_State__c) ? '' : request.Event_Location_State__c;
         String profileId = UserInfo.getProfileId();
         List<profile> pro = [Select Id, Name from profile where Id =: profileId];
         if(pro.size() > 0)
@@ -52,7 +41,7 @@ global class MarketingFundsController
                 String anRequestId = isAnonymousUser();
                 if(String.isNotBlank(anRequestId)){
                     userProfile = 'siteUser';
-                    //getAttcahment(anRequestId);
+					request = getMDF(anRequestId);
                 }
                 else 
                 {
@@ -72,6 +61,9 @@ global class MarketingFundsController
                 getFile(request.Id);
             }
         }
+        editable = String.isBlank(request.Id) || (userProfile == 'siteUser' && request.Approval_Status__c == 'Unsubmitted');
+        pap1.Country__c = String.isBlank(request.Event_Location_Country__c) ? '' : request.Event_Location_Country__c;
+        pap1.State__c = String.isBlank(request.Event_Location_State__c) ? '' : request.Event_Location_State__c;
         if(String.isNotBlank(request.Id) && String.isNotBlank(request.Event_Materials_Requested__c))
         {
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
@@ -124,41 +116,17 @@ global class MarketingFundsController
             {
                 upsert request;
             }
-            if(String.isBlank(request.Id))
+            if(request.Approval_Status__c == 'Unsubmitted')
             {
             	submitMDFToProcess(request.Id);   
             }
 			request = getMDF(request.Id);
             completedMDF = true;
-            /*
-            if(request.Type_of_Program__c != 'Enablement')
-            {
-                if(String.isBlank(accountAttachment.ParentId)){
-                    accountAttachment.ParentId = request.Id;
-                }
-                accountAttachment.Description = 'Target Account List';
-                if(String.isBlank(eventAgendaAttachment.ParentId))
-                {
-                    eventAgendaAttachment.ParentId = request.Id;
-                }
-                eventAgendaAttachment.Description = 'Event Agenda';
-                upsert accountAttachment;
-                if(eventAgendaAttachment.Body != null)
-                {
-                    upsert eventAgendaAttachment;
-                }
-                accountAttachment = new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name);
-                eventAgendaAttachment =new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name);
-            }
-            String reminder = userProfile == 'siteUser' ? 'Thank you for submitting your Marketing Fund request. We will review your submission and contact you shortly.' : 
-            'Thank you for submitting your Marketing Fund request. We will review your submission and contact you shortly. To check the status of your request, please click the Track Requests tab above.'
-                + '<br/><a style="color:#0000ee;margin:0;font-size:100%;" href="/s" target="_top">Click here to go back the home page </a> <br/> <a style="color:#0000ee;margin:0;font-size:100%;"href="/s/MarketingFunds" target="_top">Click here to submit another Marketing Fund request</a>';
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,reminder));
-			*/
         }
         catch(Exception ex)
         {
             Database.rollback(sp);
+            completedMDF = false;
 			SilverPeakUtils.logException(ex);
             ApexPages.AddMessages(ex);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
@@ -410,6 +378,10 @@ global class MarketingFundsController
             dml.AllowFieldTruncation = true;
             newFile.setOptions(dml);
             insert newFile;
+            if(newFile.file_type__c == 'Event Agenda' || newFile.file_type__c == 'Target Account List')
+            {
+                deleteFileinSFDC(mdfId, newFile.file_type__c, newFile.Id);
+            }
             if(allUploaded)
             {
                 MDF_Request__c mdf = [Select Id, Approval_Status__c from MDF_Request__c where Id =: mdfId];
@@ -428,7 +400,16 @@ global class MarketingFundsController
             return 'Exception ' + ex.getMessage();
         }
     }
-
+	
+    private static void deleteFileinSFDC(String mdfId, String fileType, String newFileId)
+    {
+        List<Ensemblestorage__EnsembleFile__c> files = [Select Id from Ensemblestorage__EnsembleFile__c where Id !=: newFileId and Funding_Requests__c =: mdfId and file_type__c =: fileType];
+        if(!files.isEmpty())
+        {
+            delete files;
+        }
+    }
+    
     @RemoteAction
     global static String updateMDF(MDF mdf,String requestId)
     {
@@ -462,7 +443,7 @@ global class MarketingFundsController
         }
     }
     
-    global static MDF_Request__c convertMDF(MDF mdf, MDF_Request__c request)
+    private static MDF_Request__c convertMDF(MDF mdf, MDF_Request__c request)
     {
         if(request.Type_of_Program__c != 'Enablement')
         {
@@ -481,7 +462,7 @@ global class MarketingFundsController
         return request;
     }
     
-    global static String validateMDF(MDF mdf, MDF_Request__c request)
+    private static String validateMDF(MDF mdf, MDF_Request__c request)
     {
         String errorMsg = '';
         String reminderMsg = 'Invalid number;';
@@ -495,11 +476,10 @@ global class MarketingFundsController
             errorMsg = String.isBlank(mdf.Topic_Course) ? 'topic:Cannot be blank;' : '' + handleNumber(mdf.Number_of_Certifications, 'certifications', reminderMsg);
         }
         errorMsg += String.isBlank(mdf.Result_Detail) ? 'result:Cannot be blank;' : '' + handleNumber(mdf.Total_Attendees, 'attendees', reminderMsg) + handleNumber(mdf.Requested_Reimbursement_Amount, 'amount', reminderCur);
-        //errorMsg += haneldNumber(mdf.invoice, 'invoice') + haneldNumber(mdf.proof, 'proof') + haneldNumber(mdf.attendance, 'attendance');
         return errorMsg;
     }
     
-    global static String handleNumber(String num, String elem, String reminder)
+    private static String handleNumber(String num, String elem, String reminder)
     {
         if(String.isBlank(num) || num == 'undifined')
         {
@@ -519,7 +499,7 @@ global class MarketingFundsController
         }
     }
     
-    global static String haneldNumber(Integer num, String elem)
+    private static String haneldNumber(Integer num, String elem)
     {
         return num > 0 ? '' : elem + ':Cannot be blank;';
     }

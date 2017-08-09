@@ -169,6 +169,7 @@ Part Number&nbsp;<img src="/s.gif" alt="Expand" class="moreArrow" title="Expand"
                         <select id="PartNumberList{!FLOOR(index)}" onchange="setAssetPN({!FLOOR(index)}, this.value)" style="display:{!IF(ShipLine.AssetIsExisted, 'none', '')}"></select>
                         <apex:inputHidden value="{!ShipLine.PartNumber}" id="PartNumber"/>
                         <apex:outputText rendered="{!ShipLine.AssetIsExisted}">{!ShipLine.PartNumber}</apex:outputText>
+                        <apex:variable var="index" value="{!index + 1}" />
                     </apex:column>
                 </apex:pageBlockTable>
             </apex:pageBlockSection> 

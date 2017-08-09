@@ -200,7 +200,7 @@ public with sharing class NewVirtualShipmentController
                 
                 vasset.Asset.ContactId = TempAsset.ContactId;
                 
-                if(currAsset.Product2.Name.contains('EC-BASE')|| currAsset.Product2.Name.contains('EC-PLUS'))
+                if(currAsset.Product2.Name.contains('EC-BASE')|| currAsset.Product2.Name.contains('EC-PLUS')|| currAsset.Product2.Name.contains('EC-MINI'))
                 {
                     vasset.Asset.EC_Old_Node_Count__c=currAsset.Licenses_Nodes__c;
                     vasset.Asset.Licenses_Nodes__c = (currAsset.Licenses_Nodes__c + virtualAsset.Asset.Licenses_Nodes__c) ;
@@ -268,6 +268,7 @@ public with sharing class NewVirtualShipmentController
                 VirtualAssetManager manager = new VirtualAssetManager();
                 manager.VirtualAssets=updateAssetLines;
                 Boolean succeeded = manager.updateECAssets();
+                System.debug('Assets created');
                 if(!succeeded)
                 {
                     Database.rollback(sp);
@@ -282,6 +283,7 @@ public with sharing class NewVirtualShipmentController
             }
             catch(DmlException ex)
             {
+                System.debug(ex);
                 ApexPages.addMessages(ex);
                 Database.rollback(sp);
                 return null;
