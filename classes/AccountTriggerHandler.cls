@@ -160,12 +160,12 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
                     PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldAccInfo);
-                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget))
+                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget) || oldAccInfo.ECSP__c!=newAccInfo.ECSP__c)
                     {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c)
+                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c || oldAccInfo.ECSP__c!=newAccInfo.ECSP__c)
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }
