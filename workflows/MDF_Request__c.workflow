@@ -55,7 +55,7 @@
     </alerts>
     <alerts>
         <fullName>MDF_has_been_Submitted_External</fullName>
-        <ccEmails>pchavez@silver-peak.com</ccEmails>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>MDF has been Submitted (External)</description>
         <protected>false</protected>
         <recipients>
@@ -67,7 +67,7 @@
     </alerts>
     <alerts>
         <fullName>New_MDF_Approved_Internal</fullName>
-        <ccEmails>amenjivar@silver-peak.com</ccEmails>
+        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>New MDF Approved Internal</description>
         <protected>false</protected>
         <recipients>

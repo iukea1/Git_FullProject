@@ -395,6 +395,14 @@
                 <behavior>Readonly</behavior>
                 <field>ContractSupportNotes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Test_Cloud_Portal_Account_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Test_Asset_Serial__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -443,6 +451,9 @@
             </layoutItems>
             <layoutItems>
                 <customLink>RMA_Tracking</customLink>
+            </layoutItems>
+            <layoutItems>
+                <customLink>Test_Cloud_Portal_Link</customLink>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
