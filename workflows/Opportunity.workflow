@@ -195,12 +195,32 @@
             <type>role</type>
         </recipients>
         <recipients>
+            <recipient>Grade_1_Sales_COMM</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_East</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_South</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_West</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
             <recipient>VPSalesEastern</recipient>
             <type>role</type>
         </recipients>
         <recipients>
             <recipient>VPSalesWestern</recipient>
             <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_1_Inside_Sales</recipient>
+            <type>roleSubordinatesInternal</type>
         </recipients>
         <recipients>
             <recipient>InsideSalesMgr</recipient>
@@ -212,10 +232,6 @@
         </recipients>
         <recipients>
             <recipient>ewhite@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>shorton@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -252,11 +268,11 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>ewhite@silver-peak.com</recipient>
-            <type>user</type>
+            <recipient>Grade_3_Sales_APAC_ASEAN</recipient>
+            <type>role</type>
         </recipients>
         <recipients>
-            <recipient>mtrims@silver-peak.com</recipient>
+            <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -289,15 +305,15 @@
             <type>owner</type>
         </recipients>
         <recipients>
+            <recipient>Grade_2_Sales_EMEA</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
             <recipient>VPSalesEMEA</recipient>
             <type>role</type>
         </recipients>
         <recipients>
             <recipient>ewhite@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mtrims@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -334,11 +350,11 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>ewhite@silver-peak.com</recipient>
-            <type>user</type>
+            <recipient>Grade_2_Sales_LATAM</recipient>
+            <type>roleSubordinatesInternal</type>
         </recipients>
         <recipients>
-            <recipient>mtrims@silver-peak.com</recipient>
+            <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -406,6 +422,30 @@
         </recipients>
         <recipients>
             <recipient>DirectorofChannelSales</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_1_Sales_COMM</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_2_Sales_EMEA</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_2_Sales_LATAM</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_East</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_South</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_3_Sales_NAM_West</recipient>
             <type>role</type>
         </recipients>
         <recipients>
@@ -774,6 +814,33 @@
         <name>Update Opp Stage as Discovery RSM</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_POC_Duration</fullName>
+        <field>POC_Duration__c</field>
+        <formula>IF(Has_Active_POCs__c, POC_Age__c,  POC_Duration__c)</formula>
+        <name>Update POC Duration</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_POC_End_Date</fullName>
+        <field>POC_End_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update POC End Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_POC_Start_Date</fullName>
+        <field>POC_Start_Date__c</field>
+        <formula>IF(Has_Active_POCs__c, Datevalue(NOW()), POC_Start_Date__c )</formula>
+        <name>Update POC Start Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -1310,6 +1377,24 @@ NOT(ISPICKVAL(Type,&quot;Marketplace&quot;)),
 NOT(New_Business__c) 
 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update POC Age Info</fullName>
+        <actions>
+            <name>Update_POC_Duration</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_POC_End_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_POC_Start_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(Has_Active_POCs__c)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>UpdateLeadSource</fullName>
