@@ -140,7 +140,7 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'kz', 'kaz', 'kazakhstan' }))return 'a0c50000002dtvfAAA';    //KAZAKHSTAN
     if(opIn(t.Country, new Set<String> { 'ke', 'ken', 'kenya' }))return 'a0c50000002dtvgAAA';    //KENYA
     if(opIn(t.Country, new Set<String> { 'ki', 'kir', 'kiribati' }))return 'a0c50000002dtvhAAA';    //KIRIBATI
-    if(opIn(t.Country, new Set<String> { 'kp', 'prk', 'korea', 'd.p.r.o.' }))return 'a0c50000002dtviAAA';    //KOREA, D.P.R.O.
+    if(opIn(t.Country, new Set<String> { 'kp', 'prk', 'korea', 'd.p.r.o.', 'democratic people\'s republic of korea(dprk)', 'dprk' }))return 'a0c50000002dtviAAA';    //KOREA, D.P.R.O.
     if(opIn(t.Country, new Set<String> { 'kr', 'kor', 'korea', 'republic of korea', 'south korea' }))return 'a0c50000002dtvjAAA';    //KOREA, REPUBLIC OF
     if(opIn(t.Country, new Set<String> { 'kw', 'kwt', 'kuwait' }))return 'a0c50000002dtvkAAA';    //KUWAIT
     if(opIn(t.Country, new Set<String> { 'kg', 'kgz', 'kyrgyzstan' }))return 'a0c50000002dtvlAAA';    //KYRGYZSTAN

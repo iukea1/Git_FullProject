@@ -828,7 +828,7 @@
     <fieldUpdates>
         <fullName>Update_POC_End_Date</fullName>
         <field>POC_End_Date__c</field>
-        <formula>NOW()</formula>
+        <formula>Today()</formula>
         <name>Update POC End Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -837,7 +837,7 @@
     <fieldUpdates>
         <fullName>Update_POC_Start_Date</fullName>
         <field>POC_Start_Date__c</field>
-        <formula>IF(Has_Active_POCs__c, Datevalue(NOW()), POC_Start_Date__c )</formula>
+        <formula>IF(Has_Active_POCs__c, Today(), POC_Start_Date__c )</formula>
         <name>Update POC Start Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

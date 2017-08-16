@@ -135,11 +135,11 @@ public class PatchRuleDeployController
                 else if(deployResult.status == 'Failed')
                 {
                     String error = 'Failled to validate/deploy the patches';
-                    if(getDeployResultMessage(deployResult) != null)
+                    if(String.isNotBlank(getDeployResultMessage(deployResult)))
                     {
                         error += ', error message is: ' + getDeployResultMessage(deployResult);
                     }
-                    sendNotification('Silver Peak failed to deploy patches', tempBody);
+                    //sendNotification('Silver Peak failed to deploy patches', tempBody);
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, error));
                     AsyncResult = null;
                 }
@@ -201,7 +201,7 @@ public class PatchRuleDeployController
         return message;
     }
 
-    private void sendNotification(String subject, String body)
+    /*private void sendNotification(String subject, String body)
     {
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new List<String> { 'zhong@snapbi.com' });
@@ -209,7 +209,7 @@ public class PatchRuleDeployController
         email.setPlainTextBody(body);
         email.setSaveAsActivity(false);
         Messaging.sendEmail(new List<Messaging.Email> { email });
-    }
+    }*/
     
     private static MetadataService.MetadataPort createService()
     { 

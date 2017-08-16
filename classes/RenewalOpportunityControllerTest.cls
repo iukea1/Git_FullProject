@@ -19,8 +19,8 @@ public class RenewalOpportunityControllerTest
         {
         Account acc = new Account(Name = 'acme');
         insert acc;
-        Opportunity opp = new Opportunity(Name = 'acme', CloseDate = System.today(), AccountId = acc.Id, StageName = 'Closed Dead', Dead_Reason__c='No Current Project',
-                                          Type = 'Support Renewal', Probability = 80, Opportunity_Source__c = 'RSM', ForecastCategoryName = 'Omitted');
+        Opportunity opp = new Opportunity(Name = 'acme', CloseDate = System.today(), AccountId = acc.Id, StageName = 'Close Dead',
+                                          Type = 'Support Renewal', Probability = 80, Opportunity_Source__c = 'RSM', ForecastCategoryName = 'Commit');
         insert opp;
         
         List<PriceBook2> pricebook = [select Id from Pricebook2 where Name = 'Standard Price Book' limit 1];
