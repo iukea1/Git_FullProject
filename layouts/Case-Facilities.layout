@@ -47,14 +47,6 @@
                 <behavior>Edit</behavior>
                 <field>Jira_Issue_ID__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Test_Cloud_Portal_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Test_Asset_Serial__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

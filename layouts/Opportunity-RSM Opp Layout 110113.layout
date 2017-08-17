@@ -94,6 +94,10 @@
                 <behavior>Readonly</behavior>
                 <field>TCV__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test_POC_Age__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

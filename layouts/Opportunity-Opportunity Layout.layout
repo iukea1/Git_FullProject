@@ -140,6 +140,10 @@
                 <behavior>Edit</behavior>
                 <field>SP_OpEx_Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Test_POC_Age__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
