@@ -869,20 +869,7 @@ BEGINS( Product2.Name ,&quot;EC&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( 
-ISPICKVAL( Product2.Family,&quot;Product&quot;), 
-OR(
-ISPICKVAL(Product2.Product_Type__c ,&quot;EDGECONNECT&quot;),
-ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Perpetual&quot;),
-ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Metered&quot;)
-),
-ISPICKVAL(Status,&quot;Customer Owned&quot;), 
-OR( 
-ISNEW(), 
-ISCHANGED( Ship_Date__c ), 
-ISCHANGED(  Product2Id ) 
-) 
-)</formula>
+        <formula>AND(  ISPICKVAL( Product2.Family,&quot;Product&quot;),  OR(  ISPICKVAL(Product2.Product_Type__c ,&quot;EDGECONNECT&quot;),  ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Perpetual&quot;),  ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Metered&quot;), ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Term&quot;) ),  ISPICKVAL(Status,&quot;Customer Owned&quot;),  OR(  ISNEW(),  ISCHANGED( Ship_Date__c ),  ISCHANGED( Product2Id )  )  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

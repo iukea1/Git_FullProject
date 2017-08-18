@@ -120,6 +120,22 @@ global class MarketingFundsController
             {
             	submitMDFToProcess(request.Id);   
             }
+            /*
+            Approval.ProcessWorkItemRequest pwr = new Approval.ProcessWorkItemRequest();
+            List<ProcessInstance> procins = new List<ProcessInstance>([select Id from ProcessInstance where Status = 'Pending' and TargetObjectId = 'a385C000000Cl8z']);
+            List<ProcessInstanceWorkitem>  workitem = new List<ProcessInstanceWorkitem>([select Id from ProcessInstanceWorkitem where ProcessInstanceId = :procins[0].id]);
+            if ((workitem != null) && (workitem.size() > 0))
+            {
+                pwr.SetComments('tets');
+                
+                pwr.setWorkItemId(workitem[0].id);
+                pwr.setAction('Removed'); 
+                
+                
+                // Execute process request
+                Approval.ProcessResult pr = Approval.process(pwr);
+            }
+			*/
 			request = getMDF(request.Id);
             completedMDF = true;
         }

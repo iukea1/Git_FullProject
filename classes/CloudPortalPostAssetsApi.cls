@@ -45,7 +45,7 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
                 generator.writeObjectField('base',item.BaseNode);
                 generator.writeObjectField('plus',item.PlusNode);
                 generator.writeObjectField('boost',item.BoostNode);
-                generator.writeObjectField('mini',item.MiniNode);
+                //generator.writeObjectField('mini',item.MiniNode);
                 generator.writeEndObject();
             }
             
@@ -109,7 +109,7 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
             
         }
         generator.writeEndArray(); 
-        generator.writeFieldName('cloudOrch');
+     /*   generator.writeFieldName('cloudOrch');
         generator.writeStartArray();
         if(orchAssets!=null && orchAssets.size()>0)
         {
@@ -134,7 +134,7 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
             }
             
         }
-        generator.writeEndArray(); 
+        generator.writeEndArray(); */
         generator.writeEndObject();
         String parameters = generator.getAsString();
         System.debug(parameters);

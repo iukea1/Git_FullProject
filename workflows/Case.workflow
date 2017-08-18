@@ -1053,6 +1053,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_Status_1</fullName>
+        <field>Status</field>
+        <literalValue>In Process</literalValue>
+        <name>Update Case Status_1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>expire_wanstart_case</fullName>
         <field>Status</field>
         <literalValue>Expired</literalValue>
@@ -1965,6 +1974,46 @@ NOT( Contact.Testing__c )
             <field>Case.UpdatedBy__c</field>
             <operation>equals</operation>
             <value>Owner</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Case Status on customer response by Portal</fullName>
+        <actions>
+            <name>Update_Case_Status_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND(
+OR(RecordType.Id = &apos;012500000005Aud&apos;,
+   RecordType.Id = &apos;012500000005Aui&apos;,
+   RecordType.Id = &apos;012500000005AuO&apos;),
+OR(TEXT(Status) = &apos;Pending Customer Feedback&apos;,
+   TEXT(Status) = &apos;Pending Customer Verification&apos;),
+    LastModifiedById  =  ContactId)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update case status on customer response via Email</fullName>
+        <actions>
+            <name>Update_Case_Status_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,WANstart,Technical Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Pending Customer Feedback,Pending Customer Verification</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.UpdatedBy__c</field>
+            <operation>equals</operation>
+            <value>Customer</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>

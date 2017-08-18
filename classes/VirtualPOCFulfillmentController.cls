@@ -238,9 +238,9 @@ public class VirtualPOCFulfillmentController
         {
             addProduct(VIRTUAL_PRODUCT_NAME, 1);
         }
-        if(pocRequest.Is_Unity_Cloud_Orchestrator__c)
+       	if(pocRequest.Is_Unity_Cloud_Orchestrator__c)
         {
-          addProduct('EC-ORCH-AAS-S-1Y', 1);
+          addProduct('EC-ORCH-AAS-50-1Y', 1);
         }
         if(VirtualAssets.isEmpty())
         {
@@ -340,7 +340,7 @@ public class VirtualPOCFulfillmentController
         List<EmailTemplate> template =null;
         if(pocRequest.Opportunity__r.Account.ECSP__c)
         {
-            if(pocRequest!=null && (pocRequest.POC_Type__c=='Perpetual'|| pocRequest.POC_Type__c=='Perpetual-Orchestrator SP'))
+            if(pocRequest!=null && (pocRequest.POC_Type__c=='Perpetual'|| pocRequest.POC_Type__c=='Perpetual-Orchestrator SP'||pocRequest.POC_Type__c=='Term Based' ))
             {
                 template = [select Id from EmailTemplate where Name=:'POC Perpetual Virtual Fulfillment Email' limit 1];
             }

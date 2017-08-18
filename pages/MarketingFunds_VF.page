@@ -8,6 +8,18 @@
     <script type="text/javascript">
         var config = '{!JSENCODE(AWSConfig)}';
     </script>
+    <style type="text/css">
+    	input.submitBtn-small {
+            float: right;
+            font-weight: normal;
+            background-color: #007cb9;
+            color: #FFFFFF;
+            background-image: none;
+            font-size: medium;
+            width: 4em;
+        	margin-right: 4em;
+        }
+    </style>
     <body id = "iframeBody">
         <apex:outputPanel rendered="{!userProfile==''}" >
             <ul>
@@ -388,8 +400,8 @@
             </ul>
         </apex:form>
         <apex:outputPanel rendered="{!userProfile != '' && (request.Approval_Status__c=='Approved' || editable == false )}" styleClass="form-horizontal">
-            <form onsubmit="validateForm(); return false;" id="theForm">
             <ul class="mainBody">
+                <form onsubmit="validateForm(); return false;" id="theForm">
                 <li style="width:90%;margin:0;padding:0;">
                     <apex:pageMessages escape="false"/>
                 </li>
@@ -522,6 +534,7 @@
                 </li>
                 <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
+                </form>
                 <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
                     <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
                         <li class="sectionTitle">Event Results</li>
@@ -644,7 +657,12 @@
                     <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
                 <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
-                <li class="sectionTitle">Details on {!request.Name}</li>
+                <li class="sectionTitle" style="width:100%;">
+                    <span>Details on {!request.Name}</span>
+                    <apex:form style="float:right;">
+						<apex:commandButton value="Edit" rendered="{!request.Approval_Status__c!='Approved'}" action="{!editMDF}" styleClass="submitBtn-small"/>
+					</apex:form>
+				</li>
                 <li>
                     <label >
                         Type of Marketing Activity
@@ -973,14 +991,6 @@
                     </li>
                 </apex:outputPanel>
                 </apex:outputPanel>
-            </ul>
-            </form>
-            <ul class="mainBody">
-                <li>
-                    <apex:form >
-                        <apex:commandButton value="Edit" rendered="{!request.Approval_Status__c!='Approved'}" action="{!editMDF}" styleClass="btn submitButton"/>
-                    </apex:form>
-                </li>
             </ul>
         </apex:outputPanel>
     </body>
