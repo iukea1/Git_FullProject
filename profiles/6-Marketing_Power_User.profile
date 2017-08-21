@@ -6113,6 +6113,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Purchasing_Request__c.Recall_process__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Purchasing_Request__c.Requested_By__c</field>
         <readable>true</readable>
     </fieldPermissions>

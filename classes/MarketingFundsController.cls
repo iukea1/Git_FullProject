@@ -5,11 +5,9 @@
 *  01DEC2016 Daniel - update: add upload large file(exceed 4.3M) functionality.
 *  02AUG2017 Daniel - update: update attached file to Amazon S3 file and create a record in SFDC
 */
-global class MarketingFundsController 
+global without Sharing class MarketingFundsController
 {
     public MDF_Request__c request { get; set; }
-    //Public Attachment accountAttachment { get; set; }
-    //public Attachment eventAgendaAttachment { get; set; }
     public String accountList { get; set; }
     public String eventAgenda { get; set; }
     public String invoice { get; set; }
@@ -22,6 +20,7 @@ global class MarketingFundsController
     public Boolean completedMDF { get; set; }
     public Boolean editable { get; set; }	
     
+    private double estimatedAmount;
     public MarketingFundsController()
     {
         eventDetails = '';
@@ -68,6 +67,11 @@ global class MarketingFundsController
         {
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
         }
+        if(String.isNotBlank(request.Id) && request.Activity_Complete__c != true)
+        {
+			 estimatedAmount = request.Estimated_Silver_Peak_Amount__c;
+        }
+        system.debug(estimatedAmount);
     }
     
     public String getAWSConfig()
@@ -116,34 +120,25 @@ global class MarketingFundsController
             {
                 upsert request;
             }
-            if(request.Approval_Status__c == 'Unsubmitted')
+            if(request.Approval_Status__c == 'Unsubmitted' || String.isBlank(request.Approval_Status__c))
             {
             	submitMDFToProcess(request.Id);   
             }
+            request = getMDF(request.Id);
+            //TODO:
             /*
-            Approval.ProcessWorkItemRequest pwr = new Approval.ProcessWorkItemRequest();
-            List<ProcessInstance> procins = new List<ProcessInstance>([select Id from ProcessInstance where Status = 'Pending' and TargetObjectId = 'a385C000000Cl8z']);
-            List<ProcessInstanceWorkitem>  workitem = new List<ProcessInstanceWorkitem>([select Id from ProcessInstanceWorkitem where ProcessInstanceId = :procins[0].id]);
-            if ((workitem != null) && (workitem.size() > 0))
+            If(rejectPRprocess(request))
             {
-                pwr.SetComments('tets');
-                
-                pwr.setWorkItemId(workitem[0].id);
-                pwr.setAction('Removed'); 
-                
-                
-                // Execute process request
-                Approval.ProcessResult pr = Approval.process(pwr);
+				submitMDFToProcess(request.Purchasing_Request__c);
             }
 			*/
-			request = getMDF(request.Id);
             completedMDF = true;
         }
         catch(Exception ex)
         {
             Database.rollback(sp);
             completedMDF = false;
-			SilverPeakUtils.logException(ex);
+			//SilverPeakUtils.logException(ex);
             ApexPages.AddMessages(ex);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
         }
@@ -152,6 +147,7 @@ global class MarketingFundsController
     
     public PageReference editMDF()
     {
+        system.debug(estimatedAmount);
         editable = true;
         return null;
     }
@@ -518,5 +514,49 @@ global class MarketingFundsController
     private static String haneldNumber(Integer num, String elem)
     {
         return num > 0 ? '' : elem + ':Cannot be blank;';
+    }
+    
+    private Boolean rejectPRprocess(MDF_Request__c request)
+    {
+        if(estimatedAmount != null && request.Purchasing_Request__c != null && request.Estimated_Silver_Peak_Amount__c > estimatedAmount)
+        {
+            While([Select Id from ProcessInstance where ProcessInstance.TargetObjectId = :request.Purchasing_Request__c and Status = 'Pending'] != null)
+            {
+                list<ProcessInstanceWorkitem> piws = [SELECT Id FROM ProcessInstanceWorkitem WHERE ProcessInstance.TargetObjectId= :request.Purchasing_Request__c];
+                if(!piws.isEmpty())
+                {
+                    Approval.ProcessWorkitemRequest pwr = new Approval.ProcessWorkitemRequest();
+                    pwr.setWorkitemId(piws[0].Id);
+                    pwr.setComments('The Estimated Silver Peak Amount of related funding request has been increased');
+                    pwr.setAction('Reject');
+                    Approval.ProcessResult result = Approval.process(pwr);
+                }
+            }
+            return true;
+            /*
+            List<ProcessInstance> pi = new List<ProcessInstance>([Select Id from ProcessInstance where Status = 'Pending' and TargetObjectId = : request.Purchasing_Request__c]);
+            if(!pi.isEmpty())
+            {
+                List<ProcessInstanceWorkitem> workitems = new List<ProcessInstanceWorkitem>([select Id from ProcessInstanceWorkitem where ProcessInstanceId = :pi[0].id]);
+                if(!workitems.isEmpty())
+                {
+                    Approval.ProcessWorkItemRequest pwr = new Approval.ProcessWorkItemRequest();
+                    pwr.setComments('The Estimated Silver Peak Amount of related funding request has been increased');
+                    pwr.setWorkItemId(workitems[0].Id);
+                    pwr.setAction('Removed');
+                    Approval.processResult pr = Approval.Process(pwr);
+                    if(pr.getInstanceStatus() == 'Removed')
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        SilverPeakUtils.logException('Failed to recall Purchase Request. [Id=' + request.Purchasing_Request__c + ']');
+                    }
+                }
+            }
+			*/
+        }
+        return false;
     }
 }

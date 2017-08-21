@@ -38,6 +38,10 @@
                 <behavior>Readonly</behavior>
                 <field>ENd_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CalculateAmounts__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
