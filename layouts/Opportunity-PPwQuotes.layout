@@ -76,6 +76,10 @@
                 <behavior>Edit</behavior>
                 <field>Test_POC_Age__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>POC_End_Date1__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

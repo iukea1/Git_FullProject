@@ -22,7 +22,7 @@
     </style>
     <body id = "iframeBody">
         <apex:outputPanel rendered="{!userProfile==''}" >
-            <ul>
+            <ul class="mainBody">
                 <li>
                     <apex:pageMessages escape="false"/>
                 </li>

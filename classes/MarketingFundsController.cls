@@ -287,7 +287,8 @@ global without Sharing class MarketingFundsController
             String url = '';
             try
             {
-                url = Crypto.decryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), EncodingUtil.base64Decode(c.replaceAll(' ','\\+'))).toString();
+                //replace $ with +
+                url = Crypto.decryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), EncodingUtil.base64Decode(c.replace('$','+'))).toString();
             }
             catch(Exception ex)
             {
@@ -302,7 +303,7 @@ global without Sharing class MarketingFundsController
                     string month = urlDate[0];
                     String day = urlDate[1];
                     date d = date.valueOf(year + '-' + month + '-' + day);
-                    return d.daysBetween(date.today()) <= 3 ?  idAndDate[0] : null;
+                    return d.daysBetween(date.today()) <= 3?  idAndDate[0] : null;
                 }
                 catch(Exception ex)
                 {

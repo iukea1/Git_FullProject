@@ -819,7 +819,7 @@
     <fieldUpdates>
         <fullName>Update_POC_Duration</fullName>
         <field>POC_Duration__c</field>
-        <formula>IF(Has_Active_POCs__c, POC_Age__c,  POC_Duration__c)</formula>
+        <formula>POC_Age__c</formula>
         <name>Update POC Duration</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -828,7 +828,7 @@
     <fieldUpdates>
         <fullName>Update_POC_End_Date</fullName>
         <field>POC_End_Date__c</field>
-        <formula>Today()</formula>
+        <formula>if( !Has_Active_POCs__c,today(),null)</formula>
         <name>Update POC End Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -837,7 +837,7 @@
     <fieldUpdates>
         <fullName>Update_POC_Start_Date</fullName>
         <field>POC_Start_Date__c</field>
-        <formula>IF(Has_Active_POCs__c, Today(), POC_Start_Date__c )</formula>
+        <formula>IF(Has_Active_POCs__c, Today(), null)</formula>
         <name>Update POC Start Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -1381,10 +1381,6 @@ NOT(New_Business__c)
     <rules>
         <fullName>Update POC Age Info</fullName>
         <actions>
-            <name>Update_POC_Duration</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>Update_POC_End_Date</name>
             <type>FieldUpdate</type>
         </actions>
@@ -1394,6 +1390,18 @@ NOT(New_Business__c)
         </actions>
         <active>true</active>
         <formula>ISCHANGED(Has_Active_POCs__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update POC Age Info_v1</fullName>
+        <actions>
+            <name>Update_POC_Duration</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(POC_Start_Date__c),
+ Has_Active_POCs__c 
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

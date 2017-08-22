@@ -32,7 +32,6 @@ public with sharing class SendMdfUrlToClientController
                     mail.setPlainTextBody(mergeEmail(et[0].Body, mdf, url));
                     mail.setBccSender(false);
                     mail.setUseSignature(false);
-                    
                     Messaging.sendEmail(new Messaging.SingleEmailMessage[]{mail});
                     ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO, 'Email has been sent successfully. Page is refreshing.'));
                 }
@@ -65,6 +64,7 @@ public with sharing class SendMdfUrlToClientController
     public static String encryptParameter(String mdfId)
     {
         Blob cryptoData = Crypto.encryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), Blob.valueOf(mdfId + '|' + Date.today().format()));
-        return EncodingUtil.base64Encode(cryptoData);
+        //replace + with $ for url encoding
+        return EncodingUtil.base64Encode(cryptoData).replace('+','$');
     }
 }
