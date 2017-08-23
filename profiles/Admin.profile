@@ -1879,6 +1879,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestCalculatePOCAge</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestCalculateQuarterForOpp</apexClass>
         <enabled>true</enabled>
     </classAccesses>

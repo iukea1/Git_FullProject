@@ -39,7 +39,7 @@
             var stageField = $("select[data-field-name='StageName']");
             var probField = $("input[data-field-name='Probability']");
             var forecastField = $("select[data-field-name='ForecastCategoryName']");
-            var spOppDependency = new SPOpportunityStageDependency(stageField, probField, forecastField, null, {!Stage2Probability});
+        	var spOppDependency = new SPOpportunityStageDependency(stageField, probField, forecastField, null, {!Stage2Probability});
         </script>
         <!-- popup for dead reason -->
         

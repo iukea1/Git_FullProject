@@ -1388,7 +1388,7 @@ NOT(New_Business__c)
             <name>Update_POC_Start_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED(Has_Active_POCs__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1398,7 +1398,7 @@ NOT(New_Business__c)
             <name>Update_POC_Duration</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND(ISCHANGED(POC_Start_Date__c),
  Has_Active_POCs__c 
 )</formula>

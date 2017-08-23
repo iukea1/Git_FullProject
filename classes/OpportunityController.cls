@@ -243,6 +243,7 @@ public with sharing virtual class OpportunityController
                     availableCategories.add('Omitted'); 
                 }
                 result.add(new StageInfo(stage.MasterLabel, stage.DefaultProbability, stage.ForecastCategoryName, availableCategories));
+               
             }
             Boolean includeCurrentStage = false;
             for(StageInfo stageInfo : result)
@@ -310,6 +311,8 @@ public with sharing virtual class OpportunityController
     {
         try
         {
+            system.debug('Opportunity Probability --->>>');
+            system.debug(opp.Probability);
             upsert opp;
             PageReference ref = new PageReference('/apex/Opportunity?id=' + opp.Id);
             ref.setRedirect(true);

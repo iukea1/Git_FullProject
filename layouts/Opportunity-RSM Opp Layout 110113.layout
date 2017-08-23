@@ -113,7 +113,7 @@
                 <field>StageName</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Probability</field>
             </layoutItems>
             <layoutItems>

@@ -25,6 +25,7 @@
             var forecastField = $("select[data-field-name='ForecastCategoryName']");
             var deadReasonContainer = $("#deadReasonField");
             spOppDependency = new SPOpportunityStageDependency(stageField, probField, forecastField, deadReasonContainer, {!Stage2Probability});
+            
         });
     </script>
     <apex:pageMessages id="errorMessages" escape="false"/>
