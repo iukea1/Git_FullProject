@@ -203,7 +203,7 @@ public without sharing class PartnerPortalIndividualRegController
     {
         domainStr = (domainStr == null) ? '' : domainStr;
         domain = (domain == null) ? '' : domain;
-        String[] domains = domainStr.split('[,@\\s]');
+        String[] domains = domainStr.split('[,;@\\s]');
         for(String d : domains)
         {
             if(domain.toLowerCase() == d.toLowerCase())

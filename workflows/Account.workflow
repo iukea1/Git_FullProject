@@ -719,7 +719,7 @@ Standard_Discount_Service__c
         <criteriaItems>
             <field>Account.Service_Provider_Account_Type__c</field>
             <operation>equals</operation>
-            <value>Metered,Metered-Orchestrator SP</value>
+            <value>EC-SP-Metered,EC-SP-Metered +Orch-SP</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.Sync_with_Cloud_Portal__c</field>

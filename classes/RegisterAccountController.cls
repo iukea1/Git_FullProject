@@ -313,7 +313,13 @@ public class RegisterAccountController
             errorMessage += ';:Email Domains Used' + errorMessage1;
             acct.Email_Domain_Used__c.addError('Email Domains Used' + errorMessage1);
             isPass = false;
-        }else if(!Pattern.matches('^@?[\\w\\d\\.\\-]+\\.[\\w\\d\\-]+$', acct.Email_Domain_Used__c.toLowerCase()))
+        }/*else if(!Pattern.matches('^@?[\\w\\d\\.\\-]+\\.[\\w\\d\\-]+$', acct.Email_Domain_Used__c.toLowerCase()))
+        {
+            errorMessage += ';:Email Domains Used must be a valid email domain. Ex @company.com.';
+            acct.Email_Domain_Used__c.addError('Please enter a valid email domain. Ex: @company.com.');
+            isPass = false;
+        }*/
+        else if(!(Pattern.matches('^@?[\\w\\d\\.\\-]+\\.[\\w\\d\\-]+$', acct.Email_Domain_Used__c.toLowerCase()) || Pattern.matches(regex, acct.Email_Domain_Used__c.toLowerCase())))
         {
             errorMessage += ';:Email Domains Used must be a valid email domain. Ex @company.com.';
             acct.Email_Domain_Used__c.addError('Please enter a valid email domain. Ex: @company.com.');
@@ -321,7 +327,14 @@ public class RegisterAccountController
         }
         else
         {
-            String domain = acct.Email_Domain_Used__c.replace('@','');
+            //.replace('@','')
+            String domain = acct.Email_Domain_Used__c;
+            if(domain.contains('@'))
+            {
+				String[] domainArr = domain.split('@');
+                domain = domainArr[1];
+                acct.Email_Domain_Used__c = '@' + domain;
+            }
             Integer count2 = [select count() from BlacklistedDomains__c where Domain__c =: domain ];
             if(count2 > 0)
             {
@@ -363,12 +376,6 @@ public class RegisterAccountController
             isPass = false;
         }
         //validation for acct.Years_in_Business__c
-        /*if(String.isBlank(acct.Years_in_Business__c) || !acct.Years_in_Business__c.isNumeric() || (Integer.valueOf(acct.Years_in_Business__c) > 999 || Integer.valueOf(acct.Years_in_Business__c)<1 ))
-        {
-            errorMessage += ';:Years in Business' + errorMessage1 + errorMessage2 + ' from 1 to 999';
-            acct.Years_in_Business__c.addError('Years in Business' + errorMessage1 + errorMessage2 + ' from 1 to 999');
-            isPass = false;
-        }*/
         if(String.isBlank(acct.Years_in_Business__c))
         {
             errorMessage += ';:Years in Business' + errorMessage1;
@@ -810,11 +817,6 @@ public class RegisterAccountController
         {
             errorMessage += ';:Tax ID Number' + errorMessage1;
             acct.Tax_ID_Number__c.addError('Tax ID Number' + errorMessage1);
-            isPass = false;
-        }else if(!acct.Tax_ID_Number__c.isNumeric())
-        {
-            errorMessage += ';:Tax ID Number' + errorMessage2;
-            acct.Tax_ID_Number__c.addError('Tax ID Number' + errorMessage2);
             isPass = false;
         }
         errorMessage.removeStart(';');

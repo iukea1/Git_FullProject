@@ -160,16 +160,16 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
                     PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldAccInfo);
-                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget) || oldAccInfo.ECSP__c!=newAccInfo.ECSP__c)
+                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget))
                     {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c || oldAccInfo.ECSP__c!=newAccInfo.ECSP__c)
+                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c)
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }
-                if(newAccInfo.ECSP__c && (newAccInfo.Service_Provider_Account_Type__c=='Perpetual-Orchestrator SP' || newAccInfo.Service_Provider_Account_Type__c=='Metered-Orchestrator SP'))
+                if(newAccInfo.ECSP__c && (newAccInfo.Service_Provider_Account_Type__c=='Perpetual-Orchestrator SP' || newAccInfo.Service_Provider_Account_Type__c=='EC-SP-Metered +Orch-SP' || newAccInfo.Service_Provider_Account_Type__c=='EC-SP-Term +Orch-SP'))
                 {
                     if(oldAccInfo.Cloud_Portal_Account_Key__c==null && newAccInfo.Cloud_Portal_Account_Key__c!=null && oldAccInfo.Cloud_Portal_Account_Name__c==null && newAccInfo.Cloud_Portal_Account_Name__c!=null)
                     {
@@ -200,7 +200,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
     {
         
     }
-    public void AfterUndelete(Map<Id, SObject> oldItems) 
+    public void AfterUndelete(Map<Id, SObject> newItems) 
     {
         
     }
@@ -214,7 +214,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 string bodyText= string.format(templateString,arguments);
             //Send Email to DevOps Team
             Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-            List<OrgWideEmailAddress> addresses = [select Id from OrgWideEmailAddress where Address='noreply@silver-peak.com' limit 1];
+            List<OrgWideEmailAddress> addresses = [select Id from OrgWideEmailAddress where Address='notifications@silver-peak.com' limit 1];
             if(addresses.size() > 0)
             {
                 message.setOrgWideEmailAddressId(addresses[0].Id);
@@ -269,23 +269,23 @@ public class AccountTriggerHandler implements ITriggerHandler {
     {
         List<Contract> lstContractToUpdate= new List<Contract>();
         List<Account> lstAccountToUpdate= new List<Account>();
-        if(ownerIds!=null && ownerIds.size()>0)
-        {
-            for(User usr : [select Id, Default_TR__c, Default_TR__r.Email from User where Id in :ownerIds and IsActive=true])
-            {
-                if(usr.Default_TR__c != null)
-                {
-                    user2TREmail.put(usr.Id, usr.Default_TR__r.Email);
-                }
-            }
-            for(User usr :[select Id, Email from User where UserRole.Name='Director of Customer Service' and UserType='Standard' and IsActive=true])
-            {
-                directorEmails.add(usr.Email);
-            }
-        }
+        
         if(mapAcct!=null && mapAcct.size()>0)
         {
-            
+            if(ownerIds!=null && ownerIds.size()>0)
+            {
+                for(User usr : [select Id, Default_TR__c, Default_TR__r.Email from User where Id in :ownerIds and IsActive=true])
+                {
+                    if(usr.Default_TR__c != null)
+                    {
+                        user2TREmail.put(usr.Id, usr.Default_TR__r.Email);
+                    }
+                }
+                for(User usr :[select Id, Email from User where UserRole.Name='Director of Customer Service' and UserType='Standard' and IsActive=true])
+                {
+                    directorEmails.add(usr.Email);
+                }
+            }
             for(Id item:mapAcct.keySet())
             {
                 Boolean t90Sent = false, t60Sent = false, t0Sent = false;
@@ -358,7 +358,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
         }
         
     }
-     private void LinkAccountToPatch(List<Id> accPatchIds, List<Id> accTeamIds,List<Opportunity> lstOpp)
+    private void LinkAccountToPatch(List<Id> accPatchIds, List<Id> accTeamIds,List<Opportunity> lstOpp)
     {
         List<Opportunity> lstFinalOpps = new List<Opportunity>();
         if(accPatchIds!=null && accPatchIds.size() > 0)
@@ -386,7 +386,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
         { 
             update lstFinalOpps;
         } 
-    } 
+    }
     private void UpdateOppTypeforAccount(Map<Id,string> mapOppType, List<Opportunity> lstOpp)
     {
         List<Opportunity> allOppsToUpdate= new List<Opportunity>();
