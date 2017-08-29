@@ -49,6 +49,10 @@
                 <field>Build_Details__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FIPS_Compliant__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>OwnerId</field>
             </layoutItems>

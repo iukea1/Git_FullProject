@@ -47,6 +47,10 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         }
                     }
                 }
+                if(newAccInfo.ECSP__c!=oldAccInfo.ECSP__c)
+                {
+                    newAccInfo.Trigger_Assignment__c=true;
+                }
                 if(!newAccInfo.Override_Service_Provider_Setting__c)
                 {
                     if(!newAccInfo.ECSP__c && (oldAccInfo.Unity_Orch_Admin_User__c!=newAccInfo.Unity_Orch_Admin_User__c || oldAccInfo.Unity_Orch_Domain__c !=newAccInfo.Unity_Orch_Domain__c ||oldAccInfo.Unity_Orch_Location__c!=newAccInfo.Unity_Orch_Location__c))
@@ -156,6 +160,9 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     oppTypeAccIds.put(newAccInfo.Id,newAccInfo.First_Asset_Quarter__c);
                 }
+                 System.debug('ECSP');
+ 				 System.debug(newAccInfo.ECSP__c);
+                 System.debug(oldAccInfo.ECSP__c);
                 if(newAccInfo.Patch_Locked__c == false)
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
@@ -165,7 +172,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c)
+                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c )
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }

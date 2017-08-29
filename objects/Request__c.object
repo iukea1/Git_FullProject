@@ -2340,6 +2340,22 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
         <picklistValues>
             <picklist>POC_Type__c</picklist>
             <values>
+                <fullName>EC-SP-Metered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Metered %2BOrch-SP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Term %2BOrch-SP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EdgeConnect</fullName>
                 <default>false</default>
             </values>
@@ -2832,6 +2848,22 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
         </picklistValues>
         <picklistValues>
             <picklist>POC_Type__c</picklist>
+            <values>
+                <fullName>EC-SP-Metered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Metered %2BOrch-SP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC-SP-Term %2BOrch-SP</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>EdgeConnect</fullName>
                 <default>false</default>
