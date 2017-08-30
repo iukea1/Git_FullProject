@@ -90,6 +90,7 @@ public class PatchRuleHelper
             {
                 Lead ld = (Lead)obj;
                 ld.Patch__c = patch.Id;
+                System.debug('patch.Type__c'+patch.Type__c);
                 if(ld.ECSP__c)
                 {
                     ld.CSM__c = patch.SP_CAM__c;
