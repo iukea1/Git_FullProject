@@ -9983,6 +9983,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>OpportunityCompetition</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>OpportunityEdit</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
