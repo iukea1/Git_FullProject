@@ -5,7 +5,9 @@
                 <apex:commandButton value="Save" action="{!Save}"/>
                 <apex:commandButton value="Cancel" action="{!Cancel}" immediate="true"/>                                
             </apex:pageBlockButtons>
+            
             <apex:PageblockSection columns="1">
+               <font color="red"><strong>Any changes to this data will over write what has been saved in the opportunity record.</strong></font><br/>
                 <apex:outputField value="{!Opportunity.Name}"/>
                 <apex:inputField label="Number of Sites" value="{!Opportunity.Number_of_branches__c}" rendered="{!Opportunity.StageName=='Closed Won'}"/>
                 <apex:inputField style="width:360px;height:40px" label="Win Description" value="{!Opportunity.Win_Description__c}" rendered="{!Opportunity.StageName=='Closed Won'}"/>
