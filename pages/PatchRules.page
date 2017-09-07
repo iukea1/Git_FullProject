@@ -149,10 +149,6 @@
                         <span class="data-cell">ISR</span>
                         <span class="data-cell">RSM</span>
                         <span class="data-cell">SE</span>
-                        <span class="data-cell">SP CAM</span>
-                        <span class="data-cell">SP ISR</span>
-                        <span class="data-cell">SP RSM</span>
-                        <span class="data-cell">SP SE</span>
                         <span class="data-cell">FCMM</span>
                         <span class="data-cell">Overlay</span>
                     </div>
@@ -176,10 +172,6 @@
                                 <span class="data-cell"><a ng-click="openNewWindow('/' + p.isrId)">{{p.isrName}}</a>&nbsp;</span>
                                 <span class="data-cell"><a ng-click="openNewWindow('/' + p.rsmId)">{{p.rsmName}}</a>&nbsp;</span>
                                 <span class="data-cell"><a ng-click="openNewWindow('/' + p.seId)">{{p.seName}}</a>&nbsp;</span>
-                                <span class="data-cell"><a ng-click="openNewWindow('/' + p.spCamId)">{{p.spCamName}}</a>&nbsp;</span>
-                                <span class="data-cell"><a ng-click="openNewWindow('/' + p.spBdrId)">{{p.spBdrName}}</a>&nbsp;</span>
-                                <span class="data-cell"><a ng-click="openNewWindow('/' + p.spRsmId)">{{p.spRsmName}}</a>&nbsp;</span>
-                                <span class="data-cell"><a ng-click="openNewWindow('/' + p.spSeId)">{{p.spSeName}}</a>&nbsp;</span>
                                 <span class="data-cell"><a ng-click="openNewWindow('/' + p.fcmmId)">{{p.fcmmName}}</a>&nbsp;</span>
                                 <span class="data-cell"><a ng-click="openNewWindow('/' + p.patchOverlay1Id)">{{p.patchOverlay1Name}}</a>&nbsp;&nbsp;<a ng-click="openNewWindow('/' + p.patchOverlay2Id)">{{p.patchOverlay2Name}}</a>&nbsp;</span>
                             </div>
