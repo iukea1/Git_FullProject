@@ -301,6 +301,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>LeanData__Matched_Account_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>LeanData__Routing_Action__c</field>
             </layoutItems>
         </layoutColumns>
