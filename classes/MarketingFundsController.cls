@@ -70,7 +70,7 @@ global class MarketingFundsController
             eventDetails = request.Event_Materials_Requested__c.replaceAll('\r\n',';');
         }
         editable = String.isBlank(request.Id) || (userProfile == 'siteUser' && request.Approval_Status__c == 'Unsubmitted');
-        resultEditable = false;
+        resultEditable = request.Approval_Status__c == 'Approved' && !request.Activity_Complete__c;
         pap1.Country__c = String.isBlank(request.Event_Location_Country__c) ? '' : request.Event_Location_Country__c;
         pap1.State__c = String.isBlank(request.Event_Location_State__c) ? '' : request.Event_Location_State__c;
         if(String.isNotBlank(request.Id) && request.Activity_Complete__c != true)
@@ -474,55 +474,6 @@ global class MarketingFundsController
     }
     
     @RemoteAction
-    global static String uploadFile(String fileBody, String fileName, String fileId, String requestId, String fileDescription, Boolean fileUploadCompleted)
-    {
-        if(String.isNotBlank(fileBody))
-        {
-            SavePoint sp = Database.setSavepoint();
-            ContentVersion cv = getDocument(fileId);
-            String newBody = cv.VersionData == null ? '' : EncodingUtil.base64Encode(cv.VersionData);
-            newBody += fileBody;
-            cv.VersionData = EncodingUtil.base64Decode(newBody);
-            cv.Title = fileName;
-            try
-            {
-                Boolean existedLink = false;
-                if(String.isBlank(cv.Id))
-                {
-                    cv.PathOnClient = fileName;
-                    cv.IsMajorVersion = false;
-                    cv.Description = fileDescription;
-                    existedLink = true;
-                }
-                upsert cv;
-                ContentVersion newCv = [Select Id, ContentDocumentId from ContentVersion where Id =: cv.Id];
-                if(existedLink == true)
-                {
-                    ContentDocumentLink cdl = new ContentDocumentLink(ContentDocumentId = newCv.ContentDocumentId, LinkedEntityId = requestId,ShareType='V');
-                    insert cdl;
-                }
-                if(fileUploadCompleted == true)
-                {
-                    MDF_Request__c mdf = [Select Id from MDF_Request__c where Id =: requestId];
-                    mdf.Activity_Complete__c = true;
-                    mdf.Feedback_Complete__c = true;
-                    update mdf;
-                }
-                return cv.Id;
-            }
-            catch(Exception ex)
-            {   
-                Database.rollback(sp);
-                return 'Exception ' + ex.getMessage();
-            }
-        }
-        else 
-        {
-            return 'File body was null';
-        }
-    }
-    
-    @RemoteAction
     global static String linkFileToMFR(String mfrId, String cvId, Boolean fileUploadCompleted)
     {
         savepoint sp = Database.setSavepoint();
@@ -545,7 +496,7 @@ global class MarketingFundsController
             catch(Exception ex)
             {
                 Database.rollback(sp);
-                return 'exception:' + ex.getMessage();
+                return 'Error:' + ex.getMessage();
             }
         }
         return null;

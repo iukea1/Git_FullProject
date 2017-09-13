@@ -356,11 +356,11 @@
         </apex:form>
         <apex:outputPanel rendered="{!userProfile != '' && (request.Approval_Status__c=='Approved' || editable == false )}" styleClass="form-horizontal">
             <ul class="mainBody">
-                <form onsubmit="validateForm(); return false;" id="theForm">
+                <apex:form onsubmit="validateForm(); return false;" id="theForm">
                     <li style="width:90%;margin:0;padding:0;">
                         <apex:pageMessages escape="false"/>
                     </li>
-                    <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && !request.Activity_Complete__c}">
+                    <apex:outputPanel rendered="{!resultEditable}">
                         <li style="width:90%;margin:0;padding:6px;" id="reminder">
                         </li>
                         <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
@@ -371,25 +371,37 @@
                                 <br/>
                                 <label>
                                     Total Attendees/Contacts Reached <span class = "redMark">*</span>
-                                    <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
+                                    <div>
+                                        <!--input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/-->
+                                        <apex:inputField value="{!request.Total_Attendees__c}" styleClass="number required" required="true" html-placeholder="Numbers only" id="attendees"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Total Opportunities Generated <span class = "redMark">*</span>
-                                    <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="opportunities"/></div>
+                                    <div>
+                                        <!--input type="text" class="number required" required="required" placeholder="Numbers only" id="opportunities"/-->
+                                        <apex:inputField value="{!request.Event_Results_Opportunities__c}" styleClass="number required" required="true" html-placeholder="Numbers only" id="opportunities"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Total Qualified Leads <span class = "redMark">*</span>
-                                    <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="leads"/></div>
+                                    <div>
+                                        <!--input type="text" class="number required" required="required" placeholder="Numbers only" id="leads"/-->
+                                        <apex:inputField value="{!request.Total_Qualified_Leads__c}" styleClass="number required" required="true" html-placeholder="Numbers only" id="leads"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Estimated Pipeline Value <span class = "redMark">*</span>
-                                    <div><input type="text" class="number currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/></div>
+                                    <div>
+                                        <!--input type="text" class="number currency required" required="required" placeholder="Please input amount in USD currency" id="pipeline"/-->
+                                        <apex:inputField value="{!request.Estimated_Pipeline_Value__c}" styleClass="number currency required" required="true" html-placeholder="Please input amount in USD currency" id="pipeline"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
@@ -401,13 +413,19 @@
                             <li>
                                 <label>
                                     Result Detail <span class = "redMark">*</span>       
-                                    <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
+                                    <div>
+                                        <!--textarea class="required" required="required" id="result" style="height:36px;"></textarea-->
+                                        <apex:inputField value="{!request.Result_Detail__c}" styleClass="required" required="required" id="result" style="height:36px;"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Requested Reimbursement Amount <span class = "redMark">*</span>
-                                    <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                                    <div>
+                                        <!--input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/-->
+                                    	<apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" styleClass="number currency required" required="true" html-placeholder="Please input amount in USD currency" id="amount"/>
+                                    </div>
                                 </label>
                             </li>
                         </apex:outputPanel> 
@@ -419,25 +437,37 @@
                                 <br/>
                                 <label>
                                     Topic/Course <span class = "redMark">*</span>
-                                    <div><input type="text" class="required" required="required" id="topic"/></div>
+                                    <div>
+                                        <!--input type="text" class="required" required="required" id="topic"/-->
+                                    	<apex:inputField value="{!request.Topic_Course__c}" styleClass="required" required="true" id="topic"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Total Attendees <span class = "redMark">*</span>
-                                    <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/></div>
+                                    <div>
+                                        <!--input type="text" class="number required" required="required" placeholder="Numbers only" id="attendees"/-->
+                                        <apex:inputField value="{!request.Total_Attendees__c}" styleClass="required" html-placeholder="Numbers only" required="true" id="eattendees"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Number of Certifications <span class = "redMark">*</span>
-                                    <div><input type="text" class="number required" required="required" placeholder="Numbers only" id="certifications"/></div>
+                                    <div>
+                                        <!--input type="text" class="number required" required="required" placeholder="Numbers only" id="certifications"/-->
+                                    	<apex:inputField value="{!request.Number_of_Certifications__c}" styleClass="number required" html-placeholder="Numbers only" required="true" id="certifications"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
                                 <label>
                                     Result Detail <span class = "redMark">*</span>       
-                                    <div><textarea class="required" required="required" id="result" style="height:36px;"></textarea></div>
+                                    <div>
+                                        <!--textarea class="required" required="required" id="result" style="height:36px;"></textarea-->
+                                    	<apex:inputField value="{!request.Result_Detail__c}" styleClass="required" required="required" id="eresult" style="height:36px;"/>
+                                    </div>
                                 </label>
                             </li>
                             <li>
@@ -449,7 +479,10 @@
                             <li>
                                 <label>
                                     Requested Reimbursement Amount <span class = "redMark">*</span>
-                                    <div><input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/></div>
+                                    <div>
+                                        <!--input type="text" class="number currency required" required="true" placeholder="Please input amount in USD currency" id="amount"/-->
+                                    	<apex:inputField value="{!request.Requested_Reimbursement_Amount__c}" styleClass="number currency required" required="true" html-placeholder="Please input amount in USD currency" id="eamount"/>
+                                    </div>
                                 </label>
                             </li>
                         </apex:outputPanel>
@@ -478,9 +511,14 @@
                         </li>
                         <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                     </apex:outputPanel>
-                    <apex:outputPanel rendered="{!request.Approval_Status__c=='Approved' && request.Activity_Complete__c}">
+                    <apex:outputPanel rendered="{!!resultEditable}">
                         <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
-                            <li class="sectionTitle">Event Results</li>
+                            <li class="sectionTitle" style="width:96%;">
+                                <span>
+									Event Results
+                                </span>
+                                <apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
+                            </li>
                             <li>
                                 <label>
                                     Total Attendees/Contacts Reached
@@ -525,7 +563,12 @@
                             </li>
                         </apex:outputPanel>
                         <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
-                            <li class="sectionTitle">Partner Training Results</li>
+                            <li class="sectionTitle" style="width:96%;">
+                                <span>
+									Partner Training Results
+                                </span>
+								<apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
+                            </li>
                             <li>
                                 <label>
                                     Topic/Course
@@ -589,7 +632,7 @@
                         </li>
                         <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                     </apex:outputPanel>
-                </form>
+                </apex:form>
                 <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
                 <li class="sectionTitle" style="width:96%;">
                     <span>
@@ -948,8 +991,8 @@
 
     function updateMDF(){
         MarketingFundsController.updateMDF(
-            {"Total_Attendees" : $("#attendees").val(), "Event_Results_Opportunities" : $("#opportunities").val(), "Total_Qualified_Leads" : $("#leads").val(), "Estimated_Pipeline_Value" : $("#pipeline").val(), 
-             "Result_Detail" : $("#result").val(), "Requested_Reimbursement_Amount" : $("#amount").val(), "Topic_Course" : $("#topic").val(), "Number_of_Certifications" : $("#certifications").val(), 'invoice' : $("#invoice")[0].files.length, 'proof' : $("#proof")[0].files.length, 'attendance' : $("#attendance")[0].files.length},"{!request.Id}",
+            {"Total_Attendees" : $("input[id$='attendees']").val(), "Event_Results_Opportunities" : $("input[id$='opportunities']").val(), "Total_Qualified_Leads" : $("input[id$='leads']").val(), "Estimated_Pipeline_Value" : $("input[id$='pipeline']").val(), 
+             "Result_Detail" : $("[id$='result']").val(), "Requested_Reimbursement_Amount" : $("input[id$='amount']").val(), "Topic_Course" : $("input[id$='topic']").val(), "Number_of_Certifications" : $("input[id$='certifications']").val(), 'invoice' : $("#invoice")[0].files.length, 'proof' : $("#proof")[0].files.length, 'attendance' : $("#attendance")[0].files.length},"{!request.Id}",
             function(result, event){
                 if(event.type === 'exception'){
                     showReminder(event);
@@ -1008,7 +1051,7 @@
                 }else if(event.status){
                     if(result == 'success'){
                         if(maxFilecompleted){
-                            top.location.reload();
+                            top.location.href = top.location.href;
                         }
                     }else if(result.substring(0,5) == 'Error'){
                         showErrorMsg(result.substring(5));
@@ -1028,7 +1071,12 @@
     function validateForm(){
         var isValid = true;
         var errorMsg = "Invalid number";
+        var number;
         $(".number").each(function(){
+            number = $(this).val();
+            if(!!number){
+                $(this).attr("value", number.replace(/,/g,''));	
+            }
             if(isNaN($(this).val())){
                 if($(this).hasClass("currency")){
                     errorMsg = "Invalid currency";
@@ -1064,10 +1112,11 @@
         for(var i = 0; i < errors.length - 1; i++){
             var eleId = errors[i].split(":")[0];
             var errMsg = errors[i].split(":")[1];
-            if(!$("#" + eleId).next().hasClass("errorMsg")){
-                $("#" + eleId).after('<div class="errorMsg"><strong>Error:</strong>'+ errMsg +'</div>');
+          	var elem = "'[id$=" + eleId+ "]'";
+            if(!$(elem).next().hasClass("errorMsg")){
+                $(elem).after('<div class="errorMsg"><strong>Error:</strong>'+ errMsg +'</div>');
             }else{
-                $("#" + eleId).next().html("<strong>Error:</strong>" + errMsg);
+                $(elem).next().html("<strong>Error:</strong>" + errMsg);
             }
         }
         $(".errorMsg:first").prev().focus();
@@ -1079,6 +1128,10 @@
     </script>
     <script type = "text/javascript">
     $(document).ready(function(){
+        var a = "{!invoice}";
+        var c = "{!proofs}";
+        var d = "{!attendance}";
+        var b = {!editable};
         showSection();
 		scrollTop();
         if($(".requiredInput1").is(":visible")){
