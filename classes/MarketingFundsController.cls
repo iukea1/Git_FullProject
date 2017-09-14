@@ -163,7 +163,7 @@ global class MarketingFundsController
                     upsert eventAgendaAttachment;
                 }
                 accountAttachment = new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name, ParentId= request.Id);
-                eventAgendaAttachment =new Attachment(Id=accountAttachment.Id, Name=accountAttachment.Name, ParentId = request.Id);
+                eventAgendaAttachment =new Attachment(Id=eventAgendaAttachment.Id, Name=eventAgendaAttachment.Name, ParentId = request.Id);
             }
             If(rejectPRprocess(request))
             {
@@ -474,7 +474,7 @@ global class MarketingFundsController
     }
     
     @RemoteAction
-    global static String linkFileToMFR(String mfrId, String cvId, Boolean fileUploadCompleted)
+    global static String linkFileToMFR(String mfrId, String cvId, Boolean fileUploadCompleted, List<String> fileIds)
     {
         savepoint sp = Database.setSavepoint();
         List<ContentVersion> cv = [Select Id, ContentDocumentId from ContentVersion where Id =: cvId limit 1];
@@ -490,6 +490,7 @@ global class MarketingFundsController
                     mdf.Activity_Complete__c = true;
                     mdf.Feedback_Complete__c = true;
                     update mdf;
+                    deleteFiles(mdf.Id, fileIds);
                 }
                 return 'success';
             }
@@ -502,16 +503,22 @@ global class MarketingFundsController
         return null;
     }
     
-    global static ContentVersion getDocument(String fileId)
+    private static void deleteFiles(String mfrId,List<String> fileIds)
     {
-        List<ContentVersion> cvs = [Select Id, VersionData, Title from ContentVersion where Id =: fileId];
-        if(cvs.isEmpty())
+        Set<Id> cdIds = new Set<Id>();
+        for(ContentVersion cv: [Select Id, ContentDocumentId from ContentVersion where Id =: fileIds])
         {
-            return new ContentVersion();
+            cdIds.add(cv.ContentDocumentId);
         }
-        else
+        
+        Set<Id> deleteCd = new Set<Id>();
+        for(ContentDocumentLink cdLink : [Select Id, ContentDocumentId from ContentDocumentLink where LinkedEntityId =: mfrId and ContentDocumentId NOT in: cdIds])
         {
-            return cvs[0];
+            deleteCd.add(cdLink.ContentDocumentId);
+        }
+        if(!deleteCd.isEmpty())
+        {
+            delete [Select Id from ContentDocument where Id in: deleteCd];
         }
     }
     

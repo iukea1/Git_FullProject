@@ -26,7 +26,9 @@ trigger ShareLeadAndOpportunityToPartner on Lead (after insert, after update)
         }
         if(needToShareLeads.size() > 0)
         {
-            ShareLeadAndOpportunityToPartnerHelper.willShareLeads(needToShareLeadIds);
+            
+                //owner change in assignment rule may remove the sharing, making the sharing in async assures.
+                ShareLeadAndOpportunityToPartnerHelper.willShareLeads(needToShareLeadIds);
         }
     }
         

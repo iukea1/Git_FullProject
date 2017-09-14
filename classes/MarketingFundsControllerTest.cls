@@ -20,6 +20,12 @@ public class MarketingFundsControllerTest {
             MDF_Request__c mdf = new MDF_Request__c(Type_of_Program__c ='Awareness', Event_Materials_Requested__c = 'test\r\nmessage',
                                                     Silver_Peak_Speaking_Opportunity__c = 'Yes');
             insert mdf;
+            List<Attachment> atts = new List<Attachment>();
+            Attachment accountAttachment = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'Target Account List', ParentId = mdf.Id);
+            atts.add(accountAttachment);
+            Attachment eventAgendaAttachment = new Attachment(Name = 'Test', Body = Blob.valueOf('Test Data'), Description = 'Event Agenda',ParentId = mdf.Id);
+            atts.add(eventAgendaAttachment);
+            insert atts;
             Blob cryptoData = Crypto.encryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), Blob.valueOf(mdf.Id + '|' + Date.today().format()));
             String url = EncodingUtil.base64Encode(cryptoData);
             ApexPages.currentPage().getParameters().put('id',url);
@@ -30,6 +36,8 @@ public class MarketingFundsControllerTest {
             //mfc.saveApprovedMDF();
             
             MarketingFundsController mfc2 = new MarketingFundsController();
+            mfc2.accountAttachment.Body = Blob.valueOf('Test Data');
+            mfc2.eventAgendaAttachment.Body = Blob.valueOf('Test Data');
             mfc2.request = new MDF_Request__c(Type_of_Program__c ='Awareness', Silver_Peak_Speaking_Opportunity__c = 'No', Approval_Status__c = 'Approved', Activity_Complete__c = true,Expected_Audience_Size__c = 2, Expected_Number_of_Leads__c = 2,Est_Value_of_Expected_Opportunities__c = 2,Event_Location_City__c = 'los', Event_Location_Zip__c = 'testZip');
             mfc2.pap1.Country__c = 'USA';
             mfc2.pap1.State__c = 'California';
@@ -68,14 +76,19 @@ public class MarketingFundsControllerTest {
         mfc.pap1.Country__c = '';
         mfc.pap1.State__c = '';
         mfc.saveMDF();
-        
-        AWSConfig__c config = new AWSConfig__c(name='Active');
-        insert config;
-        mfc.getAWSConfig();
-        mfc.getFile(mdf.Id);
         //mfc.saveApprovedMDF();
-
+		
+        //Test editMDF and editMDFResult
+		PageReference ref = mfc.editMDF();
+        system.assertEquals(true, mfc.editable);
+        ref = mfc.editMDFResult();
+        system.assertEquals(true, mfc.resultEditable);
+        
         MarketingFundsController mfc2 = new MarketingFundsController();
+        mfc2.accountAttachment.Body = Blob.valueOf('Test Data');
+        mfc2.eventAgendaAttachment.Body = Blob.valueOf('Test Data');
+		mfc2.accountAttachment.Name = 'Test';
+        mfc2.eventAgendaAttachment.Name = 'Test';
         mfc2.request = new MDF_Request__c(Type_of_Program__c ='Awareness', Silver_Peak_Speaking_Opportunity__c = 'No', Approval_Status__c = 'Approved', Activity_Complete__c = true,Expected_Audience_Size__c = 2, Expected_Number_of_Leads__c = 2,Est_Value_of_Expected_Opportunities__c = 2,Event_Location_City__c = 'los', Event_Location_Zip__c = 'testZip');
         mfc2.pap1.Country__c = 'USA';
         mfc2.pap1.State__c = 'California';
@@ -101,32 +114,25 @@ public class MarketingFundsControllerTest {
         newMDF.proof = 2;
         newMDF.attendance = 3;
         
-        MarketingFundsController.AWSResponse aws = new MarketingFundsController.AWSResponse();
-        aws.FileName = 'test';
-        aws.S3Key = 'mfr/';
-		aws.FileSize = 1.231;
-        aws.S3Bucket = 'MFR';
-        aws.FileType = 'proof';
-        
-        //insert 5 s3 file for testing
-        List<Ensemblestorage__EnsembleFile__c> files = new List<Ensemblestorage__EnsembleFile__c>();
-        Ensemblestorage__EnsembleFile__c file1 = new Ensemblestorage__EnsembleFile__c(file_type__c='Target Account', Funding_Requests__c=mdf.Id);
-        Ensemblestorage__EnsembleFile__c file2 = new Ensemblestorage__EnsembleFile__c(file_type__c='Event Agenda', Funding_Requests__c=mdf.Id);
-        Ensemblestorage__EnsembleFile__c file3 = new Ensemblestorage__EnsembleFile__c(file_type__c='invoice', Funding_Requests__c=mdf.Id);
-        Ensemblestorage__EnsembleFile__c file4 = new Ensemblestorage__EnsembleFile__c(file_type__c='proof', Funding_Requests__c=mdf.Id);
-        Ensemblestorage__EnsembleFile__c file5 = new Ensemblestorage__EnsembleFile__c(file_type__c='Attendance List', Funding_Requests__c=mdf.Id);
-		files.add(file1);
-        files.add(file2);
-        files.add(file3);
-        files.add(file4);
-        files.add(file5);
-        insert files;
-        
-        mfc2.getFile(mdf.Id);
-        
-        
-        MarketingFundsController.linkFileToMFR(aws, mdf.Id, false);
-        MarketingFundsController.linkFileToMFR(aws, mdf.Id, true);
+        //add 3 contentVersions sample 
+		ContentVersion invoiceCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'invoice', VersionData = Blob.valueOf('Test Data'));
+        insert invoiceCv;
+		invoiceCv = [Select Id, ContentDocumentId from ContentVersion where Id =: invoiceCv.Id];
+        //ContentDocumentLink invoiceLdl = new ContentDocumentLink(ContentDocumentId = invoiceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        //insert invoiceLdl;
+        ContentVersion proofCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'proof', VersionData = Blob.valueOf('Test Data'));
+        insert proofCv;
+		proofCv = [Select Id, ContentDocumentId from ContentVersion where Id =: proofCv.Id];
+        ContentDocumentLink proofLdl = new ContentDocumentLink(ContentDocumentId = proofCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        insert proofLdl;
+        ContentVersion attendanceCv = new ContentVersion(Title = 'title', PathOnClient = 'test', IsMajorVersion = false, Description = 'attendance', VersionData = Blob.valueOf('Test Data'));
+        insert attendanceCv;
+		attendanceCv = [Select Id, ContentDocumentId from ContentVersion where Id =: attendanceCv.Id];
+        ContentDocumentLink attendanceLdl = new ContentDocumentLink(ContentDocumentId = attendanceCv.ContentDocumentId, LinkedEntityId = mdf.Id,ShareType='V');
+        insert attendanceLdl;
+		mfc2.getFile(mdf.Id);
+        MarketingFundsController.linkFileToMFR(mdf.Id, invoiceCv.Id, true, null);
+        MarketingFundsController.linkFileToMFR(mdf.Id, proofCv.Id, true, null);
         MarketingFundsController.updateMDF(newMDF,'');
         MarketingFundsController.updateMDF(newMDF, mdf.Id);
         MDF_Request__c eMdf = new MDF_Request__c(Type_of_Program__c ='Enablement', Event_Materials_Requested__c = 'test\r\nmessage',
@@ -137,6 +143,8 @@ public class MarketingFundsControllerTest {
         newMDF.Requested_Reimbursement_Amount = 'Error Data';
         mfc2.getFile(eMdf.Id);
         MarketingFundsController.updateMDF(newMDF, eMdf.Id);
+        
+        
     }
     
     @isTest

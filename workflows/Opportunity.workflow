@@ -13,6 +13,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rbooth@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -484,6 +488,10 @@
             <recipient>mmartin@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Support/oppty_closed_stage</template>
     </alerts>
@@ -510,7 +518,6 @@
     </alerts>
     <alerts>
         <fullName>Opportunityhasbeenclosedandwon</fullName>
-        <ccEmails>opptywon@silver-peak.com</ccEmails>
         <description>Opportunity has been closed and won</description>
         <protected>false</protected>
         <recipients>
@@ -524,27 +531,7 @@
         <description>Sales Win Send to Opp Owner</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Account Manager</recipient>
-            <type>opportunityTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Channel Manager</recipient>
-            <type>opportunityTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Inside Sale Representative</recipient>
-            <type>opportunityTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Systems Engineer</recipient>
-            <type>opportunityTeam</type>
-        </recipients>
-        <recipients>
             <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>ddalponte@silver-peak.com</recipient>
-            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Sales_Win_Email</template>
@@ -844,6 +831,15 @@
         <name>Update Opp Stage as Discovery RSM</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Oppty_Closed_POC_Age</fullName>
+        <field>Oppty_Closed_POC_Age__c</field>
+        <formula>Today()</formula>
+        <name>Update Oppty Closed (POC Age)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -1149,7 +1145,11 @@ ISCHANGED(StageName)
         <criteriaItems>
             <field>Opportunity.Type</field>
             <operation>equals</operation>
-            <value>Follow on Business,New Business</value>
+            <value>New Business</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Win_Description__c</field>
+            <operation>notEqual</operation>
         </criteriaItems>
         <description>Sends an email when a new and follow on  opportunity is closed/won</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -1423,6 +1423,22 @@ NOT(New_Business__c)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Update Oppty Closed %28POC Age%29</fullName>
+        <actions>
+            <name>Update_Oppty_Closed_POC_Age</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>update the Oppty Closed (POC Age) filed when the opportunity is moved to closed stage</description>
+        <formula>AND
+(ISCHANGED(StageName),
+OR(ISPICKVAL(StageName,&apos;Closed Won&apos;),
+   ISPICKVAL(StageName,&apos;Closed Lost&apos;),
+   ISPICKVAL(StageName,&apos;Closed Dead&apos;),
+   ISPICKVAL(StageName,&apos;Closed Deleted&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Update POC Age Info</fullName>
         <actions>
             <name>Update_POC_End_Date</name>
@@ -1630,16 +1646,19 @@ IF(ISPICKVAL (LeadSource, &quot;Customer Referral.&quot;), 1,0), &quot;Used&quot
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>
-            <value>Closed Lost,Closed Dead</value>
+            <value>Closed Lost</value>
         </criteriaItems>
         <criteriaItems>
             <field>Opportunity.Type</field>
             <operation>notEqual</operation>
             <value>Marketplace</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Loss_Description__c</field>
+            <operation>notEqual</operation>
         </criteriaItems>
         <description>oppty-closed and not won under 100k</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

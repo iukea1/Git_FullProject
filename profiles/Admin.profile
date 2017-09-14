@@ -879,6 +879,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LeadTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LeadTriggerHandlerForLeadConversion</apexClass>
         <enabled>true</enabled>
     </classAccesses>

@@ -511,7 +511,7 @@
                         </li>
                         <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                     </apex:outputPanel>
-                    <apex:outputPanel rendered="{!!resultEditable}">
+                    <apex:outputPanel rendered="{!!resultEditable && request.Approval_Status__c=='Approved'}">
                         <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
                             <li class="sectionTitle" style="width:96%;">
                                 <span>
@@ -1032,6 +1032,7 @@
     }
     
     //Upload File
+   	var fileIds = [];
     function uploadFile(mfrId, file) {
         var client = new forcetk.Client();
         client.setSessionToken("{!$Api.Session_ID}"); 
@@ -1043,7 +1044,8 @@
         }, file.name, 'VersionData', file, function(response){
             completedFiles++;
             var maxFilecompleted = completedFiles == files.length;
-            MarketingFundsController.linkFileToMFR(mfrId, response.id, maxFilecompleted, function(result, event){
+            fileIds.push(response.id);
+            MarketingFundsController.linkFileToMFR(mfrId, response.id, maxFilecompleted, fileIds, function(result, event){
                 if(event.type === 'exception'){
                     alert('Failed to upload file. The error message is: ' + result);
                     showReminder(event);
