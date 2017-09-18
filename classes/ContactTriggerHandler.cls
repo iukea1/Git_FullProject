@@ -1,15 +1,14 @@
 public class ContactTriggerHandler implements ITriggerHandler {
     Map<Id,string> mapGEOUsers= new Map<Id,string>();
+    Set<String> moveToSDCampaignStages = new Set<String> { '03 MQL', '04 SAL', '13 MQC', '14 SAC', 'MQL', 'SAL', 'MQC' };
+    Set<String> rejectStatuses = new Set<String> { 'Sales Rejected', 'Rejected' };
+    String sdCampaignId = SalesDevelopmentHelper.getSDCampaign();
+    Set<Id> contactIdsToBeMovedOff = new Set<Id>();
+    List<Contact> contactsToBeUpdated = new List<Contact>();
+    List<CampaignMember> newSDCampaignMembers = new List<CampaignMember>();
     public ContactTriggerHandler()
     {
-        /*List<User> lstStandardUsers=[Select Id,GEO_Region__c from User where UserType='Standard' and IsActive=true];
-        if(lstStandardUsers!=null && lstStandardUsers.size()>0)
-        {
-            for(User usrData:lstStandardUsers)
-            {
-                mapGEOUsers.put(usrData.Id,usrData.GEO_Region__c);
-            }
-        }*/
+        
     }
     public Boolean IsDisabled()
     {
@@ -25,14 +24,8 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 {
                     con.TechnicalPresalesReadyCertifiedBy__c = UserInfo.getUserId();
                 }
-              /*  if(con.OwnerId!=null)
-                {
-                    if(mapGEOUsers!=null && mapGEOUsers.containsKey(con.OwnerId))
-                    {
-                        con.GEO__c= mapGEOUsers.get(con.OwnerId);
-                    }
-                }*/
-               
+                
+                
                 
             }
         }
@@ -50,25 +43,30 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 {
                     newContact.TechnicalPresalesReadyCertifiedBy__c= newContact.TechnicalPresalesReady__c?UserInfo.getUserId():null;
                 }
-               /* if(newContact.OwnerId!=oldContact.OwnerId)
-                {
-                    if(mapGEOUsers!=null && mapGEOUsers.containsKey(newContact.OwnerId))
-                    {
-                        newContact.GEO__c= mapGEOUsers.get(newContact.OwnerId);
-                    }
-                    
-                }*/
                 
             }
         }
     }
-    public void BeforeDelete(Map<Id, SObject> oldItems) 
+    public void BeforeDelete(Map<Id,SObject> oldItems) 
     {
         
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        
+        if(newItems!=null && newItems.size()>0)
+        {
+            for (Id conId : newItems.keyset())
+            {
+                Contact newContact= (Contact)newItems.get(conId);
+                if(moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && newContact.Account.Type != 'Partner')
+                {
+                    contactsToBeUpdated.add(new Contact(Id=conId,Lead_Sub_Status__c=null));
+                    newSDCampaignMembers.add(new CampaignMember(ContactId = newContact.Id, CampaignId = sdCampaignId));
+                }
+            }
+            
+            MoveContactsInAndOutOfSDCampaign();
+        }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -85,21 +83,59 @@ public class ContactTriggerHandler implements ITriggerHandler {
                     accountIds.add(newContact.AccountId);
                     contactIds.add(newContact.Id);
                 }
+                if(moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && !moveToSDCampaignStages.contains(oldContact.Lead_Lifecycle_Stage__c) && newContact.Account.Type != 'Partner')
+                {
+                    contactsToBeUpdated.add(new Contact(Id=conId,Lead_Sub_Status__c=null));
+                    newSDCampaignMembers.add(new CampaignMember(ContactId = newContact.Id, CampaignId = sdCampaignId));
+                }
+                if(!moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && moveToSDCampaignStages.contains(oldContact.Lead_Lifecycle_Stage__c))
+                {
+                    contactIdsToBeMovedOff.add(newContact.Id);
+                }
+                if(rejectStatuses.contains(newContact.Lead_Status__c) && !rejectStatuses.contains(oldContact.Lead_Status__c))
+                {
+                    contactsToBeUpdated.add(new Contact(Id=conId,Contact_BANT_Qualified__c = false,Contact_Me__c = false));
+                    contactIdsToBeMovedOff.add(newContact.Id);
+                }
             }
             if(!accountIds.isEmpty() && !contactIds.isEmpty())
             {
                 UpdateUserPartnerRoleTriggerHandler.UpdateUsersRole(contactIds, accountIds);
             }
+            MoveContactsInAndOutOfSDCampaign();
         }
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
         
     }
-    public void AfterUndelete(Map<Id, SObject> oldItems) 
+    public void AfterUndelete(Map<Id, SObject> newItems) 
     {
         
     }
     
- 
+    
+    private void MoveContactsInAndOutOfSDCampaign()
+    {
+         //Move contacts to SD campaign
+        if(!newSDCampaignMembers.isEmpty())
+        {
+            Database.insert(newSDCampaignMembers, false);
+        }
+        
+        //Move contacts off SD campaign
+        if(!contactIdsToBeMovedOff.isEmpty())
+        {
+            delete [select Id from CampaignMember where CampaignId = :sdCampaignId and ContactId in :contactIdsToBeMovedOff];
+        }
+        
+        //Update contacts
+        if(!contactsToBeUpdated.isEmpty())
+        {
+            SilverPeakUtils.BypassingTriggers = true;
+            Database.update(contactsToBeUpdated, false);
+            SilverPeakUtils.BypassingTriggers = false;
+        }
+    }
+    
 }

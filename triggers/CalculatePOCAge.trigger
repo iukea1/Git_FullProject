@@ -6,7 +6,7 @@ trigger CalculatePOCAge on Opportunity (before update) {
         Boolean oldActivePOC = oldOpp.Has_Active_POCs__c;
         Boolean newActivePOC = opp.Has_Active_POCs__c;
         
-        if(oldActivePOC != newActivePOC)
+        if(oldActivePOC != newActivePOC && !opp.Isclosed)
         {
             if(newActivePOC)
             {

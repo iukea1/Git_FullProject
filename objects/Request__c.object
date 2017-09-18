@@ -3329,7 +3329,7 @@ ISPICKVAL( POC_Type__c ,&quot;WAN Op&quot;)
     </validationRules>
     <validationRules>
         <fullName>enforce_approval_process_to_advance</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Enforce new approval submission instead of changing status</description>
         <errorConditionFormula>and( ISCHANGED(Status__c) ,  
 OR(ISPICKVAL(Status__c, &quot;Open&quot; ),

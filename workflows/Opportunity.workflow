@@ -561,6 +561,29 @@
         <template>DealRegistrations/DealRegistrationAcknowledged</template>
     </alerts>
     <alerts>
+        <fullName>Send_to_BDR_for_closed_dead</fullName>
+        <description>Send to BDR for closed dead</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Grade_1_Inside_Sales</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>Grade_2_BDR</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>ISR_Team</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>InsideSalesMgr</recipient>
+            <type>role</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/oppty_closed_stage_dead</template>
+    </alerts>
+    <alerts>
         <fullName>Transactional_Opportunity_Alert</fullName>
         <description>Transactional Opportunity Alert</description>
         <protected>false</protected>
@@ -1637,6 +1660,30 @@ IF(ISPICKVAL (LeadSource, &quot;Customer Referral.&quot;), 1,0), &quot;Used&quot
             <value>Marketplace</value>
         </criteriaItems>
         <description>oppty-closed and not won over 100K add exec staff to notices</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>oppty-closed-Dead</fullName>
+        <actions>
+            <name>Send_to_BDR_for_closed_dead</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Dead</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>notEqual</operation>
+            <value>Marketplace</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Dead_Reason__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Oppty that are closed, send an email to BDR</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

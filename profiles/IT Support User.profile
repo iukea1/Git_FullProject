@@ -73,7 +73,7 @@
     <applicationVisibilities>
         <application>standard__DataAssessment</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Ideas</application>
