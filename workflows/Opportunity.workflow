@@ -1451,7 +1451,7 @@ NOT(New_Business__c)
             <name>Update_Oppty_Closed_POC_Age</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>update the Oppty Closed (POC Age) filed when the opportunity is moved to closed stage</description>
         <formula>AND
 (ISCHANGED(StageName),

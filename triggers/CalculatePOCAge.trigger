@@ -1,4 +1,5 @@
 trigger CalculatePOCAge on Opportunity (before update) {
+
     for(Opportunity opp : Trigger.new)
     {
         Opportunity oldOpp = Trigger.Oldmap.get(opp.Id);
@@ -6,8 +7,9 @@ trigger CalculatePOCAge on Opportunity (before update) {
         Boolean oldActivePOC = oldOpp.Has_Active_POCs__c;
         Boolean newActivePOC = opp.Has_Active_POCs__c;
         
-        if(oldActivePOC != newActivePOC && !opp.Isclosed)
-        {
+        if(!opp.IsClosed){
+         if(oldActivePOC != newActivePOC)
+         {
             if(newActivePOC)
             {
                opp.POC_Start_Date__c = Date.today();
@@ -18,6 +20,15 @@ trigger CalculatePOCAge on Opportunity (before update) {
             {
                 opp.POC_End_Date__c   = Date.today();
             }
+         }
         }
-    }
+        else if(opp.IsClosed && !oldopp.IsClosed){
+        {
+            if(newActivePOC)
+            {
+            opp.POC_End_Date__c = Date.today();
+            }   
+        }
+        }
+    }       
 }
