@@ -52,4 +52,8 @@
         <name>Forecasting</name>
         <type>StandardAppMenuItem</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>sma__MapAnything</name>
+        <type>CustomTab</type>
+    </appMenuItems>
 </AppMenu>
