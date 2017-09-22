@@ -1743,20 +1743,9 @@ else
 
 var accountId = &quot;{!Account.Id}&quot;;
 var caseId = &quot;{!Case.Id}&quot;;
-var assetId = &quot;{!Case.AssetId}&quot;;
-var isAssetExpired=&quot;{!Case.Is_Asset_Warranty_Expired__c}&quot;;
-
 if(caseId != &quot;&quot; &amp;&amp; caseId != null)
 {
-	if(isAssetExpired==0)
-	{
-		   window.open(&quot;/apex/newrma?id=&quot;+ caseId, &quot;_top&quot; );
-	}
-	else
-	{
-		alert(&quot;RMA cannot be opened where contract or warranty is expired.&quot;);
-
-	}
+ window.open(&quot;/apex/newrma?id=&quot;+ caseId, &quot;_top&quot; );
 }
 else
 {
