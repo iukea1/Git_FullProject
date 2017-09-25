@@ -115,6 +115,7 @@ public class ShippingInputFormController
         {
             for(ShipLineInfo lineInfo : ShippedLineList)
             {
+                System.debug('lineInfo.PartNumber'+lineInfo.PartNumber);
                 if(lineInfo.SelectProductId == null && !lineInfo.AssetIsExisted)
                 {    
                     hasNullProd  = true;
@@ -226,6 +227,7 @@ public class ShippingInputFormController
             shipInfo= new ShipLineInfo();
             shipInfo.AssetId = aset.Id;
             shipInfo.TempAsset.GMS_Nodes__c = aset.GMS_Nodes__c;
+            shipInfo.SelectProductId = aset.Product2Id;
             shipInfo.PostShipmentStatus = aset.Status;
             shipInfo.PriorStatus = aset.Status;
             shipInfo.TempAsset.Ship_Date__c = Shipment.Ship_Date__c;
@@ -418,7 +420,9 @@ public class ShippingInputFormController
             aset.Status = ShipInfo.TempAsset.Status;
             aset.Ship_Date__c = ShipInfo.TempAsset.Ship_Date__c;
             aset.SerialNumber = ShipInfo.SerialNumber;
-            aset.Product2Id = ShipInfo.TempAsset.Product2Id;
+            if(ShipInfo.PartNumber!=null)
+                aset.Part_Number__c=ShipInfo.PartNumber;
+            aset.Product2Id = ShipInfo.AssetIsExisted?ShipInfo.SelectProductId:ShipInfo.TempAsset.Product2Id;
             aset.Ship_To_Location__c = ShipToLocation+ '  ( Tracking Information:: ' + Shipment.Tracking_Information__c + ')';
             aset.Description = Comments;
         }
