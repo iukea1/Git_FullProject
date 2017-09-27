@@ -183,10 +183,6 @@
                 <behavior>Edit</behavior>
                 <field>Customer_Account__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Allow_RMA__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -432,6 +428,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EC_Licenses__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_RMA__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
