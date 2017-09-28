@@ -569,6 +569,7 @@ global class MarketingFundsController
     {
         if(estimatedAmount != null && request.Purchasing_Request__c != null && request.Estimated_Silver_Peak_Amount__c > estimatedAmount)
         {
+            Boolean prSubmitted = false;
             for(Integer i = 0; i < 4; i++)
             {
                 list<ProcessInstanceWorkitem> piws = [SELECT Id FROM ProcessInstanceWorkitem WHERE ProcessInstance.TargetObjectId =: request.Purchasing_Request__c];
@@ -579,13 +580,14 @@ global class MarketingFundsController
                     pwr.setComments('The Estimated Silver Peak Amount of related funding request has been increased');
                     pwr.setAction('Reject');
                     Approval.ProcessResult result = Approval.process(pwr);
+                    prSubmitted = true;
                 }
                 else
                 {
                     break;
                 }
             }
-            return true;
+            return prSubmitted;
         }
         return false;
     }

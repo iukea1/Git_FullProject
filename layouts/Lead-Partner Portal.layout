@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>ECSP__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Email_Domain__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

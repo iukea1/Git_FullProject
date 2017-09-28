@@ -56,6 +56,15 @@ Sales_Rejected_Comments__c</formula>
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Lead_source_to_Deal_Reg</fullName>
+        <field>LeadSource</field>
+        <literalValue>Deal Registration</literalValue>
+        <name>Update Lead source to Deal Reg</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <outboundMessages>
         <fullName>BL__ContactUpdate</fullName>
         <apiVersion>8.0</apiVersion>
@@ -144,6 +153,19 @@ Sales_Rejected_Comments__c</formula>
         </criteriaItems>
         <description>Alert to Admin that a User has been assigned a Manager or Executive Role</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Restrict updating Deal Reg Lead Source</fullName>
+        <actions>
+            <name>Update_Lead_source_to_Deal_Reg</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>If the lead source is Deal Reg and Cloudingo tries to update it with different value, update it back to Deal Reg</description>
+        <formula>AND(ISCHANGED(LeadSource),
+TEXT(PRIORVALUE(LeadSource)) = &apos;Deal Registration&apos;,
+ $User.Id= &apos;00538000004Tfb7&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>UponSetForSelfRegister</fullName>
