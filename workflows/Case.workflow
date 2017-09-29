@@ -845,6 +845,36 @@
         <template>Support/SupportSatisfactionSurvey</template>
     </alerts>
     <alerts>
+        <fullName>Send_Email_Notification_to_Facilities_Team</fullName>
+        <description>Send Email Notification to Facilities Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>jcreasy@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jslaughterbeck@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Support/CaseOwnershipAssigned</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_Notification_to_HR_Team</fullName>
+        <description>Send Email Notification to HR Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>jcreasy@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jslaughterbeck@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Support/CaseOwnershipAssigned</template>
+    </alerts>
+    <alerts>
         <fullName>notify_customer_wanstart_activated</fullName>
         <description>notify_customer_wanstart_activated</description>
         <protected>false</protected>
@@ -1474,6 +1504,17 @@ ISCHANGED(New_Email_Notification_Text__c),
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Facilities-CaseOwnershipChange</fullName>
+        <actions>
+            <name>Send_Email_Notification_to_Facilities_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(OwnerId), 
+RecordType.Id =&apos;01238000000E9ik&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Google Alert</fullName>
         <actions>
             <name>NewCaseiscreatedGoogle</name>
@@ -1528,6 +1569,17 @@ ISCHANGED(New_Email_Notification_Text__c),
         </criteriaItems>
         <description>This workflow rule will send an email notification to the customer about the case creation.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>HR-CaseOwnershipChange</fullName>
+        <actions>
+            <name>Send_Email_Notification_to_HR_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(ISCHANGED(OwnerId), 
+RecordType.Id =&apos;01238000000E9il&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Help - Case Opened</fullName>
