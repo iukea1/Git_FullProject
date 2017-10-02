@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AccountSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <ownerRules>
-        <fullName>AllInternalUsers</fullName>
+        <fullName>Share_all_accounts</fullName>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -9,9 +9,9 @@
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
         <accountAccessLevel>Edit</accountAccessLevel>
-        <caseAccessLevel>None</caseAccessLevel>
+        <caseAccessLevel>Edit</caseAccessLevel>
         <contactAccessLevel>Edit</contactAccessLevel>
-        <name>AllInternalUsers</name>
-        <opportunityAccessLevel>None</opportunityAccessLevel>
+        <name>Share all accounts</name>
+        <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </ownerRules>
 </AccountSharingRules>

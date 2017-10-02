@@ -4,6 +4,7 @@
  * 2017-03-07: SnapBI-Andy: updated user messaging per client request
  * 2017-06-05: Added language for success message
  * 2017-08-03: Updated by Jimmy Li, added method to skip steps if the contact already have a portal user related
+ * 2017-09-30: Updated by Jimmy Li. Updated logic if the contact has a user related.
  */
 public without sharing class PartnerPortalIndividualRegController
 {
@@ -60,9 +61,21 @@ public without sharing class PartnerPortalIndividualRegController
             if(hasRelatedUser(ExistingContactId))
             {
                 ExistingContactId = null;
-            }//<== Added ends
-        }
-        
+                //Added at 2017-09-30: if this emal also related to a customer user, send email to SP for a double check. 'amenjivar@silver-peak.com','channel@silver-peak.com'
+                sendNotifications('Notification: The New Partner Portal User Also Has Customer Portal Access - Request Partner Portal Access',
+                    '\r\n The user\'s email also associated to a another user.',
+                    true, 'Notification: We also found another user has been related to your email address - Request Partner Portal Access',
+                    'Please double check your account.', new String[]{Email});
+                //Added ends at 2017-09-30
+            }//<== Added ends at 2017-08-03
+        }else if(matchedContacts.size() > 0)//Added at 2017-09-30
+        {
+            sendNotifications('Notification: Multiple Contacts Found - Request Partner Portal Access',
+                    '', false, '', '', null);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Sorry, We found multiple records based on the information you provided. Please verifiy the form or contact your account manager.'));
+            return null;
+        }//ends
+
         if(ExistingContactId == null)
         {
             if(SelectedAccountId == null)
@@ -81,6 +94,10 @@ public without sharing class PartnerPortalIndividualRegController
                         MultipleAccounts.add(new SelectOption(acc.Id, acc.Name));
                     }
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'We found multiple records matching your company, please choose one.'));
+                    //Added at 2017-09-30
+                    sendNotifications('Notification: A Partner Portal User Activeted With Multiple Accounts Matched - Request Partner Portal Access',
+                    '', false, '', '', null);//ends
+
                     return null;
                 }
                 else if(matchedAccounts.size() == 0)
@@ -108,6 +125,8 @@ public without sharing class PartnerPortalIndividualRegController
             Database.rollback(sp);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failed to process your request. Please contact your account manager.'));
             ApexPages.addMessages(ex);
+            //Added at 2017-09-30
+            sendErrorNotification(ex.getMessage()+'\r\n'+ex.getStackTraceString());
         }
         return null;
     }
@@ -119,7 +138,7 @@ public without sharing class PartnerPortalIndividualRegController
         return c > 0;
     }
     
-    //Added at 2017-08-03
+    //Added at 2017-08-03, to find out if this contact allready regitered as a customer user before
     private Boolean hasRelatedUser(Id ctcId)
     {
         Integer count = [select count() from User where IsActive=true and ContactId = :ctcId];
@@ -130,6 +149,7 @@ public without sharing class PartnerPortalIndividualRegController
     {
         return [select Id from Contact where (Account.Partner_Application_Status__c='Approved' or Account.IsPartner=true) and Email=:Email];
     }
+
     
     private List<Account> findAccounts()
     {
@@ -229,4 +249,47 @@ public without sharing class PartnerPortalIndividualRegController
             return '';
         }
     }
+
+    //Added at 2017-09-30
+    private String buildEmailMessageWithRequest()
+    {
+        String message = '';
+        message += 'Below are the request details:\r\n\r\n';
+        message += 'First Name: '+FirstName+'\r\n';
+        message += 'Last Name: '+LastName+'\r\n';
+        message += 'Title: '+Title+'\r\n';
+        message += 'Company Name: '+CompanyName+'\r\n';
+        message += 'Email: '+Email+'\r\n';
+        message += 'Phone: '+Phone+'\r\n';
+        message += 'State: '+State+'\r\n';
+        message += 'City: '+City+'\r\n';
+        message += 'ZipCode: '+ZipCode+'\r\n';
+        message += 'Email Opt-In: '+((NewUserProfile.Email_Opt_In__c)?'TRUE':'FALSE')+'\r\n\r\n';
+        return message;
+    }
+
+    private Messaging.SingleEmailMessage buildEmail(String subject, String body, String endMessage, List<String> toAddresses)
+    {
+        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+        email.setToAddresses(toAddresses);
+        email.setSubject(subject);
+        email.setPlainTextBody(body+endMessage);
+        email.setSaveAsActivity(false);
+        return email;
+    }
+
+    private void sendErrorNotification(String content)
+    {
+        Messaging.sendEmail(new List<Messaging.Email> { buildEmail('Silver Peak: Error Occured on Partner Portal Reg Page',content, '', new String[]{'silverpeak@snapbi.com'}) });
+    }
+
+    private void sendNotifications(String subject, String spEndBody, Boolean sentToUser, String userSubject, String userEndBody,  List<String> userToAddresses)
+    {
+        List<Messaging.Email> emails = new List<Messaging.Email>();
+        String body = buildEmailMessageWithRequest();
+        emails.add(buildEmail(subject, body, spEndBody, new String[] {'amenjivar@silver-peak.com','channel@silver-peak.com'}));//'amenjivar@silver-peak.com','channel@silver-peak.com'
+        if(sentToUser == true){ emails.add(buildEmail(userSubject, body, userEndBody, userToAddresses)); }
+        Messaging.sendEmail(emails);
+    }
+    //Ends
 }
