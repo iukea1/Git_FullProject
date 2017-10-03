@@ -34,7 +34,7 @@
     <ownerRules>
         <fullName>Owner_in_All_Partner_Users</fullName>
         <sharedTo>
-            <group>Non_Contractor_Sharing_Group</group>
+            <group>Silver_Peak_Employees</group>
         </sharedTo>
         <sharedFrom>
             <allPartnerUsers></allPartnerUsers>
@@ -45,7 +45,7 @@
     <ownerRules>
         <fullName>Share_Leads_with_All</fullName>
         <sharedTo>
-            <group>Non_Contractor_Sharing_Group</group>
+            <group>Silver_Peak_Employees</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>

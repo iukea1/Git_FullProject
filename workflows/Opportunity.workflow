@@ -801,6 +801,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_Sales_Region</fullName>
+        <field>Sales_Region__c</field>
+        <formula>TEXT(Owner.GEO__c) +&apos;-&apos;+TEXT(Owner.Region__c)</formula>
+        <name>Set Sales Region</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Technical_Responsibility_Updates</fullName>
         <description>Updates to Dave Fehleisen</description>
         <field>Technical_Responsible__c</field>
@@ -1405,6 +1414,16 @@ ISCHANGED(StageName)
             <value>Closed Won,Closed Lost</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Sales Region on an Opp</fullName>
+        <actions>
+            <name>Set_Sales_Region</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>OR (IsNew(), ISCHANGED( OwnerId ))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Set Stage to Discovery for Deal Reg</fullName>

@@ -1127,6 +1127,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OpportunityTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>POCExtensionController</apexClass>
         <enabled>true</enabled>
     </classAccesses>

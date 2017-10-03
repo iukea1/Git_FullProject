@@ -1084,7 +1084,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityControllerTest</apexClass>
@@ -1124,6 +1124,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityStageSetupControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OpportunityTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9303,7 +9307,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Opportunity</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpportunityChooseForMerge</apexPage>
@@ -9315,7 +9319,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpportunityEdit</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpportunityLayoutPreview</apexPage>

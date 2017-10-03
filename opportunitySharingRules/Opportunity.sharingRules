@@ -29,7 +29,7 @@
     <ownerRules>
         <fullName>Share_All_Opps</fullName>
         <sharedTo>
-            <group>Non_Contractor_Sharing_Group</group>
+            <group>Silver_Peak_Employees</group>
         </sharedTo>
         <sharedFrom>
             <allInternalUsers></allInternalUsers>
@@ -40,7 +40,7 @@
     <ownerRules>
         <fullName>Share_Partner_Opps_with_All</fullName>
         <sharedTo>
-            <group>Non_Contractor_Sharing_Group</group>
+            <group>Silver_Peak_Employees</group>
         </sharedTo>
         <sharedFrom>
             <allPartnerUsers></allPartnerUsers>

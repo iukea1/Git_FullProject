@@ -248,7 +248,7 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
         System.assertEquals(0, theCase.RMA_count__c);
     }
     
-    @isTest
+   /* @isTest
     static void testAddDefaultCompetitorName()
     {    
         Account acc = new Account(Name = 'acme');
@@ -263,7 +263,7 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
         opp = [select Id, (select OpportunityId, CompetitorName from OpportunityCompetitors limit 1) from Opportunity where Id = :opp.Id limit 1];
         System.assertEquals('Not Specified', opp.OpportunityCompetitors[0].CompetitorName);
     }
-    
+    */
     @isTest
     static void testSetOppOwnerOnPOC()
     {
@@ -301,16 +301,7 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
         update oppty;
     }
     
-    @isTest
-    static void testSetLeadSourceOnOpp()
-    {
-        Account acc = new Account(Name='acme');
-        insert acc;
-        Opportunity opp = new Opportunity(Name = 'Acme', AccountId = acc.Id, Opportunity_Source__c = 'EMC', Type = 'Fpllow on Business', CloseDate = System.today() + 1, StageName = 'Discovery', Probability = 5, ForecastCategoryName = 'Commit');
-        insert opp;
-        opp.Opportunity_Source__c = 'Dell';
-        update opp;
-    }
+   
     
     @isTest 
     static void testSetSalesRegionEqualtoOwnerSalesRegion()
@@ -347,17 +338,7 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
         System.assertEquals('acme', theCase.RMATrackingInfo__c);
     }
     
-    @isTest(SeeAllData = true)
-    static void testCreateWanStartCase()
-    {
-        Account acc = new Account(Name='acme');
-        insert acc;
-        Opportunity opp = new Opportunity(Name='acme', CloseDate=Date.today(), StageName='Closed Won', AccountId=acc.Id, POC_Type__c='POC', Win_Description__c='test', Finance_Reviewed__c=true);
-        insert opp;
-        Product2 prod = [select Id, (select Id from PriceBookEntries limit 1) from Product2 where IsActive=true and Name like 'wanstart%' limit 1];
-        OpportunityLineItem line = new OpportunityLineItem(OpportunityId=opp.Id, TotalPrice=1, Quantity=1, PriceBookEntryId=prod.PriceBookEntries[0].Id, Description='WANSTART test');
-        insert line;
-    }
+    
     
     @isTest
     static void testChangeRMAItemProductAndUpdateRMAStatus()
@@ -721,18 +702,7 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
         }
     }
     
-    @isTest
-    static void testRemoveOrphanedPOC()
-    {
-        Account account = new Account(Name='acme');
-        insert account;
-        Opportunity opp = new Opportunity(Name='acme', Registered_Partner__c=account.Id, AccountId=account.Id, StageName='Discovery', CloseDate=System.today(),Product_Type__c='Both');
-        insert opp;
-        Request__c request = new Request__c(Opportunity__c=opp.Id);
-        insert request;
-        
-        delete opp;
-    }
+   
     
     @isTest
     static void testUpdateDealRegEndDateAfterConversion()
@@ -804,11 +774,11 @@ System.assertEquals(0, rvaccount2.Won_Amount__c);
             Request__c request = new Request__c(Opportunity__c = opp.Id);
         Request__c request2 = new Request__c(Opportunity__c = opp2.Id);        
         insert new Request__c[]{ request, request2 };
-            RMA__c rma = new RMA__c(Account__c = account.Id);
+        RMA__c rma = new RMA__c(Account__c = account.Id);
         RMA__c rma2 = new RMA__c(Account__c = account2.Id);        
         insert new RMA__c[]{ rma, rma2 };
             
-            system.assertEquals(Userinfo.getUserEmail(), [SELECT Account_Manager_Email_1__c, System_Engineer_Email_1__c FROM Request__c WHERE id = :request.Id][0].Account_Manager_Email_1__c);
+        system.assertEquals(Userinfo.getUserEmail(), [SELECT Account_Manager_Email_1__c, System_Engineer_Email_1__c FROM Request__c WHERE id = :request.Id][0].Account_Manager_Email_1__c);
         system.assertEquals(Userinfo.getUserEmail(), [SELECT Account_Manager_Email_1__c, System_Engineer_Email_1__c FROM Request__c WHERE id = :request2.Id][0].System_Engineer_Email_1__c);
         system.assertEquals(Userinfo.getUserEmail(), [SELECT Account_Manager_Email_1__c, System_Engineer_Email_1__c FROM RMA__c WHERE id = :rma.Id][0].Account_Manager_Email_1__c);
         system.assertEquals(Userinfo.getUserEmail(), [SELECT Account_Manager_Email_1__c, System_Engineer_Email_1__c FROM RMA__c WHERE id = :rma2.Id][0].System_Engineer_Email_1__c);        
