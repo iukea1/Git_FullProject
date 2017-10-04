@@ -4,7 +4,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
     Set<String> rejectStatuses = new Set<String> { 'Sales Rejected', 'Rejected' };
     String sdCampaignId = SalesDevelopmentHelper.getSDCampaign();
     Set<Id> contactIdsToBeMovedOff = new Set<Id>();
-    List<Contact> contactsToBeUpdated = new List<Contact>();
+    Map<Id,Contact> contactsToBeUpdated = new Map<Id,Contact>();
     List<CampaignMember> newSDCampaignMembers = new List<CampaignMember>();
     public ContactTriggerHandler()
     {
@@ -60,7 +60,11 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 Contact newContact= (Contact)newItems.get(conId);
                 if(moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && newContact.Account.Type != 'Partner')
                 {
-                    contactsToBeUpdated.add(new Contact(Id=conId,Lead_Sub_Status__c=null));
+                     if(!contactsToBeUpdated.containsKey(newContact.Id))
+                    {
+                        contactsToBeUpdated.put(newContact.Id, new Contact(Id=newContact.Id));
+                    }
+                    contactsToBeUpdated.get(newContact.Id).Lead_Sub_Status__c = null;
                     newSDCampaignMembers.add(new CampaignMember(ContactId = newContact.Id, CampaignId = sdCampaignId));
                 }
             }
@@ -85,7 +89,11 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 }
                 if(moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && !moveToSDCampaignStages.contains(oldContact.Lead_Lifecycle_Stage__c) && newContact.Account.Type != 'Partner')
                 {
-                    contactsToBeUpdated.add(new Contact(Id=conId,Lead_Sub_Status__c=null));
+                    if(!contactsToBeUpdated.containsKey(newContact.Id))
+                    {
+                        contactsToBeUpdated.put(newContact.Id, new Contact(Id=newContact.Id));
+                    }
+                    contactsToBeUpdated.get(newContact.Id).Lead_Sub_Status__c = null;
                     newSDCampaignMembers.add(new CampaignMember(ContactId = newContact.Id, CampaignId = sdCampaignId));
                 }
                 if(!moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && moveToSDCampaignStages.contains(oldContact.Lead_Lifecycle_Stage__c))
@@ -93,8 +101,13 @@ public class ContactTriggerHandler implements ITriggerHandler {
                     contactIdsToBeMovedOff.add(newContact.Id);
                 }
                 if(rejectStatuses.contains(newContact.Lead_Status__c) && !rejectStatuses.contains(oldContact.Lead_Status__c))
-                {
-                    contactsToBeUpdated.add(new Contact(Id=conId,Contact_BANT_Qualified__c = false,Contact_Me__c = false));
+                { 
+                    if(!contactsToBeUpdated.containsKey(newContact.Id))
+                    {
+                        contactsToBeUpdated.put(newContact.Id, new Contact(Id=newContact.Id));
+                    }
+                    contactsToBeUpdated.get(newContact.Id).Contact_Me__c = false;
+                    contactsToBeUpdated.get(newContact.Id).BANT_Qualified__c = false;
                     contactIdsToBeMovedOff.add(newContact.Id);
                 }
             }
@@ -128,12 +141,10 @@ public class ContactTriggerHandler implements ITriggerHandler {
         {
             delete [select Id from CampaignMember where CampaignId = :sdCampaignId and ContactId in :contactIdsToBeMovedOff];
         }
-        
-        //Update contacts
         if(!contactsToBeUpdated.isEmpty())
         {
             SilverPeakUtils.BypassingTriggers = true;
-            Database.update(contactsToBeUpdated, false);
+            Database.update(contactsToBeUpdated.values(), false);
             SilverPeakUtils.BypassingTriggers = false;
         }
     }
