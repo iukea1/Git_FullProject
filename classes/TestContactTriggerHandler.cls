@@ -1,6 +1,6 @@
 @IsTest
 public class TestContactTriggerHandler {
- static final String PORTAL_PROFILE = '13a-SP Partner Portal';
+    static final String PORTAL_PROFILE = '13a-SP Partner Portal';
     
     @isTest(seeAllData=true)
     static void testUpdatePartnerRole()
@@ -28,65 +28,138 @@ public class TestContactTriggerHandler {
         }
     }
     
-     @IsTest(SeeAllData=true)
-    public static void TestAssignGeo_Insert()
-    {
+    //Contact updated with ABM Target 
+    @isTest
+    static void updateContactABMTarget(){
+        Account acc =  new Account();
+        acc.Name = 'Test Account';
+        acc.Type = 'Prospect';
+        insert acc;
         
-        Profile prof = [SELECT Id FROM Profile WHERE Name='1.4- Intl Regional Sales Manager']; 
-        User usr = new User(Alias = 'standt', Email='testUser@uniquetest.com', 
-                            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
-                            LocaleSidKey='en_US', ProfileId = prof.Id, Region__c='West',GEO__c='NAM',
-                            TimeZoneSidKey='America/Los_Angeles', UserName='testUser@uniquetest.com');
+        Contact con1 = new Contact();
+        con1.FirstName = 'Vince';
+        con1.LastName = 'Chase';
+        con1.AccountId = acc.Id;
+        con1.LeadSource = 'Sales';
+        insert con1;
         
-        usr.IsActive =true;
-        insert usr;
-        System.RunAs(usr)
-        {
-            Test.startTest();
-            Contact con= new Contact(FirstName='TestFirst',LastName='Test Last',OwnerId=usr.Id);
-            insert con;
-            
-            Contact newCon=[Select GEO__c,Accurate_GEO__c from Contact where Id=:con.id];
-            System.assertEquals(newCon.Accurate_GEO__c,usr.GEO__c);
-            Test.stopTest();
-        }
+        Contact con2 = new Contact();
+        con2.FirstName = 'John';
+        con2.LastName = 'Chase';
+        con2.AccountId = acc.Id;
+        con2.LeadSource = 'Sales';
+        insert con2;
         
+        con1.ABM_Target__c = True;
+        update con1;
+        
+        Account acc1 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(True, acc1.Target_Account__c);
+        
+        con1.ABM_Target__c = False;
+        update con1;
+        
+        Account acc2= [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(False, acc2.Target_Account__c);
     }
     
-    @IsTest(SeeAllData=true)
-    public static void TestAssignGeo_Update()
-    {
+    //Contact updated with ABM Target False but Account has different contact with ABM Target True
+    @isTest
+    static void updateMultipleContactABMTargetFalse(){
+        Account acc =  new Account();
+        acc.Name = 'Test Account';
+        acc.Type = 'Prospect';
+        insert acc;
         
-        Profile prof = [SELECT Id FROM Profile WHERE Name='1.4- Intl Regional Sales Manager']; 
-        User usr = new User(Alias = 'standt', Email='testUser@uniquetest.com', 
-                            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
-                            LocaleSidKey='en_US', ProfileId = prof.Id, Region__c='West',GEO__c='NAM',
-                            TimeZoneSidKey='America/Los_Angeles', UserName='testUser@uniquetest.com');
+        Contact con1 = new Contact();
+        con1.FirstName = 'Vince';
+        con1.LastName = 'Chase';
+        con1.AccountId = acc.Id;
+        con1.LeadSource = 'Sales';
+        con1.ABM_Target__c = True;
+        insert con1;
         
-        usr.IsActive =true;
-        insert usr;
-        User usr1 = new User(Alias = 'standt', Email='testUser1@uniquetest.com', 
-                            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
-                            LocaleSidKey='en_US', ProfileId = prof.Id, Region__c='East',GEO__c='APAC',
-                            TimeZoneSidKey='America/Los_Angeles', UserName='testUser1@uniquetest.com');
+        Contact con2 = new Contact();
+        con2.FirstName = 'John';
+        con2.LastName = 'Chase';
+        con2.AccountId = acc.Id;
+        con2.LeadSource = 'Sales';
+        con2.ABM_Target__c = True;
+        insert con2;
         
-        usr1.IsActive =true;
-        insert usr1;
-        System.RunAs(usr)
-        {
-            Test.startTest();
-            Contact con= new Contact(FirstName='TestFirst',LastName='Test Last',OwnerId=usr.Id);
-            insert con;
-            
-            Contact newCon=[Select GEO__c,Accurate_GEO__c from Contact where Id=:con.id];
-            System.assertEquals(newCon.Accurate_GEO__c,usr.GEO__c);
-            newCon.OwnerId=usr1.Id;
-            update newCon;
-            
-            Contact expectedCon=[Select GEO__c,Accurate_GEO__c from Contact where Id=:con.id];
-            System.assertEquals(expectedCon.Accurate_GEO__c,usr1.GEO__c);
-            Test.stopTest();
-        }
+        con1.ABM_Target__c = False;
+        update con1;
         
+        Account acc1 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(True, acc1.Target_Account__c);
+    }
+    
+    //Contact undeleted with ABM Target True
+    @isTest
+    static void undeleteContactwithABMTargetTrue(){
+        Account acc =  new Account();
+        acc.Name = 'Test Account';
+        acc.Type = 'Prospect';
+        insert acc;
+        
+        Contact con1 = new Contact();
+        con1.FirstName = 'Vince';
+        con1.LastName = 'Chase';
+        con1.AccountId = acc.Id;
+        con1.LeadSource = 'Sales';
+        con1.ABM_Target__c = True;
+        insert con1;
+        
+        Contact con2 = new Contact();
+        con2.FirstName = 'John';
+        con2.LastName = 'Chase';
+        con2.AccountId = acc.Id;
+        con2.LeadSource = 'Sales';
+        con2.ABM_Target__c = True;
+        insert con2;
+        
+        delete con1;
+        Account acc1 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(True, acc1.Target_Account__c);
+        
+        delete con2;
+        Account acc2 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(False, acc2.Target_Account__c);
+        
+        undelete con1;
+        Account acc3 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(True, acc3.Target_Account__c);
+    }
+    
+    //Bulk Contacts test
+    @isTest
+    static void bulkContactsTest(){
+        Account acc =  new Account();
+        acc.Name = 'Test Account';
+        acc.Type = 'Prospect';
+        insert acc;    
+        
+        Contact[] listContactsToCreate = new Contact[]{};
+            for(Integer x=0; x<200;X++){
+                Contact ct = new Contact(AccountId=acc.Id, FirstName = 'Vince', LastName = 'Chase'+ x, ABM_Target__c = True, LeadSource = 'Sales');
+                listContactsToCreate.add(ct);
+            }
+        
+        Test.startTest();
+        insert listContactsToCreate;
+        
+        Account acc1 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(True, acc1.Target_Account__c);
+        
+        Contact[] listContactsToDelete = new Contact[]{};
+            for(Contact c: listContactsToCreate){
+                listContactsToDelete.add(c);
+            }
+        
+        delete listContactsToDelete;
+        
+        Account acc2 = [Select Id, Target_Account__c from Account where Id =:acc.Id];
+        system.assertEquals(False, acc2.Target_Account__c);
+        Test.stopTest();
     }
 }
