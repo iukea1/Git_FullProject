@@ -496,6 +496,14 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Clear_Extend_To_Date</fullName>
+        <field>Requested_End_Date__c</field>
+        <name>Clear Extend To Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Clear_Request_End_Date</fullName>
         <field>Requested_End_Date__c</field>
         <name>Clear Request End Date</name>
@@ -691,6 +699,15 @@ Requested_End_Date__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Owner_Name_from_Opportunity</fullName>
+        <field>Opportunity_Owner__c</field>
+        <formula>Opportunity__r.Owner.FirstName +&apos; &apos;+ Opportunity__r.Owner.LastName</formula>
+        <name>Update Owner Name from Opportunity</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_POC_Approval_Flag</fullName>
         <field>Trigger_POC_Approvers__c</field>
         <literalValue>1</literalValue>
@@ -734,6 +751,16 @@ Requested_End_Date__c
         <description>Note sent to account manager when schedule ship date is entered</description>
         <formula>AND ( ISCHANGED( Estimated_Ship_Date__c ) ,  Estimated_Ship_Date__c &lt;&gt; PRIORVALUE( Estimated_Ship_Date__c ))</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear Extension Date after POC extended</fullName>
+        <actions>
+            <name>Clear_Extend_To_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( ISPICKVAL(Status__c,&quot;Shipped - Extended&quot;), IsPICKVAL(Type__c,&quot;Evaluation&quot;), NOT(ISBLANK(Requested_End_Date__c )), Requested_End_Date__c == Target_End_Date__c, OR(First_Extension_Granted__c , Second_Extension_Granted__c) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Clear Request End DateTillNotShippedPOCS</fullName>
@@ -1104,6 +1131,16 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Update Opp Owner name</fullName>
+        <actions>
+            <name>Update_Owner_Name_from_Opportunity</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT(ISBLANK(Opportunity__c ))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Update the POC Record Type</fullName>
