@@ -430,10 +430,10 @@
         if(input !== '')
         {
             var result = findItems(input, dataSets.resellers, 'label');
-            //(result.length==0)
+            /*if(result.length==0)
             {
                 result.push({'label':'Other', 'value':'other'});
-            }
+            }*/
             showResult('#resellerResult', result, 'setResellerId');
             toggleReseult("#Reseller_AutoSearchResultPanel");
         }else
@@ -908,7 +908,7 @@
                             </div>
                             <apex:outputPanel layout="block" styleClass="" id="resellerDetailPanel" rendered="{!currUserAct.Partner_Type__c != 'Reseller'}">
                                 <div>
-                                    <div class="reg-label require">Reseller</div>
+                                    <div class="reg-label require">Reseller ( Please select "Other" if the reseller does not appear on the list. )</div>
                                     <div class = "reg-input">
                                     <apex:inputHidden id="ResellerInputHidden" html-data-errlabel="Reseller" value="{!selectedResellerId}"/>
                                        <div class="autoSearchContainer">
