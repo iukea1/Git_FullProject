@@ -62,10 +62,7 @@
                 <li>
                     <label>
                         Total Estimated Activity Cost <span class = "redMark">*</span>
-                        <div>
-                            <apex:inputField rendered="{!request.Approval_Status__c != 'Approved'}" value="{!request.Total_Estimated_Program_Costs__c}" required="true" html-placeholder="Please input amount in USD currency"/>
-                            <apex:outputField rendered="{!request.Approval_Status__c == 'Approved'}" value="{!request.Total_Estimated_Program_Costs__c}"/>
-                        </div> 
+                        <div><apex:inputField value="{!request.Total_Estimated_Program_Costs__c}" required="true" html-placeholder="Please input amount in USD currency"/></div> 
                     </label>
                 </li>
                 <li>
@@ -77,10 +74,7 @@
                 <li>
                     <label>
                         Estimated Silver Peak Amount <span class = "redMark">*</span>
-                        <div>
-                            <apex:inputField rendered="{!request.Approval_Status__c != 'Approved'}" value="{!request.Estimated_Silver_Peak_Amount__c}" required="true" html-placeholder="Numbers only"/>
-                        	<apex:outputField rendered="{!request.Approval_Status__c == 'Approved'}" value="{!request.Estimated_Silver_Peak_Amount__c}"/>
-                        </div> 
+                        <div><apex:inputField value="{!request.Estimated_Silver_Peak_Amount__c}" required="true" html-placeholder="Numbers only"/></div> 
                     </label>
                 </li>
                 <li>
@@ -356,7 +350,7 @@
                     </li>
                 </div>
                 <li>
-                    <apex:commandButton rendered="{!resultEditable == false}" value="Submit" action="{!saveMDF}"  styleClass="submitButton"/>
+                    <apex:commandButton value="Submit" action="{!saveMDF}"  styleClass="submitButton"/> 
                 </li>
             </ul>
         </apex:form>
@@ -639,7 +633,7 @@
                         <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                     </apex:outputPanel>
                 </apex:form>
-                <apex:outputPanel rendered="{!editable == false}" styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
+                <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
                 <li class="sectionTitle" style="width:96%;">
                     <span>
                     	Details on {!request.Name}

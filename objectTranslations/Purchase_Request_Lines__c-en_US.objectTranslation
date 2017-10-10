@@ -97,6 +97,10 @@
         <name>Line_Total__c</name>
     </fields>
     <fields>
+        <label><!-- # PR line --></label>
+        <name>PR_line__c</name>
+    </fields>
+    <fields>
         <label><!-- Project --></label>
         <name>Project__c</name>
         <picklistValues>

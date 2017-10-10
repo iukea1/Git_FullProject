@@ -6026,6 +6026,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Purchase_Request_Lines__c.PR_line__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Purchase_Request_Lines__c.Project__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6082,6 +6087,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Purchasing_Request__c.Order_to_be_sent_by__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Purchasing_Request__c.PR_line__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Purchasing_Request__c.PR_line_qty__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

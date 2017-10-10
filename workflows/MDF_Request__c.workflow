@@ -42,6 +42,14 @@
         <template>MDF/New_Funding_Request_Submitted</template>
     </alerts>
     <alerts>
+        <fullName>MDF_Amount_changed</fullName>
+        <ccEmails>Daniel@snapbi.com</ccEmails>
+        <description>MDF Amount changed</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>MDF/MDF_Amount_changed</template>
+    </alerts>
+    <alerts>
         <fullName>MDF_Request_is_Approved_External</fullName>
         <ccEmails>amenjivar@silver-peak.com</ccEmails>
         <description>MDF Request is Approved (External)</description>

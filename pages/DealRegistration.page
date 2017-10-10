@@ -908,7 +908,7 @@
                             </div>
                             <apex:outputPanel layout="block" styleClass="" id="resellerDetailPanel" rendered="{!currUserAct.Partner_Type__c != 'Reseller'}">
                                 <div>
-                                    <div class="reg-label require">Reseller ( Please select "Other" if the reseller does not appear on the list. )</div>
+                                    <div class="reg-label require">Reseller (Please select "Other" if the reseller does not appear on the list.)</div>
                                     <div class = "reg-input">
                                     <apex:inputHidden id="ResellerInputHidden" html-data-errlabel="Reseller" value="{!selectedResellerId}"/>
                                        <div class="autoSearchContainer">

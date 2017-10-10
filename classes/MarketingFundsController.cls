@@ -88,7 +88,6 @@ global class MarketingFundsController
     public PageReference editMDFResult()
     {
         resultEditable = true;
-        editable = true;
         return null;
     }
     public PageReference saveMDF()
