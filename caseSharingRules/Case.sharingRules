@@ -53,6 +53,19 @@
         <name>SVP Marketing &amp; Subordinates</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
+        <fullName>Share_interoute_cases_with_portal_users</fullName>
+        <sharedTo>
+            <portalRole>InterouteCommunicationsLtdPartnerUser</portalRole>
+        </sharedTo>
+        <criteriaItems>
+            <field>AccountId</field>
+            <operation>equals</operation>
+            <value>0015000000MOZ6l</value>
+        </criteriaItems>
+        <caseAccessLevel>Read</caseAccessLevel>
+        <name>Share interoute cases with portal users</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
         <fullName>VP_Business_Development_Subordinates</fullName>
         <sharedTo>
             <roleAndSubordinatesInternal>VPofBusinessDevlopment</roleAndSubordinatesInternal>

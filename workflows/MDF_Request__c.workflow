@@ -43,9 +43,13 @@
     </alerts>
     <alerts>
         <fullName>MDF_Amount_changed</fullName>
-        <ccEmails>Daniel@snapbi.com</ccEmails>
+        <ccEmails>silverpeak@snapbi.com</ccEmails>
         <description>MDF Amount changed</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>amenjivar@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>MDF/MDF_Amount_changed</template>
     </alerts>
