@@ -21,16 +21,20 @@ public class QuoteExtension
     @RemoteAction
     public static String SetPrimaryQuoteAndSubmit(String quoteId, String opportunityId)
     {
-        List<Quote__c> quotes = [select Id, Primary__c from Quote__c where Opportunity__c = :opportunityId];
+        Opportunity resultOpp=null;
+        List<Quote__c> quotes = [select Id, Primary__c,Reseller_AccountId__c from Quote__c where Opportunity__c = :opportunityId];
         if(!quotes.isEmpty())
         {
             for(Quote__c quote : quotes)
             {
                 quote.Primary__c = (quote.Id == quoteId) ? true : false;
+                if(quote.Primary__c)
+                     resultOpp= new Opportunity(Id=opportunityId, Primary_Partner__c=quote.Reseller_AccountId__c);
             }
             try
             {
                 update quotes;
+                update resultOpp;
             }
             catch(Exception ex)
             {
@@ -84,6 +88,7 @@ public class QuoteExtension
     
     private static string ValidateApprovalEntryCriterias(Quote__c quoteObj)
     {
+        System.debug(quoteObj.Opportunity__r.Geo_Region__c);
         if(quoteObj.Approval_Required__c==0)
             return 'Approval process is not required. Its already approved.';
         if(quoteObj.Approval_Required__c==1 && quoteObj.Opportunity__r.Geo_Region__c =='NONE')

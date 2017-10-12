@@ -665,15 +665,19 @@ convertResult += '.00';
     //set current quote as primary quote of the opportunity
     void setPrimaryQuote()
     {
-        List<Quote__c> quotes = [select Opportunity__c, Id, Name from Quote__c where Opportunity__c = :quote.Opportunity__c];
+        Opportunity opp=null;
+        List<Quote__c> quotes = [select Opportunity__c, Id, Name,Reseller_AccountId__c from Quote__c where Opportunity__c = :quote.Opportunity__c];
         for(Quote__c q : quotes)
-        {            
-            if(q.Id == quote.Id)
-            {
-                q.Primary__c = true;
-                update q;
-            }
+        {   
+            q.Primary__c = (q.Id == quoteId) ? true : false;
+            if(q.Primary__c)
+            opp= new Opportunity(Id=q.Opportunity__c,Primary_Partner__c=q.Reseller_AccountId__c);
+            
         }
+        if(quotes!=null && quotes.size()>0)
+            update quotes;
+        if(opp!=null)
+            update opp;
     }
     
     //copy LineItems To Opportunity

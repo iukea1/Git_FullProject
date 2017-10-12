@@ -76,12 +76,12 @@ public class OppoQuoteController
         try
         {
             PageReference returnPage;
-            
+           
             if(!oppo.HasOpportunityLineItem)
             {
                 update oppo;
                 upsert quote;
-                returnPage = new PageReference('/apex/LookupProducts?id=' + quote.Id);
+                returnPage = new PageReference('/apex/Quote?Id=' + quote.Id); 
             }
             else
             {
@@ -89,7 +89,7 @@ public class OppoQuoteController
                 if(stage == CopyStage.CopyAndEdit.ordinal())
                 {
                     copyItemsToQuote(); 
-                    returnPage = new PageReference('/apex/editQuoteLines?id=' + quote.Id);                   
+                    returnPage = new PageReference('/apex/Quote?Id=' + quote.Id);                   
                 }
                 else
                 {
@@ -114,4 +114,6 @@ public class OppoQuoteController
             return null;
         }
     }
+    
+    
 }

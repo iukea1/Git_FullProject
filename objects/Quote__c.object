@@ -586,7 +586,28 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Prepared For</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR 2 OR 3</booleanFilter>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Tier_1_Partner__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Tier_2_Partner__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Tier_3_Partner__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Silver Peak Quotes</relationshipLabel>
         <relationshipName>Quotes</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -749,6 +770,22 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reseller_AccountId__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Tier_3_Partner__c)),Tier_3_Partner__c,
+IF(NOT(ISBLANK(Tier_2_Partner__c)),Tier_2_Partner__c,
+Tier_1_Partner__c
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reseller AccountId</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Reseller_EdgeConnect_Discount__c</fullName>
@@ -1017,6 +1054,75 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Tier_1_Partner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Tier 1 Partner</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.IsAPartner__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Silver Peak Quotes</relationshipLabel>
+        <relationshipName>Tier1Partners</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tier_2_Partner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Tier 2 Partner</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.IsTier2Partner__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Silver Peak Quotes (Tier 2 Partner)</relationshipLabel>
+        <relationshipName>Tier2Partner</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tier_3_Partner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Tier 3  Partner</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.IsTier3Partner__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Silver Peak Quotes (Tier3  Partner)</relationshipLabel>
+        <relationshipName>Tier3Partner</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TmpApprovalRequired__c</fullName>
         <externalId>false</externalId>
         <formula>IF(or( 
@@ -1086,6 +1192,16 @@ Approval_Made__c =FALSE), OR(and(ConsultingDiscountMax__c &gt;0,Opportunity__r.A
         <errorConditionFormula>and( Hide_Pricing__c , ShowDiscount__c )</errorConditionFormula>
         <errorDisplayField>ShowDiscount__c</errorDisplayField>
         <errorMessage>In order to hide pricing you must disable show discounts too</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_Prepared_For_belonging_to_account</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT(ISBLANK( PreparedFor__c )),
+Reseller_AccountId__c!= PreparedFor__r.AccountId
+)</errorConditionFormula>
+        <errorDisplayField>PreparedFor__c</errorDisplayField>
+        <errorMessage>Prepared For doesn&apos;t belong to the Tier1 or, Tier 2 or Tier 3 account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Renew_Quotes_can_be_create_fr_spec_prof</fullName>

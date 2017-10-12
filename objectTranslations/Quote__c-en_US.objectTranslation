@@ -266,6 +266,10 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         </picklistValues>
     </fields>
     <fields>
+        <label><!-- Reseller AccountId --></label>
+        <name>Reseller_AccountId__c</name>
+    </fields>
+    <fields>
         <label><!-- Reseller EdgeConnect Discount --></label>
         <name>Reseller_EdgeConnect_Discount__c</name>
     </fields>
@@ -365,6 +369,21 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         <relationshipLabel><!-- Silver Peak Quotes --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Tier 1 Partner --></label>
+        <name>Tier_1_Partner__c</name>
+        <relationshipLabel><!-- Silver Peak Quotes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tier 2 Partner --></label>
+        <name>Tier_2_Partner__c</name>
+        <relationshipLabel><!-- Silver Peak Quotes (Tier 2 Partner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tier 3  Partner --></label>
+        <name>Tier_3_Partner__c</name>
+        <relationshipLabel><!-- Silver Peak Quotes (Tier3  Partner) --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- TmpApprovalRequired --></label>
         <name>TmpApprovalRequired__c</name>
     </fields>
@@ -414,6 +433,10 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
     <validationRules>
         <errorMessage><!-- In order to hide pricing you must disable show discounts too --></errorMessage>
         <name>Cant_Show_Discounts_and_Hide_Prices</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Prepared For doesn&apos;t belong to the Tier1 or, Tier 2 or Tier 3 account --></errorMessage>
+        <name>Check_Prepared_For_belonging_to_account</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- You are not allowed to create quote on renewal opportunity. Please contact Finance or renewal specialist team. --></errorMessage>

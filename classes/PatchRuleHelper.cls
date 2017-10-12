@@ -393,7 +393,7 @@ assignTeamMembers(objIds);
         }
         if(oppIds.size() > 0)
         {
-            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c from Opportunity where Id in :oppIds]);
+            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c, Technical_Responsible__c from Opportunity where Id in :oppIds]);
         }
         return result;
     }
@@ -612,6 +612,10 @@ assignTeamMembers(objIds);
                 if(patch.Overlay_2__c != null && !IsPartOfCoreTeam(patch,patch.Overlay_2__c))
                 {
                     result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
+                }
+                if(patch.SE__c != null && patch.SE__c != opp.Technical_Responsible__c)
+                {
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, TeamMemberRole='Team Member'));
                 }
             }
         }
