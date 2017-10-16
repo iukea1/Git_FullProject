@@ -30,7 +30,6 @@ trigger HandlePOCStatusChange on Request__c (after update)
          }
          if(request.Target_End_Date__c != oldRequest.Target_End_Date__c)
          {
-             System.debug('POC Change');
              //updates EvaluationEndDate on Assets to TargetEndDate on POC
              datesChangedPocs.add(request.Id);
          }

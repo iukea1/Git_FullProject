@@ -617,6 +617,7 @@
         <customButtons>NewQuoteFromOpportunity</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Quote_Name__c</fields>
         <fields>Quote_Date__c</fields>
         <fields>Quote_Valid_Until__c</fields>
         <fields>Approval_Status__c</fields>

@@ -57,10 +57,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__DataAssessment</application>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Ideas</application>
         <visible>false</visible>
     </applicationVisibilities>
@@ -1117,6 +1113,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>POCRequestTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PORenewECAssetsBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2050,6 +2050,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPOCRenewalAssetsController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestPOCRequestTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -6498,6 +6502,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Quote__c.Quote_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Quote__c.RegPartProdDisc__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9906,6 +9915,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>ResellerDiscountPage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ResourceCenterComponent</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10380,6 +10393,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditPublicDocuments</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditPublicFilters</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
