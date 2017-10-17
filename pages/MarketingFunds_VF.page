@@ -1337,6 +1337,7 @@
     }
 
     var totalUploaded;
+    var firstDeleteProofs = true;
     function uploadAllFiles(mdfId){
         totalUploaded = 0;
         var bucket = new AWS.S3( {params: {Bucket: AWS.config.s3.params.Bucket} });
@@ -1360,7 +1361,10 @@
                 on('success', function(response){
                     totalUploaded++;
                     console.log(response);
-                    createFileInSF(response, mdfId, totalUploaded == files.length);
+                    createFileInSF(response, mdfId, totalUploaded == files.length, firstDeleteProofs);
+                    if(firstDeleteProofs && response.request.fileType == "Proof of Performance"){
+                        firstDeleteProofs = false;
+                    }
                 }).
                 on('httpUploadProgress', function(progress, response){
                     console.log(progress);
@@ -1379,9 +1383,9 @@
         aotuAdjustHeight();
     }
 
-    function createFileInSF(response, mdfId, allUploaded){
+    function createFileInSF(response, mdfId, allUploaded, firstDeleteProofs){
         var params = response.request.params;
-        MarketingFundsController.linkFileToMFR({"FileName":params.Body.name, "S3Key":params.Key, "FileSize":params.ContentLength, "S3Bucket":params.Bucket, "FileType":response.request.fileType}, mdfId, allUploaded, 
+        MarketingFundsController.linkFileToMFR({"FileName":params.Body.name, "S3Key":params.Key, "FileSize":params.ContentLength, "S3Bucket":params.Bucket, "FileType":response.request.fileType}, mdfId, allUploaded, firstDeleteProofs,
             function(result, event){
                 if(event.type === 'exception'){
                     alert('Failed to upload file. The error message is: ' + result);
@@ -1394,7 +1398,7 @@
                         }else{
                             top.location = '/s/MarketingFunds?id=' + mdfId;
                         }
-                    }else{
+                    }else if(result != 'successUploadedOne'){
                         showReminder(result);
                         console.log(result);
                     }

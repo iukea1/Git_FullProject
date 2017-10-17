@@ -10,7 +10,7 @@ trigger CopyECLicenseEndDateToAccount on License__c (after insert,after update) 
         
         if(oldLicense==null ||(oldLicense!=null && oldLicense.License_Expiration__c!=obj.License_Expiration__c))
         {
-            if(obj.Quote_Type__c=='EDGECONNECT' && (obj.Model__c != null && obj.Model__c.startsWith('ECBASE')) && obj.Asset_Status__c!='Customer Evaluation')
+            if(obj.Quote_Type__c=='EDGECONNECT' && obj.Model__c.startsWith('ECBASE') && obj.Asset_Status__c!='Customer Evaluation')
             {
                 setAcc.add(new Account(Id=obj.AccountId__c,EC_End_Date__c=obj.License_Expiration__c));
             }

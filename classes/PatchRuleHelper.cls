@@ -613,10 +613,6 @@ assignTeamMembers(objIds);
                 {
                     result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
                 }
-                if(patch.SE__c != null && opp.Technical_Responsible__c!= null && patch.SE__c != opp.Technical_Responsible__c)
-                {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, TeamMemberRole='Team Member'));
-                }
             }
         }
         return result;

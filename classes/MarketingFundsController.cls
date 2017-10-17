@@ -5,8 +5,9 @@
 *  01DEC2016 Daniel - update: add upload large file(exceed 4.3M) functionality.
 *  02AUG2017 Daniel - update: update attached file to Amazon S3 file and create a record in SFDC
 *  07Sep2017 Daniel - update: add edit functionality.
+*  17OCT2017 Daniel - update: add verification for this page and controller.
 */
-global with Sharing class MarketingFundsController
+global without Sharing class MarketingFundsController
 {
     public MDF_Request__c request { get; set; }
     public String accountList { get; set; }
@@ -49,17 +50,28 @@ global with Sharing class MarketingFundsController
                     ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO, 'The page you requested has expired, or the record has been submitted. If you have any questions, please contact us at channel@silver-peak.com.'));
                 }
             }
-            else if(pro[0].Name == '13g-SP Partner Community')
-            {
-                userProfile = 'loginUser';
-            }
             else
             {
-                userProfile = 'otherUser';
-            }
-            if(String.isNotBlank(request.Id))
-            {
-                getFile(request.Id);
+                if(String.isBlank(request.Id) || checkMFRVisibility(request.Id, userInfo.getUserId()))
+                {
+                    if(pro[0].Name == '13g-SP Partner Community')
+                    {
+                        userProfile = 'loginUser';
+                    }
+                    else
+                    {
+                        userProfile = 'otherUser';
+                    }
+                    if(String.isNotBlank(request.Id))
+                    {
+                        getFile(request.Id);
+                    }
+                }
+                else
+                {
+                    request = new MDF_Request__c();
+                    ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO, 'Invilid url. If you have any questions, please contact us at channel@silver-peak.com.'));
+                }
             }
         }
         if(String.isNotBlank(request.Id) && String.isNotBlank(request.Event_Materials_Requested__c))
@@ -134,21 +146,16 @@ global with Sharing class MarketingFundsController
             {
 				submitMDFToProcess(request.Purchasing_Request__c);
             }
-            String reminder = userProfile == 'siteUser' ? 'Thank you for submitting your Marketing Fund request. We will review your submission and contact you shortly.' : 
-            'Thank you for submitting your Marketing Fund request. We will review your submission and contact you shortly. To check the status of your request, please click the Track Requests tab above.'
-                + '<br/><a style="color:#0000ee;margin:0;font-size:100%;" href="/s" target="_top">Click here to go back the home page </a> <br/> <a style="color:#0000ee;margin:0;font-size:100%;"href="/s/MarketingFunds" target="_top">Click here to submit another Marketing Fund request</a>';
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,reminder));
             completedMDF = true;
         }
         catch(Exception ex)
         {
             Database.rollback(sp);
             completedMDF = false;
-			//SilverPeakUtils.logException(ex);
+			SilverPeakUtils.logException(ex);
             ApexPages.AddMessages(ex);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, ex.getStackTraceString()));
         }
-        editable = false;
         return null;
     }
     
@@ -387,7 +394,7 @@ global with Sharing class MarketingFundsController
 
 
     @RemoteAction
-    global static String linkFileToMFR(AWSResponse UploadResponse, String mdfId, Boolean allUploaded)
+    global static String linkFileToMFR(AWSResponse UploadResponse, String mdfId, Boolean allUploaded, Boolean deleteProofs)
     {
         Ensemblestorage__EnsembleFile__c newFile = new Ensemblestorage__EnsembleFile__c();
         //AWSResponse response = (AWSResponse)JSON.deserialize(UploadResponse, AWSResponse.class);
@@ -404,7 +411,10 @@ global with Sharing class MarketingFundsController
             dml.AllowFieldTruncation = true;
             newFile.setOptions(dml);
             insert newFile;
-            deleteFileinSFDC(mdfId, newFile.file_type__c, newFile.Id);
+            if(newFile.file_type__c != 'Proof of Performance' || deleteProofs)
+            {
+                deleteFileinSFDC(mdfId, newFile.file_type__c, newFile.Id);
+            }
             if(allUploaded)
             {
                 MDF_Request__c mdf = [Select Id, Approval_Status__c from MDF_Request__c where Id =: mdfId];
@@ -426,17 +436,10 @@ global with Sharing class MarketingFundsController
 	
     private static void deleteFileinSFDC(String mdfId, String fileType, String newFileId)
     {
-        if(fileType != 'Proof of Performance')
+        List<Ensemblestorage__EnsembleFile__c> files = [Select Id from Ensemblestorage__EnsembleFile__c where Id !=: newFileId and Funding_Requests__c =: mdfId and file_type__c =: fileType];
+        if(!files.isEmpty())
         {
-            List<Ensemblestorage__EnsembleFile__c> files = [Select Id from Ensemblestorage__EnsembleFile__c where Id !=: newFileId and Funding_Requests__c =: mdfId and file_type__c =: fileType];
-            if(!files.isEmpty())
-            {
-                delete files;
-            }
-        }
-        else
-        {
-            
+            delete files;
         }
     }
     
@@ -557,6 +560,16 @@ global with Sharing class MarketingFundsController
                 }
             }
             return prSubmitted;
+        }
+        return false;
+    }
+
+    private Boolean checkMFRVisibility(String mfrId, String userId)
+    {
+        List<MDF_Request__c> mfrs = [Select Id, OwnerId from MDF_Request__c where Id =: mfrId];
+        if(!mfrs.isEmpty())
+        {
+            return mfrs[0].ownerId == userId;
         }
         return false;
     }
