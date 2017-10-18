@@ -425,6 +425,7 @@ public class ShippingInputFormController
             aset.Product2Id = ShipInfo.AssetIsExisted?ShipInfo.SelectProductId:ShipInfo.TempAsset.Product2Id;
             aset.Ship_To_Location__c = ShipToLocation+ '  ( Tracking Information:: ' + Shipment.Tracking_Information__c + ')';
             aset.Description = Comments;
+            aset.Customer_Notes__c='';
         }
         else
         {

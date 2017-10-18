@@ -35,13 +35,7 @@ public class LicenseTriggerHandler implements ITriggerHandler {
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
     {
-        if(oldItems.size()>0)
-        {
-            for(Id reqId:oldItems.keySet())
-            {
-                
-            }
-        }
+        
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
@@ -88,25 +82,10 @@ public class LicenseTriggerHandler implements ITriggerHandler {
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
-        if(oldItems!=null && oldItems.size()>0)
-        {
-            for (Id licId : oldItems.keyset())
-            {
-                
-            }
-            
-            
-        }
+        
     }
     public void AfterUndelete(Map<Id, SObject> newItems) 
     {
-        if(newItems!=null && newItems.size()>0)
-        {
-            for (Id licId : newItems.keyset())
-            {
-                
-            }
-            
-        }
+       
     }
 }
