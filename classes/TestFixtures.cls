@@ -57,7 +57,7 @@ public class TestFixtures {
 		insert requests;
        
 		request__c tmprequest = [select Opportunity_Owner__c from Request__c where Id = : requests[5].Id];
-         Test.stopTest();
+        Test.stopTest();
 		System.assertEquals(userInfo.getName(), tmprequest.Opportunity_Owner__c);
 		System.debug(tmprequest.Opportunity_Owner__c);
 		delete requests;
@@ -65,7 +65,7 @@ public class TestFixtures {
        
 	} 
 
-	static testMethod void testTriggerTroubleshootAidOnCase()
+	static void testTriggerTroubleshootAidOnCase()
 	{		
 		Troubleshoot_Aids__c troubleshootAid = new Troubleshoot_Aids__c(
 			Field_Linked__c = 'DoesNotExist',

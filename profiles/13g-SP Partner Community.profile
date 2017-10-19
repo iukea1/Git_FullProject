@@ -2078,6 +2078,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestOpportunityTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestPOCExtensionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
