@@ -20,6 +20,10 @@
                 <field>Active_EC_Base_License__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EC_Product_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Product2Id</field>
             </layoutItems>

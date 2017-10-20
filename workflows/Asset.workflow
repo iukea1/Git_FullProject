@@ -874,9 +874,10 @@ OR(ISCHANGED( Ship_Date__c ),ISNEW())
         <active>true</active>
         <formula>AND 
 ( 
-OR(Account.Name =&quot;Silver Peak Systems&quot;,
-NOT(ISBLANK(SBQQ__QuoteLine__c ))
-), 
+OR(
+Account.Name =&quot;Silver Peak Systems&quot;,
+NOT(ISBLANK( SBQQ__QuoteLine__c ))
+),
 Sync_With_Cloud_Portal__c =true, 
 IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
 BEGINS( Product2.Name ,&quot;EC&quot;) 
