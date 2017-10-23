@@ -5,6 +5,7 @@
  * 2017-06-05: Added language for success message
  * 2017-08-03: Updated by Jimmy Li, added method to skip steps if the contact already have a portal user related
  * 2017-09-30: Updated by Jimmy Li. Updated logic if the contact has a user related.
+ * 2017-10-23: Updated by Jimmy Li. Remove email notification when multiple accounts/users macthed, only sends email when multiple conatcts matched.
  */
 public without sharing class PartnerPortalIndividualRegController
 {
@@ -61,17 +62,22 @@ public without sharing class PartnerPortalIndividualRegController
             if(hasRelatedUser(ExistingContactId))
             {
                 ExistingContactId = null;
-                //Added at 2017-09-30: if this emal also related to a customer user, send email to SP for a double check. 'amenjivar@silver-peak.com','channel@silver-peak.com'
+                /*Added at 2017-09-30: if this emal also related to a customer user, send email to SP for a double check. 'amenjivar@silver-peak.com','channel@silver-peak.com'
                 sendNotifications('Notification: The New Partner Portal User Also Has Customer Portal Access - Request Partner Portal Access',
                     '\r\n The user\'s email also associated to a another user.',
                     true, 'Notification: We also found another user has been related to your email address - Request Partner Portal Access',
                     'Please double check your account.', new String[]{Email});
-                //Added ends at 2017-09-30
+                /Added ends at 2017-09-30 [removed at 2017-10-23] */
             }//<== Added ends at 2017-08-03
-        }else if(matchedContacts.size() > 0)//Added at 2017-09-30
+        }else if(matchedContacts.size() > 0)//Added at 2017-09-30, if multiple contacts are matched, prevent the login process and sends an email to alieen as notification
         {
+            String contactList = '';
+            for(Contact ctc : matchedContacts)
+            {
+                contactList += ctc.Name +'\r\n';
+            }//updated at 2017-10-23
             sendNotifications('Notification: Multiple Contacts Found - Request Partner Portal Access',
-                    '', false, '', '', null);
+                    'Below are the list of matched contacts:\r\n\r\n'+contactList, false, '', '', null);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Sorry, We found multiple records based on the information you provided. Please verifiy the form or contact your account manager.'));
             return null;
         }//ends
@@ -94,9 +100,9 @@ public without sharing class PartnerPortalIndividualRegController
                         MultipleAccounts.add(new SelectOption(acc.Id, acc.Name));
                     }
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'We found multiple records matching your company, please choose one.'));
-                    //Added at 2017-09-30
+                    /*Added at 2017-09-30 [removed at 2017-10-23]
                     sendNotifications('Notification: A Partner Portal User Activeted With Multiple Accounts Matched - Request Partner Portal Access',
-                    '', false, '', '', null);//ends
+                    '', false, '', '', null);//ends*/
 
                     return null;
                 }
@@ -147,7 +153,7 @@ public without sharing class PartnerPortalIndividualRegController
     
     private List<Contact> findContacts()
     {
-        return [select Id from Contact where (Account.Partner_Application_Status__c='Approved' or Account.IsPartner=true) and Email=:Email];
+        return [select Id, Name from Contact where (Account.Partner_Application_Status__c='Approved' or Account.IsPartner=true) and Email=:Email];
     }
 
     
