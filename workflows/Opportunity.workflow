@@ -2,21 +2,27 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Closed_Won_Less_Than_100_K_Email_Template</fullName>
+        <ccEmails>prane@silver-peak.com</ccEmails>
         <description>Closed Won Less Than 100 K Email Template</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
+            <recipient>rbooth@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Sales/Opportunity_Won_New</template>
+        <template>Sales/LatestLess_Than_100_k_Opportunity</template>
     </alerts>
     <alerts>
         <fullName>Closed_Won_New_and_FO</fullName>
+        <ccEmails>prane@silver-peak.com</ccEmails>
         <description>Closed Won New and FO</description>
         <protected>false</protected>
         <recipients>
@@ -28,16 +34,12 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>rbooth@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Sales/Greater_Than_100_k_Opportunity_Won_New</template>
+        <template>Sales/LatestGreater_Than_100_k_Opportunity</template>
     </alerts>
     <alerts>
         <fullName>Commit_Changed</fullName>
@@ -526,6 +528,16 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Sales_Win_Email</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Loss_Email_to_Opp_Owner</fullName>
+        <description>Send Loss Email to Opp Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Sales/Sales_Loss_Email</template>
     </alerts>
     <alerts>
         <fullName>Send_email_to_registering_partner_sales_rep</fullName>
@@ -1407,12 +1419,50 @@ ISCHANGED(StageName)
             <name>Sales_Win_Send_to_Opp_Owner</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>
             <value>Closed Won,Closed Lost</value>
         </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Competition Data For Lost Opp</fullName>
+        <actions>
+            <name>Send_Loss_Email_to_Opp_Owner</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Lost</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Competition Data for Win</fullName>
+        <actions>
+            <name>Sales_Win_Send_to_Opp_Owner</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+ISPICKVAL(StageName,&quot;Closed Won&quot;),
+OR(
+ISPICKVAL(Type,&quot;New Business&quot;),
+AND(
+OR(
+ISPICKVAL(Type,&quot;Follow On Business&quot;),
+ISPICKVAL(Type,&quot;Support Renewal&quot;),
+ISPICKVAL(Type,&quot;EC Renewal&quot;),
+ISPICKVAL(Type,&quot;Subscription Renewal&quot;)
+),
+Amount&gt;100000
+)
+)
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
