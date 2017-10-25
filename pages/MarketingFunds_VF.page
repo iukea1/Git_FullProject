@@ -534,101 +534,104 @@
                 </li>
                 <li style="border-bottom: solid 1px #007cb9;margin-top: 100px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
+				</apex:form>
                 <apex:outputPanel rendered="{!!resultEditable && request.Approval_Status__c=='Approved'}">
-                    <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
-                        <li class="sectionTitle" style="width:96%;">
-                            <span>
-                                Event Results
-                            </span>
-                            <apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
-                        </li>
-                        <li>
-                            <label>
-                                Total Attendees/Contacts Reached
-                                <div class="displayMessage"><apex:outputField value="{!request.Total_Attendees__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Total Opportunities Generated
-                                <div class="displayMessage"><apex:outputField value="{!request.Event_Results_Opportunities__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Total Qualified Leads
-                                <div class="displayMessage"><apex:outputField value="{!request.Total_Qualified_Leads__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Estimated Pipeline Value
-                                <div class="displayMessage"><apex:outputField value="{!request.Estimated_Pipeline_Value__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Campaign 
-                                <div class="displayMessage"><apex:outputField value="{!request.Campaign_Name__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Result Detail 
-                                <div class="displayMessage"><apex:outputField value="{!request.Result_Detail__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Requested Reimbursement Amount
-                                <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
-                            </label>
-                        </li>
-                    </apex:outputPanel>
-                    <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
-                        <li class="sectionTitle" style="width:96%;">
-                            <span>
-                                Partner Training Results
-                            </span>
-                            <apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
-                        </li>
-                        <li>
-                            <label>
-                                Topic/Course
-                                <div class="displayMessage"><apex:outputField value="{!request.Topic_Course__c}" /></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Total Attendees 
-                                <div class="displayMessage"><apex:outputField value="{!request.Total_Attendees__c}" /></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Number of Certifications 
-                                <div class="displayMessage"><apex:outputField value="{!request.Number_of_Certifications__c}" /></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Result Detail 
-                                <div class="displayMessage"><apex:outputField value="{!request.Result_Detail__c}" /></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Campaign        
-                                <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                Requested Reimbursement Amount <span class = "redMark">*</span>    
-                                <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
-                            </label>
-                        </li>
-                    </apex:outputPanel>
+                    <apex:form >
+                        <apex:outputPanel rendered="{!request.Type_of_Program__c != 'Enablement'}">
+                            <li class="sectionTitle" style="width:96%;">
+                                <span>
+                                    Event Results
+                                </span>
+                                <apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
+                            </li>
+                            <li>
+                                <label>
+                                    Total Attendees/Contacts Reached
+                                    <div class="displayMessage"><apex:outputField value="{!request.Total_Attendees__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Total Opportunities Generated
+                                    <div class="displayMessage"><apex:outputField value="{!request.Event_Results_Opportunities__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Total Qualified Leads
+                                    <div class="displayMessage"><apex:outputField value="{!request.Total_Qualified_Leads__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Estimated Pipeline Value
+                                    <div class="displayMessage"><apex:outputField value="{!request.Estimated_Pipeline_Value__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Campaign 
+                                    <div class="displayMessage"><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Result Detail 
+                                    <div class="displayMessage"><apex:outputField value="{!request.Result_Detail__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Requested Reimbursement Amount
+                                    <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
+                                </label>
+                            </li>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!request.Type_of_Program__c == 'Enablement'}">
+                            <li class="sectionTitle" style="width:96%;">
+                                <span>
+                                    Partner Training Results
+                                </span>
+                                <apex:commandButton value="Edit" action="{!editMDFResult}" styleClass="submitBtn-small" style="float:right;"/>
+                            </li>
+                            <li>
+                                <label>
+                                    Topic/Course
+                                    <div class="displayMessage"><apex:outputField value="{!request.Topic_Course__c}" /></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Total Attendees 
+                                    <div class="displayMessage"><apex:outputField value="{!request.Total_Attendees__c}" /></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Number of Certifications 
+                                    <div class="displayMessage"><apex:outputField value="{!request.Number_of_Certifications__c}" /></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Result Detail 
+                                    <div class="displayMessage"><apex:outputField value="{!request.Result_Detail__c}" /></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Campaign        
+                                    <div><apex:outputField value="{!request.Campaign_Name__c}"/></div>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    Requested Reimbursement Amount <span class = "redMark">*</span>    
+                                    <div class="displayMessage"><apex:outputField value="{!request.Requested_Reimbursement_Amount__c}"/></div>
+                                </label>
+                            </li>
+                        </apex:outputPanel>
+                    </apex:form>
                     <li>
                         Required documentation
                     </li>
@@ -665,7 +668,6 @@
                     </li>
                     <li style="border-bottom: solid 1px #007cb9;margin-top: 10px;margin-bottom:30px;width:91.5%;"></li>
                 </apex:outputPanel>
-                </apex:form>
                 <apex:outputPanel styleClass="{!IF(request.Approval_Status__c=='Approved' && !request.Activity_Complete__c,'greyPanel' ,'')}">
                 <li class="sectionTitle" style="width:100%;">
                     <span>Details on {!request.Name}</span>

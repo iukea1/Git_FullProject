@@ -212,6 +212,10 @@
                 <behavior>Edit</behavior>
                 <field>Fiscal_Quarter_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Win_Opportunity__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

@@ -91,7 +91,7 @@ global without Sharing class MarketingFundsController
     
     public String getAWSConfig()
     {
-        AWSConfig__c config = AWSConfig__c.getInstance('Active');
+        AWSConfig__c config = AWSConfig__c.getInstance('Default');
         if(config != null)
         {
             return JSON.serialize(config);

@@ -1448,21 +1448,32 @@ ISCHANGED(StageName)
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-ISPICKVAL(StageName,&quot;Closed Won&quot;),
-OR(
-ISPICKVAL(Type,&quot;New Business&quot;),
-AND(
-OR(
-ISPICKVAL(Type,&quot;Follow On Business&quot;),
-ISPICKVAL(Type,&quot;Support Renewal&quot;),
-ISPICKVAL(Type,&quot;EC Renewal&quot;),
-ISPICKVAL(Type,&quot;Subscription Renewal&quot;)
-),
-Amount&gt;100000
-)
-)
-)</formula>
+        <booleanFilter>1 AND ((2 AND 3)  OR (4 AND 5))</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>New Business</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.First_Win_Opportunity__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>Follow on Business,Support Renewal,Subscription Renewal,EC Renewal,New Business</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Amount</field>
+            <operation>greaterThan</operation>
+            <value>100000</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
