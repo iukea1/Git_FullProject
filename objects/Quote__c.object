@@ -802,10 +802,8 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
     <fields>
         <fullName>Reseller_AccountId__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(NOT(ISBLANK(Tier_3_Partner__c)),Tier_3_Partner__c,
-IF(NOT(ISBLANK(Tier_2_Partner__c)),Tier_2_Partner__c,
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c)),Tier_2_Partner__c,
 Tier_1_Partner__c
-)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Reseller AccountId</label>
@@ -818,7 +816,7 @@ Tier_1_Partner__c
     <fields>
         <fullName>Reseller_EdgeConnect_Discount__c</fullName>
         <externalId>false</externalId>
-        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_EdgeConnect__c</formula>
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c )),Tier_2_Partner__r.Registered_Discount_EdgeConnect__c,Tier_1_Partner__r.Registered_Discount_EdgeConnect__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Reseller EdgeConnect Discount</label>
         <precision>18</precision>
@@ -831,7 +829,7 @@ Tier_1_Partner__c
     <fields>
         <fullName>Reseller_NX_VX_Discount__c</fullName>
         <externalId>false</externalId>
-        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_Product__c</formula>
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c )),Tier_2_Partner__r.Registered_Discount_Product__c,Tier_1_Partner__r.Registered_Discount_Product__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Reseller NX/VX Discount</label>
         <precision>18</precision>
@@ -844,7 +842,7 @@ Tier_1_Partner__c
     <fields>
         <fullName>Reseller_Service_Discount__c</fullName>
         <externalId>false</externalId>
-        <formula>Opportunity__r.Primary_Partner__r.Registered_Discount_Service__c</formula>
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c )),Tier_2_Partner__r.Registered_Discount_Service__c,Tier_1_Partner__r.Registered_Discount_Service__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Reseller Service Discount</label>
         <precision>18</precision>
@@ -1088,6 +1086,7 @@ Tier_1_Partner__c
         <label>Tier 1 Partner</label>
         <lookupFilter>
             <active>true</active>
+            <errorMessage>Account must be Reseller or Distributor</errorMessage>
             <filterItems>
                 <field>Account.IsAPartner__c</field>
                 <operation>equals</operation>
@@ -1111,6 +1110,7 @@ Tier_1_Partner__c
         <label>Tier 2 Partner</label>
         <lookupFilter>
             <active>true</active>
+            <errorMessage>Account must be of type Distributor and reseller agreement checked to true</errorMessage>
             <filterItems>
                 <field>Account.IsTier2Partner__c</field>
                 <operation>equals</operation>
@@ -1131,13 +1131,14 @@ Tier_1_Partner__c
         <fullName>Tier_3_Partner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Tier 3  Partner</label>
+        <label>Other Reseller</label>
         <lookupFilter>
             <active>true</active>
+            <errorMessage>Account must be of Type Partner</errorMessage>
             <filterItems>
-                <field>Account.IsTier3Partner__c</field>
+                <field>Account.Type</field>
                 <operation>equals</operation>
-                <value>True</value>
+                <value>Partner</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -1236,6 +1237,16 @@ Reseller_AccountId__c!= PreparedFor__r.AccountId
         <errorMessage>This contact must belong to the highest tier partner account defined in the quote (Tier1,Tier2,Tier3).</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Distributor_reqd_Tier1_rese_agg_blank</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(Tier_2_Partner__c ),
+Tier_1_Partner__r.Reseller_Agreement__c==False
+)</errorConditionFormula>
+        <errorDisplayField>Tier_2_Partner__c</errorDisplayField>
+        <errorMessage>Tier 2 Partner is required if, Tier1 partner&apos;s reseller agreement is not checked.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Renew_Quotes_can_be_create_fr_spec_prof</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
@@ -1252,11 +1263,41 @@ NOT($Profile.Name ==&quot;5-SP Contract Mgr&quot; )
         <errorMessage>You are not allowed to create quote on renewal opportunity. Please contact Finance or renewal specialist team.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Special_Instructions_reqd_after_Tier2</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISBLANK(Special_Instructions__c ),
+OR(
+NOT(ISBLANK( Tier_2_Partner__c )),
+NOT(ISBLANK( Tier_3_Partner__c ))
+)
+)</errorConditionFormula>
+        <errorDisplayField>Special_Instructions__c</errorDisplayField>
+        <errorMessage>Special Instruction is required if Tier 2 or Tier 3 is not blank.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>check_Opportunity_Pricebook</fullName>
         <active>true</active>
         <errorConditionFormula>Opportunity__r.Pricebook2Id = NULL</errorConditionFormula>
         <errorMessage>There is no pricebook for the specified opportunity.</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Add_Edit_Products</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Add/Edit Products</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(&quot;{!Quote__c.Approval_Status__c}&quot;==&quot;Submitted&quot;||&quot;{!Quote__c.Approval_Made__c}&quot; == &quot;1&quot; || &quot;{!Quote__c.Approval_Made__c}&quot; == &quot;true&quot; || &quot;{!Quote__c.Approval_Made__c}&quot; == &quot;True&quot;) 
+{ 
+alert(&quot;Quote is locked and can not be edited&quot;); 
+} 
+else 
+{ 
+window.open(&quot;/apex/EditQuoteLines?id={!Quote__c.Id}&quot;, &quot;_top&quot;); 
+}</url>
+    </webLinks>
     <webLinks>
         <fullName>CloneWithProducts</fullName>
         <availability>online</availability>

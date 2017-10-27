@@ -17,6 +17,10 @@
         <name>ApprovalType__c</name>
     </fields>
     <fields>
+        <label><!-- Approval Date Time Stamp --></label>
+        <name>Approval_Date_Time_Stamp__c</name>
+    </fields>
+    <fields>
         <label><!-- Discount Percent --></label>
         <name>Discount_Percent__c</name>
     </fields>

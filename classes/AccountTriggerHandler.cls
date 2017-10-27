@@ -15,7 +15,14 @@ public class AccountTriggerHandler implements ITriggerHandler {
     {
         if(newItems!=null && newItems.size()>0)
         {
-            
+            List<Account> lstAccount=(List<Account>) newItems;
+            for(Account newAcc :lstAccount)
+            {
+                if(!string.isBlank(newAcc.Unity_Orch_Domain__c) && CheckforDuplicateDomain(newAcc.Unity_Orch_Domain__c))
+                {
+                    newAcc.addError('Unity Orch Domain entered is used in another account. Kindly enter another domain name.');
+                }
+            }
         }
         
     }
@@ -27,6 +34,10 @@ public class AccountTriggerHandler implements ITriggerHandler {
             {
                 Account newAccInfo= (Account)newItems.get(accId);
                 Account oldAccInfo= (Account)oldItems.get(accId);
+                if(!string.isBlank(newAccInfo.Unity_Orch_Domain__c) && newAccInfo.Unity_Orch_Domain__c!=oldAccInfo.Unity_Orch_Domain__c && CheckforDuplicateDomain(newAccInfo.Unity_Orch_Domain__c))
+                {
+                    newAccInfo.addError('Unity Orch Domain entered is used in another account. Kindly enter another domain name.');
+                }
                 if(!newAccInfo.Override_Service_Provider_Setting__c)
                 {
                     if((oldAccInfo.ECSP__c!=newAccInfo.ECSP__c) || (oldAccInfo.Service_Provider_Account_Type__c !=newAccInfo.Service_Provider_Account_Type__c ||oldAccInfo.Service_Provider_Location__c!=newAccInfo.Service_Provider_Location__c || oldAccInfo.Service_Provider_Domain__c!=newAccInfo.Service_Provider_Domain__c||oldAccInfo.Service_Provider_Admin_User__c!=newAccInfo.Service_Provider_Admin_User__c))
@@ -143,7 +154,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
             {
                 Account newAccInfo= (Account)newItems.get(accId);
                 Account oldAccInfo= (Account)oldItems.get(accId);               
-               
+                
                 if(newAccInfo.Partner_Application_Status__c == 'Approved' && oldAccInfo.Partner_Application_Status__c != 'Approved')
                 {
                     lstPartnerAcctIds.add(new Account(Id=newAccInfo.Id,IsPartner=true));
@@ -160,9 +171,6 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     oppTypeAccIds.put(newAccInfo.Id,newAccInfo.First_Asset_Quarter__c);
                 }
-                 System.debug('ECSP');
- 				 System.debug(newAccInfo.ECSP__c);
-                 System.debug(oldAccInfo.ECSP__c);
                 if(newAccInfo.Patch_Locked__c == false)
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
@@ -172,7 +180,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c )
+                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c)
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }
@@ -188,10 +196,10 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     mapContractAccIds.put(newAccInfo.Id,newAccInfo);
                 }
-               /*  if(newAccInfo.IsCap__c!= oldAccInfo.IsCap__c && newAccInfo.IsCap__c== TRUE )
-                {
-                    capCreationAcctId.add(newAccInfo.Id);
-                }  Cap Project */
+                /*  if(newAccInfo.IsCap__c!= oldAccInfo.IsCap__c && newAccInfo.IsCap__c== TRUE )
+{
+capCreationAcctId.add(newAccInfo.Id);
+}  Cap Project */
             }
             LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, lstOpportunity);
             UpdateOppTypeforAccount(oppTypeAccIds,lstOpportunity);
@@ -212,6 +220,15 @@ public class AccountTriggerHandler implements ITriggerHandler {
         
     }
     
+    private boolean CheckforDuplicateDomain(string inputDomain)
+    {
+        List<Account> lstAccount= [Select Id from Account where ECSP__c=false and Unity_Orch_Domain__c=:inputDomain];
+        if(lstAccount!=null && lstAccount.size()>0)
+        {
+            return true;
+        }
+        return false;
+    }
     private void SendEmailToDevOps(List<Account> lstAcct )
     {
         for(Account newAccInfo: lstAcct)
@@ -241,36 +258,36 @@ public class AccountTriggerHandler implements ITriggerHandler {
         }
     }
     
- /* private void CreateCapAndCapCases(List<Id> setAcctIds)
- {
-   Cap__c cap = new Cap__c();
-   List<Cap_Case__c> lstCapCase = new List<cap_Case__c>();
-   List<Case> lstAscCases = [Select Id, ClosedDate, CaseNumber, LastUpdateNote__c  from Case where 
-                                       RecordtypeId IN ('012500000005AuO','012500000005Aui') AND ClosedDate = NULL
-                                       AND AccountId =:setAcctIds]; 
-  if(setAcctIds!=null && setAcctIds.size()>0)
-  {
-  for(Id item: setAcctIds)
-   {
-    cap.Account_Name__c = setAcctIds[0]; 
-    cap.Status__c       = 'Open';
-   }
-    insert cap;
+    /* private void CreateCapAndCapCases(List<Id> setAcctIds)
+{
+Cap__c cap = new Cap__c();
+List<Cap_Case__c> lstCapCase = new List<cap_Case__c>();
+List<Case> lstAscCases = [Select Id, ClosedDate, CaseNumber, LastUpdateNote__c  from Case where 
+RecordtypeId IN ('012500000005AuO','012500000005Aui') AND ClosedDate = NULL
+AND AccountId =:setAcctIds]; 
+if(setAcctIds!=null && setAcctIds.size()>0)
+{
+for(Id item: setAcctIds)
+{
+cap.Account_Name__c = setAcctIds[0]; 
+cap.Status__c       = 'Open';
+}
+insert cap;
 
-  if(lstAscCases.size()>0)
-  {
-     for(Case c : lstAscCases)
-     {    
-       Cap_Case__c cCase    = new Cap_Case__c();
-       cCase.Cap_Name__c    = cap.Id;
-       cCase.Case_Number__c = c.Id;       
-       lstCapCase.add(cCase); 
-     }
-   }
-       if (lstCapCase.size()> 0)  
-       insert lstCapCase; 
-  } 
- } Cap Project */
+if(lstAscCases.size()>0)
+{
+for(Case c : lstAscCases)
+{    
+Cap_Case__c cCase    = new Cap_Case__c();
+cCase.Cap_Name__c    = cap.Id;
+cCase.Case_Number__c = c.Id;       
+lstCapCase.add(cCase); 
+}
+}
+if (lstCapCase.size()> 0)  
+insert lstCapCase; 
+} 
+} Cap Project */
     
     private void SendEmailsForContractExpiration(Map<Id,Account> mapAcct,Set<Id> ownerIds,List<Contract> lstContracts)
     {

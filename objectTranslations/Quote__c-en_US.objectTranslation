@@ -374,16 +374,25 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
     </fields>
     <fields>
         <label><!-- Tier 1 Partner --></label>
+        <lookupFilter>
+            <errorMessage><!-- Account must be Reseller or Distributor --></errorMessage>
+        </lookupFilter>
         <name>Tier_1_Partner__c</name>
         <relationshipLabel><!-- Silver Peak Quotes --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Tier 2 Partner --></label>
+        <lookupFilter>
+            <errorMessage><!-- Account must be of type Distributor and reseller agreement checked to true --></errorMessage>
+        </lookupFilter>
         <name>Tier_2_Partner__c</name>
         <relationshipLabel><!-- Silver Peak Quotes (Tier 2 Partner) --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Tier 3  Partner --></label>
+        <label><!-- Other Reseller --></label>
+        <lookupFilter>
+            <errorMessage><!-- Account must be of Type Partner --></errorMessage>
+        </lookupFilter>
         <name>Tier_3_Partner__c</name>
         <relationshipLabel><!-- Silver Peak Quotes (Tier3  Partner) --></relationshipLabel>
     </fields>
@@ -447,13 +456,25 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         <name>Check_Prepared_For_belonging_to_account</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- Tier 2 Partner is required if, Tier1 partner&apos;s reseller agreement is not checked. --></errorMessage>
+        <name>Distributor_reqd_Tier1_rese_agg_blank</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- You are not allowed to create quote on renewal opportunity. Please contact Finance or renewal specialist team. --></errorMessage>
         <name>Renew_Quotes_can_be_create_fr_spec_prof</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Special Instruction is required if Tier 2 or Tier 3 is not blank. --></errorMessage>
+        <name>Special_Instructions_reqd_after_Tier2</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- There is no pricebook for the specified opportunity. --></errorMessage>
         <name>check_Opportunity_Pricebook</name>
     </validationRules>
+    <webLinks>
+        <label><!-- Add_Edit_Products --></label>
+        <name>Add_Edit_Products</name>
+    </webLinks>
     <webLinks>
         <label><!-- CloneWithProducts --></label>
         <name>CloneWithProducts</name>
