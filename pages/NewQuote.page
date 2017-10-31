@@ -26,9 +26,8 @@
                     <apex:outputLabel value="Quote Product"></apex:outputLabel>
                     <apex:selectList value="{!stage}" size="1" disabled="{!Not(oppo.OpportunityLineItems.size > 0)}">
                         <!-- <apex:selectOptions value="{!stages}"></apex:selectOptions> -->
-                        <apex:selectOption itemLabel="Copy Opp Products & Edit" itemValue="0"></apex:selectOption>
                         <apex:selectOption itemLabel="Copy Opp Products" itemValue="1"></apex:selectOption>
-                        <apex:selectOption itemlabel="Do not copy Opp Producs" itemValue="2"></apex:selectOption>
+                        <apex:selectOption itemlabel="Do not copy Opp Products" itemValue="2"></apex:selectOption>
                         
                     </apex:selectList>
                 </apex:pageBlockSectionItem>  

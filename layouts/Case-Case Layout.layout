@@ -539,6 +539,7 @@
     </relatedLists>
     <relatedLists>
         <customButtons>Open_RMA</customButtons>
+        <customButtons>Create_New_RMA</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>

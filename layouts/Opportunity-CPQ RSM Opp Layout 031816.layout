@@ -126,6 +126,10 @@
                 <behavior>Edit</behavior>
                 <field>Oppty_Closed_POC_Age__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier1_Partner__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

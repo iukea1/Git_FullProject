@@ -491,6 +491,10 @@
                 <behavior>Readonly</behavior>
                 <field>Intial_Estimated_Close_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier1_Partner__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

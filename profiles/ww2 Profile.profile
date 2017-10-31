@@ -9326,6 +9326,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MapPlotData</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MarkContactsCertified</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
