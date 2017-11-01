@@ -31,7 +31,7 @@
         <description>Send Information Card Submitted for Approval cc</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amenjivar@silver-peak.com</recipient>
+            <recipient>pchavez@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>

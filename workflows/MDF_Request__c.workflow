@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Email_Alert_to_Sales_when_MDF_Fields_are_Updated</fullName>
-        <ccEmails>latmdf@silver-peak.com,apacmdf@silver-peak.com,emeamdf@silver-peak.com,marketingrequest@silver-peak.com</ccEmails>
-        <description>Email Alert to Sales when MDF Fields are Updated</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>amenjivar@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>MDF/MDF_Update_Email</template>
-    </alerts>
-    <alerts>
         <fullName>Funding_Request_Send_Feedback_Needed_Template</fullName>
         <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Funding Request: Send Feedback Needed Template</description>
@@ -47,7 +34,7 @@
         <description>MDF Amount changed</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amenjivar@silver-peak.com</recipient>
+            <recipient>pchavez@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -172,7 +159,7 @@
         <description>New MDF Request has Been Denied (Internal) SVP</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amenjivar@silver-peak.com</recipient>
+            <recipient>pchavez@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
@@ -502,10 +489,6 @@
     </rules>
     <rules>
         <fullName>Marketing Alerted when MDF Updated</fullName>
-        <actions>
-            <name>Email_Alert_to_Sales_when_MDF_Fields_are_Updated</name>
-            <type>Alert</type>
-        </actions>
         <active>false</active>
         <formula>ISCHANGED(LastModifiedDate)   &amp;&amp;   LastModifiedBy.UserRole.Name    &lt;&gt;    &quot;13a-SP Partner Portal Login,12d-SP Customer &amp; Partner,13a-SP Partner Portal Login,13d-SP Partner Portal with support&quot;</formula>
         <triggerType>onAllChanges</triggerType>
