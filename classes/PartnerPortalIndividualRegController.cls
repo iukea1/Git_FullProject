@@ -62,7 +62,7 @@ public without sharing class PartnerPortalIndividualRegController
             if(hasRelatedUser(ExistingContactId))
             {
                 ExistingContactId = null;
-                /*Added at 2017-09-30: if this emal also related to a customer user, send email to SP for a double check. 'amenjivar@silver-peak.com','channel@silver-peak.com'
+                /*Added at 2017-09-30: if this emal also related to a customer user, send email to SP for a double check. 'pchavez@silver-peak.com','channel@silver-peak.com'
                 sendNotifications('Notification: The New Partner Portal User Also Has Customer Portal Access - Request Partner Portal Access',
                     '\r\n The user\'s email also associated to a another user.',
                     true, 'Notification: We also found another user has been related to your email address - Request Partner Portal Access',
@@ -293,7 +293,7 @@ public without sharing class PartnerPortalIndividualRegController
     {
         List<Messaging.Email> emails = new List<Messaging.Email>();
         String body = buildEmailMessageWithRequest();
-        emails.add(buildEmail(subject, body, spEndBody, new String[] {'amenjivar@silver-peak.com','channel@silver-peak.com'}));//'amenjivar@silver-peak.com','channel@silver-peak.com'
+        emails.add(buildEmail(subject, body, spEndBody, new String[] {'pchavez@silver-peak.com','channel@silver-peak.com'}));//'pchavez@silver-peak.com','channel@silver-peak.com'
         if(sentToUser == true){ emails.add(buildEmail(userSubject, body, userEndBody, userToAddresses)); }
         Messaging.sendEmail(emails);
     }
