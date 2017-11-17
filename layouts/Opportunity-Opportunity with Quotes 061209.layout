@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Custom_Clone</customButtons>
-    <customButtons>Define_Channel_On_Quote</customButtons>
     <customButtons>Patch_Override_Opp</customButtons>
     <customButtons>Patch_Lock_Unlock</customButtons>
     <customButtons>Add_Revenue_Recognition</customButtons>
@@ -9,7 +8,6 @@
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
     <customButtons>BL__Find_Reference</customButtons>
-    <customButtons>Define_Channel</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>

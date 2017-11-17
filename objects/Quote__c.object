@@ -168,6 +168,20 @@ OR(Approval_Level_Needed__c &gt;0, Level3Required__c==1)
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Assigned_Distributor__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+NOT(ISBLANK(Tier_1_Partner__r.Assigned_Distributor__c)),
+Tier_1_Partner__r.Assigned_Distributor__c +&quot;|&quot; + Tier_1_Partner__r.Assigned_Distributor__r.Name,&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Assigned Distributor</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Average_Discount__c</fullName>
         <externalId>false</externalId>
         <formula>if( Quote_Amount_Rollup__c&gt;0, -(Quote_Discount__c /  Quote_Amount_Rollup__c),0)</formula>
@@ -1031,6 +1045,10 @@ Tier_1_Partner__c
         <fullName>Special_Instructions__c</fullName>
         <defaultValue>&quot;Pricing shown is transfer prices from Silver Peak to Reseller, NOT End-user pricing.&quot;</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Example: Reseller CDW
+Contact: Joe Smith
+test@cdw.com
+Minimum program discount: 29%</inlineHelpText>
         <label>Special Instructions</label>
         <length>10000</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -1266,7 +1284,11 @@ NOT($Profile.Name ==&quot;5-SP Contract Mgr&quot; )
         <fullName>Special_Instructions_reqd_after_Tier2</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISBLANK(Special_Instructions__c ),
+ISNEW(),
+ISBLANK(Assigned_Distributor__c),
+OR(ISBLANK(Special_Instructions__c ),
+Special_Instructions__c ==&quot;Pricing shown is transfer prices from Silver Peak to Reseller, NOT End-user pricing.&quot;
+),
 OR(
 NOT(ISBLANK( Tier_2_Partner__c )),
 NOT(ISBLANK( Tier_3_Partner__c ))

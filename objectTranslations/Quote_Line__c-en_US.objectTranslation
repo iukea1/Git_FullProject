@@ -21,7 +21,7 @@
         <name>Approval_Date_Time_Stamp__c</name>
     </fields>
     <fields>
-        <label><!-- Discount Percent --></label>
+        <label><!-- Requested Discount --></label>
         <name>Discount_Percent__c</name>
     </fields>
     <fields>
@@ -103,7 +103,7 @@
         <relationshipLabel><!-- Quote Lines --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Reseller Discount --></label>
+        <label><!-- Allowable Discount --></label>
         <name>Reseller_Discount__c</name>
     </fields>
     <fields>

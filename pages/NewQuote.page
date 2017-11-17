@@ -77,6 +77,12 @@
                
                  
             </apex:pageBlockSection>
+            <apex:pageBlockSection >
+              <apex:pageBlockSectionItem > 
+                     <apex:outputLabel value="Special Instructions" for="specInstr"></apex:outputLabel>
+                 	 <apex:inputField style="width:100%" id="specInstr" value="{!quote.Special_Instructions__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
             <!-- debug panel <apex:outputPanel id="panel">
             a{!stage}a
             </apex:outputPanel>-->

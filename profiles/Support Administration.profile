@@ -2627,6 +2627,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Builds__c.End_of_Maintenance__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Builds__c.FIPS_Compliant__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6364,6 +6369,11 @@
         <editable>false</editable>
         <field>Quote__c.Approval_Status__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Assigned_Distributor__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

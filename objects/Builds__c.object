@@ -95,6 +95,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>End_of_Maintenance__c</fullName>
+        <externalId>false</externalId>
+        <label>End of Maintenance</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>FIPS_Compliant__c</fullName>
         <externalId>false</externalId>
         <label>FIPS Compliant</label>

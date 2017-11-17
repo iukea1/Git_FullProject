@@ -17,6 +17,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>Quote_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Opportunity__c</field>
             </layoutItems>
             <layoutItems>
@@ -144,7 +148,7 @@
         <label>Discount Section</label>
         <layoutColumns>
             <layoutItems>
-                <height>300</height>
+                <height>350</height>
                 <page>ResellerDiscountPage</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
