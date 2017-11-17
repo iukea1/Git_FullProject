@@ -284,6 +284,10 @@
                 <behavior>Readonly</behavior>
                 <field>Domain_In_Cloud_Orchestrator__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Unity_Orch_Version__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

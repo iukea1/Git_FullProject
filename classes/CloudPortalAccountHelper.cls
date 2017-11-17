@@ -176,6 +176,7 @@ generator.writeStringField('password', 'Yesadmin4u');
             if(prodName.contains('EC-ORCH-AAS'))
             {
                cp.region=regionMap.get(item.Account.Unity_Orch_Location__c);
+               cp.version=item.Account.Unity_Orch_Version__c;
             }
             if(item.License_End_Date__c!=null)
             {
