@@ -8,7 +8,7 @@ public class RenewalOpportunityController
     public RenewalOpportunityController(ApexPages.StandardController controller) 
     {
         opp = (Opportunity)controller.getRecord();
-        Opportunity oldOpp = [Select Id, Pricebook2Id,Product_Type__c,Account.ECSP__c from Opportunity where Id =:opp.Id];
+        Opportunity oldOpp = [Select Id, Pricebook2Id,Product_Type__c,Account.ECSP__c,Tier1_Partner__c,Tier2_Partner__c,Tier3_Partner__c from Opportunity where Id =:opp.Id];
         List<Product2> products=null;
         
         if(oldOpp.Product_Type__c=='NX/VX')
@@ -34,9 +34,11 @@ public class RenewalOpportunityController
         opp.Type = 'Support Renewal';
         opp.StageName = 'Renewal';
         opp.Opportunity_Source__c='';
-        opp.ForecastCategoryName = 'Commit';
+        opp.ForecastCategoryName = 'Pipeline';
         opp.Probability = 50;
-        
+        opp.Tier1_Partner__c=oldOpp.Tier1_Partner__c;
+        opp.Tier2_Partner__c=oldOpp.Tier2_Partner__c;
+        opp.Tier3_Partner__c=oldOpp.Tier3_Partner__c;
         
         opp.Pricebook2Id = oldOpp.Pricebook2Id;
         
@@ -132,11 +134,7 @@ public class RenewalOpportunityController
             try
             {
                 NewOpp = opp.clone(false, false, false, false);
-                if(NewOpp.Type=='Subscription Renewal' || NewOpp.Type=='EC Renewal' )
-                {
-                    NewOpp.RecordTypeId='012500000005bUb';
-                }
-                if(NewOpp.Type=='Support Renewal')
+                if(NewOpp.Type=='Support Renewal' || NewOpp.Type=='EC Renewal'|| NewOpp.Type=='Subscription Renewal')
                 {
                     NewOpp.RecordTypeId='012500000005bUg';
                 }

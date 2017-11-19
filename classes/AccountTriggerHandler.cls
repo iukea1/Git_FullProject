@@ -435,10 +435,11 @@ insert lstCapCase;
                string buildNumber=data.Build_Number__c;
                if(buildNumber.contains('_'))
                {
-                   buildNumber=buildNumber.replace('', '.');
+                   buildNumber=buildNumber.replace('_', '.');
                }
                ValidBuildNumber.add(buildNumber) ;
            }
+           System.debug(ValidBuildNumber);
        }
     }
     private void LinkAccountToPatch(List<Id> accPatchIds, List<Id> accTeamIds,List<Opportunity> lstOpp)

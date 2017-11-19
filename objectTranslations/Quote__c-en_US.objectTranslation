@@ -352,9 +352,9 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         <name>Show_Virtual_Alternatives__c</name>
     </fields>
     <fields>
-        <help><!-- Example: Reseller CDW
-Contact: Joe Smith
-test@cdw.com
+        <help><!-- Example: Reseller CDW 
+Contact: Joe Smith 
+test@cdw.com 
 Minimum program discount: 29% --></help>
         <label><!-- Special Instructions --></label>
         <name>Special_Instructions__c</name>

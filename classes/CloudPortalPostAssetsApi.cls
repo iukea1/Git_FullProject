@@ -118,6 +118,8 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
                 generator.writeStartObject();
                 generator.writeObjectField('serial',item.SerialNumber);
                 generator.writeObjectField('name',item.Name);
+                System.debug(item.SerialNumber);
+                 System.debug(item.email);
                 generator.writeObjectField('email',item.email);
                 generator.writeObjectField('domain',item.domain);
                 if(item.ExpiryDate!=null)

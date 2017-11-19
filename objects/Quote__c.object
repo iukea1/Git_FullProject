@@ -1045,9 +1045,9 @@ Tier_1_Partner__c
         <fullName>Special_Instructions__c</fullName>
         <defaultValue>&quot;Pricing shown is transfer prices from Silver Peak to Reseller, NOT End-user pricing.&quot;</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Example: Reseller CDW
-Contact: Joe Smith
-test@cdw.com
+        <inlineHelpText>Example: Reseller CDW 
+Contact: Joe Smith 
+test@cdw.com 
 Minimum program discount: 29%</inlineHelpText>
         <label>Special Instructions</label>
         <length>10000</length>
@@ -1282,7 +1282,7 @@ NOT($Profile.Name ==&quot;5-SP Contract Mgr&quot; )
     </validationRules>
     <validationRules>
         <fullName>Special_Instructions_reqd_after_Tier2</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
 ISNEW(),
 ISBLANK(Assigned_Distributor__c),
@@ -1339,13 +1339,20 @@ window.open(&quot;/apex/EditQuoteLines?id={!Quote__c.Id}&quot;, &quot;_top&quot;
         <masterLabel>Email Quote Document</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>if(&quot;{!Quote__c.Approval_Status__c}&quot; == &quot;Approved&quot; &amp;&amp; &quot;{!Quote__c.Primary__c}&quot; == &quot;1&quot;)
+        <url>if(&quot;{!Quote__c.Assigned_Distributor__c}&quot;==&quot;&quot; &amp;&amp; &quot;{!Quote__c.Tier_2_PartnerId__c} &quot;!=&quot;&quot; &amp;&amp;&quot;{!Quote__c.Special_Instructions__c}&quot; == &quot;&quot;)
+{
+   alert(&quot;Please enter special instructions&quot;);
+}
+else 
+{
+if(&quot;{!Quote__c.Approval_Status__c}&quot; == &quot;Approved&quot; &amp;&amp; &quot;{!Quote__c.Primary__c}&quot; == &quot;1&quot;)
 {
 window.open(&quot;/apex/EmailQuoteDocument?id={!Quote__c.Id}&quot;, &quot;_blank&quot;, &quot;width=600,height=400&quot;);
 }
 else
 {
-alert(&quot;Quote must be approved and primary.&quot;);
+      alert(&quot;Quote must be approved and primary.&quot;);
+}
 }</url>
     </webLinks>
     <webLinks>
@@ -1442,14 +1449,21 @@ var callback = {
       for(var i = 0; i &lt; records.length; i++)
       {
         var quote = records[i];
-        if(quote.Approval_Status__c == &quot;Approved&quot;)
-        {
-          window.location = &quot;/apex/quoteAttach?id={!Quote__c.Id}&quot;;
-        }
-        else
-        {
-          alert (&quot;This Quote needs approval, press the submit for approval button&quot;); 
-        }
+		if(quote.Assigned_Distributor__c ==null &amp;&amp; quote.Tier_2_Partner__c !=null &amp;&amp; quote.Special_Instructions__c == null) 
+		{ 
+			alert(&quot;Please enter special instructions&quot;); 
+		} 
+		else
+		{
+			if(quote.Approval_Status__c == &quot;Approved&quot;)
+			{
+			  window.location = &quot;/apex/quoteAttach?id={!Quote__c.Id}&quot;;
+			}
+			else
+			{
+			  alert (&quot;This Quote needs approval, press the submit for approval button&quot;); 
+			}
+		}
       }
     }
   },
@@ -1459,7 +1473,7 @@ var callback = {
   }
 };
 
-sforce.connection.query(&quot;select Id, Approval_Status__c from Quote__c where Id=&apos;{!Quote__c.Id}&apos; limit 1&quot;, callback);</url>
+sforce.connection.query(&quot;select Id,Approval_Status__c,Assigned_Distributor__c,Tier_2_Partner__c,Special_Instructions__c from Quote__c where Id=&apos;{!Quote__c.Id}&apos; limit 1&quot;, callback);</url>
     </webLinks>
     <webLinks>
         <fullName>UpdateOpportunity</fullName>
