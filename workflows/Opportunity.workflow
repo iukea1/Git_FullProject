@@ -124,6 +124,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rmarqueling@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -1003,6 +1007,20 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Check Opp Owner</fullName>
+        <actions>
+            <name>EmailFinanceOnRSMSignature</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Signature_of_Opportunity_Owner__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Check Partner Initated Flag</fullName>
         <actions>
             <name>Check_Partner_Initated_To_True</name>
@@ -1409,6 +1427,14 @@ ISCHANGED(StageName)
             <field>Opportunity.Signature_of_Opportunity_Owner__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Signed_At__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Signed_By__c</field>
+            <operation>notEqual</operation>
         </criteriaItems>
         <description>when the RSM signs the rev rec checklist, email to Kiellie and Richard</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
