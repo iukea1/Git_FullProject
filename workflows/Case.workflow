@@ -12,6 +12,10 @@
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
         </recipients>
+        <recipients>
+            <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>support@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Sales/CaseUpdatedNotice</template>
@@ -1853,7 +1857,7 @@ ISCHANGED(New_Email_Notification_Text__c),
         </actions>
         <active>true</active>
         <formula>AND( 
-NOT( ISCHANGED( UpdatedBy__c )), 
+NOT( ISCHANGED( UpdatedBy__c )),
 NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;),
 NOT(RecordType.DeveloperName = &quot;HR_Requests&quot;), 
 NOT(RecordType.DeveloperName = &quot;Facilities&quot;),

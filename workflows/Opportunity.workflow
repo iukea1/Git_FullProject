@@ -1012,7 +1012,7 @@
             <name>EmailFinanceOnRSMSignature</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.Signature_of_Opportunity_Owner__c</field>
             <operation>equals</operation>
