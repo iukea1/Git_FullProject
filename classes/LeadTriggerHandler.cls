@@ -62,6 +62,18 @@ public class LeadTriggerHandler implements ITriggerHandler {
                 Lead oldLead=(Lead)oldItems.get(leadId);
                 if(!SilverPeakUtils.BypassingTriggers)
                 {
+                    if(!newLead.IsConverted &&newLead.Deal_Reg__c && newLead.LeadSource=='Deal Registration' && newLead.Status=='Approved' && oldLead.Status!='Approved')
+                    {
+                        //Check for distributor info
+                        if(newLead.Registered_Distributor__c!=null && newLead.Registered_Partner__c==null && newLead.Deal_Registration_Reseller__c!=null)
+                        {
+                            newLead.Registered_Partner__c=newLead.Deal_Registration_Reseller__c;
+                            if(newLead.Deal_Registration_Reseller_Contact__c!=null)
+                            {
+                                newLead.Registered_Partner_Sales_Rep__c=newLead.Deal_Registration_Reseller_Contact__c;
+                            }
+                        }
+                    }
                     if(!newLead.IsConverted)
                     {
                         PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newLead);
@@ -201,6 +213,7 @@ public class LeadTriggerHandler implements ITriggerHandler {
                     needToShareLeads.add(newLead);
                     needToShareLeadIds.add(newLead.Id);
                 }
+                
                 if(newLead.IsConverted == true && newLead.Trial_Request_from_Marketplace__c == false && newLead.ConvertedContactId != null)
                 {
                     contacts.add(new Contact(Id=newLead.ConvertedContactId, Lead_Status__c=newLead.Status));

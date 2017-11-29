@@ -78,7 +78,7 @@ global without sharing class CommunityDealRegistrationController
     
     private void loadCurrUser()
     {
-        List<User> users = [select Id, Name, ContactId from User where Id = :UserInfo.getUserId() limit 1];
+        List<User> users = [select Id, Name, ContactId,Profile.Name from User where Id = :UserInfo.getUserId() limit 1];
         if(users.size() > 0)
         {
             this.currUser = users[0];
@@ -185,9 +185,18 @@ global without sharing class CommunityDealRegistrationController
         leadRecord.Deal_Registration_Reseller_Contact__c = (leadRecord.NoDealRegistrationResellerContact__c)?null:(ID)leadRecord.Deal_Registration_Reseller_Contact__c;
         //Default Lead Values
         leadRecord.Deal_Reg__c = true;
-        leadRecord.Deal_Reg_By_Partner_Id__c = currUser.id;
-        leadRecord.Registered_Partner__c = currUserAct.id;
-        leadRecord.Registered_Partner_Sales_Rep__c = currUserCont.id;
+        if(currUser.Profile.Name=='13g-SP Distributor Community')
+        {
+            leadRecord.Registered_Distributor__c = currUserAct.id;
+            leadRecord.Registered_Distributor_Contact__c = currUserCont.id;
+        }
+        else
+        {
+            leadRecord.Deal_Reg_By_Partner_Id__c = currUser.id;
+            leadRecord.Registered_Partner__c = currUserAct.id;
+            leadRecord.Registered_Partner_Sales_Rep__c = currUserCont.id;
+        }
+       
         leadRecord.Trigger_Submission__c = true;
         leadRecord.Status = 'Draft';
         //Default Lead Values End
@@ -261,7 +270,7 @@ global without sharing class CommunityDealRegistrationController
                     result.add(new SelectOptionWrapper((String)obj.get('Id'), String.escapeSingleQuotes((String)obj.get('Name')) ));
                 }
             }
-            result.add(new SelectOptionWrapper('other', 'Other'));
+            //result.add(new SelectOptionWrapper('other', 'Other'));
             return result;
         }
 
