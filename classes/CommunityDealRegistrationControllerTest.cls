@@ -19,12 +19,15 @@ public class CommunityDealRegistrationControllerTest
     static void test()
     {
         User testPartnerUser = [select Id from User where Email='testuser@test.com'];
-        Account currAct = new Account();
+        Account currAct = new Account(Name='Test',Type='Partner',Partner_Type__c='Reseller',GEO_Supported__c='APAC');
+        insert currAct;
+       	System.debug('currAct.Id'+currAct.Id);
         CommunityDealRegistrationController controller = null;
         System.runAs(testPartnerUser){
             SilverPeakUtils.BypassingTriggers = true;
             controller = new CommunityDealRegistrationController();
             List<CommunityDealRegistrationController.SelectOptionWrapper> resellers = CommunityDealRegistrationController.getAllResellers(controller.getRegionFilters());
+            System.debug('resellers[0].Value'+resellers[0].Value);
             List<Contact> resellerContact = CommunityDealRegistrationController.getAllResellerContacts(resellers[0].Value);
             List<CommunityDealRegistrationController.SelectOptionWrapper> distributors = CommunityDealRegistrationController.getAllDistributors(controller.getRegionFilters());
             controller.leadRecord = buildLead();

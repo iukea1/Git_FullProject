@@ -815,7 +815,7 @@ Standard_Discount_Service__c
             <name>AcctRecTypetoCust</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -829,7 +829,7 @@ Standard_Discount_Service__c
             <name>AcctRecType2Other</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -844,7 +844,7 @@ Standard_Discount_Service__c
             <name>SetRecTypetoReseller</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
