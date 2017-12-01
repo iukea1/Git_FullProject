@@ -188,7 +188,7 @@
         </actions>
         <active>true</active>
         <formula>AND (  ISBLANK(Assigned_Distributor__c ),  NOT(ISBLANK(Tier_2_Partner__c)) )</formula>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>CondPOTerms</fullName>

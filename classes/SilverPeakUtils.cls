@@ -17,7 +17,18 @@ public class SilverPeakUtils
         Boolean portalUser = (user.UserType == 'CustomerSuccess' || user.UserType == 'PowerCustomerSuccess');
         return portalUser;
     }
-
+	public static Boolean IsCommunityUser()
+    {
+        User user = [select UserType from User where Id = :UserInfo.getUserId()];
+        Boolean portalUser = (user.UserType == 'Partner');
+        return portalUser;
+    }
+    public static Boolean IsDistributorCommunityUser()
+    {
+        User user = [select Profile.Name from User where Id = :UserInfo.getUserId()];
+        Boolean portalUser = (user.Profile.Name == '13g-SP Distributor Community');
+        return portalUser;
+    }
     public static Id getRecordTypeId(String name, String objName)
     {
         List<RecordType> recordType = [Select Id from RecordType where Name = :name and IsActive = true and SObjectType = :objname];

@@ -472,7 +472,7 @@ Minimum program discount: 29% --></help>
         <name>Renew_Quotes_can_be_create_fr_spec_prof</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- Special Instruction is required if Tier 2 or Tier 3 is not blank. --></errorMessage>
+        <errorMessage><!-- Please enter special instructions before submitting for approval. --></errorMessage>
         <name>Special_Instructions_reqd_after_Tier2</name>
     </validationRules>
     <validationRules>

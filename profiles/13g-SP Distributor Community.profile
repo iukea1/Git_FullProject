@@ -8806,7 +8806,7 @@
         <layout>Quote_Line__c-Quote Line Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Quote__c-Quote Layout</layout>
+        <layout>Quote__c-Partner Quote Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>RMA_Item__c-Eval Item Layout</layout>

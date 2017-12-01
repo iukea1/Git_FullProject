@@ -35,7 +35,7 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
             {
                 Quote__c newQuote= (Quote__c)newItems.get(quoteId);
                 Quote__c oldQuote= (Quote__c)oldItems.get(quoteId);
-                if(newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c && newQuote.Tier_2_Partner__c!=null && newQuote.Assigned_Distributor__c!=null)
+                if((newQuote.Tier_1_Partner__c!=oldQuote.Tier_1_Partner__c || newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c) && newQuote.Tier_2_Partner__c!=null && newQuote.Assigned_Distributor__c!=null)
                 {
                     string distInfo=newQuote.Assigned_Distributor__c;
                     string[] splitDistInfo= distInfo.split('\\|');
