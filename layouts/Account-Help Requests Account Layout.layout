@@ -26,23 +26,31 @@
                 <field>AccountNumber</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Hardware_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Health_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Software_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Is_this_a_foreign_government_entity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>EC_Term__c</field>
+                <behavior>Edit</behavior>
+                <field>Clean_Status_Changed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Website_Domain__c</field>
+                <behavior>Edit</behavior>
+                <field>Data_com_Clean_Modified__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SP_MKTG__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PartnerPortalEnabledIndicator__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Phone</field>
@@ -144,7 +152,9 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.ALLOW_PORTAL_SELF_REG</fields>
+        <fields>Primary_Account_Contact__c</fields>
         <fields>CONTACT.CREATED_DATE</fields>
+        <fields>PortalUserActive__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -171,7 +181,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5C000000EgS0</masterLabel>
+        <masterLabel>00h3800000VBrlk</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

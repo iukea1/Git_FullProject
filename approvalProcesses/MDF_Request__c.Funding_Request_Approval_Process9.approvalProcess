@@ -616,7 +616,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>rcury@silver-peak.com</name>
+                <name>amenjivar@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
@@ -770,6 +770,10 @@ Change Log:
         <action>
             <name>Move_MDF_Request_To_Pending</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>New_MDF_Request_Submitted_for_Approval_Internal</name>
+            <type>Alert</type>
         </action>
     </initialSubmissionActions>
     <label>Funding Request Approval Process</label>

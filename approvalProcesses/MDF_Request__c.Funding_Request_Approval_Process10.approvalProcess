@@ -722,6 +722,12 @@
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Approval_Status_hidden_Update</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>amenjivar@silver-peak.com</name>
@@ -752,9 +758,25 @@
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Approval_Status_Hidden_to_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
+                <name>New_MDF_Request_has_Been_Denied_Internal_SVP</name>
+                <type>Alert</type>
+            </action>
+        </rejectionActions>
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Approval_Status_hidden_Update</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>sstubbs@silver-peak.com</name>
@@ -779,15 +801,31 @@
                 <value>Approval 1</value>
             </criteriaItems>
         </entryCriteria>
-        <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
         <label>SVP MDF Approval for Approver 2</label>
         <name>SVP_MDF_Approval_for_Approver_2</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Approval_Status_Hidden_to_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
+                <name>New_MDF_Request_has_Been_Denied_Internal_SVP</name>
+                <type>Alert</type>
+            </action>
+        </rejectionActions>
     </approvalStep>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Approval_Status_Hidden_to_Approved</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>ddalponte@silver-peak.com</name>
@@ -812,11 +850,21 @@
                 <value>Approval 2</value>
             </criteriaItems>
         </entryCriteria>
-        <label>17	SVP MDF Approval for Approver 3</label>
-        <name>X17_SVP_MDF_Approval_for_Approver_3</name>
+        <label>SVP MDF Approval for Approver 3</label>
+        <name>SVP_MDF_Approval_for_Approver_3</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Approval_Status_Hidden_to_Denied</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
+                <name>New_MDF_Request_has_Been_Denied_Internal_SVP</name>
+                <type>Alert</type>
+            </action>
+        </rejectionActions>
     </approvalStep>
     <description>New MDF Request approval process triggered when a Partner submits a new MDF Request via the Partner Portal. 
 Change Log:
@@ -829,7 +877,7 @@ Change Log:
 7) Update LAT approval steps
 8) GEO steps order
 9) Updated EMEA approval step, removed &quot;UKI Sales&quot; and replaced with &quot;RSM&quot;
-10) Added SVP approval steps, Replaced Isaisas with Aileen for LAT, added AZN to APAC approval process.</description>
+10) Added SVP approval steps, Replaced Isaisas with Aileen for LAT, added ANZ to APAC approval process.</description>
     <emailTemplate>MDF/New_MDF_Request_Submitted_for_Approval_Internal</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>

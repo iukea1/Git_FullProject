@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Deal_Reg_Denied_Partner</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Reg Denied - Partner</description>
         <protected>false</protected>
         <recipients>
@@ -14,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>Deal_Reg_is_Approved_external</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Reg is Approved (external)</description>
         <protected>false</protected>
         <recipients>
@@ -27,7 +25,6 @@
     </alerts>
     <alerts>
         <fullName>Deal_Registration_Denied_Need_Reason_Denied</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Deal Registration Denied (Internal)</description>
         <protected>false</protected>
         <recipients>
@@ -57,7 +54,6 @@
     </alerts>
     <alerts>
         <fullName>Email_Alert_for_ISR_CSM_that_RSM_Approval_is_Pending</fullName>
-        <ccEmails>prane@silver-peak.com</ccEmails>
         <description>Email Alert for ISR/CSM that RSM Approval is Pending</description>
         <protected>false</protected>
         <recipients>
@@ -223,7 +219,6 @@
     </alerts>
     <alerts>
         <fullName>Opportunity_Registration_Acknowledgement</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Opportunity Registration Acknowledgement</description>
         <protected>false</protected>
         <recipients>
@@ -247,7 +242,6 @@
     </alerts>
     <alerts>
         <fullName>Partner_Acknowledgement</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Partner Acknowledgement</description>
         <protected>false</protected>
         <recipients>
@@ -309,7 +303,7 @@
     </alerts>
     <alerts>
         <fullName>Send_to_BDR_for_review</fullName>
-        <ccEmails>mmartin@silver-peak.com, lauren@snapbi.com</ccEmails>
+        <ccEmails>mmartin@silver-peak.com</ccEmails>
         <description>Send to BDR for review</description>
         <protected>false</protected>
         <recipients>
@@ -339,6 +333,17 @@
         <name>Approved Time Trigger 15 mins</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Assign_the_ownership_to_Shayne</fullName>
+        <field>OwnerId</field>
+        <lookupValue>sstubbs@silver-peak.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Assign the ownership to Shayne</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
@@ -949,6 +954,20 @@ Sales_Rejected_Comments__c</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Assign SP Leads to Shayne</fullName>
+        <actions>
+            <name>Assign_the_ownership_to_Shayne</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Lead.ECSP__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Assigned to Partner</fullName>
         <actions>
             <name>Assigned_to_Partner_Modified</name>
@@ -1099,8 +1118,11 @@ Deal_Reg__c,  DATEVALUE(CreatedDate) =  TODAY(), NOT( Trigger_Submission__c ) )<
             <name>Lead_Set_Status_Draft</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
-        <formula>AND( RecordTypeId = &quot;012500000005KAN&quot;, NOT(ISPICKVAL(Status,&quot;Draft&quot;)) )</formula>
+        <active>true</active>
+        <formula>AND(
+RecordTypeId = &quot;012500000005KAN&quot;,
+NOT(ISPICKVAL(Status,&quot;Draft&quot;))
+)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -1553,14 +1575,7 @@ Deal_Reg__c,  DATEVALUE(CreatedDate) =  TODAY(), NOT( Trigger_Submission__c ) )<
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-ISPICKVAL( LeadSource,&quot;Deal Registration&quot;),
-RecordTypeId=&quot;012500000005KAN&quot;,
-ISPICKVAL(Status ,&quot;Rejected&quot;),
-NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Submitted&quot;)),
-NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Approved&quot;)),
-NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Rejected&quot;))
-)</formula>
+        <formula>AND( ISPICKVAL( LeadSource,&quot;Deal Registration&quot;), RecordTypeId=&quot;012500000005KAN&quot;, ISPICKVAL(Status ,&quot;Rejected&quot;), NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Submitted&quot;)), NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Approved&quot;)), NOT(ISPICKVAL(PRIORVALUE(Status),&quot;Rejected&quot;)) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

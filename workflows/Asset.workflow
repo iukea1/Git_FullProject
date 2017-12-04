@@ -444,6 +444,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Add_Warranty_End_Date</fullName>
@@ -771,7 +772,7 @@ right(Id,4))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND (   OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),   NOT(Product2.Name == &quot;EC-ORCH&quot;),     OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),    ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),    OR(ISNew(),  ISCHANGED(License_End_Date__c),  ISCHANGED(Bandwidth_Nodes__c),  ISCHANGED(Licenses_Nodes__c),ISCHANGED(Status),ISCHANGED(Contract_Number__c) ) )</formula>
+        <formula>AND (  OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),  NOT(Product2.Name == &quot;EC-ORCH&quot;),   OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),  ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  OR(ISNew(),  ISCHANGED(License_End_Date__c),  ISCHANGED(Bandwidth_Nodes__c),  ISCHANGED(Licenses_Nodes__c),ISCHANGED( Service_Support_Start_Date__c ),  ISCHANGED( Service_Support_End_Date__c ),  ISCHANGED(Status) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -789,7 +790,7 @@ ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Perpetual&quot;),
 ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Metered&quot;), 
 ISPICKVAL(Product2.Product_Type__c ,&quot;EC-SP-Term&quot;) 
 ), 
-OR(ISCHANGED( Ship_Date__c ),ISNEW())
+OR(ISCHANGED( Ship_Date__c ),ISNEW()) 
 
 )</formula>
         <triggerType>onAllChanges</triggerType>
@@ -823,6 +824,11 @@ OR(ISCHANGED( Ship_Date__c ),ISNEW())
             <field>Asset.Sync_With_Cloud_Portal__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Product2.Family</field>
+            <operation>notEqual</operation>
+            <value>Product</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -874,10 +880,9 @@ OR(ISCHANGED( Ship_Date__c ),ISNEW())
         <active>true</active>
         <formula>AND 
 ( 
-OR(
-Account.Name =&quot;Silver Peak Systems&quot;,
-NOT(ISBLANK( SBQQ__QuoteLine__c ))
-),
+OR(Account.Name =&quot;Silver Peak Systems&quot;,
+NOT(ISBLANK(SBQQ__QuoteLine__c ))
+), 
 Sync_With_Cloud_Portal__c =true, 
 IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
 BEGINS( Product2.Name ,&quot;EC&quot;) 

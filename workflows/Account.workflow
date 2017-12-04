@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Account_Partner_Application_Approved</fullName>
-        <ccEmails>amenjivar@silver-peak.com, lauren@snapbi.com</ccEmails>
+        <ccEmails>amenjivar@silver-peak.com</ccEmails>
         <description>Account: Partner Application Approved</description>
         <protected>false</protected>
         <recipients>
@@ -35,11 +35,10 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Approved_Primary_Contact</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Approved Primary Contact</description>
         <protected>false</protected>
         <recipients>
-            <field>RegisteringUserContact__c</field>
+            <field>PrimaryPartnerContact__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
@@ -48,7 +47,6 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Approved_Signatory_Contact</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Approved Signatory Contact</description>
         <protected>false</protected>
         <recipients>
@@ -76,6 +74,10 @@
         <description>Account: Partner Application Denied - Duplicate</description>
         <protected>false</protected>
         <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>pchavez@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -93,7 +95,6 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Pending</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Partner Application Pending</description>
         <protected>false</protected>
         <recipients>
@@ -106,7 +107,7 @@
     </alerts>
     <alerts>
         <fullName>Account_Partner_Application_Submitted</fullName>
-        <ccEmails>channel@silver-peak.com, lauren@snapbi.com</ccEmails>
+        <ccEmails>channel@silver-peak.com</ccEmails>
         <description>Account: Partner Application Submitted</description>
         <protected>false</protected>
         <recipients>
@@ -135,7 +136,6 @@
     </alerts>
     <alerts>
         <fullName>Account_Send_New_Partner_Approved_Distributor_Alert</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Account: Send New Partner Approved Distributor Alert</description>
         <protected>false</protected>
         <recipients>
@@ -163,7 +163,7 @@
         <description>Expired Flag is unchecked</description>
         <protected>false</protected>
         <recipients>
-            <recipient>shorton@silver-peak.com</recipient>
+            <recipient>lcrawford@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
@@ -172,7 +172,6 @@
     </alerts>
     <alerts>
         <fullName>Notify_Partner_Team_on_New_Partner_Creation</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Notify Partner Team on New Partner Creation</description>
         <protected>false</protected>
         <recipients>
@@ -203,7 +202,7 @@
         <description>Send Email To Shari</description>
         <protected>false</protected>
         <recipients>
-            <recipient>shorton@silver-peak.com</recipient>
+            <recipient>lcrawford@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
@@ -215,12 +214,24 @@
         <description>Send Email to Marketing when the expired customer is checked</description>
         <protected>false</protected>
         <recipients>
-            <recipient>shorton@silver-peak.com</recipient>
+            <recipient>lcrawford@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Expired_Customer_Flag_checked</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_an_alert_to_Evan</fullName>
+        <description>Send an alert to Evan</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>ewhite@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>noreply@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SubscriptionLicense/Catch_All_Patch_Evan</template>
     </alerts>
     <fieldUpdates>
         <fullName>Account_Set_App_Status_Denied_Dup</fullName>
@@ -451,6 +462,15 @@ Standard_Discount_Service__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check_SP_MKTG</fullName>
+        <field>SP_MKTG__c</field>
+        <literalValue>1</literalValue>
+        <name>Check SP MKTG</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ClearFirstCustomerQuarter</fullName>
         <field>First_Asset_Quarter__c</field>
         <name>ClearFirstCustomerQuarter</name>
@@ -472,6 +492,15 @@ Standard_Discount_Service__c
         <field>Sync_Virtual_Assets_with_CP__c</field>
         <literalValue>0</literalValue>
         <name>Clear Virtual Asset Flag for Metered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Data_com_Clean_Updated</fullName>
+        <field>Data_com_Clean_Modified__c</field>
+        <literalValue>1</literalValue>
+        <name>Data.com Clean Updated?</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -522,6 +551,24 @@ Standard_Discount_Service__c
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Clean_Status_Change</fullName>
+        <field>Clean_Status_Changed__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Clean Status Change</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_the_type_to_partner</fullName>
+        <field>Type</field>
+        <literalValue>Partner</literalValue>
+        <name>Update the type to partner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <outboundMessages>
         <fullName>BL__AccountUpdate</fullName>
         <apiVersion>8.0</apiVersion>
@@ -568,6 +615,16 @@ Standard_Discount_Service__c
             <field>Account.Partner_Application_Status__c</field>
             <operation>equals</operation>
             <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Updated_from_Information_Card__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Created_from_Information_Card__c</field>
+            <operation>equals</operation>
+            <value>False</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
         <workflowTimeTriggers>
@@ -714,11 +771,21 @@ Standard_Discount_Service__c
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Clear Cloud Portal Sync Flag for Metered</fullName>
+        <fullName>Change  SP MKTG value when ECSP checked to true</fullName>
         <actions>
-            <name>Clear_Hardware_Sync_Flag</name>
+            <name>Check_SP_MKTG</name>
             <type>FieldUpdate</type>
         </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.ECSP__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Clear Cloud Portal Sync Flag for Metered</fullName>
         <actions>
             <name>Clear_Virtual_Asset_Flag_for_Metered</name>
             <type>FieldUpdate</type>
@@ -756,6 +823,20 @@ Standard_Discount_Service__c
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Data%2Ecom Clean Status Change%3F</fullName>
+        <actions>
+            <name>Data_com_Clean_Updated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.LastModifiedById</field>
+            <operation>equals</operation>
+            <value>Data.com Clean</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>DeactivateExpiredAccountField</fullName>
         <actions>
             <name>Expired_Flag_is_unchecked</name>
@@ -765,7 +846,7 @@ Standard_Discount_Service__c
             <name>UnCheckExpiredCustomerFlag</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( ISCHANGED(Active_Asset_Count__c),  Active_Asset_Count__c&gt;0, PRIORVALUE(Expired_Customer__c)=true )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -799,6 +880,19 @@ Standard_Discount_Service__c
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Send an email to Evan for Catch All Patch</fullName>
+        <actions>
+            <name>Send_an_alert_to_Evan</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>OR( 
+ISBLANK(Patch__c), 
+Patch__r.Catchall__c 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Set ECSP to True</fullName>
         <actions>
             <name>Set_Account_to_ECSP</name>
@@ -815,7 +909,7 @@ Standard_Discount_Service__c
             <name>AcctRecTypetoCust</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -829,7 +923,7 @@ Standard_Discount_Service__c
             <name>AcctRecType2Other</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -844,7 +938,7 @@ Standard_Discount_Service__c
             <name>SetRecTypetoReseller</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -854,13 +948,27 @@ Standard_Discount_Service__c
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>SetTypetoPartnerForReseller</fullName>
+        <actions>
+            <name>Update_the_type_to_partner</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Set Record Type to Reseller</description>
+        <formula>AND(
+RecordTypeId==&quot;012500000005QUt&quot;,
+NOT(ISPICKVAL(Type,&quot;Partner&quot;))
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Sync the account if unity orch attributes change</fullName>
         <actions>
             <name>Sync_Virtual_Asset_to_Cloud_Portal</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( NOT( Sync_Virtual_Assets_with_CP__c ), OR( ISCHANGED( Unity_Orch_Admin_User__c ), ISCHANGED(  Unity_Orch_Domain__c ), ISCHANGED( Unity_Orch_Location__c  ), ISCHANGED( Unity_Orch_Version__c ) ) )</formula>
+        <formula>AND( NOT(ISNEW()), NOT( Sync_Virtual_Assets_with_CP__c ), OR( ISCHANGED( Unity_Orch_Admin_User__c ), ISCHANGED(  Unity_Orch_Domain__c ), ISCHANGED( Unity_Orch_Location__c  ), ISCHANGED( Unity_Orch_Version__c ) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -872,6 +980,16 @@ Standard_Discount_Service__c
         <active>true</active>
         <description>if there is a process that feeds Number of Employees, since the value to employees since it is the only field displayed on the page layout</description>
         <formula>AND(ISCHANGED(Number_of_Employees__c),  ISBLANK( NumberOfEmployees ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Clean Status Change</fullName>
+        <actions>
+            <name>Update_Clean_Status_Change</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(CleanStatus)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

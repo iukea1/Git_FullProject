@@ -20,6 +20,10 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AccountId18Digit__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Site</field>
             </layoutItems>
@@ -62,6 +66,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Jan__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EC_Opp_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -108,23 +116,27 @@
                 <field>Health_Description__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Hardware_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Is_this_a_foreign_government_entity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Software_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Clean_Status_Changed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>EC_Term__c</field>
+                <behavior>Edit</behavior>
+                <field>Data_com_Clean_Modified__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Website_Domain__c</field>
+                <behavior>Edit</behavior>
+                <field>SP_MKTG__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PartnerPortalEnabledIndicator__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Patch_Locked__c</field>
@@ -198,6 +210,10 @@
                 <behavior>Edit</behavior>
                 <field>Cloud_Portal_Account_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Cloud_Portal_Account_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -211,7 +227,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Cloud Orchestrator Section</label>
+        <label>Cloud Orchestrator Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -224,6 +240,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Unity_Orch_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Unity_Orch_Version__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -249,14 +269,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Service_Provider_Contracted__c</field>
+                <field>Service_Provider_Domain__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Service_Provider_Domain__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Service_Provider_Environment_Type__c</field>
@@ -264,6 +280,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Service_Provider_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Contracted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Override_Service_Provider_Setting__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -638,7 +662,9 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.ALLOW_PORTAL_SELF_REG</fields>
+        <fields>Primary_Account_Contact__c</fields>
         <fields>CONTACT.CREATED_DATE</fields>
+        <fields>PortalUserActive__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -654,6 +680,8 @@
         <fields>End_of_Maintenance__c</fields>
         <fields>License_End_Date__c</fields>
         <relatedList>Asset.Silver_Peak_Account__c</relatedList>
+        <sortField>Product_Name_And_Nodes__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>New_Virtual_Asset</customButtons>

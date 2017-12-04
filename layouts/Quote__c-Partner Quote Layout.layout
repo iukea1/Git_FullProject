@@ -29,15 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Tier_1_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Tier_2_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Tier_3_Partner__c</field>
+                <field>Opportunity_Stage__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -186,6 +178,7 @@
         <fields>Product_Description__c</fields>
         <fields>Quantity__c</fields>
         <fields>Unit_Price__c</fields>
+        <fields>Line_Price__c</fields>
         <fields>Discount_Percent__c</fields>
         <fields>Reseller_Discount__c</fields>
         <fields>Discount_Spread__c</fields>
@@ -210,7 +203,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5000000Kdy85</masterLabel>
+        <masterLabel>00hR0000000a65Z</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

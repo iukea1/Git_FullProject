@@ -12,10 +12,6 @@
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
         </recipients>
-        <recipients>
-            <recipient>pmusunuru@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
         <senderAddress>support@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Sales/CaseUpdatedNotice</template>
@@ -31,17 +27,6 @@
         <senderAddress>support@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Support/CustomerCaseClosure</template>
-    </alerts>
-    <alerts>
-        <fullName>DevOps_Email_Alert_to_Case_Owner_on_New_email_Notification</fullName>
-        <description>DevOps: Email Alert to Case Owner on New email Notification</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderAddress>devopshelp@silver-peak.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Support/Email_to_Case_New_Email_Notification</template>
     </alerts>
     <alerts>
         <fullName>Email_Case_Update_Added</fullName>
@@ -481,29 +466,6 @@
         <template>Support/TechSupportCaseinQueue</template>
     </alerts>
     <alerts>
-        <fullName>LabHelp_Email_Alert_to_Case_Owner_on_New_email_Notification</fullName>
-        <description>LabHelp:Email Alert to Case Owner on New email Notification</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderAddress>labhelp@silver-peak.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Support/Email_to_Case_New_Email_Notification</template>
-    </alerts>
-    <alerts>
-        <fullName>NewCaseiscreatedGoogle</fullName>
-        <description>New Case is created -Google</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>csr@answer1.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>support@silver-peak.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Support/LinklatersCases</template>
-    </alerts>
-    <alerts>
         <fullName>NewCaseiscreatedLinklaters</fullName>
         <ccEmails>Jason@rdc.uk.com, paul.lawrence@rdc.uk.com</ccEmails>
         <description>New Case is created - Linklaters</description>
@@ -603,7 +565,6 @@
     </alerts>
     <alerts>
         <fullName>NotifyEngineeringwhenacaseisescalated</fullName>
-        <ccEmails>mitah@silver-peak.com</ccEmails>
         <ccEmails>ttedijanto@silver-peak.com</ccEmails>
         <description>Notify Engineering when a case is escalated</description>
         <protected>false</protected>
@@ -853,6 +814,14 @@
         <description>Send Email Notification to Facilities Team</description>
         <protected>false</protected>
         <recipients>
+            <recipient>cemel@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>clerma@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>jcreasy@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -873,6 +842,10 @@
         </recipients>
         <recipients>
             <recipient>jslaughterbeck@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>msewani@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -957,6 +930,15 @@
         <name>ChangeOwner4ITRequests</name>
         <notifyAssignee>true</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Close_the_Case</fullName>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>Close the Case</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -1079,21 +1061,30 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_CapCase_Comments_Field</fullName>
-        <field>CapCase_Comments__c</field>
-        <formula>LastUpdateNote__c</formula>
-        <name>Update CapCase Comments Field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Update_Case_CC_10_Email</fullName>
         <field>CC10__c</field>
         <formula>Contact.Account.Customer_CC_Email__c</formula>
         <name>Update Case CC 10 Email</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Case_Disposition</fullName>
+        <field>Case_Disposition__c</field>
+        <literalValue>Answer/Solution Provided</literalValue>
+        <name>Update Case Disposition</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Case_Entitlement_Type</fullName>
+        <field>Entitlement_Type__c</field>
+        <literalValue>Contract</literalValue>
+        <name>Update Case Entitlement Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -1105,10 +1096,28 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Case_Reason</fullName>
+        <field>Reason</field>
+        <literalValue>Management</literalValue>
+        <name>Update Case Reason</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Case_Status_to_In_Process</fullName>
         <field>Status</field>
         <literalValue>In Process</literalValue>
         <name>Update Case Status to In Process</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Entitlement_Type</fullName>
+        <field>Entitlement_Type__c</field>
+        <literalValue>Contract</literalValue>
+        <name>Update Entitlement Type</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -1215,16 +1224,6 @@
         </criteriaItems>
         <description>Send an email when a beta case is created</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Capture Last Updated Notes to text</fullName>
-        <actions>
-            <name>Update_CapCase_Comments_Field</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <formula>ISCHANGED(LastUpdateNote__c )</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Case Closed Internal</fullName>
@@ -1383,6 +1382,46 @@ NOT(Contact.Testing__c)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Close WAN START Case after 60 days</fullName>
+        <actions>
+            <name>Update_Entitlement_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Subject</field>
+            <operation>startsWith</operation>
+            <value>New WANstart</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>WANstart</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Close_the_Case</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Case_Disposition</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Case_Entitlement_Type</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Case_Reason</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Case.CreatedDate</offsetFromField>
+            <timeLength>60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
         <fullName>CustomerSatisfactionSurvey</fullName>
         <actions>
             <name>Send_Case_Contact_a_satisfaction_survey_request</name>
@@ -1431,20 +1470,6 @@ NOT(Contact.Testing__c)
         </criteriaItems>
         <description>This workflow rule will send an email notification to the customer about the case creation.</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>DevOps-New Email Notification for Case Owner</fullName>
-        <actions>
-            <name>DevOps_Email_Alert_to_Case_Owner_on_New_email_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( 
-ISCHANGED(New_Email_Notification_Text__c), 
-(New_Email_Notification_Text__c &lt;&gt; Null),
-(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;) 
-)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Escalation Email</fullName>
@@ -1523,45 +1548,10 @@ ISCHANGED(New_Email_Notification_Text__c),
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <description>This workflow is used to notify the facilities team when a case is assigned to a team member.</description>
         <formula>AND(ISCHANGED(OwnerId), 
 RecordType.Id =&apos;01238000000E9ik&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Google Alert</fullName>
-        <actions>
-            <name>NewCaseiscreatedGoogle</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
-        <criteriaItems>
-            <field>Contact.AccountName</field>
-            <operation>contains</operation>
-            <value>Google</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Technical Support,Incoming Email</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>equals</operation>
-            <value>12-SP Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>equals</operation>
-            <value>12a-SP Portal Hi Vol</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>notEqual</operation>
-            <value>Closed,Closed-Unresolved,Completed,Expired</value>
-        </criteriaItems>
-        <description>Notify Tier1 if Google opens a case in the portal</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>HR Support Case Creation</fullName>
@@ -1590,6 +1580,7 @@ RecordType.Id =&apos;01238000000E9ik&apos;)</formula>
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <description>This workflow is used to notify the HR team when a case is assigned to a team member.</description>
         <formula>AND(ISCHANGED(OwnerId), 
 RecordType.Id =&apos;01238000000E9il&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
@@ -1673,20 +1664,6 @@ RecordType.Id =&apos;01238000000E9il&apos;)</formula>
         </criteriaItems>
         <description>This workflow rule will send an email notification to the customer about the case creation.</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>LabHelp-New Email Notification for Case Owner</fullName>
-        <actions>
-            <name>LabHelp_Email_Alert_to_Case_Owner_on_New_email_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( 
-ISCHANGED(New_Email_Notification_Text__c), 
-(New_Email_Notification_Text__c &lt;&gt; Null),
-(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;) 
-)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>New Case Created</fullName>
@@ -1857,12 +1834,12 @@ ISCHANGED(New_Email_Notification_Text__c),
         </actions>
         <active>true</active>
         <formula>AND( 
-NOT( ISCHANGED( UpdatedBy__c )),
+NOT( ISCHANGED( UpdatedBy__c )), 
 NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;),
-NOT(RecordType.DeveloperName = &quot;HR_Requests&quot;), 
+NOT(RecordType.DeveloperName = &quot;HR_Requests&quot;),
 NOT(RecordType.DeveloperName = &quot;Facilities&quot;),
-NOT(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;), 
-NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;) 
+NOT(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;),
+NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;)
 )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1873,6 +1850,7 @@ NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;)
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3 And 4</booleanFilter>
         <criteriaItems>
             <field>Case.Severity__c</field>
             <operation>notEqual</operation>
@@ -1893,6 +1871,7 @@ NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;)
             <operation>equals</operation>
             <value>Tier1</value>
         </criteriaItems>
+        <description>When a case is assigned to Tier 1, send a notification to csr answer1</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

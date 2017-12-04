@@ -452,6 +452,10 @@
         <name>Original_POC_End_Date__c</name>
     </fields>
     <fields>
+        <label><!-- POC COntact ID --></label>
+        <name>POC_COntact_ID__c</name>
+    </fields>
+    <fields>
         <help><!-- link to contact record for POC communications --></help>
         <label><!-- POC Contact --></label>
         <name>POC_Contact__c</name>
@@ -649,10 +653,6 @@
     <fields>
         <label><!-- RSM Approved --></label>
         <name>RSM_Approved__c</name>
-    </fields>
-    <fields>
-        <label><!-- RSM Manager1 --></label>
-        <name>RSM_Manager1__c</name>
     </fields>
     <fields>
         <label><!-- RSM Sales Director --></label>

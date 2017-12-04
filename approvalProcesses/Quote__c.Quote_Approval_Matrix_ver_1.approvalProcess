@@ -278,7 +278,7 @@ Approval_Level_Needed__c &gt;1
         </rejectBehavior>
     </approvalStep>
     <approvalStep>
-        <allowDelegate>false</allowDelegate>
+        <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
                 <name>chelfer@silver-peak.com</name>

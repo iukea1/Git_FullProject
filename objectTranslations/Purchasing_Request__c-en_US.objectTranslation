@@ -103,10 +103,6 @@
         <name>Purchasing_Request_Lines__c</name>
     </fields>
     <fields>
-        <label><!-- Recall process --></label>
-        <name>Recall_process__c</name>
-    </fields>
-    <fields>
         <label><!-- Requested By --></label>
         <name>Requested_By__c</name>
     </fields>

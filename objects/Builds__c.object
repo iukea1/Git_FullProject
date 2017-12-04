@@ -113,7 +113,7 @@
             </picklistValues>
             <picklistValues>
                 <fullName>No</fullName>
-                <default>false</default>
+                <default>true</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>

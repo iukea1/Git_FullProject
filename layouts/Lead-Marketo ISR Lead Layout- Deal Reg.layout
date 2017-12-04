@@ -4,9 +4,25 @@
     <customButtons>RainKing__RainKingConvert</customButtons>
     <customButtons>Patch_Override</customButtons>
     <customButtons>Patch_Lock_Unlock</customButtons>
+    <customConsoleComponents>
+        <primaryTabComponents>
+            <containers>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Find Duplicates</label>
+                    <page>Lead_FindDuplicates</page>
+                </sidebarComponents>
+                <style>Tabs</style>
+                <unit>Percentage</unit>
+                <width>35</width>
+            </containers>
+        </primaryTabComponents>
+    </customConsoleComponents>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Convert</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>Share</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -16,6 +32,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accurate_GEO__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -35,11 +55,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NoDealRegistrationResellerContact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accurate_GEO__c</field>
+                <field>ECSP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -51,15 +67,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ECSP__c</field>
+                <field>Leandata_Matched_Account_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ABM_Target__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Email_Domain__c</field>
+                <behavior>Edit</behavior>
+                <field>LeanData_Matched_Account_SP__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -82,10 +98,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SE__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Patch__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -156,10 +168,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Lead_Rejected_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Sales_Rejected_Comments__c</field>
             </layoutItems>
             <layoutItems>
@@ -180,6 +188,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_Registered_By__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Screening_Notes__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -238,10 +250,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DealReg_Distributor_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Competitive_Deal__c</field>
             </layoutItems>
             <layoutItems>
@@ -295,7 +303,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DealRegistrationDistributor__c</field>
+                <field>Partner_Rep_Phone_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Partner_Rep_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Support_Technical_Contact_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Support_Technical_Contact_Phone__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Support_Technical_Contact_Email__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -313,6 +337,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Lead_Rejected_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Reason_Denied__c</field>
             </layoutItems>
             <layoutItems>
@@ -325,19 +353,31 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Partner_Rep_Phone_Number__c</field>
+                <field>Pre_Sales_Technical_Contact_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Partner_Rep_Email__c</field>
+                <field>Pre_Sales_Technical_Contact_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DealReg_Reseller_Text__c</field>
+                <field>Pre_Sales_Technical_Contact_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DealRegistrationDistributor__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DealReg_Distributor_Text__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Deal_Registration_Reseller__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DealReg_Reseller_Text__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -482,45 +522,10 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>LeanData Fields</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Has_Matched__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Router_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Status__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Reporting_Matched_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Matched_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Action__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Marketo Sales Insight</label>
         <layoutColumns>
             <layoutItems>
-                <height>450</height>
+                <height>500</height>
                 <page>mkto_si__Lead</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -550,22 +555,6 @@
             </layoutItems>
         </layoutColumns>
         <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>460</height>
-                <page>LeanData__LeadLayout</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
     </layoutSections>
     <relatedContent>
         <relatedContentItems>

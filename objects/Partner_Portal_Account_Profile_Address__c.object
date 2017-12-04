@@ -282,6 +282,7 @@
             <picklistValues>
                 <fullName>Cameroon</fullName>
                 <default>false</default>
+                <controllingFieldValues>EMEA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cape Verde</fullName>

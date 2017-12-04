@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LeadSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <criteriaBasedRules>
-        <fullName>Deal_Reg</fullName>
-        <sharedTo>
-            <role>Marketo_Integration</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>LeadSource</field>
-            <operation>notEqual</operation>
-            <value>Deal Registration</value>
-        </criteriaItems>
-        <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Deal Reg</name>
-    </criteriaBasedRules>
-    <criteriaBasedRules>
-        <fullName>Lead_Source_Deal</fullName>
+        <fullName>Share_Approved_Deal_Reg_with_Marketo</fullName>
         <sharedTo>
             <role>Marketo_Integration</role>
         </sharedTo>
@@ -29,32 +16,34 @@
             <value>Submitted,Draft,Rejected</value>
         </criteriaItems>
         <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Lead Source Deal</name>
+        <name>Share Approved Deal Reg with Marketo</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Share_Lead_source_not_equal_to_deal_reg_Marketo</fullName>
+        <sharedTo>
+            <role>Marketo_Integration</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>LeadSource</field>
+            <operation>notEqual</operation>
+            <value>Deal Registration</value>
+        </criteriaItems>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>Share Lead source not equal to deal reg  Marketo</name>
     </criteriaBasedRules>
     <ownerRules>
-        <fullName>Owner_in_All_Partner_Users</fullName>
+        <fullName>Share_Leads_owned_by_BDR_con_to_BDR_con</fullName>
         <sharedTo>
-            <group>Silver_Peak_Employees</group>
+            <role>Grade_2_BDR_Contractor</role>
         </sharedTo>
         <sharedFrom>
-            <allPartnerUsers></allPartnerUsers>
+            <role>Grade_2_BDR_Contractor</role>
         </sharedFrom>
         <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Owner in All Partner Users</name>
+        <name>Share Leads owned by BDR con to BDR con</name>
     </ownerRules>
     <ownerRules>
-        <fullName>Share_Leads_with_All</fullName>
-        <sharedTo>
-            <group>Silver_Peak_Employees</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-        <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Share Leads with All</name>
-    </ownerRules>
-    <ownerRules>
-        <fullName>Share_Partner_User_with_Marketo</fullName>
+        <fullName>Share_Owned_by_Partner_to_Marketo</fullName>
         <sharedTo>
             <role>Marketo_Integration</role>
         </sharedTo>
@@ -62,17 +51,28 @@
             <allPartnerUsers></allPartnerUsers>
         </sharedFrom>
         <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Share Partner User with Marketo</name>
+        <name>Share Owned by Partner to Marketo</name>
     </ownerRules>
     <ownerRules>
-        <fullName>Share_with_Grade_2_BDR</fullName>
+        <fullName>Share_Owned_by_Partner_to_SP_Employee</fullName>
         <sharedTo>
-            <role>Grade_2_BDR_Contractor</role>
+            <group>Silver_Peak_Employees</group>
         </sharedTo>
         <sharedFrom>
-            <role>Grade_2_BDR_Contractor</role>
+            <allPartnerUsers></allPartnerUsers>
         </sharedFrom>
         <leadAccessLevel>Edit</leadAccessLevel>
-        <name>Share with Grade 2 BDR</name>
+        <name>Share Owned by Partner to SP Employee</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Owners_with_SP_Employee</fullName>
+        <sharedTo>
+            <group>Silver_Peak_Employees</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>Share Owners with SP Employee</name>
     </ownerRules>
 </LeadSharingRules>

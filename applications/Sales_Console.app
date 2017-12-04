@@ -114,9 +114,7 @@
     </keyboardShortcuts>
     <label>Sales Console</label>
     <listPlacement>
-        <location>left</location>
-        <units>percent</units>
-        <width>25</width>
+        <location>full</location>
     </listPlacement>
     <listRefreshMethod>refreshList</listRefreshMethod>
     <liveAgentConfig>

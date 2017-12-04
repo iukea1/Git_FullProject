@@ -4,8 +4,8 @@
     <contactPhone>4089351864</contactPhone>
     <label>Cloud Portal</label>
     <oauthConfig>
-        <callbackUrl>https://silverpeaksystems--full.cs62.my.salesforce.com</callbackUrl>
-        <consumerKey>3MVG9er.T8KbeePQtYViJPjdzPCqy4hn4.cQd4MTy2SJrczGGTEkRu1O5AD78aNaTi809rLQGtwWt.1jaBmY7</consumerKey>
-        <scopes>Full</scopes>
+        <callbackUrl>https://silverpeaksystems.my.salesforce.com</callbackUrl>
+        <consumerKey>3MVG9Yb5IgqnkB4qIBUG7lt8Fq7Nx7ymnR22fIkF5EED4hVkY6su.EaqogLsYjD95pmrF8ebqRihXrsLXO7p1</consumerKey>
+        <scopes>Api</scopes>
     </oauthConfig>
 </ConnectedApp>

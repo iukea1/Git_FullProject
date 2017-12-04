@@ -20,10 +20,6 @@
                 <behavior>Edit</behavior>
                 <field>Ensemblestorage__Comment__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Funding_Requests__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

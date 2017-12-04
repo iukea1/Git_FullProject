@@ -6,6 +6,10 @@
         <description>Send Shipment Information to Account Owner</description>
         <protected>false</protected>
         <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>

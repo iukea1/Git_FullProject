@@ -50,12 +50,12 @@
                 <field>On_Time_Renewal__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Test_POC_Age__c</field>
+                <behavior>Readonly</behavior>
+                <field>EC_Hardware_Amount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>POC_End_Date1__c</field>
+                <field>NX_VX_Amount__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -280,8 +280,9 @@
         <excludeButtons>EditAllProduct</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
-        <fields>DiscountPercent__c</fields>
         <fields>Quantity</fields>
+        <fields>DiscountPercent__c</fields>
+        <fields>Discount</fields>
         <fields>TotalPrice</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>

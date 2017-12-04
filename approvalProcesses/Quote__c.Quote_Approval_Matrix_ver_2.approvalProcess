@@ -267,9 +267,7 @@ NOT(ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;))
 NOT(ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;)), 
 NOT(ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;)), 
 NOT(ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;)), 
-Approval_Level_Needed__c &gt;1,
-NOT(Contains(Opportunity__r.GEO_Region__c ,&quot;APAC&quot;)),
-NOT(Contains(Opportunity__r.GEO_Region__c ,&quot;LAT&quot;))
+Approval_Level_Needed__c &gt;1 
 )</formula>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
@@ -280,7 +278,7 @@ NOT(Contains(Opportunity__r.GEO_Region__c ,&quot;LAT&quot;))
         </rejectBehavior>
     </approvalStep>
     <approvalStep>
-        <allowDelegate>false</allowDelegate>
+        <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
                 <name>chelfer@silver-peak.com</name>
@@ -321,7 +319,7 @@ and(
  Approval_Made__c =False,
  Approval_Level_Needed__c &gt;0,
 len( Discount_Justification__c ) &gt; 0
-),  $User.LastName =&apos;Beckus&apos;)</formula>
+),  $User.LastName =&apos;Christensen&apos;)</formula>
     </entryCriteria>
     <finalApprovalActions>
         <action>

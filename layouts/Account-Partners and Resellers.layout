@@ -33,6 +33,10 @@
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EC_Opp_Date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Partner_Type__c</field>
             </layoutItems>
@@ -51,6 +55,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SD_WAN_Boost_Discount_SP__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -73,23 +81,27 @@
                 <field>Health_Description__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Hardware_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Is_this_a_foreign_government_entity__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Software_Amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Clean_Status_Changed__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>EC_Term__c</field>
+                <behavior>Edit</behavior>
+                <field>Data_com_Clean_Modified__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Website_Domain__c</field>
+                <behavior>Edit</behavior>
+                <field>SP_MKTG__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PartnerPortalEnabledIndicator__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Phone</field>
@@ -209,6 +221,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MarketingPartnerContact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Marketting_Oferrings__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Distributor_of_Choice__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -434,22 +454,6 @@
         </layoutColumns>
         <style>CustomLinks</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>350</height>
-                <page>LeanData__AccountLayout</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
     <quickActionList>
         <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
@@ -510,7 +514,9 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>CONTACT.ALLOW_PORTAL_SELF_REG</fields>
+        <fields>Primary_Account_Contact__c</fields>
         <fields>CONTACT.CREATED_DATE</fields>
+        <fields>PortalUserActive__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -591,6 +597,7 @@
         <relatedList>SW_Only_Asset__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>Status__c</fields>

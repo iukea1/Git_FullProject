@@ -2,18 +2,18 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Lead_Custom_Clone</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
-    <customButtons>Find_Dup</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
                 <region>Right</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
+                    <label>Find Duplicates</label>
                     <page>Lead_FindDuplicates</page>
                 </sidebarComponents>
                 <style>Tabs</style>
                 <unit>Percentage</unit>
-                <width>40</width>
+                <width>25</width>
             </containers>
         </primaryTabComponents>
     </customConsoleComponents>
@@ -53,6 +53,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>LeadSource</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accurate_GEO__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -104,14 +108,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Registered_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Registered_Partner_Sales_Rep__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Contact_Registered_By__c</field>
             </layoutItems>
             <layoutItems>
@@ -143,8 +139,8 @@
                 <field>Patch__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accurate_GEO__c</field>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -156,15 +152,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ECSP__c</field>
+                <field>Leandata_Matched_Account_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Last_Status_Change__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Email_Domain__c</field>
+                <field>LeanData_Matched_Account_SP__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -270,61 +262,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RSM__c</field>
+                <field>Registered_Distributor__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SE__c</field>
+                <field>Registered_Partner__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ISR__c</field>
+                <field>Registered_Partner_Sales_Rep__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CSM__c</field>
+                <field>MQL_Stage_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData Fields</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Has_Matched__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Router_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Status__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Reporting_Matched_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Matched_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Matched_Account_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Action__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -556,22 +509,6 @@
         </layoutColumns>
         <style>CustomLinks</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>460</height>
-                <page>LeanData__LeadLayout</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
     <quickActionList>
         <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
@@ -605,6 +542,10 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Lead_Transition__c.Lead_ID__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

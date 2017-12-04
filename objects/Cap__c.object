@@ -129,11 +129,6 @@
         <type>Picklist</type>
     </fields>
     <label>Cap</label>
-    <listViews>
-        <fullName>All</fullName>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <displayFormat>{YYYY}{MM}{DD}-{0000}</displayFormat>
         <label>Cap Name</label>

@@ -164,7 +164,6 @@ public class VirtualAssetManager
         }
         catch(DmlException ex)
         {
-            System.debug(ex);
             if(!isFromApex)
             {
                 ApexPages.addMessages(ex);
@@ -207,7 +206,6 @@ public class VirtualAssetManager
         }
         catch(DmlException ex)
         {
-            System.debug(ex);
             if(!isFromApex)
             {
                 ApexPages.addMessages(ex);

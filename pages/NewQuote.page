@@ -63,8 +63,8 @@
                     <apex:inputHidden />
                 </apex:pageBlockSectionItem>
              <apex:pageBlockSectionItem > 
-                    <apex:outputLabel value="Payment Term" for="paymentterm"></apex:outputLabel>
-                    <apex:inputField value="{!quote.PaymentTerm__c}" id="paymentterm"/>
+                    <apex:outputLabel value="Payment Term" for="paymentterm" rendered="{!!IsDistributor}"></apex:outputLabel>
+                    <apex:inputField value="{!quote.PaymentTerm__c}" rendered="{!!IsDistributor}" id="paymentterm"/>
                 </apex:pageBlockSectionItem>
                 <apex:pageBlockSectionItem rendered="{!!IsDistributor}"> 
                     <apex:outputLabel value="Other Reseller" for="tier3partner"></apex:outputLabel>

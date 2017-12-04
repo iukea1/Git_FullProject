@@ -119,6 +119,13 @@
         <name>isMaintenance__c</name>
     </fields>
     <layouts>
+        <layout>Distributor Quote Line Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Quote Line Layout</layout>
         <sections>
             <label><!-- Custom Links --></label>

@@ -348,13 +348,6 @@
         <unique>false</unique>
     </fields>
     <label>Cap Case</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>Cap_Name__c</columns>
-        <columns>Case_Status__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <displayFormat>CC-{000}</displayFormat>
         <label>Cap Case Name</label>

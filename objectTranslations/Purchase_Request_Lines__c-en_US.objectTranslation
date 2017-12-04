@@ -40,12 +40,8 @@
             <translation><!-- 321-Singapore --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>331-Brazil</masterLabel>
-            <translation><!-- 331-Brazil --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>380-Support</masterLabel>
-            <translation><!-- 380-Support --></translation>
+            <masterLabel>350-Service Providers</masterLabel>
+            <translation><!-- 350-Service Providers --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>410-Demand Gen. &amp; Communications</masterLabel>
@@ -82,6 +78,14 @@
         <picklistValues>
             <masterLabel>710-Operations</masterLabel>
             <translation><!-- 710-Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>810-Support</masterLabel>
+            <translation><!-- 810-Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>820-Deployment Engineers</masterLabel>
+            <translation><!-- 820-Deployment Engineers --></translation>
         </picklistValues>
     </fields>
     <fields>

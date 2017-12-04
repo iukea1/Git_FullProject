@@ -20,10 +20,6 @@
                 <field>Active_EC_Base_License__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EC_Product_Name__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Product2Id</field>
             </layoutItems>
@@ -158,18 +154,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Customer_Asset__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Is_Customer_Date_on_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Selected_For_Renewal__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Is_Asset_Eligible_For_POC_Renewal_Ext__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

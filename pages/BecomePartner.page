@@ -237,7 +237,8 @@
         }
     </style>
   <body id = "iframeBody">
-      <!--<apex:messages />-->
+      <!-- <apex:messages /> -->
+      <apex:message />
   <apex:form style="font-family:Lucida Grande,Tahoma,Arial,sans-serif;" id="theForm" onsubmit="return checkSubmit()" rendered="{!NOT(succeeded)}" >
       <div><font size = "4">Company Information:</font></div>
       <div>Company Name: <font color = "red">*</font></div>

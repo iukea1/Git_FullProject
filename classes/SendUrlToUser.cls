@@ -8,7 +8,6 @@ public with sharing class SendUrlToUser
     public String  mdfId { get; set; }
     public PageReference sendEmailToUser()
     {
-        system.debug('Enter');
         mdfId = ApexPages.currentPage().getParameters().get('id');
         if(mdfId instanceOf Id)
         {
@@ -60,7 +59,6 @@ public with sharing class SendUrlToUser
     private String mergeEmail(String originalValue, MDF_Request__c mdf, String encryptedLink)
     {
         String recipientName = mdf.Owner.Profile.Name == '13g-SP Partner Community' ? mdf.Owner.Email : mdf.Contact__r.Name;
-        system.debug(Url.getSalesforceBaseUrl().toExternalForm());
-        return originalValue.replace('{!Mdf_Request__c.Owner.Name}', recipientName).replace('{!MDF_Request__c.Link}',Url.getSalesforceBaseUrl().toExternalForm() + '/s/MarketingFundsAnonymous?id=' + encryptedLink).replace('{!MDF_Request__c.Name}', mdf.Name);
+        return originalValue.replace('{!Mdf_Request__c.Owner.Name}', recipientName).replace('{!MDF_Request__c.Link}','https://partners.silver-peak.com/s/MarketingFundsAnonymous?id=' + encryptedLink).replace('{!MDF_Request__c.Name}', mdf.Name);
     }
 }

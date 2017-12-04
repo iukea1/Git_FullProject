@@ -231,11 +231,11 @@ formula with WANCHECK as a product: if( OR(Contains( Prod_Category__c , &quot;Ap
     <fields>
         <fullName>Maint_Year_Value__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( 
-AND( 
-Include4ServiceDiscount__c==1, 
+        <formula>IF(
+AND(
+Include4ServiceDiscount__c==1,
 Product__r.Term__c&lt;=1
-), 
+),
 1, Product__r.Term__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Maint Year Value</label>
@@ -353,9 +353,9 @@ Product__r.Term__c&lt;=1
         <defaultValue>0</defaultValue>
         <externalId>false</externalId>
         <label>Quantity</label>
-        <precision>11</precision>
+        <precision>12</precision>
         <required>true</required>
-        <scale>2</scale>
+        <scale>3</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -476,7 +476,7 @@ ISPICKVAL(Product__r.Product_Type__c,&quot;NX/VX&quot;)
     </validationRules>
     <validationRules>
         <fullName>WholeNumberQuantity</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Quantity shold be whole number if product family is not service</description>
         <errorConditionFormula>TEXT(Product__r.Family) != &quot;Support&quot; &amp;&amp; TEXT(Product__r.Family) != &quot;Service&quot; &amp;&amp; CEILING(Quantity__c) != Quantity__c &amp;&amp; !CONTAINS( Product__r.Name, &quot;SUBSCRIPTION RENEWAL&quot; )</errorConditionFormula>
         <errorDisplayField>Quantity__c</errorDisplayField>

@@ -4,11 +4,11 @@ public class TestDataController {
     {
         HttpRequest req = new HttpRequest(); 
         req.setMethod('POST');
-        req.setEndpoint('https://silverpeaksystems--full.cs62.my.salesforce.com'+'/services/oauth2/token');
+        req.setEndpoint('https://silverpeaksystems--spit.cs30.my.salesforce.com'+'/services/oauth2/token');
         req.setBody('grant_type=password' +
-                    '&client_id=' + '3MVG9er.T8KbeePQtYViJPjdzPCqy4hn4.cQd4MTy2SJrczGGTEkRu1O5AD78aNaTi809rLQGtwWt.1jaBmY7' +
-                    '&client_secret=' + '6915110763980937222' +
-                    '&username=' + EncodingUtil.urlEncode('prane@silver-peak.com.full', 'UTF-8') +
+                    '&client_id=' + '3MVG9PerJEe9i8iJHT36EOe.CDwodG04rDZo.EXoBfzJOIRF4lZIpmVa0omAgwrgr8fxBi.pXVUfrze3NmlYg' +
+                    '&client_secret=' + '362843396604305330' +
+                    '&username=' + EncodingUtil.urlEncode('prane@silver-peak.com.spit', 'UTF-8') +
                     '&password=' + EncodingUtil.urlEncode('Fluffy1985', 'UTF-8'));
         
         Http http = new Http();
@@ -37,7 +37,7 @@ System.debug('STATUS_CODE:'+res1.getStatusCode());
         
         HttpRequest req2 = new HttpRequest(); 
         req2.setMethod('POST');
-        req2.setEndpoint('https://silverpeaksystems--full.cs62.my.salesforce.com/services/apexrest/CPCaseInfo');
+        req2.setEndpoint('https://silverpeaksystems--spit.cs30.my.salesforce.com/services/apexrest/CPCaseInfo');
         req2.setHeader('AUTHORIZATION', 'Bearer '+data.access_token);
         req2.setHeader('Content-Type', 'application/json');
         JSONGenerator generator = JSON.createGenerator(true);

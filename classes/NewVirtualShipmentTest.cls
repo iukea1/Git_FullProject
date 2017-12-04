@@ -53,7 +53,7 @@ public class NewVirtualShipmentTest
     }
     
     
-        @isTest
+    @isTest
     static void testNewShipmentController_ECORCH()
     {
         Test.startTest();
@@ -97,7 +97,7 @@ public class NewVirtualShipmentTest
         
         
     }
-     @isTest
+    @isTest
     static void testNewShipmentController_EC_DatesMismatch()
     {
         Test.startTest();
@@ -137,7 +137,15 @@ public class NewVirtualShipmentTest
         controller.removeLine();
         
         controller.save(); 
-        
+        Boolean messageFound = false;
+        for(ApexPages.Message message : ApexPages.getMessages()) 
+        {
+            if(message.getDetail() == 'Dates must match for all the EdgeConnect products.' && message.getSeverity() == ApexPages.Severity.Error) 
+            {
+                messageFound = true;        
+            }
+        }
+        System.assert(messageFound);
         
     }
      @isTest
@@ -175,13 +183,20 @@ public class NewVirtualShipmentTest
         controller.addLine();
         controller.AssetLines[1].Asset.Product2Id = testProduct2.Id;
         controller.AssetLines[1].Asset.Quantity = 1;
-        controller.AssetLines[1].Asset.Evaluation_End_Date__c = Date.today().addDays(2);
+        controller.AssetLines[1].Asset.Evaluation_End_Date__c = Date.today().addDays(1);
         ApexPages.currentPage().getParameters().put('rowIndex', '2');
         controller.removeLine();
-        
         controller.save(); 
-        
-        
+        Boolean messageFound = false;
+        for(ApexPages.Message message : ApexPages.getMessages()) 
+        {
+            if(message.getDetail() == 'Please populate Unity Orchestrator attributes like admin user, domain and location in the account.' && message.getSeverity() == ApexPages.Severity.Error) 
+            {
+                messageFound = true;        
+            }
+        }
+        System.assert(messageFound);
+            
     }
     @isTest
     static void testNewShipmentController_UpdateAssetLicenseDate()

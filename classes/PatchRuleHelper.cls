@@ -275,6 +275,8 @@ assignTeamMembers(objIds);
                 {
                     List<Opportunity> effectiveOpps = new List<Opportunity>();
                     List<Id> oppIds = new List<Id>();
+                    Set<Id> oppIdsForOpportunityShare = new Set<Id>();
+                    Set<Id> oppUserIdsForOpportunityShare = new Set<Id>();
                     for(sObject obj : objs)
                     {
                         Opportunity opp = (Opportunity)obj;
@@ -296,6 +298,18 @@ assignTeamMembers(objIds);
                         Database.SaveResult[] result = Database.insert(teamMembers, false);
                         //SilverPeakUtils.logDatabaseError(teamMembers, result);
                         ShareLeadAndOpportunityToPartnerHelper.willShareOpportunities(oppIds);
+                        for(sObject obj: teamMembers)
+                        {
+                            String oppTeamMemberRole = (String)obj.get('TeamMemberRole');
+                            Id oppUserIdForShare = (Id)obj.get('UserId');
+                            Id oppIdForShare = (Id)obj.get('OpportunityId');
+                            if(oppTeamMemberRole != null && oppTeamMemberRole != 'Field and Channel Marketing Manager')
+                            {    
+                                oppIdsForOpportunityShare.add(oppIdForShare);
+                                oppUserIdsForOpportunityShare.add(oppUserIdForShare);
+                            }
+                        }  
+                        EditAccessToOppTeam(oppIdsForOpportunityShare, OppUserIdsForOpportunityShare);
                     }
                 }
                 else if(objs[0] instanceOf Account)
@@ -393,7 +407,7 @@ assignTeamMembers(objIds);
         }
         if(oppIds.size() > 0)
         {
-            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c, Technical_Responsible__c from Opportunity where Id in :oppIds]);
+            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, Technical_Responsible__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c from Opportunity where Id in :oppIds]);
         }
         return result;
     }
@@ -613,9 +627,25 @@ assignTeamMembers(objIds);
                 {
                     result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
                 }
+                if(patch.SE__c != null && opp.Technical_Responsible__c!= null && patch.SE__c != opp.Technical_Responsible__c)
+                {
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, TeamMemberRole='Systems Engineer'));
+                }
             }
         }
         return result;
+    }
+    
+    private static void EditAccessToOppTeam(Set<Id> setOppIds, Set<Id> setUserIds)
+    { 
+        List<OpportunityShare> listShares = [Select Id,OpportunityAccessLevel,Rowcause from OpportunityShare where OpportunityId  IN :setOppIds and UserOrGroupId IN : setUserIds and rowcause ='Team'];
+        
+        if(listShares != null && listShares.size()>0 ){
+            for (OpportunityShare share : listShares)  {
+                share.OpportunityAccessLevel = 'Edit';
+            }
+            update listShares;
+        }
     }
     
     private static boolean IsPartOfCoreTeam(Patch__c patch,Id userId)

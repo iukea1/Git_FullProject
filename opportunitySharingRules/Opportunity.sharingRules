@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpportunitySharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <criteriaBasedRules>
-        <fullName>Share_EMEA_Opp</fullName>
+        <fullName>Share_EMEA_Opps_with_BDR_Contractor</fullName>
         <sharedTo>
             <role>Grade_2_BDR_Contractor</role>
         </sharedTo>
@@ -10,11 +10,11 @@
             <operation>startsWith</operation>
             <value>EMEA</value>
         </criteriaItems>
-        <name>Share EMEA Opp</name>
+        <name>Share EMEA Opps with BDR Contractor</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </criteriaBasedRules>
     <criteriaBasedRules>
-        <fullName>Share_Opps_with_Marketo</fullName>
+        <fullName>Share_Non_Renewal_opps_with_Marketo</fullName>
         <sharedTo>
             <role>Marketo_Integration</role>
         </sharedTo>
@@ -23,40 +23,40 @@
             <operation>equals</operation>
             <value>Follow on Business,New Business</value>
         </criteriaItems>
-        <name>Share Opps with Marketo</name>
+        <name>Share Non Renewal opps with Marketo</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </criteriaBasedRules>
     <ownerRules>
-        <fullName>Share_All_Opps</fullName>
-        <sharedTo>
-            <group>Silver_Peak_Employees</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-        <name>Share All Opps</name>
-        <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    </ownerRules>
-    <ownerRules>
-        <fullName>Share_Partner_Opps_with_All</fullName>
-        <sharedTo>
-            <group>Silver_Peak_Employees</group>
-        </sharedTo>
-        <sharedFrom>
-            <allPartnerUsers></allPartnerUsers>
-        </sharedFrom>
-        <name>Share Partner Opps with All</name>
-        <opportunityAccessLevel>Edit</opportunityAccessLevel>
-    </ownerRules>
-    <ownerRules>
-        <fullName>Share_Partner_Opps_with_Marketo</fullName>
+        <fullName>Share_Owned_by_Partner_to_Marketo</fullName>
         <sharedTo>
             <role>Marketo_Integration</role>
         </sharedTo>
         <sharedFrom>
             <allPartnerUsers></allPartnerUsers>
         </sharedFrom>
-        <name>Share Partner Opps with Marketo</name>
+        <name>Share Owned by Partner to Marketo</name>
+        <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Owned_by_Partner_to_SP_Employee</fullName>
+        <sharedTo>
+            <group>Silver_Peak_Employees</group>
+        </sharedTo>
+        <sharedFrom>
+            <allPartnerUsers></allPartnerUsers>
+        </sharedFrom>
+        <name>Share Owned by Partner to SP Employee</name>
+        <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_with_All_Users</fullName>
+        <sharedTo>
+            <group>Silver_Peak_Employees</group>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+        <name>Share with All Users</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </ownerRules>
 </OpportunitySharingRules>

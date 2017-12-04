@@ -96,11 +96,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>331-Brazil</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>380-Support</fullName>
+                <fullName>350-Service Providers</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -137,6 +133,14 @@
             </picklistValues>
             <picklistValues>
                 <fullName>710-Operations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>810-Support</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>820-Deployment Engineers</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

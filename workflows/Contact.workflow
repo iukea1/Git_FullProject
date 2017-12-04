@@ -57,10 +57,19 @@ Sales_Rejected_Comments__c</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_Lead_source_to_Deal_Reg</fullName>
+        <fullName>Update_Contact_Owner_GEO</fullName>
+        <field>GEO__c</field>
+        <formula>IF(ISBLANK(Owner.GEO_Region__c ),&apos;&apos;,Owner.GEO_Region__c)</formula>
+        <name>Update Contact Owner GEO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_lead_source_to_deal_reg</fullName>
         <field>LeadSource</field>
         <literalValue>Deal Registration</literalValue>
-        <name>Update Lead source to Deal Reg</name>
+        <name>Update lead source to deal reg</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -155,16 +164,26 @@ Sales_Rejected_Comments__c</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Restrict updating Deal Reg Lead Source</fullName>
+        <fullName>Restrict updating deal reg lead source</fullName>
         <actions>
-            <name>Update_Lead_source_to_Deal_Reg</name>
+            <name>Update_lead_source_to_deal_reg</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>If the lead source is Deal Reg and Cloudingo tries to update it with different value, update it back to Deal Reg</description>
         <formula>AND(ISCHANGED(LeadSource),
-TEXT(PRIORVALUE(LeadSource)) = &apos;Deal Registration&apos;,
- $User.Id= &apos;00538000004Tfb7&apos;)</formula>
+    TEXT(PRIORVALUE(LeadSource)) = &apos;Deal Registration&apos;,
+    $User.Id= &apos;005380000057EOB&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Contact GEO</fullName>
+        <actions>
+            <name>Update_Contact_Owner_GEO</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(OwnerId )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

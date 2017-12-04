@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Email_Alert_to_Sales_when_MDF_Fields_are_Updated</fullName>
+        <ccEmails>latmdf@silver-peak.com,apacmdf@silver-peak.com,emeamdf@silver-peak.com,marketingrequest@silver-peak.com</ccEmails>
+        <description>Email Alert to Sales when MDF Fields are Updated</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>MDF/MDF_Update_Email</template>
+    </alerts>
+    <alerts>
         <fullName>Funding_Request_Send_Feedback_Needed_Template</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>Funding Request: Send Feedback Needed Template</description>
         <protected>false</protected>
         <recipients>
@@ -54,7 +66,6 @@
     </alerts>
     <alerts>
         <fullName>MDF_has_been_Submitted_External</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
         <description>MDF has been Submitted (External)</description>
         <protected>false</protected>
         <recipients>
@@ -66,7 +77,7 @@
     </alerts>
     <alerts>
         <fullName>New_MDF_Approved_Internal</fullName>
-        <ccEmails>lauren@snapbi.com</ccEmails>
+        <ccEmails>amenjivar@silver-peak.com</ccEmails>
         <description>New MDF Approved Internal</description>
         <protected>false</protected>
         <recipients>
@@ -90,6 +101,17 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>MDF/New_MDF_Approved_Post_Event_HTML</template>
+    </alerts>
+    <alerts>
+        <fullName>New_MDF_Request_Submitted_for_Approval_Internal</fullName>
+        <description>New MDF Request Submitted for Approval (Internal)</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MDF/New_MDF_Request_Submitted_for_Approval_Internal</template>
     </alerts>
     <alerts>
         <fullName>New_MDF_Request_has_Been_Denied_Internal_APAC</fullName>
@@ -159,7 +181,7 @@
         <description>New MDF Request has Been Denied (Internal) SVP</description>
         <protected>false</protected>
         <recipients>
-            <recipient>pchavez@silver-peak.com</recipient>
+            <recipient>ddalponte@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
@@ -233,6 +255,17 @@
         <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>MDF/MDF_Request_is_Approved_External</template>
+    </alerts>
+    <alerts>
+        <fullName>New_MFR_Request_Submitted_internal</fullName>
+        <description>New MFR Request Submitted (internal)</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>kallison@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MDF/New_MDF_Request_Submitted_for_Approval_Internal</template>
     </alerts>
     <fieldUpdates>
         <fullName>Approval_Date_Updates</fullName>
@@ -447,6 +480,36 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Funding Request%3A Approval Status %3D Pending%3B GEO not NAM%2CGAM%2CLAT</fullName>
+        <actions>
+            <name>New_MDF_Request_Submitted_for_Approval_Internal</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
+        <criteriaItems>
+            <field>MDF_Request__c.Approval_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>MDF_Request__c.GEO__c</field>
+            <operation>notEqual</operation>
+            <value>LAT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>MDF_Request__c.GEO__c</field>
+            <operation>notEqual</operation>
+            <value>NAM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>MDF_Request__c.GEO__c</field>
+            <operation>notEqual</operation>
+            <value>GAM</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Funding Request%3A Feedback Complete %3D True</fullName>
         <actions>
             <name>Funding_Request_Set_Status_Value_Below</name>
@@ -489,6 +552,10 @@
     </rules>
     <rules>
         <fullName>Marketing Alerted when MDF Updated</fullName>
+        <actions>
+            <name>Email_Alert_to_Sales_when_MDF_Fields_are_Updated</name>
+            <type>Alert</type>
+        </actions>
         <active>false</active>
         <formula>ISCHANGED(LastModifiedDate)   &amp;&amp;   LastModifiedBy.UserRole.Name    &lt;&gt;    &quot;13a-SP Partner Portal Login,12d-SP Customer &amp; Partner,13a-SP Partner Portal Login,13d-SP Partner Portal with support&quot;</formula>
         <triggerType>onAllChanges</triggerType>
@@ -524,6 +591,20 @@
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Notification of New MFR</fullName>
+        <actions>
+            <name>New_MFR_Request_Submitted_internal</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>MDF_Request__c.GEO__c</field>
+            <operation>equals</operation>
+            <value>NAM</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SetGEOfor Submit</fullName>

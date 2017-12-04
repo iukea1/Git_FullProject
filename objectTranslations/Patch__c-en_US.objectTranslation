@@ -46,7 +46,7 @@
         <relationshipLabel><!-- Patches (Overlay 2) --></relationshipLabel>
     </fields>
     <fields>
-        <help><!-- An overlay patch just add up team members to the record, but does NOT change patch assignment --></help>
+        <help><!-- If an overlay patch meets criteria, the patch is not assigned. Only the overlaying members are added to the team members --></help>
         <label><!-- Overlay --></label>
         <name>Overlay__c</name>
     </fields>
@@ -70,6 +70,7 @@
         <relationshipLabel><!-- Patches (RSM) --></relationshipLabel>
     </fields>
     <fields>
+        <help><!-- A formula referencing the processing sequence of criteria rules, indicating the logic of how the rules to be evaluated. e.g. &quot;4&quot;, &quot;1 AND 2&quot;, &quot;2 AND (3 OR 4)&quot;, &quot;2 AND NOT (3 OR 4)&quot; --></help>
         <label><!-- Rule Logic --></label>
         <name>Rule_Logic__c</name>
     </fields>

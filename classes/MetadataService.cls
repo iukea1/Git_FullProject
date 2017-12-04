@@ -8240,7 +8240,7 @@ public class MetadataService {
         private String[] field_order_type_info = new String[]{'criteriaBasedRules','ownerRules'};
     }
     public class MetadataPort {
-        public String endpoint_x = SilverPeakUtils.getSalesforceBaseUrl() + '/services/Soap/m/39.0';
+        public String endpoint_x = SilverPeakUtils.getSalesforceBaseUrl() + '/services/Soap/m/30.0';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;

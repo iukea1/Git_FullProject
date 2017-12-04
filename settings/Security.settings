@@ -15,10 +15,6 @@
         </ipRanges>
         <ipRanges>
             <end>209.157.67.185</end>
-            <start>209.157.67.185</start>
-        </ipRanges>
-        <ipRanges>
-            <end>209.157.67.185</end>
             <start>209.157.67.180</start>
         </ipRanges>
         <ipRanges>
@@ -224,7 +220,7 @@
     </networkAccess>
     <passwordPolicies>
         <complexity>AlphaNumeric</complexity>
-        <expiration>SixtyDays</expiration>
+        <expiration>SixMonths</expiration>
         <historyRestriction>3</historyRestriction>
         <lockoutInterval>FifteenMinutes</lockoutInterval>
         <maxLoginAttempts>TenAttempts</maxLoginAttempts>

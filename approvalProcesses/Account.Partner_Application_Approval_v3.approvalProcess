@@ -19,7 +19,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>curtisc@silver-peak.com</name>
+                <name>ewhite@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

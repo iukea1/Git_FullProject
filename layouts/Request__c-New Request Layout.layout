@@ -24,11 +24,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Allow_Fulfillment__c</field>
+                <field>Is_Unity_Cloud_Orchestrator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_Unity_Cloud_Orchestrator__c</field>
+                <field>Allow_Fulfillment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>POC_COntact_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -51,10 +55,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Service_Provider_Account_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

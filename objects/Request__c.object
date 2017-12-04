@@ -860,6 +860,18 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>POC_COntact_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>POC_Contact__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>POC COntact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>POC_Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1240,18 +1252,6 @@ NOT(ISBLANK(TEXT( PhysicalProduct1__c )))
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>RSM_Manager1__c</fullName>
-        <externalId>false</externalId>
-        <formula>Opportunity__r.Owner.ManagerId</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>RSM Manager1</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>RSM_Manager__c</fullName>
@@ -1902,6 +1902,7 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
         <columns>eval_length__c</columns>
         <columns>OWNER.ALIAS</columns>
         <columns>OWNER.LAST_NAME</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>OWNER.ALIAS</field>
@@ -3113,7 +3114,9 @@ ISChanged( Number_of_Virtual_Products__c )
     <validationRules>
         <fullName>ECSP_Poc_cant_be_created_for_non_servPr</fullName>
         <active>false</active>
-        <errorConditionFormula>OR(
+        <errorConditionFormula>AND(
+ISNEW(),
+OR(
 AND
 (
 ISPICKVAL(Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;),
@@ -3130,7 +3133,7 @@ AND(
 NOT(ISPICKVAL(Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)),
 ISPICKVAL( POC_Type__c,&quot;Service Provider&quot; )
 )
-)</errorConditionFormula>
+))</errorConditionFormula>
         <errorDisplayField>POC_Type__c</errorDisplayField>
         <errorMessage>The selected POC Type is not valid for this account. Service Provider is valid for ECSP Enabled Service Provider accounts . Edge Connect and Wan OP is valid for non-Service Provider accounts.</errorMessage>
     </validationRules>
@@ -3270,6 +3273,7 @@ ISPICKVAL( POC_Type__c,&quot;EC-SP-Term +Orch-SP&quot; )
         <fullName>Service_POC_type_cannot_be_Enterprise</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
+ISNEW(),
 Opportunity__r.Account.ECSP__c,
 TEXT(POC_Type__c)!=Service_Provider_Account_Type__c
 )</errorConditionFormula>
@@ -3329,7 +3333,7 @@ ISPICKVAL( POC_Type__c ,&quot;WAN Op&quot;)
     </validationRules>
     <validationRules>
         <fullName>enforce_approval_process_to_advance</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Enforce new approval submission instead of changing status</description>
         <errorConditionFormula>and( ISCHANGED(Status__c) ,  
 OR(ISPICKVAL(Status__c, &quot;Open&quot; ),
@@ -3411,7 +3415,7 @@ var accDtl=sforce.connection.query(&quot;select ECSP__c from Account where Id=&a
 var accDtlQueryResult = accDtl.getArray(&quot;records&quot;); 
 var ecspAcc=accDtlQueryResult[0].ECSP__c; 
 
-if(ecspAcc==&quot;false&quot; &amp;&amp; geoRegion!=&quot;EMEA&quot; &amp;&amp; geoRegion!=&quot;APAC&quot; &amp;&amp; ( &apos;{!Request__c.RSM__c}&apos;== &quot;&quot; || &apos;{!Request__c.RSM_Manager__c}&apos;== &quot;&quot; || &apos;{!Request__c.RSM_VP_Sales__c}&apos;== &quot;&quot; || &apos;{!Request__c.SE__c}&apos;== &quot;&quot; || &apos;{!Request__c.SE_Manager__c}&apos;== &quot;&quot;|| &apos;{!Request__c.SE_Director__c}&apos;== &quot;&quot; )) 
+if(ecspAcc==&quot;false&quot; &amp;&amp; geoRegion!=&quot;ANZ&quot; &amp;&amp; geoRegion!=&quot;EMEA&quot; &amp;&amp; geoRegion!=&quot;APAC&quot; &amp;&amp; ( &apos;{!Request__c.RSM__c}&apos;== &quot;&quot; || &apos;{!Request__c.RSM_Manager__c}&apos;== &quot;&quot; || &apos;{!Request__c.RSM_VP_Sales__c}&apos;== &quot;&quot; || &apos;{!Request__c.SE__c}&apos;== &quot;&quot; || &apos;{!Request__c.SE_Manager__c}&apos;== &quot;&quot;|| &apos;{!Request__c.SE_Director__c}&apos;== &quot;&quot; )) 
 { 
 alert(&quot;POC Approvers are blank. Check whether the opportunity is patched correctly or the managers are set properly on RSM and SE.&quot;); 
 } 
@@ -3435,7 +3439,7 @@ if(assetInfo!=null &amp;&amp; assetInfo.size&gt;0 &amp;&amp; &apos;{!Request__c.
 { 
 alert(&quot;You cannot fulfill this POC as the customer has existing assets. Please contact operations.&quot;); 
 } 
-else if(ecspAcc==&quot;false&quot; &amp;&amp; queueNameQueryResult!=null &amp;&amp; queueNameQueryResult[0].Type!=&quot;Marketplace&quot; &amp;&amp; (quoteInfoQueryResult== null ||quoteInfoQueryResult==&apos;&apos;)) 
+else if(ecspAcc==&quot;false&quot; &amp;&amp; &apos;{!Request__c.Allow_Fulfillment__c}&apos;== false &amp;&amp; queueNameQueryResult!=null &amp;&amp; queueNameQueryResult[0].Type!=&quot;Marketplace&quot; &amp;&amp; (quoteInfoQueryResult== null ||quoteInfoQueryResult==&apos;&apos;)) 
 { 
 alert(&quot;POC cannot be submitted for an approval as there is no primary quote defined for this opportunity or there are no quote lines added to the quote.&quot;); 
 } 

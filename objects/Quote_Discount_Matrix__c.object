@@ -29,7 +29,7 @@
         <externalId>false</externalId>
         <label>Product Type</label>
         <length>50</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -49,7 +49,7 @@
         <externalId>false</externalId>
         <label>Sub Type</label>
         <length>50</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

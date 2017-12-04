@@ -5,8 +5,24 @@
     <customButtons>Patch_Override</customButtons>
     <customButtons>Patch_Lock_Unlock</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
+    <customConsoleComponents>
+        <primaryTabComponents>
+            <containers>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Find Duplicates</label>
+                    <page>Lead_FindDuplicates</page>
+                </sidebarComponents>
+                <style>Tabs</style>
+                <unit>Percentage</unit>
+                <width>35</width>
+            </containers>
+        </primaryTabComponents>
+    </customConsoleComponents>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Convert</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -24,6 +40,10 @@
                 <field>GEO__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accurate_GEO__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Patch_Locked__c</field>
             </layoutItems>
@@ -36,8 +56,8 @@
                 <field>Primary_Business_Interest__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Accurate_GEO__c</field>
+                <behavior>Edit</behavior>
+                <field>ECSP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -49,15 +69,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ECSP__c</field>
+                <field>Leandata_Matched_Account_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ABM_Target__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Email_Domain__c</field>
+                <behavior>Edit</behavior>
+                <field>LeanData_Matched_Account_SP__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -547,41 +567,6 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData Fields</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Has_Matched__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Router_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Status__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Reporting_Matched_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Matched_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeanData__Routing_Action__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -605,7 +590,7 @@
         <label>Marketo Sales Insight</label>
         <layoutColumns>
             <layoutItems>
-                <height>450</height>
+                <height>500</height>
                 <page>mkto_si__Lead</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -663,22 +648,6 @@
             </layoutItems>
         </layoutColumns>
         <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>LeanData</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>460</height>
-                <page>LeanData__LeadLayout</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
     </layoutSections>
     <relatedContent>
         <relatedContentItems>

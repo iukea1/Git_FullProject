@@ -53,7 +53,20 @@
         <name>SVP Marketing &amp; Subordinates</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
-        <fullName>Share_interoute_cases_with_portal_users</fullName>
+        <fullName>Share_Axians_cases_with_other_users</fullName>
+        <sharedTo>
+            <portalRole>AXIANSNETWORKSLIMITEDPartnerUser</portalRole>
+        </sharedTo>
+        <criteriaItems>
+            <field>AccountId</field>
+            <operation>equals</operation>
+            <value>0013800001F3baz</value>
+        </criteriaItems>
+        <caseAccessLevel>Edit</caseAccessLevel>
+        <name>Share Axians cases with other users</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Share_Interroute_Cases_with_interoute_partner_user</fullName>
         <sharedTo>
             <portalRole>InterouteCommunicationsLtdPartnerUser</portalRole>
         </sharedTo>
@@ -63,7 +76,7 @@
             <value>0015000000MOZ6l</value>
         </criteriaItems>
         <caseAccessLevel>Read</caseAccessLevel>
-        <name>Share interoute cases with portal users</name>
+        <name>Share Interroute Cases with interoute partner user</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
         <fullName>VP_Business_Development_Subordinates</fullName>

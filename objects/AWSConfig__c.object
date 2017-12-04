@@ -2,7 +2,6 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
     <customSettingsVisibility>Protected</customSettingsVisibility>
-    <description>The credential of MFR file storage</description>
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>AWSAccessKey__c</fullName>
@@ -28,7 +27,7 @@
         <fullName>BucketRegion__c</fullName>
         <externalId>false</externalId>
         <label>BucketRegion</label>
-        <length>50</length>
+        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -38,7 +37,7 @@
         <fullName>Bucket__c</fullName>
         <externalId>false</externalId>
         <label>Bucket</label>
-        <length>50</length>
+        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

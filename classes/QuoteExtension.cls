@@ -5,7 +5,7 @@
 global class QuoteExtension
 {
     static final String MESSAGE_SUCCEEDED = 'Succeeded';
-    public QuoteWrapper DiscountQuote{get;set;}
+    public QuoteWrapper DiscountQuote{get;set;}  
     public QuoteExtension(ApexPages.StandardController ctrl)
     {
         Id quoteId=(Id)ctrl.getRecord().id;

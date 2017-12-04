@@ -498,6 +498,16 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Opportunity_Stage__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.IsClosed</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Opportunity Closed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Opportunity__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -596,6 +606,18 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Prep_Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>PreparedFor__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Prep Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PreparedFor__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -644,6 +666,40 @@ OR((Opportunity_Amount__c - Quote_Amount_Rollup__c) &lt;100 ,(Quote_Amount_Rollu
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Prepared_For_AccountId__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( PreparedFor__r.AccountId == Reseller_AccountId__c ,true,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Prepared For AccountId</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Partner_Credit_Hold__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c)),Tier_2_Partner__r.CreditHold__c ,
+Tier_1_Partner__r.CreditHold__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Primary Partner Credit Hold</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Partner_Reseller_Agreement__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Tier_2_Partner__c)),Tier_2_Partner__r.Reseller_Agreement__c ,
+Tier_1_Partner__r.Reseller_Agreement__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Primary Partner Reseller Agreement</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Primary__c</fullName>
@@ -1213,6 +1269,25 @@ Approval_Made__c =FALSE), OR(and(ConsultingDiscountMax__c &gt;0,Opportunity__r.A
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
+    <listViews>
+        <fullName>My_Quotes</fullName>
+        <columns>NAME</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Opportunity_Amount__c</columns>
+        <columns>Quote_Amount_Rollup__c</columns>
+        <columns>Bill_To_Account__c</columns>
+        <columns>PreparedFor__c</columns>
+        <columns>Approval_Status__c</columns>
+        <columns>Quote_Valid_Until__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Opportunity_Stage__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>My Quotes</label>
+    </listViews>
     <nameField>
         <displayFormat>Q{00000000}</displayFormat>
         <label>Quote ID</label>
@@ -1230,9 +1305,6 @@ Approval_Made__c =FALSE), OR(and(ConsultingDiscountMax__c &gt;0,Opportunity__r.A
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <listViewButtons>NewQuoteFromOpportunity</listViewButtons>
         <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>Tier_1_Partner__c</searchFilterFields>
-        <searchFilterFields>Tier_2_Partner__c</searchFilterFields>
-        <searchFilterFields>Tier_3_Partner__c</searchFilterFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <validationRules>
@@ -1245,8 +1317,9 @@ Approval_Made__c =FALSE), OR(and(ConsultingDiscountMax__c &gt;0,Opportunity__r.A
     </validationRules>
     <validationRules>
         <fullName>Check_Prepared_For_belonging_to_account</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
+NOT(Opportunity__r.Account.ECSP__c),
 NOT(ISBLANK( PreparedFor__c )),
 NOT(ISBLANK( Reseller_AccountId__c)),
 Reseller_AccountId__c!= PreparedFor__r.AccountId 
@@ -1274,22 +1347,12 @@ ISPICKVAL(Opportunity__r.Type,&quot;Support Renewal&quot;),
 ISPICKVAL(Opportunity__r.Type,&quot;Subscription Renewal&quot;),
 ISPICKVAL(Opportunity__r.Type,&quot;EC Renewal&quot;)
 ),
-NOT($Profile.Name ==&quot;1.5- Sales Power User&quot; ),
-NOT($Profile.Name ==&quot;1.7- Renewal Specialist&quot; ),
-NOT($Profile.Name ==&quot;5-SP Contract Mgr&quot; )
+NOT($User.ProfileId==&quot;00e50000000vrCL&quot;),
+NOT($UserRole.Name==&quot;Grade 2 BDR&quot; ),
+NOT($UserRole.Name==&quot;CFO&quot; ),
+NOT($UserRole.Name ==&quot;Grade 1 Sales&quot;)
 )</errorConditionFormula>
         <errorMessage>You are not allowed to create quote on renewal opportunity. Please contact Finance or renewal specialist team.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Special_Instructions_reqd_after_Tier2</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
-NOT(ISBLANK( Tier_2_Partner__c)),
-ISBLANK(Special_Instructions__c ),
-ISPICKVAL(Approval_Status__c ,&quot;Submitted&quot;)
-)</errorConditionFormula>
-        <errorDisplayField>Special_Instructions__c</errorDisplayField>
-        <errorMessage>Please enter special instructions before submitting for approval.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>check_Opportunity_Pricebook</fullName>
@@ -1333,20 +1396,20 @@ window.open(&quot;/apex/EditQuoteLines?id={!Quote__c.Id}&quot;, &quot;_top&quot;
         <masterLabel>Email Quote Document</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>if(&quot;{!Quote__c.Assigned_Distributor__c}&quot;==&quot;&quot; &amp;&amp; &quot;{!Quote__c.Tier_2_PartnerId__c} &quot;!=&quot;&quot; &amp;&amp;&quot;{!Quote__c.Special_Instructions__c}&quot; == &quot;&quot;)
-{
-   alert(&quot;Please enter special instructions&quot;);
-}
+        <url>if(&quot;{!Quote__c.Assigned_Distributor__c}&quot;==&quot;&quot; &amp;&amp; &quot;{!Quote__c.Tier_2_PartnerId__c} &quot;!=&quot;&quot; &amp;&amp;&quot;{!JSENCODE(Quote__c.Special_Instructions__c)}&quot; == &quot;&quot;) 
+{ 
+alert(&quot;Please enter special instructions&quot;); 
+} 
 else 
-{
-if(&quot;{!Quote__c.Approval_Status__c}&quot; == &quot;Approved&quot; &amp;&amp; &quot;{!Quote__c.Primary__c}&quot; == &quot;1&quot;)
-{
-window.open(&quot;/apex/EmailQuoteDocument?id={!Quote__c.Id}&quot;, &quot;_blank&quot;, &quot;width=600,height=400&quot;);
-}
-else
-{
-      alert(&quot;Quote must be approved and primary.&quot;);
-}
+{ 
+if(&quot;{!Quote__c.Approval_Status__c}&quot; == &quot;Approved&quot; &amp;&amp; &quot;{!Quote__c.Primary__c}&quot; == &quot;1&quot;) 
+{ 
+window.open(&quot;/apex/EmailQuoteDocument?id={!Quote__c.Id}&quot;, &quot;_blank&quot;, &quot;width=600,height=400&quot;); 
+} 
+else 
+{ 
+alert(&quot;Quote must be approved and primary.&quot;); 
+} 
 }</url>
     </webLinks>
     <webLinks>

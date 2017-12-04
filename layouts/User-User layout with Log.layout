@@ -48,7 +48,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EditCapCapability__c</field>
+                <field>Disable_Portal_Access__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

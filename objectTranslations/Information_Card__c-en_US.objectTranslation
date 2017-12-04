@@ -366,8 +366,4 @@
         </sections>
     </layouts>
     <startsWith>Vowel</startsWith>
-    <webLinks>
-        <label><!-- Request_Partner_Update --></label>
-        <name>Request_Partner_Update</name>
-    </webLinks>
 </CustomObjectTranslation>

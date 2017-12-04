@@ -6,8 +6,6 @@
 public with sharing class SendMdfUrlToClientController
 {   
     public String  mdfId { get; set; }
-    private final static String siteUrl = 'https://full-silverpeak.cs62.force.com';
-    //private final static String siteUrl = 'https://partners.silver-peak.com';
     public PageReference SendMdfUrlToClient()
     {
         mdfId = ApexPages.currentPage().getParameters().get('id');
@@ -32,6 +30,7 @@ public with sharing class SendMdfUrlToClientController
                     mail.setPlainTextBody(mergeEmail(et[0].Body, mdf, url));
                     mail.setBccSender(false);
                     mail.setUseSignature(false);
+                    
                     Messaging.sendEmail(new Messaging.SingleEmailMessage[]{mail});
                     ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO, 'Email has been sent successfully. Page is refreshing.'));
                 }
@@ -58,13 +57,12 @@ public with sharing class SendMdfUrlToClientController
     private String mergeEmail(String originalValue, MDF_Request__c mdf, String encryptedLink)
     {
         String recipientName = mdf.Owner.Profile.Name == '13g-SP Partner Community' ? mdf.Owner.FirstName: mdf.Contact__r.FirstName;
-        return originalValue.replace('{!MDF_Request__c.Owner.Name}', recipientName).replace('{!MDF_Request__c.OwnerFirstName}', recipientName).replace('{!MDF_Request__c.Link}',siteUrl + '/s/MarketingFundsAnonymous?id=' + encryptedLink).replace('{!MDF_Request__c.Name}', mdf.Name);
+        return originalValue.replace('{!MDF_Request__c.Owner.Name}', recipientName).replace('{!MDF_Request__c.OwnerFirstName}', recipientName).replace('{!MDF_Request__c.Link}','https://partners.silver-peak.com/s/MarketingFundsAnonymous?id=' + encryptedLink).replace('{!MDF_Request__c.Name}', mdf.Name);
     }
     
     public static String encryptParameter(String mdfId)
     {
         Blob cryptoData = Crypto.encryptWithManagedIV('AES128', Blob.valueOf('SliverPeakCrytpo'), Blob.valueOf(mdfId + '|' + Date.today().format()));
-        //replace + with $ for url encoding
-        return EncodingUtil.base64Encode(cryptoData).replace('+','$');
+        return EncodingUtil.base64Encode(cryptoData);
     }
 }

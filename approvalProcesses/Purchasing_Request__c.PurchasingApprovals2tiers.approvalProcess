@@ -163,7 +163,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>rmarqueling@silver-peak.com</name>
+                <name>mlear@silver-peak.com</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

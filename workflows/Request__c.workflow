@@ -442,14 +442,6 @@
         <description>Reminder for expiring POC and/or licenses</description>
         <protected>false</protected>
         <recipients>
-            <recipient>Account Manager</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Systems Engineer</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
             <field>POC_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -472,6 +464,22 @@
         <recipients>
             <field>CC_List_5__c</field>
             <type>email</type>
+        </recipients>
+        <recipients>
+            <field>RSM_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>RSM__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>SE_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>SE__c</field>
+            <type>userLookup</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -708,10 +716,10 @@ Requested_End_Date__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_POC_Approval_Flag</fullName>
+        <fullName>Update_POC_Approver_flag</fullName>
         <field>Trigger_POC_Approvers__c</field>
         <literalValue>1</literalValue>
-        <name>Update POC Approval Flag</name>
+        <name>Update POC Approver flag</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -955,7 +963,7 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
             <name>SetRMAClosed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Request__c.Sending_Reminder_Email__c</field>
             <operation>equals</operation>
@@ -984,7 +992,7 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
             <name>Clear_Sending_Reminder_Email</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Request__c.Sending_Reminder_Email__c</field>
             <operation>equals</operation>
@@ -1090,7 +1098,7 @@ Eval RMA opened by trigger on status change to pending return (set by monitoring
     <rules>
         <fullName>Trigger POC Approvers</fullName>
         <actions>
-            <name>Update_POC_Approval_Flag</name>
+            <name>Update_POC_Approver_flag</name>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>

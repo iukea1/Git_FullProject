@@ -78,12 +78,12 @@
     <applicationVisibilities>
         <application>standard__LightningSalesConsole</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningService</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Platform</application>
@@ -98,7 +98,7 @@
     <applicationVisibilities>
         <application>standard__Service</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__ServiceConsole</application>
@@ -167,11 +167,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewBase</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewControllerTest</apexClass>
@@ -179,15 +179,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewController_EC</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewController_NXToVX</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssetListViewController_SP</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssetTriggerHandler</apexClass>
@@ -203,7 +203,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Assets_List_Override</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
@@ -239,7 +239,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>BuildExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CPAsset</apexClass>
@@ -367,11 +367,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CmaConvertComponentController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CmaConvertConfirmController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CmaTestFixture</apexClass>
@@ -459,7 +459,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ConvertRmaToCmaController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CopyEndDateToContractTriggerTest</apexClass>
@@ -471,10 +471,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CustomActionTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CustomChatWindowController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -527,7 +523,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DownloadsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ECAssetListComponentController</apexClass>
@@ -563,10 +559,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EditRMALineAddressController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EmailNotificationOnCapCommentsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -811,7 +803,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LeadChannelAndSalesTeamController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>LeadContactCount</apexClass>
@@ -922,10 +914,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MFRUploadFileController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>MarkContactsCertifiedController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -999,7 +987,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NewCaseWithArticleController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NewCaseWithArticleControllerTest</apexClass>
@@ -1007,7 +995,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NewCaseWithAssetController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NewOpportunityController</apexClass>
@@ -1019,7 +1007,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NewRMAController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NewRMAControllerTest</apexClass>
@@ -1035,7 +1023,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NewReleaseController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NewVirtualAssetController</apexClass>
@@ -1063,7 +1051,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpenRMAController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OppoQuoteController</apexClass>
@@ -1523,15 +1511,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PickAssetForNewCaseController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PickAssetForNewCmaController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PickAssetForNewRMAController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PocRequestAutomationHelper</apexClass>
@@ -1579,7 +1567,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>QuoteHelper</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RMAItemTriggerHandler</apexClass>
@@ -1591,7 +1579,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RegisterAccountController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RegisterAccountControllerTest</apexClass>
@@ -1830,10 +1818,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TEstDataClass</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>TeamMemberCheck</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1883,10 +1867,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestBuildExtension</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TestCalculateActiveAssetCount</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1951,10 +1931,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestCopyECLicenseEndDateToAccount</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TestCurtis</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2195,10 +2171,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestUpdateAssetCountBatch</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TestUpdateAssetStatusWhenRMAShipped</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2630,9 +2602,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Builds__c.FIPS_Compliant__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2712,12 +2684,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Account_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Analysis__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2727,102 +2699,102 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Case_Status__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Comments__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Defect__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Dupe__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.ETA__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Engineer_Assigned__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Engineer__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Evaluating_Fix__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Fix__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Fixed_In__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Issue_Identified__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.QA_d__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Released__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap_Case__c.Subject__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Account_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Cap_Comments_Recipients__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Cap_Comments__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Closed_By__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Closed_Date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Cap__c.Status__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3492,7 +3464,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Information_Card__c.Primary_Partner_First_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5951,6 +5923,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Purchase_Order__c.Is_this_a_foreign_government_entity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Purchase_Order__c.Missing_End_Customer_PO__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6002,6 +5979,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Purchase_Order__c.Partial_Ship__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Purchase_Order__c.Pending_Support_Contract__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6157,11 +6139,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Purchasing_Request__c.Purchasing_Request_Lines__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Purchasing_Request__c.Recall_process__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6357,7 +6334,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote__c.Approval_Made__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6485,14 +6462,19 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Quote__c.Opp_Owner_Manager__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote__c.Opportunity_Amount__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Opportunity_Stage__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6530,9 +6512,29 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Prep_Account_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quote__c.PreparedFor__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Prepared_For_AccountId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Primary_Partner_Credit_Hold__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote__c.Primary_Partner_Reseller_Agreement__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6792,7 +6794,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>RMA_Item__c.Product_Category__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7277,7 +7279,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Request__c.Account_ID__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7450,9 +7452,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Request__c.Is_Unity_Cloud_Orchestrator__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7508,6 +7510,11 @@
         <editable>true</editable>
         <field>Request__c.Original_POC_End_Date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Request__c.POC_COntact_ID__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7638,11 +7645,6 @@
         <editable>true</editable>
         <field>Request__c.RSM_Approved__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Request__c.RSM_Manager1__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -8504,7 +8506,7 @@
         <layout>AOLead__c-AOLead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Partner Portal Layout</layout>
+        <layout>Account-Distributor Portal Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountTeamMember-Account Team Member Layout</layout>
@@ -8516,7 +8518,7 @@
         <layout>Api_Configuration__c-Api Configuration Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Asset-Portal Users</layout>
+        <layout>Asset-Distributor Users</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AssetContract__c-Asset to Contract Layout %28NOT USED%29</layout>
@@ -8570,7 +8572,7 @@
         <layout>CollaborationGroup-Group Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Partner Contact Layout</layout>
+        <layout>Contact-Distributor Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContentPage__c-Partner Portal Page Layout</layout>
@@ -8712,10 +8714,10 @@
         <layout>MultiLinkContact_del__c-MultiLinkContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Distributor Partner Profile</layout>
+        <layout>Opportunity-Distributor Portal</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>OpportunityLineItem-Opportunity Product Layout</layout>
+        <layout>OpportunityLineItem-Partner Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunitySplit-Opportunity Split Layout</layout>
@@ -8784,7 +8786,7 @@
         <layout>PricebookEntry-Price Book Entry Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Product2-Product Layout</layout>
+        <layout>Product2-Distributor Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Purchase_Order__c-Purchase Order Layout</layout>
@@ -8803,10 +8805,10 @@
         <layout>QuickText-Quick Text Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Quote_Line__c-Quote Line Layout</layout>
+        <layout>Quote_Line__c-Distributor Quote Line Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Quote__c-Partner Quote Layout</layout>
+        <layout>Quote__c-Dsitributor Quote Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>RMA_Item__c-Eval Item Layout</layout>
@@ -8908,10 +8910,10 @@
         <layout>UpdateContact_del__c-UpdateContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>User-User Layout</layout>
+        <layout>User-Distributor Profile</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>UserAlt-User Profile Layout</layout>
+        <layout>UserAlt-Distributor Profile</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Vendor_List__c-Vendor List Layout</layout>
@@ -8943,15 +8945,6 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>KB__kav</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>LMS_Course_Certification__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -8965,17 +8958,8 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>License__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -8983,36 +8967,27 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Partner_Account_Profile__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Partner_Application__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Partner_Contact_Profile__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Partner_Portal_Account_Profile_Address__c</object>
@@ -9030,15 +9005,6 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Purchasing_Request__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -9082,7 +9048,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -9116,23 +9082,23 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetListView</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetListView_EC</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetListView_NXToVX</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetListView_SP</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetListing</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetsListOverride</apexPage>
@@ -9160,7 +9126,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>BuildDetail</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CapWarningMessage</apexPage>
@@ -9168,7 +9134,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>CaseListOverride</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CertificationInfo</apexPage>
@@ -9224,7 +9190,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ConvertRmaToCma</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CustomPOCRequest</apexPage>
@@ -9236,7 +9202,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>DealRegistration</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>DefineChannel</apexPage>
@@ -9248,11 +9214,11 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>DocumentListing</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>Downloads</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>EditCapCaseRecords</apexPage>
@@ -9352,7 +9318,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>InformationCardDetail</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>JumpToMDFListing</apexPage>
@@ -9423,20 +9389,8 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>LiveAgentPreChatForm</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>LookupProducts</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MFRUploadFile</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MapPlotData</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MarkContactsCertified</apexPage>
@@ -9584,7 +9538,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>NewRmaConfirmation</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NewVirtualAsset</apexPage>
@@ -9596,7 +9550,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpenRMA</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>Opportunity</apexPage>
@@ -9796,19 +9750,19 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>PickAssetForNewCase</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PickAssetForNewCma</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PickAssetForNewRMA</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalReleases</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PreviewQuoteApprovals</apexPage>
@@ -9828,11 +9782,11 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuoteClone</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuoteCloneNoProducts</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuotePdf</apexPage>
@@ -9840,11 +9794,11 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuotePdf115</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RMAListOverride</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RecallQuoteApprovals</apexPage>
@@ -9884,7 +9838,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Releases</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>RenewalLicense</apexPage>
@@ -10015,18 +9969,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>TestChatPage</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>TestChatPage1</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>TestChatPage2</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>TestPage</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10124,16 +10066,12 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Cap_Case__c</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Cap__c</tab>
+        <tab>Aviso</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Customer_Documentation</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Downloads</tab>
@@ -10145,7 +10083,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>LMS_Course__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Leads_Partner</tab>
@@ -10157,7 +10095,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MFR_Requests</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>My_Cases</tab>
@@ -10169,7 +10107,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Open_RMA</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Opportunities_Partner</tab>
@@ -10177,7 +10115,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Purchase_Appliances</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Return_Authorizations</tab>
@@ -10202,39 +10140,7 @@
     <userLicense>Partner Community Login</userLicense>
     <userPermissions>
         <enabled>true</enabled>
-        <name>AllowUniversalSearch</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ApiEnabled</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>AssignTopics</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ChatterOwnGroups</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ConvertLeads</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>CreateTopics</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EditOppLineItemUnitPrice</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EditTask</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EditTopics</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -10242,22 +10148,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>RunReports</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SelectFilesFromSalesforce</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>UseWebLink</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ViewContent</name>
     </userPermissions>
 </Profile>
