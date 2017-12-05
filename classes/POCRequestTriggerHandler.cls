@@ -131,6 +131,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
                 Request__c oldPOC= (Request__c)oldItems.get(reqId);
                 if((oldPoc.Status__c=='Shipped- Pending Extension Approval' || oldPoc.Status__c=='Pending Return' || oldPoc.Status__c=='Pending Return - Invoiced' ) && newPOC.Status__c=='Shipped - Extended')
                 {
+                    System.debug('Shipping In');
                     mapPocContact.put(newPOC.Id,newPOC.POC_Contact__c);
                 }
                 if(newPOC.Status__c != oldPOC.Status__c)
@@ -177,9 +178,9 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
                 }
             }
             PopulatePOCApprovers(mapReqId);
-            UpdatePocStatusToOpportunity();
             DeleteRMAForApprovedPendReturnPOC(mapPocContact);
             HandlePOCStatusChange();
+            UpdatePocStatusToOpportunity();
             SendWANOPFulfillmentEmail(mapWanOpEmails);
         }
         

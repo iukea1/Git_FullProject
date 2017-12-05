@@ -4,6 +4,7 @@
     <customButtons>UpdateOpportunity</customButtons>
     <customButtons>Quote_Document</customButtons>
     <customButtons>Email_Quote_Document</customButtons>
+    <customButtons>CloneWithProducts</customButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
