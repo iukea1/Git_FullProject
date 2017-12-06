@@ -1578,6 +1578,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RMATriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RegisterAccountController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2107,6 +2111,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestRMAListComponentController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestRMATriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
