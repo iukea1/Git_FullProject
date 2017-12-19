@@ -35,6 +35,7 @@ public with sharing class PartnerPortalSSOController
         if(UserInfo.getUserType() == 'PowerPartner')
         {
             String url = HPartnerPortalSSOStub.getSSOLink(UserInfo.getUserId());
+            System.debug(url);
             return new PageReference(url);
         }
         else

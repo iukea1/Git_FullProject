@@ -4,12 +4,12 @@ public class TestDataController {
     {
         HttpRequest req = new HttpRequest(); 
         req.setMethod('POST');
-        req.setEndpoint('https://silverpeaksystems--spit.cs30.my.salesforce.com'+'/services/oauth2/token');
+        req.setEndpoint('https://silverpeaksystems.my.salesforce.com'+'/services/oauth2/token');
         req.setBody('grant_type=password' +
-                    '&client_id=' + '3MVG9PerJEe9i8iJHT36EOe.CDwodG04rDZo.EXoBfzJOIRF4lZIpmVa0omAgwrgr8fxBi.pXVUfrze3NmlYg' +
-                    '&client_secret=' + '362843396604305330' +
-                    '&username=' + EncodingUtil.urlEncode('prane@silver-peak.com.spit', 'UTF-8') +
-                    '&password=' + EncodingUtil.urlEncode('Fluffy1985', 'UTF-8'));
+                    '&client_id=' + '3MVG99OxTyEMCQ3hTzeEsN8ySTYe_mCpCxGNBsZ8yNsvuVmcXIckuLcM95jku6cCxt0iRrO4GsMpfF4e9d4v9' +
+                    '&client_secret=' + '7944597630264020101' +
+                    '&username=' + EncodingUtil.urlEncode('cloudportalapi@silver-peak.com', 'UTF-8') +
+                    '&password=' + EncodingUtil.urlEncode('cpportal@2018Cfm5wJxXCYzaTOASnTPCxOvp', 'UTF-8'));
         
         Http http = new Http();
         
@@ -34,10 +34,10 @@ System.debug('BODY: '+res1.getBody());
 System.debug('STATUS:'+res1.getStatus());
 System.debug('STATUS_CODE:'+res1.getStatusCode());
 */
-        
+        /*
         HttpRequest req2 = new HttpRequest(); 
         req2.setMethod('POST');
-        req2.setEndpoint('https://silverpeaksystems--spit.cs30.my.salesforce.com/services/apexrest/CPCaseInfo');
+        req2.setEndpoint('https://silverpeaksystems--full.cs95.my.salesforce.com/services/apexrest/CPCaseInfo');
         req2.setHeader('AUTHORIZATION', 'Bearer '+data.access_token);
         req2.setHeader('Content-Type', 'application/json');
         JSONGenerator generator = JSON.createGenerator(true);
@@ -62,6 +62,10 @@ System.debug('STATUS_CODE:'+res1.getStatusCode());
         System.debug('STATUS:'+res2.getStatus());
         System.debug('STATUS_CODE:'+res2.getStatusCode());
         caseNumber=res2.getBody();
+        
+        */
+        
+        
         /*
         HttpRequest req3 = new HttpRequest(); 
         req3.setMethod('POST');
