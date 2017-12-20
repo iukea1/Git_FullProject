@@ -14,6 +14,45 @@
         <name>CFO &amp; Subordinates</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
+        <fullName>Engineer</fullName>
+        <sharedTo>
+            <role>Engineer</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>HR Requests,Facilities</value>
+        </criteriaItems>
+        <caseAccessLevel>Edit</caseAccessLevel>
+        <name>Engineer</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Engineering_Contractor</fullName>
+        <sharedTo>
+            <role>Engineering_Contractor</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,Technical Support</value>
+        </criteriaItems>
+        <caseAccessLevel>Read</caseAccessLevel>
+        <name>Engineering-Contractor</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Engineering_Director</fullName>
+        <sharedTo>
+            <role>EngineeringDirector</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>HR Requests,Facilities</value>
+        </criteriaItems>
+        <caseAccessLevel>Edit</caseAccessLevel>
+        <name>Engineering Director</name>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
         <fullName>Human_Resources_Subordinates</fullName>
         <sharedTo>
             <roleAndSubordinatesInternal>Human_Resource</roleAndSubordinatesInternal>
@@ -118,9 +157,9 @@
         <name>VP Product Management</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
-        <fullName>VP_of_Engineering_Subordinates</fullName>
+        <fullName>VP_of_Engineering</fullName>
         <sharedTo>
-            <roleAndSubordinatesInternal>VPofEngineering</roleAndSubordinatesInternal>
+            <role>VPofEngineering</role>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
@@ -128,7 +167,7 @@
             <value>HR Requests,Facilities</value>
         </criteriaItems>
         <caseAccessLevel>Edit</caseAccessLevel>
-        <name>VP of Engineering &amp; Subordinates</name>
+        <name>VP of Engineering</name>
     </criteriaBasedRules>
     <criteriaBasedRules>
         <fullName>eTrique_Integration_Subordinates</fullName>
