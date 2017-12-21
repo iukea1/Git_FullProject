@@ -120,6 +120,13 @@
     <label>LMS Course</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>Course_Id__c</columns>
+        <columns>Course_Name__c</columns>
+        <columns>New_Course_Id__c</columns>
+        <columns>NAME</columns>
+        <columns>Display_Name__c</columns>
+        <columns>Last_Fetch_Date__c</columns>
+        <columns>Is_Active__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

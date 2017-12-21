@@ -17,6 +17,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>New_Course_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Course_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -71,6 +75,11 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Course_Id__c</fields>
+        <fields>Certification_Title__c</fields>
+        <fields>Enrollment_Id__c</fields>
+        <fields>Status__c</fields>
+        <fields>Certification_ID__c</fields>
         <relatedList>LMS_Course_Certification__c.LMS_Course_Id__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

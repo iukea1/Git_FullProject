@@ -167,6 +167,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>New_Course_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>LMS_Course_Id__r.Course_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Course Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status_Display_Name__c</fullName>
         <externalId>false</externalId>
         <label>Status Display Name</label>

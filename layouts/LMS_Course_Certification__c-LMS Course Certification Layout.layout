@@ -17,6 +17,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Certification_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Certification_Title__c</field>
             </layoutItems>
             <layoutItems>
@@ -26,6 +30,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Learner_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>New_Course_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

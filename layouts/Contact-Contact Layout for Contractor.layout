@@ -609,10 +609,10 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>Certification_ID__c</fields>
-        <fields>Certification_Title__c</fields>
+        <fields>New_Course_Name__c</fields>
         <fields>Expiry_Date__c</fields>
         <fields>Status_Display_Name__c</fields>
+        <fields>Certification_ID__c</fields>
         <relatedList>LMS_Course_Certification__c.Learner_Contact__c</relatedList>
         <sortField>Status_Display_Name__c</sortField>
         <sortOrder>Asc</sortOrder>

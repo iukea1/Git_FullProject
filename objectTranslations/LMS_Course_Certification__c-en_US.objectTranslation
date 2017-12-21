@@ -56,6 +56,10 @@
         <relationshipLabel><!-- Certifications --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- New Course Name --></label>
+        <name>New_Course_Name__c</name>
+    </fields>
+    <fields>
         <label><!-- Status Display Name --></label>
         <name>Status_Display_Name__c</name>
         <picklistValues>
