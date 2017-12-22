@@ -657,6 +657,7 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>New_Course_Name__c</fields>
+        <fields>Old_Course_Id__c</fields>
         <fields>Expiry_Date__c</fields>
         <fields>Status_Display_Name__c</fields>
         <fields>Certification_ID__c</fields>

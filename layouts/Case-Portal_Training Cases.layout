@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>Date_of_Engagement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Test_Asset_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

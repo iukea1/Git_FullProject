@@ -35,6 +35,10 @@
                 <behavior>Readonly</behavior>
                 <field>New_Course_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Old_Course_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

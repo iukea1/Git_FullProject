@@ -60,6 +60,10 @@
         <name>New_Course_Name__c</name>
     </fields>
     <fields>
+        <label><!-- Old Course Id --></label>
+        <name>Old_Course_Id__c</name>
+    </fields>
+    <fields>
         <label><!-- Status Display Name --></label>
         <name>Status_Display_Name__c</name>
         <picklistValues>

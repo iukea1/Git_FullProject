@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>Comments</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Test_Asset_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

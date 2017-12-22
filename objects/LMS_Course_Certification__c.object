@@ -178,6 +178,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Old_Course_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>LMS_Course_Id__r.Course_Id__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Old Course Id</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status_Display_Name__c</fullName>
         <externalId>false</externalId>
         <label>Status Display Name</label>

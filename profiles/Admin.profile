@@ -3650,6 +3650,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LMS_Course_Certification__c.Old_Course_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>LMS_Course_Certification__c.Status_Display_Name__c</field>
         <readable>true</readable>
