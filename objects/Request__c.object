@@ -3273,7 +3273,6 @@ ISPICKVAL( POC_Type__c,&quot;EC-SP-Term +Orch-SP&quot; )
         <fullName>Service_POC_type_cannot_be_Enterprise</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISNEW(),
 Opportunity__r.Account.ECSP__c,
 TEXT(POC_Type__c)!=Service_Provider_Account_Type__c
 )</errorConditionFormula>
