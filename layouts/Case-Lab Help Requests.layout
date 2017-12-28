@@ -30,7 +30,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Test_Asset_Account__c</field>
+                <field>Asset_Account__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
