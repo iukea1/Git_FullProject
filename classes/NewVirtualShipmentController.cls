@@ -182,6 +182,8 @@ public with sharing class NewVirtualShipmentController
         List<Asset> updateExistingECAssets = new List<Asset>();
         // Retreive the EdgeConnect Asset Product Id and Asset Id.
         Map<string,Asset> lstExistingECAssets= RetreiveExistingAssetInfo(shipmentRecord.Shipment_Account__c);
+        System.debug('lstExistingECAssets' +lstExistingECAssets);
+        System.debug('ECProductIds' +ECProductIds);
         List<VirtualAssetManager.VirtualAsset> insertAssetLines = new List<VirtualAssetManager.VirtualAsset>();
         List<VirtualAssetManager.VirtualAsset> updateAssetLines = new List<VirtualAssetManager.VirtualAsset>();
         
@@ -200,7 +202,7 @@ public with sharing class NewVirtualShipmentController
                 VirtualAssetManager.VirtualAsset vasset= new VirtualAssetManager.VirtualAsset();
                 vasset.Asset = currAsset;
                 vasset.Asset.Evaluation_End_Date__c= virtualAsset.Asset.Evaluation_End_Date__c;
-                if(currAsset.Product2.Name.contains('EC-ORCH'))
+                if(currAsset.Product2.Name=='EC-ORCH')
                 {
                     vasset.Asset.Evaluation_End_Date__c=null;
                 }
@@ -482,7 +484,7 @@ public with sharing class NewVirtualShipmentController
         Map<string,Asset> mapAssetItems = new Map<string,Asset>();   
         
         List<Id>productIds = new List<Id>();
-        List<Product2> ecProducts= [Select Id from Product2 where Name like 'EC-%' and Family='Virtual Image' and Product_Type__c='EDGECONNECT'];
+        List<Product2> ecProducts= [Select Id from Product2 where Name like 'EC-%' and (not NAME like 'EC-ORCH-AAS%') and (not NAME like 'EC-ORCH-SP-AAS%') and Family='Virtual Image' and Product_Type__c='EDGECONNECT'];
         
         for(Product2 prod :ecProducts)
         {
