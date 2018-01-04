@@ -3,11 +3,11 @@ public with sharing class HPartnerPortalSSOStub
     private static final String FAILD_TO_CREATE_DEPARTMENT_MSG = 'Failed to create a department, please contact your system administrator.';
     private static final String FAILD_TO_CREATE_LEARNER_MSG = 'Failed to create your leaner account, please contact your system administrator.';
     private static final String INVALID_CONTACT_MSG = 'Contact without account.';
-    private static final String DEFAULT_PARENT_DEPARTMENT_ID = '83a738a2-1c22-45d0-bf55-76a6daf18e18';//85750 LMS AccountName='Partners'
+    private static final String DEFAULT_PARENT_DEPARTMENT_ID = 'a522f6d2-4a80-4f00-a422-6f897b2deaa7';//85750 LMS AccountName='Partners'
     
     private static String ssoBase = 'https://full-silverpeak.cs95.force.com/idp/login?app=0sp0x000000000L';
     private static String adminKey = 'ab199f01-c2af-4e0b-b5da-7df1d8347139';//43a8764c-d95b-4f6b-b563-6ad5ffc06f97;
-    private static String httpLoginBase='https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1/Authenticate?username=ithelp@silver-peak.com&password=Speak-123&privateKey=43a8764c-d95b-4f6b-b563-6ad5ffc06f97';
+    private static String httpLoginBase='https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1/Authenticate?username=ithelp@silver-peak.com&password=Speak-123&privateKey=ab199f01-c2af-4e0b-b5da-7df1d8347139';
     
     public static String getHttpToken()
     {
