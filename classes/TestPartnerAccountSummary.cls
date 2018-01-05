@@ -51,6 +51,56 @@ public class TestPartnerAccountSummary {
         }
         
     }
+     @isTest(SeeAllData=true)
+    public static void CheckPageName_OpenOpp_Distributor()
+    {
+        Account acc = new Account(Name='testECPOC');
+        insert acc;
+        System.debug('acc'+acc.Id);
+        Account acc1 = new Account(Name='testACC');
+        insert acc1;
+        System.debug('acc1'+acc1.Id);
+        Contact contact = new Contact(FirstName = 'AcmeFirstname', LastName = 'AcmeLastname', Phone='123456789', Email = 'acme@acme.com' , accountId=acc.Id);
+        insert contact;
+        Profile prof = [SELECT Id FROM Profile WHERE Name='13g-SP Distributor Community']; 
+        User usr = new User(Alias = 'standt', Email='testUser@uniquetest.com', 
+                            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+                            LocaleSidKey='en_US', ProfileId = prof.Id, ContactId=contact.Id,
+                            TimeZoneSidKey='America/Los_Angeles', UserName='testUser@uniquetest.com');
+        
+        usr.IsActive =true;
+        insert usr;
+        Opportunity opportunity = new Opportunity();
+        opportunity.Name = 'acme';
+        opportunity.AccountId = acc1.Id;
+        opportunity.StageName = 'Discovery';
+        opportunity.Dead_Reason__c = 'acme';
+        opportunity.CloseDate = Date.today().addYears(1);
+        opportunity.Type = 'New Business';
+        opportunity.Opportunity_Source__c = 'Other';
+        opportunity.POC_Type__c = 'POC';
+        opportunity.Product_Type__c = 'Both';
+        opportunity.Deal_Type__c = 'Replication';
+        opportunity.Registering_Partner__c=acc.Id;
+        opportunity.Registering_Partner_Sales_Rep__c=contact.Id;
+        opportunity.First_CAM_Assigned__c=usr.Id;
+        insert opportunity;
+        
+        
+        
+        OpportunityShare oppShare = new OpportunityShare(OpportunityId=opportunity.Id,UserOrGroupId=usr.Id,OpportunityAccessLevel='Edit');
+        insert oppShare;
+        System.runAs(usr)
+        {
+            System.debug(opportunity.Registering_Partner__c);
+            System.debug(opportunity.Registering_Partner_Sales_Rep__c);
+            PageReference pageRef= Page.PartnerAccountSummary;
+            Test.setCurrentPage(pageRef);
+            PartnerAccountSummaryController obj= new PartnerAccountSummaryController();
+            System.assertEquals(1, obj.OpenOppsList.size());
+        }
+        
+    }
     
     @isTest(SeeAllData=true)
     public static void CheckPageName_RenewalOpp()

@@ -418,6 +418,14 @@
                 <field>Registered_Discount_Product__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Standard_Discount_EdgeConnect__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Registered_Discount_EdgeConnect__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IsAPartner__c</field>
             </layoutItems>
