@@ -935,6 +935,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Upodate_event_date</fullName>
+        <field>Event_Date__c</field>
+        <formula>today()</formula>
+        <name>Upodate event date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>rvee__NotifyRVMemberReset</fullName>
         <field>rvpe__NotifyRVMember__c</field>
         <literalValue>0</literalValue>
@@ -1919,6 +1928,20 @@ OR(ISPICKVAL( StageName , &apos;Closed Deleted&apos;),OR(ISPICKVAL( StageName , 
         </actions>
         <active>true</active>
         <formula>(rvpe__NotifyRVMember__c == true)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>update event date</fullName>
+        <actions>
+            <name>Upodate_event_date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Quoted</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

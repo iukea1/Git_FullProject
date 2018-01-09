@@ -4,9 +4,9 @@
     <contactPhone>4089351864</contactPhone>
     <label>LMS SSO</label>
     <samlConfig>
-        <acsUrl>https://silverpeaksystems-migration.sandbox.myabsorb.com/Account/SAML</acsUrl>
+        <acsUrl>https://silverpeaksystems.myabsorb.com/Account/SAML</acsUrl>
         <encryptionType>AES_128</encryptionType>
-        <entityUrl>https://silverpeaksystems-migration.sandbox.myabsorb.com/Account/SAML</entityUrl>
+        <entityUrl>https://silverpeaksystems.myabsorb.com/Account/SAML</entityUrl>
         <issuer>https://silverpeaksystems--full.cs95.my.salesforce.com</issuer>
         <samlNameIdFormat>Unspecified</samlNameIdFormat>
         <samlSubjectCustomAttr>EmailAddressFormula</samlSubjectCustomAttr>

@@ -2,7 +2,7 @@ public abstract class HPartnerPortalApiBase
 {
     public static Integer ApiTimeOut = 60000;
     public static String ContentCharset = 'UTF-8';
-    public static String BaseEndpoint = 'https://silverpeaksystems-migration.sandbox.myabsorb.com/api/Rest/v1';
+    public static String BaseEndpoint = 'https://silverpeaksystems.myabsorb.com/api/Rest/v1';
     
     public Boolean isSucceed { get; set; }
 

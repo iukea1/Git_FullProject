@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Registering_Partner_Sales_Rep__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Event_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

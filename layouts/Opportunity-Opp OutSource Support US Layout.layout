@@ -79,6 +79,10 @@
                 <behavior>Readonly</behavior>
                 <field>NX_VX_Amount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Event_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
