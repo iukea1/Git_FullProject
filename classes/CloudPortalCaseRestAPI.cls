@@ -176,6 +176,7 @@ return lstCases;
         global string conPhoneNumber{get;set;}
         global string salesforceId{get;set;}
         global string cpLicenseKey{get;set;}
+        global string cpAccountKey{get;set;}
         global string serialNumber{get;set;}
         
     }

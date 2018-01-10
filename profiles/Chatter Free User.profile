@@ -1422,6 +1422,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PatchChangeTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PatchMatchListQuickAddController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2195,6 +2199,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestUpdateOpportunityProductType</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestUpdatePatchChangesonOpenOpps</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -5837,6 +5845,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>PatchCriteriaRule__c.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch_Change__e.Channel_Manager_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch_Change__e.Patch_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch_Change__e.RSM_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
