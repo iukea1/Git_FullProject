@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AccountSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
-    <criteriaBasedRules>
-        <fullName>Share_Accounts_with_Partner_USers</fullName>
-        <sharedTo>
-            <allPartnerUsers></allPartnerUsers>
-        </sharedTo>
-        <criteriaItems>
-            <field>Type</field>
-            <operation>equals</operation>
-            <value>Partner</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Partner_Type__c</field>
-            <operation>equals</operation>
-            <value>Reseller,Distributor</value>
-        </criteriaItems>
-        <accountAccessLevel>Edit</accountAccessLevel>
-        <caseAccessLevel>None</caseAccessLevel>
-        <contactAccessLevel>Edit</contactAccessLevel>
-        <name>Share Accounts with Partner USers</name>
-        <opportunityAccessLevel>None</opportunityAccessLevel>
-    </criteriaBasedRules>
     <ownerRules>
         <fullName>AllInternalUsers</fullName>
         <sharedTo>

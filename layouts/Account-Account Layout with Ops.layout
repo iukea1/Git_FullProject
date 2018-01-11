@@ -204,6 +204,10 @@
                 <behavior>Edit</behavior>
                 <field>Default_PriceBook__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Trigger_Assignment__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

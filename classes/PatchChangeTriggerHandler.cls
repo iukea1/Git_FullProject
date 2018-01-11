@@ -26,6 +26,7 @@ public class PatchChangeTriggerHandler implements ITriggerHandler {
     {
         Map<Id,String> setCAMChange = new Map<Id,String>();
         Map<Id,String> setRSMChange = new Map<Id,String>();
+        
         for(Id recId:newItems.keyset())
         {
             Patch_Change__e obj= (Patch_Change__e)newItems.get(recId);
@@ -37,6 +38,7 @@ public class PatchChangeTriggerHandler implements ITriggerHandler {
             {
                 setRSMChange.put((Id)obj.Patch_Id__c,obj.RSM_Name__c);
             }
+            
         }
         try
         {
@@ -50,9 +52,8 @@ public class PatchChangeTriggerHandler implements ITriggerHandler {
                     {
                         opp.Channel_Manager__c=setCAMChange.get(opp.Patch__c);
                     }
-                    
-                    
                     Database.update(lstOpp, false);
+                    System.debug('Done');
                 }
                 
             }
@@ -66,12 +67,15 @@ public class PatchChangeTriggerHandler implements ITriggerHandler {
                         opp.Regional_Sales_Manager__c=setRSMChange.get(opp.Patch__c);
                     }
                     Database.update(lstOpp, false);
+                    System.debug('Done');
                 }
                 
             }
+            
         }
         catch(Exception ex)
         {
+            System.debug(ex);
             SilverPeakUtils.logException(ex);
         }
     }
