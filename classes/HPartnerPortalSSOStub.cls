@@ -96,7 +96,7 @@ public with sharing class HPartnerPortalSSOStub
                 contactProfile.LMSUserName__c = username;
                 contactProfile.LMSUserId__c = studentId;
                 System.debug('contactProfile' + contactProfile);
-                upsert contactProfile;
+                //upsert contactProfile; Partner have read access on the account
             }
             if(deptProfile.Id == null)
             {
@@ -113,7 +113,7 @@ public with sharing class HPartnerPortalSSOStub
                 accountProfile.LmsDepartmentId__c = departmentId;
                 accountProfile.LmsDepartmentName__c = deptProfile.LmsDepartmentName__c;
                 System.debug('accountProfile'+accountProfile);
-                upsert accountProfile;
+                //upsert accountProfile;Partner have read access on the account
             }
             return ssoBase;
             
