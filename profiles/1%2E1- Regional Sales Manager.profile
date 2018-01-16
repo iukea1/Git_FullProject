@@ -914,6 +914,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MDFTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MarkContactsCertifiedController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2047,6 +2051,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestLicenseTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestMDFTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -4306,6 +4314,11 @@
         <editable>false</editable>
         <field>MDF_Request__c.Preferred_Phone__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MDF_Request__c.Purchasing_Request_First_Approver__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

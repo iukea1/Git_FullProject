@@ -158,6 +158,10 @@
                 <behavior>Edit</behavior>
                 <field>Speaking_Opportunity_Abstract__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Portal_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
