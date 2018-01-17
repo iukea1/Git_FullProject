@@ -5,7 +5,7 @@
         .body input.btn, body input.btnDisabled, body input.btnCancel {
             padding: 20px 0px;
         }
-        
+
         .form-signin .btn-primary {
             color: #fff;
             background-color: #337ab7;
@@ -29,7 +29,7 @@
 
         .wrapper {
         /* Delete the inline css on the wrapper element */
-            margin: 40px 15%;   
+            margin: 40px 15%;
         }
 
         .form-signin {
@@ -45,13 +45,13 @@
             padding: 20px 30px 20px;
             border: 1px solid #E2E2E2;
         }
-    
+
         .form-signin-heading {
             font-size: 2em;
             margin: 0 0 20px 0;
             display: block;
         }
-    
+
         .loginBtnContainer {
             width: 100%;
             display: block;
@@ -75,31 +75,31 @@
             background-color: #275984;
         }
 
-        
+
 
         .btn-group-lg>.btn, .btn-lg {
             line-height: .9;
             padding: 20px 0px;
         }
-    
+
         .loginLinkContainer {
             float: right;
             margin-top: 25px;
         }
-    
+
         .loginLinkContainer .loginLink {
             display: block;
             line-height: 25px;
             text-align: right;
             font-family: 'GillSansMT-Light';
         }
-    
+
         .form-signin .requestBtnContainer input {
             background-color: #D8D8D8;
             color: #255884;
             padding: 20px 0;
         }
-    
+
         .form-signin .requestBtnContainer input:hover {
             color: #000;
             background-color: #C3C3C3;
@@ -139,7 +139,7 @@
                 </div>
                 <div style="clear:both"></div>
             </apex:form>
-            <apex:form styleClass="form-signin"> 
+            <apex:form styleClass="form-signin">
                 <h3 class="form-signin-heading">Request Login</h3>
                 <p>Need Access to the Silver Peak Partner Portal (BaseCamp)?</p>
                 <div class="requestBtnContainer">
@@ -147,9 +147,9 @@
                 </div>
             </apex:form>
             <div style="clear:both"></div>
-        </div>    
+        </div>
     </div>
-    
+
     </apex:define>
     </apex:composition>
 </apex:page>
