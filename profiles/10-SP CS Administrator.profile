@@ -630,6 +630,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GEORegionChangeTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GenerateGmsLicenseController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1988,6 +1992,10 @@
     <classAccesses>
         <apexClass>TestFixtures</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestGEORegionChangeTriggerHandler</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TestHLMSFetchCertificationsBatch</apexClass>
@@ -8553,6 +8561,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User_GEO_Region__e.GEO_Region__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User_GEO_Region__e.Owner_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

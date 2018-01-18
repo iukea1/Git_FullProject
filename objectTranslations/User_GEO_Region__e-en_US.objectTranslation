@@ -13,6 +13,10 @@
         <name>GEO_Region__c</name>
     </fields>
     <fields>
+        <label><!-- Owner Id --></label>
+        <name>Owner_Id__c</name>
+    </fields>
+    <fields>
         <label><!-- UserID --></label>
         <name>UserID__c</name>
     </fields>

@@ -465,7 +465,7 @@ public with sharing class NewVirtualShipmentController
             newLicenseEndDate = lstAssetsinShipment[0].license_End_Date__c;
             assetIds= (new Map<Id,Asset>(lstAssetsinShipment)).keySet();
             List<Asset> assetsToUpdate= new List<Asset>();
-            assetsToUpdate=[Select Id, (Select Id,Name,License_Expiration__c from licenses__r ) from Asset where  AccountId =: accountId and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and status='Customer Subscription Active' and (not Id in:assetIds) and (NOT Product2.Name ='EC-ORCH')];
+            assetsToUpdate=[Select Id, (Select Id,Name,License_Expiration__c from licenses__r ) from Asset where  AccountId =: accountId and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and status='Customer Subscription Active' and (not Id in:assetIds) and (NOT Product2.Name like'EC-ORCH')];
             System.debug('Assets not in Shipment '+ assetsToUpdate.size());
             if(assetsToUpdate.size()>0) 
             {
