@@ -453,7 +453,7 @@ public with sharing class NewVirtualShipmentController
     }
     private static void UpdateLicensesForEdgeConnectAssets(Id shipmentId, Id accountId)
     {
-        List<Asset> lstAssetsinShipment= [Select Id,license_End_Date__c from Asset where status='Customer Subscription Active' and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and Id in (Select Asset__c from Shipped_Line__c where Shipment_Id__c=: shipmentId)];
+        List<Asset> lstAssetsinShipment= [Select Id,license_End_Date__c from Asset where status='Customer Subscription Active' and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and (NOT Product2.Name like'EC-ORCH%') and Id in (Select Asset__c from Shipped_Line__c where Shipment_Id__c=: shipmentId)];
         System.debug('Shipment ID '+ shipmentId);
         System.debug('Account ID ' +accountId);
         System.debug('Assets in Shipment '+ lstAssetsinShipment.size());
@@ -465,7 +465,7 @@ public with sharing class NewVirtualShipmentController
             newLicenseEndDate = lstAssetsinShipment[0].license_End_Date__c;
             assetIds= (new Map<Id,Asset>(lstAssetsinShipment)).keySet();
             List<Asset> assetsToUpdate= new List<Asset>();
-            assetsToUpdate=[Select Id, (Select Id,Name,License_Expiration__c from licenses__r ) from Asset where  AccountId =: accountId and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and status='Customer Subscription Active' and (not Id in:assetIds) and (NOT Product2.Name like'EC-ORCH')];
+            assetsToUpdate=[Select Id, (Select Id,Name,License_Expiration__c from licenses__r ) from Asset where  AccountId =: accountId and Product2.Family='Virtual Image' and Product2.Name like 'EC-%' and status='Customer Subscription Active' and (not Id in:assetIds) and (NOT Product2.Name like'EC-ORCH%')];
             System.debug('Assets not in Shipment '+ assetsToUpdate.size());
             if(assetsToUpdate.size()>0) 
             {

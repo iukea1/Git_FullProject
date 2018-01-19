@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Quote Line Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Quote Line Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Quote Address --></label>
+        <name>Quote_Address__c</name>
+        <relationshipLabel><!-- Quote Line Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quote Line --></label>
+        <name>Quote_Line__c</name>
+        <relationshipLabel><!-- Quote Line Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quote Record Id --></label>
+        <name>Quote_Record_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Quantity --></label>
+        <name>Shipping_Quantity__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

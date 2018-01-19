@@ -1,231 +1,25 @@
 <apex:page showheader="false" controller="PartnerPortalLoginController">
     <apex:composition template="PartnerCommunityTemplate">
     <apex:define name="body">
-    <style>
-    body {
-    font-family: 'Open Sans', Arial, sans-serif;
-    background-position: top center;
-    background-image: url(https://silverpeak.box.com/shared/static/eauwhrsdht0xs7g2m212gxkvex1puufv.jpg);
-    }
-    
-     @charset "utf-8";
-
-@font-face {
- font-family: 'Nexa Bold';
- src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.eot');
- src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.eot?#iefix') format('embedded-opentype'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.woff2?v=1.0') format('woff2'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.woff') format('woff'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.ttf?v=1.0') format('truetype'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Bold.svg#NexaSlab-Bold') format('svg');
- font-weight: bold;
- font-style: normal;
-}
-
-@font-face {
- font-family: 'Nexa';
- src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.eot?v=1.0');
- src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.eot?#iefix') format('embedded-opentype'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.woff2?v=1.0') format('woff2'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.woff?v=1.0') format('woff'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.ttf?v=1.0') format('truetype'),
-   url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/NexaSlab-Regular.svg#NexaSlab-Regular') format('svg');
- font-weight: normal;
- font-style: normal;
-}
-
-@font-face {
-    font-family: 'Nexa Heavy';
-    src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.eot');
-    src: url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.eot?#iefix') format('embedded-opentype'),
-         url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.woff2?v=1.0') format('woff2'),
-         url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.woff?v=1.0') format('woff'),
-         url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.ttf?v=1.0') format('truetype'),
-         url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/nexaslabheavy.svg#nexa_slabheavy') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-  font-family: 'sp-icons';
-  src:  url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/sites/all/themes/silverpeak/font/sp-icons.eot?v=1.2');
-  src:  url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/sites/all/themes/silverpeak/font/sp-icons.eot?v=1.2#iefix') format('embedded-opentype'),
-    url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/sites/all/themes/silverpeak/font/sp-icons.ttf?v=1.2') format('truetype'),
-    url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/sites/all/themes/silverpeak/font/sp-icons.woff?v=1.2') format('woff'),
-    url('https://www.silver-peak.com/sites/all/themes/silverpeak/font/sites/all/themes/silverpeak/font/sp-icons.svg?v=1.2#sp-icons') format('svg');
-  font-weight: normal; font-style: normal;
-}
-
-[class^="ico-"], [class*=" ico-"] {
-    font-family: 'sp-icons' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-    
-    .ico-sp-horiz:before {
-    content: "\e92e";
-}
-    
-        .body input.btn, body input.btnDisabled, body input.btnCancel {
-            padding: 20px 0px;
-        }
-
-        .form-signin .btn-primary {
-            color: #fff;
-            background-color: #97c114;
-    border-radius: 28px;
-        }
-
-        .requestBtnContainer {margin-top:68px}
-        .partner-tab ul {
-            float: right;
-            margin-bottom: 0px;
-            border-right: 1px solid #e6e6e6;
-            padding: 0;
-            margin-right: 20%;
-        }
-        .partner-tab ul li {
-            float: left;
-            display: block;
-            border-left: 1px solid #e6e6e6;
-            margin: 0;
-        }
-
-        .form-signin {
-            /* Delete any other version of this rule */
-            padding-bottom: 10px;
-            display: block;
-            min-height: 400px;
-            width: 100%;
-            max-width: 450px;
-            padding: 20px 30px 20px;
-            border: 1px dashed #E2E2E2;
-            background-color: transparent;
-            
-        }
-
-        .form-signin-heading {
-            font-size: 2em;
-            margin: 0 0 20px 0;
-            display: block;
-            color: #FFF;
-        }
-
-        .loginBtnContainer {
-            width: 100%;
-            display: block;
-        }
-
-        .body button, body .x-btn, body .btn, body .btnDisabled, body .btnCancel, body .menuButton .menuButtonButton, .form-signin .btn-primary {
-            color: #FFF;
-            margin: 0;
-            font-weight: 400;
-            font-size: 1.2em;
-            line-height: .9em;
-            text-transform: uppercase;
-            border: none;
-            padding: 20px 0;
-            width: 100%;
-            background-image: none;
-        }
-
-        .form-signin .btn-primary:hover {
-            background-color: #97c114;
-            
-        }
-
-
-
-        .btn-group-lg>.btn, .btn-lg {
-            line-height: .9;
-            padding: 20px 0px;
-        }
-
-        .loginLinkContainer {
-            margin-top: 25px;
-        }
-
-        .loginLinkContainer .loginLink {
-            display: block;
-            line-height: 25px;
-            text-align: center;
-            color: #FFF;
-        }
-        input.form-control {color: #FFF; background-color: rgba(255, 255, 255, 0.4); border: 1px solid transparent}
-        
-        input.form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #FFF;
-}
-input.form-control::-moz-placeholder { /* Firefox 19+ */
-  color: #FFF;
-}
-input.form-control:-ms-input-placeholder { /* IE 10+ */
-  color: #FFF;
-}
-input.form-control:-moz-placeholder { /* Firefox 18- */
-  color: #FFF;
-}
-        
-        .loginLinkContainer .loginLink.large {
-            font-size: 20px;
-            margin-top: 16px;
-        }
-
-        .form-signin .requestBtnContainer input {
-            background-color: #D8D8D8;
-            color: #255884;
-            padding: 20px 0;
-        }
-
-        .form-signin .requestBtnContainer input:hover {
-            color: #000;
-            background-color: #C3C3C3;
-        }
-
-
-    @media only screen and (max-width: 600px) {
-        .form-signin {
-            width: 100%;
-            max-width: auto;
-            max-height: none;
-            margin-bottom: 35px;
-            display: block;
-        }
-    }
-    
-    .header-title, .tab-bdr {display:none}
-    </style>
     <script>
         if(window.location.hostname == "partner.silver-peak.com") {
             window.location.href = window.location.href.replace("partner.", "partners.");
         }
     </script>
+    <style>
+    body {
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-image: url(https://www.silver-peak.com/sites/default/files/partner-portal-login-bg.jpg); */
+  background-image: url(https://www.silver-peak.com/sites/default/files/partner-portal-narrow-bg-v5.jpg);
+}
+    </style>
     
-    <i class="ico-sp-horiz" style="
-    color: #FFF;
-    text-align:  center;
-    font-size: 77px;
-    display:  block;
-    margin-top: 40px;
-"></i>
+    <i class="ico-sp-horiz"></i>
 
-<h2 style="
-    text-align: center;
-    display: block;
-    color:  #FFF;
-    font-weight: 200;
-    font-size: 40px;
-    margin-top: 30px;
-    font-family:  'Nexa';
-    font-weight:  100;
-">Welcome to the Silver Peak<br></br>
-    Partner Portal</h2>
+<h1>Welcome to the Silver Peak<br></br>
+    Partner Portal</h1>
     <div>
     
         <div class="wrapper" >

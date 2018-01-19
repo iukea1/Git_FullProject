@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Quote Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Quote Addresses</value>
+    </caseValues>
+    <fields>
+        <label><!-- Is the final destination somewhere else? --></label>
+        <name>Is_the_final_destination_somewhere_else__c</name>
+    </fields>
+    <fields>
+        <label><!-- Quote --></label>
+        <name>Quote__c</name>
+        <relationshipLabel><!-- Quote Addresses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Shipping City --></label>
+        <name>Shipping_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Contact First Name --></label>
+        <name>Shipping_Contact_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Contact Last Name --></label>
+        <name>Shipping_Contact_Last_NAme__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping State --></label>
+        <name>Shipping_State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Shipping Street --></label>
+        <name>Shipping_Street__c</name>
+    </fields>
+    <layouts>
+        <layout>Quote Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Shipping Contact Information is required if it is shipped to different destination. --></errorMessage>
+        <name>Shipping_Contact_reqd</name>
+    </validationRules>
+</CustomObjectTranslation>
