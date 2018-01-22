@@ -1,8 +1,8 @@
 <apex:page >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'css/bootstrap.min.css')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'css/bootstrap.theme.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'css/bootstrap-theme.min.css')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'css/style.css')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'css/bootstrap.min.css')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.NewCommunity, 'custom_style.css')}"/>
     <apex:includeScript value="{!URLFOR($Resource.NewCommunity, 'js/jquery.min.js')}" />
     <apex:includeScript value="{!URLFOR($Resource.NewCommunity, 'js/bootstrap.min.js')}" />
