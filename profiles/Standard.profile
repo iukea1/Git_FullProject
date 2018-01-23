@@ -206,6 +206,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssociateLMSCertificateWithContact</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>

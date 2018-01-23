@@ -28,7 +28,7 @@
               }
           </style>
             <apex:form >
-            <div id="main">  
+            <div id="main" class="input-minor">  
               <div id="content">
                <div class="txt">
                 

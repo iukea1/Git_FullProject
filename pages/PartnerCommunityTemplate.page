@@ -238,9 +238,24 @@
       </div>
 
 
+      <!-- Section Head Tag -->
+
+<div class="title-area">
+      <section class="header-title">
+        <div class="container partner-heading">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-title">SILVER PEAK PARTNERS</h1>
+                </div>
+            </div>
+        </div>
+      </section>
+      </div>
+
+
 <!-- Body Tag -->
     <div class="apxtemp container partner-data">
-    <apex:insert name="body"/>
+      <apex:insert name="body"/>
     </div>
 
 <!-- Footer Tag -->
