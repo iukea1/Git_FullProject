@@ -8946,6 +8946,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>OpportunityRecordTypeTransition__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Opportunity_Solution__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -9750,6 +9759,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MassUpdateUser</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MiscellaneousSetup</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10246,6 +10259,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>UserListView</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>VirtualPOCFulfillment</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10403,6 +10420,10 @@
     </tabSettings>
     <tabSettings>
         <tab>MFR_Requests</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Mass_Update_User</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

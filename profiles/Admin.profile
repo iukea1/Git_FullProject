@@ -8840,7 +8840,7 @@
         <layout>MultiLinkContact_del__c-MultiLinkContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-CPQ RSM Opp Layout 031816</layout>
+        <layout>Opportunity-System Administrator_Master</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
@@ -10218,6 +10218,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MassUpdateUser</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MiscellaneousSetup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -10711,6 +10715,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>UpcomingEventsPartner</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>UserListView</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

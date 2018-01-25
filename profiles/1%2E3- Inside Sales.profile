@@ -8840,7 +8840,7 @@
         <layout>MultiLinkContact_del__c-MultiLinkContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Inside Sales Opp Layout 10112016</layout>
+        <layout>Opportunity-Inside Sales_New</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
@@ -10145,6 +10145,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MassUpdateUser</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MiscellaneousSetup</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10638,6 +10642,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>UpcomingEventsPartner</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>UserListView</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

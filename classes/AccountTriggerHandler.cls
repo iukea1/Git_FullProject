@@ -490,14 +490,14 @@ insert lstCapCase;
                             if(opp.Type==null|| opp.Type=='New Business'|| opp.Type=='Follow on Business')
                             {
                                 string type='New Business';
-                                string recordTypeId='012500000005bUW';
+                               // string recordTypeId='012500000005bUW';
                                 if(mapOppType.get(accId)!=null && opp.Fiscal_Quarter_Name__c!=mapOppType.get(accId))
                                 {
                                     type='Follow on Business';
-                                    recordTypeId='012500000005bUb';
+                                   // recordTypeId='012500000005bUb';
                                 }
                                 opp.Type= type;
-                                opp.RecordTypeId=recordTypeId;
+                               // opp.RecordTypeId=recordTypeId;
                                 allOppsToUpdate.add(opp);
                             }
                         }

@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>CPQ RSM Opp Layout 031816</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- SteelBrick Fields --></label>
+            <section>SteelBrick Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Copy of New Opportunity Page Layout with Quotes 060607</layout>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Misc Data --></label>
+            <section>Misc Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification --></label>
+            <section>Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Deleted Opportunity Page Layout</layout>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Distributor Portal</layout>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Finance_Master</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Finance_RSM Opp Layout 110113</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Generic_Master</layout>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Non PRM- Deal Reg Info --></label>
+            <section>Non PRM- Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales Opp Layout 10112016</layout>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales_Closed Deleted</layout>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales_Closed Not Won</layout>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales_Closed Won</layout>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales_New</layout>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Maintainance Opp Layout</layout>
+        <sections>
+            <label><!-- Channel --></label>
+            <section>Channel</section>
+        </sections>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- NON PRM -Deal Reg Info --></label>
+            <section>NON PRM -Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>New Opportunity Page Layout 020607</layout>
+        <sections>
+            <label><!-- Evaluation Summary --></label>
+            <section>Evaluation Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification --></label>
+            <section>Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification eTrique --></label>
+            <section>Qualification eTrique</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Reason --></label>
+            <section>Win / Loss Reason</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Attributes --></label>
+            <section>Win/Loss Attributes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>New Opportunity Page Layout 050207</layout>
+        <sections>
+            <label><!-- Pain Defined --></label>
+            <section>Pain Defined</section>
+        </sections>
+        <sections>
+            <label><!-- Qualified --></label>
+            <section>Qualified</section>
+        </sections>
+        <sections>
+            <label><!-- Selected Technically --></label>
+            <section>Selected Technically</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Reason --></label>
+            <section>Win / Loss Reason</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Attributes --></label>
+            <section>Win/Loss Attributes</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>New Opportunity Page Layout with Quotes 060607</layout>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Misc Data --></label>
+            <section>Misc Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification --></label>
+            <section>Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Operations_Master</layout>
+        <sections>
+            <label><!-- Channel --></label>
+            <section>Channel</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- NON PRM- Deal Reg Info --></label>
+            <section>NON PRM- Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Win/ Loss Detail --></label>
+            <section>Win/ Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Opp OutSource Support US Layout</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Opportunity Layout</layout>
+        <sections>
+            <label><!-- Discount Justification --></label>
+            <section>Discount Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Evaluation Justification --></label>
+            <section>Evaluation Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification --></label>
+            <section>Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Description --></label>
+            <section>Win / Loss Description</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Opportunity Layout Contractor</layout>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Opportunity with Demandbase</layout>
+        <sections>
+            <label><!-- Channel --></label>
+            <section>Channel</section>
+        </sections>
+        <sections>
+            <label><!-- Demandbase Sales Accelerator --></label>
+            <section>Demandbase Sales Accelerator</section>
+        </sections>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- NON PRM -Deal Reg Info --></label>
+            <section>NON PRM -Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Opportunity with Quotes 061209</layout>
+        <sections>
+            <label><!-- Channel --></label>
+            <section>Channel</section>
+        </sections>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- NON PRM -Deal Reg Info --></label>
+            <section>NON PRM -Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>PPwQuotes</layout>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partner Portal</layout>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>RSM Opp Layout 110113</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Renewal Opp Layout 060114</layout>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales_Closed Deleted</layout>
+        <sections>
+            <label><!-- Closed Disposition --></label>
+            <section>Closed Disposition</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Environment/POC --></label>
+            <section>Technical Environment/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales_Closed Not Won</layout>
+        <sections>
+            <label><!-- Closed Disposition --></label>
+            <section>Closed Disposition</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Environment/POC --></label>
+            <section>Technical Environment/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales_Closed Won</layout>
+        <sections>
+            <label><!-- Closed Disposition --></label>
+            <section>Closed Disposition</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Environment/POC --></label>
+            <section>Technical Environment/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales_New</layout>
+        <sections>
+            <label><!-- Closed Disposition --></label>
+            <section>Closed Disposition</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Info --></label>
+            <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Environment/POC --></label>
+            <section>Technical Environment/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Support Team_Master</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>System Administrator_Master</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Environment --></label>
+            <section>Environment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- SteelBrick Fields --></label>
+            <section>SteelBrick Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

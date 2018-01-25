@@ -164,10 +164,9 @@ public class LMSBatchHelper {
     
     public static void H_AssociateContactUsingUserId()
     {
-        System.debug('Associate using UserId');
         List<LMS_Course_Certification__c> lstCertsToUpdate= new List<LMS_Course_Certification__c>();
         List<LMS_Course_Certification__c> lstCerts= new List<LMS_Course_Certification__c>();
-        lstCerts=[Select Id,LMS_User_Id__c from  LMS_Course_Certification__c where LMS_User_Id__c!=null and Learner_Contact__c=null];
+        lstCerts=[Select Id,LMS_User_Id__c from  LMS_Course_Certification__c where LMS_User_Id__c!=null and Learner_Contact__c=null and IsActive__c=true];
         Set<string> setUserId= new Set<String>();
         Map<string,Contact> mapUsrInfo=new  Map<string,Contact>();
         if(lstCerts.size()>0)
@@ -211,12 +210,11 @@ public class LMSBatchHelper {
     
     public static void H_AssociateContactUsingEmailAddress()
     {
-        System.debug('Associate using User Email Address');
         List<LMS_Course_Certification__c> lstCertsToUpdate= new List<LMS_Course_Certification__c>();
         List<Contact> lstContactsToUpdate= new List<Contact>();
-        Set<Id> setContactsToUpdate= new Set<Id>();
+         Set<Id> setContactsToUpdate= new Set<Id>();
         List<LMS_Course_Certification__c> lstCerts= new List<LMS_Course_Certification__c>();
-        lstCerts=[Select Id,LMS_User_Id__c,Student_Email__c from  LMS_Course_Certification__c where Student_Email__c!=null and Learner_Contact__c=null];
+        lstCerts=[Select Id,LMS_User_Id__c,Student_Email__c from  LMS_Course_Certification__c where Student_Email__c!=null and Learner_Contact__c=null and IsActive__c=true];
         Set<string> setUserEmail= new Set<String>();
         Map<string,Contact> mapUsrInfo=new  Map<string,Contact>();
         if(lstCerts.size()>0)

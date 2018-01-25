@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Define_Channel</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
@@ -48,12 +49,8 @@
                 <field>On_Time_Renewal__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NX_VX_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Event_Date__c</field>
+                <field>First_Win_Opportunity__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -70,11 +67,11 @@
                 <field>CloseDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Project_Budget__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>NextStep</field>
             </layoutItems>
             <layoutItems>
@@ -156,7 +153,6 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Quote_Name__c</fields>
         <fields>Quote_Date__c</fields>
         <fields>Quote_Valid_Until__c</fields>
         <relatedList>Quote__c.Opportunity__c</relatedList>
@@ -165,8 +161,6 @@
         <excludeButtons>AddProduct</excludeButtons>
         <excludeButtons>ChoosePricebook</excludeButtons>
         <excludeButtons>EditAllProduct</excludeButtons>
-        <excludeButtons>MultiAdd</excludeButtons>
-        <excludeButtons>MultiEdit</excludeButtons>
         <excludeButtons>Sort</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
@@ -176,6 +170,9 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContactRoleList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedCompetitorList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -197,13 +194,6 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>AddAccountTeam</excludeButtons>
-        <excludeButtons>AddDefaultTeam</excludeButtons>
-        <excludeButtons>AddOppTeam</excludeButtons>
-        <excludeButtons>AddOppTeamMember</excludeButtons>
-        <excludeButtons>DeleteTeam</excludeButtons>
-        <excludeButtons>DisplayAccess</excludeButtons>
-        <excludeButtons>OppTeamMemberMultiEdit</excludeButtons>
         <fields>MemberName</fields>
         <fields>OppAccessLevel</fields>
         <fields>TeamMemberRole</fields>

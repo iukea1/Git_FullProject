@@ -9022,6 +9022,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MassUpdateUser</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MiscellaneousSetup</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -9518,6 +9522,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>UserListView</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>VirtualPOCFulfillment</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -9675,6 +9683,10 @@
     </tabSettings>
     <tabSettings>
         <tab>MFR_Requests</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Mass_Update_User</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

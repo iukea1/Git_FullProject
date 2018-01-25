@@ -1115,13 +1115,9 @@ ISBLANK(Signed_By__c)
             <name>SetPOCType2Trial</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>when a marketplace opp is closed, then set a bunch of fields</description>
-        <formula>AND (
-ISPICKVAL(  Type , &quot;Marketplace&quot;),
-ISPICKVAL(  StageName , &quot;Closed Dead&quot;),
-ISCHANGED(StageName)
-)</formula>
+        <formula>AND ( ISPICKVAL(  Type , &quot;Marketplace&quot;), ISPICKVAL(  StageName , &quot;Closed Dead&quot;), ISCHANGED(StageName) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -1573,7 +1569,7 @@ ISCHANGED(StageName)
             <name>SetRecordTypeDefault</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -1592,7 +1588,7 @@ ISCHANGED(StageName)
             <name>SetRecordTypeSpecificFO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -1611,7 +1607,7 @@ ISCHANGED(StageName)
             <name>SetRecordTypeSpecificMR</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.RecordTypeId</field>
             <operation>notEqual</operation>

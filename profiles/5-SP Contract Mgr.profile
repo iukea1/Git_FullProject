@@ -8840,7 +8840,7 @@
         <layout>MultiLinkContact_del__c-MultiLinkContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Finance_RSM Opp Layout 110113</layout>
+        <layout>Opportunity-Finance_Master</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
@@ -9882,6 +9882,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MassUpdateUser</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MiscellaneousSetup</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10375,6 +10379,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>UpcomingEventsPartner</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>UserListView</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
