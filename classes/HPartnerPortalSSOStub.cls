@@ -140,10 +140,10 @@ public with sharing class HPartnerPortalSSOStub
         
         Partner_Account_Profile__c accountProfile = new Partner_Account_Profile__c();
         String departmentName = currentAccount.Name;
+      
         if(currentAccount != null && currentAccount.Partner_Accounts_Profile__r != null 
            && currentAccount.Partner_Accounts_Profile__r.size() > 0)
         {
-            
             if(String.isNotBlank(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c)
                && validateDepartmentById(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c, token))
             {
@@ -154,14 +154,15 @@ public with sharing class HPartnerPortalSSOStub
                 departmentName = currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c;
             }
         }
-       
+        System.debug('department'+departmentName);
         HPartnerPortalGetDepartmentsApi result = validateDepartmentByName(departmentName, token);
         accountProfile.LmsDepartmentName__c = departmentName;
         if(result.isSucceed && result.departments != null && result.departments.size() > 0)
         {
             accountProfile.LmsDepartmentId__c = String.valueOf(result.departments[0].Id);
         }
-        System.debug('****'+accountProfile.Name);
+        System.debug('accountProfile'+accountProfile.Name);
+        System.debug('accountProfile.Department Id'+result.departments[0].Id);
         return accountProfile;
     }
     

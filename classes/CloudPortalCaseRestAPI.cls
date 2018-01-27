@@ -112,13 +112,13 @@ return lstCases;
         List<Asset> assets= new List<Asset>();
         System.debug(assetNumber);
         System.debug(licenseKey);
-        if(assetNumber!=null)
+        if(assetNumber!=null && assetNumber!='')
         {
             assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
             assets = [select Id, AccountId from Asset where Name=:assetNumber];
             System.debug('assets serial'+ assets);
         }
-        if(licenseKey!=null && assets.size()==0)
+        if(licenseKey!=null && licenseKey!='' && assets.size()==0)
         {
             assets = [select Id, AccountId from Asset  where License_Key__c=:licenseKey.trim()];
             System.debug('assets license'+ assets);
