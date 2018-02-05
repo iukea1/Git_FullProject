@@ -1,0 +1,38 @@
+<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order">
+	
+	<style>
+		#FileUploadContent{text-align: center; width: 100%;}
+	</style>
+
+	<apex:form >
+
+	<apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" />
+
+	<apex:pageblock mode="maindetail">
+		<apex:pageBlockButtons location="top">
+			<apex:commandButton action="{!activateOrder}" value="Activate Order"/>
+			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+		</apex:pageBlockButtons>
+	</apex:pageblock>
+
+	<apex:pageblock >
+
+		<!-- <apex:pageBlockButtons location="top">
+			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+		</apex:pageBlockButtons> -->
+
+		<apex:pageBlockSection columns="1">
+			<apex:pageBlockSectionItem >
+				<apex:pageBlockTable value="{!orderProducts}" var="orderProduct">
+					<apex:column value="{!orderProduct.Product2.Name}"/>
+					<apex:column value="{!orderProduct.Product2.ProductCode}"/>
+					<apex:column value="{!orderProduct.Quantity}"/>
+					<apex:column value="{!orderProduct.UnitPrice}"/>
+					<apex:column value="{!orderProduct.TotalPrice}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+
+	</apex:pageblock>	
+	</apex:form>
+</apex:page>

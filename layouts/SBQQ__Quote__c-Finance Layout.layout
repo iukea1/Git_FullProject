@@ -48,6 +48,14 @@
                 <behavior>Readonly</behavior>
                 <field>Primary_on_Oppty__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBCF_Product_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBCF_Evaluation_Quote__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

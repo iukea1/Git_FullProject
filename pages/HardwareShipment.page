@@ -1,0 +1,60 @@
+<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="HardwareShipmentController" tabStyle="Order">
+	
+	<style>
+		#FileUploadContent{text-align: center; width: 100%;}
+	</style>
+
+	<apex:sectionHeader title="Apply Serial Numbers - Order {!Order.OrderNumber}" />
+
+	<apex:form >
+
+	<apex:pageblock mode="maindetail">
+		<apex:pageBlockButtons location="top">
+			<apex:commandButton action="{!applyCSVFile}" value="Apply Serial Numbers File" />
+			<apex:commandButton action="{!checkSerialNumberStatus}" value="Check Serial Numbers Status"/>
+			<apex:commandButton action="{!saveAndShip}" value="Save and Ship" />
+			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+		</apex:pageBlockButtons>
+		<apex:pageBlockSection >
+			<apex:pageBlockSectionItem >
+				<apex:outputText value="Upload a CSV file with Product Serial Numbers " />
+				<apex:inputFile value="{!csvFile.body}" filename="{!csvFile.name}"/>
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+	</apex:pageblock>
+
+	<apex:pageblock >
+<!-- 
+		<apex:pageBlockButtons location="top">
+			<apex:commandButton action="{!applyCSVFile}" value="Apply Serial Numbers File" oncomplete="rerenderForm();" reRender="OrderProductTable"/>
+			
+		</apex:pageBlockButtons> -->
+
+		<apex:pageBlockSection columns="1">
+
+			<!-- <apex:pageBlockSectionItem Id="FileDisplayTable">
+				<apex:pageBlockTable value="{!fileRowWrappers}" var="fileRow">
+					<apex:column  value="{!fileRow.Column1}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSectionItem> -->
+
+			<apex:pageBlockSectionItem >
+				<apex:pageBlockTable value="{!orderProducts}" var="orderProduct" Id="OrderProductTable">
+					<apex:column value="{!orderProduct.Product2.Name}"/>
+					<apex:column value="{!orderProduct.Product2.ProductCode}"/>
+					<apex:column value="{!orderProduct.Quantity}"/>
+					<apex:column value="{!orderProduct.UnitPrice}"/>
+					<apex:column value="{!orderProduct.TotalPrice}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSectionItem>
+		</apex:pageBlockSection>
+
+		<apex:outputPanel rendered="{!uploadedFile}">
+			File Uploaded
+		</apex:outputPanel>
+
+	</apex:pageblock>	
+	</apex:form>
+
+	
+</apex:page>

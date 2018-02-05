@@ -1929,11 +1929,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Non_Registered_Discount__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>OppAcct_ShipCountry__c</field>
             <table>Opportunity.SBQQ__Quotes2__r</table>
         </columns>
@@ -1995,11 +1990,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Projected_End_Date__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Registered_Discount__c</field>
             <table>Opportunity.SBQQ__Quotes2__r</table>
         </columns>
         <columns>

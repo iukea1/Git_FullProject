@@ -156,8 +156,7 @@ public class PORenewalAssetsController {
                         if(assets.size()>0)
                         {
                             RenewalAssetsHelper.CheckUnCheckAssets(assets, true);
-                            RenewalAssetsHelper.SendEmailsForPurchaseOrder(true, PORequest,CustomerContact.Email_Contact__c); 
-                            RenewalAssetsHelper.RenewEdgeConnectLicense(assets);
+                            RenewalAssetsHelper.RenewEdgeConnectLicenseAndNotifications(true, assets, PORequest, CustomerContact.Email_Contact__c);
                         }
                        
                     }

@@ -38,7 +38,8 @@ public with sharing class HPartnerPortalGetDepartmentsApi extends HPartnerPortal
     
     public override void processResult(String response)
     {
-    	System.debug('department'+response);
-    	departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
+    	System.debug('department processResult'+response);
+        if(response!=null && response!='')
+    		departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
     }
 }

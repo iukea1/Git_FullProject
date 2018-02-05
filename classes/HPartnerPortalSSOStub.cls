@@ -137,7 +137,7 @@ public with sharing class HPartnerPortalSSOStub
 */
     private static Partner_Account_Profile__c validateDepartment(Account currentAccount, String token)
     {
-        
+        System.debug('validateDepartment');
         Partner_Account_Profile__c accountProfile = new Partner_Account_Profile__c();
         String departmentName = currentAccount.Name;
       
@@ -165,11 +165,11 @@ public with sharing class HPartnerPortalSSOStub
         System.debug('accountProfile.Department Id'+result.departments[0].Id);
         return accountProfile;
     }
-    
     public static Boolean validateDepartmentById(String departmentId, String token)
     {
         try
         {
+            System.debug('validateDepartmentById');
             HPartnerPortalGetDepartmentApi getDepartmentApi = new HPartnerPortalGetDepartmentApi(departmentId, token);
             getDepartmentApi.execute();
             if(getDepartmentApi.department!=null)
@@ -189,11 +189,11 @@ public with sharing class HPartnerPortalSSOStub
     {
         try
         {
+            System.debug('validateDepartmentByName');
             //Map<String, String> params = new Map<String, String>{'departmentname'=>departmentName};
             HPartnerPortalGetDepartmentsApi obj = new HPartnerPortalGetDepartmentsApi(token, departmentName);
-            System.debug('token'+token);
             obj.execute();
-            System.debug('obj'+obj);
+            System.debug('HPartnerPortalGetDepartmentsApi'+obj);
             return obj;
         }
         catch(Exception ex)
@@ -206,12 +206,20 @@ public with sharing class HPartnerPortalSSOStub
     
     public static String createDepartment(Account currentAccount, Account parentAccount, String token)
     {
+        System.debug('createDepartment');
         Map<String, String> departmentParams = new Map<String, String>();
-        departmentParams.put('name', currentAccount.Name);
+        //departmentParams.put('name', currentAccount.Name);
         //departmentParams.put('notes', currentAccount.Description);
         //departmentParams.put('locations', currentAccount.BillingCity);
         //departmentParams.put('token', token);
-        
+        if(currentAccount != null && currentAccount.Partner_Accounts_Profile__r != null && currentAccount.Partner_Accounts_Profile__r.size() > 0 && String.isNotBlank(currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c))
+        {
+            departmentParams.put('name', currentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentName__c);
+        }
+        else
+        {
+            departmentParams.put('name', currentAccount.Name);
+        }
         if(parentAccount != null && parentAccount.Partner_Accounts_Profile__r != null && parentAccount.Partner_Accounts_Profile__r.size() > 0 && String.isNotBlank(parentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c))
         {
             departmentParams.put('ParentId', parentAccount.Partner_Accounts_Profile__r[0].LmsDepartmentId__c);

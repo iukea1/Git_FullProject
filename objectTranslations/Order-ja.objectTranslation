@@ -6,5 +6,9 @@
             <label><!-- Additional Information --></label>
             <section>Additional Information</section>
         </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
     </layouts>
 </CustomObjectTranslation>

@@ -754,6 +754,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HardwareShipmentController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ITrigger</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1127,6 +1131,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OrderShipmentHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2331,6 +2339,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VirtualPOCFulfillmentControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>VirtualShipmentController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -10030,6 +10042,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>HardwareShipment</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>IdeasHome</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -10723,6 +10739,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>VirtualPOCFulfillment</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VirtualShipment</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
