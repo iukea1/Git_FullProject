@@ -36,10 +36,11 @@ public class HLMSPartnerPortalAPiMock implements HttpCalloutMock
         {
             res.setBody('{"Locations":null,"Name":"Silver Peak","Notes":null,"ParentDeptID":0,"Id":"01I38000000RCsg"}');
         }
+        
         // Departments.
         else if(req.getEndpoint().indexOf('/departments') > 0)
         {
-            res.setBody('[{"Id":"01I38000000RCsg","Name":"Silver Peak","Password":null,"Uri":"/departments/85748","Value":"Silver Peak","externalId":null,"parentId":0}]');
+            res.setBody('[{"Id":"01I38000000RCsg","Name":"Silver Peak","Password":null,"Uri":"/departments/01I38000000RCsg","Value":"Silver Peak","externalId":null,"parentId":0}]');
         }
         
         else if(req.getEndpoint().indexOf('/createabsorbaccount') > 0)

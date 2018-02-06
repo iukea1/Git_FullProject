@@ -16,7 +16,7 @@ public class TestH_PartnerPortalSSOStub {
         Id accountType = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Resellers').getRecordTypeId();
         Account portalAccount = new Account(Name = 'Test', RecordTypeId = accountType);
         insert portalAccount;
-        insert new Partner_Account_Profile__c(Account__c = portalAccount.Id,LmsDepartmentName__c='Test');
+        insert new Partner_Account_Profile__c(Account__c = portalAccount.Id,LmsDepartmentName__c='Test122');
         
         Contact portalContact = new Contact( FirstName = 'Test', Lastname = 'Amit', AccountId = portalAccount.Id, Email = 'srussell@silver-peak.com');
         insert portalContact;
@@ -47,8 +47,9 @@ public class TestH_PartnerPortalSSOStub {
             Test.setMock(HttpCalloutMock.class, new HLMSPartnerPortalAPiMock(200, 'OK', 'String body', new Map<String, String> ()));
             try
             {
-                String ssoLink = HPartnerPortalSSOStub.getSSOLink(UserInfo.getUserId());
-                System.debug('ssoLink'+ssoLink);
+                string token= HPartnerPortalSSOStub.getHttpToken();
+                HPartnerPortalGetDepartmentsApi obj = HPartnerPortalSSOStub.validateDepartmentByName(portalAccount.Name, token);
+                System.assert(obj!=null);
             }
             catch(Exception ex) {}
             Test.stopTest();
@@ -92,8 +93,9 @@ public class TestH_PartnerPortalSSOStub {
             Test.setMock(HttpCalloutMock.class, new HLMSPartnerPortalAPiMock(200, 'OK', 'String body', new Map<String, String> ()));
             try
             {
-                String ssoLink = HPartnerPortalSSOStub.getSSOLink(UserInfo.getUserId());
-                System.debug('ssoLink'+ssoLink);
+                string token= HPartnerPortalSSOStub.getHttpToken();
+                String departmentId = HPartnerPortalSSOStub.createDepartment(portalAccount, null, token);
+                System.assert(departmentId!=null);
             }
             catch(Exception ex) {}
             Test.stopTest();
@@ -101,12 +103,12 @@ public class TestH_PartnerPortalSSOStub {
     }
     
     @isTest
-    static void testGetSSOLink_Id() 
+    static void testGetSSOLink_SalesforceId() 
     {
         Id accountType = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Resellers').getRecordTypeId();
         Account portalAccount = new Account(Name = 'Test', RecordTypeId = accountType);
         insert portalAccount;
-        insert new Partner_Account_Profile__c(Account__c = portalAccount.Id,LmsDepartmentId__c='Test');
+        insert new Partner_Account_Profile__c(Account__c = portalAccount.Id);
         
         Contact portalContact = new Contact( FirstName = 'Test', Lastname = 'Amit', AccountId = portalAccount.Id, Email = 'srussell@silver-peak.com');
         insert portalContact;
@@ -137,8 +139,9 @@ public class TestH_PartnerPortalSSOStub {
             Test.setMock(HttpCalloutMock.class, new HLMSPartnerPortalAPiMock(200, 'OK', 'String body', new Map<String, String> ()));
             try
             {
-                String ssoLink = HPartnerPortalSSOStub.getSSOLink(UserInfo.getUserId());
-                System.debug('ssoLink'+ssoLink);
+                string token= HPartnerPortalSSOStub.getHttpToken();
+                HPartnerPortalGetDepartmentsByExtIdApi obj = HPartnerPortalSSOStub.validateDepartmentBySalesforceId(portalAccount.Id, token);
+                System.assert(obj!=null);
             }
             catch(Exception ex) {}
             Test.stopTest();
@@ -178,12 +181,12 @@ public class TestH_PartnerPortalSSOStub {
         
         System.runAs(portalUser){
               Test.startTest();
-            //Test.setMock(WebServiceMock.class, new PartnerPortalWebServiceMock());
             Test.setMock(HttpCalloutMock.class, new HLMSPartnerPortalAPiMock(200, 'OK', 'String body', new Map<String, String> ()));
             try
             {
-                String ssoLink = HPartnerPortalSSOStub.getSSOLink(UserInfo.getUserId());
-                System.debug('ssoLink'+ssoLink);
+                string token= HPartnerPortalSSOStub.getHttpToken();
+                string obj = HPartnerPortalSSOStub.createLearner(portalContact, '01I38000000RCsg', portalContact.Email, token, portalAccount);
+                System.assert(obj!=null);
             }
             catch(Exception ex) {}
             Test.stopTest();

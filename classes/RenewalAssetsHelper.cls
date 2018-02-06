@@ -41,7 +41,7 @@ public  class RenewalAssetsHelper
                     mapAssets.put(asset.Id,asset.Renewal_Date__c);
                     if((prodName.startsWith('EC-BASE')||prodName.startsWith('EC-PLUS')||prodName.startsWith('EC-BOOST'))&& asset.Renewal_Nodes__c==0)
                     {
-                         mapAssets.remove(asset.Id);
+                        mapAssets.remove(asset.Id);
                     }
                 }
             }
@@ -97,26 +97,26 @@ public  class RenewalAssetsHelper
             {
                 string prodName= asset.Product2.Name;
                 if(prodName.startsWith('EC-BASE')||prodName.startsWith('EC-PLUS'))
-				{
-				  if(asset.Licenses_Nodes__c <= asset.Renewal_Nodes__c)
-               	  {
-                    asset.Licenses_Nodes__c= asset.Renewal_Nodes__c;	
-               	  }
-				  else if(asset.Licenses_Nodes__c > asset.Renewal_Nodes__c)
-               	  {
-                    lstReductionAssets.add(asset);
-                  }
-				}
+                {
+                    if(asset.Licenses_Nodes__c <= asset.Renewal_Nodes__c)
+                    {
+                        asset.Licenses_Nodes__c= asset.Renewal_Nodes__c;	
+                    }
+                    else if(asset.Licenses_Nodes__c > asset.Renewal_Nodes__c)
+                    {
+                        lstReductionAssets.add(asset);
+                    }
+                }
                 if(prodName.startsWith('EC-BOOST'))
                 {
-				  if(asset.Bandwidth_Nodes__c <= asset.Renewal_Nodes__c)
-	                {
-	                    asset.Bandwidth_Nodes__c= asset.Renewal_Nodes__c;
-	                }
-		     	  else if(asset.Bandwidth_Nodes__c > asset.Renewal_Nodes__c)
-	                {
+                    if(asset.Bandwidth_Nodes__c <= asset.Renewal_Nodes__c)
+                    {
+                        asset.Bandwidth_Nodes__c= asset.Renewal_Nodes__c;
+                    }
+                    else if(asset.Bandwidth_Nodes__c > asset.Renewal_Nodes__c)
+                    {
                         lstReductionAssets.add(asset);
-	                }
+                    }
                 }
                 lstAssets.add(asset);
                 if(prodName!='EC-ORCH')
@@ -125,7 +125,7 @@ public  class RenewalAssetsHelper
                     mapAssets.put(asset.Id,asset.Renewal_Date__c);
                     if((prodName.startsWith('EC-BASE')||prodName.startsWith('EC-PLUS')||prodName.startsWith('EC-BOOST'))&& asset.Renewal_Nodes__c==0)
                     {
-                         mapAssets.remove(asset.Id);
+                        mapAssets.remove(asset.Id);
                     }
                 }
             }
@@ -542,7 +542,7 @@ public  class RenewalAssetsHelper
             }
         }
     }
-
+    
     public static void SendEmailsForPurchaseOrderProcessing(Purchase_Order__c purchaseOrder, Id customerContact )
     {
         string pocRenewalEmailType= 'EC Virtual Renewal Email PO Processing';

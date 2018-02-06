@@ -24,83 +24,6 @@
         </sections>
     </layouts>
     <layouts>
-        <layout>Evaluation Approved Quote</layout>
-        <sections>
-            <label><!-- Additional Text --></label>
-            <section>Additional Text</section>
-        </sections>
-        <sections>
-            <label><!-- Address Information --></label>
-            <section>Address Information</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Discount Information --></label>
-            <section>Discount Information</section>
-        </sections>
-        <sections>
-            <label><!-- Quote Options --></label>
-            <section>Quote Options</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>Evaluation Quote Layout</layout>
-        <sections>
-            <label><!-- Additional Text --></label>
-            <section>Additional Text</section>
-        </sections>
-        <sections>
-            <label><!-- Address Information --></label>
-            <section>Address Information</section>
-        </sections>
-        <sections>
-            <label><!-- Contract Information --></label>
-            <section>Contract Information</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Debug for Testing - To Be Removed --></label>
-            <section>Debug for Testing - To Be Removed</section>
-        </sections>
-        <sections>
-            <label><!-- Discount Information --></label>
-            <section>Discount Information</section>
-        </sections>
-        <sections>
-            <label><!-- Quote Options --></label>
-            <section>Quote Options</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>Evaluation Rejected Quote</layout>
-        <sections>
-            <label><!-- Additional Text --></label>
-            <section>Additional Text</section>
-        </sections>
-        <sections>
-            <label><!-- Address Information --></label>
-            <section>Address Information</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Discount Information --></label>
-            <section>Discount Information</section>
-        </sections>
-        <sections>
-            <label><!-- Quote Options --></label>
-            <section>Quote Options</section>
-        </sections>
-    </layouts>
-    <layouts>
         <layout>Evaluation Submitted Quote</layout>
         <sections>
             <label><!-- Additional Text --></label>
@@ -140,6 +63,106 @@
         <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POC Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POC Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POC Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>POC Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
         </sections>
     </layouts>
     <layouts>
