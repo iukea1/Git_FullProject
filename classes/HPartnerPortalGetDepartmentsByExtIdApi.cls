@@ -4,41 +4,41 @@ public with sharing class HPartnerPortalGetDepartmentsByExtIdApi extends HPartne
     private string externalId;
   
 
-	public HPartnerPortalGetDepartmentsByExtIdApi(String token, String salesforceId)
-	{
-		this.token = String.isBlank(token) ? HPartnerPortalSSOStub.getHttpToken(): token;
-        this.externalId = salesforceId;
-	}
-
-	public List<HPartnerPortalLMSDepartment> departments {get; set;}
-
-	public override String generateEndPoint()
+    public HPartnerPortalGetDepartmentsByExtIdApi(String token, String salesforceId)
     {
-    	
-    	String endpoint = BaseEndpoint + '/departments';
-    	if(!String.isBlank(externalId))
-    	{
-    		endpoint += '?externalId='+externalId;
-    	}
-		return endpoint;
-    	
+        this.token = String.isBlank(token) ? HPartnerPortalSSOStub.getHttpToken(): token;
+        this.externalId = salesforceId;
     }
 
-	public override HttpRequest setHeaders(HttpRequest request)
-	{
+    public List<HPartnerPortalLMSDepartment> departments {get; set;}
+
+    public override String generateEndPoint()
+    {
+        
+        String endpoint = BaseEndpoint + '/departments';
+        if(!String.isBlank(externalId))
+        {
+            endpoint += '?externalId='+externalId;
+        }
+        return endpoint;
+        
+    }
+
+    public override HttpRequest setHeaders(HttpRequest request)
+    {
         request.setMethod('GET');
         request.setHeader('Authorization',token);
-		return request;
-	}
+        return request;
+    }
     
     public override HttpRequest setBody(HttpRequest request)
     {
-    	return request;
+        return request;
     }
     
     public override void processResult(String response)
     {
         System.debug(response);
-    	departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
+        departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
     }
 }

@@ -4,40 +4,40 @@ public with sharing class HPartnerPortalGetDepartmentsApi extends HPartnerPortal
     private string departmentName;
   
 
-	public HPartnerPortalGetDepartmentsApi(String token, String departmentName)
-	{
-		this.token = String.isBlank(token) ? HPartnerPortalSSOStub.getHttpToken(): token;
-        this.departmentName = departmentName;
-	}
-
-	public List<HPartnerPortalLMSDepartment> departments {get; set;}
-
-	public override String generateEndPoint()
+    public HPartnerPortalGetDepartmentsApi(String token, String departmentName)
     {
-    	
-    	String endpoint = BaseEndpoint + '/departments';
-    	if(!String.isBlank(departmentName))
-    	{
-    		endpoint += '?departmentName=' + EncodingUtil.urlEncode(departmentName, 'UTF-8');
-    	}
-		return endpoint;
-    	
+        this.token = String.isBlank(token) ? HPartnerPortalSSOStub.getHttpToken(): token;
+        this.departmentName = departmentName;
     }
 
-	public override HttpRequest setHeaders(HttpRequest request)
-	{
+    public List<HPartnerPortalLMSDepartment> departments {get; set;}
+
+    public override String generateEndPoint()
+    {
+        
+        String endpoint = BaseEndpoint + '/departments';
+        if(!String.isBlank(departmentName))
+        {
+            endpoint += '?departmentName=' + EncodingUtil.urlEncode(departmentName, 'UTF-8');
+        }
+        return endpoint;
+        
+    }
+
+    public override HttpRequest setHeaders(HttpRequest request)
+    {
         request.setMethod('GET');
         request.setHeader('Authorization',token);
-		return request;
-	}
+        return request;
+    }
     
     public override HttpRequest setBody(HttpRequest request)
     {
-    	return request;
+        return request;
     }
     
     public override void processResult(String response)
     {
-    	departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
+        departments = (List<HPartnerPortalLMSDepartment>) JSON.deserialize(response, List<HPartnerPortalLMSDepartment>.class);
     }
 }

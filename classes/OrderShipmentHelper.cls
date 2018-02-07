@@ -4,7 +4,7 @@ public with sharing class OrderShipmentHelper {
         List<OrderItem> orderProducts = new List<OrderItem>();
 
         try{
-            orderProducts = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, Status__c, Serial_Number__c, Part_Number__c
+            orderProducts = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, Serial_Number__c, Part_Number__c
                              FROM OrderItem WHERE OrderId = :orderId];
         }
         catch(QueryException qe){
@@ -42,6 +42,7 @@ public with sharing class OrderShipmentHelper {
     public class OrderProductWrapper{
 
         public OrderItem orderProduct {get;set;}
+        public String existingAssetId {get;set;}
 
         public OrderProductWrapper(OrderItem orderProduct){
             this.orderProduct = orderProduct;

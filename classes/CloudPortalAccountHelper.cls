@@ -49,6 +49,8 @@ public class CloudPortalAccountHelper {
             generator.writeStringField('email', apiData.UserName__c);
             generator.writeStringField('mfaCode', '');
             generator.writeStringField('password', apiData.Password__c);
+            System.debug(apiData.UserName__c);
+             System.debug(apiData.Password__c);
             /* if(SilverPeakUtils.IsProduction())
 {
 generator.writeStringField('email', 'cp-salesforce@silver-peak.com');

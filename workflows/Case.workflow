@@ -584,6 +584,44 @@
         <template>Support/CaseOwnershipAssigned</template>
     </alerts>
     <alerts>
+        <fullName>PerfHelp_Case_Comments</fullName>
+        <description>PerfHelp - Case Comments</description>
+        <protected>false</protected>
+        <recipients>
+            <field>CC1__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>perfhelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/TicketCommentUpdate</template>
+    </alerts>
+    <alerts>
+        <fullName>PerfHelp_Case_Opened</fullName>
+        <description>PerfHelp - Case Opened</description>
+        <protected>false</protected>
+        <recipients>
+            <field>CC1__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>perfhelp@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Support/PerfHelp_Ticket_Creation</template>
+    </alerts>
+    <alerts>
         <fullName>SampleEntryForCaseAccountTeam</fullName>
         <description>SampleEntryForCaseAccountTeam</description>
         <protected>false</protected>
@@ -928,6 +966,16 @@
         <lookupValue>ITHelp</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>ChangeOwner4ITRequests</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ChangeOwner4PerfHelpRequests</fullName>
+        <field>OwnerId</field>
+        <lookupValue>PerfHelp</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>ChangeOwner4PerfHelpRequests</name>
         <notifyAssignee>true</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -1839,7 +1887,8 @@ NOT(RecordType.DeveloperName = &quot;IT_Help_Requests&quot;),
 NOT(RecordType.DeveloperName = &quot;HR_Requests&quot;),
 NOT(RecordType.DeveloperName = &quot;Facilities&quot;),
 NOT(RecordType.DeveloperName = &quot;Lab_Help_Requests&quot;),
-NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;)
+NOT(RecordType.DeveloperName = &quot;DevOps_Help_Requests&quot;),
+NOT(RecordType.DeveloperName = &quot;Perf_Help_Requests&quot;)
 )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1890,6 +1939,75 @@ PRIORVALUE( OwnerId) = &apos;00530000000j42G&apos;
 NOT( Contact.Testing__c )
 )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Perf Help - Customer Case Comments</fullName>
+        <actions>
+            <name>PerfHelp_Case_Comments</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Case_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Perf Help Requests</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.UpdatedBy__c</field>
+            <operation>equals</operation>
+            <value>Customer</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Perf Help - Owner Case Comments</fullName>
+        <actions>
+            <name>PerfHelp_Case_Comments</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Case_Field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Perf Help Requests</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.UpdatedBy__c</field>
+            <operation>equals</operation>
+            <value>Owner</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>PerfHelpRequests- Case Opened</fullName>
+        <actions>
+            <name>PerfHelp_Case_Opened</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>ChangeOwner4PerfHelpRequests</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>SetStatus</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Perf Help Requests</value>
+        </criteriaItems>
+        <description>New PerfHelp Requests</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>RemoveAllowRMAFlagonAssetChange</fullName>

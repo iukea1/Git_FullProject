@@ -45,7 +45,7 @@
 
 					<apex:column styleClass="order-product-column" headerClass="order-product-header">
 						<apex:facet name="header">Status</apex:facet>
-						<apex:inputField value="{!orderProductWrapper.orderProduct.Status__c}" />
+						<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
 					</apex:column>
 
 					<apex:column styleClass="order-product-column" headerClass="order-product-header">
@@ -56,6 +56,13 @@
 					<apex:column styleClass="order-product-column" headerClass="order-product-header">
 						<apex:facet name="header">Serial Number</apex:facet>
 						<apex:inputField value="{!orderProductWrapper.orderProduct.Serial_Number__c}" />
+					</apex:column>
+
+					<apex:column styleClass="order-product-column" headerClass="order-product-header" rendered="{!existingAssetsExist}">
+						<apex:facet name="header">Existing Asset</apex:facet>
+						<apex:outputLink value="/{!orderProductWrapper.existingAssetId}" target="__blank" rendered="{!orderProductWrapper.existingAssetId != null}">
+							<apex:outputText value="Asset Link"/>
+						</apex:outputLink>
 					</apex:column>
 
 				</apex:pageBlockTable>

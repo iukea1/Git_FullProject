@@ -21,7 +21,7 @@ public class HLMSPartnerPortalAPiMock implements HttpCalloutMock
         HttpResponse res = new HttpResponse();
         res.setHeader('Content-Type', 'application/json');
         res.setStatusCode(200);
-		System.debug('req.GetEndPoint'+req.getEndpoint());
+        System.debug('req.GetEndPoint'+req.getEndpoint());
         
         if(req.getEndpoint().indexOf('/Authenticate') > 0)
         {
@@ -45,7 +45,7 @@ public class HLMSPartnerPortalAPiMock implements HttpCalloutMock
         
         else if(req.getEndpoint().indexOf('/createabsorbaccount') > 0)
         {
-            res.setBody('{"Value":"students/618708"}');
+            res.setBody('{"Id":"01I38000000RCsg","FirstName":"Test","LastName":"Test","EmailAddress":"abc@abc.com","UserName":"abc@abc.com"}');
         }
         else if(req.getEndpoint().indexOf('certificates/') > 0)
         {
