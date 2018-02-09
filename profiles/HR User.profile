@@ -762,6 +762,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HardwareShipmentControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ITrigger</apexClass>
         <enabled>false</enabled>
     </classAccesses>

@@ -40,38 +40,39 @@ global class PerfHelpEmailHandlerTest {
   }
   
   @isTest
-  static void testPerfHelpCaseSupportEmailHandler()
-  {
-    Messaging.Inboundemail testEmail = new Messaging.Inboundemail();
-    testEmail.subject = 'acme subject';
-    testEmail.fromAddress = 'Acme.InTestMethod@acme.com';
-    testEmail.plainTextBody = 'This is a test Email plainTextBody !';
-    List<Messaging.Inboundemail.Binaryattachment> bAttachments = new List<Messaging.Inboundemail.Binaryattachment>();
-    List<Messaging.Inboundemail.Textattachment> tAttachments = new List<Messaging.Inboundemail.Textattachment>();
-    Messaging.Inboundemail.Binaryattachment bAttachment = new Messaging.Inboundemail.Binaryattachment();
-    bAttachment.body = Blob.valueOf('acme');
-    bAttachment.fileName = 'binary attachment';
-    bAttachments.add(bAttachment);
-    testEmail.binaryAttachments = bAttachments;
-    Messaging.Inboundemail.Textattachment tAttachment = new Messaging.Inboundemail.Textattachment();
-    tAttachment.body = 'acme';
-    tAttachment.fileName = 'text attachment';
-    tAttachments.add(tAttachment);
-    testEmail.textAttachments = tAttachments;
-    Messaging.Inboundenvelope testEnvelope = new Messaging.Inboundenvelope();
-    (new PerfHelpEmailHandler()).handleInboundEmail(testEmail, testEnvelope);
-    Case tempCase = [select Id, CaseNumber from Case where Subject = :testEmail.subject];
-    testEmail.subject = 'acme subject['+tempCase.CaseNumber+']';
-    (new PerfHelpEmailHandler()).handleInboundEmail(testEmail, testEnvelope);
-    //Test for illegal condition.
-    Messaging.Inboundemail illegalFromNameEmail = new Messaging.Inboundemail();
-    illegalFromNameEmail.fromName = 'system administrator';
-    try
+    static void testPerfHelpEmailHandler()
     {
-    (new PerfHelpEmailHandler()).handleInboundEmail(illegalFromNameEmail, testEnvelope);
+        Case cs = new Case(Subject='acme');
+        insert cs;
+        EmailSetup__c setup = new EmailSetup__c(Name='PerfHelp', Drop_Email_From__c='spam');
+        insert setup;
+        Messaging.Inboundemail testEmail = new Messaging.Inboundemail();
+        testEmail.subject = 'acme subject';
+        testEmail.fromAddress = 'Acme.InTestMethod@acme.com';
+        testEmail.plainTextBody = 'This is a test Email plainTextBody !';
+        List<Messaging.Inboundemail.Binaryattachment> bAttachments = new List<Messaging.Inboundemail.Binaryattachment>();
+        List<Messaging.Inboundemail.Textattachment> tAttachments = new List<Messaging.Inboundemail.Textattachment>();
+        Messaging.Inboundemail.Binaryattachment bAttachment = new Messaging.Inboundemail.Binaryattachment();
+        bAttachment.body = Blob.valueOf('acme');
+        bAttachment.fileName = 'binary attachment';
+        bAttachments.add(bAttachment);
+        testEmail.binaryAttachments = bAttachments;
+        Messaging.Inboundemail.Textattachment tAttachment = new Messaging.Inboundemail.Textattachment();
+        tAttachment.body = 'acme';
+        tAttachment.fileName = 'text attachment';
+        tAttachments.add(tAttachment);
+        testEmail.textAttachments = tAttachments;
+        Messaging.Inboundenvelope testEnvelope = new Messaging.Inboundenvelope();
+        (new PerfHelpEmailHandler()).handleInboundEmail(testEmail, testEnvelope);
+        testEmail.subject = 'acme subject['+cs.Subject+']';
+        (new PerfHelpEmailHandler()).handleInboundEmail(testEmail, testEnvelope);
+        //Test for illegal condition.
+        Messaging.Inboundemail illegalFromNameEmail = new Messaging.Inboundemail();
+        illegalFromNameEmail.fromName = 'system administrator';
+        (new CaseSupportEmailHandler()).handleInboundEmail(illegalFromNameEmail, testEnvelope);
+        
+        List<Case> ccs = [Select Id, Subject, OwnerId from Case where subject ='acme' limit 1];
+        system.assertEquals(1, ccs.size());
     }
-    catch(Exception ex)
-    {}
-  }
     
 }

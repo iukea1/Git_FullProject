@@ -1950,7 +1950,7 @@ NOT( Contact.Testing__c )
             <name>Update_Case_Field</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -1973,7 +1973,7 @@ NOT( Contact.Testing__c )
             <name>Update_Case_Field</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -2000,7 +2000,7 @@ NOT( Contact.Testing__c )
             <name>SetStatus</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>

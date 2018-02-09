@@ -42,10 +42,23 @@ public with sharing class OrderShipmentHelper {
     public class OrderProductWrapper{
 
         public OrderItem orderProduct {get;set;}
-        public String existingAssetId {get;set;}
+        public List<ExistingAssetWrapper> existingAssetWrappers {get;set;}
 
         public OrderProductWrapper(OrderItem orderProduct){
             this.orderProduct = orderProduct;
+            this.existingAssetWrappers = new List<ExistingAssetWrapper>();
+        }
+    }
+
+    public class ExistingAssetWrapper{
+        public String id {get;set;}
+        public String serialNumber {get;set;}
+        public Asset existingAsset {get;set;}
+
+        public ExistingAssetWrapper(String id, String serialNumber, Asset existingAsset){
+            this.id = id;
+            this.serialNumber = serialNumber;
+            this.existingAsset = existingAsset;
         }
     }
 }

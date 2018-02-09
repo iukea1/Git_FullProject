@@ -1,10 +1,14 @@
 public with sharing class HardwareShipmentController {
 
-    public static final Integer CSV_COLUMN_SIZE = 3;
+    public static final Integer CSV_COLUMN_SIZE = 4;
 
     public static final String STATUS_CUSTOMER_EVALUATION = 'Customer Evaluation';
     public static final String STATUS_CUSTOMER_OWNED = 'Customer Owned';
     public static final String DEFAULT_ORDER_PRODUCT_STATUS = STATUS_CUSTOMER_OWNED;
+
+    public static final String WARNING_MESSAGE_EXISTING_ASSET = 'Existing assets found. If you don’t change the serial number, the existing asset will be overridden with new data. Data includes: Account, Product, etc';
+    public static final String SUCCESS_MESSAGE_NO_EXISTING_ASSETS = 'No existing assets were found matching the provided serial numbers.';
+    public static final String ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED = 'A product exists on the order with a serial number matching an existing asset. Products matching existing assets must have a status of Customer Owned.';
 
     public static final String RECORD_TYPE_STANDARD = 'Sandard';
     public static final String RECORD_TYPE_EVAL = 'POC';
@@ -41,11 +45,27 @@ public with sharing class HardwareShipmentController {
     **/
 
     public PageReference checkSerialNumberStatus(){
+        this.existingAssetsExist = false;
+        resetExistingAssets();
+
         Set<String> serialNumbers = getSerialNumbersFromWrappers();
+
+        System.debug('Serial numbers from wrappers: ' + serialNumbers);
+
         List<Asset> existingAssets = queryAssetsMatchingSerialNumbers(serialNumbers);
         Map<String, Asset> serialNumberToAssetMap = buildSerialNumberToAssetMap(existingAssets);
 
-        updateOrderProductWrappersExistingAssets(serialNumberToAssetMap);
+        Boolean assetsExistMatchingSerialNumbers = updateOrderProductWrappersExistingAssets(serialNumberToAssetMap);
+
+        if(assetsExistMatchingSerialNumbers){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,WARNING_MESSAGE_EXISTING_ASSET);
+            ApexPages.addMessage(myMsg);
+            this.existingAssetsExist = true;
+        }
+        else{
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM,SUCCESS_MESSAGE_NO_EXISTING_ASSETS);
+            ApexPages.addMessage(myMsg);
+        }
 
         return null;
     }
@@ -55,6 +75,16 @@ public with sharing class HardwareShipmentController {
     }
 
     public PageReference saveAndShip(){
+        String errorValidating = validate();
+
+        if(errorValidating != null){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, errorValidating);
+            ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        updateOrderProducts();
+
         PageReference page = new PageReference('/' + order.Id);
         page.setRedirect(true);
         return page;
@@ -66,35 +96,107 @@ public with sharing class HardwareShipmentController {
         return page;
     }
 
-    public void applyCSVFile(){
+    public PageReference applyCSVFile(){
         System.debug('Applying CSV File.');
 
         if(csvFile.Body == null){
-            return;
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Error: No CSV file uploaded.');
+            ApexPages.addMessage(myMsg);
+            return null;
         }
 
-        List<String> csvElements = buildCSVElements();
-        this.fileRowWrappers = buildFileRowWrappers(csvElements);
-        Map<String, CSVFileRow> productCodeToCSVRow = buildProductCodeToCSVFileRow();
-        populateOrderProductWrappersWithFileInfo(productCodeToCSVRow);
+        try{
+            List<String> csvElements = buildCSVElements();
+            this.fileRowWrappers = buildFileRowWrappers(csvElements);
+            Map<String, CSVFileRow> productCodeToCSVRow = buildProductCodeToCSVFileRow();
+            populateOrderProductWrappersWithFileInfo(productCodeToCSVRow);
 
-        uploadedFile = true;
+            uploadedFile = true;
+        }
+        catch(Exception e){
+            System.debug('Exception occurred process file.');
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'An error occurred processing the file. Please check ensure the file is in the correct format.');
+            ApexPages.addMessage(myMsg);
+        }
+
+        return null;
+    }
+
+    /**
+    *  Save and Ship Helper Methods
+    */ 
+
+    private String validate(){
+        String errorValidating;
+
+        errorValidating = ensureCustomerOwnedStatusIfSNMatchesExistingAsset();
+
+        return errorValidating;
+    }
+
+    private String ensureCustomerOwnedStatusIfSNMatchesExistingAsset(){
+        String errorValidating;
+
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            if(orderProductWrapper.existingAssetWrappers.size() > 0 && !STATUS_CUSTOMER_OWNED.equalsIgnoreCase(orderProductWrapper.orderProduct.SBCF_Status__c)){
+                return ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED;
+            }
+        }
+
+        return errorValidating;
+    }
+
+    private void updateOrderProducts(){
+        List<OrderItem> orderProductsRelatedToWrappers = getOrderProductsOnWrappers();
+        update orderProductsRelatedToWrappers;
+    }
+
+    private List<OrderItem> getOrderProductsOnWrappers(){
+        List<OrderItem> orderProductsRelatedToWrappers = new List<OrderItem>();
+
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            orderProductsRelatedToWrappers.add(orderProductWrapper.orderProduct);
+        }
+
+        return orderProductsRelatedToWrappers;
     }
 
     /**
     *  checkSericalNumberStatus Helper Methods
     */
 
-    private void updateOrderProductWrappersExistingAssets(Map<String, Asset> serialNumberToAssetMap){
+    private void resetExistingAssets(){
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-            Asset existingAsset = serialNumberToAssetMap.get(orderProductWrapper.orderProduct.Serial_Number__c);
+            orderProductWrapper.existingAssetWrappers = new List<OrderShipmentHelper.ExistingAssetWrapper>();
+        }      
+    }
 
-            if(existingAsset == null){
+    private Boolean updateOrderProductWrappersExistingAssets(Map<String, Asset> serialNumberToAssetMap){
+        Boolean assetsExistMatchingSerialNumbers = false;
+
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            if(orderProductWrapper.orderProduct.Serial_Number__c == null){
                 continue;
             }
 
-            orderProductWrapper.existingAssetId = existingAsset.Id;
+            List<String> parsedSerialNumbers = orderProductWrapper.orderProduct.Serial_Number__c.split(';');
+
+            for(String serialNumber:parsedSerialNumbers){
+                Asset existingAsset = serialNumberToAssetMap.get(serialNumber);
+
+                if(existingAsset == null){
+                    continue;
+                }
+
+                System.debug('Existing asset found!');
+
+                //orderProductWrapper.existingAssetIds.add(existingAsset.Id);
+                orderProductWrapper.existingAssetWrappers.add(new OrderShipmentHelper.ExistingAssetWrapper(existingAsset.Id, SerialNumber, existingAsset));
+                assetsExistMatchingSerialNumbers = true;                
+            }
         }
+
+        return assetsExistMatchingSerialNumbers;
     }
 
     private Map<String, Asset> buildSerialNumberToAssetMap(List<Asset> existingAssets){
@@ -103,6 +205,8 @@ public with sharing class HardwareShipmentController {
         for(Asset existingAsset: existingAssets){
             serialNumberToAssetMap.put(existingAsset.SerialNumber, existingAsset);
         }
+
+        System.debug('Serial Number to Asset Map: ' + serialNumberToAssetMap);
 
         return serialNumberToAssetMap;
     }
@@ -117,6 +221,8 @@ public with sharing class HardwareShipmentController {
             System.debug(qe.getMessage());
         }
 
+        System.debug('Existing Assets: ' + existingAssets);
+
         return existingAssets;
     }
 
@@ -129,7 +235,13 @@ public with sharing class HardwareShipmentController {
                 continue;
             }
 
-            serialNumbersFromWrappers.add(orderProductWrapper.orderProduct.Serial_Number__c);
+            List<String> parsedSerialNumbers = orderProductWrapper.orderProduct.Serial_Number__c.split(';');
+
+            if(parsedSerialNumbers != null){
+                for(String serialNumber: parsedSerialNumbers){
+                    serialNumbersFromWrappers.add(SerialNumber);
+                }
+            }            
         }
 
         return serialNumbersFromWrappers;
@@ -205,8 +317,9 @@ public with sharing class HardwareShipmentController {
                 continue;
             }
 
-            orderProductWrapper.orderProduct.Part_Number__c = csvRow.column2;
-            orderProductWrapper.orderProduct.Serial_Number__c = csvRow.column3;
+            orderProductWrapper.orderProduct.Quantity = Decimal.valueOf(csvRow.column2);
+            orderProductWrapper.orderProduct.Part_Number__c = csvRow.column3;
+            orderProductWrapper.orderProduct.Serial_Number__c = csvRow.column4;
         }
     }
     
@@ -261,11 +374,13 @@ public with sharing class HardwareShipmentController {
         public String column1 {get;set;}
         public String column2 {get;set;}
         public String column3 {get;set;}
+        public String column4 {get;set;}
 
         public CSVFileRow(List<String> rowElements){
             this.column1 = rowElements[0];
             this.column2 = rowElements[1];
             this.column3 = rowElements[2];
+            this.column4 = rowElements[3];
         }   
     }
 
