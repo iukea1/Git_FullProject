@@ -5,10 +5,14 @@ public with sharing class HardwareShipmentController {
     public static final String STATUS_CUSTOMER_EVALUATION = 'Customer Evaluation';
     public static final String STATUS_CUSTOMER_OWNED = 'Customer Owned';
     public static final String DEFAULT_ORDER_PRODUCT_STATUS = STATUS_CUSTOMER_OWNED;
+    public static final String ACTIVATED_ORDER_STATUS = 'Activated';
+    public static final String SAVE_ORDER_SHIPPING_STATUS = 'Shipping - Complete';
+    public static final String SAVE_PRICE_CALCULATION_STATUS = 'Completed';
 
     public static final String WARNING_MESSAGE_EXISTING_ASSET = 'Existing assets found. If you don’t change the serial number, the existing asset will be overridden with new data. Data includes: Account, Product, etc';
     public static final String SUCCESS_MESSAGE_NO_EXISTING_ASSETS = 'No existing assets were found matching the provided serial numbers.';
     public static final String ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED = 'A product exists on the order with a serial number matching an existing asset. Products matching existing assets must have a status of Customer Owned.';
+    public static final String WARNING_USE_CHECK_SERIAL_NUMBERS_BEFORE_SUBMIT = 'Please Check Serial Numbers Status before Saving.';
 
     public static final String RECORD_TYPE_STANDARD = 'Sandard';
     public static final String RECORD_TYPE_EVAL = 'POC';
@@ -22,6 +26,8 @@ public with sharing class HardwareShipmentController {
 
     public Boolean uploadedFile {get;set;}
     public Boolean existingAssetsExist {get;set;}
+    public Boolean orderIsActivated {get;set;}
+    public Boolean hasCheckedSerialNumbers {get;set;}
 
     public HardwareShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
@@ -29,6 +35,15 @@ public with sharing class HardwareShipmentController {
         }
 
         this.order = (Order)stdController.getRecord();
+
+        this.orderIsActivated = OrderShipmentHelper.determineIsOrderActivated(this.order);
+
+        //if(this.orderIsActivated){
+        //    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Serial Numbers Cannot be applied to active orders.');
+        //    ApexPages.addMessage(myMsg);
+        //    return;
+        //}
+
         this.orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id);
         this.orderProductWrappers = OrderShipmentHelper.buildOrderProductWrappers(this.orderProducts);
         this.csvFile = new Document();
@@ -38,6 +53,7 @@ public with sharing class HardwareShipmentController {
 
         this.uploadedFile = false;
         this.existingAssetsExist = false;
+        this.hasCheckedSerialNumbers = false;
     }
 
     /**
@@ -45,6 +61,8 @@ public with sharing class HardwareShipmentController {
     **/
 
     public PageReference checkSerialNumberStatus(){
+        this.hasCheckedSerialNumbers = true;
+
         this.existingAssetsExist = false;
         resetExistingAssets();
 
@@ -77,13 +95,39 @@ public with sharing class HardwareShipmentController {
     public PageReference saveAndShip(){
         String errorValidating = validate();
 
+        if(!hasCheckedSerialNumbers){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, WARNING_USE_CHECK_SERIAL_NUMBERS_BEFORE_SUBMIT);
+            ApexPages.addMessage(myMsg);
+            return null;
+        }
+
         if(errorValidating != null){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, errorValidating);
             ApexPages.addMessage(myMsg);
             return null;
         }
 
-        updateOrderProducts();
+        Savepoint sp = Database.setSavepoint();
+
+        String errorUpdating;
+
+        errorUpdating = updateOrderProducts();
+        
+        if(errorUpdating != null){
+            Database.rollback(sp);
+            //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order products. Error Details: ' + errorUpdating);
+            //ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        errorUpdating = updateOrder();
+
+        if(errorUpdating != null){
+            Database.rollback(sp);
+            //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order. Error Details: ' + errorUpdating);
+            //ApexPages.addMessage(myMsg);
+            return null;
+        }
 
         PageReference page = new PageReference('/' + order.Id);
         page.setRedirect(true);
@@ -146,9 +190,33 @@ public with sharing class HardwareShipmentController {
         return errorValidating;
     }
 
-    private void updateOrderProducts(){
-        List<OrderItem> orderProductsRelatedToWrappers = getOrderProductsOnWrappers();
-        update orderProductsRelatedToWrappers;
+    private String updateOrderProducts(){
+        try{
+            List<OrderItem> orderProductsRelatedToWrappers = getOrderProductsOnWrappers();
+            update orderProductsRelatedToWrappers;
+        }
+        catch(DMlException e){
+            System.debug(e.getMessage());
+            return e.getMessage();
+        }
+
+        return null;
+    }
+
+    private String updateOrder(){
+        try{
+            this.order.Status = ACTIVATED_ORDER_STATUS;
+            this.order.Shipping_Status__c = SAVE_ORDER_SHIPPING_STATUS;
+            this.order.SBQQ__Contracted__c = true;
+            this.order.SBQQ__PriceCalcStatus__c = SAVE_PRICE_CALCULATION_STATUS;
+            update order;
+        }
+        catch(DMLException e){
+            System.debug(e.getMessage());
+            return e.getMessage();
+        }
+
+        return null;
     }
 
     private List<OrderItem> getOrderProductsOnWrappers(){

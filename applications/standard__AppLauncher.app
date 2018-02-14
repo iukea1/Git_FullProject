@@ -2,4 +2,5 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-AppLauncher</defaultLandingTab>
     <tab>standard-AppLauncher</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

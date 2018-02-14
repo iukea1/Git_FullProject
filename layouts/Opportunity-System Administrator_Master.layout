@@ -595,8 +595,6 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <customButtons>New_SPS_Quote</customButtons>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ApprovalStatus__c</fields>
         <fields>SBQQ__NetAmount__c</fields>
@@ -624,6 +622,14 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>NewQuoteFromOpportunity</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Quote_Date__c</fields>
+        <fields>Quote_Valid_Until__c</fields>
+        <relatedList>Quote__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Activity_Date__c</fields>

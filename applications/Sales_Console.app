@@ -132,7 +132,11 @@
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
     <tab>standard-LiveAgentSupervisor</tab>
+    <tab>Cap_Case__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Cap_Case__c</tab>
+        </mapping>
         <mapping>
             <fieldName>ParentId</fieldName>
             <tab>standard-Account</tab>

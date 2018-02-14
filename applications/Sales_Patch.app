@@ -7,4 +7,5 @@
     <tab>Spire</tab>
     <tab>Lead_Assignments</tab>
     <tab>MiscellaneousSetup</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

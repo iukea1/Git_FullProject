@@ -7,4 +7,5 @@
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>standard-Chatter</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

@@ -61,6 +61,7 @@ global class QuoteExtension
                     if(Userinfo.getLastName()!='Beckus')
                     {
                         string errorMsg=ValidateApprovalEntryCriterias(quoteObj);
+                        System.debug('errorMsg' + errorMsg);
                         if(errorMsg!='')
                         {
                             return errorMsg;
@@ -91,15 +92,16 @@ global class QuoteExtension
     private static string ValidateApprovalEntryCriterias(Quote__c quoteObj)
     {
         System.debug(quoteObj.Opportunity__r.Geo_Region__c);
+        string validateError='';
         if(quoteObj.Approval_Required__c==0)
-            return 'Approval process is not required. Its already approved.';
+            validateError=validateError+'\n'+'Approval process is not required. Its already approved.';
         if(quoteObj.Approval_Required__c==1 && quoteObj.Opportunity__r.Geo_Region__c =='NONE')
-            return 'GEO is blank on the opportunity.Please populate this value or contact sales operations.';        
+            validateError=validateError+'\n'+ 'GEO is blank on the opportunity.Please populate this value or contact sales operations.';        
         if(quoteObj.Approval_Required__c==1 && string.isBlank(quoteObj.Discount_Justification__c))
-            return 'Discount Justification is empty. Please provide comments.';
+            validateError=validateError+'\n'+ 'Discount Justification is empty. Please provide comments.';
          if(quoteObj.Approval_Required__c==1 && string.isBlank(quoteObj.Special_Instructions__c ))
-            return 'Special Instructions is empty. Please provide comments.';
-        return'';  
+            validateError=validateError+'\n'+ 'Special Instructions is empty. Please provide comments.';
+        return validateError;  
     }
     
     public class QuoteWrapper

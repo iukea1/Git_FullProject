@@ -125,7 +125,11 @@
     <tab>standard-Lead</tab>
     <tab>Internal_Discussion__c</tab>
     <tab>Sales_Development</tab>
+    <tab>Cap_Case__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Cap_Case__c</tab>
+        </mapping>
         <mapping>
             <tab>Internal_Discussion__c</tab>
         </mapping>

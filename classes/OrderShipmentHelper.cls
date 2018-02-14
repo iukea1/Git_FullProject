@@ -39,6 +39,14 @@ public with sharing class OrderShipmentHelper {
         return orderProductWrappers;
     }
 
+    public static Boolean determineIsOrderActivated(Order order){
+        if(HardwareShipmentController.ACTIVATED_ORDER_STATUS.equalsIgnoreCase(order.Status)){
+            return true;
+        }
+
+        return false;
+    }
+
     public class OrderProductWrapper{
 
         public OrderItem orderProduct {get;set;}

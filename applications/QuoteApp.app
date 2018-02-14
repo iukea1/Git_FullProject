@@ -5,4 +5,5 @@
     <label>Quote App</label>
     <tab>Partner_Documentation</tab>
     <tab>Internal_Discussion__c</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

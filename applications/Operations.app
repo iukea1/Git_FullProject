@@ -23,4 +23,5 @@
     <tab>Spire</tab>
     <tab>BucketContact_del__c</tab>
     <tab>MultiLinkContact_del__c</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

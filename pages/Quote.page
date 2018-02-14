@@ -104,6 +104,7 @@
                                                          endLoadingStatus();
                                                      } 
                                                  });
+                
             }
             
             jq(document).ready(function() {

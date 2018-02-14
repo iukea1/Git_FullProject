@@ -6,4 +6,5 @@
     <tab>Training_Events__c</tab>
     <tab>Training_Course__c</tab>
     <tab>AuthCode__c</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

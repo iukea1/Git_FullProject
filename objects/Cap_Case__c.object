@@ -348,6 +348,11 @@
         <unique>false</unique>
     </fields>
     <label>Cap Case</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>CC-{000}</displayFormat>
         <label>Cap Case Name</label>

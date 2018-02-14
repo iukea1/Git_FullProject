@@ -23,4 +23,6 @@
     <tab>Spire</tab>
     <tab>standard-Knowledge</tab>
     <tab>standard-KnowledgePublishing</tab>
+    <tab>Cap__c</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>

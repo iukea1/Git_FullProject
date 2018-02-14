@@ -13,4 +13,5 @@
     <tab>standard-Feed</tab>
     <tab>standard-CollaborationGroup</tab>
     <tab>standard-File</tab>
+    <tab>Cap_Case__c</tab>
 </CustomApplication>
