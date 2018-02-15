@@ -2069,26 +2069,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Level_1_Approver__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_2_Approver__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_3_Approver__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_4_Approver__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Prepared_For_Email__c</field>
             <table>Opportunity.SBQQ__Quotes2__r</table>
         </columns>
@@ -2827,11 +2807,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Distributor_Discount__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Extended_List_Price__c</field>
             <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
         </columns>
@@ -2988,11 +2963,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Days_to_Credit__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Distributor_Discount_Read_Only__c</field>
             <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
         </columns>
         <columns>

@@ -6,6 +6,7 @@
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -117,6 +118,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBCF_Parent_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RV_Member__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

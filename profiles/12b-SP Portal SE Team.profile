@@ -6420,6 +6420,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Quote_Approval_Matrix__c.Level__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Approval_Matrix__c.Maximum_Spread__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Approval_Matrix__c.Minimum_Spread__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Approval_Matrix__c.Sub_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Approval_Matrix__c.Year__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Quote_Line_Address__c.Quote_Record_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9051,6 +9076,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Quote_Address__c-Quote Address Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Quote_Approval_Matrix__c-Quote Approval Matrix Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Quote_Line_Address__c-Quote Line Address Layout</layout>

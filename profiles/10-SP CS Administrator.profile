@@ -6419,6 +6419,31 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.Maximum_Spread__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.Minimum_Spread__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.Sub_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Quote_Line_Address__c.Quote_Record_Id__c</field>
         <readable>true</readable>
@@ -9050,6 +9075,9 @@
         <layout>Quote_Address__c-Quote Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Quote_Approval_Matrix__c-Quote Approval Matrix Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Quote_Line_Address__c-Quote Line Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -9687,6 +9715,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Quote_Address__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Quote_Approval_Matrix__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

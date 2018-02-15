@@ -563,26 +563,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Level_1_Approver__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_2_Approver__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_3_Approver__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Level_4_Approver__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Prepared_For_Email__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>

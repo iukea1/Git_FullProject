@@ -5,7 +5,7 @@
 global class QuoteExtension
 {
     static final String MESSAGE_SUCCEEDED = 'Succeeded';
-    public QuoteWrapper DiscountQuote{get;set;}  
+    public QuoteWrapper DiscountQuote{get;set;}
     public QuoteExtension(ApexPages.StandardController ctrl)
     {
         Id quoteId=(Id)ctrl.getRecord().id;
@@ -61,7 +61,6 @@ global class QuoteExtension
                     if(Userinfo.getLastName()!='Beckus')
                     {
                         string errorMsg=ValidateApprovalEntryCriterias(quoteObj);
-                        System.debug('errorMsg' + errorMsg);
                         if(errorMsg!='')
                         {
                             return errorMsg;
@@ -92,16 +91,15 @@ global class QuoteExtension
     private static string ValidateApprovalEntryCriterias(Quote__c quoteObj)
     {
         System.debug(quoteObj.Opportunity__r.Geo_Region__c);
-        string validateError='';
         if(quoteObj.Approval_Required__c==0)
-            validateError=validateError+'\n'+'Approval process is not required. Its already approved.';
+            return 'Approval process is not required. Its already approved.';
         if(quoteObj.Approval_Required__c==1 && quoteObj.Opportunity__r.Geo_Region__c =='NONE')
-            validateError=validateError+'\n'+ 'GEO is blank on the opportunity.Please populate this value or contact sales operations.';        
+            return 'GEO is blank on the opportunity.Please populate this value or contact sales operations.';        
         if(quoteObj.Approval_Required__c==1 && string.isBlank(quoteObj.Discount_Justification__c))
-            validateError=validateError+'\n'+ 'Discount Justification is empty. Please provide comments.';
+            return 'Discount Justification is empty. Please provide comments.';
          if(quoteObj.Approval_Required__c==1 && string.isBlank(quoteObj.Special_Instructions__c ))
-            validateError=validateError+'\n'+ 'Special Instructions is empty. Please provide comments.';
-        return validateError;  
+            return 'Special Instructions is empty. Please provide comments.';
+        return'';  
     }
     
     public class QuoteWrapper
