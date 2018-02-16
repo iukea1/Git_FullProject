@@ -16,6 +16,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
         insert emailLog;
     
         String fromAddress = email.fromAddress;
+        System.debug('fromAddress' + fromAddress);
         //filter the email from system administrator
         if(email.fromName != null)
         {
@@ -96,6 +97,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
             {
                 //check whether the contact exists, we'll create a new contact if not
                 Contact contact = findContactByEmail(email.fromAddress);
+                System.debug('contact' + contact.Id);
                 if(contact != null)
                 {   
                     //check whether the mail is a new one or a reply
@@ -128,6 +130,8 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
             result.success = false;
             result.message = 'Your message could not be processed. This is often because the body of the email was too large. Please resend in multiple emails of smaller size to add your comments to the case';
             String errorMessage = e.getMessage();
+            System.debug(e.getMessage());
+            System.debug(e.getStackTraceString());
             result.message = errorMessage;
             if(!errorMessage.contains('STRING_TOO_LONG') && !errorMessage.contains('MAXIMUM_SIZE_OF_ATTACHMENT'))
             {
@@ -201,6 +205,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
         if(String.isNotBlank(email) && email.length() >= 2)
         {
             List<List<Contact>> result = [find :email In EMAIL FIELDS RETURNING Contact(Id, Name) limit 1];
+            System.debug(result);
             //Contact[] contacts = [select Id, Name from contact where Email=:email or Second_Email__c=:email or Third_Email__c=:email limit 1];
             if(result[0].size() > 0)
             {
@@ -354,6 +359,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
         }
     }
 
+       @testvisible
     //add a comment to case
     private static CaseComment insertCaseComment(Case theCase, Messaging.InboundEmail email)
     {
@@ -394,6 +400,8 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     //checks if there is already a case created with the specified subject with in 5 minutes.
     private static Boolean isDuplicateCase(string theSubject, string fromAddress)
     {
+        if(theSubject.length()>4000)
+            theSubject= theSubject.substring(0,3999);
         List<Case> cases = [select Id, CreatedDate  from Case where Subject = :theSubject and contact.Email = :fromAddress order by CreatedDate desc limit 1];
         if(cases.size() == 1)
         {

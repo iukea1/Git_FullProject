@@ -78,6 +78,10 @@
                 <behavior>Readonly</behavior>
                 <field>SBCF_Distributor_Margin__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Discount__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

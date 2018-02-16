@@ -1858,6 +1858,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubscriptionTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SycnOpportunityToQuoteHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -5796,6 +5800,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Discount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Partner_Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Partner_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Product_Family__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Quote_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Partner_Discount_Lookup__c.Registered__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Partner_Documentation__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9031,6 +9070,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Partner_Contact_Profile__c-Partner Contact Profile Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Partner_Discount_Lookup__c-Partner Discount Lookup Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Partner_Documentation__c-Partner Documentation Layout</layout>
