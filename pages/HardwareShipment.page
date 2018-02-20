@@ -66,10 +66,20 @@
 
 						<apex:column styleClass="order-product-column" headerClass="order-product-header">
 							<apex:facet name="header">Quantity</apex:facet>
-							<apex:inputField value="{!orderProductWrapper.orderProduct.Quantity}" />
+							<apex:outputField value="{!orderProductWrapper.orderProduct.Quantity}" />
 						</apex:column>
 
 						<apex:column styleClass="order-product-column" headerClass="order-product-header">
+							<apex:facet name="header">Order Product Items</apex:facet>
+							<apex:pageBlockTable value="{!orderProductWrappers}" var="orderProductWrapper" Id="OrderProductItemTable">
+								<apex:column styleClass="order-product-column" headerClass="order-product-header">
+									<apex:facet name="header">Status</apex:facet>
+									<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
+								</apex:column>
+							</apex:pageBlockTable>
+						</apex:column>
+
+						<!-- <apex:column styleClass="order-product-column" headerClass="order-product-header">
 							<apex:facet name="header">Status</apex:facet>
 							<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
 						</apex:column>
@@ -97,7 +107,7 @@
 									<apex:outputText value="{!existingAssetWrapper.serialNumber}"/><br/>
 								</apex:outputLink>
 							</apex:repeat>
-						</apex:column>
+						</apex:column> -->
 
 					</apex:pageBlockTable>
 				</apex:pageBlockSectionItem>

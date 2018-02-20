@@ -1862,6 +1862,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubscriptionTriggerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SycnOpportunityToQuoteHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -4635,6 +4639,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order_Product_Item__c.Order_Product__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order_Product_Item__c.Part_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order_Product_Item__c.Serial_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order_Product_Item__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>POC_Asset_Metric__c.Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6456,6 +6480,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quote_Address__c.Shipping_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote_Approval_Matrix__c.External_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9040,6 +9069,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>OrderItem-Order Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order_Product_Item__c-Order Product Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>POC_Asset_Metric__c-POC Asset Metric Layout</layout>

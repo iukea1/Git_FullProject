@@ -9,6 +9,10 @@
         <value>Quote Approval Matrixes</value>
     </caseValues>
     <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
         <label><!-- Level --></label>
         <name>Level__c</name>
     </fields>

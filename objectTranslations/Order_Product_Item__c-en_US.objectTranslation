@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order Product Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Order Product Items</value>
+    </caseValues>
+    <fields>
+        <label><!-- Order Product --></label>
+        <name>Order_Product__c</name>
+        <relationshipLabel><!-- Order Product Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Part Number --></label>
+        <name>Part_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Serial Number --></label>
+        <name>Serial_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Cold Spare</masterLabel>
+            <translation><!-- Cold Spare --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conditional PO</masterLabel>
+            <translation><!-- Conditional PO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Converted RMA Unit–Supp Transferred–WO</masterLabel>
+            <translation><!-- Converted RMA Unit–Supp Transferred–WO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Evaluation</masterLabel>
+            <translation><!-- Customer Evaluation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Owned</masterLabel>
+            <translation><!-- Customer Owned --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Subscription</masterLabel>
+            <translation><!-- Customer Subscription --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Subscription Active</masterLabel>
+            <translation><!-- Customer Subscription Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Subscription Expired</masterLabel>
+            <translation><!-- Customer Subscription Expired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demo / NFR</masterLabel>
+            <translation><!-- Demo / NFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Loan</masterLabel>
+            <translation><!-- Loan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete RMA Unit–Supp Transferred–WO</masterLabel>
+            <translation><!-- Obsolete RMA Unit–Supp Transferred–WO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Owned Eval/NFR</masterLabel>
+            <translation><!-- Owned Eval/NFR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Return – CPO</masterLabel>
+            <translation><!-- Pending Return – CPO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Return – Conversion</masterLabel>
+            <translation><!-- Pending Return – Conversion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Return – Eval</masterLabel>
+            <translation><!-- Pending Return – Eval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Return – Support</masterLabel>
+            <translation><!-- Pending Return – Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Return – Trade In</masterLabel>
+            <translation><!-- Pending Return – Trade In --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Silver Peak Inventory</masterLabel>
+            <translation><!-- Silver Peak Inventory --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Write-Off</masterLabel>
+            <translation><!-- Write-Off --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

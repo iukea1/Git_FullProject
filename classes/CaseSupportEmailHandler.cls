@@ -400,8 +400,10 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     //checks if there is already a case created with the specified subject with in 5 minutes.
     private static Boolean isDuplicateCase(string theSubject, string fromAddress)
     {
-        if(theSubject.length()>4000)
+        if(theSubject!=null && theSubject.length()>4000)
+        {
             theSubject= theSubject.substring(0,3999);
+        }
         List<Case> cases = [select Id, CreatedDate  from Case where Subject = :theSubject and contact.Email = :fromAddress order by CreatedDate desc limit 1];
         if(cases.size() == 1)
         {

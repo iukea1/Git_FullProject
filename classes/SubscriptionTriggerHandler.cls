@@ -3,10 +3,14 @@
 *  Created Date: 2.15.2018
 *  Description: Trigger on subscription to populate related asset lookup
 *  field with related subscription.
+*
+*  @Test: SubscriptionTriggerTest - 
+*
 **********************************************************************/
 public without sharing class SubscriptionTriggerHandler {
 
 	public static final String PRODUCT_NAME_PREFIX_SMART_HANDS = 'SMRT-HND';
+	public static final Datetime THIRTY_SECONDS_AGO = System.now().addSeconds(-30);
 	
 	public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
 		// Used in action method
@@ -26,13 +30,14 @@ public without sharing class SubscriptionTriggerHandler {
 			return;
 		}
 
-		Map<Id, Set<Id>> subscriptionQuoteLineIdToRequiredByQuoteLineIds = buildSubscriptionQuoteLineIdToRequiredByQuoteLineIds(subscriptionQuoteLineMap.values());
+		//Map<Id, Set<Id>> subscriptionQuoteLineIdToRequiredByQuoteLineIds = buildSubscriptionQuoteLineIdToRequiredByQuoteLineIds(subscriptionQuoteLineMap.values());
 
-		if(subscriptionQuoteLineIdToRequiredByQuoteLineIds.size() == 0){
-			System.debug('No subscription quote lines with required by quote line populated.');
-		}
+		//if(subscriptionQuoteLineIdToRequiredByQuoteLineIds.size() == 0){
+		//	System.debug('No subscription quote lines with required by quote line populated.');
+		//}
 
-		Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(subscriptionQuoteLineIdToRequiredByQuoteLineIds.values());
+		//Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(subscriptionQuoteLineIdToRequiredByQuoteLineIds.values());
+		Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(subscriptionQuoteLineMap.values());
 		List<Asset> assetsRelatedToSubscriptions = queryForAssetsRelatedToSubscriptionsRequiredByIds(requiredByQuoteLineIds);
 
 		if(assetsRelatedToSubscriptions.size() == 0){
@@ -87,16 +92,12 @@ public without sharing class SubscriptionTriggerHandler {
 				SBQQ__Subscription__c smartHandsSubscription;
 
 				for(SBQQ__Subscription__c relatedSubscription: subscriptionsRelatedToAsset){
-					if(String.isEmpty(relatedSubscription.SBQQ__ProductName__c)){
-						// this should never be the case but precondition checking
-						System.debug('Product Name on subscription is empty.');
-						continue;
-					}
-					if(relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
+					if(!String.isEmpty(relatedSubscription.SBQQ__ProductName__c) && relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
+						System.debug('Smart hand Subscription found: ' + relatedSubscription.Id);
 						smartHandsSubscription = relatedSubscription;
-					}
-					else{
-						subscription = smartHandsSubscription;
+					}else{
+						System.debug('Non smart hand subscription found: ' + relatedSubscription.Id);
+						subscription = relatedSubscription;
 					}
 				}
 
@@ -152,7 +153,7 @@ public without sharing class SubscriptionTriggerHandler {
 		List<Asset> assetsRelatedToSubscriptions = new List<Asset>();
 
 		try{
-			assetsRelatedToSubscriptions = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__Subscription__c, Smart_Hands_Subscription__c FROM Asset WHERE SBQQ__QuoteLine__c IN :requiredBySubscriptionQuoteLineIds];
+			assetsRelatedToSubscriptions = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__Subscription__c, Smart_Hands_Subscription__c FROM Asset WHERE SBQQ__QuoteLine__c IN :requiredBySubscriptionQuoteLineIds AND LastModifiedDate >= :THIRTY_SECONDS_AGO];
 		}
 		catch(QueryException qe){
 			System.debug(qe.getMessage());
@@ -163,38 +164,52 @@ public without sharing class SubscriptionTriggerHandler {
 		return assetsRelatedToSubscriptions;
 	} 
 
-	private static Set<Id> getRequiredByQuoteLineIds(List<Set<Id>> requiredByQuoteLineIds){
-		Set<Id> requiredByQuoteLineIdsFullList = new Set<Id>();
+	//private static Set<Id> getRequiredByQuoteLineIds(List<Set<Id>> requiredByQuoteLineIds){
+	//	Set<Id> requiredByQuoteLineIdsFullList = new Set<Id>();
 
-		for(Set<Id> quoteLineIdsRequiredBySubQuoteLine: requiredByQuoteLineIds){
-			requiredByQuoteLineIdsFullList.addAll(quoteLineIdsRequiredBySubQuoteLine);
-		}
+	//	for(Set<Id> quoteLineIdsRequiredBySubQuoteLine: requiredByQuoteLineIds){
+	//		requiredByQuoteLineIdsFullList.addAll(quoteLineIdsRequiredBySubQuoteLine);
+	//	}
 
-		System.debug('Required By Quote Line Ids Full List: ' + requiredByQuoteLineIdsFullList);
-		return requiredByQuoteLineIdsFullList;
-	}
+	//	System.debug('Required By Quote Line Ids Full List: ' + requiredByQuoteLineIdsFullList);
+	//	return requiredByQuoteLineIdsFullList;
+	//}
 
-	private static Map<Id, Set<Id>> buildSubscriptionQuoteLineIdToRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
-		Map<Id, Set<Id>> subscriptionQuoteLineIdToRequiredByQuoteLineIds = new Map<Id, Set<Id>>();
+	private static Set<Id> getRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
+		Set<Id> requiredByQuoteLineIds = new Set<Id>();
 
-		for(SBQQ__QuoteLine__c subscriptionQuoteLine: subscriptionQuoteLines){
-			if(subscriptionQuoteLine.SBQQ__RequiredBy__c == null){
+		for(SBQQ__QuoteLine__c quoteLine: subscriptionQuoteLines){
+			if(quoteLine.SBQQ__RequiredBy__c == null){
 				continue;
 			}
 
-			Set<Id> requiredByQuoteLineIds = subscriptionQuoteLineIdToRequiredByQuoteLineIds.get(subscriptionQuoteLine.SBQQ__RequiredBy__c);
-
-			if(requiredByQuoteLineIds == null){
-				requiredByQuoteLineIds = new Set<Id>();
-				subscriptionQuoteLineIdToRequiredByQuoteLineIds.put(subscriptionQuoteLine.SBQQ__RequiredBy__c, requiredByQuoteLineIds);
-			}
-
-			requiredByQuoteLineIds.add(subscriptionQuoteLine.SBQQ__RequiredBy__c);
+			requiredByQuoteLineIds.add(quoteLine.SBQQ__RequiredBy__c);
 		}
 
-		System.debug('Subscription Quote Line Id To Required By Quote Line Ids: ' + subscriptionQuoteLineIdToRequiredByQuoteLineIds);
-		return subscriptionQuoteLineIdToRequiredByQuoteLineIds;
+		return requiredByQuoteLineIds;
 	}
+
+	//private static Map<Id, Set<Id>> buildSubscriptionQuoteLineIdToRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
+	//	Map<Id, Set<Id>> subscriptionQuoteLineIdToRequiredByQuoteLineIds = new Map<Id, Set<Id>>();
+
+	//	for(SBQQ__QuoteLine__c subscriptionQuoteLine: subscriptionQuoteLines){
+	//		if(subscriptionQuoteLine.SBQQ__RequiredBy__c == null){
+	//			continue;
+	//		}
+
+	//		Set<Id> requiredByQuoteLineIds = subscriptionQuoteLineIdToRequiredByQuoteLineIds.get(subscriptionQuoteLine.SBQQ__RequiredBy__c);
+
+	//		if(requiredByQuoteLineIds == null){
+	//			requiredByQuoteLineIds = new Set<Id>();
+	//			subscriptionQuoteLineIdToRequiredByQuoteLineIds.put(subscriptionQuoteLine.SBQQ__RequiredBy__c, requiredByQuoteLineIds);
+	//		}
+
+	//		requiredByQuoteLineIds.add(subscriptionQuoteLine.SBQQ__RequiredBy__c);
+	//	}
+
+	//	System.debug('Subscription Quote Line Id To Required By Quote Line Ids: ' + subscriptionQuoteLineIdToRequiredByQuoteLineIds);
+	//	return subscriptionQuoteLineIdToRequiredByQuoteLineIds;
+	//}
 
 	private static Map<Id, List<SBQQ__Subscription__c>> buildQuoteLineIdsToSubscriptions(List<SBQQ__Subscription__c> incomingSubscriptions){
 		Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = new Map<Id, List<SBQQ__Subscription__c>>();

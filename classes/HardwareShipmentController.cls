@@ -19,7 +19,6 @@ public with sharing class HardwareShipmentController {
 
 	public Order order {get;set;}
 
-    public List<OrderItem> orderProducts {get;set;} 
     public List<OrderShipmentHelper.OrderProductWrapper> orderProductWrappers {get;set;}
     public Document csvFile {get;set;}
     public List<CSVFileRow> fileRowWrappers {get;set;}
@@ -44,8 +43,11 @@ public with sharing class HardwareShipmentController {
         //    return;
         //}
 
-        this.orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id);
-        this.orderProductWrappers = OrderShipmentHelper.buildOrderProductWrappers(this.orderProducts);
+        List<OrderItem> orderProducts = OrderShipmentHelper.queryForOrderProducts(order.Id);
+        List<Order_Product_Item__c> relatedOrderProductItems = OrderShipmentHelper.queryForOrderProductItems(orderProducts);
+        List<OrderShipmentHelper.OrderProductItemWrapper> orderProductItemWrappers = OrderShipmentHelper.buildOrderProductItemWrappers(relatedOrderProductItems, orderProducts);
+
+        this.orderProductWrappers = OrderShipmentHelper.buildOrderProductWrappers(orderProducts);
         this.csvFile = new Document();
         this.fileRowWrappers = new List<CSVFileRow>();
 
@@ -129,6 +131,8 @@ public with sharing class HardwareShipmentController {
             return null;
         }
 
+        printAssetsCreatedInTheLast30Seconds();
+
         PageReference page = new PageReference('/' + order.Id);
         page.setRedirect(true);
         return page;
@@ -169,6 +173,21 @@ public with sharing class HardwareShipmentController {
     /**
     *  Save and Ship Helper Methods
     */ 
+
+    private void printAssetsCreatedInTheLast30Seconds(){
+        Datetime thirtySecondsAgo = System.now().addSeconds(-30);
+        List<Asset> assetsCreatedInLast30Seconds = new List<Asset>();
+
+
+        try{
+            assetsCreatedInLast30Seconds = [SELECT Id, Name FROM Asset WHERE CreatedDate >= :thirtySecondsAgo];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+
+        System.debug('Assets Created In the Last 30 Seconds: ' + assetsCreatedInLast30Seconds);
+    }
 
     private String validate(){
         String errorValidating;

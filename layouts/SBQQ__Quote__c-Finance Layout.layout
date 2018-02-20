@@ -49,10 +49,6 @@
                 <field>Primary_on_Oppty__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBCF_Product_Type__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SBCF_Evaluation_Quote__c</field>
             </layoutItems>
@@ -62,15 +58,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBCF_Partner_Level__c</field>
+                <field>Partner_Level__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBCF_Registered__c</field>
+                <field>Registered__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SBCF_Distributor_Margin__c</field>
+                <field>Distributor_Margin__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

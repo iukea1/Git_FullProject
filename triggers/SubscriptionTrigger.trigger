@@ -3,6 +3,9 @@
 *  Created Date: 2.15.2018
 *  Description: Trigger on subscription to populate related asset lookup
 *  field with related subscription.
+*
+*  @Test - SubscriptionTriggerTest
+*
 **********************************************************************/
 trigger SubscriptionTrigger on SBQQ__Subscription__c (after insert) {
 
