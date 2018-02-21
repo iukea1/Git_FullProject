@@ -2,8 +2,9 @@
 global with sharing class CloudPortalCaseRestAPI {
     
     @HttpPost
-    global static ID CreateNewCase(CaseData caseInfo)
+    global static void CreateNewCase(CaseData caseInfo)
     {
+        CaseInfo outputInfo= new CaseInfo();
         RestRequest req = RestContext.request;
         RestResponse res=RestContext.response;
         Asset existAsset=null;
@@ -15,6 +16,8 @@ global with sharing class CloudPortalCaseRestAPI {
             if(caseInfo!=null)
             {
                 // Find Asset info
+                // 
+              
                 if(caseInfo.serialNumber!=null)
                 {
                     existAsset=findAssetByNumber(caseInfo.serialNumber);
@@ -46,6 +49,7 @@ global with sharing class CloudPortalCaseRestAPI {
                         existContact= CreateContactByMail(caseInfo.emailAddress,caseInfo.conFullName,caseInfo.conPhoneNumber,acctId);
                     }
                 }
+                
                 if(existAsset==null)
                 {
                      caseInfo.description=string.format('{0} \n SerialNumber: {1}', new String[]{caseInfo.description,caseInfo.serialNumber});
@@ -63,19 +67,29 @@ global with sharing class CloudPortalCaseRestAPI {
                 insertCase.RecordTypeId='012500000005AuiAAE';// Tech Support Queue
                 insertCase.ContactId=existContact!=null?existContact.Id:null;
                 insert insertCase;
-                res.statusCode=200;
+                if(insertCase.Id!=null)
+                {
+                    Case outputCase=[Select Id,CaseNumber from Case where Id=:insertCase.Id];
+                	res.statusCode=200;
+                    JSONGenerator gen= JSON.createGenerator(true);
+                    gen.writeStartObject();
+                    gen.writeStringField('caseId', outputCase.Id!=null?outputCase.Id:'');
+                    gen.writeStringField('caseNumber', outputCase.CaseNumber!=null?outputCase.CaseNumber:'');
+                    gen.writeEndObject();
+              		res.responseBody=Blob.valueOf(gen.getAsString());
+                }
+                
             }
         }
+       
         catch(Exception ex)
         {
-            insert new ErrorLog__c(Subject__c='Error in CPCaseInfo API', Message__c=ex.getMessage() + '\r\n' + ex.getStackTraceString());
-            res.responseBody = Blob.valueOf(String.valueOf(ex) + '\n\n' + ex.getMessage());
+            res.responseBody = Blob.valueOf(ex.getMessage());
             res.statusCode=400;
-            System.debug(ex.getMessage());
-            System.debug(ex.getStackTraceString());
+            insert new ErrorLog__c(Subject__c='Error in CPCaseInfo API', Message__c=ex.getMessage() + '\r\n' + ex.getStackTraceString());
             
         }
-        return insertCase.Id;
+        
     }
     
     
@@ -176,6 +190,13 @@ return lstCases;
         global string conPhoneNumber{get;set;}
         global string salesforceId{get;set;}
         global string serialNumber{get;set;}
+       
         
+    }
+    
+    global class CaseInfo
+    {
+         global string caseId{get;set;}
+        global string caseNumber{get;set;}
     }
 }

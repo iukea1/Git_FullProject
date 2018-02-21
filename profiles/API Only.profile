@@ -479,7 +479,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CustomException</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CustomPOCRequestController</apexClass>
@@ -10545,6 +10545,10 @@
     <tabVisibilities>
         <tab>NX_To_VX</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Quote_Approval_Matrix__c</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Quote__c</tab>

@@ -127,6 +127,11 @@
         <unique>false</unique>
     </fields>
     <label>Quote Approval Matrix</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>QAM-{0000}</displayFormat>
         <label>Quote Approval Matrix Name</label>

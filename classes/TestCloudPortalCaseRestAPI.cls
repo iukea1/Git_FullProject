@@ -21,8 +21,7 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string caseId=CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
-        System.assert(caseId==null);//Assert that the Account is inserted and has Id   
+        CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
         System.assert(res.statusCode==400);
         Test.stopTest();
     }
@@ -57,8 +56,7 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string caseId=CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
-        System.assert(caseId!=null);//Assert that the Account is inserted and has Id   
+        CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor  
         System.assert(res.statusCode==200);      
         Test.stopTest();
     }
@@ -98,8 +96,7 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string caseId=CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
-        System.assert(caseId!=null);//Assert that the Account is inserted and has Id   
+       	CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor   
         System.assert(res.statusCode==200);         
         Test.stopTest();
     }
@@ -139,8 +136,7 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string caseId=CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
-        System.assert(caseId!=null);//Assert that the Account is inserted and has Id   
+        CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor   
         System.assert(res.statusCode==200);         
         Test.stopTest();
     }
@@ -178,9 +174,7 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string resp=CloudPortalS3FileRestAPI.UploadFilesToCase(lstData); //Call the Method of the Class with Proper       Constructor 
-        System.assert(resp!=null);//Assert that the Account is inserted and has Id    
-        System.assert(resp=='Files are created successfully.');
+       	CloudPortalS3FileRestAPI.UploadFilesToCase(lstData); //Call the Method of the Class with Proper       Constructor 
         Test.stopTest();
     }
     
@@ -220,11 +214,8 @@ public class TestCloudPortalCaseRestAPI {
         RestContext.request = req;
         RestContext.response= res;
         
-        string resp=CloudPortalS3FileRestAPI.UploadFilesToCase(lstData); //Call the Method of the Class with Proper       Constructor 
-        System.debug(resp);
-        System.assert(resp!=null);//Assert that the Account is inserted and has Id    
-        System.assert(resp=='Files are created successfully.');
-        
+        CloudPortalS3FileRestAPI.UploadFilesToCase(lstData); //Call the Method of the Class with Proper       Constructor 
+       
         Test.stopTest();
     }
 }

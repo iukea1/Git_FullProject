@@ -1,3 +1,1 @@
-global class CustomException extends Exception {
-
-}
+global class CustomException extends Exception {}

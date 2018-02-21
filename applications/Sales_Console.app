@@ -133,9 +133,13 @@
     <tab>standard-Contact</tab>
     <tab>standard-LiveAgentSupervisor</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Quote_Approval_Matrix__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>Cap_Case__c</tab>
+        </mapping>
+        <mapping>
+            <tab>Quote_Approval_Matrix__c</tab>
         </mapping>
         <mapping>
             <fieldName>ParentId</fieldName>

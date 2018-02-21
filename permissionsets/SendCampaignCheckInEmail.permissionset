@@ -9988,6 +9988,10 @@
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Quote_Approval_Matrix__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Quote__c</tab>
         <visibility>None</visibility>
     </tabSettings>

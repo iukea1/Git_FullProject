@@ -10453,6 +10453,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Quote_Approval_Matrix__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Return_Authorizations</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

@@ -11018,6 +11018,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Quote_Approval_Matrix__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Quote__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>

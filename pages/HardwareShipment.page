@@ -12,12 +12,21 @@
 		.detailList .helpOrbOn {  position: relative; }
 
 		.serial-number-input { width:95%; }
+
+		#DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
+
+		#ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
+
+		.serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
+
+		.copy-sn-textarea { width: 100%; min-height: 150px; }
+
 	</style>
 
 	
-	<!-- <apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
+	<apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
 
-		<apex:form>
+		<apex:form >
 			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
 		</apex:form>
 
@@ -25,7 +34,7 @@
 
 		<apex:pageMessages />
 
-	</apex:outputPanel> -->
+	</apex:outputPanel>
 
 	<apex:outputPanel Id="NonActivatedOrder" rendered="True">
 
@@ -38,8 +47,8 @@
 			<apex:pageBlockButtons location="top">
 				<apex:commandButton action="{!applyCSVFile}" value="Apply Serial Numbers File" />
 				<apex:commandButton action="{!checkSerialNumberStatus}" value="Check Serial Numbers Status"/>
-				<apex:commandButton action="{!saveAndShip}" value="Save and Ship" onclick="return confirmOverwriteExistingAssets();"/>
-				<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+				<apex:commandButton action="{!save}" value="Save" />
+				<apex:commandButton action="{!returnToOrder}" value="Cancel" onclick="return confirm('Are you sure you want to cancel. All unsaved changes will be lost.');"/>
 			</apex:pageBlockButtons>
 			<apex:pageBlockSection >
 				<apex:pageBlockSectionItem >
@@ -49,84 +58,114 @@
 			</apex:pageBlockSection>
 		</apex:pageblock>
 
-		<apex:pageblock >
-
-			<apex:pageBlockSection columns="1">
-
-				<apex:pageBlockSectionItem >
-					<apex:pageBlockTable value="{!orderProductWrappers}" var="orderProductWrapper" Id="OrderProductTable">
-						<apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">Product Name</apex:facet>
-							<apex:outputLink value="/{!orderProductWrapper.orderProduct.Product2}" target="__blank">
-								<apex:outputText value="{!orderProductWrapper.orderProduct.Product2.Name}"/>
-							</apex:outputLink>
-						</apex:column>
-
-						<apex:column value="{!orderProductWrapper.orderProduct.Product2.ProductCode}" styleClass="order-product-column" headerClass="order-product-header" />
-
-						<apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">Quantity</apex:facet>
-							<apex:outputField value="{!orderProductWrapper.orderProduct.Quantity}" />
-						</apex:column>
-
-						<apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">Order Product Items</apex:facet>
-							<apex:pageBlockTable value="{!orderProductWrappers}" var="orderProductWrapper" Id="OrderProductItemTable">
-								<apex:column styleClass="order-product-column" headerClass="order-product-header">
-									<apex:facet name="header">Status</apex:facet>
-									<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
-								</apex:column>
-							</apex:pageBlockTable>
-						</apex:column>
-
-						<!-- <apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">Status</apex:facet>
-							<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
-						</apex:column>
-
-						<apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">Part Number</apex:facet>
-							<apex:inputField value="{!orderProductWrapper.orderProduct.Part_Number__c}" />
-						</apex:column>
-
-						<apex:column styleClass="order-product-column" headerClass="order-product-header">
-							<apex:facet name="header">
-								<span style="vertical-align: top;">
-									Serial Numbers 
-								</span>
-								<img src="{!URLFOR($Resource.OrderImages, 'OrderImages/Question.png')}" height="13px" title="Enter all serial numbers related to the product seperating each serial number with the ; character. Example '1111111111;2222222222'" />				
-							</apex:facet>
-							<apex:inputField styleClass="serial-number-input" value="{!orderProductWrapper.orderProduct.Serial_Number__c}" />
-						</apex:column>
-
-						<apex:column styleClass="order-product-column" headerClass="order-product-header" rendered="{!existingAssetsExist}">
-							<apex:facet name="header">Existing Assets</apex:facet>
-							<apex:repeat value="{!orderProductWrapper.existingAssetWrappers}" var="existingAssetWrapper" >
-								SN: 
-								<apex:outputLink value="/{!existingAssetWrapper.Id}" target="__blank">
-									<apex:outputText value="{!existingAssetWrapper.serialNumber}"/><br/>
+		<div id="DataTableContainer">
+			<apex:pageblock >
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:pageBlockTable value="{!orderProductWrappers}" var="orderProductWrapper" Id="OrderProductTable">
+							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">Product Name</apex:facet>
+								<apex:outputLink value="/{!orderProductWrapper.orderProduct.Product2}" target="__blank">
+									<apex:outputText value="{!orderProductWrapper.orderProduct.Product2.Name}"/>
 								</apex:outputLink>
-							</apex:repeat>
-						</apex:column> -->
+							</apex:column>
 
-					</apex:pageBlockTable>
-				</apex:pageBlockSectionItem>
-			</apex:pageBlockSection>
+							<apex:column value="{!orderProductWrapper.orderProduct.Product2.ProductCode}" styleClass="order-product-column" headerClass="order-product-header" />
 
-			<!-- <apex:outputPanel rendered="{!uploadedFile}">
-				File Uploaded
-			</apex:outputPanel> -->
+							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">Quantity</apex:facet>
+								<apex:outputField value="{!orderProductWrapper.orderProduct.Quantity}" />
+							</apex:column>
 
-		</apex:pageblock>	
+							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">Order Product Items</apex:facet>
+								<apex:pageBlockTable value="{!orderProductWrapper.orderProductItems}" var="orderProductItemWrapper" Id="OrderProductItemTable">
+									<apex:column styleClass="order-product-column" headerClass="order-product-header">
+										<apex:facet name="header">Status</apex:facet>
+										<apex:inputField value="{!orderProductItemWrapper.orderProductItem.Status__c}" />
+									</apex:column>
+
+									<apex:column styleClass="order-product-column" headerClass="order-product-header">
+										<apex:facet name="header">Part Number</apex:facet>
+										<apex:inputField value="{!orderProductItemWrapper.orderProductItem.Part_Number__c}" />
+									</apex:column>
+
+									<apex:column styleClass="order-product-column" headerClass="order-product-header">
+										<apex:facet name="header">
+											<apex:commandLink value="Serial Number" action="{!updateCopySerialNumberView}" styleClass="serial-number-link">
+												<apex:param name="copySerialNumberOrderProductId" assignTo="{!copySerialNumberOrderProductId}" value="{!orderProductWrapper.orderProduct.Id}" />
+											</apex:commandLink>
+										</apex:facet>
+										<apex:inputField value="{!orderProductItemWrapper.orderProductItem.Serial_Number__c}" />
+									</apex:column>
+								</apex:pageBlockTable>
+							</apex:column>
+
+							<!-- <apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">Status</apex:facet>
+								<apex:inputField value="{!orderProductWrapper.orderProduct.SBCF_Status__c}" />
+							</apex:column>
+
+							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">Part Number</apex:facet>
+								<apex:inputField value="{!orderProductWrapper.orderProduct.Part_Number__c}" />
+							</apex:column>
+
+							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+								<apex:facet name="header">
+									<span style="vertical-align: top;">
+										Serial Numbers 
+									</span>
+									<img src="{!URLFOR($Resource.OrderImages, 'OrderImages/Question.png')}" height="13px" title="Enter all serial numbers related to the product seperating each serial number with the ; character. Example '1111111111;2222222222'" />				
+								</apex:facet>
+								<apex:inputField styleClass="serial-number-input" value="{!orderProductWrapper.orderProduct.Serial_Number__c}" />
+							</apex:column>
+
+							<apex:column styleClass="order-product-column" headerClass="order-product-header" rendered="{!existingAssetsExist}">
+								<apex:facet name="header">Existing Assets</apex:facet>
+								<apex:repeat value="{!orderProductWrapper.existingAssetWrappers}" var="existingAssetWrapper" >
+									SN: 
+									<apex:outputLink value="/{!existingAssetWrapper.Id}" target="__blank">
+										<apex:outputText value="{!existingAssetWrapper.serialNumber}"/><br/>
+									</apex:outputLink>
+								</apex:repeat>
+							</apex:column> -->
+
+						</apex:pageBlockTable>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+
+			</apex:pageblock>	
+		</div>
+
+		<div id="ProductSerialNumberDisplay">
+			<apex:pageBlock >
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:outputPanel >
+							<apex:outputText value="Click a Serial Number column heading to display a list of serial numbers for the respective product."  rendered="{!copySerialNumberOrderProductId == null}" />
+
+							<apex:outputPanel rendered="{!copySerialNumberOrderProductId != null}">
+								<apex:outputText value="Order Product Serial Numbers: {!copySerialNumberOrderProductWrapper.orderProduct.Product2.Name}"/>
+								<apex:inputTextarea value="{!copySerialNumbers}"  styleClass="copy-sn-textarea" disabled="true"/>
+							</apex:outputPanel>
+							
+						</apex:outputPanel>
+
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</div>
+
 		</apex:form>
 
 	</apex:outputPanel>
 
 	<script>
-		function confirmOverwriteExistingAssets(){
-			var result = confirm('Are you sure you want to Save and Ship. If existing assets are found matching the provided serial numbers the existing asset will be overridden with new data. Data includes: Account, Product, etc.');
-			return result;
-		}
+		// function confirmOverwriteExistingAssets(){
+		// 	var result = confirm('Are you sure you want to Save and Ship. If existing assets are found matching the provided serial numbers the existing asset will be overridden with new data. Data includes: Account, Product, etc.');
+		// 	return result;
+		// }
 	</script>
 
 	

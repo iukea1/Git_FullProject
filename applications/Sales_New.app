@@ -15,4 +15,5 @@
     <tab>standard-report</tab>
     <tab>standard-ContentSearch</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Quote_Approval_Matrix__c</tab>
 </CustomApplication>
