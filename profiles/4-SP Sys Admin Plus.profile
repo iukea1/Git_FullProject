@@ -8916,9 +8916,6 @@
         <layout>ContentVersion-General</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contract-Contract Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contract_to_Opportunity__c-Contract to Opportunity Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

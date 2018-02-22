@@ -89,7 +89,7 @@ global with sharing class CloudPortalCaseRestAPI {
             insert new ErrorLog__c(Subject__c='Error in CPCaseInfo API', Message__c=ex.getMessage() + '\r\n' + ex.getStackTraceString());
             
         }
-        
+       
     }
     
     
@@ -196,7 +196,7 @@ return lstCases;
     
     global class CaseInfo
     {
-         global string caseId{get;set;}
+        global string caseId{get;set;}
         global string caseNumber{get;set;}
     }
 }

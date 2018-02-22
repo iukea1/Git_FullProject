@@ -69,12 +69,12 @@
                 <field>Registered__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Distributor_Margin__c</field>
+                <behavior>Edit</behavior>
+                <field>Additional_Discount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Additional_Discount__c</field>
+                <field>Distributor_Margin__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

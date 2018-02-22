@@ -75,6 +75,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SBCF_Set_Renewal_Forecast</fullName>
+        <field>SBQQ__RenewalForecast__c</field>
+        <literalValue>1</literalValue>
+        <name>SBCF Set Renewal Forecast</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SBCF_Set_Renewal_Term</fullName>
+        <field>SBQQ__RenewalTerm__c</field>
+        <formula>12</formula>
+        <name>SBCF Set Renewal Term</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>contract_expiry</fullName>
         <field>Status</field>
         <literalValue>Expired</literalValue>
@@ -125,5 +143,24 @@
         </criteriaItems>
         <description>Set&apos;s actions to occur when contracts are edited.</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Contract Fields</fullName>
+        <actions>
+            <name>SBCF_Set_Renewal_Term</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>SBCF_Set_Renewal_Forecast</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Contract.CreatedDate</offsetFromField>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
 </Workflow>

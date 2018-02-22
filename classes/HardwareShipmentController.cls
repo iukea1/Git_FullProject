@@ -145,11 +145,9 @@ public with sharing class HardwareShipmentController {
 
         //printAssetsCreatedInTheLast30Seconds();
 
-        //PageReference page = new PageReference('/' + order.Id);
-        //page.setRedirect(true);
-        //return page;
-
-        return null;
+        PageReference page = new PageReference('/' + order.Id);
+        page.setRedirect(true);
+        return page;
     }
 
     public PageReference returnToOrder(){
@@ -169,16 +167,17 @@ public with sharing class HardwareShipmentController {
 
         try{
             List<String> csvElements = buildCSVElements();
-            //this.fileRowWrappers = buildFileRowWrappers(csvElements);
+            this.fileRowWrappers = buildFileRowWrappers(csvElements);
 
-            //System.debug('File rows before filter: ' + this.fileRowWrappers);
+            System.debug('File rows before filter: ' + this.fileRowWrappers);
+            System.debug('File row size before filter: ' + this.fileRowWrappers.size());
 
-            //this.fileRowWrappers = filterFileRows(this.fileRowWrappers);
+            this.fileRowWrappers = filterFileRows(this.fileRowWrappers);
+            System.debug('File rows after filter: ' + this.fileRowWrappers);
+            System.debug('File row size after filter: ' + this.fileRowWrappers.size());
 
-            //System.debug('File rows after filter: ' + this.fileRowWrappers);
-
-            //Map<String, CSVFileRow> productCodeToCSVRow = buildProductCodeToCSVFileRow();
-            //populateOrderProductWrappersWithFileInfo(productCodeToCSVRow);
+            Map<String, List<CSVFileRow>> productCodeToCSVRow = buildProductCodeToCSVFileRows();
+            populateOrderProductItemWrappersWithFileInfo(productCodeToCSVRow);
 
             //uploadedFile = true;
         }
@@ -398,7 +397,11 @@ public with sharing class HardwareShipmentController {
         String defaultOrderProductStatus = getDefaultOrderProductStatus();
 
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-            orderProductWrapper.orderProduct.SBCF_Status__c = defaultOrderProductStatus;
+            for(OrderShipmentHelper.OrderProductItemWrapper itemWrapper: orderProductWrapper.orderProductItems){
+                if(itemWrapper.orderProductItem.Status__c == null){
+                    itemWrapper.orderProductItem.Status__c = defaultOrderProductStatus;
+                }
+            }
         }
     }   
 
@@ -451,28 +454,63 @@ public with sharing class HardwareShipmentController {
         return quoteRecordTypeName;
     }
 
-    private void populateOrderProductWrappersWithFileInfo(Map<String, CSVFileRow> productCodeToCSVRow){
+    private void populateOrderProductItemWrappersWithFileInfo(Map<String, List<CSVFileRow>> productCodeToCSVRows){
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-            CSVFileRow csvRow = productCodeToCSVRow.get(orderProductWrapper.orderProduct.Product2.ProductCode);
+            List<CSVFileRow> csvRows = productCodeToCSVRows.get(orderProductWrapper.orderProduct.Product2.ProductCode);
 
-            if(csvRow == null){
+            if(csvRows == null){
                 continue;
             }
 
-            orderProductWrapper.orderProduct.Quantity = Decimal.valueOf(csvRow.column2);
-            orderProductWrapper.orderProduct.Part_Number__c = csvRow.column3;
-            orderProductWrapper.orderProduct.Serial_Number__c = csvRow.column4;
+            for(Integer i=0; i<orderProductWrapper.orderProductItems.size() && i<csvRows.size(); i++){
+                OrderShipmentHelper.OrderProductItemWrapper itemWrapper = orderProductWrapper.orderProductItems[i];
+                CSVFileRow row = csvRows[i];
+
+                String partNumber = '';
+
+                if(row.column7 != null){
+                    List<String> column7Strings = row.column7.split('_');
+                    if(column7Strings != null && column7Strings.size() == 2){
+                        partNumber = column7Strings[1];
+                    }
+                }                
+
+                itemWrapper.orderProductItem.Serial_Number__c = row.column8;
+                itemWrapper.orderProductItem.Part_Number__c = partNumber;
+            }
         }
     }
     
-    private Map<String, CSVFileRow> buildProductCodeToCSVFileRow(){
-        Map<String, CSVFileRow> productCodeToCSVRow = new Map<String, CSVFileRow>();
+    private Map<String, List<CSVFileRow>> buildProductCodeToCSVFileRows(){
+        Map<String, List<CSVFileRow>> productCodeToCSVRows = new Map<String, List<CSVFileRow>>();
 
         for(CSVFileRow row: this.fileRowWrappers){
-            productCodeToCSVRow.put(row.column1, row);
+            if(row.column7 == null){
+                continue;
+            }
+
+            String productCode = '';
+
+            if(row.column7 != null){
+                List<String> column7Strings = row.column7.split('_');
+                if(column7Strings != null && column7Strings.size() == 2){
+                    productCode = column7Strings[0];
+                }
+            }
+
+            List<CSVFileRow> csvRows = productCodeToCSVRows.get(productCode);
+
+            if(csvRows == null){
+                csvRows = new List<CSVFileRow>();
+                productCodeToCSVRows.put(productCode, csvRows);
+            }
+
+            csvRows.add(row);
         }
 
-        return productCodeToCSVRow;
+        System.debug('Product Code To CSV Rows: ' + productCodeToCSVRows);
+
+        return productCodeToCSVRows;
     }
 
     private List<CSVFileRow> buildFileRowWrappers(List<String> csvElements){
@@ -501,7 +539,8 @@ public with sharing class HardwareShipmentController {
         Integer index = 0;
         Integer nextIndex = 0;
 
-        //do{
+        // Strip the " and the commas out of the Tracking # column
+        do{
             index = csvBody.indexOfChar(DOUBLE_QUOTE_CHAR_VALUE, index);
 
             System.debug('Index of ": ' + index);
@@ -526,32 +565,13 @@ public with sharing class HardwareShipmentController {
                 }
             }
             
-        //}while(index != -1 || nextIndex != -1);
+        }while(index != -1 && nextIndex != -1);
 
 
         //// Here everything should be truly column delimited.  
+        List<String> csvElements = csvBody.split(',');
 
-        //List<String> csvElements = csvBody.split(',');
-
-        List<String> csvRows = csvBody.split('(\\r|\\n)+');
-
-        System.debug('CSV Rows: ' + csvRows);
-        System.debug('CSV Rows Size: ' + csvRows.size());
-
-        index = csvBody.indexOfChar(DOUBLE_QUOTE_CHAR_VALUE, index);
-        System.debug('Index still exist?: ' + index);
-
-        //for(String csvRow: csvRows){
-        //    Integer indexOfChar = csvRow.indexOfChar(DOUBLE_QUOTE_CHAR_VALUE);
-        //    System.debug('indexOfChar: ' + indexOfChar);
-        //}
-
-        //System.debug('CSV File Elements: ' + csvElements);
-        //System.debug('CSV File Elements Size: ' + csvElements.size());
-
-        //return csvElements;
-
-        return csvRows;
+        return csvElements;
     }
 
     /*
@@ -563,6 +583,8 @@ public with sharing class HardwareShipmentController {
     */
     private List<CSVFileRow> filterFileRows(List<CSVFileRow> unfilteredFileRows){
         List<CSVFileRow> filteredFileRows = new List<CSVFileRow>();
+
+        // Part Number 
 
         for(CSVFileRow unfilteredRow: unfilteredFileRows){
             if(
@@ -590,7 +612,7 @@ public with sharing class HardwareShipmentController {
         public String column4 {get;set;} // Req# - Sales Order Number
         public String column5 {get;set;}
         public String column6 {get;set;}
-        public String column7 {get;set;} // Item# - Product Code
+        public String column7 {get;set;} // Item# - Product Code and Part Number - Format ProductCode_PartNumber
         public String column8 {get;set;} // S/N - Serial Number
         public String column9 {get;set;}
         public String column10 {get;set;}

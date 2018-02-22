@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>Total_Comp_Rate_Enabled__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Upgrade_Maintenance__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

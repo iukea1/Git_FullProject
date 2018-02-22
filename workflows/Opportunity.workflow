@@ -758,6 +758,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SBCF_Set_Renewal_Opportunity_Close_Date</fullName>
+        <field>CloseDate</field>
+        <formula>SBQQ__RenewedContract__r.EndDate + 14</formula>
+        <name>SBCF Set Renewal Opportunity Close Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SBCF_Set_Renewal_Opportunity_Name</fullName>
+        <field>Name</field>
+        <formula>Account.Name &amp; &apos; - &apos; &amp; &apos;Renewal&apos; &amp; &apos; - &apos; &amp; SBQQ__RenewedContract__r.Name</formula>
+        <name>SBCF Set Renewal Opportunity Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Set2NewBiz</fullName>
         <description>Set type filed to new business</description>
         <field>Type</field>
@@ -1468,6 +1486,24 @@ ISBLANK(Signed_By__c)
             <operation>notEqual</operation>
         </criteriaItems>
         <description>when the RSM signs the rev rec checklist, email to Kiellie and Richard</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Renewal Opportunity Fields</fullName>
+        <actions>
+            <name>SBCF_Set_Renewal_Opportunity_Close_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>SBCF_Set_Renewal_Opportunity_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.SBQQ__Renewal__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

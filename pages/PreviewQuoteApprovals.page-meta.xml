@@ -5,13 +5,13 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>PreviewQuoteApprovals</label>
     <packageVersions>
-        <majorNumber>23</majorNumber>
-        <minorNumber>0</minorNumber>
+        <majorNumber>210</majorNumber>
+        <minorNumber>15</minorNumber>
         <namespace>SBQQ</namespace>
     </packageVersions>
     <packageVersions>
-        <majorNumber>2</majorNumber>
-        <minorNumber>12</minorNumber>
+        <majorNumber>3</majorNumber>
+        <minorNumber>8</minorNumber>
         <namespace>sbaa</namespace>
     </packageVersions>
 </ApexPage>

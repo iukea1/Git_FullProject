@@ -70,6 +70,15 @@
         <fullName>Quote_Line__c</fullName>
         <externalId>false</externalId>
         <label>Quote Line</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>SBQQ__QuoteLine__c.SBQQ__ProductFamily__c</field>
+                <operation>equals</operation>
+                <value>Product</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>SBQQ__QuoteLine__c</referenceTo>
         <relationshipLabel>Quote Line Addresses</relationshipLabel>
         <relationshipName>Quote_Line_Addresses</relationshipName>
