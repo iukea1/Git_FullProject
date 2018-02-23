@@ -4,7 +4,9 @@ public with sharing class HardwareShipmentController {
 
     public static final String STATUS_CUSTOMER_EVALUATION = 'Customer Evaluation';
     public static final String STATUS_CUSTOMER_OWNED = 'Customer Owned';
+
     public static final String DEFAULT_ORDER_PRODUCT_STATUS = STATUS_CUSTOMER_OWNED;
+
     public static final String ACTIVATED_ORDER_STATUS = 'Activated';
     public static final String SAVE_ORDER_SHIPPING_STATUS = 'Shipping - Complete';
     public static final String SAVE_PRICE_CALCULATION_STATUS = 'Completed';
@@ -14,8 +16,8 @@ public with sharing class HardwareShipmentController {
     public static final String ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED = 'A product exists on the order with a serial number matching an existing asset. Products matching existing assets must have a status of Customer Owned.';
     public static final String WARNING_USE_CHECK_SERIAL_NUMBERS_BEFORE_SUBMIT = 'Please Check Serial Numbers Status before Saving.';
 
-    public static final String RECORD_TYPE_STANDARD = 'Sandard';
-    public static final String RECORD_TYPE_EVAL = 'POC';
+    //public static final String RECORD_TYPE_STANDARD = 'Sandard';
+    //public static final String RECORD_TYPE_EVAL = 'POC';
 
     public static final String RETURN_CHARACTER = '\r\n';
     public static final Integer DOUBLE_QUOTE_CHAR_VALUE = 34;
@@ -75,29 +77,29 @@ public with sharing class HardwareShipmentController {
     **/
 
     public PageReference checkSerialNumberStatus(){
-        //this.hasCheckedSerialNumbers = true;
+        this.hasCheckedSerialNumbers = true;
 
-        //this.existingAssetsExist = false;
-        //resetExistingAssets();
+        this.existingAssetsExist = false;
+        resetExistingAssets();
 
-        //Set<String> serialNumbers = getSerialNumbersFromWrappers();
+        Set<String> serialNumbers = getSerialNumbersFromWrappers();
 
-        //System.debug('Serial numbers from wrappers: ' + serialNumbers);
+        System.debug('Serial numbers from wrappers: ' + serialNumbers);
 
-        //List<Asset> existingAssets = queryAssetsMatchingSerialNumbers(serialNumbers);
-        //Map<String, Asset> serialNumberToAssetMap = buildSerialNumberToAssetMap(existingAssets);
+        List<Asset> existingAssets = queryAssetsMatchingSerialNumbers(serialNumbers);
+        Map<String, Asset> serialNumberToAssetMap = buildSerialNumberToAssetMap(existingAssets);
 
-        //Boolean assetsExistMatchingSerialNumbers = updateOrderProductWrappersExistingAssets(serialNumberToAssetMap);
+        Boolean assetsExistMatchingSerialNumbers = updateOrderProductWrappersExistingAssets(serialNumberToAssetMap);
 
-        //if(assetsExistMatchingSerialNumbers){
-        //    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,WARNING_MESSAGE_EXISTING_ASSET);
-        //    ApexPages.addMessage(myMsg);
-        //    this.existingAssetsExist = true;
-        //}
-        //else{
-        //    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM,SUCCESS_MESSAGE_NO_EXISTING_ASSETS);
-        //    ApexPages.addMessage(myMsg);
-        //}
+        if(assetsExistMatchingSerialNumbers){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,WARNING_MESSAGE_EXISTING_ASSET);
+            ApexPages.addMessage(myMsg);
+            this.existingAssetsExist = true;
+        }
+        else{
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM,SUCCESS_MESSAGE_NO_EXISTING_ASSETS);
+            ApexPages.addMessage(myMsg);
+        }
 
         return null;
     }
@@ -306,87 +308,84 @@ public with sharing class HardwareShipmentController {
     *  checkSericalNumberStatus Helper Methods
     */
 
-    //private void resetExistingAssets(){
-    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-    //        orderProductWrapper.existingAssetWrappers = new List<OrderShipmentHelper.ExistingAssetWrapper>();
-    //    }      
-    //}
+    private void resetExistingAssets(){
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            for(OrderShipmentHelper.OrderProductItemWrapper orderProductItem: orderProductWrapper.orderProductItems){
+                orderProductItem.orderProductItem.Existing_Asset__c = null;
+                orderProductItem.multipleExistingAssetsFound = false;
+            }
+        }      
+    }
 
-    //private Boolean updateOrderProductWrappersExistingAssets(Map<String, Asset> serialNumberToAssetMap){
-    //    Boolean assetsExistMatchingSerialNumbers = false;
+    private Boolean updateOrderProductWrappersExistingAssets(Map<String, Asset> serialNumberToAssetMap){
+        Boolean assetsExistMatchingSerialNumbers = false;
 
-    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-    //        if(orderProductWrapper.orderProduct.Serial_Number__c == null){
-    //            continue;
-    //        }
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            for(OrderShipmentHelper.OrderProductItemWrapper orderProductItemWrapper: orderProductWrapper.orderProductItems){
+                if(orderProductItemWrapper.orderProductItem.Serial_Number__c == null){
+                    // May need validation on Custom activate button to ensure SNs on all or specific order product items.
+                    continue;
+                }
 
-    //        List<String> parsedSerialNumbers = orderProductWrapper.orderProduct.Serial_Number__c.split(';');
+                Asset existingAsset = serialNumberToAssetMap.get(orderProductItemWrapper.orderProductItem.Serial_Number__c);
 
-    //        for(String serialNumber:parsedSerialNumbers){
-    //            Asset existingAsset = serialNumberToAssetMap.get(serialNumber);
+                if(existingAsset == null){
+                    continue;
+                }
 
-    //            if(existingAsset == null){
-    //                continue;
-    //            }
+                System.debug('Existing asset found!');
 
-    //            System.debug('Existing asset found!');
+                orderProductItemWrapper.orderProductItem.Existing_Asset__c = existingAsset.Id;
+                assetsExistMatchingSerialNumbers = true;
+            }
+        }
 
-    //            //orderProductWrapper.existingAssetIds.add(existingAsset.Id);
-    //            orderProductWrapper.existingAssetWrappers.add(new OrderShipmentHelper.ExistingAssetWrapper(existingAsset.Id, SerialNumber, existingAsset));
-    //            assetsExistMatchingSerialNumbers = true;                
-    //        }
-    //    }
+        return assetsExistMatchingSerialNumbers;
+    }
 
-    //    return assetsExistMatchingSerialNumbers;
-    //}
+    private Map<String, Asset> buildSerialNumberToAssetMap(List<Asset> existingAssets){
+        Map<String, Asset> serialNumberToAssetMap = new Map<String, Asset>();
 
-    //private Map<String, Asset> buildSerialNumberToAssetMap(List<Asset> existingAssets){
-    //    Map<String, Asset> serialNumberToAssetMap = new Map<String, Asset>();
+        for(Asset existingAsset: existingAssets){
+            serialNumberToAssetMap.put(existingAsset.SerialNumber, existingAsset);
+        }
 
-    //    for(Asset existingAsset: existingAssets){
-    //        serialNumberToAssetMap.put(existingAsset.SerialNumber, existingAsset);
-    //    }
+        System.debug('Serial Number to Asset Map: ' + serialNumberToAssetMap);
 
-    //    System.debug('Serial Number to Asset Map: ' + serialNumberToAssetMap);
+        return serialNumberToAssetMap;
+    }
 
-    //    return serialNumberToAssetMap;
-    //}
+    private List<Asset> queryAssetsMatchingSerialNumbers(Set<String> serialNumbers){
+        List<Asset> existingAssets = new List<Asset>();
 
-    //private List<Asset> queryAssetsMatchingSerialNumbers(Set<String> serialNumbers){
-    //    List<Asset> existingAssets = new List<Asset>();
+        try{
+            existingAssets = [SELECT Id, SerialNumber FROM Asset WHERE SerialNumber != null AND SerialNumber in :serialNumbers];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
 
-    //    try{
-    //        existingAssets = [SELECT Id, SerialNumber FROM Asset WHERE SerialNumber != null AND SerialNumber in :serialNumbers];
-    //    }
-    //    catch(QueryException qe){
-    //        System.debug(qe.getMessage());
-    //    }
+        System.debug('Existing Assets: ' + existingAssets);
 
-    //    System.debug('Existing Assets: ' + existingAssets);
+        return existingAssets;
+    }
 
-    //    return existingAssets;
-    //}
+    private Set<String> getSerialNumbersFromWrappers(){
+        Set<String> serialNumbersFromWrappers = new Set<String>();
 
-    //private Set<String> getSerialNumbersFromWrappers(){
-    //    Set<String> serialNumbersFromWrappers = new Set<String>();
+        for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+            for(OrderShipmentHelper.OrderProductItemWrapper orderProductItem: orderProductWrapper.orderProductItems){
+                if(orderProductItem.orderProductItem.Serial_Number__c == null){
+                    // May want to stop here and display message to user. 
+                    continue;
+                }
 
-    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-    //        if(orderProductWrapper.orderProduct.Serial_Number__c == null){
-    //            // May want to stop here and display message to user. 
-    //            continue;
-    //        }
+                serialNumbersFromWrappers.add(orderProductItem.orderProductItem.Serial_Number__c);
+            }                        
+        }
 
-    //        List<String> parsedSerialNumbers = orderProductWrapper.orderProduct.Serial_Number__c.split(';');
-
-    //        if(parsedSerialNumbers != null){
-    //            for(String serialNumber: parsedSerialNumbers){
-    //                serialNumbersFromWrappers.add(SerialNumber);
-    //            }
-    //        }            
-    //    }
-
-    //    return serialNumbersFromWrappers;
-    //}
+        return serialNumbersFromWrappers;
+    }
 
 
     /**
@@ -406,52 +405,37 @@ public with sharing class HardwareShipmentController {
     }   
 
     private String getDefaultOrderProductStatus(){
-        String quoteRecordTypeName = getRecordTypeNameOnQuote();
-        System.debug('Quote Record Type Name: ' + quoteRecordTypeName);
+        SBQQ__Quote__c relatedQuote = queryForRelatedQuote();
 
-        if(quoteRecordTypeName == null){
+        if(relatedQuote == null){
             return DEFAULT_ORDER_PRODUCT_STATUS;
         }
-        else if(quoteRecordTypeName.contains(RECORD_TYPE_STANDARD)){
-            return STATUS_CUSTOMER_OWNED;
-        }
-        else if(quoteRecordTypeName.contains(RECORD_TYPE_EVAL)){
+
+        if(relatedQuote.SBCF_Evaluation_Quote__c == true){
             return STATUS_CUSTOMER_EVALUATION;
         }
         else{
-            return DEFAULT_ORDER_PRODUCT_STATUS;
+            return STATUS_CUSTOMER_OWNED;
         }
     }
 
-    private String getRecordTypeNameOnQuote(){
-        System.debug('Get Record Type Name On Quote');
-
-        String quoteRecordTypeName;
+    private SBQQ__Quote__c queryForRelatedQuote(){
+        SBQQ__Quote__c relatedQuote;
 
         if(this.order.SBQQ__Quote__c == null){
-            // Return null
+            // return null
             System.debug('SBQQ__Quote__c lookup field null');
-            return quoteRecordTypeName;
+            return relatedQuote;
         }
-
-        try{    
-            SBQQ__Quote__c relatedQuote = [SELECT RecordType.Name FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c LIMIT 1];
-
-            // Should go into catch if null but just in case
-            if(relatedQuote != null){
-                System.debug('Related Quote Not Null. Assigning relatedQuote record type of: ' + relatedQuote.RecordType.Name);
-                quoteRecordTypeName = relatedQuote.RecordType.Name;
-            }
-            else{
-                System.debug('Related Quote is null.');
-            }
-        }
-        catch(QueryException qe){
-            System.debug('No quote returned from query');
-            system.debug(qe.getMessage());
+        
+        try{
+            relatedQuote = [SELECT SBCF_Evaluation_Quote__c, RecordType.Name FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c LIMIT 1];
         }   
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
 
-        return quoteRecordTypeName;
+        return relatedQuote;
     }
 
     private void populateOrderProductItemWrappersWithFileInfo(Map<String, List<CSVFileRow>> productCodeToCSVRows){

@@ -610,8 +610,6 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <customButtons>New_SPS_Quote</customButtons>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ApprovalStatus__c</fields>
         <fields>SBQQ__NetAmount__c</fields>
@@ -866,7 +864,7 @@
         <summaryLayoutItems>
             <field>Registration_Expiration__c</field>
             <posX>3</posX>
-            <posY>1</posY>
+            <posY>0</posY>
         </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>

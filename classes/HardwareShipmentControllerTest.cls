@@ -22,7 +22,7 @@ private class HardwareShipmentControllerTest {
 	}
 
 	@isTest static void whenTestWithZeroOrderProducts() {
-		Order order = [SELECT Id, SBQQ__Quote__c FROM Order LIMIT 1];
+		Order order = [SELECT Id, SBQQ__Quote__c, Status FROM Order LIMIT 1];
 
 		Test.startTest();
 			ApexPages.currentPage().getParameters().put('id', order.id);
@@ -43,6 +43,7 @@ private class HardwareShipmentControllerTest {
 		product.ProductCode = '300128-002';
 		product.Model__c = 'EC-BASE-2Y';
 		product.IsActive = true;
+		product.Forecast_Category__c = 'Physical';
 		insert product;
 
         Id pricebookId = Test.getStandardPricebookId();
@@ -69,6 +70,7 @@ private class HardwareShipmentControllerTest {
         insert customPrice;
 
         order.Pricebook2Id = customPB.Id;
+        order.Sales_Order_Number__c = 'SO034507';
         update order;
 
 		OrderItem orderProduct = new OrderItem();
@@ -84,11 +86,13 @@ private class HardwareShipmentControllerTest {
 			ApexPages.StandardController stdOrder = new ApexPages.StandardController(order);
 			HardwareShipmentController controller = new HardwareShipmentController(stdOrder);
 
-			controller.csvFile.body = Blob.valueOf('300128-002,1111111111,2222222222');
+			controller.csvFile.body = Blob.valueOf('No.,SHO,Customer Name,Req#,Request Type,OEM CUST Name,Item#,S/N,LOCID,Location Type,Qty,Shipped Date,Ship Method,Tracking#,Ref PO#,RMA#,RMA Received Date,Contact,Phone Number,Address 1,Address 2,Address 3,City,State/Province,Zip/Postal Code,Country,1,CSHO-99999999,SILVERPEAK,SO034507,SP-SOLD,Blood Systems,300128-002_500190-001,001BBC199D5A,SP-SHIPD-SOLD,VIRTUALPOOL,1,2/13/2018,Test Line,"425428745952, 425428745963, 425428745974, 425428745985, 425428745996, 425428746000, ",PO999999,,,Drew Justus,Test,Test,Test,,Test,n.a,99999,USA');
 			controller.applyCSVFile();
 
 			controller.checkSerialNumberStatus();
-			controller.saveAndShip();
+			controller.copySerialNumberOrderProductId = orderProduct.Id;
+			controller.updateCopySerialNumberView();
+			controller.save();
 
 		Test.stopTest();
 	}

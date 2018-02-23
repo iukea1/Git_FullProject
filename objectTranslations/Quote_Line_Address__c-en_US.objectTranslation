@@ -9,6 +9,18 @@
         <value>Quote Line Addresses</value>
     </caseValues>
     <fields>
+        <label><!-- Is Hardware --></label>
+        <name>Is_Hardware__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Family --></label>
+        <name>Product_Family__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>Product_Name__c</name>
+    </fields>
+    <fields>
         <label><!-- Quote Address --></label>
         <name>Quote_Address__c</name>
         <relationshipLabel><!-- Quote Line Addresses --></relationshipLabel>
@@ -19,12 +31,24 @@
         <relationshipLabel><!-- Quote Line Addresses --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Quote Record Id --></label>
-        <name>Quote_Record_Id__c</name>
+        <label><!-- Quote --></label>
+        <name>Quote__c</name>
+        <relationshipLabel><!-- Quote Line Addresses --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Shipping Quantity --></label>
         <name>Shipping_Quantity__c</name>
     </fields>
+    <layouts>
+        <layout>Quote Line Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- New_Quote_Line_Address --></label>
+        <name>New_Quote_Line_Address</name>
+    </webLinks>
 </CustomObjectTranslation>

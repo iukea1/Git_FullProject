@@ -54,12 +54,42 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Is_Hardware__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Hardware</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_Family__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Quote_Line__r.SBQQ__Product__r.Family)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Family</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quote_Line__r.SBQQ__Product__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Quote_Address__c</fullName>
         <externalId>false</externalId>
         <label>Quote Address</label>
         <referenceTo>Quote_Address__c</referenceTo>
         <relationshipLabel>Quote Line Addresses</relationshipLabel>
-        <relationshipName>Quote_Line_Addresses</relationshipName>
+        <relationshipName>Quote_Line_Addresses1</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
@@ -68,6 +98,7 @@
     </fields>
     <fields>
         <fullName>Quote_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Quote Line</label>
         <lookupFilter>
@@ -77,27 +108,31 @@
                 <operation>equals</operation>
                 <value>Product</value>
             </filterItems>
+            <filterItems>
+                <field>SBQQ__QuoteLine__c.SBQQ__Quote__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Quote__c</valueField>
+            </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>SBQQ__QuoteLine__c</referenceTo>
         <relationshipLabel>Quote Line Addresses</relationshipLabel>
-        <relationshipName>Quote_Line_Addresses</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
-    </fields>
-    <fields>
-        <fullName>Quote_Record_Id__c</fullName>
-        <externalId>false</externalId>
-        <formula>Quote_Address__r.Quote__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Quote Record Id</label>
+        <relationshipName>Quote_Line_Addresses1</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Quote</label>
+        <referenceTo>SBQQ__Quote__c</referenceTo>
+        <relationshipLabel>Quote Line Addresses</relationshipLabel>
+        <relationshipName>Quote_Line_Addresses1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Shipping_Quantity__c</fullName>
@@ -111,11 +146,30 @@
         <unique>false</unique>
     </fields>
     <label>Quote Line Address</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
+        <displayFormat>QLA-{0000}</displayFormat>
         <label>Quote Line Address Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Quote Line Addresses</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Quote__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>New_Quote_Line_Address</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Quote Line Address</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.parent.location.href=&quot;a7y/e?CF00N0x000000YHPf={!Quote_Address__c.Quote__c}&amp;CF00N0x000000YHPV={!Quote_Address__c.Name}&amp;retURL={!Quote_Address__c.Id}&quot;;</url>
+    </webLinks>
 </CustomObject>

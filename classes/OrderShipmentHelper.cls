@@ -56,7 +56,7 @@ public with sharing class OrderShipmentHelper {
         Set<Id> orderProductIds = getOrderProductIds(orderProducts);
 
         try{
-            orderProductItems = [SELECT Id, Order_Product__c, Part_Number__c, Serial_Number__c, Status__c FROM Order_Product_Item__c WHERE Order_Product__c IN :orderProductIds];
+            orderProductItems = [SELECT Id, Order_Product__c, Part_Number__c, Serial_Number__c, Status__c, Existing_Asset__c FROM Order_Product_Item__c WHERE Order_Product__c IN :orderProductIds];
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());
@@ -153,12 +153,12 @@ public with sharing class OrderShipmentHelper {
     public class OrderProductWrapper{
 
         public OrderItem orderProduct {get;set;}
-        public List<ExistingAssetWrapper> existingAssetWrappers {get;set;}
+        //public List<ExistingAssetWrapper> existingAssetWrappers {get;set;} // Going to be handled at the Order Product Item level now
         public List<OrderProductItemWrapper> orderProductItems {get;set;}
 
         public OrderProductWrapper(OrderItem orderProduct, List<OrderProductItemWrapper> orderProductItems){
             this.orderProduct = orderProduct;
-            this.existingAssetWrappers = new List<ExistingAssetWrapper>();
+            //this.existingAssetWrappers = new List<ExistingAssetWrapper>();
             this.orderProductItems = orderProductItems;
         }
     }
@@ -167,6 +167,8 @@ public with sharing class OrderShipmentHelper {
         public Id orderProductId {get;set;}
         public Order_Product_Item__c orderProductItem {get;set;}
         public Boolean isInserted {get;set;}
+        public Boolean multipleExistingAssetsFound {get;set;}
+        public List<Asset> multipleExistingAssets {get;set;}
 
         public OrderProductItemWrapper(Order_Product_Item__c orderProductItem, Boolean isInserted, Id orderProductId){
             this.orderProductItem = orderProductItem;
