@@ -17,6 +17,10 @@
         <name>Company__c</name>
     </fields>
     <fields>
+        <label><!-- Count Hardware Quote Line --></label>
+        <name>Count_Hardware_Quote_Line__c</name>
+    </fields>
+    <fields>
         <label><!-- Country --></label>
         <name>Country__c</name>
         <picklistValues>
@@ -2210,14 +2214,17 @@
         <name>Street__c</name>
     </fields>
     <fields>
+        <help><!-- VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models. --></help>
         <label><!-- VAT Addr --></label>
         <name>VAT_Addr__c</name>
     </fields>
     <fields>
+        <help><!-- VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models. --></help>
         <label><!-- Company --></label>
         <name>VAT_Company__c</name>
     </fields>
     <fields>
+        <help><!-- VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models. --></help>
         <label><!-- VAT ID --></label>
         <name>VAT_ID__c</name>
     </fields>
@@ -2237,6 +2244,18 @@
         </sections>
     </layouts>
     <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- VAT ID is required for the selected country --></errorMessage>
+        <name>EU_VAT_ID_required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- VAT Address is required for the selected country. --></errorMessage>
+        <name>EU_VAT_address_required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Company is required for the selected country. --></errorMessage>
+        <name>EU_VAT_company_required</name>
+    </validationRules>
     <validationRules>
         <errorMessage><!-- First Name is required --></errorMessage>
         <name>Final_DestinationFirstName_required</name>

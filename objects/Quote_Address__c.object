@@ -74,6 +74,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Count_Hardware_Quote_Line__c</fullName>
+        <externalId>false</externalId>
+        <label>Count Hardware Quote Line</label>
+        <summaryFilterItems>
+            <field>Quote_Line_Address__c.Is_Hardware__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Quote_Line_Address__c.Quote_Address__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Country__c</fullName>
         <externalId>false</externalId>
         <label>Country</label>
@@ -2037,7 +2051,38 @@
     <fields>
         <fullName>Is_EU__c</fullName>
         <externalId>false</externalId>
-        <formula>true</formula>
+        <formula>CASE
+(
+    Country__c, 
+   &apos;Latvia&apos;,1,
+&apos;Hungary&apos;,1,
+&apos;Lithuania&apos;,1,
+&apos;Luxembourg&apos;,1,
+&apos;Ireland&apos;,1,
+&apos;Malta&apos;,1,
+&apos;Estonia&apos;,1,
+&apos;Romania&apos;,1,
+&apos;Slovenia&apos;,1,
+&apos;United Kingdom&apos;,1,
+&apos;Cyprus&apos;,1,
+&apos;Belgium&apos;,1,
+&apos;Czech Republic&apos;,1,
+&apos;Denmark&apos;,1,
+&apos;Netherlands&apos;,1,
+&apos;Austria&apos;,1,
+&apos;Greece&apos;,1,
+&apos;Finland&apos;,1,
+&apos;France&apos;,1,
+&apos;Germany&apos;,1,
+&apos;Slovakia&apos;,1,
+&apos;Italy&apos;,1,
+&apos;Spain&apos;,1,
+&apos;Sweden&apos;,1,
+&apos;Poland&apos;,1,
+&apos;Portugal&apos;,1,
+&apos;Bulgaria&apos;,1,
+    0
+)=1</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is EU?</label>
         <trackTrending>false</trackTrending>
@@ -2441,6 +2486,7 @@
     <fields>
         <fullName>VAT_Addr__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models.</inlineHelpText>
         <label>VAT Addr</label>
         <length>1000</length>
         <trackTrending>false</trackTrending>
@@ -2450,6 +2496,7 @@
     <fields>
         <fullName>VAT_Company__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models.</inlineHelpText>
         <label>Company</label>
         <length>255</length>
         <required>false</required>
@@ -2460,6 +2507,7 @@
     <fields>
         <fullName>VAT_ID__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>VAT information is not required for shipment of EC-US, EC-XS, EC-S, NX-700 or NX-1700. Please enter N/A in all fields if shipping these models.</inlineHelpText>
         <label>VAT ID</label>
         <length>80</length>
         <required>false</required>
@@ -2475,6 +2523,30 @@
     <pluralLabel>Quote Addresses</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>EU_VAT_ID_required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Is_EU__c ,
+ISBLANK( VAT_ID__c))</errorConditionFormula>
+        <errorDisplayField>VAT_ID__c</errorDisplayField>
+        <errorMessage>VAT ID is required for the selected country</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EU_VAT_address_required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Is_EU__c ,
+ISBLANK(VAT_Addr__c))</errorConditionFormula>
+        <errorDisplayField>VAT_Addr__c</errorDisplayField>
+        <errorMessage>VAT Address is required for the selected country.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EU_VAT_company_required</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Is_EU__c ,
+ISBLANK(  VAT_Company__c ))</errorConditionFormula>
+        <errorDisplayField>VAT_Company__c</errorDisplayField>
+        <errorMessage>Company is required for the selected country.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Final_DestinationFirstName_required</fullName>
         <active>true</active>

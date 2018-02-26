@@ -63,6 +63,10 @@
                 <behavior>Readonly</behavior>
                 <field>Is_EU__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Count_Hardware_Quote_Line__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

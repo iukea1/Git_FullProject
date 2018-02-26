@@ -1602,6 +1602,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteExtControllerTests</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>QuoteExtension</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -6464,6 +6468,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote_Address__c.Company__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote_Address__c.Count_Hardware_Quote_Line__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

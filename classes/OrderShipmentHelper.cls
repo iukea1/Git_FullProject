@@ -167,8 +167,9 @@ public with sharing class OrderShipmentHelper {
         public Id orderProductId {get;set;}
         public Order_Product_Item__c orderProductItem {get;set;}
         public Boolean isInserted {get;set;}
-        public Boolean multipleExistingAssetsFound {get;set;}
-        public List<Asset> multipleExistingAssets {get;set;}
+        //public Boolean multipleExistingAssetsFound {get;set;}
+        //public List<Asset> multipleExistingAssets {get;set;}
+        public Asset existingAsset {get;set;}
 
         public OrderProductItemWrapper(Order_Product_Item__c orderProductItem, Boolean isInserted, Id orderProductId){
             this.orderProductItem = orderProductItem;

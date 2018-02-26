@@ -98,13 +98,13 @@
 												<apex:param name="copySerialNumberOrderProductId" assignTo="{!copySerialNumberOrderProductId}" value="{!orderProductWrapper.orderProduct.Id}" />
 											</apex:commandLink>
 										</apex:facet>
-										<apex:inputField value="{!orderProductItemWrapper.orderProductItem.Serial_Number__c}" />
+										<apex:inputField value="{!orderProductItemWrapper.orderProductItem.Serial_Number__c}" onChange="updateSNchangeFlag();" />
 									</apex:column>
 
 									<apex:column styleClass="order-product-column-existing-asset" headerClass="order-product-header" rendered="{!existingAssetsExist}">
-										<apex:facet name="header">Existing Asset</apex:facet>
+										<apex:facet name="header">Existing Asset Status</apex:facet>
 										<apex:outputLink value="/{!orderProductItemWrapper.orderProductItem.Existing_Asset__c}" target="__blank" rendered="{!orderProductItemWrapper.orderProductItem.Existing_Asset__c != null}">
-											<apex:outputText value="{!orderProductItemWrapper.orderProductItem.Existing_Asset__c}"/>
+											<apex:outputText value="{!orderProductItemWrapper.existingAsset.Status}"/>
 										</apex:outputLink>
 
 									</apex:column>
@@ -168,6 +168,10 @@
 			</apex:pageBlock>
 		</div>
 
+		<!--<apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" style="opacity:0; position:absolute; left:9999px;" />-->
+		<apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" />
+
+
 		</apex:form>
 
 	</apex:outputPanel>
@@ -177,6 +181,26 @@
 		// 	var result = confirm('Are you sure you want to Save and Ship. If existing assets are found matching the provided serial numbers the existing asset will be overridden with new data. Data includes: Account, Product, etc.');
 		// 	return result;
 		// }
+
+		var serialNumberChange = false;
+
+		function updateSNchangeFlag(){
+			console.log('Update SN change flag function.');
+
+			var hasUpdatedSNsSinceSNsChecked = {!hasUpdatedSNsSinceSNsChecked};
+
+			console.log('Current Value: ' + hasUpdatedSNsSinceSNsChecked);
+
+			if(hasUpdatedSNsSinceSNsChecked == false){
+				// check hidden field that get submitted
+				checkHiddenCheckboxTrue();
+			}
+		}
+
+		function checkHiddenCheckboxTrue(){
+
+		}
+
 	</script>
 
 	

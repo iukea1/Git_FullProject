@@ -36,6 +36,8 @@ public with sharing class HardwareShipmentController {
     public Boolean existingAssetsExist {get;set;}
     public Boolean orderIsActivated {get;set;}
     public Boolean hasCheckedSerialNumbers {get;set;}
+    public Boolean hasUpdatedSNsSinceSNsChecked {get;set;}
+
 
     public HardwareShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
@@ -70,6 +72,7 @@ public with sharing class HardwareShipmentController {
         this.uploadedFile = false;
         this.existingAssetsExist = false;
         this.hasCheckedSerialNumbers = false;
+        this.hasUpdatedSNsSinceSNsChecked = false;
     }
 
     /**
@@ -95,11 +98,14 @@ public with sharing class HardwareShipmentController {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,WARNING_MESSAGE_EXISTING_ASSET);
             ApexPages.addMessage(myMsg);
             this.existingAssetsExist = true;
+            this.hasUpdatedSNsSinceSNsChecked = false;
         }
         else{
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM,SUCCESS_MESSAGE_NO_EXISTING_ASSETS);
             ApexPages.addMessage(myMsg);
         }
+
+        this.hasUpdatedSNsSinceSNsChecked = false;
 
         return null;
     }
@@ -189,6 +195,8 @@ public with sharing class HardwareShipmentController {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'An error occurred processing the file. Please check ensure the file is in the correct format.');
             ApexPages.addMessage(myMsg);
         }
+
+        checkSerialNumberStatus();
 
         return null;
     }
@@ -312,7 +320,7 @@ public with sharing class HardwareShipmentController {
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
             for(OrderShipmentHelper.OrderProductItemWrapper orderProductItem: orderProductWrapper.orderProductItems){
                 orderProductItem.orderProductItem.Existing_Asset__c = null;
-                orderProductItem.multipleExistingAssetsFound = false;
+                orderProductItem.existingAsset = null;
             }
         }      
     }
@@ -336,6 +344,7 @@ public with sharing class HardwareShipmentController {
                 System.debug('Existing asset found!');
 
                 orderProductItemWrapper.orderProductItem.Existing_Asset__c = existingAsset.Id;
+                orderProductItemWrapper.existingAsset = existingAsset;
                 assetsExistMatchingSerialNumbers = true;
             }
         }
@@ -359,7 +368,7 @@ public with sharing class HardwareShipmentController {
         List<Asset> existingAssets = new List<Asset>();
 
         try{
-            existingAssets = [SELECT Id, SerialNumber FROM Asset WHERE SerialNumber != null AND SerialNumber in :serialNumbers];
+            existingAssets = [SELECT Id, SerialNumber, Status FROM Asset WHERE SerialNumber != null AND SerialNumber in :serialNumbers];
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());

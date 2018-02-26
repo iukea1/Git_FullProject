@@ -113,6 +113,11 @@
                 <operation>equals</operation>
                 <valueField>$Source.Quote__c</valueField>
             </filterItems>
+            <filterItems>
+                <field>SBQQ__QuoteLine__c.SBQQ__Bundle__c</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>SBQQ__QuoteLine__c</referenceTo>
