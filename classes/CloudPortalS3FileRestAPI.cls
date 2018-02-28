@@ -2,10 +2,11 @@
 global with sharing class CloudPortalS3FileRestAPI {
     
     @HttpPost
-    global static void UploadFilesToCase(List<FileInfo> fileInfo)
+    global static FileData UploadFilesToCase(List<FileInfo> fileInfo)
     {
         RestRequest req = RestContext.request;
         RestResponse res=RestContext.response;
+        FileData objData= new FileData();
         List<Ensemblestorage__EnsembleFile__c> lstFilesToInsert= new List<Ensemblestorage__EnsembleFile__c>();
         
         
@@ -36,20 +37,20 @@ global with sharing class CloudPortalS3FileRestAPI {
                 if(lstFilesToInsert.size()>0)
                 {
                     insert lstFilesToInsert;
-                    res.responseBody = Blob.valueOf('Files are created successfully.'); 
-                    res.statusCode=200;
+                    objData.statusCode=200;
+                    objData.errorMessage= 'Files are created successfully.';
                 }
             }
             catch(Exception ex)
             {
                 insert new ErrorLog__c(Subject__c='Error in CPFileInfo API', Message__c=ex.getMessage() + '\r\n' + ex.getStackTraceString());
-                res.responseBody = Blob.valueOf(String.valueOf(ex));
-                res.statusCode=400;
+                objData.statusCode=400;
+                objData.errorMessage= ex.getMessage();
                 
             }
             
         }
-        
+        return objData;
     }
     
     private static void SetCaseIdsfromCaseNumber(List<FileInfo> lstFileRec)
@@ -95,7 +96,13 @@ global with sharing class CloudPortalS3FileRestAPI {
         global decimal fileSize{get;set;}    
         
     }
-    
+     global class FileData
+    {
+        global integer statusCode{get;set;}
+        global string errorMessage{get;set;}
+        
+        
+    }
     
     
 }

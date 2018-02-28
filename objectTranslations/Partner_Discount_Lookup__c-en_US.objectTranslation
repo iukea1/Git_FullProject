@@ -24,8 +24,8 @@
             <translation><!-- Ascent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>N/A</masterLabel>
-            <translation><!-- N/A --></translation>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Registered</masterLabel>

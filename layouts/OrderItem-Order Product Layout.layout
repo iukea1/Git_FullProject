@@ -36,14 +36,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Serial_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Part_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Prior_Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -121,6 +113,10 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
+        <fields>Part_Number__c</fields>
+        <fields>Serial_Number__c</fields>
+        <fields>Existing_Asset__c</fields>
         <relatedList>Order_Product_Item__c.Order_Product__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

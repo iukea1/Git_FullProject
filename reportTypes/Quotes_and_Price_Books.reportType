@@ -453,11 +453,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Opp_Partner_Sales_Rep__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Prepared_For_Name__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
@@ -488,16 +483,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ResellerAcctName__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ResellerName__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Reseller_Partner__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
@@ -514,11 +499,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Today__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>opportunityName__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
         <columns>
@@ -598,22 +578,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>X1_Year_Products__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>X1_Year_Projected_End_Date__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>X3_Year_Products__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>X5_Year_Products__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
         <columns>

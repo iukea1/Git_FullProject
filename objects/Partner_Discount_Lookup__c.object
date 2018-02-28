@@ -79,7 +79,7 @@
         <label>Partner Level</label>
         <picklist>
             <picklistValues>
-                <fullName>N/A</fullName>
+                <fullName>None</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

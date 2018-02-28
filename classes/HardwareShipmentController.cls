@@ -1,3 +1,18 @@
+/**************************************************************************************************************
+* Created By: drew.justus@simplus.com
+* Created Date: 02/01/2018
+* Description: Controller for the HardwareShipment.page. Controller provides functionality to parse a CSV file
+* and populate Order Product Items based on data in the file. Controller matches products in file (Req#) to
+* the Sales Order Number field on the order. Parse and population occurs on 'Apply Serial Numbers File' button.
+* 
+* The page also includes functionality to check serial numbers on existing assets in the system. If existing
+* assets are found, the Existing Asset lookup field is populated on the Order Product Item. 
+*
+* Page uses a new Order Product Item object to store Serial Numbers, Part Numbers, Statuses and existing assets
+* specific to each Order Product Quantity.
+*
+* @Test - HardwareShipmentControllerTest - 93%
+***************************************************************************************************************/
 public with sharing class HardwareShipmentController {
 
     public static final Integer CSV_COLUMN_SIZE = 26;
@@ -35,8 +50,19 @@ public with sharing class HardwareShipmentController {
     public Boolean uploadedFile {get;set;}
     public Boolean existingAssetsExist {get;set;}
     public Boolean orderIsActivated {get;set;}
+    public Boolean noPhysicalOrderProducts {get;set;}
     public Boolean hasCheckedSerialNumbers {get;set;}
     public Boolean hasUpdatedSNsSinceSNsChecked {get;set;}
+
+    public Boolean displayErrorOnly{
+        get{
+            if(orderIsActivated || noPhysicalOrderProducts){
+                return true;
+            }
+
+            return false;
+        }
+    }
 
 
     public HardwareShipmentController(ApexPages.StandardController stdController) {
@@ -57,6 +83,14 @@ public with sharing class HardwareShipmentController {
         List<OrderItem> orderProducts = OrderShipmentHelper.queryForOrderProducts(order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE);
         System.debug('Order Products: ' + orderProducts);
 
+        if(orderProducts == null || orderProducts.size() == 0){
+            System.debug('There are no order products with forecast category Physical.');
+            this.noPhysicalOrderProducts = true;
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products with forecast category physical.');
+            ApexPages.addMessage(myMsg);
+            return;
+        }
+
         List<Order_Product_Item__c> relatedOrderProductItems = OrderShipmentHelper.queryForOrderProductItems(orderProducts);
         System.debug('Related Order Product Items: ' + relatedOrderProductItems);
 
@@ -64,6 +98,8 @@ public with sharing class HardwareShipmentController {
         System.debug('Order product item wrappers: ' + orderProductItemWrappers);
 
         this.orderProductWrappers = OrderShipmentHelper.buildOrderProductWrappers(orderProducts, orderProductItemWrappers);
+        System.debug('Order product wrappers: ' + this.orderProductWrappers);
+
         this.csvFile = new Document();
         this.fileRowWrappers = new List<CSVFileRow>();
 
@@ -73,6 +109,18 @@ public with sharing class HardwareShipmentController {
         this.existingAssetsExist = false;
         this.hasCheckedSerialNumbers = false;
         this.hasUpdatedSNsSinceSNsChecked = false;
+        this.noPhysicalOrderProducts = false;
+
+        if(OrderShipmentHelper.hasInsertedOrderProductItems == true){
+            checkSerialNumberStatus();
+        }
+
+        Boolean result = OrderShipmentHelper.orderProductItemCountMatchesOrderProductQuantity(this.orderProductWrappers);
+
+        if(result == false){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Order Product quantity does not match order product items.');
+            ApexPages.addMessage(myMsg);
+        }
     }
 
     /**
@@ -115,43 +163,11 @@ public with sharing class HardwareShipmentController {
     }
 
     public PageReference save(){
-        //String errorValidating = validate();
+        List<Order_Product_Item__c> orderProductItemsToUpsert = OrderShipmentHelper.getOrderProductItemsFromWrappers(this.orderProductWrappers);
 
-        //if(!hasCheckedSerialNumbers){
-        //    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, WARNING_USE_CHECK_SERIAL_NUMBERS_BEFORE_SUBMIT);
-        //    ApexPages.addMessage(myMsg);
-        //    return null;
-        //}
-
-        //if(errorValidating != null){
-        //    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, errorValidating);
-        //    ApexPages.addMessage(myMsg);
-        //    return null;
-        //}
-
-        //Savepoint sp = Database.setSavepoint();
-
-        //String errorUpdating;
-
-        //errorUpdating = updateOrderProducts();
-        
-        //if(errorUpdating != null){
-        //    Database.rollback(sp);
-        //    //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order products. Error Details: ' + errorUpdating);
-        //    //ApexPages.addMessage(myMsg);
-        //    return null;
-        //}
-
-        //errorUpdating = updateOrder();
-
-        //if(errorUpdating != null){
-        //    Database.rollback(sp);
-        //    //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order. Error Details: ' + errorUpdating);
-        //    //ApexPages.addMessage(myMsg);
-        //    return null;
-        //}
-
-        //printAssetsCreatedInTheLast30Seconds();
+        if(orderProductItemsToUpsert.size() > 0){
+            upsert orderProductItemsToUpsert;
+        }        
 
         PageReference page = new PageReference('/' + order.Id);
         page.setRedirect(true);
@@ -197,6 +213,7 @@ public with sharing class HardwareShipmentController {
         }
 
         checkSerialNumberStatus();
+        this.csvFile = new Document();
 
         return null;
     }
@@ -233,84 +250,6 @@ public with sharing class HardwareShipmentController {
             }
         }
     }
-
-    /**
-    *  Save and Ship Helper Methods
-    */ 
-
-    //private void printAssetsCreatedInTheLast30Seconds(){
-    //    Datetime thirtySecondsAgo = System.now().addSeconds(-30);
-    //    List<Asset> assetsCreatedInLast30Seconds = new List<Asset>();
-
-
-    //    try{
-    //        assetsCreatedInLast30Seconds = [SELECT Id, Name FROM Asset WHERE CreatedDate >= :thirtySecondsAgo];
-    //    }
-    //    catch(QueryException qe){
-    //        System.debug(qe.getMessage());
-    //    }
-
-    //    System.debug('Assets Created In the Last 30 Seconds: ' + assetsCreatedInLast30Seconds);
-    //}
-
-    //private String validate(){
-    //    String errorValidating;
-
-    //    errorValidating = ensureCustomerOwnedStatusIfSNMatchesExistingAsset();
-
-    //    return errorValidating;
-    //}
-
-    //private String ensureCustomerOwnedStatusIfSNMatchesExistingAsset(){
-    //    String errorValidating;
-
-    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-    //        if(orderProductWrapper.existingAssetWrappers.size() > 0 && !STATUS_CUSTOMER_OWNED.equalsIgnoreCase(orderProductWrapper.orderProduct.SBCF_Status__c)){
-    //            return ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED;
-    //        }
-    //    }
-
-    //    return errorValidating;
-    //}
-
-    //private String updateOrderProducts(){
-    //    try{
-    //        List<OrderItem> orderProductsRelatedToWrappers = getOrderProductsOnWrappers();
-    //        update orderProductsRelatedToWrappers;
-    //    }
-    //    catch(DMlException e){
-    //        System.debug(e.getMessage());
-    //        return e.getMessage();
-    //    }
-
-    //    return null;
-    //}
-
-    //private String updateOrder(){
-    //    try{
-    //        this.order.Status = ACTIVATED_ORDER_STATUS;
-    //        this.order.Shipping_Status__c = SAVE_ORDER_SHIPPING_STATUS;
-    //        this.order.SBQQ__Contracted__c = true;
-    //        this.order.SBQQ__PriceCalcStatus__c = SAVE_PRICE_CALCULATION_STATUS;
-    //        update order;
-    //    }
-    //    catch(DMLException e){
-    //        System.debug(e.getMessage());
-    //        return e.getMessage();
-    //    }
-
-    //    return null;
-    //}
-
-    //private List<OrderItem> getOrderProductsOnWrappers(){
-    //    List<OrderItem> orderProductsRelatedToWrappers = new List<OrderItem>();
-
-    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
-    //        orderProductsRelatedToWrappers.add(orderProductWrapper.orderProduct);
-    //    }
-
-    //    return orderProductsRelatedToWrappers;
-    //}
 
     /**
     *  checkSericalNumberStatus Helper Methods
@@ -396,7 +335,6 @@ public with sharing class HardwareShipmentController {
         return serialNumbersFromWrappers;
     }
 
-
     /**
     *  defaultOrderItemStatus Helper Methods 
     */
@@ -452,7 +390,23 @@ public with sharing class HardwareShipmentController {
             List<CSVFileRow> csvRows = productCodeToCSVRows.get(orderProductWrapper.orderProduct.Product2.ProductCode);
 
             if(csvRows == null){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Order Product: ' + orderProductWrapper.orderProduct.Product2.Name + ' - No csv rows match product.');
+                ApexPages.addMessage(myMsg);
                 continue;
+            }
+            if(orderProductWrapper.orderProductItems == null){
+                continue;
+            }
+
+            if(csvRows.size() > orderProductWrapper.orderProductItems.size()){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, 
+                    'Order Product: ' + orderProductWrapper.orderProduct.Product2.Name + ' - ' + csvRows.size() + ' matching products in the file, but only ' + orderProductWrapper.orderProductItems.size() + ' on the order. ');
+                ApexPages.addMessage(myMsg);
+            }
+            else if(orderProductWrapper.orderProductItems.size() > csvRows.size()){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, 
+                    'Order Product: ' + orderProductWrapper.orderProduct.Product2.Name + ' - ' + orderProductWrapper.orderProductItems.size() + ' products on the order, but only ' + csvRows.size() + ' in the file.');
+                ApexPages.addMessage(myMsg);
             }
 
             for(Integer i=0; i<orderProductWrapper.orderProductItems.size() && i<csvRows.size(); i++){
@@ -486,7 +440,7 @@ public with sharing class HardwareShipmentController {
 
             if(row.column7 != null){
                 List<String> column7Strings = row.column7.split('_');
-                if(column7Strings != null && column7Strings.size() == 2){
+                if(column7Strings != null && column7Strings.size() >= 1){
                     productCode = column7Strings[0];
                 }
             }
@@ -655,5 +609,125 @@ public with sharing class HardwareShipmentController {
             this.column26 = rowElements[25];
         }   
     }
+
+
+    /**
+    *  Save and Ship Helper Methods -- old code. May be needed if we need to do a custom activation button.
+    */ 
+
+    /* Old save and ship when order was being activated.
+    public void saveAndShip(){
+        String errorValidating = validate();
+
+        if(!hasCheckedSerialNumbers){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, WARNING_USE_CHECK_SERIAL_NUMBERS_BEFORE_SUBMIT);
+            ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        if(errorValidating != null){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, errorValidating);
+            ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        Savepoint sp = Database.setSavepoint();
+
+        String errorUpdating;
+
+        errorUpdating = updateOrderProducts();
+        
+        if(errorUpdating != null){
+            Database.rollback(sp);
+            //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order products. Error Details: ' + errorUpdating);
+            //ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        errorUpdating = updateOrder();
+
+        if(errorUpdating != null){
+            Database.rollback(sp);
+            //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error updating order. Error Details: ' + errorUpdating);
+            //ApexPages.addMessage(myMsg);
+            return null;
+        }
+
+        printAssetsCreatedInTheLast30Seconds();
+    }*/
+
+    //private void printAssetsCreatedInTheLast30Seconds(){
+    //    Datetime thirtySecondsAgo = System.now().addSeconds(-30);
+    //    List<Asset> assetsCreatedInLast30Seconds = new List<Asset>();
+
+
+    //    try{
+    //        assetsCreatedInLast30Seconds = [SELECT Id, Name FROM Asset WHERE CreatedDate >= :thirtySecondsAgo];
+    //    }
+    //    catch(QueryException qe){
+    //        System.debug(qe.getMessage());
+    //    }
+
+    //    System.debug('Assets Created In the Last 30 Seconds: ' + assetsCreatedInLast30Seconds);
+    //}
+
+    //private String validate(){
+    //    String errorValidating;
+
+    //    errorValidating = ensureCustomerOwnedStatusIfSNMatchesExistingAsset();
+
+    //    return errorValidating;
+    //}
+
+    //private String ensureCustomerOwnedStatusIfSNMatchesExistingAsset(){
+    //    String errorValidating;
+
+    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+    //        if(orderProductWrapper.existingAssetWrappers.size() > 0 && !STATUS_CUSTOMER_OWNED.equalsIgnoreCase(orderProductWrapper.orderProduct.SBCF_Status__c)){
+    //            return ERROR_EXISTING_ASSET_WITH_STATUS_NOT_CUSTOMER_OWNED;
+    //        }
+    //    }
+
+    //    return errorValidating;
+    //}
+
+    //private String updateOrderProducts(){
+    //    try{
+    //        List<OrderItem> orderProductsRelatedToWrappers = getOrderProductsOnWrappers();
+    //        update orderProductsRelatedToWrappers;
+    //    }
+    //    catch(DMlException e){
+    //        System.debug(e.getMessage());
+    //        return e.getMessage();
+    //    }
+
+    //    return null;
+    //}
+
+    //private String updateOrder(){
+    //    try{
+    //        this.order.Status = ACTIVATED_ORDER_STATUS;
+    //        this.order.Shipping_Status__c = SAVE_ORDER_SHIPPING_STATUS;
+    //        this.order.SBQQ__Contracted__c = true;
+    //        this.order.SBQQ__PriceCalcStatus__c = SAVE_PRICE_CALCULATION_STATUS;
+    //        update order;
+    //    }
+    //    catch(DMLException e){
+    //        System.debug(e.getMessage());
+    //        return e.getMessage();
+    //    }
+
+    //    return null;
+    //}
+
+    //private List<OrderItem> getOrderProductsOnWrappers(){
+    //    List<OrderItem> orderProductsRelatedToWrappers = new List<OrderItem>();
+
+    //    for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
+    //        orderProductsRelatedToWrappers.add(orderProductWrapper.orderProduct);
+    //    }
+
+    //    return orderProductsRelatedToWrappers;
+    //}
 
 }

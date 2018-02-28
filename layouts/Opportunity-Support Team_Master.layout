@@ -80,6 +80,10 @@
                 <behavior>Edit</behavior>
                 <field>SP_OpEx_Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Opportunity__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

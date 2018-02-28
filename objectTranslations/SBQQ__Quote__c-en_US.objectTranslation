@@ -84,6 +84,10 @@
             <section>Discount Information</section>
         </sections>
         <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
@@ -115,6 +119,10 @@
             <section>Discount Information</section>
         </sections>
         <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
@@ -138,6 +146,10 @@
             <section>Discount Information</section>
         </sections>
         <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
@@ -159,6 +171,10 @@
         <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
         </sections>
         <sections>
             <label><!-- Quote Options --></label>

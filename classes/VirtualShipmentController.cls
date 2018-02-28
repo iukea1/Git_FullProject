@@ -20,7 +20,7 @@ public with sharing class VirtualShipmentController {
             return;
         }
 
-        this.orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id);
+        //this.orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id);
     }
 
     public PageReference activateOrder(){

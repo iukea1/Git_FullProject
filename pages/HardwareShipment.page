@@ -1,9 +1,11 @@
-<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="HardwareShipmentController" tabStyle="Order">
+<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="HardwareShipmentController" tabStyle="Order" Id="Page">
 	
 	<style>
 		#FileUploadContent {text-align: center; width: 100%;}
 
 		.order-product-header {text-align:center;}
+
+		.order-product-top-level-value {vertical-align: text-top !important; padding-top:15px !important; font-weight:bold;}
 
 		.order-product-column {text-align:center;}
 
@@ -26,7 +28,7 @@
 	</style>
 
 	
-	<apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
+	<apex:outputPanel Id="ErrorPanel" rendered="{!displayErrorOnly}">
 
 		<apex:form >
 			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
@@ -38,18 +40,18 @@
 
 	</apex:outputPanel>
 
-	<apex:outputPanel Id="NonActivatedOrder" rendered="{!orderIsActivated == false}">
+	<apex:outputPanel Id="HardwareShipmentPanel" rendered="{!displayErrorOnly == false}">
 
 		<apex:pageMessages />
 
 		<apex:sectionHeader title="Apply Serial Numbers - Order {!Order.OrderNumber}" />
 
-		<apex:form >
+		<apex:form Id="Form">
 		<apex:pageblock mode="maindetail">
 			<apex:pageBlockButtons location="top">
 				<apex:commandButton action="{!applyCSVFile}" value="Apply Serial Numbers File" />
 				<apex:commandButton action="{!checkSerialNumberStatus}" value="Check Serial Numbers Status"/>
-				<apex:commandButton action="{!save}" value="Save" />
+				<apex:commandButton action="{!save}" value="Save" onclick="return validateSave();"/>
 				<apex:commandButton action="{!returnToOrder}" value="Cancel" onclick="return confirm('Are you sure you want to cancel. All unsaved changes will be lost.');"/>
 			</apex:pageBlockButtons>
 			<apex:pageBlockSection >
@@ -65,16 +67,16 @@
 				<apex:pageBlockSection columns="1">
 					<apex:pageBlockSectionItem >
 						<apex:pageBlockTable value="{!orderProductWrappers}" var="orderProductWrapper" Id="OrderProductTable">
-							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+							<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
 								<apex:facet name="header">Product Name</apex:facet>
-								<apex:outputLink value="/{!orderProductWrapper.orderProduct.Product2}" target="__blank">
+								<apex:outputLink value="/{!orderProductWrapper.orderProduct.Product2}" target="__blank" >
 									<apex:outputText value="{!orderProductWrapper.orderProduct.Product2.Name}"/>
 								</apex:outputLink>
 							</apex:column>
 
-							<apex:column value="{!orderProductWrapper.orderProduct.Product2.ProductCode}" styleClass="order-product-column" headerClass="order-product-header" />
+							<apex:column value="{!orderProductWrapper.orderProduct.Product2.ProductCode}" styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" />
 
-							<apex:column styleClass="order-product-column" headerClass="order-product-header">
+							<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
 								<apex:facet name="header">Quantity</apex:facet>
 								<apex:outputField value="{!orderProductWrapper.orderProduct.Quantity}" />
 							</apex:column>
@@ -168,8 +170,8 @@
 			</apex:pageBlock>
 		</div>
 
-		<!--<apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" style="opacity:0; position:absolute; left:9999px;" />-->
-		<apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" />
+		<apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" style="opacity:0; position:absolute; left:9999px;" />
+		<!-- <apex:inputCheckbox id="hiddenChangedSNsCheckbox" value="{!hasUpdatedSNsSinceSNsChecked}" /> -->
 
 
 		</apex:form>
@@ -178,9 +180,27 @@
 
 	<script>
 		// function confirmOverwriteExistingAssets(){
-		// 	var result = confirm('Are you sure you want to Save and Ship. If existing assets are found matching the provided serial numbers the existing asset will be overridden with new data. Data includes: Account, Product, etc.');
+		// 	var result = confirm('Are you sure you want to Save. Existing assets will be overridden with new data upon activation. Data includes: Account, Product, etc.');
 		// 	return result;
 		// }
+
+		function validateSave(){
+			var checkbox = document.getElementById('{!$Component.Page.Form.hiddenChangedSNsCheckbox}');
+			var hasCheckedSNs = {!hasCheckedSerialNumbers};
+
+			console.log('checkbox checked? ' + checkbox.checked);
+			console.log('hasCheckedSNs: ' + hasCheckedSNs);
+
+			if(checkbox.checked == true || hasCheckedSNs == false){
+				alert('You must Check Serial Numbers status before saving.');
+				return false;
+			}
+
+			if({!existingAssetsExist} == true){
+				var result = confirm('Are you sure you want to save. Existing assets will be overwritten with new data upon activation of the order. Data includes: Account, Product, etc.');
+				return result;
+			}		
+		}
 
 		var serialNumberChange = false;
 
@@ -198,7 +218,8 @@
 		}
 
 		function checkHiddenCheckboxTrue(){
-
+			var checkbox = document.getElementById('{!$Component.Page.Form.hiddenChangedSNsCheckbox}');
+			checkbox.checked = true;
 		}
 
 	</script>

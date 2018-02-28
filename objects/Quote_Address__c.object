@@ -2395,7 +2395,6 @@
                 <fullName>Quebec</fullName>
                 <default>false</default>
                 <controllingFieldValues>Canada</controllingFieldValues>
-                <controllingFieldValues>United States</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Rhode Island</fullName>
