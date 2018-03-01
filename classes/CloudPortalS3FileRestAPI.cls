@@ -38,7 +38,7 @@ global with sharing class CloudPortalS3FileRestAPI {
                 {
                     insert lstFilesToInsert;
                     objData.statusCode=200;
-                    objData.errorMessage= 'Files are created successfully.';
+                    objData.errorMessage= '';
                 }
             }
             catch(Exception ex)

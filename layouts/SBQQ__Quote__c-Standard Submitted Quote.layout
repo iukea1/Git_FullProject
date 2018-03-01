@@ -3,6 +3,7 @@
     <customButtons>SBQQ__IncludeDocument</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>
     <customButtons>Recall_Quote_Approvals</customButtons>
+    <customButtons>Preview_Approvals</customButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
