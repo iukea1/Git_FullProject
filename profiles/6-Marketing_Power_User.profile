@@ -9150,7 +9150,7 @@
         <layout>MultiLinkContact_del__c-MultiLinkContact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Generic_Master</layout>
+        <layout>Opportunity-Marketing_Master</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>

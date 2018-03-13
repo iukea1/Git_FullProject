@@ -109,6 +109,14 @@
                 <behavior>Readonly</behavior>
                 <field>Print_EC_Add_On_Order_Language__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quote_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>invalidECCombinationFlag__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -80,14 +80,6 @@
                 <field>Registered__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Additional_Discount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Distributor_Margin__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Hw_Sum_Qty_QL__c</field>
             </layoutItems>
@@ -116,12 +108,12 @@
                 <field>Preexisting_EC_Assets__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Print_EC_Add_On_Order_Language__c</field>
+                <behavior>Edit</behavior>
+                <field>Quote_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RMS_VP_Sales_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>invalidECCombinationFlag__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -140,6 +132,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__PriceBook__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -203,14 +199,18 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Discount Information</label>
+        <label>Pricing Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Discount__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SBQQ__ListAmount__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SBQQ__NetAmount__c</field>
@@ -333,6 +333,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__WatermarkShown__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Sale_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -340,8 +344,28 @@
                 <field>SBQQ__QuoteTemplateId__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Print_Special_Instructions__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Sale_Type__c</field>
+                <field>Print_List_Price__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Print_Minimum_Program_Discount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Print_Distributor_Discount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Print_Reseller_Discount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Print_EC_Add_On_Order_Language__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -453,16 +477,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Country__c</fields>
-        <fields>Is_EU__c</fields>
-        <relatedList>Quote_Address__c.Quote__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Quote_Line_Address__c.Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

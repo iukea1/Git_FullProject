@@ -106,7 +106,7 @@ private class HardwareShipmentControllerTest {
 		Test.stopTest();
 	}
 
-	@isTest static void whenTestAfterOrderProductsSaved(){
+	@isTest static void whenTestWithExistingOrderProductItems(){
 		Order order = [SELECT Id, SBQQ__Quote__c FROM Order LIMIT 1];
 
 		Product2 product = new Product2();
@@ -153,6 +153,13 @@ private class HardwareShipmentControllerTest {
 		orderProduct.UnitPrice = 1000;
 		insert orderProduct;
 
+		Order_Product_Item__c testOrderProductItem = new Order_Product_Item__c();
+		testOrderProductItem.Order_Product__c = orderProduct.Id;
+		testOrderProductItem.Serial_Number__c = 'testSN';
+		testOrderProductItem.Part_Number__c = 'test PN';
+		testOrderProductItem.Status__c = 'Customer Owned';
+		insert testOrderProductItem;
+
 		Test.startTest();
 			ApexPages.currentPage().getParameters().put('id', order.id);
 			ApexPages.StandardController stdOrder = new ApexPages.StandardController(order);
@@ -167,7 +174,20 @@ private class HardwareShipmentControllerTest {
 
 			controller.save();
 
-			controller = new HardwareShipmentController(stdOrder);
+			//controller = new HardwareShipmentController(stdOrder);
+
+			// When test OrderShipmentHelper component
+
+			//List<Order_Product_Item__c> existingOrderProductItems = new List<Order_Product_Item__c>();
+			
+			//Order_Product_Item__c testOrderProductItem = new Order_Product_Item__c();
+			//testOrderProductItem.Order_Product__c = orderProduct.Id;
+			//testOrderProductItem.Serial_Number__c = 'testSN';
+			//insert testOrderProductItem;
+
+			//existingOrderProductItems.add(testOrderProductItem);
+
+			//OrderShipmentHelper.buildOrderProductItemWrappersFromExistingOrderProductItems(existingOrderProductItems);
 
 		Test.stopTest();
 	}

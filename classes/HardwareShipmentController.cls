@@ -11,6 +11,11 @@
 * Page uses a new Order Product Item object to store Serial Numbers, Part Numbers, Statuses and existing assets
 * specific to each Order Product Quantity.
 *
+* Updated By: drew.justus@simplus.com
+* Update Date: 03/05/2018
+* Update Description: It was requested on Demo 03/02/2018 that we alert the user if two of the same serial
+* numbers exist on the order. Made modification to perform this action. 
+*
 * @Test - HardwareShipmentControllerTest - 93%
 ***************************************************************************************************************/
 public with sharing class HardwareShipmentController {
@@ -155,6 +160,8 @@ public with sharing class HardwareShipmentController {
 
         this.hasUpdatedSNsSinceSNsChecked = false;
 
+        addPageMessagesForDuplicateSNsOnOrder();
+
         return null;
     }
 
@@ -254,6 +261,37 @@ public with sharing class HardwareShipmentController {
     /**
     *  checkSericalNumberStatus Helper Methods
     */
+
+    // Update - 3/05/2018 - Add page messages if duplicate serial numbers exist on order
+    private void addPageMessagesForDuplicateSNsOnOrder(){
+        Set<String> serialNumbersOnOrder = new Set<String>();
+        Set<String> duplicateSerialNumbers = new Set<String>();
+
+        for(OrderShipmentHelper.OrderProductWrapper orderProduct: this.orderProductWrappers){            
+
+            if(orderProduct.orderProductItems == null){
+                continue;
+            }
+
+            for(OrderShipmentHelper.OrderProductItemWrapper orderProductItem: orderProduct.orderProductItems){
+                if(orderProductItem.orderProductItem != null && orderProductItem.orderProductItem.Serial_Number__c != null){
+                    Boolean isDuplicateSN = serialNumbersOnOrder.contains(orderProductItem.orderProductItem.Serial_Number__c);
+
+                    if(isDuplicateSN){
+                        duplicateSerialNumbers.add(orderProductItem.orderProductItem.Serial_Number__c);                      
+                    }
+                    else{
+                        serialNumbersOnOrder.add(orderProductItem.orderProductItem.Serial_Number__c);
+                    }
+                }
+            }
+
+            for(String duplicateSN: duplicateSerialNumbers){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Duplicate Serial Number: ' + duplicateSN);
+                ApexPages.addMessage(myMsg);
+            }
+        }
+    }
 
     private void resetExistingAssets(){
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){

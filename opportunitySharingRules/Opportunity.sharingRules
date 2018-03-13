@@ -278,7 +278,7 @@
             <allInternalUsers></allInternalUsers>
         </sharedFrom>
         <name>Share Opps with Marketing Team</name>
-        <opportunityAccessLevel>Read</opportunityAccessLevel>
+        <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </ownerRules>
     <ownerRules>
         <fullName>Share_Opps_with_Operations_Team</fullName>

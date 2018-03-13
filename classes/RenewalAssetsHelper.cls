@@ -527,6 +527,7 @@ public  class RenewalAssetsHelper
                     ccs.add(contactPerson.Email);
                 }
                 ccs.add('notifications@silver-peak.com');
+                ccs.add('RenewalsTeam@silver-peak.com');
                 Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                 email.setTemplateId(template[0].Id);
                 email.setTargetObjectId(purchaseOrder.Email_Contact__c);
@@ -559,6 +560,7 @@ public  class RenewalAssetsHelper
                     ccs.add(contactPerson.Email);
                 }
                 ccs.add('notifications@silver-peak.com');
+                ccs.add('RenewalsTeam@silver-peak.com');
                 Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                 email.setTemplateId(template[0].Id);
                 email.setTargetObjectId(purchaseOrder.Email_Contact__c);
@@ -585,6 +587,7 @@ public  class RenewalAssetsHelper
             {
                 List<String> ccs = getAccountTeam(purchaseOrder.Opportunity__r.AccountId);
                 ccs.add('notifications@silver-peak.com');
+                ccs.add('RenewalsTeam@silver-peak.com');
                 Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
                 email.setTemplateId(template[0].Id);
                 email.setTargetObjectId(purchaseOrder.Email_Contact__c);

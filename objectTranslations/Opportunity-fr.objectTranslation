@@ -436,6 +436,53 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Marketing_Master</layout>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Non PRM- Deal Reg Info --></label>
+            <section>Non PRM- Deal Reg Info</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
+            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Qualification Information --></label>
+            <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win/Loss Detail --></label>
+            <section>Win/Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>New Opportunity Page Layout 020607</layout>
         <sections>
             <label><!-- Evaluation Summary --></label>

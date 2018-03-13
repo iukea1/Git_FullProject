@@ -44,7 +44,7 @@ public class SendShipmentFulfilmentEmailController
     private boolean SendShipmentEmail(string emailTemplate,List<Shipment__c> shipments)
     {
         List<String> ccs = new List<string>();
-        List<EmailTemplate> template = [select Id from EmailTemplate where Name=:emailTemplate limit 1];
+        List<EmailTemplate> template = [select Id, Name from EmailTemplate where Name=:emailTemplate limit 1];
         if(template.size() > 0)
         {
             
@@ -57,6 +57,10 @@ public class SendShipmentFulfilmentEmailController
             if(accTeamMember!=null && accTeamMember.size()>0 )
             {
                 ccs.addAll(accTeamMember);
+            }
+            if(template[0].Name =='EdgeConnect Fulfillment Email' || template[0].Name =='EdgeConnect Add-On Email')
+            {
+                ccs.add('RenewalsTeam@silver-peak.com');
             }
             
             ccs.add('notifications@silver-peak.com');

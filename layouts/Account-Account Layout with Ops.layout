@@ -490,6 +490,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__CoTermedContractsCombined__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Distributor_Margin__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

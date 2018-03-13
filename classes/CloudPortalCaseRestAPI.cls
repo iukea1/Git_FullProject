@@ -28,18 +28,19 @@ global with sharing class CloudPortalCaseRestAPI {
                 {
                     acctId=existAsset.AccountId;
                 }
-                 if(acctId==null)
-                 {
-                     string errorMessage= string.format('Unable to create case as there is no account with salesforce ID={0} and serial number={1}', new String[]{caseInfo.salesforceId,caseInfo.serialNumber});
-                     throw new CustomException(errorMessage);
-                 }
-                
-                
                 if(caseInfo.emailAddress!=null)
                 {
                     existContact=findContactByEmail(caseInfo.emailAddress);
+                    if(existContact!=null && existContact.AccountID!=null)
+                    {
+                        acctId=existContact.AccountId;
+                    }
                 }
-                
+                 if(acctId==null)
+                 {
+                     string errorMessage= string.format('Unable to create case as there is no account with salesforce ID={0} and serial number={1} and contact email={2}', new String[]{caseInfo.salesforceId,caseInfo.serialNumber,caseInfo.emailAddress});
+                     throw new CustomException(errorMessage);
+                 }
                 if(existContact==null)
                 {                    
                     if(acctId!=null)
@@ -161,7 +162,7 @@ return lstCases;
     {
         if(String.isNotBlank(email) && email.length() >= 2)
         {
-            List<List<Contact>> result = [find :email In EMAIL FIELDS RETURNING Contact(Id, Name) limit 1];
+            List<List<Contact>> result = [find :email In EMAIL FIELDS RETURNING Contact(Id, Name,AccountId) limit 1];
             //Contact[] contacts = [select Id, Name from contact where Email=:email or Second_Email__c=:email or Third_Email__c=:email limit 1];
             if(result[0].size() > 0)
             {
