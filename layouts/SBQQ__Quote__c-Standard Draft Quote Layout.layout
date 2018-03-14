@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>invalidECCombinationFlag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approval_Level_Triggered__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -164,6 +168,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Blended_Margin__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__CustomerDiscount__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -477,6 +485,16 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>Contract.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

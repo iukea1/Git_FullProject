@@ -11,11 +11,7 @@
 *     are fully defined.
 *
 **********************************************************************/
-trigger SubscriptionTrigger on SBQQ__Subscription__c (after insert) {
+trigger SubscriptionTrigger on SBQQ__Subscription__c (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
 
-	if(Trigger.isAfter){
-		if(Trigger.isInsert){
-			SubscriptionTriggerHandler.populateRelatedAssetSubscriptionLookups(Trigger.new);
-		}
-	}
+	 TriggerDispatcher.Run(new SubscriptionTriggerHandler());
 }

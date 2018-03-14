@@ -226,6 +226,18 @@
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>SBQQ__Subscription__c</referenceTo>
+        <relationshipLabel>Licenses</relationshipLabel>
+        <relationshipName>Licenses</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <label>License</label>
     <listViews>
         <fullName>All</fullName>

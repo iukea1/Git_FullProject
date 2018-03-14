@@ -4027,6 +4027,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>License__c.Subscription__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MDF_Request__c.Account_Activity_PoC_Mobile_Phone__c</field>
         <readable>false</readable>
     </fieldPermissions>

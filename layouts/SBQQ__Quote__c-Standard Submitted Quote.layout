@@ -124,6 +124,10 @@
                 <behavior>Edit</behavior>
                 <field>invalidECCombinationFlag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approval_Level_Triggered__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -394,7 +394,6 @@ public with sharing class NewVirtualShipmentController
         {
             for(VirtualAssetManager.VirtualAsset virtualAsset : updateAssetLines)
             {
-                
                 virtualAsset.Asset.Evaluation_End_Date__c = null;
                 nullifyEvalUpdatedAssets.add(virtualAsset.Asset);
             }
