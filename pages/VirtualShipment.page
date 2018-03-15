@@ -26,19 +26,13 @@
 		.copy-sn-textarea { width: 100%; min-height: 150px; }
 
 	</style>
-    
+    <apex:pageMessages id="showmsg"></apex:pageMessages>
 	<apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
-
 		<apex:form >
 			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
 		</apex:form>
-
 		<br/>
-
-		<apex:pageMessages />
-
 	</apex:outputPanel>
-
 	<apex:outputPanel Id="NonActivatedOrder" rendered="{!NOT(orderIsActivated)}">
 
 		<apex:form >
@@ -48,7 +42,7 @@
 		<apex:pageblock mode="maindetail">
 			<apex:pageBlockButtons location="top">
 				<!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
-                <apex:commandButton action="{!saveOrder}" value="Save"/>
+                <apex:commandButton action="{!saveOrder}" value="Save" rerender="showmsg"/>
 				<apex:commandButton action="{!returnToOrder}" value="Cancel"/>
 			</apex:pageBlockButtons>
 		</apex:pageblock>

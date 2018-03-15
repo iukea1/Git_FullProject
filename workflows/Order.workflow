@@ -15,6 +15,15 @@
         <template>unfiled$public/Welcome_Email_Test</template>
     </alerts>
     <fieldUpdates>
+        <fullName>SBCF_Set_Contracted_to_True</fullName>
+        <field>SBQQ__Contracted__c</field>
+        <literalValue>1</literalValue>
+        <name>SBCF Set Contracted to True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SBCF_Set_Contracting_Method</fullName>
         <field>SBQQ__ContractingMethod__c</field>
         <literalValue>Single Contract</literalValue>
@@ -23,6 +32,20 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>SBCF Set Contracted to True</fullName>
+        <actions>
+            <name>SBCF_Set_Contracted_to_True</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>SBCF Set Contracting Method</fullName>
         <actions>

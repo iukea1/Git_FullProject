@@ -10,15 +10,14 @@
 public with sharing class OrderShipmentHelper {
 
     public static final Set<String> PRODUCT_CATEGORY_HARDWARE = new Set<String>{ 'Physical' };
-    public static final Set<String> ALL_PRODUCT_CATEGORY_HARDWARE = new Set<String>{'Virtual','Physical', 'Maintenance Virtual', 'Maintenance Virtual', 'MR Virtual', 'MR Physical'};
-
+    public static final Set<String> PRODUCT_CATEGORY_HARDWARE_VIRTUAL = new Set<String>{'Virtual', 'Maintenance Virtual', 'Maintenance Virtual', 'MR Virtual'};
     public static Boolean hasInsertedOrderProductItems = false;
-	
+    
     /*
     *   If order product items exist, creates order product item wrappers from existing order product item wrappers.
     *   If order product items do not exist, creates one order product wrapper for each Order Product quantity
     */
-	public static List<OrderProductItemWrapper> buildOrderProductItemWrappers(List<Order_Product_Item__c> existingOrderProductItems, List<OrderItem> orderProducts){
+    public static List<OrderProductItemWrapper> buildOrderProductItemWrappers(List<Order_Product_Item__c> existingOrderProductItems, List<OrderItem> orderProducts){
         List<OrderProductItemWrapper> orderProductItemWrappers = new List<OrderProductItemWrapper>();
 
         System.debug('Build Order Product Item Wrappers.');
@@ -80,16 +79,48 @@ public with sharing class OrderShipmentHelper {
 
     public static List<OrderItem> queryForOrderProducts(String orderId, Set<String> productForecastCategories){
         List<OrderItem> orderProducts = new List<OrderItem>();
-
+        
         try{
             orderProducts = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
                              FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+                             
+            System.debug('-------->OrderItemFromHelper<------------- ' + orderProducts);     
+        
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());
         }
 
         return orderProducts;
+    }
+    
+    public static Boolean queryForOrderProductsVirtualShipment(String orderId, Set<String> productForecastCategories){
+        List<OrderItem> orderProductsList = new List<OrderItem>();
+        boolean isECProducts = false;
+        Boolean isDuplicateECProd = false;
+        try{
+            orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
+                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+            
+            System.debug('Order product list  ' + orderProductsList);
+            for(OrderItem oi: orderProductsList){
+                System.debug('Orderitem prod name' + oi.Product2.Name);
+                if(oi.Product2.Name.startsWith('EC') && isECProducts == False){
+                    isECProducts = true;
+                    System.debug('First EC' + isECProducts);
+                }
+                else if(oi.Product2.Name.startsWith('EC-ORCH-AAS') && isECProducts == true){
+                    isDuplicateECProd = true;
+                    System.debug('Second EC ' + isDuplicateECProd);
+                }
+                
+            }
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+
+        return isDuplicateECProd;
     }
 
     public static List<String> getAllOrderFieldsAPINames(){
@@ -157,7 +188,7 @@ public with sharing class OrderShipmentHelper {
 
         return false;
     }
-   	
+    
     public static Set<Id> getOrderProductIds(List<OrderItem> orderProducts){
         Set<Id> orderProductIds = new Set<Id>();
 

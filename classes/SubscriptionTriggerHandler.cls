@@ -43,7 +43,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 SBQQ__Subscription__c newSub= (SBQQ__Subscription__c)newItems.get(subId);
                 if(newSub.Forecast_Category__c=='Virtual')
                 {
-                    lstLicense.add(new License__c(Subscription__c=subId,Start_Date__c=newSub.SBQQ__SubscriptionStartDate__c,License_Expiration__c=newSub.SBQQ__SubscriptionEndDate__c,Quantity__c=newSub.SBQQ__Quantity__c,SerialNumber__c=newSub.SerialNumber__c,Model__c=newSub.Product_Model__c));
+                    lstLicense.add(new License__c(Subscription__c=subId,Start_Date__c=newSub.SBQQ__SubscriptionStartDate__c,License_Expiration__c=newSub.SBQQ__SubscriptionEndDate__c,AssetId__c='02i0x0000011Oxo',Quantity__c=newSub.SBQQ__Quantity__c,SerialNumber__c=newSub.SerialNumber__c,Model__c=newSub.Product_Model__c));
                 }
             }
             InsertAndEncryptLicenses(lstLicense);
@@ -61,13 +61,44 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     {
     }
     
-    private static void InsertAndEncryptLicenses( List<License__c> lstLicenses)
+    private  void InsertAndEncryptLicenses( List<License__c> lstLicenses)
     {
+        List<Id> licIds= new List<Id>();
         if(lstLicenses!=null && lstLicenses.size()>0)
         {
             insert lstLicenses;
-            
-            
+            for(License__c obj:lstLicenses)
+            {
+                licIds.add(obj.Id);
+            }
+            EncryptLicenses(licIds);
+        }
+    }
+    
+     private void EncryptLicenses(List<Id> licenseIds)
+    {
+        Set<Id> gmsLicenseIds = new Set<Id>();
+        for(License__c gmsLicense : [select Id from License__c where Id in :licenseIds and (Subscription__r.SBQQ__Product__r.Model__c='GX-V' OR Subscription__r.SBQQ__Product__r.Product_Category__c = 'GMS')])
+        {
+            gmsLicenseIds.add(gmsLicense.Id);
+        }
+        if(gmsLicenseIds.size() > 0)
+        {
+            LicenseEncryptionJob job = new LicenseEncryptionJob();
+            job.LicenseIds = new List<Id>(gmsLicenseIds);
+            System.enqueueJob(job);
+        }
+        
+        Set<Id> virtualLicenseIds = new Set<Id>();
+        for(License__c virtualLicense : [select Id from License__c where Id in :licenseIds and Subscription__r.SBQQ__Product__r.Model__c!='GX-V' And Subscription__r.SBQQ__Product__r.Product_Category__c !='GMS'])
+        {
+            virtualLicenseIds.add(virtualLicense.Id);
+        }
+        if(virtualLicenseIds.size() > 0)
+        {
+            LicenseEncryptionJob job = new LicenseEncryptionJob();
+            job.LicenseIds = new List<Id>(virtualLicenseIds);
+            System.enqueueJob(job);
         }
     }
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
