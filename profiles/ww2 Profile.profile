@@ -7666,6 +7666,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>RMA__c.Trigger_Time_05__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>RMA__c.Type__c</field>
         <readable>true</readable>

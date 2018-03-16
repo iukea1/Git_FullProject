@@ -1,6 +1,7 @@
 public with sharing class VirtualShipmentController {
 
     public Order order {get;set;}
+    public List<Order> orderList {get;set;}
     public List<OrderItem> orderProducts {get;set;} 
     public Boolean isECProducts;
     public Boolean isDuplicateECProd;
@@ -26,61 +27,20 @@ public with sharing class VirtualShipmentController {
         System.debug('Order Products: ' + orderProducts);
         
         if(orderProducts == null || orderProducts.size() == 0){
-            System.debug('There are no order products available.');
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products available.');
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products available where the forecast category contains virtual.');
             ApexPages.addMessage(myMsg);
             return;
         }
-       
-        //String relatedQuoteStatus = getRelatedQuote();
-        /*SBQQ__Quote__c quote = queryForRelatedQuote();
-            if(quote.SBCF_Evaluation_Quote__c == False){
-                for(OrderItem op: orderProducts){
-                    
-                }
-            }
-        */
     }
     
-    // Helper Method
-
-    private SBQQ__Quote__c queryForRelatedQuote(){
-        
-        SBQQ__Quote__c relatedQuote;
-
-        if(this.order.SBQQ__Quote__c == null){
-            // return null
-            System.debug('SBQQ__Quote__c lookup field null');
-            return relatedQuote;
-        }
-        
-        try{
-            relatedQuote = [SELECT SBCF_Evaluation_Quote__c, RecordType.Name FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c LIMIT 1];
-        }   
-        catch(QueryException qe){
-            System.debug(qe.getMessage());
-        }
-
-        return relatedQuote;
-    }
+    
     
     public PageReference saveOrder(){
         
         //check if order records related quote has the boolean field 'SBCF_Evaluation_Quote__c' equal to FALSE
-        //query order items including the orderProducts in constructor
-        
-        System.debug('Order Id ----> ' + this.order.id);
-       
-        List<OrderItem> orderProductList = OrderShipmentHelper.queryForOrderProducts(this.order.id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
-        System.debug('order products test -------@@@@  ' + orderProductList);
-        
-      
-        for(OrderItem oi: orderProducts){
-            System.debug('------->Product Name<--------  ' + oi);
-            //oi.Product2.Name = 'Sample ';
-        }
-        
-        Order orderRec = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c FROM Order WHERE Id =: this.order.Id LIMIT 1];
+        //orderRecs will be the storage of the orders that has been activated. 
+        List<Order> orderRecs = new List<Order>();
+        Order orderRec = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: this.order.Id LIMIT 1];      
         if(orderRec.SBQQ__Quote__r.SBCF_Evaluation_Quote__c == False){
             isDuplicateECProd = OrderShipmentHelper.queryForOrderProductsVirtualShipment(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
             System.debug('isDuplicateECProd' + isDuplicateECProd);
@@ -97,12 +57,33 @@ public with sharing class VirtualShipmentController {
             if(orderProducts.size() > 0){
                 update orderProducts;
             }
-            // query order record
-            // update the field to be activated 
+        	//query the order record           
+            // update the field to be activated
+            orderRec.SBQQ__Contracted__c = true;
+            orderRec.Status = 'Activated'; 
+            orderRecs.add(orderRec);
+            if(orderRecs.size()>0){
+                update orderRecs;
+            }
+            
+            
             // query contracts under the order (parent)
-            // loop the contracts to see all the assets and subscription
+            Set<Id> contractIds = new Set<Id>();
+            List<Contract> contractList = [SELECT Id, Name, SBQQ__Order__c, SBQQ__Order__r.Status, SBQQ__Order__r.SBQQ__Contracted__c FROM Contract WHERE SBQQ__Order__c =: this.order.Id];
+            for(Contract cont: contractList){
+            	 contractIds.add(cont.Id);
+            } 
+			List<SBQQ__Subscription__c> subsList = [SELECT Id, Name, SBQQ__Contract__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: contractIds];
+			
+            
+            Set<id> accountIds = new Set<Id>();
+            List<Asset> assetlist = [SELECT Id, Name, License_Key__c, AccountId FROM Asset WHERE AccountId IN (SELECT AccountId FROM Order WHERE Id =: this.order.Id)];
+            //List<Account> accList = [SELECT Id, Name, Order FROM Account];
+            // Order -> Account -> Asset
+            
+            
+            
             // fill-in the license key for assets and subscription using the 2 apex classes given in SDD
-            this.orderIsActivated = true;
             PageReference page = new PageReference('/' + this.order.Id);
             page.setRedirect(true);
             return page;
@@ -120,6 +101,20 @@ public with sharing class VirtualShipmentController {
         PageReference page = new PageReference('/' + this.order.Id);
         page.setRedirect(true);
         return page;
+    }
+    
+     private List<Contract> queryForRelatedContract(){
+        
+        List<Contract> contractList = new List<Contract>();
+         
+        try{
+            contractList = [SELECT Id, Name, SBQQ__Order__c FROM Contract WHERE SBQQ__Order__c =: this.order.Id];
+        }   
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+
+        return contractList;
     }
 
 }

@@ -122,7 +122,21 @@ public with sharing class OrderShipmentHelper {
 
         return isDuplicateECProd;
     }
-
+    
+    public static List<Order> queryForOrderRecords(String orderId){
+        List<Order> orderList = new List<Order>();
+        
+        try{        
+         	orderList = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: orderId LIMIT 1];      
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+        
+        return orderList;
+    }
+	
+    
     public static List<String> getAllOrderFieldsAPINames(){
         List<String> orderFieldAPINames = new List<String>();
 

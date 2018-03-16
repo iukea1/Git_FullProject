@@ -516,6 +516,10 @@
         <name>Tracking_Information__c</name>
     </fields>
     <fields>
+        <label><!-- Trigger Time 05 --></label>
+        <name>Trigger_Time_05__c</name>
+    </fields>
+    <fields>
         <label><!-- Type --></label>
         <name>Type__c</name>
         <picklistValues>

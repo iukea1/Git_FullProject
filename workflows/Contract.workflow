@@ -107,7 +107,7 @@
             <name>ContractExtended</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( NOT(ISPICKVAL(Contract_Type__c,&quot;Evaluation&quot;)), OR( ISCHANGED( EndDate ) &amp;&amp;  ISPICKVAL( Status , &quot;Activated&quot;), ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Draft&quot;), ISPICKVAL( Status , &quot;Activated&quot;) &amp;&amp; ISPICKVAL( Priorvalue(Status) , &quot;Expired&quot;) ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
