@@ -3,9 +3,7 @@ public with sharing class VirtualShipmentController {
     public Order order {get;set;}
     public List<Order> orderList {get;set;}
     public List<OrderItem> orderProducts {get;set;} 
-    public Boolean isECProducts;
     public Boolean isDuplicateECProd;
-    public Set<Id> orderProductSet;
     public Boolean orderIsActivated {get;set;}
 
     public VirtualShipmentController(ApexPages.StandardController stdController) {
@@ -27,7 +25,7 @@ public with sharing class VirtualShipmentController {
         System.debug('Order Products: ' + orderProducts);
         
         if(orderProducts == null || orderProducts.size() == 0){
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products available where the forecast category contains virtual.');
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products available. The forecast category must contain virtual.');
             ApexPages.addMessage(myMsg);
             return;
         }
@@ -38,8 +36,7 @@ public with sharing class VirtualShipmentController {
     public PageReference saveOrder(){
         
         //check if order records related quote has the boolean field 'SBCF_Evaluation_Quote__c' equal to FALSE
-        //orderRecs will be the storage of the orders that has been activated. 
-        List<Order> orderRecs = new List<Order>();
+        //checking also if there's a EC Products and EC-AAS-ORCH that was included in the quote line. 
         Order orderRec = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: this.order.Id LIMIT 1];      
         if(orderRec.SBQQ__Quote__r.SBCF_Evaluation_Quote__c == False){
             isDuplicateECProd = OrderShipmentHelper.queryForOrderProductsVirtualShipment(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
@@ -57,44 +54,11 @@ public with sharing class VirtualShipmentController {
             if(orderProducts.size() > 0){
                 update orderProducts;
             }
-        	//query the order record           
-            // update the field to be activated
-            orderRec.SBQQ__Contracted__c = true;
-            orderRec.Status = 'Activated'; 
-            orderRecs.add(orderRec);
-            if(orderRecs.size()>0){
-                update orderRecs;
-            }
-            
-            
-            // query contracts under the order (parent)
-            Set<Id> contractIds = new Set<Id>();
-            List<Contract> contractList = [SELECT Id, Name, SBQQ__Order__c, SBQQ__Order__r.Status, SBQQ__Order__r.SBQQ__Contracted__c FROM Contract WHERE SBQQ__Order__c =: this.order.Id];
-            for(Contract cont: contractList){
-            	 contractIds.add(cont.Id);
-            } 
-			List<SBQQ__Subscription__c> subsList = [SELECT Id, Name, SBQQ__Contract__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: contractIds];
-			
-            
-            Set<id> accountIds = new Set<Id>();
-            List<Asset> assetlist = [SELECT Id, Name, License_Key__c, AccountId FROM Asset WHERE AccountId IN (SELECT AccountId FROM Order WHERE Id =: this.order.Id)];
-            //List<Account> accList = [SELECT Id, Name, Order FROM Account];
-            // Order -> Account -> Asset
-            
-            
-            
-            // fill-in the license key for assets and subscription using the 2 apex classes given in SDD
             PageReference page = new PageReference('/' + this.order.Id);
             page.setRedirect(true);
             return page;
         }
         
-    }
-    
-    public PageReference activateOrder(){
-        PageReference page = new PageReference('/' + this.order.Id);
-        page.setRedirect(true);
-        return page;
     }
 
     public PageReference returnToOrder(){
@@ -102,19 +66,4 @@ public with sharing class VirtualShipmentController {
         page.setRedirect(true);
         return page;
     }
-    
-     private List<Contract> queryForRelatedContract(){
-        
-        List<Contract> contractList = new List<Contract>();
-         
-        try{
-            contractList = [SELECT Id, Name, SBQQ__Order__c FROM Contract WHERE SBQQ__Order__c =: this.order.Id];
-        }   
-        catch(QueryException qe){
-            System.debug(qe.getMessage());
-        }
-
-        return contractList;
-    }
-
 }

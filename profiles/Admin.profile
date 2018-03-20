@@ -210,6 +210,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssociateToQuoteLineAddressController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4023,11 +4027,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>License__c.Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>License__c.Subscription__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10183,6 +10182,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssetsListOverrideBU</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>AssociateToQuoteLineAddress</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

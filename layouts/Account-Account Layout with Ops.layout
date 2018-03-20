@@ -686,6 +686,7 @@
         <relatedList>Contract.Silver_Peak_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>SBQQ__RenewContracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>

@@ -78,11 +78,6 @@
         <label><!-- License Start Date --></label>
         <name>Start_Date__c</name>
     </fields>
-    <fields>
-        <label><!-- Subscription --></label>
-        <name>Subscription__c</name>
-        <relationshipLabel><!-- Licenses --></relationshipLabel>
-    </fields>
     <layouts>
         <layout>license Layout</layout>
         <sections>

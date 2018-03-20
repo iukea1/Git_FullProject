@@ -153,13 +153,26 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>New Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>400</height>
+                <page>AssociateToQuoteLineAddress</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <relatedLists>
-        <customButtons>New_Quote_Line_Address</customButtons>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>Quote__c</fields>
-        <fields>Quote_Line__c</fields>
         <fields>Product_Name__c</fields>
+        <fields>Product_Family__c</fields>
         <fields>Shipping_Quantity__c</fields>
         <relatedList>Quote_Line_Address__c.Quote_Address__c</relatedList>
     </relatedLists>

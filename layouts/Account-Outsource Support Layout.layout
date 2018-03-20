@@ -388,9 +388,6 @@
         <fields>OwnerId</fields>
         <fields>ParentId</fields>
         <relatedLists>
-            <fields>CONTRACT.CONTRACT_NUMBER</fields>
-            <fields>CONTRACT.START_DATE</fields>
-            <fields>CONTRACT.END_DATE</fields>
             <relatedList>RelatedContractList</relatedList>
         </relatedLists>
         <relatedLists>

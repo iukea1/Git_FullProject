@@ -2242,6 +2242,10 @@
             <label><!-- Final Destination Country and Contact Information --></label>
             <section>Final Destination Country and Contact Information</section>
         </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
     </layouts>
     <startsWith>Consonant</startsWith>
     <validationRules>

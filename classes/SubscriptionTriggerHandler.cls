@@ -35,21 +35,18 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        List<License__c	> lstLicense = new List<License__c>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id subId : newItems.keyset())
             {
-                SBQQ__Subscription__c newSub= (SBQQ__Subscription__c)newItems.get(subId);
-                if(newSub.Forecast_Category__c=='Virtual')
-                {
-                    lstLicense.add(new License__c(Subscription__c=subId,Start_Date__c=newSub.SBQQ__SubscriptionStartDate__c,License_Expiration__c=newSub.SBQQ__SubscriptionEndDate__c,AssetId__c='02i0x0000011Oxo',Quantity__c=newSub.SBQQ__Quantity__c,SerialNumber__c=newSub.SerialNumber__c,Model__c=newSub.Product_Model__c));
-                }
+               
             }
-            InsertAndEncryptLicenses(lstLicense);
+            
         }
         
        populateRelatedAssetSubscriptionLookups(newItems.values());
+        system.debug('new items: ' + newItems.values());
+       queryForAssetsWithSubscription(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -60,47 +57,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     public void AfterUndelete(Map<Id, SObject> newItems) 
     {
     }
-    
-    private  void InsertAndEncryptLicenses( List<License__c> lstLicenses)
-    {
-        List<Id> licIds= new List<Id>();
-        if(lstLicenses!=null && lstLicenses.size()>0)
-        {
-            insert lstLicenses;
-            for(License__c obj:lstLicenses)
-            {
-                licIds.add(obj.Id);
-            }
-            EncryptLicenses(licIds);
-        }
-    }
-    
-     private void EncryptLicenses(List<Id> licenseIds)
-    {
-        Set<Id> gmsLicenseIds = new Set<Id>();
-        for(License__c gmsLicense : [select Id from License__c where Id in :licenseIds and (Subscription__r.SBQQ__Product__r.Model__c='GX-V' OR Subscription__r.SBQQ__Product__r.Product_Category__c = 'GMS')])
-        {
-            gmsLicenseIds.add(gmsLicense.Id);
-        }
-        if(gmsLicenseIds.size() > 0)
-        {
-            LicenseEncryptionJob job = new LicenseEncryptionJob();
-            job.LicenseIds = new List<Id>(gmsLicenseIds);
-            System.enqueueJob(job);
-        }
-        
-        Set<Id> virtualLicenseIds = new Set<Id>();
-        for(License__c virtualLicense : [select Id from License__c where Id in :licenseIds and Subscription__r.SBQQ__Product__r.Model__c!='GX-V' And Subscription__r.SBQQ__Product__r.Product_Category__c !='GMS'])
-        {
-            virtualLicenseIds.add(virtualLicense.Id);
-        }
-        if(virtualLicenseIds.size() > 0)
-        {
-            LicenseEncryptionJob job = new LicenseEncryptionJob();
-            job.LicenseIds = new List<Id>(virtualLicenseIds);
-            System.enqueueJob(job);
-        }
-    }
+  
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         // Used in action method
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = buildQuoteLineIdsToSubscriptions(incomingSubscriptions);
@@ -335,5 +292,50 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         System.debug('Subscription Quote Line Map: ' + subscriptionQuoteLineMap);
         return subscriptionQuoteLineMap;
     }
+    
+    
+    // Populate the related Asset to the Subsccription's Asset Lookup field
+    // Author: Ronald Pascual 
+    // Date: March 20, 2018
+    // Description: Reuse the logic that was currently implemented to the Asset's subscription lookup, which will be apply this logic to Subcription's Asset Lookup field. 
+    
+    private static void queryForAssetsWithSubscription(List<SBQQ__Subscription__c> incomingSubs){
+        system.debug('incomingSubs: ' + incomingSubs);
+    	Set<Id> assetWithSubscription = new Set<Id>();
+        Map<Id, Id> assetToSubscription = new Map<Id, Id>();
+        List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+        Set<Id> incomingSubscriptionSet = new Set<Id>();
+        
+        for(SBQQ__Subscription__c subsRec: incomingSubs){
+            incomingSubscriptionSet.add(subsRec.Id);
+        }
+        system.debug('incomingSubscriptionSet: ' + incomingSubscriptionSet);
+        
+        List<Asset> assetsWithSubscriptionRecs = [SELECT Id, Name, SBQQ__Subscription__c FROM Asset WHERE SBQQ__Subscription__c IN : incomingSubscriptionSet];
+        System.debug('ASSETS WITH SUBSCRIPTION ------ : ' + assetsWithSubscriptionRecs);
+        
+        for(Asset assetsWithSubscriptionRec: assetsWithSubscriptionRecs){
+                  assetWithSubscription.add(assetsWithSubscriptionRec.SBQQ__Subscription__c);
+                  assetToSubscription.put(assetsWithSubscriptionRec.SBQQ__Subscription__c, assetsWithSubscriptionRec.Id);
+            
+        }
+        System.debug('assetsWithSubscriptionRecs ------ : ' + assetsWithSubscriptionRecs);
+        List<SBQQ__Subscription__c> subscriptionInAsset = [SELECT Id, Name, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE Id IN: assetWithSubscription];
+       	System.debug('subscriptionInAsset ------ @@: ' + subscriptionInAsset);
+
+        for(SBQQ__Subscription__c subs: subscriptionInAsset){
+            subs.SBCF_Asset__c = assetToSubscription.get(subs.Id);
+            System.debug('Asset to subscription  ------ @@: ' + assetToSubscription.get(subs.Id));
+            subList.add(subs);
+        }
+            
+        if(subList.size()>0){
+            update subList;
+        }
+	
+    }
+    
+    
+    
     
 }
