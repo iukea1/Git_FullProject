@@ -4646,6 +4646,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order_Product_Item__c.Asset__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order_Product_Item__c.Existing_Asset__c</field>
         <readable>false</readable>
     </fieldPermissions>

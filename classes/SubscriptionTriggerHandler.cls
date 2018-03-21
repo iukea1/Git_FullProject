@@ -46,7 +46,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
        populateRelatedAssetSubscriptionLookups(newItems.values());
         system.debug('new items: ' + newItems.values());
-       queryForAssetsWithSubscription(newItems.values());
+       //queryForAssetsWithSubscription(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -60,6 +60,10 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
   
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         // Used in action method
+        Map<Id, Id> assetTosubscription = new Map<Id, Id>();
+        Set<id> assetThatHasSubscription = new Set<Id>();
+		List<SBQQ__Subscription__c> subscriptionWithAsset = new List<SBQQ__Subscription__c>();
+        
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = buildQuoteLineIdsToSubscriptions(incomingSubscriptions);
         
         if(quoteLineIdsToSubscriptions.keySet() == null){
@@ -100,6 +104,25 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(assetsToUpdate.size() > 0){
             update assetsToUpdate;
         }
+        
+        // This is the process to populate the related asset to Subscription detail page. 
+        for(Asset assetRec: assetsToUpdate){
+            assetThatHasSubscription.add(assetRec.SBCF_Subscription__c);
+            assetTosubscription.put(assetRec.SBCF_Subscription__c, assetRec.Id);
+        }
+        
+        List<SBQQ__Subscription__c> subsInAsset = queryForAllSubscriptionsInAsset(assetThatHasSubscription);
+        
+        for(SBQQ__Subscription__c subs: subsInAsset){
+            subs.SBCF_Asset__c = assetToSubscription.get(subs.Id);
+            subscriptionWithAsset.add(subs);
+        }
+        
+        if(subscriptionWithAsset.size()>0){
+            update subscriptionWithAsset;
+        }
+        
+        
     }
     
     // Action
@@ -299,43 +322,18 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     // Date: March 20, 2018
     // Description: Reuse the logic that was currently implemented to the Asset's subscription lookup, which will be apply this logic to Subcription's Asset Lookup field. 
     
-    private static void queryForAssetsWithSubscription(List<SBQQ__Subscription__c> incomingSubs){
-        system.debug('incomingSubs: ' + incomingSubs);
-    	Set<Id> assetWithSubscription = new Set<Id>();
-        Map<Id, Id> assetToSubscription = new Map<Id, Id>();
-        List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
-        Set<Id> incomingSubscriptionSet = new Set<Id>();
+    private static List<SBQQ__Subscription__c> queryForAllSubscriptionsInAsset(Set<Id> subscriptionsInAsset){
+        List<SBQQ__Subscription__c> subscriptionInAsset = new List<SBQQ__Subscription__c>();
         
-        for(SBQQ__Subscription__c subsRec: incomingSubs){
-            incomingSubscriptionSet.add(subsRec.Id);
-        }
-        system.debug('incomingSubscriptionSet: ' + incomingSubscriptionSet);
+            try{
+                subscriptionInAsset = [SELECT Id, Name, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE Id IN :subscriptionsInAsset];
+            }
+            catch(QueryException qe){
+                System.debug(qe.getMessage());
+            }
+            System.debug('Subscriptions in Asset: ' + subscriptionInAsset);
         
-        List<Asset> assetsWithSubscriptionRecs = [SELECT Id, Name, SBQQ__Subscription__c FROM Asset WHERE SBQQ__Subscription__c IN : incomingSubscriptionSet];
-        System.debug('ASSETS WITH SUBSCRIPTION ------ : ' + assetsWithSubscriptionRecs);
-        
-        for(Asset assetsWithSubscriptionRec: assetsWithSubscriptionRecs){
-                  assetWithSubscription.add(assetsWithSubscriptionRec.SBQQ__Subscription__c);
-                  assetToSubscription.put(assetsWithSubscriptionRec.SBQQ__Subscription__c, assetsWithSubscriptionRec.Id);
-            
-        }
-        System.debug('assetsWithSubscriptionRecs ------ : ' + assetsWithSubscriptionRecs);
-        List<SBQQ__Subscription__c> subscriptionInAsset = [SELECT Id, Name, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE Id IN: assetWithSubscription];
-       	System.debug('subscriptionInAsset ------ @@: ' + subscriptionInAsset);
-
-        for(SBQQ__Subscription__c subs: subscriptionInAsset){
-            subs.SBCF_Asset__c = assetToSubscription.get(subs.Id);
-            System.debug('Asset to subscription  ------ @@: ' + assetToSubscription.get(subs.Id));
-            subList.add(subs);
-        }
-            
-        if(subList.size()>0){
-            update subList;
-        }
-	
+        return subscriptionInAsset;
     }
-    
-    
-    
     
 }

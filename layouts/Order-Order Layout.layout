@@ -81,6 +81,10 @@
                 <behavior>Edit</behavior>
                 <field>Ship_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Unity_Cloud_Orch_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

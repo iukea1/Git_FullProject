@@ -9,6 +9,11 @@
         <value>Order Product Items</value>
     </caseValues>
     <fields>
+        <label><!-- Asset --></label>
+        <name>Asset__c</name>
+        <relationshipLabel><!-- Order Product Items (Asset) --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Existing Asset --></label>
         <name>Existing_Asset__c</name>
         <relationshipLabel><!-- Order Product Items --></relationshipLabel>

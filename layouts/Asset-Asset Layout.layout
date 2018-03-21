@@ -448,7 +448,17 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SBQQ__ContractNumber__c</fields>
+        <fields>SBQQ__Contract__c</fields>
+        <fields>SBQQ__Product__c</fields>
+        <fields>SBQQ__NetPrice__c</fields>
+        <fields>SBQQ__SubscriptionStartDate__c</fields>
+        <fields>SBQQ__SubscriptionEndDate__c</fields>
         <relatedList>SBQQ__Subscription__c.SBCF_Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Order_Product_Item__c.Asset__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <relatedObjects>ContactId</relatedObjects>

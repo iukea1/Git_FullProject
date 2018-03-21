@@ -1,8 +1,10 @@
 <apex:page standardcontroller="Quote_Address__c" extensions="AssociateToQuoteLineAddressController">
-    
+  
     <apex:form >
        <apex:pageBlock >
+           <apex:pageMessages ></apex:pageMessages>
             <apex:pageBlockTable value="{!lstQLA}" var="c">
+                  <apex:column width="30%"><apex:facet name="header">QuoteLine Name</apex:facet>{!c.QLData.Name}</apex:column>
                    <apex:column width="30%"><apex:facet name="header">Name</apex:facet>{!c.QLData.SBQQ__Product__r.Name}</apex:column>
                 <apex:column width="30%">
                     <apex:facet name="header">Quantity</apex:facet>{!c.QLData.SBQQ__Quantity__c}</apex:column>
@@ -10,8 +12,8 @@
                      <apex:facet name="header">Shipping Quantity </apex:facet><apex:inputText value="{!c.ShippingQuantity}" />
                 </apex:column>
             </apex:pageBlockTable>
-           <apex:pageBlockButtons >
-            	<apex:commandButton value="Save" action="{!SaveData}" />
+           <apex:pageBlockButtons location="bottom">
+            	<apex:commandButton value="Save" action="{!SaveData}"   />
            </apex:pageBlockButtons>
            
         </apex:pageBlock>
