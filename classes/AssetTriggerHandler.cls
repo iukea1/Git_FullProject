@@ -1,4 +1,5 @@
 public class AssetTriggerHandler implements ITriggerHandler {
+    public static final Datetime THIRTY_SECONDS_AGO = System.now().addSeconds(-30);
     Id silverpeakSystemsId='00130000007mEjX';// production Id
     Set<Id> lstHWCPAccount {get;set;} //Provision Decommission Account
     Set<Id> lstSWCPAccount {get;set;} //Provision Decommission Account
@@ -343,4 +344,27 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
         }
     }
+    
+    
+    // Author : Ronald P. Pascual
+    // Company : Simplus
+    // Date : March 22, 2018  
+    // Description : To implement the relationship between asset and subscription. 
+    // 				 The subscription record must acquire its related asset upon activation of order.
+     				 
+    // Main Method
+    
+    /*
+    public static void populateRelatedSubscriptionAssetLookups(List<Asset> incomingAssets){
+        Set<Id> assetWithQuoteLines = new Set<Id>();
+        
+        for(Asset asset: incomingAssets){
+            assetWithQuoteLines.add(asset.SBQQ__QuoteLine__c);
+        }
+        
+        List<SBQQ__QuoteLine__c> quoteLineRelatedToAsset = [SELECT Id, Name FROM SBQQ__QuoteLine__c WHERE Id IN: assetWithQuoteLines];
+        
+    }
+	*/
+        
 }

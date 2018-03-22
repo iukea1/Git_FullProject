@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
+        <fullName>SBCF_Set_Contracting_Method_for_ORCH_AAS</fullName>
+        <field>SBQQ__ContractingMethod__c</field>
+        <literalValue>Contract Separately</literalValue>
+        <name>SBCF Set Contracting Method for ORCH-AAS</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Unity_Cloud_Orchestrator</fullName>
         <field>Is_Unity_Cloud_orchestrator__c</field>
         <literalValue>1</literalValue>
@@ -20,6 +29,20 @@
 NOT(ISNULL(Id )),
 CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
 )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Contracting Method for ORCH-AAS</fullName>
+        <actions>
+            <name>SBCF_Set_Contracting_Method_for_ORCH_AAS</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Product2.Name</field>
+            <operation>startsWith</operation>
+            <value>EC-ORCH-AAS</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

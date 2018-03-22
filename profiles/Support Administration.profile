@@ -7252,6 +7252,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RMA_Item__c.Replacement_Product_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>RMA_Item__c.SSLSCACCARRIER__c</field>
         <readable>false</readable>
     </fieldPermissions>
