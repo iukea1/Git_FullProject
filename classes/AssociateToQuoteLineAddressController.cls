@@ -22,15 +22,18 @@ public class AssociateToQuoteLineAddressController {
                     mapQLA.put(data.Quote_Line__c,integer.valueOf(data.Shipping_Quantity__c));
                 }
             }
-            for(SBQQ__QuoteLine__c ql:lstQuoteLines )
+            if(lstQuoteLines!=null && lstQuoteLines.size()>0)
             {
-                integer shipQuantity=0;
-                if(mapQLA.containsKey(ql.Id))
+                for(SBQQ__QuoteLine__c ql:lstQuoteLines )
                 {
-                    shipQuantity= mapQLA.get(ql.Id);
+                    integer shipQuantity=0;
+                    if(mapQLA.containsKey(ql.Id))
+                    {
+                        shipQuantity= mapQLA.get(ql.Id);
+                    }
+                    QLAWrapper objQLA= new QLAWrapper(ql,shipQuantity);
+                    lstQLA.add(objQLA);
                 }
-                QLAWrapper objQLA= new QLAWrapper(ql,shipQuantity);
-                lstQLA.add(objQLA);
             }
         }
         
@@ -53,7 +56,6 @@ public class AssociateToQuoteLineAddressController {
             System.debug(lstQLA);
             if(lstQLA!=null && lstQLA.size()>0)
             {
-                
                 for(QLAWrapper obj : lstQLA)
                 {
                     Quote_Line_Address__c objData = new Quote_Line_Address__c(Quote_Address__c=quoteAddressId,Quote_Line__c=obj.QLData.Id,Shipping_Quantity__c=obj.ShippingQuantity,Quote__c=obj.QLData.SBQQ__Quote__c);
@@ -62,9 +64,6 @@ public class AssociateToQuoteLineAddressController {
                 System.debug(lstQLAddress);
                 insert lstQLAddress;
                 ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO,'Data is saved successfully'));
-               
-                
-                
             }
             
         }

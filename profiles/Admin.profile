@@ -210,6 +210,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssociateToQuoteLineAddConTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AssociateToQuoteLineAddressController</apexClass>
         <enabled>true</enabled>
     </classAccesses>

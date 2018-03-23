@@ -5,7 +5,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     Set<Id> lstSWCPAccount {get;set;} //Provision Decommission Account
     Set<Id> lstTACAccount {get;set;}//ActiveAssetCount
     Map<Id,Account> lstCustomerDateAccount {get;set;} // Customer Date Account
-   
+    
     
     public AssetTriggerHandler()
     {
@@ -23,7 +23,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         lstSWCPAccount= new Set<Id>();
         lstTACAccount= new Set<Id>();
         lstCustomerDateAccount= new Map<Id,Account>();
-       
+        
     }
     public Boolean IsDisabled()
     {
@@ -95,7 +95,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 {
                     if(oldAsset.Contract_Number__c != newAsset.Contract_Number__c || oldAsset.Status != newAsset.Status)
                     {
-                      	newAsset.Is_Customer_Asset__c=true;
+                        newAsset.Is_Customer_Asset__c=true;
                     }
                     if(oldAsset.AccountId!=newAsset.AccountId )
                     {
@@ -159,6 +159,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
+            populateRelatedAssetSubscriptionLookups(newItems.values());
         }
     }
     
@@ -224,7 +225,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
     
     
-  
+    
     private void MakeFinalUpdateToAccount()
     {
         Set<Id> acctIds= new Set<Id>();
@@ -345,26 +346,210 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
     }
     
-    
-    // Author : Ronald P. Pascual
-    // Company : Simplus
-    // Date : March 22, 2018  
-    // Description : To implement the relationship between asset and subscription. 
-    // 				 The subscription record must acquire its related asset upon activation of order.
-     				 
-    // Main Method
-    
-    /*
-    public static void populateRelatedSubscriptionAssetLookups(List<Asset> incomingAssets){
-        Set<Id> assetWithQuoteLines = new Set<Id>();
         
-        for(Asset asset: incomingAssets){
-            assetWithQuoteLines.add(asset.SBQQ__QuoteLine__c);
+    // Main Method
+    public static void populateRelatedAssetSubscriptionLookups(List<Asset> incomingAssets){
+        // Used in action method
+        
+        Map<Id, List<Asset>> quoteLineIdsToAssets = buildQuoteLineIdsToAssets(incomingAssets);
+        System.debug('@@---------quoteLineIdsToAssets'+ quoteLineIdsToAssets);
+        if(quoteLineIdsToAssets.keySet() == null){
+            System.debug('There are no quote lines related to incoming subscriptions. ');
+            return;
         }
         
-        List<SBQQ__QuoteLine__c> quoteLineRelatedToAsset = [SELECT Id, Name FROM SBQQ__QuoteLine__c WHERE Id IN: assetWithQuoteLines];
+        Set<Id> assetQuoteLineIds = quoteLineIdsToAssets.keySet();
+        System.debug('@@---------assetQuoteLineIds'+ assetQuoteLineIds);
+        // Map quote line Id to Quote Line
+        Map<Id, SBQQ__QuoteLine__c> assetQuoteLineMap = queryForAssetQuoteLines(assetQuoteLineIds);
+        System.debug('@@---------queryForAssetQuoteLines'+ assetQuoteLineMap);
+        if(assetQuoteLineMap.size() == 0){
+            System.debug('No quote lines were returned related to subscription quote lines.');
+            return;
+        }
+        
+        Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(assetQuoteLineMap.values());
+        System.debug('@@---------assetQuoteLineMap.values() : '+ assetQuoteLineMap.values());
+        System.debug('@@---------assetQuoteLineMap.keySet() : '+ assetQuoteLineMap.keySet());
+        System.debug('@@---------requiredByQuoteLineIds'+ requiredByQuoteLineIds);
+        List<SBQQ__Subscription__c> subscriptionRelatedToAssets = queryForSubscriptionRelatedToAssetsRequiredByIds(requiredByQuoteLineIds);
+        System.debug('@@---------subscriptionRelatedToAssets'+ subscriptionRelatedToAssets);
+        // PROBLEM 
+        if(subscriptionRelatedToAssets.size() == 0){
+            System.debug('No assets were found relating to the subscription quote lines required by quote line.');
+            return;
+        }
+        
+        Map<Id, Set<Id>> assetRequiredByIdToAssetQuoteLineIds = buildAssetRequiredByIdToAssetQuoteLineIds(assetQuoteLineMap.values());
+        System.debug('@@---------assetRequiredByIdToAssetQuoteLineIds'+ assetRequiredByIdToAssetQuoteLineIds);
+        List<SBQQ__Subscription__c> subscriptionsToUpdate = updateSubscriptionsWithAssetLookups(subscriptionRelatedToAssets, assetRequiredByIdToAssetQuoteLineIds, quoteLineIdsToAssets);
+        
+        System.debug('Assets to update: ' + subscriptionsToUpdate);
+        
+        if(subscriptionsToUpdate.size() > 0){
+            update subscriptionsToUpdate;
+            
+        }
+        // end of the asset 
+
         
     }
-	*/
+    //Helper Method
+     private static Map<Id, List<Asset>> buildQuoteLineIdsToAssets(List<Asset> incomingAssets){
+         Map<Id, List<Asset>> quoteLineIdsToAssets = new Map<Id, List<Asset>>();
+         
+         for(Asset asset: incomingAssets){
+             if(asset.SBQQ__QuoteLine__c == null){
+                 continue;
+             }
+             
+             List<Asset> assetsRelatedToQuoteLine = quoteLineIdsToAssets.get(asset.SBQQ__QuoteLine__c);
+             
+             if(assetsRelatedToQuoteLine == null){
+                 assetsRelatedToQuoteLine = new List<Asset>();
+                 quoteLineIdsToAssets.put(asset.SBQQ__QuoteLine__c, assetsRelatedToQuoteLine);
+             }
+             
+             assetsRelatedToQuoteLine.add(asset);
+         }
+         
+         System.debug('Quote Line Id To Asset Id: ' + quoteLineIdsToAssets);
+         return quoteLineIdsToAssets;
+     }
+
+    
+    private static Map<Id, SBQQ__QuoteLine__c> queryForAssetQuoteLines(Set<Id> assetQuoteLineIds){
+        Map<Id, SBQQ__QuoteLine__c> assetQuoteLineMap = new Map<Id, SBQQ__QuoteLine__c>();
         
+        try{
+            assetQuoteLineMap = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, SBQQ__RequiredBy__c FROM SBQQ__QuoteLine__c WHERE SBQQ__RequiredBy__c IN :assetQuoteLineIds]);
+        }
+        catch(QueryException qe){
+            system.debug(qe.getMessage());
+        }
+        
+        System.debug('Asset Quote Line Map: ' + assetQuoteLineMap);
+        return assetQuoteLineMap;
+    }
+    
+    private static Set<Id> getRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> assetQuoteLines){
+        Set<Id> requiredByQuoteLineIds = new Set<Id>();
+        
+        for(SBQQ__QuoteLine__c quoteLine: assetQuoteLines){
+            if(quoteLine.Id == null){
+                continue;
+            } 
+            
+            requiredByQuoteLineIds.add(quoteLine.Id);
+        }
+        
+        return requiredByQuoteLineIds;
+    }
+    
+    private static Map<Id, SBQQ__Subscription__c> assetRequiredByIdToSubscriptionQuoteline(Set<Id> assetRequiredByIds){
+        Map<Id, SBQQ__Subscription__c> requiredByToSubscriptionQuoteLineMap = new Map<Id, SBQQ__Subscription__c>();
+        
+        
+        return requiredByToSubscriptionQuoteLineMap;
+    }
+    
+    private static List<SBQQ__Subscription__c> queryForSubscriptionRelatedToAssetsRequiredByIds(Set<Id> requiredByAssetQuoteLineIds){
+        List<SBQQ__Subscription__c> subscriptionRelatedToAssets = new List<SBQQ__Subscription__c>();
+        
+        try{
+            subscriptionRelatedToAssets = [SELECT Id, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__c IN :requiredByAssetQuoteLineIds AND LastModifiedDate >= :THIRTY_SECONDS_AGO];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+            
+            System.debug('Subscription realted to Asset : ' + subscriptionRelatedToAssets);
+        
+        return subscriptionRelatedToAssets;
+    }
+    
+    private static Map<Id, Set<Id>> buildAssetRequiredByIdToAssetQuoteLineIds(List<SBQQ__QuoteLine__c> assetQuoteLines){
+        Map<Id, Set<Id>> assetRequiredByIdToSubscriptionQuoteLineIds = new Map<Id, Set<Id>>();
+        
+        System.debug('asset Quote Lines in buildAssetRequiredByIdToAssetQuoteLineIds: ' + assetQuoteLines);
+        
+        for(SBQQ__QuoteLine__c subscriptionQuoteLine: assetQuoteLines){
+            if(subscriptionQuoteLine.SBQQ__RequiredBy__c == null){
+                continue;
+            }
+            
+            Set<Id> subscriptionQuoteLineIds = assetRequiredByIdToSubscriptionQuoteLineIds.get(subscriptionQuoteLine.SBQQ__RequiredBy__c);
+            
+            if(subscriptionQuoteLineIds == null){
+                subscriptionQuoteLineIds = new Set<Id>();
+                assetRequiredByIdToSubscriptionQuoteLineIds.put(subscriptionQuoteLine.SBQQ__RequiredBy__c, subscriptionQuoteLineIds);
+            }
+            
+            subscriptionQuoteLineIds.add(subscriptionQuoteLine.Id);
+        }
+        
+        System.debug('Asset Required By Id To Asset Quote Line Ids: ' + assetRequiredByIdToSubscriptionQuoteLineIds);
+        
+        return assetRequiredByIdToSubscriptionQuoteLineIds;
+    }
+    
+    private static List<SBQQ__Subscription__c> updateSubscriptionsWithAssetLookups(List<SBQQ__Subscription__c> subscriptionRelatedToAssets, Map<Id, Set<Id>> assetRequiredByIdToAssetQuoteLineIds,
+                                                                   Map<Id, List<Asset>> quoteLineIdsToAssets){
+                                                                       
+                                                                       System.debug('Update Subscription With Asset Lookups Method.');
+                                                                       List<SBQQ__Subscription__c> subscriptionsToUpdate = new List<SBQQ__Subscription__c>();
+                                                                       
+                                                                       for(SBQQ__Subscription__c subscription: subscriptionRelatedToAssets){
+                                                                           Set<Id> assetQuoteLineIds = assetRequiredByIdToAssetQuoteLineIds.keySet();
+                                                                           
+                                                                           if(assetQuoteLineIds == null){
+                                                                               System.debug('No asset quote line Ids related to Subscription for subscription: ' + subscription);
+                                                                               continue;
+                                                                           }
+                                                                           
+                                                                           List<Asset> assetsRelatedToSubscription = new List<Asset>();
+                                                                           for(Id assetQuoteLineId: assetQuoteLineIds){
+                                                                               List<Asset> assets = quoteLineIdsToAssets.get(assetQuoteLineId);
+                                                                               if(assets == null){
+                                                                                   System.debug('No asset in = map with id: ' + assetQuoteLineId);
+                                                                                   continue;
+                                                                               }
+                                                                               assetsRelatedToSubscription.addAll(assets);
+                                                                           }
+                                                                           
+                                                                           if(assetsRelatedToSubscription.size() == 0){
+                                                                               System.debug('There were no subscriptions related to asset with Id: ' + subscription.Id);
+                                                                           }
+                                                                           else{
+                                                                               System.debug('assets found related to subscription.');
+                                                                               System.debug('Updating subscription with Id: ' + subscription.Id + ' with asset lookups with the following assets: ' + assetsRelatedToSubscription);
+                                                                               
+                                                                               Asset asset;
+                                                                               //SBQQ__Subscription__c smartHandsSubscription;
+                                                                               
+                                                                               for(Asset relatedAsset: assetsRelatedToSubscription){
+                                                                                   asset = relatedAsset;
+                                                                               }
+                                                                               
+                                                                               // Should not be the case since the trigger is on subscription
+                                                                               if(asset == null){
+                                                                                   System.debug('No Asset Found for Subscription with Id: ' + subscription.Id);
+                                                                                   continue;
+                                                                               }
+                                                                               else{
+                                                                                   if(asset != null){
+                                                                                       subscription.SBCF_Asset__c = asset.Id;
+                                                                                   }
+                                                                                   
+                                                                                   subscriptionsToUpdate.add(subscription);
+                                                                                   
+                                                                               }
+                                                                               
+                                                                           }
+                                                                           
+                                                                       }
+                                                                        System.debug('subscription to Update : ' + subscriptionsToUpdate);
+                                                                       return subscriptionsToUpdate;
+                                                                   }
+    
 }
