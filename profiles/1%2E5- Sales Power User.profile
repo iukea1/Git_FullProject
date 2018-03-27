@@ -314,6 +314,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CheckRecursive</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CheckVirtualAssetsSyncFlag</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -6046,6 +6050,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Patch__c.FCMM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Patch__c.GDPR_Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

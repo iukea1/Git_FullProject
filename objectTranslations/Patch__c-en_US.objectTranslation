@@ -43,6 +43,10 @@
         <relationshipLabel><!-- Patches (FCMM) --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- GDPR Country? --></label>
+        <name>GDPR_Country__c</name>
+    </fields>
+    <fields>
         <label><!-- ISR Email --></label>
         <name>ISR_Email__c</name>
     </fields>

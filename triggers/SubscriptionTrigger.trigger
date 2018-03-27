@@ -12,6 +12,5 @@
 *
 **********************************************************************/
 trigger SubscriptionTrigger on SBQQ__Subscription__c (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
-
-	 TriggerDispatcher.Run(new SubscriptionTriggerHandler());
+        TriggerDispatcher.Run(new SubscriptionTriggerHandler());
 }

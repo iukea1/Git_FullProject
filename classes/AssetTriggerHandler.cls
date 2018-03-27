@@ -60,6 +60,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
+           // populateStatusPartAndSerialNumberToAsset(newItems);
         }
         
         
@@ -159,7 +160,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            populateRelatedAssetSubscriptionLookups(newItems.values());
+            //populateRelatedAssetSubscriptionLookups(newItems.values());
         }
     }
     
@@ -353,6 +354,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         
         Map<Id, List<Asset>> quoteLineIdsToAssets = buildQuoteLineIdsToAssets(incomingAssets);
         System.debug('@@---------quoteLineIdsToAssets'+ quoteLineIdsToAssets);
+        
         if(quoteLineIdsToAssets.keySet() == null){
             System.debug('There are no quote lines related to incoming subscriptions. ');
             return;
@@ -420,9 +422,14 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     private static Map<Id, SBQQ__QuoteLine__c> queryForAssetQuoteLines(Set<Id> assetQuoteLineIds){
         Map<Id, SBQQ__QuoteLine__c> assetQuoteLineMap = new Map<Id, SBQQ__QuoteLine__c>();
+        List<SBQQ__QuoteLine__c> queryForAssetQuoteLine = new List<SBQQ__QuoteLine__c>();
         
         try{
-            assetQuoteLineMap = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, SBQQ__RequiredBy__c FROM SBQQ__QuoteLine__c WHERE SBQQ__RequiredBy__c IN :assetQuoteLineIds]);
+            queryForAssetQuoteLine = [SELECT Id, SBQQ__RequiredBy__c FROM SBQQ__QuoteLine__c WHERE SBQQ__RequiredBy__c IN :assetQuoteLineIds];
+            
+            for(SBQQ__QuoteLine__c quoteLineMap: queryForAssetQuoteLine){
+                assetQuoteLineMap.put(quoteLineMap.SBQQ__RequiredBy__c, quoteLineMap);
+            }
         }
         catch(QueryException qe){
             system.debug(qe.getMessage());
@@ -457,7 +464,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<SBQQ__Subscription__c> subscriptionRelatedToAssets = new List<SBQQ__Subscription__c>();
         
         try{
-            subscriptionRelatedToAssets = [SELECT Id, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__c IN :requiredByAssetQuoteLineIds AND LastModifiedDate >= :THIRTY_SECONDS_AGO];
+            subscriptionRelatedToAssets = [SELECT Id, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__c IN :requiredByAssetQuoteLineIds];
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());
@@ -551,5 +558,176 @@ public class AssetTriggerHandler implements ITriggerHandler {
                                                                         System.debug('subscription to Update : ' + subscriptionsToUpdate);
                                                                        return subscriptionsToUpdate;
                                                                    }
+ // end of the helper method 
+ 
     
+ // Author : Ronald Pascual
+ // Date: March 26, 2018
+ // Description : To Pull the Status, Part Number, and Serial Number from the Order Product Items to Asset. 
+ // -------------------------------------------------------------------------------------------------------
+ 
+ // START of Activation Order task -------@@@ 
+
+    private static void populateAssetFields(List<Asset> incomingAssets){
+        List<Asset> updateOrderProductItem = populateStatusPartAndSerialNumberToAsset(incomingAssets);
+        
+        if(updateOrderProductItem == null){
+            System.debug('There are no incoming asset that was related to order product item. ');
+        }
+        
+        if(updateOrderProductItem.size()>0){
+            update updateOrderProductItem;
+        }
+    }
+    
+    private static List<Asset> populateStatusPartAndSerialNumberToAsset(List<Asset> asset){
+    
+        List<Asset> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(asset);
+    
+        if(assetProductEqualToPhysical == null){
+            System.debug('There are no incoming asset that has a product forecast category of PHYSICAL. ');
+        }
+    
+        Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
+    
+        if(orderProductToAssets.keySet() == null){
+            System.debug('There are no order product related to incoming assets. ');
+        }
+    
+        Set<Id> orderProductFromAsset =  orderProductToAssets.keySet();
+    
+        List<Order_Product_Item__c> orderProductItemRelatedToAsset = getAllOrderProductItemsRelatedToOrderProduct(orderProductFromAsset);
+    
+        if(orderProductToAssets.keySet() == null){
+            System.debug('There are no ORDER PRODUCT ITEM related to incoming assets. ');
+        }
+    
+        List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
+    
+        System.debug('Asset to update :  ' + updateAssets);
+    
+        if(updateAssets.size()>0){
+            update updateAssets;
+        }
+        
+        //List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
+    	
+        return updateAssets;
+
+    }
+    
+    //List<Asset> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset);
+    
+    private static List<Asset> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
+        List<Asset> assetProductEqualToPhysical = new List<Asset>();
+    
+        for(Asset asset: incomingAsset){
+            if(asset.Product2.Forecast_Category__c == 'Physical'){
+                assetProductEqualToPhysical.add(asset);
+            }	
+        }
+    
+        return assetProductEqualToPhysical;	
+    }
+    
+    //Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
+    
+    private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
+         Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
+    
+         for(Asset asset: assetProductEqualToPhysical){
+            if(asset.SBQQ__OrderProduct__c == null){
+                continue;
+            }
+    
+            List<Asset> assetRelatedToOrderProducts = orderProductToAssets.get(asset.SBQQ__OrderProduct__c);
+    
+            if(assetRelatedToOrderProducts == null){
+                assetRelatedToOrderProducts = new List<Asset>();
+                orderProductToAssets.put(asset.SBQQ__OrderProduct__c, assetRelatedToOrderProducts);
+            }
+    
+            assetRelatedToOrderProducts.add(asset);
+    
+         }
+    
+         return orderProductToAssets;
+    }
+        
+    private static List<Order_Product_Item__c> getAllOrderProductItemsRelatedToOrderProduct(Set<Id> orderProductFromAsset){
+        List<Order_Product_Item__c> orderProductItemsRelatedToOrderProduct = new List<Order_Product_Item__c>();
+        
+        try{
+            orderProductItemsRelatedToOrderProduct = [SELECT Id, Status__c, Serial_Number__c, Part_Number__c, Order_Product__c FROM  Order_Product_Item__c WHERE Order_Product__c IN : orderProductFromAsset];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+    
+        return orderProductItemsRelatedToOrderProduct;
+    }    
+    
+    //List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
+    
+    private static List<Asset> updateAssetRelatedToOrderProduct(List<Order_Product_Item__c> orderProductItemRelatedToAsset, Map<Id, List<Asset>> orderProductToAssets){
+    
+        List<Asset> updateAssets = new List<Asset>();
+    
+        for(Order_Product_Item__c orderProdItem: orderProductItemRelatedToAsset){
+            List<Asset> assetList = orderProductToAssets.get(orderProdItem.Order_Product__c);
+            System.debug('Assets related to Order Product : ' + assetList);
+             for(Asset asset: assetList){
+                asset.SerialNumber = orderProdItem.Serial_Number__c;
+                asset.Part_Number__c = orderProdItem.Part_Number__c;
+                asset.Status = orderProdItem.Status__c;
+                updateAssets.add(asset);
+             }		 
+        }
+    
+        return updateAssets;
+    }   
+     
+    private static List<Order_Product_Item__c> updateOrderProductRelatedToAsset(List<Order_Product_Item__c> orderProductItemRelatedToAsset, List<Asset> updatedAssets){
+    
+        List<Order_Product_Item__c> updateOrderProductItem = new List<Order_Product_Item__c>();
+    
+        for(Order_Product_Item__c orderProdItem: orderProductItemRelatedToAsset){
+            System.debug('Assets related to Order Product : ' + updatedAssets);
+             for(Asset asset: updatedAssets){
+                orderProdItem.Asset__c = asset.Id;
+                updateOrderProductItem.add(orderProdItem);
+             }		 
+        }
+    
+        return updateOrderProductItem;
+    }
+    
+    // ------------- Asset override method ---------------//
+    // --- requires @future method 
+    
+    private static Set<Id> generatedAssetIds(List<Asset> incomingAssets){
+        Set<Id> generatedAssetSetOfIds = new Set<Id>();
+        List<Asset> updatedAssetsRelatedToOrderProdItems = populateStatusPartAndSerialNumberToAsset(incomingAssets);
+        
+        if(updatedAssetsRelatedToOrderProdItems == null){
+            System.debug('There are no incoming asset that was related to order product item. ');
+        }
+        
+        for(Asset updatedAssets: updatedAssetsRelatedToOrderProdItems){
+            generatedAssetSetOfIds.add(updatedAssets.Id);
+        }
+        
+        return generatedAssetSetOfIds;
+    }
+    
+    private static void overrideAsset(Set<Id> orderProductAsset){
+        
+    	List<Order_Product_Item__c> orderProductItemsWithExistingAsset = [SELECT Id, Name, Existing_Asset__c, Asset__c FROM Order_Product_Item__c WHERE Asset__c IN: orderProductAsset];
+        System.debug('@@-------- orderProductItemsWithExistingAsset : ' + orderProductItemsWithExistingAsset);
+        for(Order_Product_Item__c orderProdItem: orderProductItemsWithExistingAsset){
+            //existsingAssetToAsset.put(orderProdItem.Existing_Asset__c, Asset__c);
+        }
+        
+    }
+        
 }

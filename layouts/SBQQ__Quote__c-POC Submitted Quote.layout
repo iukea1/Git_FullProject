@@ -125,6 +125,10 @@
                 <behavior>Readonly</behavior>
                 <field>Is_Service_Provider__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ApprovalsArchived__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
