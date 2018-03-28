@@ -1,0 +1,4 @@
+<apex:component controller="EvalQuoteProductController" access="global" layout="none">
+ 
+  
+</apex:component>

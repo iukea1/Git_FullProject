@@ -60,7 +60,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
-           // populateStatusPartAndSerialNumberToAsset(newItems);
+            populateAssetFields(newItems);
         }
         
         
@@ -161,6 +161,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
             //populateRelatedAssetSubscriptionLookups(newItems.values());
+            updateTheExistingAsset(newItems.values());
         }
     }
     
@@ -704,6 +705,21 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     // ------------- Asset override method ---------------//
     // --- requires @future method 
+    // 
+    
+    
+    private static void updateTheExistingAsset(List<Asset> incomingAssets){
+        
+		Set<Id> generatedAssetSetOfIds =  generatedAssetIds(incomingAssets);
+        
+        if(generatedAssetSetOfIds == null){
+            System.debug('There are no asset generated upon activation of order' + generatedAssetSetOfIds);
+            return;
+        }
+        
+        overrideAsset(generatedAssetSetOfIds);
+        
+    }
     
     private static Set<Id> generatedAssetIds(List<Asset> incomingAssets){
         Set<Id> generatedAssetSetOfIds = new Set<Id>();
@@ -722,12 +738,34 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     private static void overrideAsset(Set<Id> orderProductAsset){
         
-    	List<Order_Product_Item__c> orderProductItemsWithExistingAsset = [SELECT Id, Name, Existing_Asset__c, Asset__c FROM Order_Product_Item__c WHERE Asset__c IN: orderProductAsset];
-        System.debug('@@-------- orderProductItemsWithExistingAsset : ' + orderProductItemsWithExistingAsset);
-        for(Order_Product_Item__c orderProdItem: orderProductItemsWithExistingAsset){
-            //existsingAssetToAsset.put(orderProdItem.Existing_Asset__c, Asset__c);
+        Set<Asset> updateExistingAssetSet = new Set<Asset>();
+    
+        for(Order_Product_Item__c orderProdItem: [SELECT Id, Existing_Asset__c, 
+                                                    Asset__r.Part_Number__c,
+                                                    Asset__r.SerialNumber,
+                                                    Asset__r.Status
+                                                    FROM Order_Product_Item__c
+                                                    WHERE Asset__c IN: orderProductAsset]){
+    		
+            System.debug('Order Product Item with Existing Asset : ' +  orderProdItem);
+                                                        
+            if(orderProdItem.Existing_Asset__c != null){
+                Asset existingAsset = new Asset();
+                existingAsset.Id = orderProdItem.Existing_Asset__c;
+                existingAsset.Part_Number__c = orderProdItem.Asset__r.Part_Number__c;
+                existingAsset.SerialNumber = orderProdItem.Asset__r.SerialNumber;
+                existingAsset.Status = orderProdItem.Asset__r.Status;
+                updateExistingAssetSet.add(existingAsset);
+                
+                System.debug('Updated Existing Asset : ' +  updateExistingAssetSet);
+            }
+            
         }
-        
-    }
-        
+    
+            if(!updateExistingAssetSet.isEmpty()){
+                update new List<Asset>(updateExistingAssetSet);
+            }
+            
+	}
+    
 }

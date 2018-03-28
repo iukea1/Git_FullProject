@@ -598,6 +598,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EvalQuoteProductController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ExpiringAssetListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
