@@ -1,6 +1,25 @@
-<apex:component controller="EvalQuoteProductController">
-  <!-- Begin Default Content REMOVE THIS -->
-  <h1>Congratulations</h1>
-  This is your new Component
-  <!-- End Default Content REMOVE THIS -->
+<apex:component controller="EvalQuoteProductController" access="global" layout="none">
+    <apex:attribute name="pocId" type="Id" description="Id of the Quote" assignTo="{!QuoteId}"></apex:attribute>
+            <table cellspacing="5" style="width=:100%;border-collapse: collapse;" >
+            <tr>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Product Name</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping Street</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping City</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping State</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping Country</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping Postal Code</td>
+                <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Shipping Quantity</td>
+            </tr>
+            <apex:repeat value="{!HWProd}" var="item">
+                <tr>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Line__r.SBQQ__Product__r.Name} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Address__r.Street__c} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Address__r.City__c} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Address__r.State__c} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Address__r.Country__c} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Quote_Address__r.Postal_Code__c} </td>
+                    <td style="border: 1px solid;padding: 8px; text-align: left;">{!item.Shipping_Quantity__c} </td>
+                </tr>
+            </apex:repeat>
+        </table> 
 </apex:component>
