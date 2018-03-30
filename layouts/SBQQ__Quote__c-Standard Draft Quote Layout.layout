@@ -115,6 +115,10 @@
                 <behavior>Readonly</behavior>
                 <field>ApprovalsArchived__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Actual_Ship_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -460,6 +464,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>sbaa__ApprovalChain__c</fields>
         <fields>sbaa__ApprovalStep__c</fields>
         <fields>sbaa__Approver__c</fields>
         <fields>sbaa__AssignedTo__c</fields>
