@@ -45,7 +45,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         }
         
        //populateRelatedAssetSubscriptionLookups(newItems.values());
-       populateRelatedSubscriptionAssetLookups(newItems.values());
+       //-- latest -- // populateRelatedSubscriptionAssetLookups(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {

@@ -107,6 +107,10 @@
                 <behavior>Edit</behavior>
                 <field>POC_Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pricebook2Id</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

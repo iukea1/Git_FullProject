@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Quote GEO Region Approver</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Quote GEO Region Approvers</value>
+    </caseValues>
+    <fields>
+        <label><!-- Approver2 Id --></label>
+        <name>Approver2_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approver3 Id --></label>
+        <name>Approver3_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- GEO --></label>
+        <name>GEO__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

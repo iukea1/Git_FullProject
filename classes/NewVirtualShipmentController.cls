@@ -93,7 +93,7 @@ public with sharing class NewVirtualShipmentController
             return ecProdIds;            
         }
     }
-      private Map<Id,String> UnityORCHSPProductIds {
+    private Map<Id,String> UnityORCHSPProductIds {
         get{
             Map<Id,String> ecProdIds= new Map<Id,String>();
             try
@@ -112,7 +112,7 @@ public with sharing class NewVirtualShipmentController
             return ecProdIds;            
         }
     }
-  
+    
     public List<Product2> ProductsList
     {
         get
@@ -152,9 +152,9 @@ public with sharing class NewVirtualShipmentController
         {
             Integer index = Integer.valueOf(rowIndex);
             /*if(index>0)
-            {
-                index=index-1;
-            }*/
+{
+index=index-1;
+}*/
             AssetLines.remove(index);
         }
         catch(Exception ex)
@@ -253,7 +253,7 @@ public with sharing class NewVirtualShipmentController
                 if(ECProductIds!=null && ECProductIds.size()>0 && ECProductIds.containsKey(virtualAsset.Asset.Product2Id))
                 {
                     virtualAsset.Asset.Status='Customer Subscription Active';
-                  
+                    
                     virtualAsset.Asset.EC_Product_Name__c=ECProductIds.get(virtualAsset.Asset.Product2Id);
                     if(virtualAsset.Asset.EC_Product_Name__c!=null && virtualAsset.Asset.EC_Product_Name__c.contains('EC-ORCH-AAS'))
                     {
@@ -265,7 +265,7 @@ public with sharing class NewVirtualShipmentController
                         if(UnityORCHSPProductIds!=null && UnityORCHSPProductIds.containsKey(virtualAsset.Asset.Product2Id))
                             virtualAsset.Asset.EC_Product_Name__c=UnityORCHSPProductIds.get(virtualAsset.Asset.Product2Id);
                     }
-                  
+                    
                 }
                 //If the EC Orchestrator is selected, then hardcode the GMS Nodes to 10000
                 if(ECProductIds!=null && ECProductIds.size()>0 && ECProductIds.containsKey(virtualAsset.Asset.Product2Id) &&  ECProductIds.get(virtualAsset.Asset.Product2Id) =='EC-ORCH' )
@@ -418,7 +418,7 @@ public with sharing class NewVirtualShipmentController
         Set<Date> setDates= new Set<Date>();
         for(VirtualAssetManager.VirtualAsset virtualAsset : AssetLines)
         {
-            if(ECProductIds.containsKey(virtualAsset.Asset.Product2Id) && ECProductIds.get(virtualAsset.Asset.Product2Id) !='EC-ORCH')
+            if(ECProductIds.containsKey(virtualAsset.Asset.Product2Id) && ECProductIds.get(virtualAsset.Asset.Product2Id) !='EC-ORCH' && !UnityORCHProductIds.containsKey(virtualAsset.Asset.Product2Id))
             {
                 setDates.add(virtualAsset.Asset.Evaluation_End_Date__c);
             }
@@ -540,7 +540,7 @@ public with sharing class NewVirtualShipmentController
         
         return mapAssetItems;
     }
-        
+    
     public PageReference cancel()
     {
         PageReference pageResult = new PageReference('/' + PO.Id);

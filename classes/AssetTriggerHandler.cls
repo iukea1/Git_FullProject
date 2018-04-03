@@ -60,7 +60,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
-            populateAssetFields(newItems);
+            //populateAssetFields(newItems);
         }
         
         
@@ -161,7 +161,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
             //populateRelatedAssetSubscriptionLookups(newItems.values());
-            updateTheExistingAsset(newItems.values());
+            //updateTheExistingAsset(newItems.values());
+            populateAssetFields(newItems.values());
+            
         }
     }
     
@@ -196,6 +198,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
+            
         }
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
@@ -348,287 +351,97 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
     }
     
-        
-    // Main Method
-    public static void populateRelatedAssetSubscriptionLookups(List<Asset> incomingAssets){
-        // Used in action method
-        
-        Map<Id, List<Asset>> quoteLineIdsToAssets = buildQuoteLineIdsToAssets(incomingAssets);
-        System.debug('@@---------quoteLineIdsToAssets'+ quoteLineIdsToAssets);
-        
-        if(quoteLineIdsToAssets.keySet() == null){
-            System.debug('There are no quote lines related to incoming subscriptions. ');
-            return;
-        }
-        
-        Set<Id> assetQuoteLineIds = quoteLineIdsToAssets.keySet();
-        System.debug('@@---------assetQuoteLineIds'+ assetQuoteLineIds);
-        // Map quote line Id to Quote Line
-        Map<Id, SBQQ__QuoteLine__c> assetQuoteLineMap = queryForAssetQuoteLines(assetQuoteLineIds);
-        System.debug('@@---------queryForAssetQuoteLines'+ assetQuoteLineMap);
-        if(assetQuoteLineMap.size() == 0){
-            System.debug('No quote lines were returned related to subscription quote lines.');
-            return;
-        }
-        
-        Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(assetQuoteLineMap.values());
-        System.debug('@@---------assetQuoteLineMap.values() : '+ assetQuoteLineMap.values());
-        System.debug('@@---------assetQuoteLineMap.keySet() : '+ assetQuoteLineMap.keySet());
-        System.debug('@@---------requiredByQuoteLineIds'+ requiredByQuoteLineIds);
-        List<SBQQ__Subscription__c> subscriptionRelatedToAssets = queryForSubscriptionRelatedToAssetsRequiredByIds(requiredByQuoteLineIds);
-        System.debug('@@---------subscriptionRelatedToAssets'+ subscriptionRelatedToAssets);
-        // PROBLEM 
-        if(subscriptionRelatedToAssets.size() == 0){
-            System.debug('No assets were found relating to the subscription quote lines required by quote line.');
-            return;
-        }
-        
-        Map<Id, Set<Id>> assetRequiredByIdToAssetQuoteLineIds = buildAssetRequiredByIdToAssetQuoteLineIds(assetQuoteLineMap.values());
-        System.debug('@@---------assetRequiredByIdToAssetQuoteLineIds'+ assetRequiredByIdToAssetQuoteLineIds);
-        List<SBQQ__Subscription__c> subscriptionsToUpdate = updateSubscriptionsWithAssetLookups(subscriptionRelatedToAssets, assetRequiredByIdToAssetQuoteLineIds, quoteLineIdsToAssets);
-        
-        System.debug('Assets to update: ' + subscriptionsToUpdate);
-        
-        if(subscriptionsToUpdate.size() > 0){
-            update subscriptionsToUpdate;
-            
-        }
-        // end of the asset 
-
-        
-    }
-    //Helper Method
-     private static Map<Id, List<Asset>> buildQuoteLineIdsToAssets(List<Asset> incomingAssets){
-         Map<Id, List<Asset>> quoteLineIdsToAssets = new Map<Id, List<Asset>>();
-         
-         for(Asset asset: incomingAssets){
-             if(asset.SBQQ__QuoteLine__c == null){
-                 continue;
-             }
-             
-             List<Asset> assetsRelatedToQuoteLine = quoteLineIdsToAssets.get(asset.SBQQ__QuoteLine__c);
-             
-             if(assetsRelatedToQuoteLine == null){
-                 assetsRelatedToQuoteLine = new List<Asset>();
-                 quoteLineIdsToAssets.put(asset.SBQQ__QuoteLine__c, assetsRelatedToQuoteLine);
-             }
-             
-             assetsRelatedToQuoteLine.add(asset);
-         }
-         
-         System.debug('Quote Line Id To Asset Id: ' + quoteLineIdsToAssets);
-         return quoteLineIdsToAssets;
-     }
-
-    
-    private static Map<Id, SBQQ__QuoteLine__c> queryForAssetQuoteLines(Set<Id> assetQuoteLineIds){
-        Map<Id, SBQQ__QuoteLine__c> assetQuoteLineMap = new Map<Id, SBQQ__QuoteLine__c>();
-        List<SBQQ__QuoteLine__c> queryForAssetQuoteLine = new List<SBQQ__QuoteLine__c>();
-        
-        try{
-            queryForAssetQuoteLine = [SELECT Id, SBQQ__RequiredBy__c FROM SBQQ__QuoteLine__c WHERE SBQQ__RequiredBy__c IN :assetQuoteLineIds];
-            
-            for(SBQQ__QuoteLine__c quoteLineMap: queryForAssetQuoteLine){
-                assetQuoteLineMap.put(quoteLineMap.SBQQ__RequiredBy__c, quoteLineMap);
-            }
-        }
-        catch(QueryException qe){
-            system.debug(qe.getMessage());
-        }
-        
-        System.debug('Asset Quote Line Map: ' + assetQuoteLineMap);
-        return assetQuoteLineMap;
-    }
-    
-    private static Set<Id> getRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> assetQuoteLines){
-        Set<Id> requiredByQuoteLineIds = new Set<Id>();
-        
-        for(SBQQ__QuoteLine__c quoteLine: assetQuoteLines){
-            if(quoteLine.Id == null){
-                continue;
-            } 
-            
-            requiredByQuoteLineIds.add(quoteLine.Id);
-        }
-        
-        return requiredByQuoteLineIds;
-    }
-    
-    private static Map<Id, SBQQ__Subscription__c> assetRequiredByIdToSubscriptionQuoteline(Set<Id> assetRequiredByIds){
-        Map<Id, SBQQ__Subscription__c> requiredByToSubscriptionQuoteLineMap = new Map<Id, SBQQ__Subscription__c>();
-        
-        
-        return requiredByToSubscriptionQuoteLineMap;
-    }
-    
-    private static List<SBQQ__Subscription__c> queryForSubscriptionRelatedToAssetsRequiredByIds(Set<Id> requiredByAssetQuoteLineIds){
-        List<SBQQ__Subscription__c> subscriptionRelatedToAssets = new List<SBQQ__Subscription__c>();
-        
-        try{
-            subscriptionRelatedToAssets = [SELECT Id, SBQQ__QuoteLine__c, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__c IN :requiredByAssetQuoteLineIds];
-        }
-        catch(QueryException qe){
-            System.debug(qe.getMessage());
-        }
-            
-            System.debug('Subscription realted to Asset : ' + subscriptionRelatedToAssets);
-        
-        return subscriptionRelatedToAssets;
-    }
-    
-    private static Map<Id, Set<Id>> buildAssetRequiredByIdToAssetQuoteLineIds(List<SBQQ__QuoteLine__c> assetQuoteLines){
-        Map<Id, Set<Id>> assetRequiredByIdToSubscriptionQuoteLineIds = new Map<Id, Set<Id>>();
-        
-        System.debug('asset Quote Lines in buildAssetRequiredByIdToAssetQuoteLineIds: ' + assetQuoteLines);
-        
-        for(SBQQ__QuoteLine__c subscriptionQuoteLine: assetQuoteLines){
-            if(subscriptionQuoteLine.SBQQ__RequiredBy__c == null){
-                continue;
-            }
-            
-            Set<Id> subscriptionQuoteLineIds = assetRequiredByIdToSubscriptionQuoteLineIds.get(subscriptionQuoteLine.SBQQ__RequiredBy__c);
-            
-            if(subscriptionQuoteLineIds == null){
-                subscriptionQuoteLineIds = new Set<Id>();
-                assetRequiredByIdToSubscriptionQuoteLineIds.put(subscriptionQuoteLine.SBQQ__RequiredBy__c, subscriptionQuoteLineIds);
-            }
-            
-            subscriptionQuoteLineIds.add(subscriptionQuoteLine.Id);
-        }
-        
-        System.debug('Asset Required By Id To Asset Quote Line Ids: ' + assetRequiredByIdToSubscriptionQuoteLineIds);
-        
-        return assetRequiredByIdToSubscriptionQuoteLineIds;
-    }
-    
-    private static List<SBQQ__Subscription__c> updateSubscriptionsWithAssetLookups(List<SBQQ__Subscription__c> subscriptionRelatedToAssets, Map<Id, Set<Id>> assetRequiredByIdToAssetQuoteLineIds,
-                                                                   Map<Id, List<Asset>> quoteLineIdsToAssets){
-                                                                       
-                                                                       System.debug('Update Subscription With Asset Lookups Method.');
-                                                                       List<SBQQ__Subscription__c> subscriptionsToUpdate = new List<SBQQ__Subscription__c>();
-                                                                       
-                                                                       for(SBQQ__Subscription__c subscription: subscriptionRelatedToAssets){
-                                                                           Set<Id> assetQuoteLineIds = assetRequiredByIdToAssetQuoteLineIds.keySet();
-                                                                           
-                                                                           if(assetQuoteLineIds == null){
-                                                                               System.debug('No asset quote line Ids related to Subscription for subscription: ' + subscription);
-                                                                               continue;
-                                                                           }
-                                                                           
-                                                                           List<Asset> assetsRelatedToSubscription = new List<Asset>();
-                                                                           for(Id assetQuoteLineId: assetQuoteLineIds){
-                                                                               List<Asset> assets = quoteLineIdsToAssets.get(assetQuoteLineId);
-                                                                               if(assets == null){
-                                                                                   System.debug('No asset in = map with id: ' + assetQuoteLineId);
-                                                                                   continue;
-                                                                               }
-                                                                               assetsRelatedToSubscription.addAll(assets);
-                                                                           }
-                                                                           
-                                                                           if(assetsRelatedToSubscription.size() == 0){
-                                                                               System.debug('There were no subscriptions related to asset with Id: ' + subscription.Id);
-                                                                           }
-                                                                           else{
-                                                                               System.debug('assets found related to subscription.');
-                                                                               System.debug('Updating subscription with Id: ' + subscription.Id + ' with asset lookups with the following assets: ' + assetsRelatedToSubscription);
-                                                                               
-                                                                               Asset asset;
-                                                                               //SBQQ__Subscription__c smartHandsSubscription;
-                                                                               
-                                                                               for(Asset relatedAsset: assetsRelatedToSubscription){
-                                                                                   asset = relatedAsset;
-                                                                               }
-                                                                               
-                                                                               // Should not be the case since the trigger is on subscription
-                                                                               if(asset == null){
-                                                                                   System.debug('No Asset Found for Subscription with Id: ' + subscription.Id);
-                                                                                   continue;
-                                                                               }
-                                                                               else{
-                                                                                   if(asset != null){
-                                                                                       subscription.SBCF_Asset__c = asset.Id;
-                                                                                   }
-                                                                                   
-                                                                                   subscriptionsToUpdate.add(subscription);
-                                                                                   
-                                                                               }
-                                                                               
-                                                                           }
-                                                                           
-                                                                       }
-                                                                        System.debug('subscription to Update : ' + subscriptionsToUpdate);
-                                                                       return subscriptionsToUpdate;
-                                                                   }
- // end of the helper method 
- 
     
  // Author : Ronald Pascual
  // Date: March 26, 2018
  // Description : To Pull the Status, Part Number, and Serial Number from the Order Product Items to Asset. 
  // -------------------------------------------------------------------------------------------------------
  
- // START of Activation Order task -------@@@ 
+ // START of Activation Order task -------@@ 
+ // Before Insert Trigger 
 
     private static void populateAssetFields(List<Asset> incomingAssets){
-        List<Asset> updateOrderProductItem = populateStatusPartAndSerialNumberToAsset(incomingAssets);
+        List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
+        System.debug('update asset ------ : ' + updateAsset);
         
-        if(updateOrderProductItem == null){
-            System.debug('There are no incoming asset that was related to order product item. ');
+        if(updateAsset.size()>0){
+            update updateAsset;
         }
         
-        if(updateOrderProductItem.size()>0){
-            update updateOrderProductItem;
-        }
     }
     
     private static List<Asset> populateStatusPartAndSerialNumberToAsset(List<Asset> asset){
     
-        List<Asset> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(asset);
-    
-        if(assetProductEqualToPhysical == null){
-            System.debug('There are no incoming asset that has a product forecast category of PHYSICAL. ');
-        }
-    
-        Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
-    
-        if(orderProductToAssets.keySet() == null){
-            System.debug('There are no order product related to incoming assets. ');
-        }
+        Set<Id> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(asset);        
+        System.debug('@@--------   assetProductEqualToPhysical : ' + assetProductEqualToPhysical);
+        
+        List<Asset> generatedAsset = assetGenerated(assetProductEqualToPhysical);
+        System.debug('@@------------ generatedAsset ' + generatedAsset);
+ 
+        Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(generatedAsset);
+        System.debug('@@ -------- orderProductToAssets ' + orderProductToAssets);
     
         Set<Id> orderProductFromAsset =  orderProductToAssets.keySet();
+        System.debug('@@------- orderProductFromAsset :' + orderProductFromAsset);
     
         List<Order_Product_Item__c> orderProductItemRelatedToAsset = getAllOrderProductItemsRelatedToOrderProduct(orderProductFromAsset);
-    
-        if(orderProductToAssets.keySet() == null){
-            System.debug('There are no ORDER PRODUCT ITEM related to incoming assets. ');
-        }
-    
+        System.debug('@@------- orderProductItemRelatedToAsset :' + orderProductItemRelatedToAsset);
+
         List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
-    
-        System.debug('Asset to update :  ' + updateAssets);
+        System.debug('@@ ----- Asset to update :  ' + updateAssets);
     
         if(updateAssets.size()>0){
             update updateAssets;
         }
         
-        //List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
-    	
+        List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
+    	System.debug('@@--------- updateOrderProductItem : ' + updateOrderProductItem);
+        
+        if(updateOrderProductItem.size()>0){
+            update updateOrderProductItem;
+        }
+        
         return updateAssets;
 
     }
     
-    //List<Asset> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset);
-    
-    private static List<Asset> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
+    private static Set<Id> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
+    //private static List<Asset> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
         List<Asset> assetProductEqualToPhysical = new List<Asset>();
-    
+ 		Set<Id> assetIds = new Set<Id>();
+        //Map<Id,Product> bagongMap;    
+            
         for(Asset asset: incomingAsset){
-            if(asset.Product2.Forecast_Category__c == 'Physical'){
+            //if(asset.Product2.Forecast_Category__c == 'Physical'){
+            	System.debug('Assets -------@@:' + asset);
+            	System.debug('Assets product forecast category :' + asset.Product2.Forecast_Category__c);
                 assetProductEqualToPhysical.add(asset);
-            }	
+            	assetIds.add(asset.Id);
+            //}	
+            // 
         }
+        /*
+        for(Asset asset: incomingAsset){
+            //if(asset.Product2.Forecast_Category__c == 'Physical'){ 
+            // get the order id's and product id's 
+            	System.debug('Assets product forecast category :' + bagongMap.get(asset.Product2Id).Forecast Category;
+                assetProductEqualToPhysical.add(asset);
+            //}	
+            // 
+        }
+    	*/
+        return assetIds;	
+    }
     
-        return assetProductEqualToPhysical;	
+    private static List<Asset> assetGenerated(Set<Id> assetId){
+        List<Asset> generatedAsset = new List<Asset>();
+        try {
+            generatedAsset = [SELECT Id, SBQQ__OrderProduct__c FROM Asset WHERE Id IN: assetId];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+        return generatedAsset;
     }
     
     //Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
@@ -675,14 +488,17 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> updateAssets = new List<Asset>();
     
         for(Order_Product_Item__c orderProdItem: orderProductItemRelatedToAsset){
-            List<Asset> assetList = orderProductToAssets.get(orderProdItem.Order_Product__c);
+            
+            List<Asset> assetList = orderProductToAssets.get(orderProdItem.Order_Product__c);            
             System.debug('Assets related to Order Product : ' + assetList);
+            
              for(Asset asset: assetList){
                 asset.SerialNumber = orderProdItem.Serial_Number__c;
                 asset.Part_Number__c = orderProdItem.Part_Number__c;
                 asset.Status = orderProdItem.Status__c;
                 updateAssets.add(asset);
              }		 
+            
         }
     
         return updateAssets;
@@ -704,25 +520,61 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
     
     // ------------- Asset override method ---------------//
-    // --- requires @future method 
-    // 
+    
     
     
     private static void updateTheExistingAsset(List<Asset> incomingAssets){
-        
+        List<Asset> deleteAssets = new LIst<Asset>();
 		Set<Id> generatedAssetSetOfIds =  generatedAssetIds(incomingAssets);
         
         if(generatedAssetSetOfIds == null){
             System.debug('There are no asset generated upon activation of order' + generatedAssetSetOfIds);
             return;
         }
+        List<Asset> generatedAssetToBeDeleted = generatedAssetToDelete(incomingAssets);
+        List<Asset> assetToOverride = overrideAsset(generatedAssetSetOfIds);
         
-        overrideAsset(generatedAssetSetOfIds);
+        if(assetToOverride.size()>0){
+            update assetToOverride;
+            
+            for(Asset assetOverride: assetToOverride){
+                for(Asset generatedAsset: generatedAssetToBeDeleted){
+                    if(generatedAsset.Part_Number__c == assetOverride.Part_Number__c && 
+                       generatedAsset.SerialNumber == assetOverride.SerialNumber && 
+                       generatedAsset.Status == assetOverride.Status){
+
+                       deleteAssets.add(generatedAsset);
+                    }
+                }
+        	}
+            
+            System.debug('delete Asset : ' + deleteAssets);
+            
+        }
+        
+        
+        
         
     }
     
     private static Set<Id> generatedAssetIds(List<Asset> incomingAssets){
+        //List<Asset> assetToDelete = new List<Asset>();
         Set<Id> generatedAssetSetOfIds = new Set<Id>();
+        //List<Asset> updatedAssetsRelatedToOrderProdItems = populateStatusPartAndSerialNumberToAsset(incomingAssets);
+        
+        if(incomingAssets == null){
+            System.debug('There are no incoming asset that was related to order product item. ');
+        }
+        
+        for(Asset updatedAssets: incomingAssets){
+            generatedAssetSetOfIds.add(updatedAssets.Id);
+        }
+        
+        return generatedAssetSetOfIds;
+    }
+    
+    private static List<Asset> generatedAssetToDelete(List<Asset> incomingAssets){
+        List<Asset> assetToDelete = new List<Asset>();
         List<Asset> updatedAssetsRelatedToOrderProdItems = populateStatusPartAndSerialNumberToAsset(incomingAssets);
         
         if(updatedAssetsRelatedToOrderProdItems == null){
@@ -730,15 +582,15 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         for(Asset updatedAssets: updatedAssetsRelatedToOrderProdItems){
-            generatedAssetSetOfIds.add(updatedAssets.Id);
+            assetToDelete.add(updatedAssets);
         }
         
-        return generatedAssetSetOfIds;
+        return assetToDelete;
     }
     
-    private static void overrideAsset(Set<Id> orderProductAsset){
+    private static List<Asset> overrideAsset(Set<Id> orderProductAsset){
         
-        Set<Asset> updateExistingAssetSet = new Set<Asset>();
+        List<Asset> updateExistingAssetList = new List<Asset>();
     
         for(Order_Product_Item__c orderProdItem: [SELECT Id, Existing_Asset__c, 
                                                     Asset__r.Part_Number__c,
@@ -755,17 +607,18 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 existingAsset.Part_Number__c = orderProdItem.Asset__r.Part_Number__c;
                 existingAsset.SerialNumber = orderProdItem.Asset__r.SerialNumber;
                 existingAsset.Status = orderProdItem.Asset__r.Status;
-                updateExistingAssetSet.add(existingAsset);
+                updateExistingAssetList.add(existingAsset);
                 
-                System.debug('Updated Existing Asset : ' +  updateExistingAssetSet);
+                System.debug('Updated Existing Asset : ' +  updateExistingAssetList);
             }
             
         }
     
-            if(!updateExistingAssetSet.isEmpty()){
-                update new List<Asset>(updateExistingAssetSet);
+            if(!updateExistingAssetList.isEmpty()){
+                update updateExistingAssetList;
             }
-            
+        
+            return updateExistingAssetList;
 	}
     
 }

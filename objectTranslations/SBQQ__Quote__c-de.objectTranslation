@@ -144,6 +144,10 @@
             <section>Address Information</section>
         </sections>
         <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
             <label><!-- Contract Information --></label>
             <section>Contract Information</section>
         </sections>
@@ -166,6 +170,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Success Criteria --></label>
+            <section>Success Criteria</section>
         </sections>
     </layouts>
     <layouts>
