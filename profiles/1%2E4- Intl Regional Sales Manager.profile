@@ -610,6 +610,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ExtendPOCController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ForecastAutoSubmit</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -6622,21 +6626,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote_GEO_Region_Approvers__c.Approver2_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote_GEO_Region_Approvers__c.Approver3_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote_GEO_Region_Approvers__c.GEO__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Quote_Line_Address__c.Is_Hardware__c</field>
         <readable>true</readable>
@@ -9304,9 +9293,6 @@
         <layout>Quote_Approval_Matrix__c-Quote Approval Matrix Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Quote_GEO_Region_Approvers__c-Quote GEO Region Approver Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Quote_Line_Address__c-Quote Line Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -10093,6 +10079,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>ExtendPOC</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ExtensionRequestPopup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -10641,6 +10631,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>QuoteSubmitApproval</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>RMAListOverride</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -10992,10 +10986,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Quote_Approval_Matrix__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Quote_GEO_Region_Approvers__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

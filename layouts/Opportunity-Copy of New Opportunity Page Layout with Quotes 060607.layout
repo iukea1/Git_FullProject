@@ -140,6 +140,10 @@
                 <behavior>Edit</behavior>
                 <field>POC_Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Owner_ManagerId__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

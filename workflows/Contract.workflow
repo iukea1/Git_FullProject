@@ -47,6 +47,17 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>POC/ContractRenewed</template>
     </alerts>
+    <alerts>
+        <fullName>test</fullName>
+        <description>test</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/Eval_Quote_Allow_Fulfillment</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Contract_Set_EC_Total_Contract_Value</fullName>
         <field>SD_WAN_Optimization_Value__c</field>
@@ -160,6 +171,24 @@
             </actions>
             <offsetFromField>Contract.CreatedDate</offsetFromField>
             <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>contract id not equal to null</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Name</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>test</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

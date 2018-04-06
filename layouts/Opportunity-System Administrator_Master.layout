@@ -11,6 +11,7 @@
     <customButtons>BL__Find_Reference</customButtons>
     <customButtons>Define_Channel</customButtons>
     <customButtons>SBQQ__CreateOrder</customButtons>
+    <customButtons>Create_Renewal_Quote</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -111,6 +112,10 @@
                 <behavior>Edit</behavior>
                 <field>Pricebook2Id</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Owner_ManagerId__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -204,6 +209,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__Ordered__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

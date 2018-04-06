@@ -3345,7 +3345,9 @@ ISPICKVAL(Status__c, &quot;Closed - Won&quot; ),
 ISPICKVAL(Status__c, &quot;Closed - Denied&quot; ),
 ISPICKVAL(Status__c, &quot;Closed - Returned&quot; ),
 ISPICKVAL(Status__c, &quot;Scheduled&quot; )),
-OR($User.Id = Opportunity__r.OwnerId, $User.Id = Opportunity__r.Technical_Responsible__r.Id),  Marketplace_Sourced_Opp__c =0
+NOT( $Profile.Name==&quot;9-Operations Manager&quot; ),
+NOT( $Profile.Name==&quot;System Administrator&quot; ),
+Marketplace_Sourced_Opp__c =0
 )</errorConditionFormula>
         <errorMessage>Use the Submit for Approval button instead of changing the status to request approval</errorMessage>
     </validationRules>

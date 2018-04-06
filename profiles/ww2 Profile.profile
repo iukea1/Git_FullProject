@@ -610,6 +610,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ExtendPOCController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ForecastAutoSubmit</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -6623,21 +6627,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quote_GEO_Region_Approvers__c.Approver2_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Quote_GEO_Region_Approvers__c.Approver3_Id__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Quote_GEO_Region_Approvers__c.GEO__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Quote_Line_Address__c.Is_Hardware__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9307,9 +9296,6 @@
         <layout>Quote_Approval_Matrix__c-Quote Approval Matrix Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Quote_GEO_Region_Approvers__c-Quote GEO Region Approver Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Quote_Line_Address__c-Quote Line Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -9707,6 +9693,10 @@
     <pageAccesses>
         <apexPage>Exception</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ExtendPOC</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ExtensionRequestPopup</apexPage>
@@ -10254,6 +10244,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuotePdf115</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>QuoteSubmitApproval</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

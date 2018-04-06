@@ -12,7 +12,7 @@
 *
 **********************************************************************/
 public without sharing class SubscriptionTriggerHandler implements ITriggerHandler{
-    public static boolean run = true;
+    
     public static final String PRODUCT_NAME_PREFIX_SMART_HANDS = 'SMRT-HND';
     public static final Datetime THIRTY_SECONDS_AGO = System.now().addSeconds(-30);
     
@@ -44,12 +44,11 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             
         }
         
-       //populateRelatedAssetSubscriptionLookups(newItems.values());
-       //-- latest -- // populateRelatedSubscriptionAssetLookups(newItems.values());
+       populateRelatedAssetSubscriptionLookups(newItems.values());
+       //populateRelatedSubscriptionAssetLookups(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-		
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
@@ -58,14 +57,12 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     {
     }
   
-    public static void populateRelatedSubscriptionAssetLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
+    public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         // Used in action method
-        Set<Id> subscriptionToUpdateIds = new Set<Id>();
-		List<SBQQ__Subscription__c> finalSubscriptionToUpdate = new List<SBQQ__Subscription__c>();
-
         Map<Id, Id> assetTosubscription = new Map<Id, Id>();
         Set<id> assetThatHasSubscription = new Set<Id>();
 		List<SBQQ__Subscription__c> subscriptionWithAsset = new List<SBQQ__Subscription__c>();
+        List<SBQQ__Subscription__C> renewedSubscriptionList = new List<SBQQ__Subscription__c>();
         
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = buildQuoteLineIdsToSubscriptions(incomingSubscriptions);
         
@@ -100,41 +97,14 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds = buildSubscriptionRequiredByIdToSubscriptionQuoteLineIds(subscriptionQuoteLineMap.values());
         
-        List<SBQQ__Subscription__c> subscriptionToUpdate = updateAssetsWithSubscriptionLookups(assetsRelatedToSubscriptions, subscriptionRequiredByIdToSubscriptionQuoteLineIds, quoteLineIdsToSubscriptions);
+        List<Asset> assetsToUpdate = updateAssetsWithSubscriptionLookups(assetsRelatedToSubscriptions, subscriptionRequiredByIdToSubscriptionQuoteLineIds, quoteLineIdsToSubscriptions);
         
-        System.debug('Assets to update: ' + subscriptionToUpdate);
+        System.debug('Assets to update: ' + assetsToUpdate);
         
-        if(subscriptionToUpdate.size()>0){
-            update subscriptionToUpdate;
-        }
-        /*
-        for(SBQQ__Subscription__c subs: subscriptionToUpdate){
-          subscriptionToUpdateIds.add(subs.Id);
+        if(assetsToUpdate.size() > 0){
+            update assetsToUpdate;
         }
         
-        List<SBQQ__Subscription__c> subsList = [SELECT Id, Name, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE Id IN : subscriptionToUpdateIds];
-
-        for(SBQQ__Subscription__c subRec: subscriptionToUpdate){
-          for(SBQQ__Subscription__c sub: subsList){
-            if(subRec.Id == sub.Id){
-              sub.SBCF_Asset__c = subRec.SBCF_Asset__c;
-              //finalSubscriptionToUpdate.add(sub);
-            }
-          }
-        }
-        if(subsList.size()>0){
-            update subsList;
-        }
-        
-        */
-        //if(finalSubscriptionToUpdate.size()>0){
-        //    update finalSubscriptionToUpdate;
-        // }
-		
-        //if(assetsToUpdate.size() > 0){
-        //    update assetsToUpdate;
-        //}
-        /*
         // This is the process to populate the related asset to Subscription detail page. 
         for(Asset assetRec: assetsToUpdate){
             assetThatHasSubscription.add(assetRec.SBCF_Subscription__c);
@@ -142,26 +112,37 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         }
         
         List<SBQQ__Subscription__c> subsInAsset = queryForAllSubscriptionsInAsset(assetThatHasSubscription);
-		//List<SBQQ__Subscription__c> renewedSubscription = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c != Null];        
         for(SBQQ__Subscription__c subs: subsInAsset){
             subs.SBCF_Asset__c = assetToSubscription.get(subs.Id);
             subscriptionWithAsset.add(subs);
         }
-        
+
         if(subscriptionWithAsset.size()>0){
             update subscriptionWithAsset;
         }
-        */
+        
+        List<SBQQ__Subscription__c> renewedSubscription = [SELECT Id, SBCF_Asset__c, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c, SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__r.SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c NOT IN ('',NULL)];        
+        for(SBQQ__Subscription__c renewSubs: renewedSubscription){
+            if(renewSubs.SBCF_Asset__c == NULL){
+                SBQQ__Subscription__c renewedSubs = new SBQQ__Subscription__c();
+                renewedSubs.Id = renewSubs.SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c;
+                renewSubs.SBCF_Asset__c = renewedSubs.SBCF_Asset__c;
+                renewedSubscriptionList.add(renewSubs);
+            }
+        }
+        
+        if(renewedSubscriptionList.size()>0){
+            update renewedSubscriptionList;
+        }
         
     }
     
     // Action
-    private static List<SBQQ__Subscription__c> updateAssetsWithSubscriptionLookups(List<Asset> assetsRelatedToSubscriptions, Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds,
+    private static List<Asset> updateAssetsWithSubscriptionLookups(List<Asset> assetsRelatedToSubscriptions, Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds,
                                                                    Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions){
                                                                        
                                                                        System.debug('Update Assets With Subscription Lookups Method.');
                                                                        List<Asset> assetsToUpdate = new List<Asset>();
-                                                                       List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
                                                                        
                                                                        for(Asset asset: assetsRelatedToSubscriptions){
                                                                            Set<Id> subscriptionQuoteLineIds = subscriptionRequiredByIdToSubscriptionQuoteLineIds.get(asset.SBQQ__QuoteLine__c);
@@ -192,17 +173,15 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                                                                                SBQQ__Subscription__c smartHandsSubscription;
                                                                                
                                                                                for(SBQQ__Subscription__c relatedSubscription: subscriptionsRelatedToAsset){
-                                                                                   //if(!String.isEmpty(relatedSubscription.SBQQ__ProductName__c) && relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
-                                                                                       //System.debug('Smart hand Subscription found: ' + relatedSubscription.Id);
-                                                                                       //smartHandsSubscription = relatedSubscription;
-                                                                                   //}else{
-                                                                                   //    System.debug('Non smart hand subscription found: ' + relatedSubscription.Id);
-                                                                                   //    subscription = relatedSubscription;
-                                                                                   //}
-                                                                                	relatedSubscription.SBCF_Asset__c = asset.Id;
-                                                                                    subscriptionToUpdate.add(relatedSubscription);
+                                                                                   if(!String.isEmpty(relatedSubscription.SBQQ__ProductName__c) && relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
+                                                                                       System.debug('Smart hand Subscription found: ' + relatedSubscription.Id);
+                                                                                       smartHandsSubscription = relatedSubscription;
+                                                                                   }else{
+                                                                                       System.debug('Non smart hand subscription found: ' + relatedSubscription.Id);
+                                                                                       subscription = relatedSubscription;
+                                                                                   }
                                                                                }
-                                                                               /*
+                                                                               
                                                                                // Should not be the case since the trigger is on subscription
                                                                                if(subscription == null && smartHandsSubscription == null){
                                                                                    System.debug('No Subscription or Smart Hand Subscription Found for Asset with Id: ' + asset.Id);
@@ -212,15 +191,18 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                                                                                    if(subscription != null){
                                                                                        asset.SBCF_Subscription__c = subscription.Id;
                                                                                    }
-                                                                                   
+                                                                                   if(smartHandsSubscription != null){
+                                                                                       asset.Smart_Hands_Subscription__c = smartHandsSubscription.Id;
+                                                                                   }
                                                                                    
                                                                                    assetsToUpdate.add(asset);
                                                                                }
-                                                                               */
+                                                                               
                                                                            }
                                                                            
                                                                        }
-                                                                       return subscriptionToUpdate;
+                                                                       
+                                                                       return assetsToUpdate;
                                                                    }
     
     private static Map<Id, Set<Id>> buildSubscriptionRequiredByIdToSubscriptionQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
@@ -363,7 +345,6 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         return subscriptionInAsset;
     }
     
-    /*
     public static void populateRelatedSubscriptionAssetLookups(List<SBQQ__Subscription__c> incomingSubs){
         List<SBQQ__Subscription__c> subcriptionsToUpdate = new List<SBQQ__Subscription__c>();
         Set<Id> subscriptionIdsSet = new Set<Id>();
@@ -390,7 +371,5 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         //List<SBQQ__Subscription__c> quoteLineRelatedToAsset = [SELECT Id, Name (SELECT Id, Name FROM SBQQ__SubscribedAsset__c) FROM SBQQ__Subscription__c WHERE Id IN: subscriptionIdsSet];
         
     }
-    */
-    
     
 }

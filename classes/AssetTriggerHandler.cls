@@ -121,6 +121,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
+            
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -364,9 +365,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
         System.debug('update asset ------ : ' + updateAsset);
         
-        if(updateAsset.size()>0){
-            update updateAsset;
-        }
+        //if(updateAsset.size()>0){
+        //    update updateAsset;
+        // }
         
     }
     
@@ -377,6 +378,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
         
         List<Asset> generatedAsset = assetGenerated(assetProductEqualToPhysical);
         System.debug('@@------------ generatedAsset ' + generatedAsset);
+        
+        for(Asset genAsset: generatedAsset){
+            System.debug('asset order product : ' + genAsset.SBQQ__OrderProduct__c);
+        }
+        
  
         Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(generatedAsset);
         System.debug('@@ -------- orderProductToAssets ' + orderProductToAssets);
@@ -390,16 +396,16 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
         System.debug('@@ ----- Asset to update :  ' + updateAssets);
     
-        if(updateAssets.size()>0){
-            update updateAssets;
-        }
+        //if(updateAssets.size()>0){
+        //    update updateAssets;
+        //}
         
-        List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
-    	System.debug('@@--------- updateOrderProductItem : ' + updateOrderProductItem);
+        //List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
+    	//System.debug('@@--------- updateOrderProductItem : ' + updateOrderProductItem);
         
-        if(updateOrderProductItem.size()>0){
-            update updateOrderProductItem;
-        }
+        //if(updateOrderProductItem.size()>0){
+        //    update updateOrderProductItem;
+        //}
         
         return updateAssets;
 
@@ -409,7 +415,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     //private static List<Asset> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
         List<Asset> assetProductEqualToPhysical = new List<Asset>();
  		Set<Id> assetIds = new Set<Id>();
-        //Map<Id,Product> bagongMap;    
+     
             
         for(Asset asset: incomingAsset){
             //if(asset.Product2.Forecast_Category__c == 'Physical'){
@@ -420,16 +426,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             //}	
             // 
         }
-        /*
-        for(Asset asset: incomingAsset){
-            //if(asset.Product2.Forecast_Category__c == 'Physical'){ 
-            // get the order id's and product id's 
-            	System.debug('Assets product forecast category :' + bagongMap.get(asset.Product2Id).Forecast Category;
-                assetProductEqualToPhysical.add(asset);
-            //}	
-            // 
-        }
-    	*/
+       
         return assetIds;	
     }
     
@@ -450,6 +447,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
     
          for(Asset asset: assetProductEqualToPhysical){
+            System.debug('@@----- asset.SBQQ__OrderProduct__c :' + asset.SBQQ__OrderProduct__c);
+             
             if(asset.SBQQ__OrderProduct__c == null){
                 continue;
             }

@@ -177,6 +177,14 @@
                 <behavior>Edit</behavior>
                 <field>LeanData_Matched_Account_SP__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDPR_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GDPR_Country_Formula__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
