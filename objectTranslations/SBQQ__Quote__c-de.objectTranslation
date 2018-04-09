@@ -148,6 +148,10 @@
             <section>CC List</section>
         </sections>
         <sections>
+            <label><!-- Contact and comments --></label>
+            <section>Contact and comments</section>
+        </sections>
+        <sections>
             <label><!-- Contract Information --></label>
             <section>Contract Information</section>
         </sections>
@@ -164,8 +168,8 @@
             <section>Discount Information</section>
         </sections>
         <sections>
-            <label><!-- POC Fields --></label>
-            <section>POC Fields</section>
+            <label><!-- Poc Approvers --></label>
+            <section>Poc Approvers</section>
         </sections>
         <sections>
             <label><!-- Quote Options --></label>

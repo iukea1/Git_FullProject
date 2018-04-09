@@ -1,5 +1,9 @@
 <apex:component controller="EvalQuoteProductController" access="global" layout="none">
     <apex:attribute name="pocId" type="Id" description="Id of the Quote" assignTo="{!QuoteId}"></apex:attribute>
+      <apex:outputPanel rendered="{!HWProd.size==0}">
+      There are no physical products.
+       </apex:outputPanel>
+    <apex:outputPanel rendered="{!HWProd.size>0}">
             <table cellspacing="5" style="width=:100%;border-collapse: collapse;" >
             <tr>
                 <td style="font-weight:bold; border: 1px solid;padding: 8px; text-align: left;">Product Name</td>
@@ -22,4 +26,5 @@
                 </tr>
             </apex:repeat>
         </table> 
+        </apex:outputPanel>
 </apex:component>
