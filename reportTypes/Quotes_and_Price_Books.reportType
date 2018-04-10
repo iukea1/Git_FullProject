@@ -433,7 +433,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>OppAcct_ShipName__c</field>
+            <field>Output_ShippingName__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
         <columns>

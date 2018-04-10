@@ -188,6 +188,10 @@
                 <behavior>Edit</behavior>
                 <field>Justification__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Account_Country__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

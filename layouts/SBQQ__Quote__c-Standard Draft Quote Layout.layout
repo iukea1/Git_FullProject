@@ -4,6 +4,7 @@
     <customButtons>SBQQ__EditLines</customButtons>
     <customButtons>SBQQ__RefreshPrices</customButtons>
     <customButtons>SBQQ__ImportLines</customButtons>
+    <customButtons>Extend_POC</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>
@@ -147,6 +148,10 @@
                 <behavior>Edit</behavior>
                 <field>Justification__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Account_Country__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -200,6 +205,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__CustomerDiscount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Active_Asset_Subscription_Count__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

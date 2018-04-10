@@ -14,13 +14,22 @@ public class ExtendPOCController {
         
         quoteList = [SELECT Id, Name, Justification__c, Requested_Extension_Date__c, SBQQ__EndDate__c FROM SBQQ__Quote__c WHERE Id =: quote.Id LIMIT 1];
         
+        if(quoteList == null || quoteList.size() == 0){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There is no quote available.');
+            ApexPages.addMessage(myMsg);
+            return;
+        }
+        
     }
     
     public PageReference saveQuote(){
-        PageReference page = new PageReference('/' + this.quote.Id);
+        if(quoteList.size()>0){
+            update quoteList;
+        }
+        PageReference page = new PageReference('/apex/QuoteSubmitApproval?id=' + this.quote.Id);
         page.setRedirect(true);
-        return page;
-    }
+        return page;  
+    }    
     
     
     public PageReference returnToQuote(){

@@ -122,6 +122,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             
+            //for(Asset assetRecord : Trigger.newMap.values()){
+            //    if(Trigger.oldMap.get(assetRecord).SBQQ__OrderProduct__c != Trigger.newMap.get(assetRecord).SBQQ__OrderProduct__c){
+            // Your order product is now available for reference, run the rest of your logic.
+            //    }
+            //}
+            
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -365,9 +371,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
         System.debug('update asset ------ : ' + updateAsset);
         
-        //if(updateAsset.size()>0){
-        //    update updateAsset;
-        // }
+        if(updateAsset.size()>0){
+            update updateAsset;
+         }
         
     }
     

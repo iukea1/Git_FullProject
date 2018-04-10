@@ -1638,6 +1638,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAItemTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
