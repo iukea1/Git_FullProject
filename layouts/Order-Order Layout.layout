@@ -85,6 +85,10 @@
                 <behavior>Readonly</behavior>
                 <field>Unity_Cloud_Orch_Count__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBCF_Order_End_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

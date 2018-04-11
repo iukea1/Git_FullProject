@@ -434,16 +434,6 @@
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
-        <fields>TASK.STATUS</fields>
-        <fields>TASK.PRIORITY</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
@@ -452,30 +442,8 @@
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>RMA__c</fields>
-        <fields>Type__c</fields>
-        <fields>Status__c</fields>
-        <relatedList>RMA_Item__c.Asset__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <relatedList>Shipped_Line__c.Asset__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>SBQQ__ContractNumber__c</fields>
-        <fields>SBQQ__Contract__c</fields>
-        <fields>SBQQ__Product__c</fields>
-        <fields>SBQQ__NetPrice__c</fields>
-        <fields>SBQQ__SubscriptionStartDate__c</fields>
-        <fields>SBQQ__SubscriptionEndDate__c</fields>
-        <relatedList>SBQQ__Subscription__c.SBCF_Asset__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Order_Product_Item__c.Asset__c</relatedList>
+        <relatedList>SBQQ__SubscribedAsset__c.SBQQ__Asset__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <relatedObjects>ContactId</relatedObjects>

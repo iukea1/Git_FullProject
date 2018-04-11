@@ -59,6 +59,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
   
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         // Used in action method
+        List<SBQQ__SubscribedAsset__c> subscriptionAndAssetList = new List<SBQQ__SubscribedAsset__c>();
         Map<Id, Id> assetTosubscription = new Map<Id, Id>();
         Set<id> assetThatHasSubscription = new Set<Id>();
 		List<SBQQ__Subscription__c> subscriptionWithAsset = new List<SBQQ__Subscription__c>();
@@ -107,10 +108,19 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         // This is the process to populate the related asset to Subscription detail page. 
         for(Asset assetRec: assetsToUpdate){
-            assetThatHasSubscription.add(assetRec.SBCF_Subscription__c);
-            assetTosubscription.put(assetRec.SBCF_Subscription__c, assetRec.Id);
+            SBQQ__SubscribedAsset__c subscriptionAndAsset = new SBQQ__SubscribedAsset__c();
+            subscriptionAndAsset.SBQQ__Subscription__c = assetRec.SBCF_Subscription__c; 
+            subscriptionAndAsset.SBQQ__Asset__c = assetRec.Id;
+            subscriptionAndAssetList.add(subscriptionAndAsset);
+            //assetThatHasSubscription.add(assetRec.SBCF_Subscription__c);
+            //assetTosubscription.put(assetRec.SBCF_Subscription__c, assetRec.Id);
         }
         
+        if(subscriptionAndAssetList.size()>0){
+            insert subscriptionAndAssetList;
+        }
+        
+        /*
         List<SBQQ__Subscription__c> subsInAsset = queryForAllSubscriptionsInAsset(assetThatHasSubscription);
         for(SBQQ__Subscription__c subs: subsInAsset){
             subs.SBCF_Asset__c = assetToSubscription.get(subs.Id);
@@ -120,6 +130,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(subscriptionWithAsset.size()>0){
             update subscriptionWithAsset;
         }
+        
         
         List<SBQQ__Subscription__c> renewedSubscription = [SELECT Id, SBCF_Asset__c, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c, SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__r.SBCF_Asset__c FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__r.SBQQ__RenewedSubscription__c NOT IN ('',NULL)];        
         for(SBQQ__Subscription__c renewSubs: renewedSubscription){
@@ -134,7 +145,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(renewedSubscriptionList.size()>0){
             update renewedSubscriptionList;
         }
-        
+        */
     }
     
     // Action
