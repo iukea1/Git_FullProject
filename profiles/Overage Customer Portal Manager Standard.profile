@@ -10497,6 +10497,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Partner_Discount_Lookup__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Quote_Approval_Matrix__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

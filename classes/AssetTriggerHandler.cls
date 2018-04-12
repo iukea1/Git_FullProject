@@ -143,7 +143,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        System.debug('After Insert');
+        System.debug('After Insert' + newItems);
+        
         Map<Id,Asset> hardwareECAssetIds= new  Map<Id,Asset>();
         Map<Id,Asset> softwareECBaseAssetIds= new  Map<Id,Asset>();
         Set<Id> setAccIds=new Set<Id>();
@@ -168,10 +169,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
             //populateRelatedAssetSubscriptionLookups(newItems.values());
-            //updateTheExistingAsset(newItems.values());
-            populateAssetFields(newItems.values());
-            
+            //updateTheExistingAsset(newItems.values()); 
         }
+        populateAssetFields(newItems.values());
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 

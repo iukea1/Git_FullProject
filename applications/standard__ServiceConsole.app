@@ -126,12 +126,16 @@
     <tab>Internal_Discussion__c</tab>
     <tab>Sales_Development</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Partner_Discount_Lookup__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>Cap_Case__c</tab>
         </mapping>
         <mapping>
             <tab>Internal_Discussion__c</tab>
+        </mapping>
+        <mapping>
+            <tab>Partner_Discount_Lookup__c</tab>
         </mapping>
         <mapping>
             <tab>SP_Forecasting</tab>

@@ -160,6 +160,10 @@
                 <behavior>Readonly</behavior>
                 <field>Output_Account_Country__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contract_Pricing__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

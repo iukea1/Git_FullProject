@@ -25,4 +25,5 @@
     <tab>standard-KnowledgePublishing</tab>
     <tab>Cap__c</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Partner_Discount_Lookup__c</tab>
 </CustomApplication>

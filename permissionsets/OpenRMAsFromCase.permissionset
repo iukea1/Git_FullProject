@@ -10119,6 +10119,10 @@
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Partner_Discount_Lookup__c</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Partner_Documentation</tab>
         <visibility>None</visibility>
     </tabSettings>

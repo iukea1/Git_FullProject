@@ -150,7 +150,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Output_Account_Country__c</field>
+                <field>Contract_Pricing__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -397,6 +397,22 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Sale_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Bill_To_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Bill_To_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Bill_To_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Output_Bill_To_State__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

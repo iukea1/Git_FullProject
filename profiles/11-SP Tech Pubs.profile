@@ -10541,6 +10541,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Partner_Discount_Lookup__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Partner_Documentation</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

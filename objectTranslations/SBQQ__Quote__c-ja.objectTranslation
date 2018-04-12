@@ -103,10 +103,6 @@
             <section>Additional Text</section>
         </sections>
         <sections>
-            <label><!-- Address Information --></label>
-            <section>Address Information</section>
-        </sections>
-        <sections>
             <label><!-- CC List --></label>
             <section>CC List</section>
         </sections>
@@ -127,16 +123,8 @@
             <section>Debug for Testing - To Be Removed</section>
         </sections>
         <sections>
-            <label><!-- Discount Information --></label>
-            <section>Discount Information</section>
-        </sections>
-        <sections>
             <label><!-- Poc Approvers --></label>
             <section>Poc Approvers</section>
-        </sections>
-        <sections>
-            <label><!-- Quote Options --></label>
-            <section>Quote Options</section>
         </sections>
         <sections>
             <label><!-- Success Criteria --></label>

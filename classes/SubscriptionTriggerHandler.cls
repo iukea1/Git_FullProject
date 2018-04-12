@@ -307,6 +307,8 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = new Map<Id, List<SBQQ__Subscription__c>>();
         
         for(SBQQ__Subscription__c subscription: incomingSubscriptions){
+           System.debug('Subscription product name : ' + subscription.SBQQ__Product__c); 
+           
             if(subscription.SBQQ__QuoteLine__c == null){
                 continue;
             }

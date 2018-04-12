@@ -32,16 +32,22 @@ CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SBCF Set Contracting Method for ORCH-AAS</fullName>
+        <fullName>SBCF Set Contracting Method for ORCH-AAS %26 Smart Hands</fullName>
         <actions>
             <name>SBCF_Set_Contracting_Method_for_ORCH_AAS</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Product2.Name</field>
             <operation>startsWith</operation>
             <value>EC-ORCH-AAS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Product2.Name</field>
+            <operation>startsWith</operation>
+            <value>SMRT-HND</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

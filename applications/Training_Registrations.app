@@ -7,4 +7,5 @@
     <tab>Training_Course__c</tab>
     <tab>AuthCode__c</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Partner_Discount_Lookup__c</tab>
 </CustomApplication>

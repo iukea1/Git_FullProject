@@ -10657,6 +10657,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Partner_Discount_Lookup__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Purchase_Appliances</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

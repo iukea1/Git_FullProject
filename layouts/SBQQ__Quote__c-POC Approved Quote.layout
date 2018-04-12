@@ -159,10 +159,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Allow_Fulfillment__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Requested_Delivery_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -192,6 +188,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Output_Account_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contract_Pricing__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

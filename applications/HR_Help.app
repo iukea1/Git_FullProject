@@ -8,4 +8,5 @@
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Partner_Discount_Lookup__c</tab>
 </CustomApplication>

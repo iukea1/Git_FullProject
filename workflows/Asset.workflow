@@ -722,6 +722,14 @@ right(Id,4))</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sample_field_update_on_asset</fullName>
+        <field>GMS_Nodes__c</field>
+        <name>sample field update on asset</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>6Mbps WAN upgrade checked</fullName>
         <actions>

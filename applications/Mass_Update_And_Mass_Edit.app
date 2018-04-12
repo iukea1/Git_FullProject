@@ -6,4 +6,5 @@
     <tab>About_Mass_Update_and_Mass_Edit</tab>
     <tab>Internal_Discussion__c</tab>
     <tab>Cap_Case__c</tab>
+    <tab>Partner_Discount_Lookup__c</tab>
 </CustomApplication>
