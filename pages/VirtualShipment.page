@@ -51,8 +51,9 @@
             <apex:pageBlock >
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
-                    	<apex:pageBlockTable value="{!orderProducts}" var="orderProd" id="orderProdTable">
-                            
+                        
+                        <!-- New Order, based on order products -->
+                    	<apex:pageBlockTable value="{!orderProducts}" var="orderProd" id="orderProdTable" rendered="{!NOT(isRenewal)}">
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                 <apex:facet name="header">Product Name</apex:facet>
                                     <apex:outputLink value="/{!orderProd.Product2}" target="__blank">
@@ -74,8 +75,29 @@
 								<apex:facet name="header">GSM Nodes</apex:facet>
 								<apex:inputField value="{!orderProd.GMS_Nodes__c}" />
 							</apex:column>
+                        </apex:pageBlockTable>
+                        
+                        <apex:pageBlockTable value="{!oldSubscriptionAndAsset}" var="assetAndSubs" id="subscribedAsset" rendered="{!NOT(isRenewal)}">
+                        	
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                            	<apex:facet name="header">Subscription</apex:facet>
+                                <apex:outputText value="{!assetAndSubs.SBQQ__Subscription__c}"/>
+                            </apex:column>
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                            	<apex:facet name="header">Subscription Quantity</apex:facet>
+                                <apex:outputText value="{!assetAndSubs.SBQQ__Subscription__r.SBQQ__Quantity__c}"/>
+                            </apex:column>
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                            	<apex:facet name="header">Asset</apex:facet>
+                                <apex:repeat value="{!assetAndSubs.SBQQ__Asset__c}"/>
+                            </apex:column>
+                            
+							
                             
                         </apex:pageBlockTable>
+                        
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
         	</apex:pageBlock>    

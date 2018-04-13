@@ -807,11 +807,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>BL__SyncWithBoulderLogic__c</field>
-            <table>Account</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>LID__LinkedIn_Company_Id__c</field>
             <table>Account</table>
         </columns>

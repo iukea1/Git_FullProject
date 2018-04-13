@@ -569,17 +569,6 @@ Standard_Discount_Service__c
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <outboundMessages>
-        <fullName>BL__AccountUpdate</fullName>
-        <apiVersion>8.0</apiVersion>
-        <endpointUrl>https://www.boulderlogic.com/Reference/SfdcNotificationBinding.asmx?blns=BL</endpointUrl>
-        <fields>Id</fields>
-        <includeSessionId>true</includeSessionId>
-        <integrationUser>prane@silver-peak.com</integrationUser>
-        <name>AccountUpdate</name>
-        <protected>false</protected>
-        <useDeadLetterQueue>false</useDeadLetterQueue>
-    </outboundMessages>
     <rules>
         <fullName>Account%3A Partner Account Enabled</fullName>
         <actions>
@@ -758,16 +747,6 @@ Standard_Discount_Service__c
         </actions>
         <active>true</active>
         <formula>AND( ISCHANGED(Active_Asset_Count__c), Active_Asset_Count__c==0, PRIORVALUE(Expired_Customer__c)=false)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>BL__AccountUpdate</fullName>
-        <actions>
-            <name>BL__AccountUpdate</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>true</active>
-        <formula>ISCHANGED(LastModifiedDate) &amp;&amp; BL__SyncWithBoulderLogic__c == true</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

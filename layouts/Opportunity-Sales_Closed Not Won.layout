@@ -557,16 +557,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>BL__ReqID__c</fields>
-        <fields>BL__ReferenceType__c</fields>
-        <fields>BL__Status__c</fields>
-        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
-        <sortField>BL__ReqID__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
         <customButtons>Ensemblestorage__Upload_Files</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>

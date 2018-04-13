@@ -23,7 +23,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         lstSWCPAccount= new Set<Id>();
         lstTACAccount= new Set<Id>();
         lstCustomerDateAccount= new Map<Id,Account>();
-        
     }
     public Boolean IsDisabled()
     {
@@ -122,12 +121,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             
-            //for(Asset assetRecord : Trigger.newMap.values()){
-            //    if(Trigger.oldMap.get(assetRecord).SBQQ__OrderProduct__c != Trigger.newMap.get(assetRecord).SBQQ__OrderProduct__c){
-            // Your order product is now available for reference, run the rest of your logic.
-            //    }
-            //}
-            
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -168,10 +161,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            //populateRelatedAssetSubscriptionLookups(newItems.values());
-            //updateTheExistingAsset(newItems.values()); 
+             
         }
-        populateAssetFields(newItems.values());
+        //populateAssetFields(newItems.values());
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -205,8 +197,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            
+            //populateAssetFields(newItems.values());
         }
+        
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
@@ -366,7 +359,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
  
  // START of Activation Order task -------@@ 
  // Before Insert Trigger 
-
+	
     private static void populateAssetFields(List<Asset> incomingAssets){
         List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
         System.debug('update asset ------ : ' + updateAsset);

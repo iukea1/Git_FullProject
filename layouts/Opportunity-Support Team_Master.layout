@@ -8,7 +8,6 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
-    <customButtons>BL__Find_Reference</customButtons>
     <customButtons>Define_Channel</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>

@@ -8,7 +8,6 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
-    <customButtons>BL__Find_Reference</customButtons>
     <customButtons>Define_Channel</customButtons>
     <customButtons>SBQQ__CreateOrder</customButtons>
     <customButtons>Create_Renewal_Quote</customButtons>
@@ -695,16 +694,6 @@
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>BL__ReqID__c</fields>
-        <fields>BL__ReferenceType__c</fields>
-        <fields>BL__Status__c</fields>
-        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
-        <sortField>BL__ReqID__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -801,22 +790,13 @@
         <relatedList>T3chAccelerator__Instance__c.T3chAccelerator__opportunity_id__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>ORDERS.EFFECTIVE_DATE</fields>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>RelatedOrderList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>re10__OrderStage__c</fields>
-        <fields>re10__SignDate__c</fields>
-        <fields>re10__Currency__c</fields>
-        <fields>re10__BusinessUnit__c</fields>
-        <fields>re10__Status__c</fields>
-        <fields>re10__OrderTotal__c</fields>
-        <relatedList>re10__GKOrderHeader__c.re10__Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

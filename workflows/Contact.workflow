@@ -74,17 +74,6 @@ Sales_Rejected_Comments__c</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <outboundMessages>
-        <fullName>BL__ContactUpdate</fullName>
-        <apiVersion>8.0</apiVersion>
-        <endpointUrl>https://www.boulderlogic.com/Reference/SfdcNotificationBinding.asmx?blns=BL</endpointUrl>
-        <fields>Id</fields>
-        <includeSessionId>true</includeSessionId>
-        <integrationUser>prane@silver-peak.com</integrationUser>
-        <name>ContactUpdate</name>
-        <protected>false</protected>
-        <useDeadLetterQueue>false</useDeadLetterQueue>
-    </outboundMessages>
     <rules>
         <fullName>Add Date Time Stamp On Screening Notes</fullName>
         <actions>
@@ -93,16 +82,6 @@ Sales_Rejected_Comments__c</formula>
         </actions>
         <active>true</active>
         <formula>AND(  ISChanged(ISR_Notes__c ),  LEN(ISR_Notes__c)&gt;0   )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>BL__ContactUpdate</fullName>
-        <actions>
-            <name>BL__ContactUpdate</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>true</active>
-        <formula>ISCHANGED(LastModifiedDate)  &amp;&amp;   BL__SynchWithBoulderLogic__c  == true</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

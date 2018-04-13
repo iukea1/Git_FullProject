@@ -3,7 +3,6 @@
     <customButtons>Contact_Custom_Clone</customButtons>
     <customButtons>New_Opportunity</customButtons>
     <customButtons>Convert_into_Existing_Opportunity</customButtons>
-    <customButtons>BL__Nominate</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
@@ -12,7 +11,6 @@
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnablePrmSuperUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewCustomerPortal</excludeButtons>
     <excludeButtons>ViewPartnerPortalUser</excludeButtons>

@@ -80,6 +80,10 @@
             <section>Custom Links</section>
         </sections>
         <sections>
+            <label><!-- Debug --></label>
+            <section>Debug</section>
+        </sections>
+        <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
         </sections>

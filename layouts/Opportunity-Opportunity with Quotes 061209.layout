@@ -7,7 +7,6 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
-    <customButtons>BL__Find_Reference</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -684,15 +683,6 @@
         <fields>Status__c</fields>
         <fields>AccountName__c</fields>
         <relatedList>Request__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>BL__ReqID__c</fields>
-        <fields>BL__ReferenceType__c</fields>
-        <fields>BL__Status__c</fields>
-        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
-        <sortField>BL__ReqID__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>AddProduct</excludeButtons>

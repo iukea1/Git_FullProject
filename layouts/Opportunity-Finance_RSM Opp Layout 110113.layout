@@ -6,7 +6,6 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
-    <customButtons>BL__Find_Reference</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -735,16 +734,6 @@
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>BL__ReqID__c</fields>
-        <fields>BL__ReferenceType__c</fields>
-        <fields>BL__Status__c</fields>
-        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
-        <sortField>BL__ReqID__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -895,7 +884,7 @@
         <summaryLayoutItems>
             <field>Registration_Expiration__c</field>
             <posX>3</posX>
-            <posY>1</posY>
+            <posY>0</posY>
         </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>

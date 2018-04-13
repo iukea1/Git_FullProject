@@ -7,7 +7,6 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
-    <customButtons>BL__Find_Reference</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
@@ -407,16 +406,6 @@
         <relatedList>SE_Activity__c.Opportunity__c</relatedList>
         <sortField>Activity_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>BL__ReqID__c</fields>
-        <fields>BL__ReferenceType__c</fields>
-        <fields>BL__Status__c</fields>
-        <relatedList>BL__BLLC_Requested_Reference__c.BL__Opportunity__c</relatedList>
-        <sortField>BL__ReqID__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <customButtons>Ensemblestorage__Upload_Files</customButtons>

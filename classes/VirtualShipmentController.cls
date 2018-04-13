@@ -5,6 +5,11 @@ public with sharing class VirtualShipmentController {
     public List<OrderItem> orderProducts {get;set;} 
     public Boolean isDuplicateECProd;
     public Boolean orderIsActivated {get;set;}
+    public List<SBQQ__SubscribedAsset__c> oldSubscriptionAndAsset {get;set;}
+    
+    public Boolean isRenewal {get;set;}
+    
+    Set<Id> renewalContractIds = new Set<Id>(); 
 
     public VirtualShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
@@ -21,8 +26,29 @@ public with sharing class VirtualShipmentController {
             return;
         }
         
-        orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
-        System.debug('Order Products: ' + orderProducts);
+        // Determine first if the order is renewal
+        // If renewal, then query the related opportunity and the renewed contract. 
+        // From the renewed contract, get the subscsription, and get the subscribed asset list. 
+        
+        if(this.order.Type == 'Renewal'){
+            List<Order> renewalOrders = [SELECT Id, Opportunity.SBQQ__RenewedContract__c FROM Order WHERE Opportunity.SBQQ__RenewedContract__c NOT IN ('', NULL) LIMIT 1];
+            for(Order renewalOrder: renewalOrders){
+                renewalContractIds.add(renewalOrder.Opportunity.SBQQ__RenewedContract__c);
+            } 
+            oldSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Contract__c, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds];
+        	isRenewal = true;
+        }
+        else{
+            orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
+        	System.debug('Order Products: ' + orderProducts);
+            isRenewal = false;
+        }
+            
+        
+		        
+        
+        
+        
         
         if(orderProducts == null || orderProducts.size() == 0){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no order products available. The forecast category must contain virtual.');
