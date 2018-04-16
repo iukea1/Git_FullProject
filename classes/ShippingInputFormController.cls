@@ -274,30 +274,51 @@ public class ShippingInputFormController
 **/
     private void updateRMAExchange(Id faultyAssetId, Id newAssetId, String RMANum, String Email1, String Email2, String Email3)
     {
-        Asset faultyAsset = [select Id, Status, Ship_Date__c, Name, Contract_Number__c, POCRequest__c, End_of_Maintenance__c, GMS_Nodes__c, Evaluation_End_Date__c, Evaluation_Start_Date__c from Asset where Id=:faultyAssetId limit 1];
-        Asset newAsset = new Asset(Id=newAssetId);
-        
-        newAsset.Status = faultyAsset.Status;
-        newAsset.Ship_Date__c = faultyAsset.Ship_Date__c;
-        newAsset.Contract_Number__c = faultyAsset.Contract_Number__c;
-        newAsset.GMS_Nodes__c = faultyAsset.GMS_Nodes__c;
-        newAsset.Evaluation_Start_Date__c = faultyAsset.Evaluation_Start_Date__c;
-        newAsset.Evaluation_End_Date__c = faultyAsset.Evaluation_End_Date__c;
-        newAsset.POCRequest__c = faultyAsset.POCRequest__c;
-        newAsset.ReplacedSN__c = faultyAsset.Name;
-        newAsset.ReplacedSNRMA__c = RMANum;
-        newAsset.ReplaceSNEmail1__c = Email1;
-        newAsset.ReplaceSNEmail2__c = Email2;
-        newAsset.ReplaceSNEmail3__c = Email3;
-        newAsset.SendReplacementNotice__c = True;
-        faultyAsset.Contract_Number__c = null;
-        faultyAsset.POCRequest__c = null;
-        faultyAsset.Status = 'Pending Return – Support';
-        update new List<Asset> { faultyAsset, newAsset };
-            
-            //ShipDate change on asset will fire a trigger to populate EOM date, we have to do second update
+        System.Savepoint sp= Database.setSavepoint();
+        try
+        {
+            List<SBQQ__SubscribedAsset__c> lstSubAsset= new List<SBQQ__SubscribedAsset__c>();
+            Asset faultyAsset = [select Id, Status, Ship_Date__c, Name, Contract_Number__c, POCRequest__c, End_of_Maintenance__c, GMS_Nodes__c, Evaluation_End_Date__c, Evaluation_Start_Date__c from Asset where Id=:faultyAssetId limit 1];
+            Asset newAsset = new Asset(Id=newAssetId);
+            newAsset.Status = faultyAsset.Status;
+            newAsset.Ship_Date__c = faultyAsset.Ship_Date__c;
+            newAsset.Contract_Number__c = faultyAsset.Contract_Number__c;
+            newAsset.GMS_Nodes__c = faultyAsset.GMS_Nodes__c;
+            newAsset.Evaluation_Start_Date__c = faultyAsset.Evaluation_Start_Date__c;
+            newAsset.Evaluation_End_Date__c = faultyAsset.Evaluation_End_Date__c;
+            newAsset.POCRequest__c = faultyAsset.POCRequest__c;
+            newAsset.ReplacedSN__c = faultyAsset.Name;
+            newAsset.ReplacedSNRMA__c = RMANum;
+            newAsset.ReplaceSNEmail1__c = Email1;
+            newAsset.ReplaceSNEmail2__c = Email2;
+            newAsset.ReplaceSNEmail3__c = Email3;
+            newAsset.SendReplacementNotice__c = True;
+            faultyAsset.Contract_Number__c = null;
+            faultyAsset.POCRequest__c = null;
+            faultyAsset.Status = 'Pending Return – Support';
+            update new List<Asset> { faultyAsset, newAsset };
+                
+                //ShipDate change on asset will fire a trigger to populate EOM date, we have to do second update
             newAsset = new Asset(Id=newAssetId, End_of_Maintenance__c=faultyAsset.End_of_Maintenance__c);
-        update newAsset;
+            update newAsset;
+            
+            List<SBQQ__SubscribedAsset__c> lstSubscribedAsset =[Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Asset__c=:faultyAssetId and SBQQ__Active__c=true ];
+            if(lstSubscribedAsset!=null && lstSubscribedAsset.size()>0)
+            {
+                for(SBQQ__SubscribedAsset__c sub:lstSubscribedAsset)
+                {
+                    lstSubAsset.add(new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=faultyAsset.Id,SBQQ__Subscription__c=sub.SBQQ__Subscription__c,SBQQ__Active__c=true));
+                    sub.SBQQ__Active__c=false;
+                }
+                
+                update lstSubscribedAsset;
+                insert lstSubAsset;
+            }
+        }
+        catch(Exception ex)
+        {
+            Database.rollback(sp);
+        }
     }
     
     /**

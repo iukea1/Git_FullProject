@@ -5,6 +5,7 @@
     <customButtons>SBQQ__RefreshPrices</customButtons>
     <customButtons>SBQQ__ImportLines</customButtons>
     <customButtons>Extend_POC</customButtons>
+    <customButtons>SBQQ__GenerateDocument</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>

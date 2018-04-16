@@ -144,6 +144,10 @@
                 <behavior>Readonly</behavior>
                 <field>Owner_ManagerId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CloseDate_Formatted__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

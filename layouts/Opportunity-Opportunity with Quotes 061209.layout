@@ -119,6 +119,10 @@
                 <behavior>Readonly</behavior>
                 <field>Owner_ManagerId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CloseDate_Formatted__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -633,7 +637,7 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <customButtons>New_SPS_Quote</customButtons>
+        <customButtons>New_SP_Quote</customButtons>
         <fields>NAME</fields>
         <fields>ApprovalStatus__c</fields>
         <fields>SBQQ__NetAmount__c</fields>
