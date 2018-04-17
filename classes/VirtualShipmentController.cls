@@ -8,12 +8,16 @@ public with sharing class VirtualShipmentController {
     public List<SBQQ__SubscribedAsset__c> oldSubscriptionAndAsset {get;set;}
     public List<SBQQ__SubscribedAsset__c> parentOfSubscriptionAndAsset {get;set;}
     public List<SBQQ__Subscription__c> existingSubscription {get;set;}
+    public Map<Id, List<SBQQ__SubscribedAsset__c>> subscriptionToSubscribedAsset {get;set;}
     
     public Boolean isRenewal {get;set;}
     
     Set<Id> renewalContractIds = new Set<Id>(); 
     Set<Id> selectedAssetIds = new Set<Id>();
-
+	
+    
+    
+    
     public VirtualShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
             stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames());
@@ -39,9 +43,9 @@ public with sharing class VirtualShipmentController {
                 renewalContractIds.add(renewalOrder.Opportunity.SBQQ__RenewedContract__c);
             } 
             
-            oldSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Contract__c, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds];
-        	parentOfSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds LIMIT 1];
-            existingSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c,(SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c];
+            //oldSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Contract__c, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds];
+        	//parentOfSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds LIMIT 1];
+            existingSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
             isRenewal = true;
         }
         else{
@@ -91,13 +95,35 @@ public with sharing class VirtualShipmentController {
         
         else if(orderRec.Status == 'Renewal'){
             // On the order shipment handler, create another helper class, that will query the order product's quantity,
-            // after getting the quantity of order product, compare it to the size of the selected asset on VF page. 
-            for(SBQQ__SubscribedAsset__c subscribeAsset: oldSubscriptionAndAsset){
-                if(subscribeAsset.SBQQ__Asset__r.Is_Selected_For_Renewal__c == true){
-                    selectedAssetIds.add(subscribeAsset.SBQQ__Asset__c);
+            // after getting the quantity of order product, compare it to the size of the selected asset on VF page.
+            
+            for(SBQQ__Subscription__c existingSubs: existingSubscription){
+                /*
+                //subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
+                oldSubscriptionAndAsset = existingSubs.SBQQ__SubscribedAssets__r;
+                for(SBQQ__SubscribedAsset__c subsAsset :oldSubscriptionAndAsset){
+                    if(contains){
+                        List<SBQQ__SubscribedAsset__c> asdList = subscriptionToSubscribedAsset.get(id);
+                        asdList.add(subsAsset);
+                        subscriptionToSubscribedAsset.put(id, asdList);
+                    }else{
+                        subscriptionToSubscribedAsset.put(id, List<>{id});
+                    }
+                }*/
+                    
+                /*for(SBQQ__SubscribedAsset__c subsAsset: existingSubs.SBQQ__SubscribedAssets__r){
+                    oldSubscriptionAndAsset = new List<SBQQ__SubscribedAsset__c>();
+                    oldSubscriptionAndAsset.add(subsAsset);
+                    subscriptionToSubscribedAsset.put(existingSubs.Id, oldSubscriptionAndAsset);
                 }
+                
+                List<SBQQ__SubscribedAsset__c> subscribedAssetToUpdate = subscriptionToSubscribedAsset.get(existingSubs.Id);*/
             }
-            //return null;
+            
+            
+            
+            
+			
         }
                 
         PageReference page = new PageReference('/' + this.order.Id);
@@ -111,4 +137,28 @@ public with sharing class VirtualShipmentController {
         page.setRedirect(true);
         return page;
     }
+    
+    public class parentSubscriptionWrapper{
+        
+        public SBQQ__Subscription__c subs {get;set;}
+        
+        public parentSubscriptionWrapper(SBQQ__Subscription__c subs){
+            this.subs = subs;
+        }
+    }
+    
+    public class subscribedAssetWithSubscription{
+        
+        public Id subscriptionId {get;set;}
+        public SBQQ__SubscribedAsset__c subAndAsset {get;set;}
+        public Asset asset {get;set;}
+        
+        public subscribedAssetWithSubscription(SBQQ__SubscribedAsset__c subAndAsset){
+            this.subAndAsset = subAndAsset;
+        }
+    }
+
+   
+    
+    
 }

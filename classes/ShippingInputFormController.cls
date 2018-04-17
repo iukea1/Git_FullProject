@@ -274,9 +274,6 @@ public class ShippingInputFormController
 **/
     private void updateRMAExchange(Id faultyAssetId, Id newAssetId, String RMANum, String Email1, String Email2, String Email3)
     {
-        System.Savepoint sp= Database.setSavepoint();
-        try
-        {
             List<SBQQ__SubscribedAsset__c> lstSubAsset= new List<SBQQ__SubscribedAsset__c>();
             Asset faultyAsset = [select Id, Status, Ship_Date__c, Name, Contract_Number__c, POCRequest__c, End_of_Maintenance__c, GMS_Nodes__c, Evaluation_End_Date__c, Evaluation_Start_Date__c from Asset where Id=:faultyAssetId limit 1];
             Asset newAsset = new Asset(Id=newAssetId);
@@ -307,18 +304,13 @@ public class ShippingInputFormController
             {
                 for(SBQQ__SubscribedAsset__c sub:lstSubscribedAsset)
                 {
-                    lstSubAsset.add(new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=faultyAsset.Id,SBQQ__Subscription__c=sub.SBQQ__Subscription__c,SBQQ__Active__c=true));
+                    lstSubAsset.add(new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=newAsset.Id,SBQQ__Subscription__c=sub.SBQQ__Subscription__c,SBQQ__Active__c=true));
                     sub.SBQQ__Active__c=false;
                 }
                 
                 update lstSubscribedAsset;
                 insert lstSubAsset;
             }
-        }
-        catch(Exception ex)
-        {
-            Database.rollback(sp);
-        }
     }
     
     /**

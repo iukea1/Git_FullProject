@@ -75,6 +75,7 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {     
         List<Quote__c> lstPrimaryQuotes= new List<Quote__c>();
+        List<Quote__c> lstOppQuote= new List<Quote__c>();
         List<Quote__c> lstNotPrimaryQuotes= new List<Quote__c>();
         mapQuoteOpp= new Map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
@@ -83,7 +84,8 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
             {
                 Quote__c newQuote= (Quote__c)newItems.get(quoteId);
                 Quote__c oldQuote= (Quote__c)oldItems.get(quoteId);
-                
+                if(newQuote.Opportunity__c!=null && (newQuote.Primary__c!=oldQuote.Primary__c || newQuote.Tier_1_Partner__c!=oldQuote.Tier_1_Partner__c || newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c))
+                       lstOppQuote.add(newQuote);
                 if(newQuote.Primary__c!=oldQuote.Primary__c)
                 {
                     if(newQuote.Primary__c)
@@ -112,6 +114,8 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
             }
             CheckPrimaryFlag();
             SetProductType(lstPrimaryQuotes,lstNotPrimaryQuotes);
+            PushTierValuesinOpp(lstOppQuote);
+            
         }
         
     }
@@ -123,7 +127,24 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
     {
         
     }
-    
+    private void PushTierValuesinOpp(List<Quote__c> lstPrimaryQuotes)
+    {
+        		
+        		List<Opportunity> lstOpps= new List<Opportunity>();
+        		for(Quote__c qc : lstPrimaryQuotes)
+                {
+                    lstOpps.add(new Opportunity(Id=qc.Opportunity__c,Primary_Partner__c=qc.Reseller_AccountId__c,Tier1_Partner__c=qc.Tier_1_Partner__c,Tier2_Partner__c=qc.Tier_2_Partner__c,Tier3_Partner__c=qc.Tier_3_Partner__c));
+                }
+                try
+                {
+                    if(lstOpps!=null && lstOpps.size()>0)
+                    	update lstOpps;
+                }
+                catch(Exception ex)
+                {
+                    Trigger.new[0].addError(ex.getMessage());
+                }
+    }
     private boolean CheckInvalidPriceBook(Set<Id> lstOppId)
     {
         List<Opportunity> lstOpp=[Select PriceBook2Id from Opportunity where Id in:lstOppId];

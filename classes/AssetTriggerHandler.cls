@@ -197,7 +197,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            //populateAssetFields(newItems.values());
+            populateAssetFields(newItems.values());
         }
         
     }
@@ -444,7 +444,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
-    
+         Set<Id> AssetQuoteLineIds = new Set<Id>();
+         Set<Id> OrderItemIds = new Set<Id>();
+         Set<Id> OrderProductItemIds = new Set<Id>();
+         /*
          for(Asset asset: assetProductEqualToPhysical){
             System.debug('@@----- asset.SBQQ__OrderProduct__c :' + asset.SBQQ__OrderProduct__c);
              
@@ -462,7 +465,31 @@ public class AssetTriggerHandler implements ITriggerHandler {
             assetRelatedToOrderProducts.add(asset);
     
          }
-    
+        */
+        
+        //Loop through the Assets
+        for(Asset a: assetProductEqualToPhysical){
+            
+            //Get Quote Line Ids
+            if(a.SBQQ__QuoteLine__c != NULL){
+                AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
+            }
+            
+            //Query Order Products where Quote Line Ids
+            for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
+                OrderItemIds.add(oi.id);
+            }
+            
+            //Query Order Product Items, order by created by
+            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds ORDER BY CreatedDate]){
+                //Put in list
+                //Loop through Asset again and populate 
+            }
+            
+            
+            
+        }
+        
          return orderProductToAssets;
     }
         

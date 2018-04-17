@@ -6,13 +6,14 @@ global class QuoteExtension
 {
     static final String MESSAGE_SUCCEEDED = 'Succeeded';
     public QuoteWrapper DiscountQuote{get;set;}
+    ApexPages.StandardController sc;
     public QuoteExtension(ApexPages.StandardController ctrl)
     {
+        sc=ctrl;
         Id quoteId=(Id)ctrl.getRecord().id;
         Quote__c quoteInfo= [Select Id,Reseller_AccountId__c,Tier_1_Partner__r.Payment_Terms__c,Tier_1_Partner__r.Partner_Level__c,Tier_1_Partner__r.Partner_Type__c,Tier_1_Partner__r.Reseller_Agreement__c,Tier_1_Partner__r.Standard_Discount_Product__c,Tier_1_Partner__r.Standard_Discount_Service__c,Tier_1_Partner__r.Standard_Discount_EdgeConnect__c,Tier_1_Partner__r.Registered_Discount_EdgeConnect__c,Tier_1_Partner__r.Registered_Discount_Product__c,Tier_1_Partner__r.Registered_Discount_Service__c from Quote__c where Id=:quoteId];
         DiscountQuote= new QuoteWrapper(quoteInfo); 
     }
-    
     @RemoteAction
     global static Boolean CheckQuote(String quoteId, String opportunityId)
     {

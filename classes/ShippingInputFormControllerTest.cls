@@ -48,7 +48,7 @@ public class ShippingInputFormControllerTest
         
         Account account = new Account(Name = 'test shipment');
         insert account;
-         Account spAccount = new Account(Name = 'Silver Peak Systems');
+        Account spAccount = new Account(Name = 'Silver Peak Systems');
         insert spAccount;
         Contact ct = new Contact(AccountId = account.Id, LastName = 'test ship',Email='abc@abc.com');
         insert ct;
@@ -127,6 +127,58 @@ public class ShippingInputFormControllerTest
         System.assert(!controller.isValidSerialNumber('1234.567890ab'));
         System.assert(!controller.isValidSerialNumber('1234.5678.90ab.'));
         System.assert(!controller.isValidSerialNumber('.1234.5678.90ab'));
+    }
+    
+    @isTest
+    static void testupdateRMAExchange()
+    {
+        Account account = new Account(Name = 'test shipment');
+        insert account;
+        Account spAccount = new Account(Name = 'Silver Peak Systems');
+        insert spAccount;
+        Contact ct = new Contact(AccountId = account.Id, LastName = 'test ship');
+        insert ct;
+        Product2 prd = new Product2(Name='acme', Family='Product', IsActive=true, ProductCode='acme');
+        insert prd;
+        Asset asset = new Asset(Name = 'test', SerialNumber = '123456789012', AccountId = account.Id, ContactId = ct.Id, Product2Id=prd.Id);
+        insert asset;
+        Asset asset2 = new Asset(Name = 'test2', SerialNumber = '123456789013', AccountId = account.Id, ContactId = ct.Id, Product2Id=prd.Id);
+        insert asset2;
+        Contract con= new Contract(Name='Test',AccountId=account.Id ,StartDate=Date.today(),EndDate=Date.today().addYears(1));
+        insert con;
+        SBQQ__Subscription__c sbData= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=account.Id,SBQQ__Product__c=prd.Id,SBQQ__Contract__c=con.Id);
+        insert sbData;
+        
+        SBQQ__SubscribedAsset__c subAsset= new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c=sbData.Id,SBQQ__Asset__c=asset2.id,SBQQ__Active__c=true);
+        insert subAsset;
+        PageReference pageRef = new PageReference('/apex/ShippingInputForm?accountId=' + account.Id);
+        Test.setCurrentPage(pageRef);
+        
+        ShippingInputFormController controller = new ShippingInputFormController();
+        controller.SNSets = '123456789012, 1234567890ab';
+        controller.Process();
+        controller.Shipment.To_Be_Swapped_Asset__c = asset2.Id;
+        controller.getProductList();
+        controller.getPartNumberList();
+        
+        List<ShippingInputFormController.ShipLineInfo> lines = controller.ShippedLineList;
+        System.assertEquals(2, lines.size());
+        System.assertEquals(true, lines[0].AssetIsExisted);
+        System.assertEquals(false, lines[1].AssetIsExisted);
+        lines[1].SelectProductId = prd.Id;
+        
+        controller.Save();
+        System.assertEquals(0, ApexPages.getMessages().size());
+        List<Shipment__c> shipmentList = [select Shipment_Account__c, Shipment_Contact__c, Shipment_Contract__c from Shipment__c where Id = :controller.Shipment.Id limit 1];
+        System.assertEquals(1, shipmentList.size());
+        
+        asset2 = [select Id, Status from Asset where Id=:asset2.Id limit 1];
+        System.assertEquals('Pending Return – Support', asset2.Status);
+        SBQQ__SubscribedAsset__c subAsset1=[Select SBQQ__Active__c from SBQQ__SubscribedAsset__c where SBQQ__Asset__c=:asset2.Id LIMIT 1 ];
+        System.assert(subAsset1.SBQQ__Active__c==false);
+        SBQQ__SubscribedAsset__c subAsset2=[Select SBQQ__Active__c from SBQQ__SubscribedAsset__c where SBQQ__Asset__c=:asset.Id LIMIT 1 ];
+        System.assert(subAsset2.SBQQ__Active__c==true);
+        
     }
     
     

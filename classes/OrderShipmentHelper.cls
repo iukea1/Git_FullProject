@@ -10,7 +10,8 @@
 public with sharing class OrderShipmentHelper {
 
     public static final Set<String> PRODUCT_CATEGORY_HARDWARE = new Set<String>{ 'Physical' };
-    public static final Set<String> PRODUCT_CATEGORY_HARDWARE_VIRTUAL = new Set<String>{'Virtual', 'Maintenance Virtual', 'Maintenance Virtual', 'MR Virtual'};
+    public static final Set<String> PRODUCT_CATEGORY_HARDWARE_VIRTUAL = new Set<String>{'Virtual', 'Maintenance Virtual', 'MR Virtual'};
+    public static final Set<String> ALL_PRODUCT_CATEGORY = new Set<String>{'Virtual', 'Maintenance Virtual', 'MR Virtual', 'Physical', 'Maintenance Physical', 'MR Physical' };
     public static Boolean hasInsertedOrderProductItems = false;
     
     /*
@@ -121,6 +122,21 @@ public with sharing class OrderShipmentHelper {
         }
 
         return isDuplicateECProd;
+    }
+    
+    public static List<OrderItem> queryForOrderProductRenewals(String orderId, Set<String> productForecastCategories){
+        List<OrderItem> orderProductsList = new List<OrderItem>();
+        boolean isECProducts = false;
+        Boolean isDuplicateECProd = false;
+        try{
+            orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
+                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];   
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+
+        return orderProductsList;
     }
     
     public static List<Order> queryForOrderRecords(String orderId){

@@ -83,45 +83,42 @@
             
             
             <apex:pageBlock rendered="{!isRenewal}">
-                <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
-                        
+                        <apex:pageBlockTable value="{!existingSubscription}" var="subs" rendered="{!isRenewal}">
                             
-                        <apex:pageBlockTable value="{!parentOfSubscriptionAndAsset}" var="subscription" id="parentSubscription" rendered="{!isRenewal}">
-                            
-                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
                                 <apex:facet name="header">Subscription</apex:facet>
-                                <apex:outputText value="{!subscription.SBQQ__Subscription__r.SBQQ__Product__r.Name}"/>
+                                <apex:outputText value="{!subs.SBQQ__Product__r.Name}"/>
+                            </apex:column>
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
+                                <apex:facet name="header">Quantity</apex:facet>
+                                <apex:outputText value="{!subs.SBQQ__Quantity__c}"/>
                             </apex:column>
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                <apex:facet name="header">Subscription Quantity</apex:facet>
-                                <apex:outputText value="{!subscription.SBQQ__Subscription__r.SBQQ__Quantity__c}"/>
+                                
+                                <apex:facet name="header">Related Assets</apex:facet>
+                                <apex:pageBlockTable value="{!subs.SBQQ__SubscribedAssets__r}" var="subscription" id="childAssets">
+									<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Asset</apex:facet>
+                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}"/> 
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Serial Number</apex:facet>
+                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.SerialNumber}"/> 
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Selected for Renewal</apex:facet>
+                                        <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}"/> 
+                                    </apex:column>
+                                </apex:pageBlockTable>
                             </apex:column>
                             
                         </apex:pageBlockTable>
-                               
-                        
-                        
-                        <apex:pageBlockTable value="{!oldSubscriptionAndAsset}" var="assetAndSubs" id="subscribedAsset" rendered="{!isRenewal}">
-
-                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            	<apex:facet name="header">Asset</apex:facet>
-                                <apex:outputText value="{!assetAndSubs.SBQQ__Asset__r.Name}"/>
-                            </apex:column>
-                            
-                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            	<apex:facet name="header">Serial Number</apex:facet>
-                                <apex:outputText value="{!assetAndSubs.SBQQ__Asset__r.SerialNumber}"/>
-                            </apex:column>
-							
-                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            	<apex:facet name="header">Asset</apex:facet>
-                                <apex:inputField value="{!assetAndSubs.SBQQ__Asset__r.Is_Selected_For_Renewal__c}"/>
-                            </apex:column>
-                            
-                        </apex:pageBlockTable>
-
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
         	</apex:pageBlock>
