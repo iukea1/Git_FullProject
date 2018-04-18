@@ -60,6 +60,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             //populateAssetFields(newItems);
+            groupAssetsByOrderProduct(lstAsset);
         }
         
         
@@ -197,7 +198,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            populateAssetFields(newItems.values());
+            //populateAssetFields(newItems.values());
         }
         
     }
@@ -371,7 +372,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
     
     private static List<Asset> populateStatusPartAndSerialNumberToAsset(List<Asset> asset){
-    
+        
+        List<Asset> AssetList = new List<Asset>();
+        
         Set<Id> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(asset);        
         System.debug('@@--------   assetProductEqualToPhysical : ' + assetProductEqualToPhysical);
         
@@ -382,7 +385,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             System.debug('asset order product : ' + genAsset.SBQQ__OrderProduct__c);
         }
         
- 
+        
         Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(generatedAsset);
         System.debug('@@ -------- orderProductToAssets ' + orderProductToAssets);
     
@@ -406,7 +409,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //    update updateOrderProductItem;
         //}
         
-        return updateAssets;
+        //return updateAssets;
+        return AssetList;
 
     }
     
@@ -444,6 +448,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
+         //Map<Id, Asset> QuoteLinetoAssetMap = new Map<Id, Asset>();
+         Map<String, Asset> SerialNumtoAssetMap = new Map<String, Asset>();
+         List<Asset> assetRelatedToOrderProducts = new List<Asset>();
          Set<Id> AssetQuoteLineIds = new Set<Id>();
          Set<Id> OrderItemIds = new Set<Id>();
          Set<Id> OrderProductItemIds = new Set<Id>();
@@ -470,6 +477,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //Loop through the Assets
         for(Asset a: assetProductEqualToPhysical){
             
+            //assetRelatedToOrderProducts = new List<Asset>();
+            orderProductToAssets.put(a.SBQQ__QuoteLine__c, assetRelatedToOrderProducts);
+            
             //Get Quote Line Ids
             if(a.SBQQ__QuoteLine__c != NULL){
                 AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
@@ -481,11 +491,24 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             
             //Query Order Product Items, order by created by
-            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds ORDER BY CreatedDate]){
+            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds ORDER BY CreatedDate DESC ]){
                 //Put in list
-                //Loop through Asset again and populate 
+                //Loop through Asset again and populate
+                /*
+                a.Status = op.Status__c;
+                a.Part_Number__c = op.Part_Number__c;
+                a.SerialNumber = op.Serial_Number__c;
+                assetRelatedToOrderProducts.add(a);
+                
+                SerialNumtoAssetMap.put(op.Serial_Number__c, op);
+                */
             }
             
+            /*
+            if(a.Serial_Number__c == SerialNumtoAssetMap.get(a.Serial_Number__c).Serial_Number__c){
+                
+            }
+            */
             
             
         }

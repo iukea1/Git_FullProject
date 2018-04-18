@@ -103,16 +103,12 @@ public with sharing class OrderShipmentHelper {
             orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
                              FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
             
-            System.debug('Order product list  ' + orderProductsList);
             for(OrderItem oi: orderProductsList){
-                System.debug('Orderitem prod name' + oi.Product2.Name);
                 if(oi.Product2.Name.startsWith('EC') && isECProducts == False){
                     isECProducts = true;
-                    System.debug('First EC' + isECProducts);
                 }
                 else if(oi.Product2.Name.startsWith('EC-ORCH-AAS') && isECProducts == true){
                     isDuplicateECProd = true;
-                    System.debug('Second EC ' + isDuplicateECProd);
                 }
                 
             }
@@ -123,6 +119,7 @@ public with sharing class OrderShipmentHelper {
 
         return isDuplicateECProd;
     }
+
     
     public static List<OrderItem> queryForOrderProductRenewals(String orderId, Set<String> productForecastCategories){
         List<OrderItem> orderProductsList = new List<OrderItem>();

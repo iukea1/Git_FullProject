@@ -4,14 +4,16 @@ public with sharing class VirtualShipmentController {
     public List<Order> orderList {get;set;}
     public List<OrderItem> orderProducts {get;set;} 
     public Boolean isDuplicateECProd;
+    public Boolean orderProductQuantityIsNotEqual;
     public Boolean orderIsActivated {get;set;}
     public List<SBQQ__SubscribedAsset__c> oldSubscriptionAndAsset {get;set;}
-    public List<SBQQ__SubscribedAsset__c> parentOfSubscriptionAndAsset {get;set;}
+    public List<Asset> assetToUpdate {get;set;}
     public List<SBQQ__Subscription__c> existingSubscription {get;set;}
     public Map<Id, List<SBQQ__SubscribedAsset__c>> subscriptionToSubscribedAsset {get;set;}
-    
+    public Map<Id, OrderItem> orderToOrderItemQuantity {get;set;}
+    //public Map<Id, Integer> subscriptionToNumberOfSelected {get;set;}
     public Boolean isRenewal {get;set;}
-    
+    //public Map<String, List<Boolean>> errorMessageForCounter {get;set;}
     Set<Id> renewalContractIds = new Set<Id>(); 
     Set<Id> selectedAssetIds = new Set<Id>();
 	
@@ -68,10 +70,10 @@ public with sharing class VirtualShipmentController {
         //check if order records related quote has the boolean field 'SBCF_Evaluation_Quote__c' equal to FALSE
         //checking also if there's a EC Products and EC-AAS-ORCH that was included in the quote line.
          
-        Order orderRec = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: this.order.Id LIMIT 1];
+        Order orderRec = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Type, (SELECT Id, Quantity, OrderId FROM OrderItems LIMIT 1) FROM Order WHERE Id =: this.order.Id LIMIT 1];
         //In this controller of VF page, there is two layout, one is for first order, and 2nd is the renewal of order. 
         //Check first the Order Status, so that you could Identify which save functionality will be done from your vf page.  
-        if(orderRec.Status != 'Renewal'){
+        if(orderRec.Type != 'Renewal'){
             if(orderRec.SBQQ__Quote__r.SBCF_Evaluation_Quote__c == False){
                     isDuplicateECProd = OrderShipmentHelper.queryForOrderProductsVirtualShipment(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
                         if(isDuplicateECProd == true){
@@ -93,32 +95,64 @@ public with sharing class VirtualShipmentController {
             }
         }
         
-        else if(orderRec.Status == 'Renewal'){
+        else if(orderRec.Type == 'Renewal'){
             // On the order shipment handler, create another helper class, that will query the order product's quantity,
             // after getting the quantity of order product, compare it to the size of the selected asset on VF page.
+		orderToOrderItemQuantity = new Map<Id, OrderItem>();
+        for(OrderItem orderItem: orderRec.OrderItems){
+            orderToOrderItemQuantity.put(orderItem.OrderId, orderItem);
+        }    
             
-            for(SBQQ__Subscription__c existingSubs: existingSubscription){
-                /*
-                //subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
-                oldSubscriptionAndAsset = existingSubs.SBQQ__SubscribedAssets__r;
-                for(SBQQ__SubscribedAsset__c subsAsset :oldSubscriptionAndAsset){
-                    if(contains){
-                        List<SBQQ__SubscribedAsset__c> asdList = subscriptionToSubscribedAsset.get(id);
-                        asdList.add(subsAsset);
-                        subscriptionToSubscribedAsset.put(id, asdList);
-                    }else{
-                        subscriptionToSubscribedAsset.put(id, List<>{id});
+        for(SBQQ__Subscription__c existingSubs: existingSubscription){
+            
+            	oldSubscriptionAndAsset = new List<SBQQ__SubscribedAsset__c>();
+            	subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
+                for(SBQQ__SubscribedAsset__c subsAsset: existingSubs.SBQQ__SubscribedAssets__r){
+     
+                    if(subsAsset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
+                        oldSubscriptionAndAsset.add(subsAsset);
                     }
-                }*/
                     
-                /*for(SBQQ__SubscribedAsset__c subsAsset: existingSubs.SBQQ__SubscribedAssets__r){
-                    oldSubscriptionAndAsset = new List<SBQQ__SubscribedAsset__c>();
-                    oldSubscriptionAndAsset.add(subsAsset);
                     subscriptionToSubscribedAsset.put(existingSubs.Id, oldSubscriptionAndAsset);
+					
+                    OrderItem orderProductQuantity = orderToOrderItemQuantity.get(orderRec.Id);
+                    List<SBQQ__SubscribedAsset__c> selectedAsset = subscriptionToSubscribedAsset.get(existingSubs.Id);
+                    assetToUpdate = new List<Asset>();
+                    for(SBQQ__SubscribedAsset__c asset: selectedAsset){
+                        if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
+                            Asset updateAsset = new Asset();
+                            updateAsset.Id = asset.SBQQ__Asset__c;
+                            updateAsset.Is_Selected_For_Renewal__c = true;
+                            assetToUpdate.add(updateAsset);
+                        }
+                    }
+                    
+                    if(orderProductQuantity.Quantity != assetToUpdate.size()){
+                        orderProductQuantityIsNotEqual = true;
+                    }
+					
+                    else if(orderProductQuantity.Quantity == selectedAsset.size()){
+                        orderProductQuantityIsNotEqual = false;
+                    }
                 }
-                
-                List<SBQQ__SubscribedAsset__c> subscribedAssetToUpdate = subscriptionToSubscribedAsset.get(existingSubs.Id);*/
+         }
+         
+            if(orderProductQuantityIsNotEqual){
+               ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: The Order Product quantity must equal to all of your selected asset'));
+               return null;
             }
+            else{
+                if(assetToUpdate.size()>0){
+                    update assetToUpdate;
+                }
+            }
+            
+            PageReference page = new PageReference('/' + this.order.Id);
+            page.setRedirect(true);
+            return page;
+            
+        
+    	
             
             
             
@@ -138,25 +172,13 @@ public with sharing class VirtualShipmentController {
         return page;
     }
     
-    public class parentSubscriptionWrapper{
-        
-        public SBQQ__Subscription__c subs {get;set;}
-        
-        public parentSubscriptionWrapper(SBQQ__Subscription__c subs){
-            this.subs = subs;
-        }
+    /*
+    public PageReference action(){
+        subscriptionToNumberOfSelected = new Map<Id, Integer>();
+        return null;
     }
+    */
     
-    public class subscribedAssetWithSubscription{
-        
-        public Id subscriptionId {get;set;}
-        public SBQQ__SubscribedAsset__c subAndAsset {get;set;}
-        public Asset asset {get;set;}
-        
-        public subscribedAssetWithSubscription(SBQQ__SubscribedAsset__c subAndAsset){
-            this.subAndAsset = subAndAsset;
-        }
-    }
 
    
     

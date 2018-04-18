@@ -19,7 +19,7 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
                 {
                     string distInfo=newQuote.Assigned_Distributor__c;
                     string[] splitDistInfo= distInfo.split('\\|');
-                 
+                    
                     if(newQuote.Tier_2_Partner__c!=splitDistInfo[0])
                         newQuote.Tier_2_Partner__c.addError('Tier 2 partner is not a valid distributor.'+ string.format('Please select {0} value.',new string[]{splitDistInfo[1]}) );
                 }
@@ -37,13 +37,13 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
                 Quote__c oldQuote= (Quote__c)oldItems.get(quoteId);
                 if(newQuote.Opportunity__c!=oldQuote.Opportunity__c && CheckInvalidPriceBook(new Set<Id>{newQuote.Opportunity__c,oldQuote.Opportunity__c}))
                 {
-                     newQuote.addError('The pricebook of the new opportunity does not match with the current opportunity pricebook.' );
+                    newQuote.addError('The pricebook of the new opportunity does not match with the current opportunity pricebook.' );
                 }
                 if(newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c && newQuote.Tier_2_Partner__c!=null && newQuote.Assigned_Distributor__c!=null)
                 {
                     string distInfo=newQuote.Assigned_Distributor__c;
                     string[] splitDistInfo= distInfo.split('\\|');
-                   
+                    
                     if(newQuote.Tier_2_Partner__c!=splitDistInfo[0])
                         newQuote.Tier_2_Partner__c.addError('Tier 2 partner is not a valid distributor.'+ string.format('Please select {0} value.',new string[]{splitDistInfo[1]}) );
                 }
@@ -58,6 +58,7 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
         mapQuoteOpp= new Map<Id,Id>();
+        List<Quote__c> lstOppQuote= new List<Quote__c>();
         if(newItems!=null && newItems.size()>0)
         {
             for(Id quoteId:newItems.keyset())
@@ -66,10 +67,12 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
                 if(quoteInfo.Primary__c && quoteInfo.Opportunity__c!=null)
                 {
                     mapQuoteOpp.put(quoteInfo.Id,quoteInfo.Opportunity__c);
+                    lstOppQuote.add(quoteInfo);
                 }
             }
             
             CheckPrimaryFlag();
+            PushTierValuesinOpp(lstOppQuote);
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -84,8 +87,8 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
             {
                 Quote__c newQuote= (Quote__c)newItems.get(quoteId);
                 Quote__c oldQuote= (Quote__c)oldItems.get(quoteId);
-                if(newQuote.Opportunity__c!=null && (newQuote.Primary__c!=oldQuote.Primary__c || newQuote.Tier_1_Partner__c!=oldQuote.Tier_1_Partner__c || newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c))
-                       lstOppQuote.add(newQuote);
+                if(newQuote.Opportunity__c!=null && newQuote.Primary__c && (newQuote.Primary__c!=oldQuote.Primary__c || newQuote.Tier_1_Partner__c!=oldQuote.Tier_1_Partner__c || newQuote.Tier_2_Partner__c!=oldQuote.Tier_2_Partner__c || newQuote.Tier_3_Partner__c!=oldQuote.Tier_3_Partner__c))
+                    lstOppQuote.add(newQuote);
                 if(newQuote.Primary__c!=oldQuote.Primary__c)
                 {
                     if(newQuote.Primary__c)
@@ -115,7 +118,6 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
             CheckPrimaryFlag();
             SetProductType(lstPrimaryQuotes,lstNotPrimaryQuotes);
             PushTierValuesinOpp(lstOppQuote);
-            
         }
         
     }
@@ -129,21 +131,26 @@ public class SPQuoteTriggerHandler implements ITriggerHandler {
     }
     private void PushTierValuesinOpp(List<Quote__c> lstPrimaryQuotes)
     {
-        		
-        		List<Opportunity> lstOpps= new List<Opportunity>();
-        		for(Quote__c qc : lstPrimaryQuotes)
-                {
-                    lstOpps.add(new Opportunity(Id=qc.Opportunity__c,Primary_Partner__c=qc.Reseller_AccountId__c,Tier1_Partner__c=qc.Tier_1_Partner__c,Tier2_Partner__c=qc.Tier_2_Partner__c,Tier3_Partner__c=qc.Tier_3_Partner__c));
-                }
-                try
-                {
-                    if(lstOpps!=null && lstOpps.size()>0)
-                    	update lstOpps;
-                }
-                catch(Exception ex)
-                {
-                    Trigger.new[0].addError(ex.getMessage());
-                }
+        System.debug('Test');
+        System.debug(lstPrimaryQuotes);
+        List<Opportunity> lstOpps= new List<Opportunity>();
+        if(lstPrimaryQuotes!=null && lstPrimaryQuotes.size()>0)
+        {
+            for(Quote__c qc : lstPrimaryQuotes)
+            {
+                Opportunity opp= new Opportunity(Id=qc.Opportunity__c);
+                opp.Primary_Partner__c=qc.Reseller_AccountId__c!=null?qc.Reseller_AccountId__c:null;
+                opp.Tier1_Partner__c=qc.Tier_1_Partner__c!=null?qc.Tier_1_Partner__c:null;
+                opp.Tier2_Partner__c=qc.Tier_2_Partner__c!=null?qc.Tier_2_Partner__c:null;
+                opp.Tier3_Partner__c=qc.Tier_3_Partner__c!=null?qc.Tier_3_Partner__c:null;
+                lstOpps.add(opp);
+            }
+            
+            if(lstOpps!=null && lstOpps.size()>0)
+                update lstOpps;
+            
+            
+        }
     }
     private boolean CheckInvalidPriceBook(Set<Id> lstOppId)
     {

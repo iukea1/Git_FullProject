@@ -113,7 +113,7 @@
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                     	<apex:facet name="header">Selected for Renewal</apex:facet>
-                                        <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}"/> 
+                                        <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}" /> 
                                     </apex:column>
                                 </apex:pageBlockTable>
                             </apex:column>
