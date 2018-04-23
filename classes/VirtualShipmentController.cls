@@ -3,20 +3,24 @@ public with sharing class VirtualShipmentController {
     public Order order {get;set;}
     public List<Order> orderList {get;set;}
     public List<OrderItem> orderProducts {get;set;} 
+    
+    public Boolean hasSmartHands;
     public Boolean isDuplicateECProd;
     public Boolean orderProductQuantityIsNotEqual;
     public Boolean orderIsActivated {get;set;}
+    
     public List<SBQQ__SubscribedAsset__c> oldSubscriptionAndAsset {get;set;}
     public List<Asset> assetToUpdate {get;set;}
+    
     public List<SBQQ__Subscription__c> existingSubscription {get;set;}
     public Map<Id, List<SBQQ__SubscribedAsset__c>> subscriptionToSubscribedAsset {get;set;}
     public Map<Id, OrderItem> orderToOrderItemQuantity {get;set;}
-    //public Map<Id, Integer> subscriptionToNumberOfSelected {get;set;}
+    
     public Boolean isRenewal {get;set;}
-    //public Map<String, List<Boolean>> errorMessageForCounter {get;set;}
     Set<Id> renewalContractIds = new Set<Id>(); 
     Set<Id> selectedAssetIds = new Set<Id>();
 	
+    
     
     
     
@@ -75,24 +79,40 @@ public with sharing class VirtualShipmentController {
         //Check first the Order Status, so that you could Identify which save functionality will be done from your vf page.  
         if(orderRec.Type != 'Renewal'){
             if(orderRec.SBQQ__Quote__r.SBCF_Evaluation_Quote__c == False){
-                    isDuplicateECProd = OrderShipmentHelper.queryForOrderProductsVirtualShipment(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
-                        if(isDuplicateECProd == true){
-                            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: Only one can be choose between EC Products and EC-ORCH-AAS'));
-                        }
+                    
+                isDuplicateECProd = OrderShipmentHelper.queryForOrderProductsVirtualShipment(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
+                        
+                if(isDuplicateECProd == true){
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: Only one can be choose between EC Products and EC-ORCH-AAS'));
+                	return null;
+                }
+                
+				hasSmartHands = OrderShipmentHelper.queryOrderProdIfContainsSmartHands(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
+                
+                if(hasSmartHands == true){
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Smart Hands Products are existing.'));
+                	return null;
+                }
+                		
             }
                 
-            if(isDuplicateECProd == true){
+            
+            try{
+                 if(orderProducts.size() > 0){
+                     update orderProducts;
+                 } 
+        	}
+            catch(Exception ex)
+            {
+                ApexPages.addMessages(ex);
                 return null;
             }
-            else {
                 
-                if(orderProducts.size() > 0){
-                    update orderProducts;
-                }
-                PageReference page = new PageReference('/' + this.order.Id);
-                page.setRedirect(true);
-                return page;
-            }
+                
+            PageReference page = new PageReference('/' + this.order.Id);
+            page.setRedirect(true);
+            return page;
+            
         }
         
         else if(orderRec.Type == 'Renewal'){

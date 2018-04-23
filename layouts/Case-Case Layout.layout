@@ -20,6 +20,22 @@
         <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Deployment Engineering</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>DeploymentEngineeringCaseWarningMessage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -504,6 +520,17 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <fields>DE_Note__c.NAME</fields>
+        <fields>DE_Note__c.DE_Notes__c</fields>
+        <fields>DE_Note__c.Has_Attachment__c</fields>
+        <fields>DE_Note__c.Deployment_Engineer__c</fields>
+        <fields>User.CREATED</fields>
+        <fields>DE_Note__c.CREATED_DATE</fields>
+        <relatedList>DE_Case_Note__c.Case_Number__c</relatedList>
+        <sortField>DE_Note__c.Deployment_Engineer__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedTeamMemberList</relatedList>
     </relatedLists>

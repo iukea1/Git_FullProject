@@ -98,7 +98,8 @@ public with sharing class OrderShipmentHelper {
     public static Boolean queryForOrderProductsVirtualShipment(String orderId, Set<String> productForecastCategories){
         List<OrderItem> orderProductsList = new List<OrderItem>();
         boolean isECProducts = false;
-        Boolean isDuplicateECProd = false;
+        boolean isDuplicateECProd = false;
+        
         try{
             orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
                              FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
@@ -119,7 +120,32 @@ public with sharing class OrderShipmentHelper {
 
         return isDuplicateECProd;
     }
+	
+    public static Boolean queryOrderProdIfContainsSmartHands(String orderId, Set<String> productForecastCategories){
+        List<OrderItem> orderProductsList = new List<OrderItem>();
+        boolean isSmartHands = false;
+        boolean hasSmartHands = false;
+        
+        try{
+            orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
+                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+            
+            for(OrderItem oi: orderProductsList){
+                if(string.ValueOf(oi.Product2.Name).startsWith('SMRT-HND') && isSmartHands == False){
+                    isSmartHands = true;
+                }
+                else if(!string.ValueOf(oi.Product2.Name).startsWith('SMRT-HND') && isSmartHands == true){
+                    hasSmartHands = true;
+                }
+                
+            }
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
 
+        return hasSmartHands;
+    }
     
     public static List<OrderItem> queryForOrderProductRenewals(String orderId, Set<String> productForecastCategories){
         List<OrderItem> orderProductsList = new List<OrderItem>();

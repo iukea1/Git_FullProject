@@ -135,9 +135,17 @@
     <tab>Cap_Case__c</tab>
     <tab>Quote_Approval_Matrix__c</tab>
     <tab>Partner_Discount_Lookup__c</tab>
+    <tab>DE_Note__c</tab>
+    <tab>DE_Case_Note__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>Cap_Case__c</tab>
+        </mapping>
+        <mapping>
+            <tab>DE_Case_Note__c</tab>
+        </mapping>
+        <mapping>
+            <tab>DE_Note__c</tab>
         </mapping>
         <mapping>
             <tab>Partner_Discount_Lookup__c</tab>

@@ -482,6 +482,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>rbooth@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
@@ -661,6 +665,10 @@
         <recipients>
             <recipient>InsideSalesMgr</recipient>
             <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/oppty_closed_stage_dead</template>

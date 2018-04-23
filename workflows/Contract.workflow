@@ -295,6 +295,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SBCF_Set_Status_to_Activated</fullName>
+        <field>Status</field>
+        <literalValue>Activated</literalValue>
+        <name>SBCF Set Status to Activated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>contract_expiry</fullName>
         <field>Status</field>
         <literalValue>Expired</literalValue>
@@ -480,5 +489,19 @@
             <timeLength>2</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Status to Activated</fullName>
+        <actions>
+            <name>SBCF_Set_Status_to_Activated</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>

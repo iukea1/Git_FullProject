@@ -1,0 +1,9 @@
+<apex:page standardController="Order" extensions="SubscribedAssetForRenewalController" action="{!createRenewal}">
+	<apex:pageMessages />
+    <apex:outputPanel Id="ErrorPanel" rendered="{!order.Subscribed_Asset_Created__c}">
+		<apex:form >
+			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+		</apex:form>
+		<br/>
+	</apex:outputPanel>   
+</apex:page>

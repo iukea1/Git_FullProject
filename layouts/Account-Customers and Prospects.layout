@@ -9,6 +9,22 @@
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Deployment Engineering</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>DeploymentEngineeringAccountWarning</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Assignment</label>
@@ -90,6 +106,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IsCap__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deployment_Engineering__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -700,6 +720,16 @@
         <fields>ACCOUNT.NAME</fields>
         <fields>CONTACT.PHONE1</fields>
         <relatedList>Contact.SBCF_Parent_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>DE_Notes__c</fields>
+        <fields>Has_Attachment__c</fields>
+        <fields>Deployment_Engineer__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>DE_Note__c.Account_Name__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -26,21 +26,46 @@
 
 	</style>
     
-    <apex:pageMessages id="showmsg"></apex:pageMessages>
+    <apex:outputPanel Id="CheckStatus"  rendered="{!checkStatus}">
+        <apex:pageMessages />
+        <apex:form >
+			<apex:commandButton action="{!returnToQuote}" value="Return to Quote"/>
+		</apex:form>
+    </apex:outputPanel>
     
+    <apex:outputPanel Id="PocStatusValid" rendered="{!NOT(checkStatus)}">
+    <apex:pageMessages />    
     <apex:form >
 
 		<apex:sectionHeader title="Extend POC - Quote {!quote.Name}" />
 
 		<apex:pageblock mode="maindetail">
-			<apex:pageBlockButtons location="top">
-                <apex:commandButton action="{!saveQuote}" value="Save & Submit for Approval" />
-				<apex:commandButton action="{!returnToQuote}" value="Cancel"/>
-			</apex:pageBlockButtons>
+			
 		</apex:pageblock>
         
         <div>
             <apex:pageBlock >
+                
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton action="{!saveQuote}" value="Save & Submit for Approval" />
+                    <apex:commandButton action="{!returnToQuote}" value="Cancel"/>
+                </apex:pageBlockButtons>
+                
+                <b>If the POC is in Pending Return status and contains EdgeConnect, Orchestrator, VX, or VRX software assets you will need to enter a new POC request for new licenses. Hardware assets including EdgeConnect and NX will be extended under the existing POC request.</b>
+                <br/><br/><br/><br/>
+                <table>
+                        <tr>
+                        <td width="50%">
+                        <b>Extend To Date:</b> &nbsp;&nbsp;<apex:inputField value="{!quoteList.Requested_Extension_Date__c}"/> <br/> <br/><br/>
+                        </td>
+                        </tr>
+                       <tr>
+                        <td>
+                        <b>Why is an extension needed?</b> <apex:inputField value="{!quoteList.Justification__c}" style="width:80%"/> <br/> <br/><br/>
+                        </td>
+                        </tr>
+                </table>
+                <!--
             	<apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
                     	<apex:pageBlockTable value="{!quoteList}" var="quoteRec" id="orderProdTable">
@@ -53,66 +78,26 @@
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
 								<apex:facet name="header">Requested Extension Date</apex:facet>
 								<apex:inputField value="{!quoteRec.Requested_Extension_Date__c}" />
+                                <apex:facet name="header">Justification</apex:facet>
+								<apex:inputField value="{!quoteRec.Justification__c}" />
 							</apex:column>
-                            
+                           
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
 								<apex:facet name="header">Justification</apex:facet>
 								<apex:inputField value="{!quoteRec.Justification__c}" />
 							</apex:column>
-                            
+                           
                             
                             
                         </apex:pageBlockTable>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
+				-->
             </apex:pageBlock>
         </div>
         
     </apex:form>
-
-    
-    
-    
-    <script type="text/javascript">
-    var __sfdcSessionId = '{!GETSESSIONID()}';
-    </script>
-    <script src="/soap/ajax/41.0/connection.js"
-          type="text/javascript"></script>
-    <script type="text/javascript">
-    function execute(){
-    	var quoteInfo = sforce.connection.query("select Id,SBCF_Evaluation_Quote__c,Quote_Lines_with_Discount__c,Discount_Justification__c, Customer_Will_Buy__c,Additional_Approval_custom__c,Hw_Sum_Qty_QL__c,Hw_Sum_Qty_QLA__c,Hw_Count_Qty_QLA__c,Hw_Count_Qty_QL__c from SBQQ__Quote__c where Name='{!SBQQ__Quote__c.Name}'"); 
-        var quote = quoteInfo.getArray("records")[0]; 
-        var disc = quote.Discount_Justification__c; 
-        var quoteLine = quote.Quote_Lines_with_Discount__c; 
-        var customerWillBuy = quote.Customer_Will_Buy__c; 
-        var additionalApprvCustm = quote.Additional_Approval_custom__c; 
-        
-        if(quote.SBCF_Evaluation_Quote__c == 'true' && (quote.Hw_Count_Qty_QL__c!=quote.Hw_Count_Qty_QLA__c || quote.Hw_Sum_Qty_QL__c!=quote.Hw_Sum_Qty_QLA__c)) { 
-        	alert("Some/All Hardware products don't have address defined on eval quote. Please go to Quote Address section and associate address to each quoteline. ") 
-        } 
-        else if(quoteLine > 0 && disc == null && additionalApprvCustm > 0){ 
-        	alert('Answering the, Have you confirmed with a trial close, question AND entering a discount justification is required.') 
-        } 
-        else if( !(customerWillBuy === "Yes" || customerWillBuy === "No") && additionalApprvCustm > 0 ){ 
-        	alert('Answering the, Have you confirmed with a trial close, question AND entering a discount justification is required.'); 
-        } 
-        else if( additionalApprvCustm > 0 ) 
-        { 
-            this.disabled = true; 
-            this.className = 'btnDisabled'; 
-            
-            window.location.href ='https://salesforce.com/apex/SubmitQuote?Id={!SBQQ__Quote__c.Id}'; 
-        } 
-        else 
-        { 
-            this.disabled = true; 
-            this.className = 'btnDisabled'; 
-            window.location.href ='https://salesforce.com/apex/SubmitQuote?Id={!SBQQ__Quote__c.Id}'; 
-        }
-        
-    }      
-    </script>
-    
+	</apex:outputPanel>
     
     
 </apex:page>

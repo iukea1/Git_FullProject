@@ -4,4 +4,6 @@
     <tab>standard-AppLauncher</tab>
     <tab>Cap_Case__c</tab>
     <tab>Partner_Discount_Lookup__c</tab>
+    <tab>DE_Note__c</tab>
+    <tab>DE_Case_Note__c</tab>
 </CustomApplication>

@@ -51,6 +51,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
+        //queryRenewalSubscription(newItems.values());
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
@@ -58,90 +59,102 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     public void AfterUndelete(Map<Id, SObject> newItems) 
     {
     }
+    
+    
+    //public static void queryRenewalSubscription(List<SBQQ__Subscription__c> subscription){
+       // for(SBQQ__Subscription__c subs: subscription){
+        //    if(!String.isEmpty(subs.SBQQ__ProductName__c) && subs.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_RENEWAL)){
+                
+              //     System.debug('Incoming Subscription contract in after update: ' + subs.SBQQ__Contract__c);
+              //     System.debug('Incoming Subscription order in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r);
+              //     System.debug('Incoming Subscription opportunity in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
+              //     System.debug('Incoming Subscription Renewed Contract in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);    
+              //     System.debug('@@@@----------- renewed subscription in after update : ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
+                
+          //  }
+       // }       
+    // }
   
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
+        
         // Used in action method
         List<SBQQ__SubscribedAsset__c> subscriptionAndAssetList = new List<SBQQ__SubscribedAsset__c>();
-        Set<id> renewalSubscriptions = new Set<id>();
-        Set<id> renewedContractForSubscription = new Set<id>();
-        Map<Id, Set<Id>> renewedSubscriptionToRenewedOpportunity = new Map<Id, Set<Id>>();
         List<SBQQ__Subscription__c> newlyGeneratedSubscription = new List<SBQQ__Subscription__c>();
-
-        
+        Set<id> renewalSubscriptions = new Set<id>();
+   
         //Start of the process for renewal
         for(SBQQ__Subscription__c subs: incomingSubscriptions){
             if(!String.isEmpty(subs.SBQQ__ProductName__c) && 
                subs.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_RENEWAL)){
+               System.debug('@@----------- renewed subscription in after insert : ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
                renewalSubscriptions.add(subs.id); 
+                   
             }
             else{
                newlyGeneratedSubscription.add(subs); 
             }
         }
+        
         System.debug('Renewed Subscription : ' + renewalSubscriptions);
         System.debug('Newly generated subscription : ' + newlyGeneratedSubscription);
+        
+        
         if(newlyGeneratedSubscription.size()>0){
+            
             Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = buildQuoteLineIdsToSubscriptions(newlyGeneratedSubscription);
         
-        if(quoteLineIdsToSubscriptions.keySet() == null){
-            System.debug('There are no quote lines related to incoming subscriptions. ');
-            return;
-        }
-        
-        Set<Id> subscriptionQuoteLineIds = quoteLineIdsToSubscriptions.keySet();
-        // Map quote line Id to Quote Line
-        Map<Id, SBQQ__QuoteLine__c> subscriptionQuoteLineMap = queryForSubscriptionQuoteLines(subscriptionQuoteLineIds);
-        
-        if(subscriptionQuoteLineMap.size() == 0){
-            System.debug('No quote lines were returned related to subscription quote lines.');
-            return;
-        }
-        
-        Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(subscriptionQuoteLineMap.values());
-        List<Asset> assetsRelatedToSubscriptions = queryForAssetsRelatedToSubscriptionsRequiredByIds(requiredByQuoteLineIds);
-        
-        if(assetsRelatedToSubscriptions.size() == 0){
-            System.debug('No assets were found relating to the subscription quote lines required by quote line.');
-            return;
-        }
-        
-        Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds = buildSubscriptionRequiredByIdToSubscriptionQuoteLineIds(subscriptionQuoteLineMap.values());
-        
-        List<Asset> assetsToUpdate = updateAssetsWithSubscriptionLookups(assetsRelatedToSubscriptions, subscriptionRequiredByIdToSubscriptionQuoteLineIds, quoteLineIdsToSubscriptions);
-        
-        System.debug('Assets to update: ' + assetsToUpdate);
-        
-        if(assetsToUpdate.size() > 0){
-            update assetsToUpdate;
-        }
-        
-        // This is the process to populate the related asset to Subscription detail page. 
-        for(Asset assetRec: assetsToUpdate){
-            SBQQ__SubscribedAsset__c subscriptionAndAsset = new SBQQ__SubscribedAsset__c();
-            subscriptionAndAsset.SBQQ__Subscription__c = assetRec.SBCF_Subscription__c; 
-            subscriptionAndAsset.SBQQ__Asset__c = assetRec.Id;
-            subscriptionAndAssetList.add(subscriptionAndAsset);
-        }
-        
-            if(subscriptionAndAssetList.size()>0){
-                insert subscriptionAndAssetList;
+            if(quoteLineIdsToSubscriptions.keySet() == null){
+                System.debug('There are no quote lines related to incoming subscriptions. ');
+                return;
             }
-        }
+            
+            Set<Id> subscriptionQuoteLineIds = quoteLineIdsToSubscriptions.keySet();
+            // Map quote line Id to Quote Line
+            Map<Id, SBQQ__QuoteLine__c> subscriptionQuoteLineMap = queryForSubscriptionQuoteLines(subscriptionQuoteLineIds);
+            
+            if(subscriptionQuoteLineMap.size() == 0){
+                System.debug('No quote lines were returned related to subscription quote lines.');
+                return;
+            }
+            
+            Set<Id> requiredByQuoteLineIds = getRequiredByQuoteLineIds(subscriptionQuoteLineMap.values());
+            List<Asset> assetsRelatedToSubscriptions = queryForAssetsRelatedToSubscriptionsRequiredByIds(requiredByQuoteLineIds);
+            
+            if(assetsRelatedToSubscriptions.size() == 0){
+                System.debug('No assets were found relating to the subscription quote lines required by quote line.');
+                return;
+            }
+            
+            Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds = buildSubscriptionRequiredByIdToSubscriptionQuoteLineIds(subscriptionQuoteLineMap.values());
+            
+            List<Asset> assetsToUpdate = updateAssetsWithSubscriptionLookups(assetsRelatedToSubscriptions, subscriptionRequiredByIdToSubscriptionQuoteLineIds, quoteLineIdsToSubscriptions);
+            
+            System.debug('Assets to update: ' + assetsToUpdate);
+            
+            if(assetsToUpdate.size() > 0){
+                update assetsToUpdate;
+            }
+            
+            // This is the process to populate the related asset to Subscription detail page. 
+            for(Asset assetRec: assetsToUpdate){
+                //SBQQ__SubscribedAsset__c subscriptionAndAsset = new SBQQ__SubscribedAsset__c();
+                //subscriptionAndAsset.SBQQ__Subscription__c = assetRec.SBCF_Subscription__c; 
+                //subscriptionAndAsset.SBQQ__Asset__c = assetRec.Id;
+                //subscriptionAndAsset.SBQQ__Active__c = true;
+                //subscriptionAndAssetList.add(subscriptionAndAsset);
+                subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
+                //listCS.add(new CS__c(Opportunity__c = o.id));
+            }
+            
+                if(subscriptionAndAssetList.size()>0){
+                    insert subscriptionAndAssetList;
+                }
+            }
+        
         else{
             if(renewalSubscriptions.size()>0){
-                List<SBQQ__Subscription__c> renewedSubscriptions = [SELECT Id, SBQQ__Contract__r.SBQQ__Order__r.OpportunityId 
-                                                                    FROM SBQQ__Subscription__c 
-                                                                    WHERE Id IN : renewalSubscriptions];
                 
-                for(SBQQ__Subscription__c renewedSubscription: renewedSubscriptions){
-                    renewedContractForSubscription.add(renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-			        renewedSubscriptionToRenewedOpportunity.put(renewedSubscription.Id, renewedContractForSubscription);        
-                }
-                List<SBQQ__SubscribedAsset__c> renewedAssets = [SELECT Id, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c 
-                                                                FROM SBQQ__SubscribedAsset__c 
-                                                                WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: renewedContractForSubscription
-                                                                AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
-                
+                //createSubscribedAssetForRenewal(renewalSubscriptions);  
             }
         }
         
@@ -215,6 +228,43 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                                                                        
                                                                        return assetsToUpdate;
                                                                    }
+                                                                   
+    /*
+    Method to update the Asset's GMS Nodes field if the Subscription's Product is Upgraded
+    */
+    private static void UpdateGMS_Nodes (List<SBQQ__Subscription__c> SubscriptionList){
+        
+        Set<Id> ContractIds = new Set<Id>();
+        Set<Id> OrderIds = new Set<Id>();
+        Set<Id> OpportunityIds = new Set<Id>();
+        Id SubscriptionContract;
+        Boolean MatchedContract = false;
+        
+        //Loop through the Subscriptions and get the Contract Ids
+        for(SBQQ__Subscription__c sub: SubscriptionList){
+            ContractIds.add(sub.SBQQ__Contract__c);
+        }
+        
+        //Loop through Contract and get Order Product 
+        for(Contract con: [SELECT Id, SBQQ__Order__c FROM Contract WHERE Id =: ContractIds]){
+            OrderIds.add(con.SBQQ__Order__c);
+        }
+        
+        //Loop through Order and get Opportunity
+        for(Order ord : [SELECT Id, OpportunityId FROM Order WHERE Id =: OrderIds]){
+            OpportunityIds.add(ord.OpportunityId);
+        }
+        
+        //Loop through Opportunity and check if it has amended Contract and the Contract == Subscription's Contract
+        for(Opportunity opp: [SELECT Id, Name, SBQQ__AmendedContract__c FROM Opportunity WHERE Id =: OpportunityIds]){
+            
+        }
+        
+        //If Contract matches with Amended from Opportunity, query subscriptions to get the Asset
+        
+        
+        
+    }
     
     private static Map<Id, Set<Id>> buildSubscriptionRequiredByIdToSubscriptionQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
         Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds = new Map<Id, Set<Id>>();
@@ -255,18 +305,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         return assetsRelatedToSubscriptions;
     } 
-    
-    //private static Set<Id> getRequiredByQuoteLineIds(List<Set<Id>> requiredByQuoteLineIds){
-    //	Set<Id> requiredByQuoteLineIdsFullList = new Set<Id>();
-    
-    //	for(Set<Id> quoteLineIdsRequiredBySubQuoteLine: requiredByQuoteLineIds){
-    //		requiredByQuoteLineIdsFullList.addAll(quoteLineIdsRequiredBySubQuoteLine);
-    //	}
-    
-    //	System.debug('Required By Quote Line Ids Full List: ' + requiredByQuoteLineIdsFullList);
-    //	return requiredByQuoteLineIdsFullList;
-    //}
-    
+
     private static Set<Id> getRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
         Set<Id> requiredByQuoteLineIds = new Set<Id>();
         
@@ -280,28 +319,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         return requiredByQuoteLineIds;
     }
-    
-    //private static Map<Id, Set<Id>> buildSubscriptionQuoteLineIdToRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
-    //	Map<Id, Set<Id>> subscriptionQuoteLineIdToRequiredByQuoteLineIds = new Map<Id, Set<Id>>();
-    
-    //	for(SBQQ__QuoteLine__c subscriptionQuoteLine: subscriptionQuoteLines){
-    //		if(subscriptionQuoteLine.SBQQ__RequiredBy__c == null){
-    //			continue;
-    //		}
-    
-    //		Set<Id> requiredByQuoteLineIds = subscriptionQuoteLineIdToRequiredByQuoteLineIds.get(subscriptionQuoteLine.SBQQ__RequiredBy__c);
-    
-    //		if(requiredByQuoteLineIds == null){
-    //			requiredByQuoteLineIds = new Set<Id>();
-    //			subscriptionQuoteLineIdToRequiredByQuoteLineIds.put(subscriptionQuoteLine.SBQQ__RequiredBy__c, requiredByQuoteLineIds);
-    //		}
-    
-    //		requiredByQuoteLineIds.add(subscriptionQuoteLine.SBQQ__RequiredBy__c);
-    //	}
-    
-    //	System.debug('Subscription Quote Line Id To Required By Quote Line Ids: ' + subscriptionQuoteLineIdToRequiredByQuoteLineIds);
-    //	return subscriptionQuoteLineIdToRequiredByQuoteLineIds;
-    //}
+   
     
     private static Map<Id, List<SBQQ__Subscription__c>> buildQuoteLineIdsToSubscriptions(List<SBQQ__Subscription__c> incomingSubscriptions){
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = new Map<Id, List<SBQQ__Subscription__c>>();
@@ -341,48 +359,142 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         return subscriptionQuoteLineMap;
     }
     
+    //------- populate asset in subscription detail page ------- //
+    /*
+    @InvocableMethod
+    public static void updateTheSelectedAsset(List<Id> renewalSubs){
+        
+        List<SBQQ__SubscribedAsset__c> subscribedAssetRenewal = new List<SBQQ__SubscribedAsset__c>();
+        Set<Id> renewedOrder = new Set<Id>();
+        Set<Id> contractRenewalIds = new Set<Id>();
+        Set<Id>  orderRenewalIds = new Set<Id>();
+        List<Asset> newAssetToUpdate = new List<Asset>();
+        Set<id> renewedContractForSubscription = new Set<id>();
+        Set<Id> assetsRenewed = new Set<Id>();
+        Map<Id, Set<Id>> renewedSubscriptionToRenewedOpportunity = new Map<Id, Set<Id>>();
+        
+        List<SBQQ__Subscription__c> renewedSubscriptions = [SELECT Id, SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c
+                                                                    FROM SBQQ__Subscription__c 
+                                                                    WHERE Id IN : renewalSubs];
+                
+                System.debug('Incoming Subscription : ' + renewedSubscriptions);
+                
+                
+                for(SBQQ__Subscription__c renewedSubscription: renewedSubscriptions){
+                    renewedContractForSubscription.add(renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
+                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__c);
+                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r);
+                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
+                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
+                    renewedSubscriptionToRenewedOpportunity.put(renewedSubscription.Id, renewedContractForSubscription);        
+                }
+                List<SBQQ__SubscribedAsset__c> renewedAssets = [SELECT Id, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c 
+                                                                FROM SBQQ__SubscribedAsset__c 
+                                                                WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: renewedContractForSubscription
+                                                                AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
+                
+                System.debug('Subscribed Asset to be selected for Renewal : ' + renewedAssets);
+                
+                for(SBQQ__SubscribedAsset__c assetIds: renewedAssets){
+                    assetsRenewed.add(assetIds.SBQQ__Asset__c);
+                }
+                
+                List<Asset> assetToBeCreateInSubscribeAsset = [SELECT Id, Is_Selected_For_Renewal__c FROM Asset WHERE Id IN: assetsRenewed];
+                System.debug('Asset that has been selected for renewal : ' + assetToBeCreateInSubscribeAsset);
+                
+                for(SBQQ__Subscription__c sub: renewedSubscriptions){
+                    for(Asset assetToBeRenewed: assetToBeCreateInSubscribeAsset){
+                        assetToBeRenewed.SBCF_Subscription__c = sub.Id;
+                        newAssetToUpdate.add(assetToBeRenewed);
+                    }
+                }
+                System.debug('Update the subscription field in Asset ' + newAssetToUpdate);
+                
+                
+                if(newAssetToUpdate.size()>0){
+                    update newAssetToUpdate;
+                }
+                
+                for(Asset assetForSubscribedAsset: newAssetToUpdate){
+                    SBQQ__SubscribedAsset__c newSubscribedAsset = new SBQQ__SubscribedAsset__c();
+                    newSubscribedAsset.SBQQ__Asset__c = assetForSubscribedAsset.Id;
+                    newSubscribedAsset.SBQQ__Subscription__c = assetForSubscribedAsset.SBCF_Subscription__c;
+                    subscribedAssetRenewal.add(newSubscribedAsset);
+                }
+                System.debug('Subscribed Asset that will be created ' + subscribedAssetRenewal);
+                
+                if(subscribedAssetRenewal.size()>0){
+                    insert subscribedAssetRenewal;
+                }
+    } */
+    /*
+    @future
+    public static void createSubscribedAssetForRenewal(Set<id> subsId){
+        Set<Id> assetsRenewed = new Set<Id>();
+        Set<Id> renewedContractForSubscription = new Set<Id>();
+        List<Asset> newAssetToUpdate = new List<Asset>();
+        List<SBQQ__SubscribedAsset__c> subscribedAssetRenewal = new List<SBQQ__SubscribedAsset__c>();
+        
+        List<SBQQ__Subscription__c> renewedSubscriptions = [SELECT Id, SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c
+                                                            FROM SBQQ__Subscription__c 
+                                                            WHERE Id IN : subsId];
+                
+        System.debug('Incoming Subscription : ' + renewedSubscriptions);
+        
+        
+        for(SBQQ__Subscription__c renewedSubscription: renewedSubscriptions){
+            renewedContractForSubscription.add(renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
+            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__c);
+            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r);
+            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
+            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
+        }
+                
+                
+        
+        List<SBQQ__SubscribedAsset__c> renewedAssets = [SELECT Id, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c 
+                                                        FROM SBQQ__SubscribedAsset__c 
+                                                        WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: renewedContractForSubscription
+                                                        AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
+        
+        System.debug('Subscribed Asset to be selected for Renewal : ' + renewedAssets);
+        
+        for(SBQQ__SubscribedAsset__c assetIds: renewedAssets){
+            assetsRenewed.add(assetIds.SBQQ__Asset__c);
+        }
+        
+        List<Asset> assetToBeCreateInSubscribeAsset = [SELECT Id, Is_Selected_For_Renewal__c FROM Asset WHERE Id IN: assetsRenewed];
+        System.debug('Asset that has been selected for renewal : ' + assetToBeCreateInSubscribeAsset);
+        
+        
+        
+        for(SBQQ__Subscription__c sub: renewedSubscriptions){
+            for(Asset assetToBeRenewed: assetToBeCreateInSubscribeAsset){
+                assetToBeRenewed.SBCF_Subscription__c = sub.Id;
+                newAssetToUpdate.add(assetToBeRenewed);
+            }
+        }
+        System.debug('Update the subscription field in Asset ' + newAssetToUpdate);
+        
+        
+        if(newAssetToUpdate.size()>0){
+            update newAssetToUpdate;
+        }
+        
+        for(Asset assetForSubscribedAsset: newAssetToUpdate){
+            SBQQ__SubscribedAsset__c newSubscribedAsset = new SBQQ__SubscribedAsset__c();
+            newSubscribedAsset.SBQQ__Asset__c = assetForSubscribedAsset.Id;
+            newSubscribedAsset.SBQQ__Subscription__c = assetForSubscribedAsset.SBCF_Subscription__c;
+            subscribedAssetRenewal.add(newSubscribedAsset);
+        }
+        System.debug('Subscribed Asset that will be created ' + subscribedAssetRenewal);
+        
+        if(subscribedAssetRenewal.size()>0){
+            insert subscribedAssetRenewal;
+        }
+        
+    }*/
     
-    // Populate the related Asset to the Subsccription's Asset Lookup field
-    // Author: Ronald Pascual 
-    // Date: March 20, 2018
-    // Description: Reuse the logic that was currently implemented to the Asset's subscription lookup, which will be apply this logic to Subcription's Asset Lookup field. 
-    public static List<SBQQ__Subscription__c> queryForAllSubscriptionsInAsset(Set<Id> assetThatHasSubs){
-        List<SBQQ__Subscription__c> subscriptionInAsset = new List<SBQQ__Subscription__c>();
-        
-        try{
-            subscriptionInAsset = [SELECT Id, SBCF_Asset__c FROM SBQQ__Subscription__c WHERE Id IN: assetThatHasSubs];
-        }
-        catch(QueryException qe){
-            system.debug(qe.getMessage());
-        }
-        return subscriptionInAsset;
-    }
     
-    public static void populateRelatedSubscriptionAssetLookups(List<SBQQ__Subscription__c> incomingSubs){
-        List<SBQQ__Subscription__c> subcriptionsToUpdate = new List<SBQQ__Subscription__c>();
-        Set<Id> subscriptionIdsSet = new Set<Id>();
-        Map<Id, Id> subscriptionToAssetMap = new Map<Id, Id>();
-        
-        for(SBQQ__Subscription__c subscription: incomingSubs){
-            subscriptionIdsSet.add(subscription.Id);
-        }
-        
-        for(Asset asset: [SELECT Id, SBQQ__Subscription__c FROM Asset WHERE SBQQ__Subscription__c IN :subscriptionIdsSet]){
-            subscriptionToAssetMap.put(asset.SBQQ__Subscription__c, asset.Id);
-        }
-        
-        for(SBQQ__Subscription__c subs: incomingSubs){
-            subs.SBCF_Asset__c = subscriptionToAssetMap.get(subs.Id);
-            subcriptionsToUpdate.add(subs);
-        }
-        
-        if(subcriptionsToUpdate.size()>0){
-            update subcriptionsToUpdate;
-        }
-        
-        
-        //List<SBQQ__Subscription__c> quoteLineRelatedToAsset = [SELECT Id, Name (SELECT Id, Name FROM SBQQ__SubscribedAsset__c) FROM SBQQ__Subscription__c WHERE Id IN: subscriptionIdsSet];
-        
-    }
     
 }

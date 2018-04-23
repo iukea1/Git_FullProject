@@ -165,6 +165,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
              
         }
         //populateAssetFields(newItems.values());
+        DeleteGeneratedAsset(newItems.values());
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -449,11 +450,16 @@ public class AssetTriggerHandler implements ITriggerHandler {
     private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
          //Map<Id, Asset> QuoteLinetoAssetMap = new Map<Id, Asset>();
-         Map<String, Asset> SerialNumtoAssetMap = new Map<String, Asset>();
+         Map<Integer, Order_Product_Item__c> NumtoOrderProductItemMap = new Map<Integer, Order_Product_Item__c>();
          List<Asset> assetRelatedToOrderProducts = new List<Asset>();
+         List<Order_Product_Item__c> OrderProductItemstoUpdate = new List<Order_Product_Item__c>();
          Set<Id> AssetQuoteLineIds = new Set<Id>();
          Set<Id> OrderItemIds = new Set<Id>();
          Set<Id> OrderProductItemIds = new Set<Id>();
+         Set<Order_Product_Item__c> OrderProductItemstoUpdateSet = new Set<Order_Product_Item__c>();
+         Integer OrderQuantity;
+         Integer counter = 1;
+         Integer counter2 = 1;
          /*
          for(Asset asset: assetProductEqualToPhysical){
             System.debug('@@----- asset.SBQQ__OrderProduct__c :' + asset.SBQQ__OrderProduct__c);
@@ -486,24 +492,35 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             
             //Query Order Products where Quote Line Ids
-            for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
+            for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c, Quantity FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
                 OrderItemIds.add(oi.id);
+                OrderQuantity = Integer.valueOf(oi.Quantity);
             }
             
             //Query Order Product Items, order by created by
-            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds ORDER BY CreatedDate DESC ]){
+            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds ORDER BY CreatedDate DESC ]){
                 //Put in list
                 //Loop through Asset again and populate
+                
+                //counter = 1;
+                NumtoOrderProductItemMap.put(counter, op);
+                counter++;
                 /*
                 a.Status = op.Status__c;
                 a.Part_Number__c = op.Part_Number__c;
                 a.SerialNumber = op.Serial_Number__c;
                 assetRelatedToOrderProducts.add(a);
-                
-                SerialNumtoAssetMap.put(op.Serial_Number__c, op);
                 */
+                
+                //SerialNumtoAssetMap.put(op.Serial_Number__c, op);
+                //op.Asset__c = a.id;
+                //OrderProductItemstoUpdateSet.add(op);
+                
             }
             
+            //System.debug('OrderProductItemstoUpdateSet values = ' + OrderProductItemstoUpdateSet);
+            
+            System.debug('NumtoOrderProductItemMap values = ' + NumtoOrderProductItemMap);
             /*
             if(a.Serial_Number__c == SerialNumtoAssetMap.get(a.Serial_Number__c).Serial_Number__c){
                 
@@ -513,7 +530,145 @@ public class AssetTriggerHandler implements ITriggerHandler {
             
         }
         
-         return orderProductToAssets;
+        //Loop on Asset again
+        for(Asset a: assetProductEqualToPhysical){
+            //counter2 = 1;
+            System.debug('counter2 value = ' + counter2);
+            if(!NumtoOrderProductItemMap.isEmpty()){
+                
+                if(counter2 <= OrderQuantity){
+                a.Status = NumtoOrderProductItemMap.get(counter2).Status__c;
+                a.Part_Number__c = NumtoOrderProductItemMap.get(counter2).Part_Number__c;
+                a.SerialNumber = NumtoOrderProductItemMap.get(counter2).Serial_Number__c;
+                assetRelatedToOrderProducts.add(a);
+                counter2++;
+                }
+            }
+
+            
+        }
+        
+        if(!OrderProductItemstoUpdateSet.isEmpty()){
+            update new List<Order_Product_Item__c>(OrderProductItemstoUpdateSet);
+        }
+        
+        System.debug('assetRelatedToOrderProducts values = ' + assetRelatedToOrderProducts);
+        
+        return orderProductToAssets;
+    }
+    
+    /*
+    Method to Delete the newly generated Asset if there is already an existing Asset on the Order Product Item
+    */
+    
+    private static void DeleteGeneratedAsset (List<Asset> AssetList){
+        
+        System.debug('DeleteGeneratedAsset List = ' + AssetList);
+        
+        List<Asset> ToDeleteAssets = new List<Asset>();
+        Set<Id> AssetQuoteLineIds = new Set<Id>();
+        Set<Id> OrderItemIds = new Set<Id>();
+        Set<Id> OrderProductItemIds = new Set<Id>();
+        Set<Id> ExistingAssetIds = new Set<Id>();
+        Set<Id> toDeleteAssetIds = new Set<Id>();
+        Map<Id, Order_Product_Item__c> ExistingAssetOrderProductMap = new Map<Id, Order_Product_Item__c>();
+        List<Asset> toUpdateExistingAsset = new List<Asset>();
+        List<Order_Product_Item__c> OrderProductItemstoUpdate = new List<Order_Product_Item__c>();
+        Set<Order_Product_Item__c> OrderProductItemstoUpdateSet = new Set<Order_Product_Item__c>();
+        Map<Id, Order_Product_Item__c> ToUpdateOrderProductsMap = new Map<Id, Order_Product_Item__c>();
+        Map<Id, Order_Product_Item__c> ToExistingUpdateOrderProductsMap = new Map<Id, Order_Product_Item__c>();
+        Map<Id, Asset> toUpdateExistingAssetMap = new Map<Id, Asset>();
+        Map<Id, Asset> ToDeleteAssetsMap = new Map<Id, Asset>();
+        
+        
+        
+        //Loop through the Assets
+        for(Asset a: AssetList){
+            
+            //Get Quote Line Ids
+            if(a.SBQQ__QuoteLine__c != NULL){
+                AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
+            }
+            
+            //Query Order Products where Quote Line Ids
+            for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c, Quantity FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
+                OrderItemIds.add(oi.id);
+            }
+            
+            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c, Existing_Asset__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds]){
+                
+                if(op.Existing_Asset__c != NULL){
+                        
+                    //Get the Existing Assets and Map with the Order Product Item
+                    ExistingAssetOrderProductMap.put(op.Existing_Asset__c, op);
+                    toDeleteAssetIds.add(op.Asset__c);
+                    op.Asset__c = NULL;
+                    ToExistingUpdateOrderProductsMap.put(op.id, op);
+                }
+                
+                if(op.Asset__c == NULL && op.Existing_Asset__c == NULL){
+                    op.Asset__c = a.id;
+                    //OrderProductItemstoUpdateSet.add(op);
+                    ToUpdateOrderProductsMap.put(op.id, op);
+                }
+            }
+            
+            //Query for the Existing Assets and update the Part Number, Serial Number and Status fields with values from Order Product Item
+            for(Asset AssetEx: [SELECT Id, Part_Number__c, SerialNumber, Status FROM Asset WHERE Id =: ExistingAssetOrderProductMap.keySet()]){
+                
+                //Populate the Part Number, Serial Number and Status fields
+                AssetEx.Status = ExistingAssetOrderProductMap.get(AssetEx.id).Status__c;
+                AssetEx.Part_Number__c = ExistingAssetOrderProductMap.get(AssetEx.id).Part_Number__c;
+                AssetEx.SerialNumber = ExistingAssetOrderProductMap.get(AssetEx.id).Serial_Number__c;
+                //toUpdateExistingAsset.add(AssetEx);
+                toUpdateExistingAssetMap.put(AssetEx.id, AssetEx);
+            }
+            
+            for(Asset AssetDel : [SELECT Id, Part_Number__c, SerialNumber, Status FROM Asset WHERE Id =: toDeleteAssetIds]){
+                
+                //Add to List for Deletion
+                //ToDeleteAssets.add(AssetDel);
+                ToDeleteAssetsMap.put(AssetDel.id, AssetDel);
+            }
+            
+            System.debug('ToUpdateOrderProductsMap List = ' + ToUpdateOrderProductsMap);
+            System.debug('toUpdateExistingAssetMap List = ' + toUpdateExistingAssetMap);
+            System.debug('ToDeleteAssetsMap List = ' + ToDeleteAssetsMap);
+            
+            /*
+            if(!OrderProductItemstoUpdateSet.isEmpty()){
+                update new List<Order_Product_Item__c>(OrderProductItemstoUpdateSet);
+            }
+            */
+            
+            if(!ToUpdateOrderProductsMap.isEmpty()){
+                update ToUpdateOrderProductsMap.values();
+            }
+            
+            if(!ToExistingUpdateOrderProductsMap.isEmpty()){
+                update ToExistingUpdateOrderProductsMap.values();
+            }
+            
+            /*
+            if(!toUpdateExistingAsset.isEmpty()){
+                update toUpdateExistingAsset;
+            }
+            
+            if(!ToDeleteAssets.isEmpty()){
+                delete ToDeleteAssets;
+            }*/
+            
+            if(!toUpdateExistingAssetMap.isEmpty()){
+                update toUpdateExistingAssetMap.values();
+            }
+            
+            if(!ToDeleteAssetsMap.isEmpty()){
+                //delete ToDeleteAssetsMap.values();
+                Database.delete(ToDeleteAssetsMap.values(), false);
+            }
+            
+            
+        }
     }
         
     private static List<Order_Product_Item__c> getAllOrderProductItemsRelatedToOrderProduct(Set<Id> orderProductFromAsset){
