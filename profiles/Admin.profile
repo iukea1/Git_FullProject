@@ -474,6 +474,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ContractTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ConvertRmaToCmaController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1647,6 +1651,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>QuoteTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>QuotelineTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

@@ -170,6 +170,10 @@
                 <behavior>Readonly</behavior>
                 <field>Contract_Pricing__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>POC_ID_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

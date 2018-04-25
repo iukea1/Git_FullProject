@@ -24,7 +24,7 @@ public class ExtendPOCController {
         }
         
         
-            if(quoteList.POC_Status__c != 'Shipped' || quoteList.POC_Status__c != 'Shipped - Extended' || quoteList.POC_Status__c != 'Pending Return'){
+            if(quoteList.POC_Status__c != 'Shipped' && quoteList.POC_Status__c != 'Shipped - Extended' && quoteList.POC_Status__c != 'Pending Return'){
                 checkStatus = true;
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Invalid Quote POC Status.');
                 ApexPages.addMessage(myMsg);

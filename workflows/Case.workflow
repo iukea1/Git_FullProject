@@ -890,6 +890,22 @@
         <template>Support/CaseOwnershipAssigned</template>
     </alerts>
     <alerts>
+        <fullName>Send_Support_Case_Notification_to_CSR_Team</fullName>
+        <ccEmails>customerresponse@answer1.com</ccEmails>
+        <ccEmails>Alicia@answer1.com</ccEmails>
+        <ccEmails>Cameron@answer1.com</ccEmails>
+        <ccEmails>Athena@answer1.com</ccEmails>
+        <ccEmails>tsemanagers@silver-peak.com</ccEmails>
+        <description>Send Support Case Notification to CSR Team</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Support_Case_Notification_to_Csr_Team</template>
+    </alerts>
+    <alerts>
         <fullName>notify_customer_wanstart_activated</fullName>
         <description>notify_customer_wanstart_activated</description>
         <protected>false</protected>
@@ -941,6 +957,15 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>Support/WANstart_Activation</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>Case_Notification_TimeStamp</fullName>
+        <field>Case_Notification_TimeStamp__c</field>
+        <formula>NOW()- 0.02073</formula>
+        <name>Case Notification TimeStamp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>ChangeCaseRecordType</fullName>
         <field>RecordTypeId</field>
@@ -1098,6 +1123,26 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Support_Case_30_min_Notification1_False</fullName>
+        <field>Support_Case_30_min_Notification__c</field>
+        <literalValue>0</literalValue>
+        <name>Support Case 30 min Notification1-False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Support_Case_30_min_Notification1_True</fullName>
+        <field>Support_Case_30_min_Notification__c</field>
+        <literalValue>1</literalValue>
+        <name>Support Case 30 min Notification1-True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>UpdateApprovalStatus</fullName>
@@ -2157,6 +2202,102 @@ NOT( Contact.Testing__c )
             <value>Owner</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Support Case 30 mins Notification-1</fullName>
+        <actions>
+            <name>Case_Notification_TimeStamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,Technical Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Tier1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Csr Answer1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Support_Case_30_min_Notification__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_Support_Case_Notification_to_CSR_Team</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>Support_Case_30_min_Notification1_True</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Case.Case_Notification_TimeStamp__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Support Case 30 mins Notification-2</fullName>
+        <actions>
+            <name>Case_Notification_TimeStamp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,Technical Support</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Tier1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>equals</operation>
+            <value>Csr Answer1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Support_Case_30_min_Notification__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_Support_Case_Notification_to_CSR_Team</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>Support_Case_30_min_Notification1_False</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Case.Case_Notification_TimeStamp__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Update Case CC Email</fullName>

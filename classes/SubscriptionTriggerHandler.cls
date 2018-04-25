@@ -48,6 +48,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         }
         
        populateRelatedAssetSubscriptionLookups(newItems.values());
+       UpdateGMS_Nodes(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -239,28 +240,80 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         Set<Id> OpportunityIds = new Set<Id>();
         Id SubscriptionContract;
         Boolean MatchedContract = false;
+        Id toGetAsset;
+        Id CurrentSubscription;
+        Boolean IsGMS25 = false;
         
         //Loop through the Subscriptions and get the Contract Ids
         for(SBQQ__Subscription__c sub: SubscriptionList){
             ContractIds.add(sub.SBQQ__Contract__c);
+            SubscriptionContract = sub.SBQQ__Contract__c;
+            CurrentSubscription = sub.id;
+            
+            if(sub.SBQQ__ProductName__c.contains('GMS-25')){
+                IsGMS25 = true;
+            }
         }
+        
+        System.debug('IsGMS25 = ' + IsGMS25);
+        System.debug('ContractIds = ' + ContractIds);
         
         //Loop through Contract and get Order Product 
         for(Contract con: [SELECT Id, SBQQ__Order__c FROM Contract WHERE Id =: ContractIds]){
             OrderIds.add(con.SBQQ__Order__c);
         }
         
+        System.debug('OrderIds = ' + OrderIds);
+        
         //Loop through Order and get Opportunity
         for(Order ord : [SELECT Id, OpportunityId FROM Order WHERE Id =: OrderIds]){
             OpportunityIds.add(ord.OpportunityId);
         }
         
+        System.debug('OpportunityIds = ' + OpportunityIds);
+        
         //Loop through Opportunity and check if it has amended Contract and the Contract == Subscription's Contract
-        for(Opportunity opp: [SELECT Id, Name, SBQQ__AmendedContract__c FROM Opportunity WHERE Id =: OpportunityIds]){
+        for(Opportunity opp: [SELECT Id, Name, SBQQ__AmendedContract__c, SBQQ__AmendedContract__r.id FROM Opportunity WHERE Id =: OpportunityIds]){
             
+            System.debug('Opportunity query = ' + opp);
+            System.debug('Amended contract = ' + opp.SBQQ__AmendedContract__c);
+            
+            if(opp.SBQQ__AmendedContract__r.id == SubscriptionContract){
+                MatchedContract = true;
+            }
         }
         
+        System.debug('SubscriptionContract = ' + SubscriptionContract);
+        //System.debug('ContractIds = ' + ContractIds);
+        System.debug('MatchedContract = ' + MatchedContract);
+        
         //If Contract matches with Amended from Opportunity, query subscriptions to get the Asset
+        if(MatchedContract){
+            
+            //Query the second to the last Subscription
+            SBQQ__Subscription__c SectoLast = [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract ORDER BY CreatedDate DESC LIMIT 1][1];
+            
+            //Query the Asset from the Subscription
+            Asset AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBQQ__Subscription__c =: SectoLast.Id];
+            
+            //Query the Product Name
+            //Product2 AssetProd = [SELECT Id, Name FROM Product2 WHERE Id =: AssetToUpdate.Product2Id];
+            
+            System.debug('SectoLast value = ' + SectoLast);
+            System.debug('AssetToUpdate value = ' + AssetToUpdate);
+            
+            //Check if the Asset's Product Name is GMS-10
+            if(IsGMS25){
+                
+                //Update the Asset GMS Node field
+                AssetToUpdate.GMS_Nodes__c = '25';
+                AssetToUpdate.SBQQ__Subscription__c = CurrentSubscription;
+            }
+            
+            System.debug('AssetToUpdate value = ' + AssetToUpdate);
+            
+            update AssetToUpdate;
+        }
         
         
         

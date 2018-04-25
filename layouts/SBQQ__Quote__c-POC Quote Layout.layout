@@ -40,8 +40,8 @@
                 <field>Require_Unity_Cloud_Orchestrator__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>POC_ID__c</field>
+                <behavior>Readonly</behavior>
+                <field>POC_ID_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

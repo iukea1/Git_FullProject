@@ -166,6 +166,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
+        populatePOCIdInAsset(newItems.values());
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -176,12 +177,21 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setAccIds=new Set<Id>();
         Set<Id> setECAcctIds= new Set<Id>();
         Set<Id> setWanOpAcctIds= new Set<Id>();
+        List<Asset> lstLicenseAssets= new List<Asset>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
+                if(newAsset.Product_Family__c=='Virtual Image')
+                {
+                    if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
+                        lstLicenseAssets.add(newAsset);
+                    else if(newAsset.SBQQ__CurrentSubscription__c!=null && newAsset.Status!=oldAsset.Status && newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c && (newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription'))
+                        lstLicenseAssets.add(newAsset);
+                }
+                    
                 if(oldAsset.AccountId!=newAsset.AccountId || oldAsset.Status!=newAsset.Status)
                 {
                     if(newAsset.Product_Quote_Type__c=='EDGECONNECT' && newAsset.Product_Family__c=='Product' && (newAsset.Status=='Customer Evaluation' || newAsset.Status=='Customer Owned'))
@@ -199,6 +209,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
+            GenerateLicense(lstLicenseAssets);
             //populateAssetFields(newItems.values());
         }
         
@@ -231,7 +242,35 @@ public class AssetTriggerHandler implements ITriggerHandler {
         MakeFinalUpdateToAccount(); 
     }
     
-    
+    private void GenerateLicense(List<Asset> lstAssets)
+    {
+        List<License__c> licenses = new List<License__c>();
+       
+        for(Asset asset:lstAssets)
+        {
+			integer quantity=1;
+            License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Ship_Date__c);
+            if(asset.Model__c=='GX-V' || asset.Product_Category__c=='GMS')
+                quantity=Integer.valueOf(asset.GMS_Nodes__c);
+            lic.Quantity__c=quantity;
+            if(asset.status=='Customer Owned')
+            {
+                lic.License_Expiration__c=null;
+            }
+            if(asset.status=='Customer Subscription Active' || asset.status=='Customer Subscription')
+            {
+                lic.License_Expiration__c=asset.Subscription_End_Date__c;
+            }
+            licenses.add(lic);
+        }
+        if(licenses.size()>0)
+        {
+           insert licenses; 
+           System.debug('licenses ' +licenses);
+        }
+            
+        
+    }
     
     private void MakeFinalUpdateToAccount()
     {
@@ -361,7 +400,29 @@ public class AssetTriggerHandler implements ITriggerHandler {
  
  // START of Activation Order task -------@@ 
  // Before Insert Trigger 
-	
+    private static void populatePOCIdInAsset(List<Asset> assets){
+        
+        Set<Id> assetIds = new Set<Id>();
+        List<Asset> assetWithPocId = new List<Asset>();
+        
+        for(Asset asset: assets){
+            assetIds.add(asset.id);
+        }
+        
+        List<Asset> assetToUpdate = [SELECT Id, Name, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.POC_ID__c FROM Asset WHERE Id IN: assetIds];
+        
+        for(Asset a: assetToUpdate){
+            if(a.SBQQ__QuoteLine__r.POC_ID__c != null){
+                a.POC_ID__c = a.SBQQ__QuoteLine__r.POC_ID__c;
+                assetWithPocId.add(a);
+            }
+        }
+        
+        if(assetWithPocId.size()>0){
+            update assetWithPocId;
+        }
+        
+    }
     private static void populateAssetFields(List<Asset> incomingAssets){
         List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
         System.debug('update asset ------ : ' + updateAsset);
@@ -369,6 +430,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         if(updateAsset.size()>0){
             update updateAsset;
          }
+         
         
     }
     
