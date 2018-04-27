@@ -15,7 +15,7 @@ public class ExtendPOCController {
         this.checkStatus = false;
         this.quote = (SBQQ__Quote__c)stdController.getRecord();
         
-        quoteList = [SELECT Id, Name, Justification__c, Requested_Extension_Date__c, SBQQ__EndDate__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id =: quote.Id LIMIT 1];
+        quoteList = [SELECT Id, Name, Justification__c, Requested_Extension_Date__c, SBQQ__EndDate__c, SBQQ__StartDate__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id =: quote.Id LIMIT 1];
         
         if(quoteList == null){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There is no quote available.');
@@ -37,7 +37,10 @@ public class ExtendPOCController {
         
         boolean isValid=true;
         // Validate the extension request 
-        
+        if(quoteList.Requested_Extension_Date__c <= quoteList.SBQQ__StartDate__c && quoteList.Requested_Extension_Date__c <= quoteList.SBQQ__EndDate__c){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid Extension Date'));
+            isValid=false;
+        }
         if(quoteList.Requested_Extension_Date__c==null )
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter Extend To Date.'));

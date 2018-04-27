@@ -238,37 +238,102 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         Set<Id> ContractIds = new Set<Id>();
         Set<Id> OrderIds = new Set<Id>();
         Set<Id> OpportunityIds = new Set<Id>();
+        Set<Id> OrderProdIds = new Set<Id>();
+        Set<Id> QuoteLineIds = new Set<Id>();
+        Set<Id> QuoteIds = new Set<Id>();
         Id SubscriptionContract;
         Boolean MatchedContract = false;
         Id toGetAsset;
         Id CurrentSubscription;
-        Boolean IsGMS25 = false;
         
+        Boolean IsGMS25 = false;
+        Boolean IsGMS50 = false;
+        Boolean IsGMS100 = false;
+        Boolean IsGMS200 = false;
+        Boolean IsGMS500 = false;
+        Boolean IsGMS1000 = false;
+        Boolean IsGMS2000 = false;
+        Boolean isNotGMS = false;
         //Loop through the Subscriptions and get the Contract Ids
         for(SBQQ__Subscription__c sub: SubscriptionList){
+            
+            System.debug('Subscription loop = ' + sub);
+            
             ContractIds.add(sub.SBQQ__Contract__c);
+            //OrderProdIds.add(sub.SBQQ__OrderProduct__c);
+            QuoteLineIds.add(sub.SBQQ__QuoteLine__c);
             SubscriptionContract = sub.SBQQ__Contract__c;
             CurrentSubscription = sub.id;
             
             if(sub.SBQQ__ProductName__c.contains('GMS-25')){
                 IsGMS25 = true;
             }
+            //----- additional validation @ronald 
+            else if(sub.SBQQ__ProductName__c.contains('GMS-50')){
+                IsGMS50 = true;
+            }
+            else if(sub.SBQQ__ProductName__c.contains('GMS-100')){
+                IsGMS100 = true;
+            }
+            else if(sub.SBQQ__ProductName__c.contains('GMS-200')){
+                IsGMS200 = true;
+            }
+            else if(sub.SBQQ__ProductName__c.contains('GMS-500')){
+                IsGMS500 = true;
+            }
+            else if(sub.SBQQ__ProductName__c.contains('GMS-1000')){
+                IsGMS1000 = true;
+            }
+            else if(sub.SBQQ__ProductName__c.contains('GMS-2000')){
+                IsGMS2000 = true;
+            }
+            else{
+                isNotGMS = true;
+            }
+            
         }
         
         System.debug('IsGMS25 = ' + IsGMS25);
         System.debug('ContractIds = ' + ContractIds);
+        System.debug('QuoteLineIds = ' + QuoteLineIds);
+        System.debug('SubscriptionContract = ' + SubscriptionContract);
+        System.debug('CurrentSubscription = ' + CurrentSubscription);
+        
+        //Loop through Quote Line to get Quote Ids
+        for(SBQQ__QuoteLine__c ql: [SELECT Id, Name, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id =: QuoteLineIds]){
+            QuoteIds.add(ql.SBQQ__Quote__c);
+        }
+        
+        //Loop through Quote to get Opportunity
+        for(SBQQ__Quote__c q: [SELECT Id, Name, SBQQ__Opportunity2__c FROM SBQQ__Quote__c WHERE Id =: QuoteIds]){
+            OpportunityIds.add(q.SBQQ__Opportunity2__c);
+        }
+        
+        System.debug('QuoteIds = ' + QuoteIds);
+        
+        /*
+        //Loop through Order Product to get Order Ids
+        for(OrderItem op: [SELECT Id, OrderId FROM OrderItem WHERE Id =: OrderProdIds]){
+            OrderIds.add(op.OrderId);
+        }
         
         //Loop through Contract and get Order Product 
-        for(Contract con: [SELECT Id, SBQQ__Order__c FROM Contract WHERE Id =: ContractIds]){
+        for(Contract con: [SELECT Id, SBQQ__Order__c,SBQQ__Order__r.OpportunityId, SBQQ__Order__r.Opportunity.SBQQ__AmendedContract__c FROM Contract WHERE Id =: ContractIds]){
+            
+            System.debug('Contract query = ' + con);
             OrderIds.add(con.SBQQ__Order__c);
         }
+        
         
         System.debug('OrderIds = ' + OrderIds);
         
         //Loop through Order and get Opportunity
         for(Order ord : [SELECT Id, OpportunityId FROM Order WHERE Id =: OrderIds]){
+            
+            System.debug('Order query = ' + ord);
             OpportunityIds.add(ord.OpportunityId);
         }
+        */
         
         System.debug('OpportunityIds = ' + OpportunityIds);
         
@@ -277,8 +342,9 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             
             System.debug('Opportunity query = ' + opp);
             System.debug('Amended contract = ' + opp.SBQQ__AmendedContract__c);
+            System.debug('Amended contract __r id = ' + opp.SBQQ__AmendedContract__r.id);
             
-            if(opp.SBQQ__AmendedContract__r.id == SubscriptionContract){
+            if(opp.SBQQ__AmendedContract__c == SubscriptionContract){
                 MatchedContract = true;
             }
         }
@@ -291,28 +357,74 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(MatchedContract){
             
             //Query the second to the last Subscription
-            SBQQ__Subscription__c SectoLast = [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract ORDER BY CreatedDate DESC LIMIT 1][1];
+            SBQQ__Subscription__c SectoLast = [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract ORDER BY CreatedDate DESC][1];
+            
+            System.debug('SectoLast value = ' + SectoLast);
+            
+            //Query the Subscribed Asset to update
+            //SBQQ__SubscribedAsset__c[] SubAsset = [SELECT Id, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__c =: SectoLast.Id];
+            
+            //SBQQ__SubscribedAsset__c SubAssetUpdated = SubAsset[0];
+            
+            //System.debug('SubAssetUpdated value = ' + SubAssetUpdated);
             
             //Query the Asset from the Subscription
-            Asset AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBQQ__Subscription__c =: SectoLast.Id];
+            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c =: SectoLast.Id];
             
+            System.debug('AssetToUpdate value = ' + AssetToUpdate);
+            
+            Asset AssetUpdated = AssetToUpdate[0];
             //Query the Product Name
             //Product2 AssetProd = [SELECT Id, Name FROM Product2 WHERE Id =: AssetToUpdate.Product2Id];
             
-            System.debug('SectoLast value = ' + SectoLast);
-            System.debug('AssetToUpdate value = ' + AssetToUpdate);
+            
+            System.debug('AssetUpdated value = ' + AssetUpdated);
             
             //Check if the Asset's Product Name is GMS-10
             if(IsGMS25){
                 
                 //Update the Asset GMS Node field
-                AssetToUpdate.GMS_Nodes__c = '25';
-                AssetToUpdate.SBQQ__Subscription__c = CurrentSubscription;
+                AssetUpdated.GMS_Nodes__c = '25';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+                
+                //SubAssetUpdated.SBQQ__Subscription__c = CurrentSubscription;
             }
+            // ----- additional validation @-- ronald
+            else if(IsGMS50){
+                AssetUpdated.GMS_Nodes__c = '50';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            else if(IsGMS100){
+                AssetUpdated.GMS_Nodes__c = '100';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            else if(IsGMS200){
+                AssetUpdated.GMS_Nodes__c = '200';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            else if(IsGMS500){
+                AssetUpdated.GMS_Nodes__c = '500';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            else if(IsGMS1000){
+                AssetUpdated.GMS_Nodes__c = '1000';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            else if(IsGMS2000){
+                AssetUpdated.GMS_Nodes__c = '2000';
+                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+            }
+            
             
             System.debug('AssetToUpdate value = ' + AssetToUpdate);
             
-            update AssetToUpdate;
+            //update SubAssetUpdated;
+            
+            update AssetUpdated;
+            
+            // Continuation for subscribed Asset @@----- ronald
+            SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = AssetUpdated.Id, SBQQ__Subscription__c = AssetUpdated.SBCF_Subscription__c, SBQQ__Active__c = true);
+            insert subscribedAsset;
         }
         
         

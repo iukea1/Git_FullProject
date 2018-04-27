@@ -1,0 +1,8 @@
+<apex:page standardController="Account" >
+    
+   <script type="text/javascript">
+window.onload = function() {
+   window.open('http://www.google.com','google',' menubar=0, resizable=0,dependent=0,status=0,width=300,height=200,left=10,top=10')
+}
+</script>
+</apex:page>

@@ -1,5 +1,13 @@
 public without sharing class ContractTriggerHandler implements ITriggerHandler{
-        public ContractTriggerHandler(){
+        
+    public static final String EvalRmaRecordTypeId = '012500000005H0o';
+    public static final String EvalRMAItemRecordTypeId = '012500000005H0y';
+    Id rmaRecordTypeId = Schema.SObjectType.RMA__c.getRecordTypeInfosByName().get('Eval RMA').getRecordTypeId();
+    Id itemRecordTypeId = Schema.SObjectType.RMA_Item__c.getRecordTypeInfosByName().get('Eval Return').getRecordTypeId();
+
+
+    
+    public ContractTriggerHandler(){
             
         }
         public Boolean IsDisabled(){
@@ -22,6 +30,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         }
         public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
         {
+            createRMAEval(newItems.values());
         }
         public void AfterDelete(Map<Id, SObject> oldItems) 
         {
@@ -54,20 +63,108 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         
         public static void createRMAEval(List<Contract> incomingContract){
             
+            List<RMA__c> rmas = new List<RMA__c>();
+            List<SBQQ__SubscribedAsset__c> subsAndAsset = new List<SBQQ__SubscribedAsset__c>();
             List<Contract> expiredContract = new List<Contract>();
-            Set<id> contractIds = new Set<Id>();
             
+            Set<id> contractIds = new Set<Id>();
+            Set<id> accountIds = new Set<Id>();
+            
+            Map<Id, List<SBQQ__SubscribedAsset__c>> assetToSubscribedAssetMap = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
+            Map<Id, List<RMA_Item__c>> accountToRMAItemMap = new Map<Id, List<RMA_Item__c>>();
+
             for(Contract contract: incomingContract){
                 contractIds.add(contract.Id);
             }
             
-            //List<Contract> contractExpired = [SELECT Id, Status FROM Contract WHERE Id IN: contractIds];
-            for(Contract c: [SELECT Id, Status FROM Contract WHERE Id IN: contractIds]){
-                if(c.Status == 'Expired'){
-                    
+            List<Contract> contractExpired = [SELECT Id, Status, Evaluation_Quote__c, SBQQ__Quote__r.POC_Contact__c, Contract.AccountId FROM Contract WHERE Id IN: contractIds];
+            
+            for(Contract con: contractExpired){
+                accountIds.add(con.AccountId);
+            }
+                        
+            //List<Contact> contactInContract = [SELECT Id, AccountId FROM Contact WHERE AccountId IN: accountIds LIMIT 1];
+            
+            List<SBQQ__SubscribedAsset__c> assetToUpdate = [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: contractIds];
+            
+            for(SBQQ__SubscribedAsset__c asset: assetToUpdate){
+                
+                if(assetToSubscribedAssetMap.containsKey(asset.SBQQ__Asset__c)){
+                    List<SBQQ__SubscribedAsset__c> subscribedAssetList = assetToSubscribedAssetMap.get(asset.SBQQ__Asset__c);
+                    subscribedAssetList.add(asset);
+                    assetToSubscribedAssetMap.put(asset.SBQQ__Asset__c, subscribedAssetList);
                 }
+                
+                else{
+                    assetToSubscribedAssetMap.put(asset.SBQQ__Asset__c, new List<SBQQ__SubscribedAsset__c>{asset});
+                }	
             }
             
+            Set<Id> assetIdsToUpdate = assetToSubscribedAssetMap.keySet();
+            List<RMA_Item__c> items = new List<RMA_Item__c>();
+            List<Asset> assets = [SELECT Id, Product2Id FROM Asset WHERE Id IN: assetIdsToUpdate];
+            // processing
+            
+            for(Contract c: contractExpired){
+                
+                    if(c.Status == 'Expired' && c.Evaluation_Quote__c){
+                        RMA__c rma = new RMA__c(Account__c=c.AccountId, RecordTypeId=EvalRmaRecordTypeId, POC_Quote__c = c.SBQQ__Quote__c, Status__c='Initiated', Type__c='Eval Return', Contact_Loc_1__c= c.SBQQ__Quote__r.POC_Contact__c);
+
+                        for(Asset asset: assets){
+                            items.add(new RMA_Item__c(Asset__c=asset.Id, Product2__c=asset.Product2Id, RecordTypeId=EvalRMAItemRecordTypeId, Type__c='Return - Refurbish and Stock', Status__c='Not Dispatched'));
+                        }
+                        if(items.size()>0){
+                            rmas.add(rma);
+                        }
+                        //accountToRMAItemMap.put(c.AccountId, items);
+                    }
+                    
+
+            }
+            
+            try {
+                
+                upsert rmas;
+                
+            }
+            catch(QueryException qe){
+                System.debug(qe.getMessage());
+            }
+            
+            List<RMA_Item__c> rmaItems = new List<RMA_Item__c>();
+            
+            for(RMA__c rmaRec: rmas){
+               
+                //List<RMA_Item__c> items = accountToRMAItemMap.get(rmaRec.Account__c);
+                
+                if(items != null){
+                    
+                    for(RMA_Item__c item : items){
+                        item.RMA__c = rmaRec.Id;
+                        rmaItems.add(item);
+                    }
+                    
+                }
+                
+            }
+            
+            try {
+                upsert rmaItems;
+            }
+            catch(QueryException qe){
+                System.debug(qe.getMessage());
+            }
+            
+            for(Asset a: assets){
+                a.Status = 'Pending Return – Eval';
+            }
+            
+            try {
+                update assets;
+            }
+            catch(QueryException qe){
+                System.debug(qe.getMessage());
+            }
         }
         
     }

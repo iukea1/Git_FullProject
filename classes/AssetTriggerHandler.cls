@@ -167,6 +167,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
+        updateAssetStatus(newItems.values());
+        updateShipmentDateOfAsset(newItems.values());
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -186,9 +188,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 Asset oldAsset=(Asset)oldItems.get(assetId);
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
-                    if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
+                    if(newAsset.Status!=null && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
                         lstLicenseAssets.add(newAsset);
-                    else if(newAsset.SBQQ__CurrentSubscription__c!=null && newAsset.Status!=oldAsset.Status && newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c && (newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription'))
+                    else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status!=oldAsset.Status || (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c)) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription'))
                         lstLicenseAssets.add(newAsset);
                 }
                     
@@ -245,11 +247,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
     private void GenerateLicense(List<Asset> lstAssets)
     {
         List<License__c> licenses = new List<License__c>();
-       
+        Set<Id> assetIds= new Set<Id>();
         for(Asset asset:lstAssets)
         {
 			integer quantity=1;
-            License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Ship_Date__c);
+            License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Ship_Date__c,Model__c=asset.Model__c);
             if(asset.Model__c=='GX-V' || asset.Product_Category__c=='GMS')
                 quantity=Integer.valueOf(asset.GMS_Nodes__c);
             lic.Quantity__c=quantity;
@@ -261,12 +263,23 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 lic.License_Expiration__c=asset.Subscription_End_Date__c;
             }
+            if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD'))
+                assetIds.add(asset.id);
+            
             licenses.add(lic);
         }
         if(licenses.size()>0)
         {
            insert licenses; 
            System.debug('licenses ' +licenses);
+           List<Id> licenseIds = new  List<Id>();
+          
+           for(License__c lic:licenses)
+           {
+               if(assetIds.size()>0 && assetIds.contains(lic.AssetId__c))
+                   licenseIds.add(lic.Id);
+           }
+           VirtualAssetManager.encryptLicenses(licenseIds);
         }
             
         
@@ -423,89 +436,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
     }
-    private static void populateAssetFields(List<Asset> incomingAssets){
-        List<Asset> updateAsset = populateStatusPartAndSerialNumberToAsset(incomingAssets);    
-        System.debug('update asset ------ : ' + updateAsset);
-        
-        if(updateAsset.size()>0){
-            update updateAsset;
-         }
-         
-        
-    }
     
-    private static List<Asset> populateStatusPartAndSerialNumberToAsset(List<Asset> asset){
-        
-        List<Asset> AssetList = new List<Asset>();
-        
-        Set<Id> assetProductEqualToPhysical = assetsWithForecastCategoryEqualToPhysical(asset);        
-        System.debug('@@--------   assetProductEqualToPhysical : ' + assetProductEqualToPhysical);
-        
-        List<Asset> generatedAsset = assetGenerated(assetProductEqualToPhysical);
-        System.debug('@@------------ generatedAsset ' + generatedAsset);
-        
-        for(Asset genAsset: generatedAsset){
-            System.debug('asset order product : ' + genAsset.SBQQ__OrderProduct__c);
-        }
-        
-        
-        Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(generatedAsset);
-        System.debug('@@ -------- orderProductToAssets ' + orderProductToAssets);
-    
-        Set<Id> orderProductFromAsset =  orderProductToAssets.keySet();
-        System.debug('@@------- orderProductFromAsset :' + orderProductFromAsset);
-    
-        List<Order_Product_Item__c> orderProductItemRelatedToAsset = getAllOrderProductItemsRelatedToOrderProduct(orderProductFromAsset);
-        System.debug('@@------- orderProductItemRelatedToAsset :' + orderProductItemRelatedToAsset);
-
-        List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
-        System.debug('@@ ----- Asset to update :  ' + updateAssets);
-    
-        //if(updateAssets.size()>0){
-        //    update updateAssets;
-        //}
-        
-        //List<Order_Product_Item__c> updateOrderProductItem = updateOrderProductRelatedToAsset(orderProductItemRelatedToAsset, updateAssets);
-    	//System.debug('@@--------- updateOrderProductItem : ' + updateOrderProductItem);
-        
-        //if(updateOrderProductItem.size()>0){
-        //    update updateOrderProductItem;
-        //}
-        
-        //return updateAssets;
-        return AssetList;
-
-    }
-    
-    private static Set<Id> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
-    //private static List<Asset> assetsWithForecastCategoryEqualToPhysical(List<Asset> incomingAsset){
-        List<Asset> assetProductEqualToPhysical = new List<Asset>();
- 		Set<Id> assetIds = new Set<Id>();
-     
-            
-        for(Asset asset: incomingAsset){
-            //if(asset.Product2.Forecast_Category__c == 'Physical'){
-            	System.debug('Assets -------@@:' + asset);
-            	System.debug('Assets product forecast category :' + asset.Product2.Forecast_Category__c);
-                assetProductEqualToPhysical.add(asset);
-            	assetIds.add(asset.Id);
-            //}	
-            // 
-        }
-       
-        return assetIds;	
-    }
-    
-    private static List<Asset> assetGenerated(Set<Id> assetId){
-        List<Asset> generatedAsset = new List<Asset>();
-        try {
-            generatedAsset = [SELECT Id, SBQQ__OrderProduct__c FROM Asset WHERE Id IN: assetId];
-        }
-        catch(QueryException qe){
-            System.debug(qe.getMessage());
-        }
-        return generatedAsset;
-    }
     
     //Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
     
@@ -732,158 +663,76 @@ public class AssetTriggerHandler implements ITriggerHandler {
             
         }
     }
+    
+    
+    private static void updateShipmentDateOfAsset(List<Asset> incomingAsset){
+        Map<Id, List<Asset>> quoteToAsset = new Map<Id, List<Asset>>();
+        List<Asset> updateAsset = new List<Asset>();
+        Set<Id> assetIds = new Set<Id>();
         
-    private static List<Order_Product_Item__c> getAllOrderProductItemsRelatedToOrderProduct(Set<Id> orderProductFromAsset){
-        List<Order_Product_Item__c> orderProductItemsRelatedToOrderProduct = new List<Order_Product_Item__c>();
+        for(Asset asset: incomingAsset){
+           assetIds.add(asset.Id);
+        }
         
-        try{
-            orderProductItemsRelatedToOrderProduct = [SELECT Id, Status__c, Serial_Number__c, Part_Number__c, Order_Product__c FROM  Order_Product_Item__c WHERE Order_Product__c IN : orderProductFromAsset];
-        }
-        catch(QueryException qe){
-            System.debug(qe.getMessage());
-        }
-    
-        return orderProductItemsRelatedToOrderProduct;
-    }    
-    
-    //List<Asset> updateAssets = updateAssetRelatedToOrderProduct(orderProductItemRelatedToAsset, orderProductToAssets);
-    
-    private static List<Asset> updateAssetRelatedToOrderProduct(List<Order_Product_Item__c> orderProductItemRelatedToAsset, Map<Id, List<Asset>> orderProductToAssets){
-    
-        List<Asset> updateAssets = new List<Asset>();
-    
-        for(Order_Product_Item__c orderProdItem: orderProductItemRelatedToAsset){
-            
-            List<Asset> assetList = orderProductToAssets.get(orderProdItem.Order_Product__c);            
-            System.debug('Assets related to Order Product : ' + assetList);
-            
-             for(Asset asset: assetList){
-                asset.SerialNumber = orderProdItem.Serial_Number__c;
-                asset.Part_Number__c = orderProdItem.Part_Number__c;
-                asset.Status = orderProdItem.Status__c;
-                updateAssets.add(asset);
-             }		 
-            
-        }
-    
-        return updateAssets;
-    }   
+        List<Asset> assetlst = [SELECT Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE Id IN: assetIds];
+        
+        for(Asset a: assetlst){
+            if(quoteToAsset.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)){
+                 List<Asset> assetToUpdateTheShipmentDate = quoteToAsset.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c);
+                 assetToUpdateTheShipmentDate.add(a);
+            }
      
-    private static List<Order_Product_Item__c> updateOrderProductRelatedToAsset(List<Order_Product_Item__c> orderProductItemRelatedToAsset, List<Asset> updatedAssets){
-    
-        List<Order_Product_Item__c> updateOrderProductItem = new List<Order_Product_Item__c>();
-    
-        for(Order_Product_Item__c orderProdItem: orderProductItemRelatedToAsset){
-            System.debug('Assets related to Order Product : ' + updatedAssets);
-             for(Asset asset: updatedAssets){
-                orderProdItem.Asset__c = asset.Id;
-                updateOrderProductItem.add(orderProdItem);
-             }		 
-        }
-    
-        return updateOrderProductItem;
-    }
-    
-    // ------------- Asset override method ---------------//
-    
-    
-    
-    private static void updateTheExistingAsset(List<Asset> incomingAssets){
-        List<Asset> deleteAssets = new LIst<Asset>();
-		Set<Id> generatedAssetSetOfIds =  generatedAssetIds(incomingAssets);
-        
-        if(generatedAssetSetOfIds == null){
-            System.debug('There are no asset generated upon activation of order' + generatedAssetSetOfIds);
-            return;
-        }
-        List<Asset> generatedAssetToBeDeleted = generatedAssetToDelete(incomingAssets);
-        List<Asset> assetToOverride = overrideAsset(generatedAssetSetOfIds);
-        
-        if(assetToOverride.size()>0){
-            update assetToOverride;
-            
-            for(Asset assetOverride: assetToOverride){
-                for(Asset generatedAsset: generatedAssetToBeDeleted){
-                    if(generatedAsset.Part_Number__c == assetOverride.Part_Number__c && 
-                       generatedAsset.SerialNumber == assetOverride.SerialNumber && 
-                       generatedAsset.Status == assetOverride.Status){
-
-                       deleteAssets.add(generatedAsset);
-                    }
-                }
-        	}
-            
-            System.debug('delete Asset : ' + deleteAssets);
-            
-        }
-        
-        
-        
-        
-    }
-    
-    private static Set<Id> generatedAssetIds(List<Asset> incomingAssets){
-        //List<Asset> assetToDelete = new List<Asset>();
-        Set<Id> generatedAssetSetOfIds = new Set<Id>();
-        //List<Asset> updatedAssetsRelatedToOrderProdItems = populateStatusPartAndSerialNumberToAsset(incomingAssets);
-        
-        if(incomingAssets == null){
-            System.debug('There are no incoming asset that was related to order product item. ');
-        }
-        
-        for(Asset updatedAssets: incomingAssets){
-            generatedAssetSetOfIds.add(updatedAssets.Id);
-        }
-        
-        return generatedAssetSetOfIds;
-    }
-    
-    private static List<Asset> generatedAssetToDelete(List<Asset> incomingAssets){
-        List<Asset> assetToDelete = new List<Asset>();
-        List<Asset> updatedAssetsRelatedToOrderProdItems = populateStatusPartAndSerialNumberToAsset(incomingAssets);
-        
-        if(updatedAssetsRelatedToOrderProdItems == null){
-            System.debug('There are no incoming asset that was related to order product item. ');
-        }
-        
-        for(Asset updatedAssets: updatedAssetsRelatedToOrderProdItems){
-            assetToDelete.add(updatedAssets);
-        }
-        
-        return assetToDelete;
-    }
-    
-    private static List<Asset> overrideAsset(Set<Id> orderProductAsset){
-        
-        List<Asset> updateExistingAssetList = new List<Asset>();
-    
-        for(Order_Product_Item__c orderProdItem: [SELECT Id, Existing_Asset__c, 
-                                                    Asset__r.Part_Number__c,
-                                                    Asset__r.SerialNumber,
-                                                    Asset__r.Status
-                                                    FROM Order_Product_Item__c
-                                                    WHERE Asset__c IN: orderProductAsset]){
-    		
-            System.debug('Order Product Item with Existing Asset : ' +  orderProdItem);
-                                                        
-            if(orderProdItem.Existing_Asset__c != null){
-                Asset existingAsset = new Asset();
-                existingAsset.Id = orderProdItem.Existing_Asset__c;
-                existingAsset.Part_Number__c = orderProdItem.Asset__r.Part_Number__c;
-                existingAsset.SerialNumber = orderProdItem.Asset__r.SerialNumber;
-                existingAsset.Status = orderProdItem.Asset__r.Status;
-                updateExistingAssetList.add(existingAsset);
-                
-                System.debug('Updated Existing Asset : ' +  updateExistingAssetList);
+            else{
+                 quoteToAsset.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new List<Asset>{a});
             }
+        }
+        
+        Set<Id> assetQuoteIds = quoteToAsset.keySet();
+        Order orderlst = [SELECT Id, ActivatedDate, SBQQ__Contracted__c, SBQQ__Quote__c FROM Order WHERE SBQQ__Quote__c IN: assetQuoteIds AND SBQQ__Contracted__c =TRUE LIMIT 1];
+        
+        for(Asset asset: assetlst){
+            DateTime dt = orderlst.ActivatedDate;
+            Date shipDate = dt.date();
+            asset.Ship_Date__c = shipDate;
+            updateAsset.add(asset);
+        }
+        
+        if(updateAsset.size()>0){
+            update updateAsset;
+        }
+    }    
+    private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
+        
+        Set<Id> assetIds = new Set<Id>();
+        List<Asset> updateAsset = new List<Asset>();
+        Map<Id, List<Asset>> quoteToAsset = new Map<Id, List<Asset>>();
+        
+        
+        for(Asset asset: assetStatusToUpdate){
+           assetIds.add(asset.Id);
+        }
+        
+        List<Asset> assetlst = [SELECT Id, Name, Product2.Name, SBQQ__QuoteLine__r.POC_ID__c, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE Id IN: assetIds];
+        
+        for(Asset a: assetlst){
+            
+            if(a.SBQQ__QuoteLine__r.POC_ID__c != null && a.SBQQ__QuoteLine__r.POC_ID__c != 0){
+            	 a.Status = 'Customer Subscription';   
+            }
+            if(a.Product2.Name.contains('Asset')){
+                a.Status = 'Customer Evaluation';
+            }
+            updateAsset.add(a);
             
         }
-    
-            if(!updateExistingAssetList.isEmpty()){
-                update updateExistingAssetList;
-            }
+        try{
+            update updateAsset;
+        }
+        catch(Exception ex){
+            ApexPages.addMessages(ex);
+        }
         
-            return updateExistingAssetList;
-	}
+        
+    }
     
 }

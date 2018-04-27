@@ -380,7 +380,7 @@ public class TestAssetTriggerHandler {
         insert spAccount;
         Opportunity testOpp = new Opportunity(Name='acme', CloseDate=Date.today(), StageName='New', ForecastCategoryName ='Omitted', AccountId=testAccount.Id,Product_Type__c='Both');
         insert testOpp;
-        Contact contact = new Contact(FirstName = 'AcmeFirstname', LastName = 'AcmeLastname', Phone='123456789', Email = 'acme@acme.com' );
+        Contact contact = new Contact(AccountId=testAccount.Id,FirstName = 'AcmeFirstname', LastName = 'AcmeLastname', Phone='123456789', Email = 'acme@acme.com' );
         insert contact;
         Request__c request = new Request__c(POC_Contact__c = contact.Id, Target_End_Date__c=Date.today(),Opportunity__c=testOpp.Id);
         request.POC_Type__c='EdgeConnect';
@@ -395,5 +395,74 @@ public class TestAssetTriggerHandler {
         System.assertEquals(true, acc.Sync_Virtual_Assets_with_CP__c);
         test.stopTest();
     }
-   
+     @IsTest
+    public static void CheckLicenseGeneration_CustomerOwned()
+    {
+        Product2 vxProd = new Product2(Name='GMS-10',Model__c='GX-V',Product_Category__c='GMS', Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true,Product_Type__c='NX/VX');
+        insert vxProd;
+        Product2 maint = new Product2(Name='GMS-10 Maintenance Contract',Model__c='GX-V Maintenance Contract',Product_Category__c='GMS', Forecast_Category__c = 'Virtual', Product_Type__c='NX/VX',Family='Virtual Image', IsActive=true);
+        insert maint;
+        Account acc= new Account(Name='TEst');
+        insert acc;
+        Account spAcc= new Account(Name='Silver Peak Systems');
+        insert spAcc;
+        Asset asset= new Asset(Name='testEC',GMS_Nodes__c='10',Product2Id=vxProd.id,Ship_Date__c=Date.today(),AccountId=acc.Id,SerialNumber='testEC');
+        insert asset;
+        asset.Status='Customer Owned';
+        update asset;
+        License__c lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id LIMIT 1];
+        System.assert(lic.Id!=null);
+    }
+    @IsTest
+    public static void CheckLicenseGeneration_CustomerSub()
+    {
+        Product2 vxProd = new Product2(Name='VX-2000 4-YEAR',Model__c='VX-2000 4-YEAR',Product_Category__c='Subscription', Product_Type__c='NX/VX',Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true);
+        insert vxProd;
+        Product2 maint = new Product2(Name='VX-2000 Maintenance Contract',Model__c='VX-2000 Maintenance Contract',Product_Type__c='NX/VX',Product_Category__c='Subscription', Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true);
+        insert maint;
+        Account acc= new Account(Name='TEst');
+        insert acc;
+        Account spAcc= new Account(Name='Silver Peak Systems');
+        insert spAcc;
+        Asset asset= new Asset(Name='testEC',Product2Id=vxProd.id,Ship_Date__c=Date.today(),AccountId=acc.Id,SerialNumber='testEC');
+        insert asset;
+        SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=maint.Id);
+        insert sub;
+        SBQQ__SubscribedAsset__c subAsset= new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=asset.Id,SBQQ__Subscription__c=sub.Id);
+        insert subAsset;
+        
+        asset.SBQQ__CurrentSubscription__c=sub.Id;
+        asset.Status='Customer Subscription Active';
+        update asset;
+        License__c lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id LIMIT 1];
+        System.assert(lic.Id!=null);
+    }
+    @IsTest
+    public static void CheckLicenseGeneration_CustomerSubChange()
+    {
+        Product2 vxProd = new Product2(Name='VX-2000 4-YEAR',Model__c='VX-2000 4-YEAR',Product_Type__c='NX/VX',Product_Category__c='Subscription', Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true);
+        insert vxProd;
+        Product2 maint = new Product2(Name='VX-2000 Maintenance Contract',Product_Type__c='NX/VX',Model__c='VX-2000 Maintenance Contract',Product_Category__c='Subscription', Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true);
+        insert maint;
+        Account acc= new Account(Name='TEst');
+        insert acc;
+        Account spAcc= new Account(Name='Silver Peak Systems');
+        insert spAcc;
+        Asset asset= new Asset(Name='testEC',Product2Id=vxProd.id,Ship_Date__c=Date.today(),AccountId=acc.Id,SerialNumber='testEC');
+        insert asset;
+        SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=maint.Id);
+        insert sub;
+        SBQQ__SubscribedAsset__c subAsset= new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=asset.Id,SBQQ__Subscription__c=sub.Id);
+        insert subAsset;
+        
+        asset.SBQQ__CurrentSubscription__c=sub.Id;
+        asset.Status='Customer Subscription Active';
+        update asset;
+        SBQQ__Subscription__c sub2= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=maint.Id);
+        insert sub2;
+        asset.SBQQ__CurrentSubscription__c=sub2.Id;
+        update asset;
+        List<License__c> lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id];
+        System.assert(lic.size()==2);
+    }
 }

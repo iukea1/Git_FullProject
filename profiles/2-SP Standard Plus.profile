@@ -566,6 +566,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ECAssetViewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ECSubscriptionExpirationReminderJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7679,6 +7683,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>RMA__c.POC_Quote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>RMA__c.Partner_Notification_Text__c</field>
         <readable>false</readable>
@@ -10406,6 +10415,10 @@
     <pageAccesses>
         <apexPage>NewVirtualShipment</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>OpenAssets</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpenRMA</apexPage>

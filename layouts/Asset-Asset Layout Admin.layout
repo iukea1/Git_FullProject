@@ -96,6 +96,10 @@
                 <field>POC_ID_Number__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_ID__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Product_Category__c</field>
             </layoutItems>
