@@ -250,6 +250,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> assetIds= new Set<Id>();
         for(Asset asset:lstAssets)
         {
+            // added a debug log for testing purposes @Ronald
+           	System.debug('asset.Product_Quote_Type__c : ' + asset.Product_Quote_Type__c);
+            System.debug('asset.Model__c : ' + asset.Model__c);
+            // ----------------- @@ 
 			integer quantity=1;
             License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Ship_Date__c,Model__c=asset.Model__c);
             if(asset.Model__c=='GX-V' || asset.Product_Category__c=='GMS')
@@ -263,9 +267,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 lic.License_Expiration__c=asset.Subscription_End_Date__c;
             }
-            if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD'))
+            if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD')) 
                 assetIds.add(asset.id);
-            
             licenses.add(lic);
         }
         if(licenses.size()>0)
@@ -688,19 +691,40 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         Set<Id> assetQuoteIds = quoteToAsset.keySet();
-        Order orderlst = [SELECT Id, ActivatedDate, SBQQ__Contracted__c, SBQQ__Quote__c FROM Order WHERE SBQQ__Quote__c IN: assetQuoteIds AND SBQQ__Contracted__c =TRUE LIMIT 1];
+        System.debug('asset quote ids' + assetQuoteIds);
         
-        for(Asset asset: assetlst){
-            DateTime dt = orderlst.ActivatedDate;
-            Date shipDate = dt.date();
-            asset.Ship_Date__c = shipDate;
-            updateAsset.add(asset);
+        Order orderlst = queryForOrder(assetQuoteIds);
+        System.debug('order list ' + orderlst);
+      
+        if(orderlst != null && orderlst.ActivatedDate != null){
+            for(Asset asset: assetlst){
+                DateTime dt = orderlst.ActivatedDate;
+                Date shipDate = dt.date();
+                asset.Ship_Date__c = shipDate;
+                updateAsset.add(asset);
+            }
         }
+        
         
         if(updateAsset.size()>0){
             update updateAsset;
         }
-    }    
+    }
+	private static Order queryForOrder(Set<Id> assetQuoteIds){
+        Order parentOrder = new Order();
+        
+        try{
+            parentOrder = [SELECT Id, ActivatedDate, SBQQ__Contracted__c, SBQQ__Quote__c FROM Order WHERE SBQQ__Quote__c IN: assetQuoteIds AND SBQQ__Contracted__c =TRUE LIMIT 1];
+        }
+        catch(QueryException qe){
+            System.debug(qe.getMessage());
+        }
+        
+        System.debug('Assets related to Subscriptions: ' + parentOrder);
+        
+        return parentOrder;
+    }
+    
     private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
         
         Set<Id> assetIds = new Set<Id>();
@@ -719,18 +743,17 @@ public class AssetTriggerHandler implements ITriggerHandler {
             if(a.SBQQ__QuoteLine__r.POC_ID__c != null && a.SBQQ__QuoteLine__r.POC_ID__c != 0){
             	 a.Status = 'Customer Subscription';   
             }
-            if(a.Product2.Name.contains('Asset')){
+            if(a.Product2.Name.contains('Asset') && a.Product2.Name != null){
                 a.Status = 'Customer Evaluation';
             }
             updateAsset.add(a);
             
         }
-        try{
-            update updateAsset;
+        if(updateAsset.size()>0){
+           update updateAsset; 
         }
-        catch(Exception ex){
-            ApexPages.addMessages(ex);
-        }
+            
+        
         
         
     }

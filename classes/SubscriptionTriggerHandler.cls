@@ -52,7 +52,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-        //queryRenewalSubscription(newItems.values());
+        
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
@@ -62,19 +62,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     }
     
     
-    //public static void queryRenewalSubscription(List<SBQQ__Subscription__c> subscription){
-       // for(SBQQ__Subscription__c subs: subscription){
-        //    if(!String.isEmpty(subs.SBQQ__ProductName__c) && subs.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_RENEWAL)){
-                
-              //     System.debug('Incoming Subscription contract in after update: ' + subs.SBQQ__Contract__c);
-              //     System.debug('Incoming Subscription order in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r);
-              //     System.debug('Incoming Subscription opportunity in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
-              //     System.debug('Incoming Subscription Renewed Contract in after update: ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);    
-              //     System.debug('@@@@----------- renewed subscription in after update : ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-                
-          //  }
-       // }       
-    // }
+    
   
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         
@@ -138,13 +126,11 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             
             // This is the process to populate the related asset to Subscription detail page. 
             for(Asset assetRec: assetsToUpdate){
-                //SBQQ__SubscribedAsset__c subscriptionAndAsset = new SBQQ__SubscribedAsset__c();
-                //subscriptionAndAsset.SBQQ__Subscription__c = assetRec.SBCF_Subscription__c; 
-                //subscriptionAndAsset.SBQQ__Asset__c = assetRec.Id;
-                //subscriptionAndAsset.SBQQ__Active__c = true;
-                //subscriptionAndAssetList.add(subscriptionAndAsset);
+                System.debug('assetRec.SBCF_Subscription__c  : ' + assetRec.SBCF_Subscription__c);
+                System.debug('assetRec.Id   : ' + assetRec.Id);
+                
                 subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
-                //listCS.add(new CS__c(Opportunity__c = o.id));
+                System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
             }
             
                 if(subscriptionAndAssetList.size()>0){
@@ -299,7 +285,8 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         System.debug('SubscriptionContract = ' + SubscriptionContract);
         System.debug('CurrentSubscription = ' + CurrentSubscription);
         
-        //Loop through Quote Line to get Quote Ids
+        if(!isNotGMS){
+             //Loop through Quote Line to get Quote Ids
         for(SBQQ__QuoteLine__c ql: [SELECT Id, Name, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id =: QuoteLineIds]){
             QuoteIds.add(ql.SBQQ__Quote__c);
         }
@@ -369,7 +356,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             //System.debug('SubAssetUpdated value = ' + SubAssetUpdated);
             
             //Query the Asset from the Subscription
-            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c =: SectoLast.Id];
+            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c =: SectoLast.Id AND  Product2.Name LIKE '%GMS-10%'];
             
             System.debug('AssetToUpdate value = ' + AssetToUpdate);
             
@@ -425,6 +412,8 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             // Continuation for subscribed Asset @@----- ronald
             SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = AssetUpdated.Id, SBQQ__Subscription__c = AssetUpdated.SBCF_Subscription__c, SBQQ__Active__c = true);
             insert subscribedAsset;
+        }
+       
         }
         
         
@@ -524,141 +513,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         return subscriptionQuoteLineMap;
     }
     
-    //------- populate asset in subscription detail page ------- //
-    /*
-    @InvocableMethod
-    public static void updateTheSelectedAsset(List<Id> renewalSubs){
-        
-        List<SBQQ__SubscribedAsset__c> subscribedAssetRenewal = new List<SBQQ__SubscribedAsset__c>();
-        Set<Id> renewedOrder = new Set<Id>();
-        Set<Id> contractRenewalIds = new Set<Id>();
-        Set<Id>  orderRenewalIds = new Set<Id>();
-        List<Asset> newAssetToUpdate = new List<Asset>();
-        Set<id> renewedContractForSubscription = new Set<id>();
-        Set<Id> assetsRenewed = new Set<Id>();
-        Map<Id, Set<Id>> renewedSubscriptionToRenewedOpportunity = new Map<Id, Set<Id>>();
-        
-        List<SBQQ__Subscription__c> renewedSubscriptions = [SELECT Id, SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c
-                                                                    FROM SBQQ__Subscription__c 
-                                                                    WHERE Id IN : renewalSubs];
-                
-                System.debug('Incoming Subscription : ' + renewedSubscriptions);
-                
-                
-                for(SBQQ__Subscription__c renewedSubscription: renewedSubscriptions){
-                    renewedContractForSubscription.add(renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__c);
-                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r);
-                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
-                    System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-                    renewedSubscriptionToRenewedOpportunity.put(renewedSubscription.Id, renewedContractForSubscription);        
-                }
-                List<SBQQ__SubscribedAsset__c> renewedAssets = [SELECT Id, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c 
-                                                                FROM SBQQ__SubscribedAsset__c 
-                                                                WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: renewedContractForSubscription
-                                                                AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
-                
-                System.debug('Subscribed Asset to be selected for Renewal : ' + renewedAssets);
-                
-                for(SBQQ__SubscribedAsset__c assetIds: renewedAssets){
-                    assetsRenewed.add(assetIds.SBQQ__Asset__c);
-                }
-                
-                List<Asset> assetToBeCreateInSubscribeAsset = [SELECT Id, Is_Selected_For_Renewal__c FROM Asset WHERE Id IN: assetsRenewed];
-                System.debug('Asset that has been selected for renewal : ' + assetToBeCreateInSubscribeAsset);
-                
-                for(SBQQ__Subscription__c sub: renewedSubscriptions){
-                    for(Asset assetToBeRenewed: assetToBeCreateInSubscribeAsset){
-                        assetToBeRenewed.SBCF_Subscription__c = sub.Id;
-                        newAssetToUpdate.add(assetToBeRenewed);
-                    }
-                }
-                System.debug('Update the subscription field in Asset ' + newAssetToUpdate);
-                
-                
-                if(newAssetToUpdate.size()>0){
-                    update newAssetToUpdate;
-                }
-                
-                for(Asset assetForSubscribedAsset: newAssetToUpdate){
-                    SBQQ__SubscribedAsset__c newSubscribedAsset = new SBQQ__SubscribedAsset__c();
-                    newSubscribedAsset.SBQQ__Asset__c = assetForSubscribedAsset.Id;
-                    newSubscribedAsset.SBQQ__Subscription__c = assetForSubscribedAsset.SBCF_Subscription__c;
-                    subscribedAssetRenewal.add(newSubscribedAsset);
-                }
-                System.debug('Subscribed Asset that will be created ' + subscribedAssetRenewal);
-                
-                if(subscribedAssetRenewal.size()>0){
-                    insert subscribedAssetRenewal;
-                }
-    } */
-    /*
-    @future
-    public static void createSubscribedAssetForRenewal(Set<id> subsId){
-        Set<Id> assetsRenewed = new Set<Id>();
-        Set<Id> renewedContractForSubscription = new Set<Id>();
-        List<Asset> newAssetToUpdate = new List<Asset>();
-        List<SBQQ__SubscribedAsset__c> subscribedAssetRenewal = new List<SBQQ__SubscribedAsset__c>();
-        
-        List<SBQQ__Subscription__c> renewedSubscriptions = [SELECT Id, SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c
-                                                            FROM SBQQ__Subscription__c 
-                                                            WHERE Id IN : subsId];
-                
-        System.debug('Incoming Subscription : ' + renewedSubscriptions);
-        
-        
-        for(SBQQ__Subscription__c renewedSubscription: renewedSubscriptions){
-            renewedContractForSubscription.add(renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__c);
-            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r);
-            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.OpportunityId);
-            System.debug('Incoming Subscription : ' + renewedSubscription.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-        }
-                
-                
-        
-        List<SBQQ__SubscribedAsset__c> renewedAssets = [SELECT Id, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Asset__c, SBQQ__Subscription__r.SBQQ__Contract__c 
-                                                        FROM SBQQ__SubscribedAsset__c 
-                                                        WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN: renewedContractForSubscription
-                                                        AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
-        
-        System.debug('Subscribed Asset to be selected for Renewal : ' + renewedAssets);
-        
-        for(SBQQ__SubscribedAsset__c assetIds: renewedAssets){
-            assetsRenewed.add(assetIds.SBQQ__Asset__c);
-        }
-        
-        List<Asset> assetToBeCreateInSubscribeAsset = [SELECT Id, Is_Selected_For_Renewal__c FROM Asset WHERE Id IN: assetsRenewed];
-        System.debug('Asset that has been selected for renewal : ' + assetToBeCreateInSubscribeAsset);
-        
-        
-        
-        for(SBQQ__Subscription__c sub: renewedSubscriptions){
-            for(Asset assetToBeRenewed: assetToBeCreateInSubscribeAsset){
-                assetToBeRenewed.SBCF_Subscription__c = sub.Id;
-                newAssetToUpdate.add(assetToBeRenewed);
-            }
-        }
-        System.debug('Update the subscription field in Asset ' + newAssetToUpdate);
-        
-        
-        if(newAssetToUpdate.size()>0){
-            update newAssetToUpdate;
-        }
-        
-        for(Asset assetForSubscribedAsset: newAssetToUpdate){
-            SBQQ__SubscribedAsset__c newSubscribedAsset = new SBQQ__SubscribedAsset__c();
-            newSubscribedAsset.SBQQ__Asset__c = assetForSubscribedAsset.Id;
-            newSubscribedAsset.SBQQ__Subscription__c = assetForSubscribedAsset.SBCF_Subscription__c;
-            subscribedAssetRenewal.add(newSubscribedAsset);
-        }
-        System.debug('Subscribed Asset that will be created ' + subscribedAssetRenewal);
-        
-        if(subscribedAssetRenewal.size()>0){
-            insert subscribedAssetRenewal;
-        }
-        
-    }*/
+   
     
     
     

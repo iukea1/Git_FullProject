@@ -298,6 +298,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CaseTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseUpdatesEmailHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -548,6 +552,10 @@
     <classAccesses>
         <apexClass>DeploymentEngineeringCaseController</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DeploymentEngineeringNotesTriggerHandler</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DownloadExtension</apexClass>
@@ -1662,6 +1670,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RHX_TEST_Attachment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAItemTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1999,6 +2011,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestCaseShareWithPartnerManager</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestCaseTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3095,6 +3111,11 @@
         <editable>true</editable>
         <field>DE_Note__c.Additional_Email_Recipients__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DE_Note__c.Attachment_Count__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

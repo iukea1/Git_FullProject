@@ -31,6 +31,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Attachment_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Additional_Email_Recipients__c</field>
             </layoutItems>
             <layoutItems>

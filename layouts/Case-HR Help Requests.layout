@@ -71,6 +71,10 @@
                 <behavior>Readonly</behavior>
                 <field>View_Assets__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Product_Family__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

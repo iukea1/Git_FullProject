@@ -18,6 +18,10 @@
         <name>Additional_Email_Recipients__c</name>
     </fields>
     <fields>
+        <label><!-- Attachment Count --></label>
+        <name>Attachment_Count__c</name>
+    </fields>
+    <fields>
         <label><!-- Deployment Engineering Notes --></label>
         <name>DE_Notes__c</name>
     </fields>

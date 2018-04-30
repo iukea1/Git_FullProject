@@ -4,7 +4,7 @@ public class ECAssetViewController {
     
     
     
-    
+   
     
     public class ECAssetViewWrapper
     {
