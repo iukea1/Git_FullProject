@@ -24,7 +24,11 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems){
-        populateRequestedEndDateToQuoteEndDate(newItems.values());
+        if(CheckRecursive.runOnce()){
+           populateRequestedEndDateToQuoteEndDate(newItems.values()); 
+        }  
+      
+        
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {
@@ -42,9 +46,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         
         
         for(SBQQ__Quote__c quote: quotes){
-        
-                 evaluationQuoteIsTrueIds.add(quote.Id);
-          
+        	evaluationQuoteIsTrueIds.add(quote.Id);
         }
         
         List<SBQQ__Quote__c> evaluationQuoteIsTrue = [SELECT Id, SBCF_Evaluation_Quote__c, Name FROM SBQQ__Quote__c WHERE Id IN: evaluationQuoteIsTrueIds];
@@ -85,20 +87,33 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         
         List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
         
-        for(SBQQ__Quote__c quoteRec: [SELECT Id, Name, ApprovalStatus__c, Justification__c, Requested_Extension_Date__c, SBQQ__EndDate__c 
+        for(SBQQ__Quote__c quoteRec: [SELECT Id, Name, ApprovalStatus__c, Justification__c, SBQQ__StartDate__c, Requested_Extension_Date__c, SBQQ__EndDate__c 
                                       FROM SBQQ__Quote__c 
                                       WHERE Id IN: quotesIds]){
                                           
               if(quoteRec.ApprovalStatus__c == 'Approved'){
-                 quoteRec.SBQQ__EndDate__c = quoteRec.Requested_Extension_Date__c;
-                 quotesToUpdate.add(quoteRec);
-               }
+                  if(quoteRec.Requested_Extension_Date__c != null && quoteRec.SBQQ__StartDate__c != null){
+                      if(quoteRec.Requested_Extension_Date__c >= quoteRec.SBQQ__StartDate__c){
+                      	  quoteRec.SBQQ__EndDate__c = quoteRec.Requested_Extension_Date__c;
+                          quotesToUpdate.add(quoteRec);
+                  	  }
+                      
+                          
+                      
+                  }
+              }
                        
         }
         
-        if(quotesToUpdate.size()>0){
-            update quotesToUpdate;
+        try{
+            if(quotesToUpdate.size()>0){
+                update quotesToUpdate;
+            } 
         }
+        catch(Exception e){
+            
+        }
+        
         
         
        

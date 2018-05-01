@@ -267,9 +267,13 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 lic.License_Expiration__c=asset.Subscription_End_Date__c;
             }
-            if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD')) 
-                assetIds.add(asset.id);
-            licenses.add(lic);
+            // added the not equal to null condition @Ronald
+            if(asset.Model__c != null){
+              if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD') ) 
+                    assetIds.add(asset.id);
+                licenses.add(lic);  
+            }
+                
         }
         if(licenses.size()>0)
         {

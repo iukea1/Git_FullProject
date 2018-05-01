@@ -1,8 +1,21 @@
-<apex:page standardController="Account" >
-    
-   <script type="text/javascript">
-window.onload = function() {
-   window.open('http://www.google.com','google',' menubar=0, resizable=0,dependent=0,status=0,width=300,height=200,left=10,top=10')
-}
-</script>
+<apex:page standardController="Case" extensions="OpenAssetSubsController" showHeader="true" > 
+    <apex:pageBlock title="List of Assets" rendered="{!lstAssets.size>0}">
+        <apex:pageBlockTable value="{!lstAssets}" var="sub" >
+            <apex:column headerValue="Serial Number" value="{!sub.SBQQ__Asset__r.SerialNumber}"/>
+            <apex:column headerValue="Product Name" value="{!sub.SBQQ__Asset__r.Product2.Name}"/>
+            <apex:column headerValue="Warranty Start Date" value="{!sub.SBQQ__Asset__r.Warranty_Start_Date__c}"/>
+            <apex:column headerValue="Warranty End Date" value="{!sub.SBQQ__Asset__r.Warranty_End_Date__c}"/>
+            <apex:column headerValue="Status" value="{!sub.SBQQ__Asset__r.Status}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock title="List of Subscriptions" rendered="{!lstSubs.size>0}" >
+        <apex:pageBlockTable value="{!lstSubs}" var="sub" >
+            <apex:column headerValue="Contract Number" value="{!sub.SBQQ__Subscription__r.SBQQ__Contract__r.ContractNumber}"/>
+            <apex:column headerValue="Product Name" value="{!sub.SBQQ__Subscription__r.SBQQ__Product__r.Name}"/>
+            <apex:column headerValue="Contract Start Date" value="{!sub.SBQQ__Subscription__r.SBQQ__Contract__r.StartDate}"/>
+            <apex:column headerValue="Contract End Date" value="{!sub.SBQQ__Subscription__r.SBQQ__Contract__r.EndDate}"/>
+            <apex:column headerValue="Contract Type" value="{!sub.SBQQ__Subscription__r.SBQQ__Contract__r.Contract_Type__c}"/>
+            <apex:column headerValue="POC Contract" value="{!sub.SBQQ__Subscription__r.SBQQ__Contract__r.Evaluation_Quote__c}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
 </apex:page>

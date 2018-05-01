@@ -1118,6 +1118,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OpenAssetSubsController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OpenOpportunitiesRelatedList</apexClass>
         <enabled>true</enabled>
     </classAccesses>

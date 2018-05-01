@@ -456,6 +456,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Subscription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Subscription_Serial_Number__c</field>
             </layoutItems>
             <layoutItems>

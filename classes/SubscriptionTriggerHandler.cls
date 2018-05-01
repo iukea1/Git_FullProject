@@ -123,14 +123,29 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             if(assetsToUpdate.size() > 0){
                 update assetsToUpdate;
             }
+            Set<id> newSubs = new Set<id>();
             
+            for(Asset assetRec: assetsToUpdate){
+                newSubs.add(assetRec.SBCF_Subscription__c);
+            }
+            boolean isRenewal = false;
+            //List<SBQQ__Subscription__c> subList = [SELECT Id, SBQQ__ProductName__c FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c LIKE '%RENEWAL%'];
+            for(SBQQ__Subscription__c subRecs: [SELECT Id, SBQQ__ProductName__c FROM SBQQ__Subscription__c WHERE Id IN: newSubs AND SBQQ__ProductName__c LIKE '%RENEWAL%']){
+                if(subRecs.SBQQ__ProductName__c.contains('RENEWAL')){
+                    isRenewal = true;
+                }
+            }
+            System.debug(' isRnewal :' + isRenewal);
             // This is the process to populate the related asset to Subscription detail page. 
             for(Asset assetRec: assetsToUpdate){
                 System.debug('assetRec.SBCF_Subscription__c  : ' + assetRec.SBCF_Subscription__c);
                 System.debug('assetRec.Id   : ' + assetRec.Id);
-                
-                subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
-                System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
+                if(!isRenewal){
+                     
+                     subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
+                	 System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
+                }
+               
             }
             
                 if(subscriptionAndAssetList.size()>0){

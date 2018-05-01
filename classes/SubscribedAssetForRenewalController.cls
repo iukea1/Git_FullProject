@@ -35,7 +35,7 @@ public class SubscribedAssetForRenewalController {
         }
         
 		Order currentOrder = [SELECT Id, Opportunity.SBQQ__RenewedContract__c, SBQQ__Contracted__c FROM Order WHERE Id =: this.order.Id]; 
-        if(currentOrder.Opportunity.SBQQ__RenewedContract__c == null || currentOrder.Opportunity.SBQQ__RenewedContract__c ==''){
+        if(currentOrder.Opportunity.SBQQ__RenewedContract__c == null){
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'This is for Renewal Asset only.'));
             return null;
         }
@@ -83,6 +83,7 @@ public class SubscribedAssetForRenewalController {
         Set<Id> selectedAssetsIds = subscribedAssetToAsset.keySet();
         
         List<Asset> assetToBeCreateInSubscribeAsset = [SELECT Id, Is_Selected_For_Renewal__c FROM Asset WHERE Id IN: selectedAssetsIds AND Is_Selected_For_Renewal__c = TRUE];
+        
         for(SBQQ__Subscription__c renSub: subscriptionList){
             for(Asset asset: assetToBeCreateInSubscribeAsset){
                 asset.SBCF_Subscription__c = renSub.Id;
@@ -98,6 +99,7 @@ public class SubscribedAssetForRenewalController {
             SBQQ__SubscribedAsset__c renewedSubs = new SBQQ__SubscribedAsset__c();
             renewedSubs.SBQQ__Subscription__c = renewedAsset.SBCF_Subscription__c;
             renewedSubs.SBQQ__Asset__c = renewedAsset.Id;
+            renewedSubs.SBQQ__Active__c = true;
             subscribedAssetToCreate.add(renewedSubs);
         }
         

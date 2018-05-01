@@ -56,7 +56,10 @@ public class ExtendPOCController {
             return null;
         }
         
+        
+        
         try{
+            quoteList.SBQQ__EndDate__c = quoteList.Requested_Extension_Date__c;
             update quoteList; 
         }
         catch(Exception ex)
