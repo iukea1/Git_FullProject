@@ -323,12 +323,26 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Contract Exp- 1 days notice</fullName>
+        <fullName>Contract%3A Edited</fullName>
+        <actions>
+            <name>Contract_Set_EC_Total_Contract_Value</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Contract.Contract_Type__c</field>
+            <field>Contract.CreatedDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Set&apos;s actions to occur when contracts are edited.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>EC Contract Exp- 1 days notice</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
             <operation>equals</operation>
-            <value>MSP,Service Provider,Smart Hands</value>
+            <value>EDGECONNECT</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -347,11 +361,12 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Contract Exp- 30 days after notice</fullName>
+        <fullName>EC Contract Exp- 30 days after notice</fullName>
         <active>true</active>
         <criteriaItems>
-            <field>Contract.Name</field>
-            <operation>notEqual</operation>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -370,11 +385,12 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Contract Exp- 30 days notice</fullName>
+        <fullName>EC Contract Exp- 30 days notice</fullName>
         <active>true</active>
         <criteriaItems>
-            <field>Contract.Name</field>
-            <operation>notEqual</operation>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -393,11 +409,12 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Contract Exp- 60 days notice</fullName>
+        <fullName>EC Contract Exp- 60 days notice</fullName>
         <active>true</active>
         <criteriaItems>
-            <field>Contract.Name</field>
-            <operation>notEqual</operation>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -416,11 +433,12 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Contract Exp- 90 days notice</fullName>
+        <fullName>EC Contract Exp- 90 days notice</fullName>
         <active>true</active>
         <criteriaItems>
-            <field>Contract.Name</field>
-            <operation>notEqual</operation>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -439,46 +457,13 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Contract%3A Created from EdgeConnect Quote</fullName>
-        <actions>
-            <name>Contract_Set_Status_to_Activated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Set&apos;s actions to occur when contracts are created from an opportunity that is quoting edgeconnect products.</description>
-        <formula>AND(  ISPICKVAL(SBQQ__Quote__r.Product_Type__c, &quot;EDGECONNECT&quot;),  NOT(SBQQ__MasterContract__c)  )</formula>
-        <triggerType>onCreateOnly</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Contract_Set_Master_Contract_True</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Contract%3A Edited</fullName>
-        <actions>
-            <name>Contract_Set_EC_Total_Contract_Value</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contract.CreatedDate</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Set&apos;s actions to occur when contracts are edited.</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>SBCF Set Contract Fields</fullName>
         <actions>
             <name>SBCF_Set_Renewal_Term</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>TRUE</formula>
+        <formula>SBQQ__Opportunity__r.POC_Opportunity__c = FALSE</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>

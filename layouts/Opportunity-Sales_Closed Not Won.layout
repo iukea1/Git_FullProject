@@ -85,6 +85,10 @@
                 <behavior>Readonly</behavior>
                 <field>CloseDate_Formatted__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Specialist__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -512,6 +516,8 @@
         <relatedList>RelatedOpportunityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>New_SP_Quote</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ApprovalStatus__c</fields>
         <fields>SBQQ__NetAmount__c</fields>

@@ -66,6 +66,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             List<RMA__c> rmas = new List<RMA__c>();
             List<SBQQ__SubscribedAsset__c> subsAndAsset = new List<SBQQ__SubscribedAsset__c>();
             List<Contract> expiredContract = new List<Contract>();
+			List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();			
             
             Set<id> contractIds = new Set<Id>();
             Set<id> accountIds = new Set<Id>();
@@ -77,7 +78,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 contractIds.add(contract.Id);
             }
             
-            List<Contract> contractExpired = [SELECT Id, Status, Evaluation_Quote__c, SBQQ__Quote__r.POC_Contact__c, Contract.AccountId FROM Contract WHERE Id IN: contractIds];
+            List<Contract> contractExpired = [SELECT Id, Status, Evaluation_Quote__c, SBQQ__Quote__c, SBQQ__Quote__r.POC_Contact__c, Contract.AccountId FROM Contract WHERE Id IN: contractIds];
             
             for(Contract con: contractExpired){
                 accountIds.add(con.AccountId);
@@ -108,6 +109,10 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             for(Contract c: contractExpired){
                 
                     if(c.Status == 'Expired' && c.Evaluation_Quote__c){
+                        
+                        SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(Id = c.SBQQ__Quote__c, POC_Status__c='Pending Return');
+                        quotesToUpdate.add(quoteToUpdate);
+                        
                         RMA__c rma = new RMA__c(Account__c=c.AccountId, RecordTypeId=EvalRmaRecordTypeId, POC_Quote__c = c.SBQQ__Quote__c, Status__c='Initiated', Type__c='Eval Return', Contact_Loc_1__c= c.SBQQ__Quote__r.POC_Contact__c);
 
                         for(Asset asset: assets){
@@ -127,7 +132,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 upsert rmas;
                 
             }
-            catch(QueryException qe){
+            catch(Exception qe){
                 System.debug(qe.getMessage());
             }
             
@@ -148,10 +153,15 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 
             }
             
+            
+            if(!quotesToUpdate.isEmpty()){
+                update quotesToUpdate;    
+            }
+            
             try {
                 upsert rmaItems;
             }
-            catch(QueryException qe){
+            catch(Exception qe){
                 System.debug(qe.getMessage());
             }
             
@@ -162,7 +172,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             try {
                 update assets;
             }
-            catch(QueryException qe){
+            catch(Exception qe){
                 System.debug(qe.getMessage());
             }
         }

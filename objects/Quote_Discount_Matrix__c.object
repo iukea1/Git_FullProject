@@ -66,4 +66,16 @@
         <unique>false</unique>
     </fields>
     <label>Quote Discount Matrix</label>
+    <listViews>
+        <fullName>all</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Sub_Type__c</columns>
+        <columns>Year__c</columns>
+        <columns>Start_Discount__c</columns>
+        <columns>End_Discount__c</columns>
+        <columns>Level__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>all</label>
+    </listViews>
 </CustomObject>

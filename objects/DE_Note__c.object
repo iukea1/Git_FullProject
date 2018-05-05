@@ -120,15 +120,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Has_Attachment__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Has Attachment?</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Send_Email_To_Account_Team__c</fullName>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>

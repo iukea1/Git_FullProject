@@ -2947,11 +2947,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>ProductName__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Projected_End_Date_WFR__c</field>
             <table>Opportunity.SBQQ__Quotes2__r.SBQQ__LineItems__r</table>
         </columns>

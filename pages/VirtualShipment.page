@@ -1,4 +1,4 @@
-<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order">
+<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order" action="{!dmlOperation}">
 	
     <style>
 		#FileUploadContent {text-align: center; width: 100%;}
@@ -46,13 +46,16 @@
 				<apex:commandButton action="{!returnToOrder}" value="Cancel"/>
 			</apex:pageBlockButtons>
 		</apex:pageblock>
-            
+        
+        
 		<div id="DataTableValues">
+            
+            <!--
             <apex:pageBlock rendered="{!NOT(isRenewal)}">
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
                         
-                        <!-- New Order, based on order products -->
+                        
                     	<apex:pageBlockTable value="{!orderProducts}" var="orderProd" id="orderProdTable">
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                 <apex:facet name="header">Product Name</apex:facet>
@@ -80,12 +83,13 @@
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
         	</apex:pageBlock>   
-            
+            -->
+            <!-- rendered="{!isRenewal}" -->
             
             <apex:pageBlock rendered="{!isRenewal}">
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
-                        <apex:pageBlockTable value="{!existingSubscription}" var="subs" rendered="{!isRenewal}">
+                        <apex:pageBlockTable value="{!displaySubscription}" var="subs" rendered="{!isRenewal}">
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
                                 <apex:facet name="header">Subscription</apex:facet>
@@ -94,7 +98,7 @@
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
                                 <apex:facet name="header">Quantity</apex:facet>
-                                <apex:outputText value="{!subs.SBQQ__Quantity__c}"/>
+                                <apex:outputText value="{!subs.Quoted_Quantity__c}"/> 
                             </apex:column>
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
@@ -122,6 +126,56 @@
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
         	</apex:pageBlock>
+            
+            
+            <apex:pageBlock rendered="{!isAmendment}">
+                <apex:pageBlockSection columns="1">
+                    <apex:pageBlockSectionItem >
+                        <apex:pageBlockTable value="{!amendedSubscription}" var="subs" rendered="{!isAmendment}">
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
+                                <apex:facet name="header">Subscription</apex:facet>
+                                <apex:outputText value="{!subs.SBQQ__Product__r.Name}"/>
+                            </apex:column>
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" >
+                                <apex:facet name="header">Quantity</apex:facet>
+                                <!-- <apex:pageBlockTable value="{!orderItems}" var="oi" id="orderProdQuantity">
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Ordered Quantity</apex:facet>
+                                            <apex:outputText value="{!oi.Quantity}"/>
+                                    	</apex:column>
+                                 </apex:pageBlockTable>
+								-->
+                                <apex:outputText value="{!subs.SBQQ__Quantity__c}"/>
+                            </apex:column>
+                            
+                            <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                
+                                <apex:facet name="header">Related Assets</apex:facet>
+                                <apex:pageBlockTable value="{!subs.SBQQ__SubscribedAssets__r}" var="subscription" id="childAssets">
+									<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Asset</apex:facet>
+                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}"/> 
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Serial Number</apex:facet>
+                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.SerialNumber}"/> 
+                                    </apex:column>
+                                    
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    	<apex:facet name="header">Selected for Amendment</apex:facet>
+                                        <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}" /> 
+                                    </apex:column>
+                                </apex:pageBlockTable>
+                            </apex:column>
+                            
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>    
+        	</apex:pageBlock>
+            
             
         </div>
         

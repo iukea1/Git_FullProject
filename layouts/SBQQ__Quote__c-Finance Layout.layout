@@ -168,6 +168,10 @@
                 <behavior>Readonly</behavior>
                 <field>POC_ID_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TODAY_DATE__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -75,6 +75,10 @@
                 <behavior>Readonly</behavior>
                 <field>CloseDate_Formatted__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Specialist__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -494,6 +498,17 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>New_SP_Quote</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>ApprovalStatus__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <fields>Product_Type__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Activity_Date__c</fields>

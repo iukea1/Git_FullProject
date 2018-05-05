@@ -75,8 +75,10 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         for(SBQQ__Subscription__c subs: incomingSubscriptions){
             if(!String.isEmpty(subs.SBQQ__ProductName__c) && 
                subs.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_RENEWAL)){
-               System.debug('@@----------- renewed subscription in after insert : ' + subs.SBQQ__Contract__r.SBQQ__Order__r.Opportunity.SBQQ__RenewedContract__c);
-               renewalSubscriptions.add(subs.id); 
+               
+                   System.debug('Renewal Subscription : ' + subs);
+                   
+                   renewalSubscriptions.add(subs.id); 
                    
             }
             else{
@@ -129,8 +131,10 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 newSubs.add(assetRec.SBCF_Subscription__c);
             }
             boolean isRenewal = false;
-            //List<SBQQ__Subscription__c> subList = [SELECT Id, SBQQ__ProductName__c FROM SBQQ__Subscription__c WHERE SBQQ__ProductName__c LIKE '%RENEWAL%'];
-            for(SBQQ__Subscription__c subRecs: [SELECT Id, SBQQ__ProductName__c FROM SBQQ__Subscription__c WHERE Id IN: newSubs AND SBQQ__ProductName__c LIKE '%RENEWAL%']){
+            for(SBQQ__Subscription__c subRecs: [SELECT Id, SBQQ__ProductName__c 
+                                                FROM SBQQ__Subscription__c 
+                                                WHERE Id IN: newSubs 
+                                                AND SBQQ__ProductName__c LIKE '%RENEWAL%']){
                 if(subRecs.SBQQ__ProductName__c.contains('RENEWAL')){
                     isRenewal = true;
                 }
@@ -138,10 +142,11 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             System.debug(' isRnewal :' + isRenewal);
             // This is the process to populate the related asset to Subscription detail page. 
             for(Asset assetRec: assetsToUpdate){
+                
                 System.debug('assetRec.SBCF_Subscription__c  : ' + assetRec.SBCF_Subscription__c);
                 System.debug('assetRec.Id   : ' + assetRec.Id);
+                
                 if(!isRenewal){
-                     
                      subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
                 	 System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
                 }
@@ -155,6 +160,28 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         else{
             if(renewalSubscriptions.size()>0){
+                system.debug('renewalSubscriptions: ' + renewalSubscriptions);
+                List<SBQQ__SubscribedAsset__c> subAssetList = new List<SBQQ__SubscribedAsset__c>();
+                
+				List<SBQQ__Subscription__c> subList = [SELECT Id, (SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
+                                                                         FROM SBQQ__SubscribedAssets__r 
+                                                                         WHERE SBQQ__Subscription__c IN: renewalSubscriptions 
+                                                                         AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE) 
+                                                       					 FROM SBQQ__Subscription__c WHERE ID IN: renewalSubscriptions];
+                
+                for(SBQQ__Subscription__c s: subList){
+                    List<SBQQ__SubscribedAsset__c> subListAsset = s.SBQQ__SubscribedAssets__r;
+                        for(SBQQ__SubscribedAsset__c sa: subListAsset){
+                            system.debug('renewal sub asset ' + sa);
+                        }
+                }
+                
+                List<SBQQ__SubscribedAsset__c> renewalSubscribedAsset = [SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
+                                                                         FROM SBQQ__SubscribedAsset__c 
+                                                                         WHERE SBQQ__Subscription__c IN: renewalSubscriptions 
+                                                                         AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE];
+                
+                System.debug('renewal Subscribed Asset : ' +  renewalSubscribedAsset);
                 
                 //createSubscribedAssetForRenewal(renewalSubscriptions);  
             }
@@ -242,6 +269,9 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         Set<Id> OrderProdIds = new Set<Id>();
         Set<Id> QuoteLineIds = new Set<Id>();
         Set<Id> QuoteIds = new Set<Id>();
+        Set<Id> subsIds = new Set<Id>();
+        
+		List<Asset> updateAsset = new List<Asset>();
         Id SubscriptionContract;
         Boolean MatchedContract = false;
         Id toGetAsset;
@@ -359,9 +389,11 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(MatchedContract){
             
             //Query the second to the last Subscription
-            SBQQ__Subscription__c SectoLast = [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract ORDER BY CreatedDate DESC][1];
+            for(SBQQ__Subscription__c s:  [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract]){
+                subsIds.add(s.Id);
+            }
             
-            System.debug('SectoLast value = ' + SectoLast);
+            System.debug('SectoLast value = ' + subsIds);
             
             //Query the Subscribed Asset to update
             //SBQQ__SubscribedAsset__c[] SubAsset = [SELECT Id, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__c =: SectoLast.Id];
@@ -371,7 +403,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             //System.debug('SubAssetUpdated value = ' + SubAssetUpdated);
             
             //Query the Asset from the Subscription
-            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c =: SectoLast.Id AND  Product2.Name LIKE '%GMS-10%'];
+            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c IN: subsIds AND  Product2.Name LIKE '%GMS-10%'];
             
             System.debug('AssetToUpdate value = ' + AssetToUpdate);
             
@@ -381,52 +413,56 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             
             
             System.debug('AssetUpdated value = ' + AssetUpdated);
-            
-            //Check if the Asset's Product Name is GMS-10
-            if(IsGMS25){
-                
+            for(Asset a: AssetToUpdate){
+                if(IsGMS25){
                 //Update the Asset GMS Node field
-                AssetUpdated.GMS_Nodes__c = '25';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-                
+                    a.GMS_Nodes__c = '25';
+                	a.SBCF_Subscription__c = CurrentSubscription;
+                    updateAsset.add(a);
                 //SubAssetUpdated.SBQQ__Subscription__c = CurrentSubscription;
-            }
+                }
             // ----- additional validation @-- ronald
-            else if(IsGMS50){
-                AssetUpdated.GMS_Nodes__c = '50';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
+                else if(IsGMS50){
+                    a.GMS_Nodes__c = '50';
+                    a.SBCF_Subscription__c = CurrentSubscription;
+                    updateAsset.add(a);
+                }
+                else if(IsGMS100){
+                    a.GMS_Nodes__c = '100';
+                    a.SBCF_Subscription__c = CurrentSubscription;
+                    updateAsset.add(a);
+                    
+                }
+                else if(IsGMS200){
+                    a.GMS_Nodes__c = '200';
+                    a.SBCF_Subscription__c = CurrentSubscription;
+                    updateAsset.add(a);
+                }
+                else if(IsGMS500){
+                    a.GMS_Nodes__c = '500';
+                    a.SBCF_Subscription__c = CurrentSubscription;
+                    updateAsset.add(a);
+                    
+                }
             }
-            else if(IsGMS100){
-                AssetUpdated.GMS_Nodes__c = '100';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-            }
-            else if(IsGMS200){
-                AssetUpdated.GMS_Nodes__c = '200';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-            }
-            else if(IsGMS500){
-                AssetUpdated.GMS_Nodes__c = '500';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-            }
-            else if(IsGMS1000){
-                AssetUpdated.GMS_Nodes__c = '1000';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-            }
-            else if(IsGMS2000){
-                AssetUpdated.GMS_Nodes__c = '2000';
-                AssetUpdated.SBCF_Subscription__c = CurrentSubscription;
-            }
+            //Check if the Asset's Product Name is GMS-10
+            
             
             
             System.debug('AssetToUpdate value = ' + AssetToUpdate);
             
             //update SubAssetUpdated;
             
-            update AssetUpdated;
+            if(updateAsset.size()>0){
+                update updateAsset;
+            }
             
             // Continuation for subscribed Asset @@----- ronald
-            SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = AssetUpdated.Id, SBQQ__Subscription__c = AssetUpdated.SBCF_Subscription__c, SBQQ__Active__c = true);
-            insert subscribedAsset;
+            for(Asset asset: updateAsset){
+                SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = asset.Id, SBQQ__Subscription__c = asset.SBCF_Subscription__c, SBQQ__Active__c = true);
+            	insert subscribedAsset;
+            }
+            
         }
        
         }

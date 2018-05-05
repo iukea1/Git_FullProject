@@ -193,6 +193,10 @@
                 <behavior>Readonly</behavior>
                 <field>POC_ID_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TODAY_DATE__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -432,6 +436,14 @@
         <editHeading>true</editHeading>
         <label>Additional Text</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Ordered__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__OrderGroupID__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Special_Instructions__c</field>

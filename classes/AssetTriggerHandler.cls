@@ -745,10 +745,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(Asset a: assetlst){
             
             if(a.SBQQ__QuoteLine__r.POC_ID__c != null && a.SBQQ__QuoteLine__r.POC_ID__c != 0){
-            	 a.Status = 'Customer Subscription';   
+                a.Status = 'Customer Evaluation';
             }
             if(a.Product2.Name.contains('Asset') && a.Product2.Name != null){
-                a.Status = 'Customer Evaluation';
+                a.Status = 'Customer Subscription';  
             }
             updateAsset.add(a);
             

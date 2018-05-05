@@ -1,6 +1,6 @@
 trigger AttachmentCheckOnDENote on Attachment (before insert, before delete)
 {
-    List<DE_Note__c> lstDENotes = new List<DE_Note__c>();
+   /* List<DE_Note__c> lstDENotes = new List<DE_Note__c>();
     Set<Id> setDENoteIds = new Set<Id>();
     Set<Id> setattIds = new Set<Id>();
     List<DE_Note__c> lstFinal = new List<DE_Note__c>();
@@ -52,5 +52,5 @@ trigger AttachmentCheckOnDENote on Attachment (before insert, before delete)
             system.debug('lstFinal:' + lstFinal);
             update lstFinal;
         }
-    }
+    } */
 }

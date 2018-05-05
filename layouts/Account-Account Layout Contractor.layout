@@ -402,7 +402,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>DE_Notes__c</fields>
-        <fields>Has_Attachment__c</fields>
         <fields>Deployment_Engineer__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>DE_Note__c.Account_Name__c</relatedList>

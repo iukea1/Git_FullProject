@@ -6,7 +6,6 @@
     <customButtons>SBQQ__ImportLines</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
-    <customButtons>Extend_POC</customButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -42,6 +41,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>POC_ID_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TODAY_DATE__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

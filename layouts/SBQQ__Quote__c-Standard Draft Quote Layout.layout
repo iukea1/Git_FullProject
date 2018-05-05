@@ -9,6 +9,7 @@
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>
+    <customButtons>SBQQ__CloneWithRelatedClassic</customButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -149,6 +150,14 @@
                 <behavior>Readonly</behavior>
                 <field>POC_ID_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TODAY_DATE__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBCF_Profile_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -202,6 +211,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Active_Asset_Subscription_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Estimated_Ship_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -428,6 +441,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Price_Book_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__PriceBook__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

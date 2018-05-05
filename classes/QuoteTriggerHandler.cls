@@ -1,5 +1,9 @@
 public without sharing class QuoteTriggerHandler implements ITriggerHandler{
-
+	
+    public static final String EvalRmaRecordTypeId = '012500000005H0o';
+    public static final String EvalRMAItemRecordTypeId = '012500000005H0y';
+    Id rmaRecordTypeId = Schema.SObjectType.RMA__c.getRecordTypeInfosByName().get('Eval RMA').getRecordTypeId();
+    Id itemRecordTypeId = Schema.SObjectType.RMA_Item__c.getRecordTypeInfosByName().get('Eval Return').getRecordTypeId();
     
     public QuoteTriggerHandler(){
         
@@ -87,7 +91,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         
         List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
         
-        for(SBQQ__Quote__c quoteRec: [SELECT Id, Name, ApprovalStatus__c, Justification__c, SBQQ__StartDate__c, Requested_Extension_Date__c, SBQQ__EndDate__c 
+        for(SBQQ__Quote__c quoteRec: [SELECT Id, Name, SBQQ__ExpirationDate__c, ApprovalStatus__c, Justification__c, SBQQ__StartDate__c, Requested_Extension_Date__c, SBQQ__EndDate__c 
                                       FROM SBQQ__Quote__c 
                                       WHERE Id IN: quotesIds]){
                                           
@@ -95,6 +99,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
                   if(quoteRec.Requested_Extension_Date__c != null && quoteRec.SBQQ__StartDate__c != null){
                       if(quoteRec.Requested_Extension_Date__c >= quoteRec.SBQQ__StartDate__c){
                       	  quoteRec.SBQQ__EndDate__c = quoteRec.Requested_Extension_Date__c;
+                          quoteRec.SBQQ__ExpirationDate__c = quoteRec.Requested_Extension_Date__c;
                           quotesToUpdate.add(quoteRec);
                   	  }
                       

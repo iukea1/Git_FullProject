@@ -194,6 +194,14 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__SubscriptionEndDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__RequiredBySubscription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Smart_Hands_Subscription__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

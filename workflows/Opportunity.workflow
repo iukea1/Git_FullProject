@@ -961,6 +961,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Renewal_Specialist_Name</fullName>
+        <field>Renewal_Specialist__c</field>
+        <formula>Patch__r.RSS__r.FirstName +&quot; &quot;+  Patch__r.RSS__r.LastName</formula>
+        <name>Update Renewal Specialist Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Upodate_event_date</fullName>
         <field>Event_Date__c</field>
         <formula>today()</formula>
@@ -1737,6 +1746,26 @@ NOT(ISPICKVAL(Type,&quot;Marketplace&quot;)),
 NOT(New_Business__c) 
 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Renewal Specialist on Open Opp</fullName>
+        <actions>
+            <name>Update_Renewal_Specialist_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND
+(
+NOT(ISNULL(Patch__c)),
+OR(
+ISCHANGED(Renewal_Specialist__c),
+ISCHANGED(Patch__c)
+
+
+)
+
+)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>UpdateLeadSource</fullName>

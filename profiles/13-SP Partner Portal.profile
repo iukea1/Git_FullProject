@@ -56,6 +56,11 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>standard__AllTabSet</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>standard__AppLauncher</application>
         <default>false</default>
         <visible>true</visible>
@@ -74,6 +79,11 @@
         <application>standard__Ideas</application>
         <default>false</default>
         <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningInstrumentation</application>
+        <default>false</default>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningSalesConsole</application>
@@ -1894,6 +1904,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubscribedAssetTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SubscriptionAdminController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2059,10 +2073,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestCopyECLicenseEndDateToAccount</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TestDENotesTriggers</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3129,11 +3139,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DE_Note__c.Deployment_Engineer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DE_Note__c.Has_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6133,6 +6138,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Patch_Change__e.RSS_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Patch__c.Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6265,6 +6275,11 @@
         <editable>false</editable>
         <field>Patch__c.RSM__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch__c.RSS__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9102,6 +9117,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Partner Portal Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBrand-Account BrandLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountTeamMember-Account Team Member Layout</layout>

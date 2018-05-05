@@ -55,4 +55,15 @@
         <unique>false</unique>
     </fields>
     <label>Opportunity Record Type Transition</label>
+    <listViews>
+        <fullName>Custom_Setting_Details</fullName>
+        <columns>NAME</columns>
+        <columns>Initial_Solution_Interest__c</columns>
+        <columns>Type__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Record_Type_Name__c</columns>
+        <columns>Record_Type_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Custom Setting Details</label>
+    </listViews>
 </CustomObject>

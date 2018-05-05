@@ -32,6 +32,14 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SBCF_Set_Shipment_Contact_to_PO_Contact</fullName>
+        <field>Shipping_Status__c</field>
+        <name>SBCF Set Shipment Contact to PO Contact</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>SBCF Set Contracted to True</fullName>
         <actions>

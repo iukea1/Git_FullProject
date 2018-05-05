@@ -7,6 +7,10 @@
         <label>Product Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>OrderItemNumber</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>OrderId</field>
             </layoutItems>
@@ -71,6 +75,26 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__ContractingMethod__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Subscription__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Asset__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Contract__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Contracted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__RequiredBy__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

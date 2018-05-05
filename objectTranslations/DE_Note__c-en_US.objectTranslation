@@ -34,10 +34,6 @@
         <relationshipLabel><!-- Deployment Engineering Notes --></relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Has Attachment? --></label>
-        <name>Has_Attachment__c</name>
-    </fields>
-    <fields>
         <label><!-- Send Email To Account Team? --></label>
         <name>Send_Email_To_Account_Team__c</name>
     </fields>

@@ -33,6 +33,13 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Copy of Quote Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Evaluation Submitted Quote</layout>
         <sections>
             <label><!-- Additional Text --></label>
