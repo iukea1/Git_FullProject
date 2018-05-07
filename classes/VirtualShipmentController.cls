@@ -18,7 +18,8 @@ public with sharing class VirtualShipmentController {
     
     public List<SBQQ__Subscription__c> existingSubscription;
     public List<SBQQ__Subscription__c> displaySubscription {get;set;}
-    public List<SBQQ__Subscription__c> updateSubscription {get;set;}
+    public List<SBQQ__Subscription__c> displayAmendedSubscription {get;set;}
+
     public Map<Id, List<SBQQ__SubscribedAsset__c>> subscriptionToSubscribedAsset {get;set;}
     public Map<Id, List<OrderItem>> orderToOrderItemQuantity {get;set;}
     
@@ -26,9 +27,11 @@ public with sharing class VirtualShipmentController {
     public List<Asset> assetUpdate {get;set;}
     
     public List<SBQQ__Subscription__c> amendedSubscription {get;set;}
+    public List<SBQQ__Subscription__c> updateAmendedSubscription {get;set;}
     public Map<Id, List<SBQQ__SubscribedAsset__c>> amendedsubToSubscribedAssetMap {get;set;}
     public Map<Id, OrderItem> orderToItemQuantityMap {get;set;}
     public Map<Id, String> orderItemNameMap {get;set;}
+    public Map<Id, String> orderItemAmendmentNameMap {get;set;}
     
     public Boolean isRenewal {get;set;}
     public Boolean isAmendment {get;set;}
@@ -122,6 +125,7 @@ public with sharing class VirtualShipmentController {
             
         } */
         // else if
+        /*
         if(this.order.Type == 'Amendment'){
             List<Order> amendmentOrders = [SELECT Id, Opportunity.SBQQ__AmendedContract__c FROM Order WHERE Id =: this.order.Id AND Opportunity.SBQQ__AmendedContract__c NOT IN ('', NULL) LIMIT 1];
             
@@ -141,9 +145,9 @@ public with sharing class VirtualShipmentController {
                     
                 }
             }
-            
             isAmendment = true;
         }
+		*/
         /*
         else{
             orderProducts = OrderShipmentHelper.queryForOrderProducts(this.order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE_VIRTUAL);
@@ -159,9 +163,10 @@ public with sharing class VirtualShipmentController {
 		*/
     }
     
-    public PageReference dmlOperation(){
+    public PageReference constructor(){
         
         if(this.order.Type == 'Renewal'){
+            
             List<Order> renewalOrders = [SELECT Id, Opportunity.SBQQ__RenewedContract__c FROM Order WHERE Id =: this.order.Id AND Opportunity.SBQQ__RenewedContract__c NOT IN ('', NULL) LIMIT 1];
             for(Order renewalOrder: renewalOrders){
                 renewalContractIds.add(renewalOrder.Opportunity.SBQQ__RenewedContract__c);
@@ -169,7 +174,7 @@ public with sharing class VirtualShipmentController {
             } 
             
            
-        orderProducts = [SELECT Id, OrderId, Quantity, SBQQ__QuotedQuantity__c, PricebookEntry.Product2.Name FROM OrderItem WHERE OrderId IN: renewalOrderIds];
+        	orderProducts = [SELECT Id, OrderId, Quantity, SBQQ__QuotedQuantity__c, PricebookEntry.Product2.Name FROM OrderItem WHERE OrderId IN: renewalOrderIds];
             orderItemNameMap = new Map<Id, String>();
             
             for(OrderItem oItem: orderProducts){
@@ -181,37 +186,79 @@ public with sharing class VirtualShipmentController {
             existingSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__ProductName__c, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
             
         
-        List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+        	List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+            
             for(SBQQ__Subscription__c sub: existingSubscription){
                for(OrderItem oiRec: orderProducts){
-                   
-                 
-                   
-                   if(orderItemNameMap.get(oiRec.Id).substring(0,5) == sub.SBQQ__ProductName__c.substring(0,5)){
-                       
-                     
-                       
-                   		sub.Quoted_Quantity__c = oiRec.Quantity;
-                        
-                       
+                   if(orderItemNameMap.get(oiRec.Id).substring(0,7) == sub.SBQQ__ProductName__c.substring(0,7)){          
+                   		sub.Quoted_Quantity__c = oiRec.Quantity;                 
                         subList.add(sub);
                    }
-                   
                 } 
             }
             
+            if(subList == null){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no renewal subscription available.');
+                ApexPages.addMessage(myMsg);
+                return null;
+            }
             
-        if(subList.size()>0){
-            update subList;
-        
+            if(subList.size()>0){
+                update subList;
+            
+            }
+    
+            displaySubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
+            isRenewal = true;
+                
         }
         
-		
-        displaySubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
-       
-         isRenewal = true;
+        else if(this.order.Type == 'Amendment'){
             
+            List<Order> amendmentOrders = [SELECT Id, Opportunity.SBQQ__AmendedContract__c FROM Order WHERE Id =: this.order.Id AND Opportunity.SBQQ__AmendedContract__c NOT IN ('', NULL) LIMIT 1];
+            
+            for(Order amendmentOrder: amendmentOrders){
+                amendedContractIds.add(amendmentOrder.Opportunity.SBQQ__AmendedContract__c);
+                amendedOrderIds.add(amendmentOrder.Id);
+            }
+            
+            orderItems = [SELECT Id, OrderId, Quantity FROM OrderItem WHERE OrderId IN: amendedOrderIds];
+            
+            for(OrderItem orderItem: orderItems){
+                orderItemAmendmentNameMap.put(orderItem.Id, orderItem.PricebookEntry.Product2.Name);
+            }
+            
+            amendedSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, SBQQ__Contract__c, Quoted_Quantity__c, 
+                                   (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c 
+                                    FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: amendedContractIds];
+            
+            for(OrderItem oi: orderItems){
+                for(SBQQ__Subscription__c s: amendedSubscription){
+                    if(orderItemAmendmentNameMap.get(oi.Id) != null && s.SBQQ__ProductName__c != null){
+                        if(orderItemAmendmentNameMap.get(oi.Id).substring(0,7) == s.SBQQ__ProductName__c.substring(0,7)){
+                            s.Quoted_Quantity__c = oi.Quantity;
+                            updateAmendedSubscription.add(s);
+                    	}
+                    }
+                }
+            }
+            
+            if(updateAmendedSubscription == null){
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'There are no amended subscription available.');
+                ApexPages.addMessage(myMsg);
+                return null;
+            }
+            
+            if(updateAmendedSubscription.size()>0){
+                update updateAmendedSubscription;
+            }
+            
+            displayAmendedSubscription =  [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, SBQQ__Contract__c, Quoted_Quantity__c,
+                                   		  (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c 
+                                    	   FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: amendedContractIds];
+            isAmendment = true;
         }
+        
         return null;
     }
     
@@ -269,7 +316,7 @@ public with sharing class VirtualShipmentController {
 		
            
         orderToOrderItemQuantity = new Map<Id, List<OrderItem>>();
-            
+        /*    
         for(OrderItem orderItem: orderRec.OrderItems){
             if(orderToOrderItemQuantity.containsKey(orderItem.OrderId)){
                 List<OrderItem> orderItemList = orderToOrderItemQuantity.get(orderItem.OrderId);
@@ -280,21 +327,24 @@ public with sharing class VirtualShipmentController {
                 orderToOrderItemQuantity.put(orderItem.OrderId, new List<OrderItem>{orderItem});
             }
         }    
-            
+        */    
         for(SBQQ__Subscription__c existingSubs: displaySubscription){
             
             	oldSubscriptionAndAsset = new List<SBQQ__SubscribedAsset__c>();
             	subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
                 for(SBQQ__SubscribedAsset__c subsAsset: existingSubs.SBQQ__SubscribedAssets__r){
-     
                     if(subsAsset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
-                        oldSubscriptionAndAsset.add(subsAsset);
+                        if(subscriptionToSubscribedAsset.containsKey(existingSubs.Id)){
+                            List<SBQQ__SubscribedAsset__c> subAssetInSubscription = subscriptionToSubscribedAsset.get(existingSubs.Id);
+                            subAssetInSubscription.add(subsAsset);
+                            subscriptionToSubscribedAsset.put(existingSubs.Id, subAssetInSubscription);
+                        }
+                        else{
+                            subscriptionToSubscribedAsset.put(existingSubs.Id, new List<SBQQ__SubscribedAsset__c>{subsAsset});
+                        }
                     }
-                    
-                    subscriptionToSubscribedAsset.put(existingSubs.Id, oldSubscriptionAndAsset);
-					
-                    List<OrderItem> orderProductQuantity = orderToOrderItemQuantity.get(orderRec.Id);
-                    
+                        
+                                        
                     List<SBQQ__SubscribedAsset__c> selectedAsset = subscriptionToSubscribedAsset.get(existingSubs.Id);
                     
                     assetToUpdate = new List<Asset>();
@@ -339,13 +389,7 @@ public with sharing class VirtualShipmentController {
                 
         else if(orderRec.Type == 'Amendment'){
             
-            orderToItemQuantityMap = new Map<Id, OrderItem>();
-            
-            for(OrderItem orderItem: orderRec.OrderItems){
-                orderToItemQuantityMap.put(orderItem.OrderId, orderItem);
-            }
-            
-            for(SBQQ__Subscription__c amendedSub: amendedSubscription){
+            for(SBQQ__Subscription__c amendedSub: displayAmendedSubscription){
                 
                 previousSubAsset = new List<SBQQ__SubscribedAsset__c>();
                 amendedsubToSubscribedAssetMap = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
@@ -353,11 +397,19 @@ public with sharing class VirtualShipmentController {
                 for(SBQQ__SubscribedAsset__c amendedSA: amendedSub.SBQQ__SubscribedAssets__r){
                     
                     if(amendedSA.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
-                        previousSubAsset.add(amendedSA);
-                        amendedsubToSubscribedAssetMap.put(amendedSub.Id, previousSubAsset);
+                        //Mapping for Subscription to Subscribed Asset
+                        if(amendedsubToSubscribedAssetMap.containsKey(amendedSub.Id)){
+                            List<SBQQ__SubscribedAsset__c> subAssetInAmendedSub = amendedsubToSubscribedAssetMap.get(amendedSub.Id);
+                            subAssetInAmendedSub.add(amendedSA);
+                            amendedsubToSubscribedAssetMap.put(amendedSub.Id, subAssetInAmendedSub);
+                        }
+                        else{
+                            amendedsubToSubscribedAssetMap.put(amendedSub.Id, new List<SBQQ__SubscribedAsset__c>{amendedSA});
+                        }
+                        // end of mapping
                     }
                                         
-                    OrderItem orderItemQuantity = orderToItemQuantityMap.get(orderRec.Id);
+                    //OrderItem orderItemQuantity = orderToItemQuantityMap.get(orderRec.Id);
                     List<SBQQ__SubscribedAsset__c> assetSelected = amendedsubToSubscribedAssetMap.get(amendedSub.Id);
                     
                     assetUpdate = new List<Asset>();
@@ -369,11 +421,11 @@ public with sharing class VirtualShipmentController {
                         }
                     }
                     
-                    if(orderItemQuantity.Quantity != assetUpdate.size()){
+                    if(amendedSub.Quoted_Quantity__c != assetUpdate.size()){
                         orderItemsQuantityIsNotEqual = true;
                     }
                     
-                    else if(orderItemQuantity.Quantity == assetUpdate.size()){
+                    else if(amendedSub.Quoted_Quantity__c == assetUpdate.size()){
                         orderItemsQuantityIsNotEqual = false;
                     }
                     

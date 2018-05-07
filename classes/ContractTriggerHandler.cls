@@ -2,8 +2,8 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         
     public static final String EvalRmaRecordTypeId = '012500000005H0o';
     public static final String EvalRMAItemRecordTypeId = '012500000005H0y';
-    Id rmaRecordTypeId = Schema.SObjectType.RMA__c.getRecordTypeInfosByName().get('Eval RMA').getRecordTypeId();
-    Id itemRecordTypeId = Schema.SObjectType.RMA_Item__c.getRecordTypeInfosByName().get('Eval Return').getRecordTypeId();
+    String rmaRecordTypeId = Schema.SObjectType.RMA__c.getRecordTypeInfosByName().get('Eval RMA').getRecordTypeId();
+    String itemRecordTypeId = Schema.SObjectType.RMA_Item__c.getRecordTypeInfosByName().get('Eval Return').getRecordTypeId();
 
 
     

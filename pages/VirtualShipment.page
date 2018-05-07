@@ -1,4 +1,4 @@
-<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order" action="{!dmlOperation}">
+<apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order" action="{!constructor}">
 	
     <style>
 		#FileUploadContent {text-align: center; width: 100%;}
@@ -36,9 +36,7 @@
 	<apex:outputPanel Id="NonActivatedOrder" rendered="{!NOT(orderIsActivated)}">
 
 		<apex:form >
-
 		<apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" />
-
 		<apex:pageblock mode="maindetail">
 			<apex:pageBlockButtons location="top">
 				<!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
@@ -107,7 +105,7 @@
                                 <apex:pageBlockTable value="{!subs.SBQQ__SubscribedAssets__r}" var="subscription" id="childAssets">
 									<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                     	<apex:facet name="header">Asset</apex:facet>
-                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}"/> 
+                                        <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}" /> 
                                     </apex:column>
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">

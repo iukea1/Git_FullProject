@@ -1896,6 +1896,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SplitContractController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SubmitPurchaseRequestOnMdfApprovalTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10496,6 +10500,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>SiteTemplate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SplitContract</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

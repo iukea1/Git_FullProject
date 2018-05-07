@@ -80,7 +80,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_daybefore</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Exp_Notice_expired_day_after</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_30</fullName>
@@ -119,7 +119,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_30days</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_30days</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_after_30_days</fullName>
@@ -158,7 +158,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_30daysafter</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expirat_Notice_30days_after</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_0_days</fullName>
@@ -169,7 +169,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_30days</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_30days</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_60_days</fullName>
@@ -208,7 +208,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_60days</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_60days</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_90_days</fullName>
@@ -247,7 +247,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/Contract_Expiration_Notice_90days</template>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_90days</template>
     </alerts>
     <fieldUpdates>
         <fullName>Contract_Set_EC_Total_Contract_Value</fullName>
@@ -335,6 +335,26 @@
         </criteriaItems>
         <description>Set&apos;s actions to occur when contracts are edited.</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>EC Contract Exp- 0 days notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>EC Contract Exp- 1 days notice</fullName>
