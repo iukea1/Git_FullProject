@@ -84,7 +84,7 @@
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_30</fullName>
-        <description>Contract Expiration Notice in 30 days</description>
+        <description>EC Contract Before 30 Days</description>
         <protected>false</protected>
         <recipients>
             <recipient>Account Manager</recipient>
@@ -96,6 +96,10 @@
         </recipients>
         <recipients>
             <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
             <type>accountTeam</type>
         </recipients>
         <recipients>
@@ -120,45 +124,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_30days</template>
-    </alerts>
-    <alerts>
-        <fullName>Contract_Expiration_Notice_after_30_days</fullName>
-        <description>Contract Expiration Notice after 30 days</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>Account Manager</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Channel Manager</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Inside Sale Representative</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>Systems Engineer</recipient>
-            <type>accountTeam</type>
-        </recipients>
-        <recipients>
-            <field>CustomerSignedId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices_2__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/EC_Contract_Expirat_Notice_30days_after</template>
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_0_days</fullName>
@@ -173,7 +138,7 @@
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_60_days</fullName>
-        <description>Contract Expiration Notice in 60 days</description>
+        <description>EC Contract Before 60 Days</description>
         <protected>false</protected>
         <recipients>
             <recipient>Account Manager</recipient>
@@ -185,6 +150,10 @@
         </recipients>
         <recipients>
             <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
             <type>accountTeam</type>
         </recipients>
         <recipients>
@@ -212,7 +181,251 @@
     </alerts>
     <alerts>
         <fullName>Contract_Expiration_Notice_in_90_days</fullName>
-        <description>Contract Expiration Notice in 90 days</description>
+        <description>EC Contract Before 90 days</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_90days</template>
+    </alerts>
+    <alerts>
+        <fullName>EC_Contract_Expiration_Notice_after_30_days</fullName>
+        <description>EC Contract 30 Days After</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <recipient>prane@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/EC_Contract_Expirat_Notice_30days_after</template>
+    </alerts>
+    <alerts>
+        <fullName>Eval_Contract_5_Days_before_expire</fullName>
+        <description>Eval Contract -5 Days before expire</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Eval_Contract_5_Days_Before_expiration</template>
+    </alerts>
+    <alerts>
+        <fullName>Eval_Contract_On_Day</fullName>
+        <description>Eval Contract On Day</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/Eval_Contract_expired_today</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Contract_expiration_a_day_after</fullName>
+        <description>EC Contract 1 Day After</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/EC_Contract_Exp_Notice_expired_day_after</template>
+    </alerts>
+    <alerts>
+        <fullName>VX_Sub_30_Days_After</fullName>
+        <description>VX Sub 30 Days After</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/VX_Contract_Expirat_Notice_30days_after</template>
+    </alerts>
+    <alerts>
+        <fullName>VX_Sub_30_Days_Before</fullName>
+        <description>VX Sub 30 Days Before</description>
         <protected>false</protected>
         <recipients>
             <recipient>Account Manager</recipient>
@@ -242,12 +455,129 @@
             <field>Customer_Addl_Notices__c</field>
             <type>contactLookup</type>
         </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/VX_Contract_Expiration_Notice_30days</template>
+    </alerts>
+    <alerts>
+        <fullName>VX_Sub_60_Days_Before</fullName>
+        <description>VX Sub 60 Days Before</description>
+        <protected>false</protected>
         <recipients>
-            <recipient>prane@silver-peak.com</recipient>
-            <type>user</type>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_90days</template>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/VX_Contract_Expiration_Notice_60days</template>
+    </alerts>
+    <alerts>
+        <fullName>VX_Sub_Day_After</fullName>
+        <description>VX Sub Day After</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/VX_Contract_Expirat_Notice_1day_after</template>
+    </alerts>
+    <alerts>
+        <fullName>Vx_Sub_90_Days_Before</fullName>
+        <description>Vx Sub 90 Days Before</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/VX_Contract_Expiration_Notice_90days</template>
     </alerts>
     <fieldUpdates>
         <fullName>Contract_Set_EC_Total_Contract_Value</fullName>
@@ -337,7 +667,7 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>EC Contract Exp- 0 days notice</fullName>
+        <fullName>EC Contract Exp- 1 day after notice</fullName>
         <active>false</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
@@ -351,38 +681,18 @@
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>EC Contract Exp- 1 days notice</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
             <actions>
-                <name>Contract_Expiration_Notice_1_day</name>
+                <name>Send_Contract_expiration_a_day_after</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-1</timeLength>
+            <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>EC Contract Exp- 30 days after notice</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
             <operation>equals</operation>
@@ -396,7 +706,7 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Contract_Expiration_Notice_after_30_days</name>
+                <name>EC_Contract_Expiration_Notice_after_30_days</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
@@ -406,7 +716,7 @@
     </rules>
     <rules>
         <fullName>EC Contract Exp- 30 days notice</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
             <operation>equals</operation>
@@ -430,7 +740,7 @@
     </rules>
     <rules>
         <fullName>EC Contract Exp- 60 days notice</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
             <operation>equals</operation>
@@ -454,7 +764,7 @@
     </rules>
     <rules>
         <fullName>EC Contract Exp- 90 days notice</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
             <operation>equals</operation>
@@ -473,6 +783,124 @@
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>EdgeConnect After Expiration</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Expired</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>EC_Contract_Expiration_Notice_after_30_days</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_Contract_expiration_a_day_after</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>EdgeConnect Upcoming Expiration</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contract_Expiration_Notice_30</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contract_Expiration_Notice_in_60_days</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contract_Expiration_Notice_in_90_days</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Eval Contract Expiration</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Eval_Contract_On_Day</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Eval_Contract_5_Days_before_expire</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-5</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -508,5 +936,230 @@
             <value>Draft</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>VX Sub Contract Exp- 1 day after notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Virtual_Subscription_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_Day_After</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Sub Contract Exp- 30 days after notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Virtual_Subscription_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_30_Days_After</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Sub Contract Exp- 30 days notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_30_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Sub Contract Exp- 60 days notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_60_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Sub Contract Exp- 90 days notice</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Vx_Sub_90_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Subscription After Expiration</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Virtual_Subscription_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Expired</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_Day_After</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_30_Days_After</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>VX Subscription Upcoming Expiration</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Virtual_Subscription_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Vx_Sub_90_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_60_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>VX_Sub_30_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
 </Workflow>

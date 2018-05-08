@@ -1,0 +1,6 @@
+<apex:component controller="SBQQSubscriptionController" access="global" layout="none">
+    <apex:attribute name="contract_Id" type="Id" description="Id of the Contract" assignTo="{!ContractId}"></apex:attribute>
+    <apex:repeat value="{!lstVXSubAssets}" var="asset">
+            {!asset.Product2.Name}, S/N {!asset.SerialNumber} <br />
+        </apex:repeat>
+</apex:component>

@@ -1688,6 +1688,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RHX_TEST_SBQQ_Subscription</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAItemTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1757,6 +1761,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RvAccountToAccountBatchProcess</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SBQQSubscriptionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2277,6 +2285,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestRequeueCaseController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestSBQQSubscriptionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -11367,6 +11379,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Request__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>SBQQ__LookupData__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

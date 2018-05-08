@@ -1688,6 +1688,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RHX_TEST_SBQQ_Subscription</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RMAItemTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1757,6 +1761,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RvAccountToAccountBatchProcess</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SBQQSubscriptionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2277,6 +2285,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestRequeueCaseController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestSBQQSubscriptionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10608,6 +10620,10 @@
         <recordType>Training_Events__c.Partner</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
+    <tabVisibilities>
+        <tab>SBQQ__LookupData__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <userLicense>CPQ Integration User</userLicense>
     <userPermissions>
         <enabled>true</enabled>
