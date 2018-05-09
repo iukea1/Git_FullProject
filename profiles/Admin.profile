@@ -632,6 +632,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EvalAssetView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EvalQuoteProductController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1764,7 +1768,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SBQQSubscriptionController</apexClass>
+        <apexClass>SBQQSubscriptionDataController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

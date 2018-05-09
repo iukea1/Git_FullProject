@@ -384,6 +384,163 @@
         <template>Steelbrick_Email_Templates/EC_Contract_Exp_Notice_expired_day_after</template>
     </alerts>
     <alerts>
+        <fullName>Unity_Cloud_Orch_1_Day_After</fullName>
+        <description>Unity Cloud Orch 1 Day After</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_day_after</template>
+    </alerts>
+    <alerts>
+        <fullName>Unity_Cloud_Orch_30_Days_Before</fullName>
+        <description>Unity Cloud Orch 30 Days Before</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_30_days</template>
+    </alerts>
+    <alerts>
+        <fullName>Unity_Cloud_Orch_60_Days_Before</fullName>
+        <description>Unity Cloud Orch 60 Days Before</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_60_days</template>
+    </alerts>
+    <alerts>
+        <fullName>Unity_Cloud_Orch_90_Days_Before</fullName>
+        <description>Unity Cloud Orch 90 Days Before</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Channel Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Inside Sale Representative</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Renewal Specialist</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_90_days</template>
+    </alerts>
+    <alerts>
         <fullName>VX_Sub_30_Days_After</fullName>
         <description>VX Sub 30 Days After</description>
         <protected>false</protected>
@@ -580,6 +737,15 @@
         <template>Steelbrick_Email_Templates/VX_Contract_Expiration_Notice_90days</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Change_the_status_to_Expired</fullName>
+        <field>Status</field>
+        <literalValue>Expired</literalValue>
+        <name>Change the status to Expired</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Contract_Set_EC_Total_Contract_Value</fullName>
         <field>SD_WAN_Optimization_Value__c</field>
         <formula>SBQQ__Quote__r.License_Value__c</formula>
@@ -667,127 +833,11 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>EC Contract Exp- 1 day after notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Send_Contract_expiration_a_day_after</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>EC Contract Exp- 30 days after notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>EC_Contract_Expiration_Notice_after_30_days</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>30</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>EC Contract Exp- 30 days notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Contract_Expiration_Notice_30</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-30</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>EC Contract Exp- 60 days notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Contract_Expiration_Notice_in_60_days</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-60</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>EC Contract Exp- 90 days notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Contract_Expiration_Notice_in_90_days</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-90</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>EdgeConnect After Expiration</fullName>
+        <actions>
+            <name>Change_the_status_to_Expired</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
@@ -800,9 +850,14 @@
             <value>False</value>
         </criteriaItems>
         <criteriaItems>
+            <field>Contract.EndDate</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
             <field>Contract.Status</field>
             <operation>equals</operation>
-            <value>Expired</value>
+            <value>Activated</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
@@ -819,9 +874,8 @@
                 <name>Send_Contract_expiration_a_day_after</name>
                 <type>Alert</type>
             </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -870,6 +924,11 @@
             <timeLength>-90</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Eval Contract Expiration</fullName>
@@ -889,6 +948,10 @@
             <actions>
                 <name>Eval_Contract_On_Day</name>
                 <type>Alert</type>
+            </actions>
+            <actions>
+                <name>Change_the_status_to_Expired</name>
+                <type>FieldUpdate</type>
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>0</timeLength>
@@ -938,12 +1001,16 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>VX Sub Contract Exp- 1 day after notice</fullName>
-        <active>false</active>
+        <fullName>Unity Cloud Orchestrator After Expiration</fullName>
+        <actions>
+            <name>Change_the_status_to_Expired</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
         <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
+            <field>Contract.Unity_Cloud_Orchestrator_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
@@ -951,115 +1018,65 @@
             <value>False</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Contract.Virtual_Subscription_Count__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
+            <field>Contract.EndDate</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>VX_Sub_Day_After</name>
+                <name>Unity_Cloud_Orch_1_Day_After</name>
                 <type>Alert</type>
             </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>VX Sub Contract Exp- 30 days after notice</fullName>
-        <active>false</active>
+        <fullName>Unity Cloud Orchestrator Upcoming Expiration</fullName>
+        <active>true</active>
         <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Virtual_Subscription_Count__c</field>
+            <field>Contract.Unity_Cloud_Orchestrator_Count__c</field>
             <operation>greaterThan</operation>
             <value>0</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>VX_Sub_30_Days_After</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>30</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>VX Sub Contract Exp- 30 days notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
         <criteriaItems>
             <field>Contract.Evaluation_Quote__c</field>
             <operation>equals</operation>
             <value>False</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>VX_Sub_30_Days_Before</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-30</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>VX Sub Contract Exp- 60 days notice</fullName>
-        <active>false</active>
         <criteriaItems>
-            <field>Contract.Product_Type__c</field>
+            <field>Contract.Status</field>
             <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
+            <value>Activated</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>VX_Sub_60_Days_Before</name>
+                <name>Unity_Cloud_Orch_60_Days_Before</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>-60</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>VX Sub Contract Exp- 90 days notice</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contract.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Vx_Sub_90_Days_Before</name>
+                <name>Unity_Cloud_Orch_30_Days_Before</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Unity_Cloud_Orch_90_Days_Before</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Contract.EndDate</offsetFromField>
@@ -1069,6 +1086,10 @@
     </rules>
     <rules>
         <fullName>VX Subscription After Expiration</fullName>
+        <actions>
+            <name>Change_the_status_to_Expired</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
@@ -1088,7 +1109,12 @@
         <criteriaItems>
             <field>Contract.Status</field>
             <operation>equals</operation>
-            <value>Expired</value>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.EndDate</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
@@ -1096,9 +1122,8 @@
                 <name>VX_Sub_Day_After</name>
                 <type>Alert</type>
             </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
