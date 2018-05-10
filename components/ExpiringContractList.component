@@ -10,7 +10,7 @@
             <td> Contract Status</td>
             <td>Units on Contract</td>
         </tr>
-        <apex:repeat value="{!Contracts}" var="contract">
+       <!-- <apex:repeat value="{!Contracts}" var="contract">
             <tr>
                 <td>{!contract.ContractNumber}</td>
                 <td>{!contract.CustomerSigned.Email}</td>
@@ -20,6 +20,18 @@
 					<apex:repeat value="{!contract.Assets1__r}" var="sn">
                			{!sn.name} ({!sn.Model__c})<br/>
 				</apex:repeat>
+				</td>
+            </tr>
+        </apex:repeat>-->
+        
+         <apex:repeat value="{!SubscribedContracts}" var="contract">
+            <tr>
+                <td>{!contract.ContractNumber}</td>
+                <td>{!contract.CustomerSignedEmail}</td>
+                <td style="color:{!IF(contract.EndDate - TODAY() <= days, 'red', '')}"><apex:outputText value="{0, Date, MM/dd/yyyy}"><apex:param value="{!contract.EndDate}"/></apex:outputText></td>
+                <td>{!contract.Status}</td>
+				<td style="text-align:right">
+					{!contract.AssetList}
 				</td>
             </tr>
         </apex:repeat>
