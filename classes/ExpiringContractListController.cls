@@ -33,8 +33,8 @@ public class ExpiringContractListController
             if(AccountId != null)
             {
                 
-                List<Contract> lstContracts= [select Id, ContractNumber, Account.Name, CustomerSigned.Name, CustomerSigned.Email, Status, EndDate, (select Name, Model__c from Assets1__r) from Contract where (Status in ('Activated', 'Expired') or Trigger_Notice__c!=null) and AccountId=:AccountId and Include_For_Notice__c=1 order by EndDate];
-                List<SBQQ__Subscription__c> lstSub=[Select Id,SBQQ__Contract__c,(Select Id,SBQQ__Asset__r.Name,SBQQ__Asset__r.Model__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__Product__r.Product_Type__c='NX/VX' and SBQQ__Product__r.Product_Category__c like 'Maintenance%'  and (SBQQ__Contract__r.Status in ('Activated', 'Expired') or SBQQ__Contract__r.Trigger_Notice__c!=null)and SBQQ__Contract__r.AccountId=:AccountId and SBQQ__Contract__r.Include_For_Notice__c=1];
+                List<Contract> lstContracts= [select Id, ContractNumber, Account.Name, CustomerSigned.Name, CustomerSigned.Email, Status, EndDate, (select Name, Model__c from Assets1__r) from Contract where (Status in ('Activated', 'Expired') or Trigger_Notice__c!=null) and AccountId=:AccountId and Perpetual_Product_Count__c >0 order by EndDate];
+                List<SBQQ__Subscription__c> lstSub=[Select Id,SBQQ__Contract__c,(Select Id,SBQQ__Asset__r.Name,SBQQ__Asset__r.Model__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__Product__r.Product_Type__c='NX/VX' and SBQQ__Product__r.Product_Category__c like 'Maintenance%'  and (SBQQ__Contract__r.Status in ('Activated', 'Expired') or SBQQ__Contract__r.Trigger_Notice__c!=null)and SBQQ__Contract__r.AccountId=:AccountId and SBQQ__Contract__r.Perpetual_Product_Count__c>0];
                 if(lstContracts!=null && lstContracts.size()>0)
                 {
                     for(Contract con:lstContracts)

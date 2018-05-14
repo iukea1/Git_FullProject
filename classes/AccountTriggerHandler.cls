@@ -178,7 +178,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
         if(newItems!=null && newItems.size()>0)
         {
             lstOpportunity=[Select Id,AccountId,CloseDate,Fiscal_Quarter_Name__c,StageName,Type,Trigger_Assignment__c,Patch_Locked__c  from Opportunity where AccountId in:newItems.keyset()]; // Fetch All Opps 
-            lstContract = [select Id,AccountId, Trigger_Notice__c,Include_For_Notice__c from Contract where AccountId in:newItems.keyset()];// FetchAllContracts
+            lstContract = [select Id,AccountId, Trigger_Notice__c,Include_For_Notice__c,Perpetual_Product_Count__c from Contract where AccountId in:newItems.keyset()];// FetchAllContracts
             for (Id accId : newItems.keyset())
             {
                 Account newAccInfo= (Account)newItems.get(accId);
@@ -330,8 +330,8 @@ insert lstCapCase;
         List<Contract> lstContractToUpdate= new List<Contract>();
         List<Account> lstAccountToUpdate= new List<Account>();
         System.debug('lstContracts'+lstContracts.size() );
-         System.debug('lstContracts'+lstContracts);
-           System.debug('mapAcct'+mapAcct);
+        System.debug('lstContracts'+lstContracts);
+        System.debug('mapAcct'+mapAcct);
         if(mapAcct!=null && mapAcct.size()>0)
         {
             if(ownerIds!=null && ownerIds.size()>0)
@@ -350,7 +350,7 @@ insert lstCapCase;
             }
             for(Id item:mapAcct.keySet())
             {
-                Boolean t90Sent = false, t60Sent = false, t0Sent = false;
+                Boolean t90Sent = false, t60Sent = false, t0Sent = false,t30Sent=false;
                 Account acc=mapAcct.get(item);
                 if(lstContracts!=null && lstContracts.size()>0)
                 {
@@ -383,6 +383,14 @@ insert lstCapCase;
                                     sendT0Emails(acc);
                                 }
                             }
+                            else if(ct.Trigger_Notice__c == 'T30')
+                            {
+                                if(!t30Sent)
+                                {
+                                    t30Sent = true;
+                                    sendT30Emails(acc);
+                                }
+                            }
                         }
                     }
                 }
@@ -394,7 +402,7 @@ insert lstCapCase;
                         lstAccountToUpdate.add( new Account(Id=acc.Id, SendExpirationEmail__c=false));
                         for(Contract ct : lstContracts)
                         {
-                            if(ct.AccountId==item && ct.Trigger_Notice__c!=null && ct.Include_For_Notice__c==1)
+                            if(ct.AccountId==item && ct.Trigger_Notice__c!=null && ct.Perpetual_Product_Count__c==1)
                             {
                                 lstContractToUpdate.add( new Contract(Id=ct.Id,Trigger_Notice__c = null)); 
                             }
@@ -557,6 +565,36 @@ insert lstCapCase;
         Contact recipient = createTempContact(acc.OwnerId, acc.Id);
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setTemplateId(t90Template);
+        mail.setSaveAsActivity(false);
+        mail.setTargetObjectId(recipient.Id);
+        List<String> recipients = new List<String> { 'notifications@silver-peak.com','renewals@silver-peak.com' };
+            if(user2TREmail.containsKey(acc.OwnerId))
+        {
+            recipients.add(user2TREmail.get(acc.OwnerId));
+        }
+        mail.setccAddresses(recipients);
+        mail.setWhatId(acc.Id);
+        mail.setUseSignature(false);
+        if(orgWideId != null)
+        {
+            mail.setOrgWideEmailAddressId(orgWideId);
+        }
+        if(!Test.isRunningTest())
+        {
+            Messaging.sendEmail(new Messaging.Email[] { mail });
+        }
+        delete recipient;
+    }
+    
+    
+     //sends T90 email to account owner and cc to notification@sp
+    private void sendT30Emails(Account acc)
+    {
+        Id t30Template = [select Id from EmailTemplate where DeveloperName='Contract_Fulfilment_T_30' limit 1].Id;
+        Id orgWideId = getOrgWideId();
+        Contact recipient = createTempContact(acc.OwnerId, acc.Id);
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        mail.setTemplateId(t30Template);
         mail.setSaveAsActivity(false);
         mail.setTargetObjectId(recipient.Id);
         List<String> recipients = new List<String> { 'notifications@silver-peak.com','renewals@silver-peak.com' };

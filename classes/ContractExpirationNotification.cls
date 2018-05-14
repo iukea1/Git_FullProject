@@ -4,6 +4,7 @@
 global class ContractExpirationNotification implements Schedulable, Database.Batchable<sObject>, Database.Stateful
 {
     private Integer t0Contracts;
+    private Integer t30Contracts;
     private Integer t60Contracts;
     private Integer t90Contracts;
     
@@ -18,7 +19,8 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
         t0Contracts = 0;
         t60Contracts = 0;
         t90Contracts = 0;
-        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90)) and Include_For_Notice__c=1) from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90)) and Include_For_Notice__c=1)]);
+        t30Contracts = 0;
+        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60),:Date.today().addDays(30), :Date.today().addDays(90)) and Perpetual_Product_Count__c>0) from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90)) and Include_For_Notice__c=1)]);
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> objs)
@@ -46,6 +48,14 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
                         sending = true;
                         t0Contracts++;
                     }
+                }
+                else if(ct.EndDate == Date.today().addDays(30))
+                {
+                    ct.Trigger_Notice__c = 'T30';
+                    contracts.add(ct);
+                    acc.SendExpirationEmail__c = true;
+                    sending = true;
+                    t30Contracts++;
                 }
                 else if(ct.EndDate == Date.today().addDays(60))
                 {
