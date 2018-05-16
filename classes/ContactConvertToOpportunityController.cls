@@ -16,6 +16,8 @@ public without sharing class ContactConvertToOpportunityController
     public Opportunity Opportunity { get; set; }
     public String OpportunityId { get; set; }
     public OpportunityContactRole OCR { get; set; }
+    
+    public List<OpportunityContactRole> ExistingOpps{get;set;}
     //public Boolean IsSendNotificationEmail { get; set; }
 
     public ContactConvertToOpportunityController(ApexPages.StandardController controller)
@@ -24,7 +26,9 @@ public without sharing class ContactConvertToOpportunityController
         if(!contacts.isEmpty()) 
         {
             contact = contacts[0];
-        }
+        } 
+        ExistingOpps= new List<OpportunityContactRole>();
+        ExistingOpps=CheckDuplicateOpportunity();
         Opportunity = new Opportunity();
         Opportunity.AccountId = contact.AccountId;
         Opportunity.OwnerId = contact.Account.OwnerId;
@@ -121,5 +125,11 @@ public without sharing class ContactConvertToOpportunityController
         contact.Contact_BANT_Qualified__c = false;
         contact.Contact_Me__c = false;
         update contact;
+    }
+    
+    private  List<OpportunityContactRole> CheckDuplicateOpportunity()
+    {
+        List<OpportunityContactRole> lstOpps=[select id, OpportunityId, Opportunity.Name,Opportunity.StageName,Opportunity.CloseDate from OpportunityContactRole where Opportunity.Account.Type='Prospect' and Opportunity.IsClosed=false and contactId=:contact.Id and Opportunity.AccountId=:contact.AccountId ORDER BY Opportunity.CloseDate desc];
+        return lstOpps;
     }
 }

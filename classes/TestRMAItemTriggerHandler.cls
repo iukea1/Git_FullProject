@@ -1,6 +1,6 @@
 @IsTest
 public class TestRMAItemTriggerHandler {
-  @isTest
+    @isTest
     static void testChangeRMAItemProductAndUpdateRMAStatus()
     {
         List<Product2> prods = new List<Product2> { 
@@ -197,23 +197,44 @@ public class TestRMAItemTriggerHandler {
         item = [select Product2__r.Name from RMA_Item__c where Id=:item.Id limit 1];
         System.assertEquals('H', item.Product2__r.Name);
     }
-      @isTest
+    @isTest
     static void testAfterRMAItemReceived()
     {
-        Id accountId = TestUtilities.createTestAccount();
-        Account spAccount= new Account(Name='Silver Peak Systems');
-        insert spAccount;
-        Product2 testProduct = TestUtilities.createTestProduct();
-        testProduct.Product_Category__c = 'Appliance';
-        update testProduct;
-        Asset testAsset = TestUtilities.createTestAsset(accountId, testProduct.Id);
-        RMA__c testRMA = TestUtilities.createTestRMA(accountId, null, null);
-        RMA_Item__c testRMAItem = TestUtilities.createTestRMAItem(testRma.Id, testAsset.Id, testProduct.Id);
+        Account acc= new Account(Name='Test');
+        insert acc;
+        Account spacc= new Account(Name='Silver Peak Systems');
+        insert spAcc;
+        Product2 nxSub= new Product2(Name='NX-1700 Sub',IsActive=true,Model__c='NX-1700 MAINT CONTRACT',Product_Category__c='Subscription',Family='Virtual Image', PRoduct_Type__c='NX/VX');
+        insert nxSub;
+        Product2 nxProd= new Product2(Name='NX-1700',IsActive=true,Model__c='NX-1700',Product_Category__c='Appliance',Family='Product', PRoduct_Type__c='NX/VX');
+        insert nxProd;
+        Asset asset1= new Asset(Name='Test',SerialNumber='Test',AccountId=acc.Id,Product2Id=nxProd.Id,Status='Customer Owned');
+        insert asset1;
+        Contract con= new Contract(AccountId=acc.Id);
+        insert con;
+        
+        con.status='Activated';
+        update con;
+        SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=nxSub.Id);
+        insert sub;
+        
+        asset1.SBQQ__CurrentSubscription__c=sub.Id;
+        update asset1;
+        
+        SBQQ__SubscribedAsset__c sub1 = new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c=sub.Id,SBQQ__Asset__c=asset1.Id,SBQQ__Active__c=true);
+        insert sub1;
+        
+        
+        RMA__c testRMA = TestUtilities.createTestRMA(acc.Id, null, null);
+        RMA_Item__c testRMAItem = TestUtilities.createTestRMAItem(testRma.Id, asset1.Id, nxProd.Id);
         
         testRMAItem.Status__c = 'Received';
         update testRMAItem;
         
-        testAsset = [select AccountId, Status from Asset where Id = :testAsset.Id];
+        Asset testAsset = [select AccountId, Status from Asset where Id = :asset1.Id];
         system.assertEquals('Silver Peak Inventory', testAsset.Status);
+        
+        SBQQ__SubscribedAsset__c subAsset=[Select Id,SBQQ__Active__c from SBQQ__SubscribedAsset__c where SBQQ__Subscription__c=:sub.Id];
+        system.assert(subAsset.SBQQ__Active__c==false);
     }
 }

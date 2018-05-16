@@ -20,7 +20,7 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
         t60Contracts = 0;
         t90Contracts = 0;
         t30Contracts = 0;
-        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60),:Date.today().addDays(30), :Date.today().addDays(90)) and Perpetual_Product_Count__c>0) from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90)) and Include_For_Notice__c=1)]);
+        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60),:Date.today().addDays(30), :Date.today().addDays(90)) and Perpetual_Product_Count__c>0) from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90),:Date.today().addDays(30)) and Perpetual_Product_Count__c>0)]);
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> objs)
@@ -112,9 +112,9 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
     
     private Boolean hasActiveAssets(Id contractId)
     {
-        for(Asset asset : [select Id, Status from Asset where Contract_Number__c=:contractId])
+        for(SBQQ__SubscribedAsset__c asset : [select Id, SBQQ__Asset__r.Status from SBQQ__SubscribedAsset__c where SBQQ__Subscription__r.SBQQ__Contract__c=:contractId and SBQQ__Active__c=true])
         {
-            if(asset.Status == 'Conditional PO' || asset.Status == 'Customer Owned' || asset.Status == 'Cold Spare' || asset.Status.startsWith('Pending Return'))
+            if(asset.SBQQ__Asset__r.Status == 'Conditional PO' || asset.SBQQ__Asset__r.Status == 'Customer Owned' || asset.SBQQ__Asset__r.Status == 'Cold Spare' || asset.SBQQ__Asset__r.Status.startsWith('Pending Return'))
             {
                 return true;
             }
