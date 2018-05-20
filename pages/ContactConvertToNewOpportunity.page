@@ -6,7 +6,7 @@
     {
         if(dataCount>0)
         {
-            var strconfirm = confirm("Are you sure you want to continue?");
+            var strconfirm = confirm("You are about to create a duplicate opportunity for this account. Are you sure you want to continue? ");
             if (strconfirm == true) {
                 return true;
             }
@@ -28,20 +28,35 @@
 <apex:inputCheckbox value="{!IsSendNotificationEmail}" id="emailOpt" />
 </apex:pageBlockSectionItem>-->
                 
-                <apex:pageBlockSectionItem ><apex:outputText style="color:red;" rendered="{!ExistingOpps.size>0}" value="There are existing opportunities for this account. Please make sure you dont create duplicate opportunities."></apex:outputText></apex:pageBlockSectionItem>
-                    
+                <apex:pageBlockSectionItem >
+                    <apex:outputText style="color:red;font-size:14px" rendered="{!ExistingOpps.size>0}" value="There is an open opportunity on this account, please check the below to confirm a duplicate opportunity is not created. Potential/acceptable scenario when more than one Opportunity exists"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                  <apex:outputText style="color:red;" rendered="{!ExistingOpps.size>0}" value="*Customer requires separate PO's based on ship to or product type."></apex:outputText>
+                </apex:pageBlockSectionItem>
+                   <apex:pageBlockSectionItem >
+                   <apex:outputText style="color:red;" rendered="{!ExistingOpps.size>0}" value="*Global Company that requires different distribution or partner in different country?"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                   <apex:pageBlockSectionItem >
+                  <apex:outputText style="color:red;" rendered="{!ExistingOpps.size>0}" value="*Paid POC is placed on separate opportunity/quote?"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
                  <apex:pageBlockSectionItem >
                     <apex:dataTable width="50%" value="{!ExistingOpps}" rendered="{!ExistingOpps.size>0}" var="item" id="theTable" rowClasses="odd,even" styleClass="tableClass">
                         <apex:column width="20%">
-                            <apex:facet name="header">Name</apex:facet>
+                            <apex:facet name="header">Opportunity Name</apex:facet>
                             <apex:outputLink style="color:red" target="_blank" value="/{!item.opportunityId}">{!item.Opportunity.Name}</apex:outputLink>
                         </apex:column>
                         <apex:column width="10%">
-                            <apex:facet name="header">StageName</apex:facet>
+                            <apex:facet name="header">Stage</apex:facet>
                             <apex:outputText >{!item.opportunity.StageName}</apex:outputText> 
                         </apex:column>
+                         <apex:column width="20%">
+                            <apex:facet name="header">Created Date</apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!item.opportunity.CreatedDate}" /> </apex:outputText>
+                        </apex:column>
                         <apex:column width="20%">
-                            <apex:facet name="header">CloseDate</apex:facet>
+                            <apex:facet name="header">Close Date</apex:facet>
                             <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!item.opportunity.CloseDate}" /> </apex:outputText>
                         </apex:column>
                     </apex:dataTable>

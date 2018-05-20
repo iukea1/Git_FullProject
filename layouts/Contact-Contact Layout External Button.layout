@@ -2,6 +2,8 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Contact_Custom_Clone</customButtons>
     <customButtons>New_Opportunity</customButtons>
+    <customButtons>absorblms__Enroll_in_Training</customButtons>
+    <customButtons>absorblms__View_Transcript</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
@@ -318,6 +320,20 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MrktCampHist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <height>200</height>
+                <page>CertificationInfo</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
+                <height>200</height>
+                <page>absorblms__contactTranscript</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>

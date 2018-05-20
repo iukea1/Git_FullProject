@@ -15,6 +15,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
     {
         return false;
     }
+    
     public void BeforeInsert(List<SObject> newItems) 
     {
         if(newItems!=null && newItems.size()>0)
@@ -24,7 +25,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 if(con.TechnicalPresalesReady__c)
                 {
                     con.TechnicalPresalesReadyCertifiedBy__c = UserInfo.getUserId();
-                }      
+                }     
             }     
         }       
     }
@@ -58,7 +59,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
         {
             for (Id conId : newItems.keyset())
             {
-                Contact newContact= (Contact)newItems.get(conId);
+                /*Contact newContact= (Contact)newItems.get(conId);
                 if(moveToSDCampaignStages.contains(newContact.Lead_Lifecycle_Stage__c) && newContact.Account.Type != 'Partner')
                 {
                     if(!contactsToBeUpdated.containsKey(newContact.Id))
@@ -67,7 +68,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
                     }
                     contactsToBeUpdated.get(newContact.Id).Lead_Sub_Status__c = null;
                     newSDCampaignMembers.add(new CampaignMember(ContactId = newContact.Id, CampaignId = sdCampaignId));
-                }
+                }*/
             }
             
             MoveContactsInAndOutOfSDCampaign();

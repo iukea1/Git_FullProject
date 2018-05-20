@@ -15,4 +15,5 @@ public interface ITriggerHandler
     void AfterUndelete(Map<Id, SObject> oldItems);
  
     Boolean IsDisabled();
+    
 }

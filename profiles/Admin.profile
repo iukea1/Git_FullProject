@@ -2292,7 +2292,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TestSBQQSubscriptionController</apexClass>
+        <apexClass>TestSBQQSubscriptionDataController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

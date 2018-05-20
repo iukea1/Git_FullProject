@@ -9,6 +9,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
     
     public ContractTriggerHandler(){
             
+        
         }
         public Boolean IsDisabled(){
             return false;

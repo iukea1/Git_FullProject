@@ -176,6 +176,7 @@ public class SilverPeakUtils
         }
     }
     
+    
     public static void logException(Exception ex)
     {
         logException(ex.getMessage() + '\r\n' + ex.getStackTraceString());
@@ -202,4 +203,5 @@ public class SilverPeakUtils
         }
         Database.insert(new ErrorLog__c(Subject__c=subject, Message__c=errMsg), false);
     }
+
 }

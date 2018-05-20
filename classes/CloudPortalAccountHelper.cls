@@ -250,4 +250,10 @@ generator.writeStringField('password', 'Yesadmin4u');
         
         return cpAccount;
     }
+      public static List<CPAsset> ConvertSubscriptionsToCpSub(List<SBQQ__Subscription__c> lstSub, string subType)
+      {
+           List<CPAsset> lstResult= new List<CPASset>();
+          
+          return lstResult;
+      }
 }

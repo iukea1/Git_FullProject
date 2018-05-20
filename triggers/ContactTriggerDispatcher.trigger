@@ -18,6 +18,7 @@ trigger ContactTriggerDispatcher on Contact (before insert, before update, befor
         //TriggerHandler handler = new ContactTriggerHandlerForSDC();
         //handler.execute();
         if(system.isFuture()) return;
+        
         TriggerDispatcher.Run(new ContactTriggerHandler());
     }
 }

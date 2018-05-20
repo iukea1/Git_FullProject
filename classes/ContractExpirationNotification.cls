@@ -20,7 +20,7 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
         t60Contracts = 0;
         t90Contracts = 0;
         t30Contracts = 0;
-        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60),:Date.today().addDays(30), :Date.today().addDays(90)) and Perpetual_Product_Count__c>0) from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90),:Date.today().addDays(30)) and Perpetual_Product_Count__c>0)]);
+        return Database.getQueryLocator([select Id, (select Id, EndDate from Contracts where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60),:Date.today().addDays(30), :Date.today().addDays(90)) and Perpetual_Product_Count__c>0 and Product_Type__c='NX/VX') from Account where Id in (select AccountId from Contract where Status='Activated' and EndDate in (:Date.today().addDays(-1), :Date.today(), :Date.today().addDays(60), :Date.today().addDays(90),:Date.today().addDays(30)) and Perpetual_Product_Count__c>0 and Product_Type__c='NX/VX')]);
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> objs)
@@ -92,7 +92,7 @@ global class ContractExpirationNotification implements Schedulable, Database.Bat
     
     global void finish(Database.BatchableContext bc)
     {
-        String message = 'T0 contracts updated: ' + t0Contracts + '\r\nT60 contracts updated: ' + t60Contracts + '\r\nT90 contracts updated: ' +t90Contracts;
+        String message = 'T0 contracts updated: ' + t0Contracts + '\r\nT30 contracts updated: ' + t30Contracts +'\r\nT60 contracts updated: ' + t60Contracts + '\r\nT90 contracts updated: ' +t90Contracts;
         sendEmail('Contract Expiration Notification Finished', message);
     }
     

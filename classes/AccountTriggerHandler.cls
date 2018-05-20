@@ -357,7 +357,7 @@ insert lstCapCase;
                     for(Contract ct : lstContracts)
                     {
                         System.debug('ct.Trigger_Notice__c'+ct.Trigger_Notice__c);
-                        if(ct.AccountId==item && ct.Trigger_Notice__c!=null && ct.Include_For_Notice__c==1)
+                        if(ct.AccountId==item && ct.Trigger_Notice__c!=null)
                         {
                             if(ct.Trigger_Notice__c == 'T90')
                             {
@@ -402,7 +402,7 @@ insert lstCapCase;
                         lstAccountToUpdate.add( new Account(Id=acc.Id, SendExpirationEmail__c=false));
                         for(Contract ct : lstContracts)
                         {
-                            if(ct.AccountId==item && ct.Trigger_Notice__c!=null && ct.Perpetual_Product_Count__c==1)
+                            if(ct.AccountId==item && ct.Trigger_Notice__c!=null && ct.Perpetual_Product_Count__c>0)
                             {
                                 lstContractToUpdate.add( new Contract(Id=ct.Id,Trigger_Notice__c = null)); 
                             }
@@ -587,31 +587,58 @@ insert lstCapCase;
     }
     
     
-     //sends T90 email to account owner and cc to notification@sp
+     //sends T30 email to account owner and cc to notification@sp
     private void sendT30Emails(Account acc)
     {
         Id t30Template = [select Id from EmailTemplate where DeveloperName='Contract_Fulfilment_T_30' limit 1].Id;
         Id orgWideId = getOrgWideId();
+        Set<String> customerEmails = new Set<String>();
+        List<Messaging.Email> mails = new List<Messaging.Email>();
         Contact recipient = createTempContact(acc.OwnerId, acc.Id);
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setTemplateId(t30Template);
-        mail.setSaveAsActivity(false);
-        mail.setTargetObjectId(recipient.Id);
-        List<String> recipients = new List<String> { 'notifications@silver-peak.com','renewals@silver-peak.com' };
+        System.debug('recipient'+ recipient);
+        for(Contract ct : getExpiredContracts(acc.Id, 'T30'))
+        {
+            if(ct.CustomerSigned.Email != null)
+            {
+                customerEmails.add(ct.CustomerSigned.Email);
+            }
+            if(ct.Customer_Addl_Notices__r.Email != null)
+            {
+                customerEmails.add(ct.Customer_Addl_Notices__r.Email);
+            }
+            if(ct.Customer_Addl_Notices_2__r.Email != null)
+            {
+                customerEmails.add(ct.Customer_Addl_Notices_2__r.Email);
+            }
+        }
+        if(customerEmails.size() > 0)
+        {
             if(user2TREmail.containsKey(acc.OwnerId))
-        {
-            recipients.add(user2TREmail.get(acc.OwnerId));
-        }
-        mail.setccAddresses(recipients);
-        mail.setWhatId(acc.Id);
-        mail.setUseSignature(false);
-        if(orgWideId != null)
-        {
-            mail.setOrgWideEmailAddressId(orgWideId);
-        }
-        if(!Test.isRunningTest())
-        {
-            Messaging.sendEmail(new Messaging.Email[] { mail });
+            {
+                customerEmails.add(user2TREmail.get(acc.OwnerId));
+            }
+            customerEmails.add('notifications@silver-peak.com');
+            customerEmails.add('renewals@silver-peak.com');
+            customerEmails.add('prane@silver-peak.com');
+            List<String> ccAddresses = new List<String>();
+            ccAddresses.addAll(customerEmails);
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setTemplateId(t30Template);
+            mail.setSaveAsActivity(false);
+            mail.setTargetObjectId(recipient.Id);
+            mail.setccAddresses(ccAddresses);
+            mail.setWhatId(acc.Id);
+            mail.setUseSignature(false);
+            if(orgWideId != null)
+            {
+                mail.setOrgWideEmailAddressId(orgWideId);
+            }
+            if(!Test.isRunningTest())
+            {
+                
+                Messaging.sendEmail(new List<Messaging.EMail> { mail });
+                System.debug('Mail sent');
+            }
         }
         delete recipient;
     }
@@ -718,6 +745,7 @@ insert lstCapCase;
     {
         User usr = [select Id, LastName, FirstName, Email from User where Id=:userId limit 1];
         Contact ct = new Contact(FirstName=usr.FirstName, LastName=usr.LastName, Email=usr.Email, AccountId=accountId);
+        System.debug('ct'+ ct);
         insert ct;
         return ct;
     }
@@ -730,7 +758,7 @@ insert lstCapCase;
     
     private List<Contract> getExpiredContracts(Id accountId, String triggerNotice)
     {
-        return [select Id, CustomerSignedId, CustomerSigned.Email, Customer_Addl_Notices__r.Email, Customer_Addl_Notices_2__r.Email from Contract where AccountId=:accountId and Trigger_Notice__c=:triggerNotice and Include_For_Notice__c=1];
+        return [select Id, CustomerSignedId, CustomerSigned.Email, Customer_Addl_Notices__r.Email, Customer_Addl_Notices_2__r.Email from Contract where AccountId=:accountId and Trigger_Notice__c=:triggerNotice and Perpetual_Product_Count__c>0 and Product_Type__c='NX/VX'];
     }
     
     private Id getOrgWideId()
