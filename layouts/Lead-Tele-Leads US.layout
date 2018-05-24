@@ -185,6 +185,10 @@
                 <behavior>Readonly</behavior>
                 <field>GDPR_Country_Formula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Country_Picklist__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

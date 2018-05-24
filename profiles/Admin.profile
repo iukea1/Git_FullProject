@@ -336,6 +336,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CheckVirtualSubscriptionsSyncFlag</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CloudPortalAccount</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1689,6 +1693,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RHX_TEST_Attachment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RHX_TEST_Order</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -8490,6 +8498,11 @@
         <editable>false</editable>
         <field>Request__c.eval_length__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RevenueRecognitionChecklist__c.ARRID__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

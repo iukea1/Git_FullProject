@@ -56,6 +56,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ARRID__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>ARRID as assigned by Finance for this opp</inlineHelpText>
+        <label>ARRID</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contingencies_of_Sale__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Are there any reseller or end customer contingencies or conditions for this sale?</inlineHelpText>

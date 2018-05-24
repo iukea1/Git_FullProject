@@ -38,13 +38,28 @@ public class CloudPortalPostAssetsJob implements Database.Batchable<sObject>,Dat
                     {
                         continue;
                     }
-                    List<Asset> lstAssetsToUpdate=[Select Id,SerialNumber,Product2.Name,Product2.Model__c,Product2.Product_Type__c,Licenses_Nodes__c,Bandwidth_Nodes__c,License_End_Date__c,Contract_Number__r.StartDate,Contract_Number__r.EndDate,Contract_Number__r.Status,Quantity,Account.Unity_Orch_Admin_User__c,Account.Unity_Orch_Domain__c,Account.Unity_Orch_Location__c,Account.Unity_Orch_Version__c ,Product2.Bandwidth__c from Asset where AccountId=:accId.Id and (Product2.Name like 'EC%' or Product2.Name like'UNITY CLOUD%') and Product2.Family='Virtual Image' and (NOT Product2.Name='EC-ORCH') and Status in ('Customer Subscription Active','Customer Subscription','Customer Evaluation','Loan','Conditional PO','Customer Owned') and SBQQ__QuoteLine__c = null ];
+                    List<Asset> lstAssetsToUpdate=[Select Id,SerialNumber,Product2.Name,Product2.Model__c,Product2.Product_Type__c,Licenses_Nodes__c,Bandwidth_Nodes__c,License_End_Date__c,Contract_Number__r.StartDate,Contract_Number__r.EndDate,Contract_Number__r.Status,Quantity,Account.Unity_Orch_Admin_User__c,Account.Unity_Orch_Domain__c,Account.Unity_Orch_Location__c,Account.Unity_Orch_Version__c ,Product2.Bandwidth__c from Asset where AccountId=:accId.Id and (Product2.Name like 'EC%' or Product2.Name like'UNITY CLOUD%') and Product2.Family='Virtual Image' and (NOT Product2.Name='EC-ORCH') and Status in ('Customer Subscription Active','Customer Subscription','Customer Evaluation','Loan','Conditional PO','Customer Owned') ];
+                    List<SBQQ__Subscription__c> lstSubToUpdate=[Select Id,SerialNumber__c,SBQQ__Product__r.Name,SBQQ__Product__r.Model__c,SBQQ__Product__r.Product_Type__c,SBQQ__Quantity__c,SBQQ__Contract__r.StartDate,SBQQ__Contract__r.EndDate,SBQQ__Contract__r.Status,SBQQ__Account__r.Unity_Orch_Admin_User__c,SBQQ__Account__r.Unity_Orch_Domain__c,SBQQ__Account__r.Unity_Orch_Location__c,SBQQ__Account__r.Unity_Orch_Version__c ,SBQQ__Product__r.Bandwidth__c from SBQQ__Subscription__c where SBQQ__Account__r.Id=:accId.Id and (SBQQ__Product__r.Name like 'EC%' or SBQQ__Product__r.Name like'UNITY CLOUD%') and SBQQ__Product__r.Family='Virtual Image' and SBQQ__Contract__r.Product_Type__c in('EDGECONNECT','EC-SP-Term','EC-SP-Metered','EC-SP-Perpetual')];
+                    List<CPAsset> lstECAssets,lstECEvalAssets,lstSaasAssets,lstECSaasSub,lstCPXAssets,lstSPAssets,lstECSPSub,lstCloudOrchAssets= new List<CPAsset>() ;
                     // Call the account helper to create assets in cloudportal format.
-                    List<CPAsset> lstECAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'EC');
-                    List<CPAsset> lstSaasAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'SAAS');
-                    List<CPAsset> lstCPXAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'CPX');
-                    List<CPAsset> lstSPAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'SP');
-                    List<CPAsset> lstCloudOrchAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'UNITYORCH');
+                    lstECAssets=CloudPortalAccountHelper.ConvertSubscriptionsToCpSub(lstSubToUpdate, 'EC');
+                    //lstECEvalAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'Evaluation');
+                    lstSaasAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'SAAS'); // UNITY CLOUD Intelligence
+                    lstECSaasSub=CloudPortalAccountHelper.ConvertSubscriptionsToCpSub(lstSubToUpdate, 'SAAS'); // EC-SAAS
+                    //lstCPXAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'CPX');
+                    lstSPAssets=CloudPortalAccountHelper.ConvertAssetToCpAsset(lstAssetsToUpdate, 'SP'); // Perpetual
+                    lstECSPSub=CloudPortalAccountHelper.ConvertSubscriptionsToCpSub(lstSubToUpdate, 'SP'); // Term
+                    lstCloudOrchAssets=CloudPortalAccountHelper.ConvertSubscriptionsToCpSub(lstSubToUpdate, 'UNITYORCH');
+                    
+                    //Combine assets and subscriptions in one list
+                     //if(lstECEvalAssets!=null && lstECEvalAssets.size()>0)
+                       // lstECAssets.addAll(lstECEvalAssets);
+                    if(lstECSaasSub!=null && lstECSaasSub.size()>0)
+                        lstSaasAssets.addAll(lstECSaasSub);
+                    System.debug('lstSaasAssets' + lstSaasAssets);
+                     if(lstECSPSub!=null && lstECSPSub.size()>0)
+                        lstSPAssets.addAll(lstECSPSub);
+                    
                     string currToken= CloudPortalAccountHelper.GetTokenFromPortal();
                     CloudPortalPostAssetsApi obj= new CloudPortalPostAssetsApi(cloudPortalId);
                     obj.token=currToken;

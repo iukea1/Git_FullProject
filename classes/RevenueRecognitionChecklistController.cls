@@ -8,7 +8,7 @@ public class RevenueRecognitionChecklistController
     public RevenueRecognitionChecklistController()
     {
         String oppId = ApexPages.currentPage().getParameters().get('id');
-        List<opportunity> opps = [Select Id, Name,Owner.ManagerId, AccountId, OwnerId, Finance_Id__c, Signed_By__c, Signed_At__c, Signature_of_Opportunity_Owner__c, ProdRoadmap__c, RightOfReturn__c, Rev_Rec_Reminders__c, Other_Promises_Made__c, 
+        List<opportunity> opps = [Select Id, Name,Owner.ManagerId,ARRID__c, AccountId, OwnerId, Finance_Id__c, Signed_By__c, Signed_At__c, Signature_of_Opportunity_Owner__c, ProdRoadmap__c, RightOfReturn__c, Rev_Rec_Reminders__c, Other_Promises_Made__c, 
                                                     Other_Promises_Made_Diclosed__c, Installation_Notes__c, Installation_Date__c, InstallationExpectations__c, Future_Features_Expected__c, Future_Features_Expected_Specifics__c, Finance_Reviewed__c,
                                                     Finance_Review_Notes__c, Finance_Released_At__c, Describe_Contingencies__c, Contingencies_of_Sale__c,   TrainingOrWANStartExpectations__c, DescribeExpectations__c, UnitsGoingAbroad__c, Is_Foreign_Governor_Entity__c From Opportunity Where id=:oppId];
         
@@ -139,6 +139,7 @@ public class RevenueRecognitionChecklistController
     private RevenueRecognitionChecklist__c opp2Checklist(Opportunity opp)
     {
         RevenueRecognitionChecklist__c rrChecklist = new RevenueRecognitionChecklist__c();
+        rrChecklist.Arrid__c = opp.Arrid__c;
         rrChecklist.Signed_By__c = opp.Signed_By__c;
         rrChecklist.Signed_At__c = opp.Signed_At__c;
         rrChecklist.Signature_of_Opportunity_Owner__c = opp.Signature_of_Opportunity_Owner__c;
@@ -166,27 +167,28 @@ public class RevenueRecognitionChecklistController
     
     private void checklist2Opp(RevenueRecognitionChecklist__c checklist, Opportunity opp)
     {
-        opp.Signed_By__c = rrChecklist.Signed_By__c;
-        opp.Signed_At__c = rrChecklist.Signed_At__c;
-        opp.Signature_of_Opportunity_Owner__c = rrChecklist.Signature_of_Opportunity_Owner__c;
-        opp.ProdRoadmap__c = rrChecklist.Roadmap_Information__c;
-        opp.RightOfReturn__c = rrChecklist.RightOfReturn__c;
-        opp.Other_Promises_Made__c = rrChecklist.Other_Promises_Made__c;
-        opp.Other_Promises_Made_Diclosed__c = (rrChecklist.Other_Promises_Made__c == 'Yes') ? rrChecklist.Other_Promises_Made_Disclosure__c : null;
-        opp.InstallationExpectations__c = rrChecklist.InstallationExpectations__c;
-        opp.Installation_Notes__c = (rrChecklist.InstallationExpectations__c == 'Yes') ? rrChecklist.Installation_Notes__c : null;
-        opp.Installation_Date__c = (rrChecklist.InstallationExpectations__c == 'Yes') ? rrChecklist.Installation_Date__c : null;       
-        opp.Future_Features_Expected__c = rrChecklist.Future_Features_Expected__c;
-        opp.Future_Features_Expected_Specifics__c = (rrChecklist.Future_Features_Expected__c == 'Yes') ? rrChecklist.Future_Features_Expected_Specifics__c : null;
-        opp.Finance_Reviewed__c = rrChecklist.Finance_Reviewed__c;
-        opp.Finance_Review_Notes__c = rrChecklist.Finance_Review_Notes__c;
-        opp.Finance_Released_At__c = rrChecklist.Finance_Released_At__c;
-        opp.Contingencies_of_Sale__c = rrChecklist.Contingencies_of_Sale__c;
-        opp.Describe_Contingencies__c = (rrChecklist.Contingencies_of_Sale__c == 'Yes') ? rrChecklist.Describe_Contingencies__c : null; 
-        opp.TrainingOrWANStartExpectations__c = rrChecklist.TrainingOrWANStartExpectations__c;
-        opp.DescribeExpectations__c = (rrChecklist.TrainingOrWANStartExpectations__c == 'Yes') ? rrChecklist.DescribeExpectations__c : null;
-        opp.UnitsGoingAbroad__c = rrChecklist.UnitsGoingAbroad__c;  
-        opp.Is_Foreign_Governor_Entity__c = rrChecklist.Is_Foreign_Governor_Entity__c;
+        opp.Signed_By__c = checklist.Signed_By__c;
+        opp.Signed_At__c = checklist.Signed_At__c;
+        opp.Arrid__c = checklist.Arrid__c;
+        opp.Signature_of_Opportunity_Owner__c = checklist.Signature_of_Opportunity_Owner__c;
+        opp.ProdRoadmap__c = checklist.Roadmap_Information__c;
+        opp.RightOfReturn__c = checklist.RightOfReturn__c;
+        opp.Other_Promises_Made__c = checklist.Other_Promises_Made__c;
+        opp.Other_Promises_Made_Diclosed__c = (checklist.Other_Promises_Made__c == 'Yes') ? checklist.Other_Promises_Made_Disclosure__c : null;
+        opp.InstallationExpectations__c = checklist.InstallationExpectations__c;
+        opp.Installation_Notes__c = (checklist.InstallationExpectations__c == 'Yes') ? checklist.Installation_Notes__c : null;
+        opp.Installation_Date__c = (checklist.InstallationExpectations__c == 'Yes') ? checklist.Installation_Date__c : null;       
+        opp.Future_Features_Expected__c = checklist.Future_Features_Expected__c;
+        opp.Future_Features_Expected_Specifics__c = (checklist.Future_Features_Expected__c == 'Yes') ? checklist.Future_Features_Expected_Specifics__c : null;
+        opp.Finance_Reviewed__c = checklist.Finance_Reviewed__c;
+        opp.Finance_Review_Notes__c = checklist.Finance_Review_Notes__c;
+        //opp.Finance_Released_At__c = checklist.Finance_Released_At__c;
+        opp.Contingencies_of_Sale__c = checklist.Contingencies_of_Sale__c;
+        opp.Describe_Contingencies__c = (checklist.Contingencies_of_Sale__c == 'Yes') ? checklist.Describe_Contingencies__c : null; 
+        opp.TrainingOrWANStartExpectations__c = checklist.TrainingOrWANStartExpectations__c;
+        opp.DescribeExpectations__c = (checklist.TrainingOrWANStartExpectations__c == 'Yes') ? checklist.DescribeExpectations__c : null;
+        opp.UnitsGoingAbroad__c = checklist.UnitsGoingAbroad__c;  
+        opp.Is_Foreign_Governor_Entity__c = checklist.Is_Foreign_Governor_Entity__c;
     }
     
     @isTest

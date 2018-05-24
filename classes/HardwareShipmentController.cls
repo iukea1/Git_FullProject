@@ -42,7 +42,7 @@ public with sharing class HardwareShipmentController {
     public static final String RETURN_CHARACTER = '\r\n';
     public static final Integer DOUBLE_QUOTE_CHAR_VALUE = 34;
 
-	public Order order {get;set;}
+    public Order order {get;set;}
 
     public List<OrderShipmentHelper.OrderProductWrapper> orderProductWrappers {get;set;}
     public Document csvFile {get;set;}
@@ -219,7 +219,6 @@ public with sharing class HardwareShipmentController {
             ApexPages.addMessage(myMsg);
         }
 
-        checkSerialNumberStatus();
         this.csvFile = new Document();
 
         return null;
@@ -426,10 +425,10 @@ public with sharing class HardwareShipmentController {
     private void populateOrderProductItemWrappersWithFileInfo(Map<String, List<CSVFileRow>> productCodeToCSVRows){
         for(OrderShipmentHelper.OrderProductWrapper orderProductWrapper: this.orderProductWrappers){
             List<CSVFileRow> csvRows = productCodeToCSVRows.get(orderProductWrapper.orderProduct.Product2.ProductCode);
-
+            
             if(csvRows == null){
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Order Product: ' + orderProductWrapper.orderProduct.Product2.Name + ' - No csv rows match product.');
-                ApexPages.addMessage(myMsg);
+                ApexPages.addMessage( myMsg);
                 continue;
             }
             if(orderProductWrapper.orderProductItems == null){
@@ -445,30 +444,32 @@ public with sharing class HardwareShipmentController {
                 ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, 
                     'Order Product: ' + orderProductWrapper.orderProduct.Product2.Name + ' - ' + orderProductWrapper.orderProductItems.size() + ' products on the order, but only ' + csvRows.size() + ' in the file.');
                 ApexPages.addMessage(myMsg);
+            } else {
+                for(Integer i=0; i<orderProductWrapper.orderProductItems.size() && i<csvRows.size(); i++){
+                    OrderShipmentHelper.OrderProductItemWrapper itemWrapper = orderProductWrapper.orderProductItems[i];
+                    CSVFileRow row = csvRows[i];
+    
+                    String partNumber = '';
+    
+                    if(row.column7 != null){
+                        List<String> column7Strings = row.column7.split('_');
+                        if(column7Strings != null && column7Strings.size() == 2){
+                            partNumber = column7Strings[1];
+                        }
+                    }                
+    
+                    itemWrapper.orderProductItem.Serial_Number__c = row.column8;
+                    itemWrapper.orderProductItem.Part_Number__c = partNumber;
+                }
+                checkSerialNumberStatus();
             }
 
-            for(Integer i=0; i<orderProductWrapper.orderProductItems.size() && i<csvRows.size(); i++){
-                OrderShipmentHelper.OrderProductItemWrapper itemWrapper = orderProductWrapper.orderProductItems[i];
-                CSVFileRow row = csvRows[i];
-
-                String partNumber = '';
-
-                if(row.column7 != null){
-                    List<String> column7Strings = row.column7.split('_');
-                    if(column7Strings != null && column7Strings.size() == 2){
-                        partNumber = column7Strings[1];
-                    }
-                }                
-
-                itemWrapper.orderProductItem.Serial_Number__c = row.column8;
-                itemWrapper.orderProductItem.Part_Number__c = partNumber;
-            }
         }
     }
     
     private Map<String, List<CSVFileRow>> buildProductCodeToCSVFileRows(){
         Map<String, List<CSVFileRow>> productCodeToCSVRows = new Map<String, List<CSVFileRow>>();
-
+        
         for(CSVFileRow row: this.fileRowWrappers){
             if(row.column7 == null){
                 continue;
@@ -500,23 +501,24 @@ public with sharing class HardwareShipmentController {
 
     private List<CSVFileRow> buildFileRowWrappers(List<String> csvElements){
         List<CSVFileRow> fileRowWrappers = new List<CSVFileRow>();
-
+        
+        String builder = '';
         for(Integer i = 0; i < csvElements.size(); i = i+CSV_COLUMN_SIZE){
             List<String> rowElements = new List<String>();
 
             for(Integer j = i; j < i + CSV_COLUMN_SIZE; j++){
                 rowElements.add(csvElements[j]);
+                builder += csvElements[j]+'--';
             }   
 
             fileRowWrappers.add(new CSVFileRow(rowElements));
         }
-
         return fileRowWrappers;
     }
 
     private List<String> buildCSVElements(){
         String csvBody = csvFile.Body.toString();
-         
+        
         System.debug('CSV File Body: ' + csvBody);
         csvBody = csvBody.replaceAll('(\\r|\\n)+', ',');
         System.debug('CSV File Body After removing linebreaks');
@@ -555,7 +557,7 @@ public with sharing class HardwareShipmentController {
 
         //// Here everything should be truly column delimited.  
         List<String> csvElements = csvBody.split(',');
-
+        
         return csvElements;
     }
 

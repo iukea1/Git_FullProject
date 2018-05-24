@@ -8,7 +8,7 @@ public class CheckVirtualAssetsSyncFlag implements Schedulable, Database.Batchab
     
     public Database.QueryLocator start(Database.BatchableContext context)
     {
-        return Database.getQueryLocator([Select Id,Name from Account where Id in (SELECT AccountId FROM Asset where Sync_With_Cloud_Portal__c =true)]);
+        return Database.getQueryLocator([Select Id,Name from Account where Id in (SELECT AccountId FROM Asset where Sync_With_Cloud_Portal__c =true) ]);
     }
     
     public void execute(Database.BatchableContext context, List<sObject> scope)

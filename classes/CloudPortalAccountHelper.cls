@@ -153,15 +153,11 @@ generator.writeStringField('password', 'Yesadmin4u');
         {
             string prodName=counter.Product2.Name;
             string prodType=counter.Product2.Product_Type__c;
-            if(assetType=='UNITYORCH'&& prodName.startsWith('EC-ORCH-AAS') && prodType=='EDGECONNECT')
+            if(assetType=='SAAS' && prodName.contains('UNITY CLOUD INTELLIGENCE'))
             {filterAssets.add(counter);}
-            if(assetType=='EC'&& prodName.startsWith('EC')&& !prodName.contains('EC-SAAS')&& !prodName.contains('EC-SP') && prodType=='EDGECONNECT')
-            {filterAssets.add(counter);}
-            if(assetType=='SAAS' && (prodName.contains('EC-SAAS') || prodName.contains('UNITY CLOUD INTELLIGENCE')))
-            {filterAssets.add(counter);}
-            if(assetType=='CPX' && prodName=='EC-SP')
-            {filterAssets.add(counter);}
-            if(assetType=='SP' && prodName.startsWith('EC-SP-')&& (prodType=='EC-SP-Perpetual' || prodType=='EC-SP-Term'))
+           // if(assetType=='CPX' && prodName=='EC-SP')
+           // {filterAssets.add(counter);}
+            if(assetType=='SP' && prodName.startsWith('EC-SP-')&& prodType=='EC-SP-Perpetual')
             {filterAssets.add(counter);}
         }
         for(Asset item:filterAssets)
@@ -187,7 +183,7 @@ generator.writeStringField('password', 'Yesadmin4u');
                 millis=dt.getTime();
             }
             cp.ExpiryDate= millis;
-            cp.BaseNode=0;
+          /*  cp.BaseNode=0;
             cp.PlusNode=0;
             cp.BoostNode=0;
             cp.MiniNode=0;
@@ -206,7 +202,7 @@ generator.writeStringField('password', 'Yesadmin4u');
             if(item.Bandwidth_Nodes__c!=null)
             {
                 cp.BoostNode=((integer.valueOf(item.Bandwidth_Nodes__c)*1000)*100);
-            }
+            }*/
             if(item.Contract_Number__r.StartDate!=null && item.Contract_Number__r.Status=='Activated')
             {
                 DateTime dt=DateTime.newInstance(item.Contract_Number__r.StartDate,Time.newInstance(0, 0, 0, 0));
@@ -252,8 +248,95 @@ generator.writeStringField('password', 'Yesadmin4u');
     }
       public static List<CPAsset> ConvertSubscriptionsToCpSub(List<SBQQ__Subscription__c> lstSub, string subType)
       {
-           List<CPAsset> lstResult= new List<CPASset>();
-          
+          List<CPAsset> lstResult= new List<CPASset>();
+          List<SBQQ__Subscription__c> filterSub= new List<SBQQ__Subscription__c>();
+          for(SBQQ__Subscription__c counter:lstSub)
+          {
+              string prodName=counter.SBQQ__Product__r.Name;
+              string prodType=counter.SBQQ__Product__r.Product_Type__c;
+              if(subType=='UNITYORCH'&& prodName.startsWith('EC-ORCH-AAS') && prodType=='EDGECONNECT')
+              {filterSub.add(counter);}
+              if(subType=='EC'&& prodName.startsWith('EC')&& !prodName.contains('EC-SAAS')&& !prodName.contains('EC-SP') && prodType=='EDGECONNECT')
+              {filterSub.add(counter);}
+              if(subType=='SAAS' && prodName.contains('EC-SAAS'))
+              {filterSub.add(counter);}
+              if(subType=='SP' && prodName.startsWith('EC-SP-')&& prodType=='EC-SP-Term')
+              {filterSub.add(counter);}
+          }
+          for(SBQQ__Subscription__c item:filterSub)
+          {
+              CPAsset cp= new CPAsset();
+              string prodName=item.SBQQ__Product__r.Name;
+              cp.SerialNumber=item.SerialNumber__c;
+              cp.domain=item.SBQQ__Account__r.Unity_Orch_Domain__c;
+              cp.region=item.SBQQ__Account__r.Unity_Orch_Location__c;
+              cp.email=item.SBQQ__Account__r.Unity_Orch_Admin_User__c;       
+              cp.version='';
+              
+              long millis=0;
+              if(prodName.contains('EC-ORCH-AAS'))
+              {
+                  cp.region=regionMap.get(item.SBQQ__Account__r.Unity_Orch_Location__c);
+                  if(!String.isBlank(item.SBQQ__Account__r.Unity_Orch_Version__c))
+                      cp.version=item.SBQQ__Account__r.Unity_Orch_Version__c;
+              }
+              if(item.SBQQ__Contract__r.EndDate!=null)
+              {
+                  DateTime dt=DateTime.newInstance(item.SBQQ__Contract__r.EndDate,Time.newInstance(0, 0, 0, 0));
+                  millis=dt.getTime();
+              }
+              cp.ExpiryDate= millis;
+              cp.BaseNode=0;
+              cp.PlusNode=0;
+              cp.BoostNode=0;
+              cp.MiniNode=0;
+              if(prodName.contains('BASE') && item.SBQQ__Quantity__c!=null)
+              {
+                  cp.BaseNode=integer.valueOf(item.SBQQ__Quantity__c);
+              } 
+              if(prodName.contains('MINI') && item.SBQQ__Quantity__c!=null)
+              {
+                  cp.MiniNode=integer.valueOf(item.SBQQ__Quantity__c);
+              }
+              if(prodName.contains('PLUS')&& item.SBQQ__Quantity__c!=null)
+              {
+                  cp.PlusNode=integer.valueOf(item.SBQQ__Quantity__c);
+              } 
+               if(prodName.contains('BOOST')&& item.SBQQ__Quantity__c!=null)
+              {
+                  cp.BoostNode=((integer.valueOf(item.SBQQ__Quantity__c)*1000)*100);
+              } 
+              if(item.SBQQ__Contract__r.StartDate!=null && item.SBQQ__Contract__r.Status=='Activated')
+              {
+                  DateTime dt=DateTime.newInstance(item.SBQQ__Contract__r.StartDate,Time.newInstance(0, 0, 0, 0));
+                  millis=dt.getTime();
+                  cp.startDate=millis;
+              }
+              if(item.SBQQ__Contract__r.EndDate!=null && item.SBQQ__Contract__r.Status=='Activated')
+              {
+                  DateTime dt=DateTime.newInstance(item.SBQQ__Contract__r.EndDate,Time.newInstance(0, 0, 0, 0));
+                  millis=dt.getTime();
+                  cp.endDate=millis;
+              }
+              if(item.Id!=null)
+              {
+                  cp.salesforceId=item.Id;
+              }
+              if(item.SerialNumber__c!=null)
+              {
+                  cp.id=item.SerialNumber__c;
+              }
+              if(item.SBQQ__Product__r.Name!=null)
+              {
+                  cp.name=item.SBQQ__Product__r.Name;
+              }
+              if(item.SBQQ__Quantity__c>0)
+              {
+                  cp.quantity=item.SBQQ__Quantity__c;
+              }
+              lstResult.add(cp); 
+          }
+        
           return lstResult;
       }
 }

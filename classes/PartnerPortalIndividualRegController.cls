@@ -195,6 +195,7 @@ public without sharing class PartnerPortalIndividualRegController
         newUser.MailingState = State;
         newUser.MailingCity = City;
         newUser.MailingPostalCode = ZipCode;
+        newUser.Country_Picklist__c = TemporaryAddress.Country__c;
         newUser.LeadSource = 'Partner Portal';
         //adding checkbox to track partner portal T & C agreement
         newUser.PortalTermsandConditionsAgreement__c = PortalTC;

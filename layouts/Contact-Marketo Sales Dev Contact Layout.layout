@@ -49,6 +49,10 @@
                 <behavior>Edit</behavior>
                 <field>SBCF_Parent_Account__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Country_Picklist__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

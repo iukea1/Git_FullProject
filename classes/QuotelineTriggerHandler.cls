@@ -10,7 +10,18 @@ public without sharing class QuotelineTriggerHandler implements ITriggerHandler{
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-        
+        if(newItems!=null && newItems.size()>0)
+        {
+            for(Id qlId:newItems.keyset())
+            {
+                SBQQ__QuoteLine__c newItem= (SBQQ__QuoteLine__c)newItems.get(qlId);
+                SBQQ__QuoteLine__c oldItem= (SBQQ__QuoteLine__c)newItems.get(qlId);
+                if(newItem.SBQQ__Quantity__c<oldItem.SBQQ__Quantity__c)
+                    newItem.Reduction_QL__c=1;
+                else
+                     newItem.Reduction_QL__c=0;
+            }
+        }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
     {
@@ -18,10 +29,11 @@ public without sharing class QuotelineTriggerHandler implements ITriggerHandler{
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        populateQuoteNumberToPOCId(newItems.values());
+        //populateQuoteNumberToPOCId(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
     {
+        
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
     {

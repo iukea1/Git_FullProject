@@ -616,6 +616,15 @@ Evaluation_Start_Date__c )</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SBCF_Set_Asset_Name_to_Serial_Number</fullName>
+        <field>Name</field>
+        <formula>SerialNumber</formula>
+        <name>SBCF Set Asset Name to Serial Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SetEvalEndDate</fullName>
         <field>Evaluation_End_Date__c</field>
         <formula>today()+91</formula>
@@ -780,7 +789,7 @@ right(Id,4))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND (  OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),  NOT(Product2.Name == &quot;EC-ORCH&quot;),   OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),  ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  OR(ISNew(),  ISCHANGED(License_End_Date__c),  ISCHANGED(Bandwidth_Nodes__c),  ISCHANGED(Licenses_Nodes__c),ISCHANGED( Service_Support_Start_Date__c ),  ISCHANGED( Service_Support_End_Date__c ),  ISCHANGED(Status) ) )</formula>
+        <formula>AND (  OR(  BEGINS(Product2.Name,&quot;EC&quot;),  BEGINS(Product2.Name,&quot;UNITY CLOUD&quot;) ),  NOT(Product2.Name == &quot;EC-ORCH&quot;),   OR( ISPICKVAL(Status,&quot;Customer Subscription Active&quot;), ISPICKVAL(Status,&quot;Customer Subscription&quot;), ISPICKVAL(Status,&quot;Customer Evaluation&quot;),  ISPICKVAL(Status,&quot;Customer Owned&quot;), ISPICKVAL(Status,&quot;Loan&quot;), ISPICKVAL(Status,&quot;Conditional PO&quot;) ),  ISPICKVAL(Product2.Family,&quot;Virtual Image&quot;),  OR(ISNew(),  ISCHANGED(Licenses_Nodes__c),ISCHANGED( Service_Support_Start_Date__c ),  ISCHANGED( Service_Support_End_Date__c ),  ISCHANGED(Status) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -888,9 +897,7 @@ OR(ISCHANGED( Ship_Date__c ),ISNEW())
         <active>true</active>
         <formula>AND 
 ( 
-OR(Account.Name =&quot;Silver Peak Systems&quot;,
-NOT(ISBLANK(SBQQ__QuoteLine__c ))
-), 
+Account.Name =&quot;Silver Peak Systems&quot;, 
 Sync_With_Cloud_Portal__c =true, 
 IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
 BEGINS( Product2.Name ,&quot;EC&quot;) 
@@ -1405,6 +1412,19 @@ NOT(TriggerAutoFulfillEmail__c)
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Asset Name to Serial Number</fullName>
+        <actions>
+            <name>SBCF_Set_Asset_Name_to_Serial_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Asset.SerialNumber</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>SendReplacementNotice</fullName>

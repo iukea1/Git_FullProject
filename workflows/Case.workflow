@@ -2209,7 +2209,7 @@ NOT( Contact.Testing__c )
             <name>Case_Notification_TimeStamp</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -2257,7 +2257,7 @@ NOT( Contact.Testing__c )
             <name>Case_Notification_TimeStamp</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>

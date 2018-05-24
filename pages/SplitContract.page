@@ -1,110 +1,251 @@
-<apex:page standardController="Contract" extensions="SplitContractController" tabStyle="Contract">
-    
+<apex:page standardController="Contract" extensions="SplitContractController" tabStyle="Contract" docType="html-5.0">
+    <apex:slds />
     <style>
-		#FileUploadContent {text-align: center; width: 100%;}
-
-		.order-product-header {text-align:center;}
-
-		.order-product-top-level-value {vertical-align: text-top !important; padding-top:15px !important; font-weight:bold;}
-
-		.order-product-column {text-align:center;}
-
-		.order-product-column-existing-asset {text-align:center; width:150px;}
-
-		.requiredBlock {display:none;}
-
-		.detailList .helpOrbOn {  position: relative; }
-
-		.serial-number-input { width:95%; }
-
-		#DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
-
-		#ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
-
-		.serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
-
-		.copy-sn-textarea { width: 100%; min-height: 150px; }
-
-	</style>
+        #FileUploadContent {text-align: center; width: 100%;}
     
-    <apex:pageMessages id="showmsg"></apex:pageMessages>
-    <apex:form >
-        <apex:sectionHeader title="Contract Split Details - Contract {!Contract.Name}" />
-        <apex:pageblock mode="maindetail">
-            <apex:pageBlockButtons location="bottom">
-                <apex:commandButton action="{!saveContract}" value="Save" rerender="showmsg"/>
-                <apex:commandButton action="{!returnToContract}" value="Cancel"/>
-            </apex:pageBlockButtons>
-        </apex:pageblock>    
-    <div>
-        <apex:pageBlock >
-            <apex:pageBlockSection >
-                <apex:pageBlockSectionItem >
-                    <apex:pageBlockTable value="{!existingSubscription}" var="subscription" id="subId" columnsWidth="1000px">
-                        
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Subscription #</apex:facet>
-                            <apex:outputText value="{!subscription.Name}"/>                        
-                        </apex:column>
-                    	<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Product Name</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__ProductName__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Customer Price</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__CustomerPrice__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Start Date</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__SubscriptionStartDate__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">End Date</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__SubscriptionEndDate__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Subscription Status</apex:facet>
-                            <apex:outputText value="{!subscription.SBCF_Subscription_Status__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">List Price</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__ListPrice__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Net Price</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__NetPrice__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Quantity</apex:facet>
-                            <apex:outputText value="{!subscription.SBQQ__Quantity__c}"/>                        
-                        </apex:column>
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" style="width:5px">
-                            <apex:facet name="header">No. of Subs to Split</apex:facet>
-                            <apex:inputField value="{!subscription.No_of_Subscription_to_Split__c}"  style="width: 50px"/>                        
-                        </apex:column>
-                        
-                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            <apex:facet name="header">Related Assets</apex:facet>
-                            <apex:pageBlockTable value="{!subscription.SBQQ__SubscribedAssets__r}" var="subscribedAsset">
-                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    <apex:facet name="header">Asset</apex:facet>
-                                    <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.Name}" style="width: 350px"/> 
+    
+        .order-product-top-level-value {vertical-align: text-top !important;font-weight:bold;}
+    
+        .order-product-column {text-align:center;}
+    
+        .order-product-column-existing-asset {text-align:center; width:150px;}
+    
+        .requiredBlock {display:none;}
+    
+        .detailList .helpOrbOn {  position: relative; }
+    
+        .serial-number-input { width:95%; }
+    
+        #DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
+    
+        #ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
+    
+        .serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
+    
+        .copy-sn-textarea { width: 100%; min-height: 150px; }
+        
+        
+        /* KAI CSS 05/22/2018 */
+        
+        td { padding: 10px; }
+        td.empty { display: none; }
+        tr.headerRow th.order-product-header {text-align:center; padding: 5px;}
+        td.order-product-top-level-value {text-align:center; font-weight: 500;}
+        td.order-product-top-level-value.sub-header-number {text-align: left;}
+        .apexp .detailList .list td.order-product-top-level-value.rel-assets-col { 
+            padding-top: 0; 
+            padding-left: 0; 
+            padding-right: 0;
+            padding-bottom: 0;
+            min-width: 300px;
+        }
+        body .bPageBlock .pbBody .dataCol {
+            padding: 0;
+        }
+        div.linkHolder {
+            padding: 10px 0;
+            text-align: right;
+        }
+        
+        /* MESSAGING STYLE */
+        .message.errorM3 {
+            border: none;
+            background-color: #c33;
+        }
+        table.messageTable tr:first-child > td:first-child { display: none; }
+        table.messageTable tr:first-child > td h4 { display: none; }
+        table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
+        
+    </style>
+    <script>
+        var checkInputVal = function(el, q) {
+            var curr = el.value;
+            if(curr > q) {
+                el.value = q;
+            } else if(curr < 0) {
+                el.value = 0;
+            }
+        }
+    </script>
+    <div class="slds-scope">
+        <apex:form >
+            <div style="padding: 30px 0;">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contracts" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                                <nav>
+                                    <ol class="slds-breadcrumb slds-line-height_reset">
+                                        <li class="slds-breadcrumb__item">
+                                            <span>Contract</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                                <h1 class="slds-page-header__title slds-p-right_x-small">
+                                    Contract Split Details
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:outputPanel rendered="{! !saveComplete}">
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+                            <apex:commandButton action="{!saveContract2}" value="Save" styleClass="slds-button slds-button_brand"/>
+                            <apex:commandButton action="{!returnToContract}" value="Cancel" styleClass="slds-button slds-button_brand"/>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!saveComplete}">
+                        <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
+                            <apex:commandButton action="{!returnToContract}" value="Return to Contract" styleClass="slds-button slds-button_neutral"/>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            <div>
+                <!-- SECTION: interface before process completion -->
+                <apex:outputPanel rendered="{! !saveComplete}">
+                    <apex:pageBlock >
+                        <apex:pageMessages id="showmsg"></apex:pageMessages>
+                        <apex:pageBlockSection >
+                            <apex:pageBlockTable value="{!existingSubscription}" var="subscription" id="subId">
+                                <apex:column styleClass="order-product-column order-product-top-level-value sub-header-number" headerClass="order-product-header">
+                                    <apex:facet name="header">Subscription #</apex:facet>
+                                    <apex:outputText value="{!subscription.Name}"/>                        
                                 </apex:column>
                                 <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    <apex:facet name="header">Serial Number</apex:facet>
-                                    <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.SerialNumber}" style="width: 350px"/> 
+                                    <apex:facet name="header">Product Name</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__ProductName__c}"/>                        
                                 </apex:column>
                                 <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    <apex:facet name="header">Asset To Split</apex:facet>
-                                    <apex:inputField value="{!subscribedAsset.SBQQ__Asset__r.Is_Selected_to_Split__c}" style="width: 40px"/> 
+                                    <apex:facet name="header">Customer Price</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__CustomerPrice__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Start Date</apex:facet>   
+                                    <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                        <apex:param value="{!subscription.SBQQ__SubscriptionStartDate__c}" /> 
+                                    </apex:outputText>                   
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">End Date</apex:facet>
+                                    <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                        <apex:param value="{!subscription.SBQQ__SubscriptionEndDate__c}" /> 
+                                    </apex:outputText>                      
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Subscription Status</apex:facet>
+                                    <apex:outputText value="{!subscription.SBCF_Subscription_Status__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">List Price</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__ListPrice__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Net Price</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__NetPrice__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Quantity</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__Quantity__c}"/>                        
+                                </apex:column>
+                                <!-- apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header" style="width:5px">
+                                    <apex:facet name="header"># of Assets to Split</apex:facet>
+                                    <apex:inputField type="number" value="{!subscription.No_of_Subscription_to_Split__c}" style="width: 100%;text-align: right;" onchange="checkInputVal(this, {!subscription.SBQQ__Quantity__c})"/>                        
+                                </apex:column -->
+                                
+                                <apex:column styleClass="order-product-column order-product-top-level-value rel-assets-col" headerClass="order-product-header">
+                                    <apex:facet name="header">Assets to move</apex:facet>
+                                    <apex:pageBlockTable value="{!subscription.SBQQ__SubscribedAssets__r}" var="subscribedAsset">
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Asset</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.Name}" style="width: 350px"/> 
+                                        </apex:column>
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Serial Number</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.SerialNumber}" style="width: 350px"/> 
+                                        </apex:column>
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Include in split?</apex:facet>
+                                            <apex:inputField value="{!subscribedAsset.SBQQ__Asset__r.Is_Selected_to_Split__c}" style="width: 40px"/> 
+                                        </apex:column>
+                                    </apex:pageBlockTable>
                                 </apex:column>
                             </apex:pageBlockTable>
-                        </apex:column>
-                        
-                    </apex:pageBlockTable>
-                </apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-        </apex:pageBlock>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            
+            
+                <!-- SECTION: Split interface showing contract splits -->
+                <apex:outputPanel rendered="{!saveComplete}">
+                    <div style="width: 49%; display: inline-block;">
+                        <apex:pageBlock title="Old contract">
+                            <apex:pageBlockTable value="{!oldContractSubs}" var="subscription" id="subId">
+                                <apex:column styleClass="order-product-column order-product-top-level-value sub-header-number" headerClass="order-product-header">
+                                    <apex:facet name="header">Subscription #</apex:facet>
+                                    <apex:outputText value="{!subscription.Name}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Quantity</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__Quantity__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value rel-assets-col" headerClass="order-product-header">
+                                    <apex:facet name="header">Assets</apex:facet>
+                                    <apex:pageBlockTable value="{!subscription.SBQQ__SubscribedAssets__r}" var="subscribedAsset">
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Asset</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.Name}" style="width: 350px"/> 
+                                        </apex:column>
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Serial Number</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.SerialNumber}" style="width: 350px"/> 
+                                        </apex:column>
+                                    </apex:pageBlockTable>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            <div class="linkHolder">
+                                <apex:commandLink value="View record ≫" action="{!returnToContract}"  target="_blank"/> 
+                            </div>
+                        </apex:pageBlock>
+                    </div>
+                    <div style="width: 49%; display: inline-block; vertical-align: top;">
+                        <apex:pageBlock title="Split contract">
+                            <apex:pageBlockTable value="{!newContractSubs}" var="subscription" id="subId">
+                                <apex:column styleClass="order-product-column order-product-top-level-value sub-header-number" headerClass="order-product-header">
+                                    <apex:facet name="header">Subscription #</apex:facet>
+                                    <apex:outputText value="{!subscription.Name}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                    <apex:facet name="header">Quantity</apex:facet>
+                                    <apex:outputText value="{!subscription.SBQQ__Quantity__c}"/>                        
+                                </apex:column>
+                                <apex:column styleClass="order-product-column order-product-top-level-value rel-assets-col" headerClass="order-product-header">
+                                    <apex:facet name="header">Assets</apex:facet>
+                                    <apex:pageBlockTable value="{!subscription.SBQQ__SubscribedAssets__r}" var="subscribedAsset">
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Asset</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.Name}" style="width: 350px"/> 
+                                        </apex:column>
+                                        <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                            <apex:facet name="header">Serial Number</apex:facet>
+                                            <apex:outputText value="{!subscribedAsset.SBQQ__Asset__r.SerialNumber}" style="width: 350px"/> 
+                                        </apex:column>
+                                    </apex:pageBlockTable>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                            <div class="linkHolder">
+                                <apex:commandLink value="View record ≫" action="{!viewNewContract}" target="_blank"/> 
+                            </div>
+                        </apex:pageBlock>
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </apex:form>
     </div>
-    </apex:form>
 </apex:page>
