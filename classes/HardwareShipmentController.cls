@@ -58,7 +58,9 @@ public with sharing class HardwareShipmentController {
     public Boolean noPhysicalOrderProducts {get;set;}
     public Boolean hasCheckedSerialNumbers {get;set;}
     public Boolean hasUpdatedSNsSinceSNsChecked {get;set;}
-
+    
+    public String partNumberFiller {get;set;}
+    
     public Boolean displayErrorOnly{
         get{
             if(orderIsActivated || noPhysicalOrderProducts){
@@ -170,12 +172,21 @@ public with sharing class HardwareShipmentController {
     }
 
     public PageReference save(){
-        List<Order_Product_Item__c> orderProductItemsToUpsert = OrderShipmentHelper.getOrderProductItemsFromWrappers(this.orderProductWrappers);
-
+        //OLD CODE
+        //List<Order_Product_Item__c> orderProductItemsToUpsert = OrderShipmentHelper.getOrderProductItemsFromWrappers(this.orderProductWrappers);
+        List<Order_Product_Item__c> orderProductItemsToUpsert = new List<Order_Product_Item__c>();
+        for(OrderShipmentHelper.OrderProductWrapper wraps : orderProductWrappers) {
+            for(OrderShipmentHelper.OrderProductItemWrapper wr : wraps.orderProductItems) {
+                orderProductItemsToUpsert.add(wr.orderProductItem);
+            }
+        }
+        
         if(orderProductItemsToUpsert.size() > 0){
             upsert orderProductItemsToUpsert;
         }        
-
+        
+        update new Order(Id=this.order.Id, SerialNumberApplied__c=true);
+        
         PageReference page = new PageReference('/' + order.Id);
         page.setRedirect(true);
         return page;
@@ -559,6 +570,15 @@ public with sharing class HardwareShipmentController {
         List<String> csvElements = csvBody.split(',');
         
         return csvElements;
+    }
+    
+    public void fillPartNumbers() {
+        String filler = partNumberFiller;
+        for(OrderShipmentHelper.OrderProductWrapper opw : orderProductWrappers) {
+            for(OrderShipmentHelper.OrderProductItemWrapper opiw : opw.orderProductItems) {
+                if(opiw.orderProductItem.Part_Number__c == null || opiw.orderProductItem.Part_Number__c == '') opiw.orderProductItem.Part_Number__c = filler;
+            }
+        }
     }
 
     /*

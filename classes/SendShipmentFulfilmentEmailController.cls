@@ -166,6 +166,13 @@ public class SendShipmentFulfilmentEmailController
             shipmentType='SP Shipping Fulfilment';
             lstShipmentTemplates.add(shipmentType);
         }
+       
+        else {
+           
+            lstShipmentTemplates.add(shipmentType);
+        }	 
+    
+        
         system.debug('lstShipmentTemplates Info:' + lstShipmentTemplates);
         return lstShipmentTemplates; 
     }

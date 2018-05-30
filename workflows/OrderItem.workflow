@@ -10,6 +10,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Product_Family_field</fullName>
+        <field>Product_Family__c</field>
+        <formula>TEXT(PricebookEntry.Product2.Family)</formula>
+        <name>Update Product Family field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Product_Name</fullName>
+        <field>Product_Name__c</field>
+        <formula>PricebookEntry.Product2.Name</formula>
+        <name>Update Product Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Unity_Cloud_Orchestrator</fullName>
         <field>Is_Unity_Cloud_orchestrator__c</field>
         <literalValue>1</literalValue>
@@ -29,6 +47,24 @@
 NOT(ISNULL(Id )),
 CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
 )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Populate Product Family on Order Product line</fullName>
+        <actions>
+            <name>Update_Product_Family_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Product_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Product2.Family</field>
+            <operation>equals</operation>
+            <value>Virtual Image</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

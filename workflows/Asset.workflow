@@ -1424,7 +1424,30 @@ NOT(TriggerAutoFulfillEmail__c)
             <field>Asset.SerialNumber</field>
             <operation>notEqual</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>Asset.SerialNumber</field>
+            <operation>notContain</operation>
+            <value>GMS</value>
+        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Asset Name to Serial Number GMS</fullName>
+        <actions>
+            <name>SBCF_Set_Asset_Name_to_Serial_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Asset.SerialNumber</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.SerialNumber</field>
+            <operation>contains</operation>
+            <value>GMS</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SendReplacementNotice</fullName>

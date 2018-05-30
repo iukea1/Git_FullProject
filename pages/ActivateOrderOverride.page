@@ -1,0 +1,62 @@
+<apex:page showHeader="true" sidebar="true" standardController="Order" action="{!checkUpdate}" extensions="ActivateOrderController" tabStyle="Order" Id="Page">
+    <apex:slds />
+    <style>
+        #FileUploadContent {text-align: center; width: 100%;}
+
+        .order-product-header {text-align:center;}
+
+        .order-product-top-level-value {vertical-align: text-top !important; padding-top:15px !important; font-weight:bold;}
+
+        .order-product-column {text-align:center;}
+
+        .order-product-column-existing-asset {text-align:center; width:150px;}
+
+        .requiredBlock {display:none;}
+
+        .detailList .helpOrbOn {  position: relative; }
+
+        .serial-number-input { width:95%; }
+
+        #DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
+
+        #ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
+
+        .serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
+
+        .copy-sn-textarea { width: 100%; min-height: 150px; }
+
+
+
+        /* MESSAGING STYLE */
+        .message {
+            margin: 0 4px;
+        }
+        .message.errorM3 {
+            border: none;
+            background-color: #c33;
+        }
+        .message.confirmM3{
+            border: none;
+            background-color: #390;
+        }
+        .message.warningM3{
+            border: none;
+            background-color: #f90;
+        }
+        table.messageTable tr:first-child > td:first-child { display: none; }
+        table.messageTable tr:first-child > td h4 { display: none; }
+        table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
+        
+    </style>
+    <apex:outputPanel Id="ErrorPanel" rendered="{!orderIsActivated || needSerial}">
+        <br />
+        <apex:form style="display: flex;">
+            <apex:commandButton action="{!returnToOrder}" value="≪ Return to Order" styleClass="slds-button"/>
+            <div style="flex: 1;vertical-align: middle;text-align: right;">
+                <apex:commandButton action="{!runSerialNumberPage}" value="Apply Serial Number" styleClass="slds-button slds-button_neutral"/>
+            </div>
+        </apex:form>
+        <br/>
+        <apex:pageMessages />
+    </apex:outputPanel>
+</apex:page>

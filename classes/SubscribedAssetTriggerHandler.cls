@@ -1,17 +1,18 @@
 public without sharing class SubscribedAssetTriggerHandler implements ITriggerHandler{
     
     public static final String PRODUCT_NAME_PREFIX_RENEWAL = 'RENEWAL';
-	
+    
     
     public SubscribedAssetTriggerHandler(){
         
     }
-	public Boolean IsDisabled()
+    public Boolean IsDisabled()
     {
         return false;
     }
     public void BeforeInsert(List<SObject> newItems) 
     {
+        cleanSerialNumber(newItems);
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -22,12 +23,12 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        
+        //cleanSerialNumber(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
         
-        	displayIncomingSubscribedAsset(newItems.values());
+            displayIncomingSubscribedAsset(newItems.values());
         
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
@@ -39,20 +40,20 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     
     public static void displayIncomingSubscribedAsset(List<SBQQ__SubscribedAsset__c> incomingSubAsset){
         
-		System.debug('Subscribed Asset : ' + incomingSubAsset);
+        System.debug('Subscribed Asset : ' + incomingSubAsset);
         
         Set<Id> saIds = new Set<Id>();
         Map<Id, List<SBQQ__SubscribedAsset__c>> subsToSubscribedAssetMap = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
         Map<Id, Asset> subscribedAssetToAsset = new Map<Id, Asset>();
         
-		List<SBQQ__SubscribedAsset__c> subscribedAssetToDelete = new List<SBQQ__SubscribedAsset__c>();
+        List<SBQQ__SubscribedAsset__c> subscribedAssetToDelete = new List<SBQQ__SubscribedAsset__c>();
                 
         for(SBQQ__SubscribedAsset__c sa: incomingSubAsset){
             
             System.debug('@@---------- Subscription Id for Renewed Subscribed Asset : ' + sa.SBQQ__Subscription__c);
             
             if(sa.SBQQ__Subscription__c != null){
-              	saIds.add(sa.Id);  
+                saIds.add(sa.Id);  
             }
             
         }
@@ -155,16 +156,16 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         List<SBQQ__SubscribedAsset__c> renewalSubAsset = [SELECT Id, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
                                                           FROM SBQQ__SubscribedAsset__c WHERE ID IN: saIds 
                                                           AND SBQQ__Subscription__r.SBQQ__Product__r.Name = '%RENEWAL%'];
-		
-		System.debug('RENEWAL SUBSCRIBED ASSET : ' + renewalSubAsset);
+        
+        System.debug('RENEWAL SUBSCRIBED ASSET : ' + renewalSubAsset);
 
         for(SBQQ__SubscribedAsset__c rsa: renewalSubAsset){
             
             if(rsa.SBQQ__Subscription__r.SBQQ__ProductName__c.contains('Renewal')){
                 
                 if(rsa.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
-                	sbaForRenewed.add(rsa);
-            	}
+                    sbaForRenewed.add(rsa);
+                }
             
                 System.debug('sbaForRenewed : ' + sbaForRenewed);
                 
@@ -184,5 +185,46 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         }
         */
         
+    }
+
+
+    public static void cleanSerialNumber(List<SBQQ__SubscribedAsset__c> incomingSubAsset) { 
+        List<Asset> assetDelete = new List<Asset>();
+        List<Asset> assetUpdate = new List<Asset>();
+        Map<String, String> serNumberOldAsset = getAllData(incomingSubAsset);
+        Set<Id> asstIds = new Set<Id>();
+
+        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
+            asstIds.add(sa.SBQQ__Asset__c);
+        }
+
+        Map<Id, Asset> assetSerial = new Map<Id, Asset>([SELECT Id, SerialNumber FROM Asset WHERE Id IN :asstIds]);
+
+        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
+            //assetUpdate.add();
+            if(assetSerial.containsKey(sa.SBQQ__Asset__c) && serNumberOldAsset.containsKey(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber)) {
+                assetDelete.add(new Asset(Id=sa.SBQQ__Asset__c));
+                String assetId = serNumberOldAsset.get(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber);
+                sa.SBQQ__Asset__c = assetId;
+            }
+        }
+        if(!assetDelete.isEmpty()) delete assetDelete;
+    }
+    private static Map<String, String> getAllData(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
+        Map<Id, SBQQ__SubscribedAsset__c> fullData = new Map<Id, SBQQ__SubscribedAsset__c>(
+                [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__OrderProduct__c FROM SBQQ__SubscribedAsset__c WHERE Id IN :incomingSubAsset]
+        );
+        Set<Id> ordProdIds = new Set<Id>();
+        for(SBQQ__SubscribedAsset__c sa : fullData.values()) {
+            ordProdIds.add(sa.SBQQ__Subscription__r.SBQQ__OrderProduct__c);
+        }
+
+        Map<String, String> serNumberOldAsset = new Map<String, String>();
+        for(OrderItem op : [SELECT Id, (SELECT Id, Existing_Asset__c, Serial_Number__c FROM Order_Product_Items__r) FROM OrderItem WHERE Id IN :ordProdIds]) {
+            for(Order_Product_Item__c opi : op.Order_Product_Items__r) {
+                serNumberOldAsset.put(opi.Serial_Number__c, opi.Existing_Asset__c);
+            }
+        }
+        return serNumberOldAsset;
     }
 }

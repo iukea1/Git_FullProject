@@ -136,6 +136,27 @@ public class SplitContractController {
         List<SBQQ__SubscribedAsset__c> scAstInsert = new List<SBQQ__SubscribedAsset__c>();
         Boolean hasErrors = false;
         
+        Boolean hasMove = false;
+        Integer totalAssets = 0;
+        Integer totalMove = 0;
+        for(SBQQ__Subscription__c s : existingSubscription) {
+            totalAssets += s.SBQQ__SubscribedAssets__r.size();
+            for(SBQQ__SubscribedAsset__c  sa : s.SBQQ__SubscribedAssets__r) {
+                if(sa.SBQQ__Asset__r.Is_Selected_to_Split__c) {
+                    hasMove = true; 
+                    totalMove += 1;
+                }
+            }
+        }
+        if(!hasMove) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: At least one Asset must be selected to do a Split'));
+            return null;
+        }
+        if(totalMove >= totalAssets) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: Cannot move all assets'));
+            return null;
+        }
+        
         System.Savepoint sp = Database.setSavePoint();
 
         Contract cClone = contract.clone();

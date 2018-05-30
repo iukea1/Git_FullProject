@@ -81,11 +81,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__LightningInstrumentation</application>
-        <default>false</default>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__LightningSalesConsole</application>
         <default>false</default>
         <visible>true</visible>
@@ -149,6 +144,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AcctWithTimelineTestClass</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ActivateOrderController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9626,6 +9625,10 @@
     <pageAccesses>
         <apexPage>AccountSummary2</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ActivateOrderOverride</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AnswersHome</apexPage>

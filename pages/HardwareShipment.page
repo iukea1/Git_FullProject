@@ -47,6 +47,26 @@
         table.messageTable tr:first-child > td h4 { display: none; }
         table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
         
+        
+        /* PART NUMBER MODAL */
+        #partNumberFiller {
+            z-index: 999;
+            background: rgba(0,0,0,.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        #partNumberFiller > #partNumberFillerModal {
+            margin-top: 20px;
+            background-color: white;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+        }
     </style>
     <script>
         function clickFileOpen(applyButt) {
@@ -59,8 +79,27 @@
             applyButt.disabled = true;
             callApply();
         }
+        
+        function fillMissingPartNumbers() {
+            document.getElementById('partNumberFiller').style.display = "initial";
+        }
+        function hideMissingPartNumbers() {
+            document.getElementById('partNumberFiller').style.display = "none";
+        }
     </script>
-    
+    <div id="partNumberFiller" >
+        <div id="partNumberFillerModal">
+            <h2 style="font-weight: 600; margin-bottom: 5px;">Fill missing Part Numbers</h2>
+            <apex:form >
+                <apex:inputText value="{!partNumberFiller }" />
+                <div style="display: flex; margin-top: 3px;">
+                    <button onclick="hideMissingPartNumbers(this)" type="button" class="slds-button">Cancel</button>
+                    <div style="flex: 1;" />
+                    <apex:commandButton action="{!returnToOrder}" value="Save" styleClass="slds-button slds-button_brand"/>
+                </div>
+            </apex:form>
+        </div>
+    </div>
     <apex:outputPanel Id="ErrorPanel" rendered="{!displayErrorOnly}">
 
         <apex:form >
@@ -109,6 +148,7 @@
                         </div>
                         
                         <button class="btn slds-button slds-button_neutral" onclick="clickFileOpen(this)" type="button" data-is-apply-serial="true">Apply Serial Numbers File</button>
+                        <button class="btn slds-button slds-button_neutral" onclick="fillMissingPartNumbers(this)" type="button" data-is-fill-part-number="true">Fill missing Part Number</button>
                         <apex:commandButton action="{!checkSerialNumberStatus}" value="Check Serial Numbers Status" styleClass="slds-button slds-button_neutral" />
                         <apex:commandButton action="{!save}" value="Save" onclick="return validateSave();"  styleClass="slds-button slds-button_brand"/>
                         <apex:commandButton action="{!returnToOrder}" value="Cancel" onclick="return confirm('Are you sure you want to cancel. All unsaved changes will be lost.');" styleClass="slds-button slds-button_brand" />
@@ -148,7 +188,9 @@
                                     </apex:column>
 
                                     <apex:column styleClass="order-product-column" headerClass="order-product-header">
-                                        <apex:facet name="header">Part Number</apex:facet>
+                                        <apex:facet name="header">
+                                            <span>Part Number</span>
+                                        </apex:facet>
                                         <apex:inputField value="{!orderProductItemWrapper.orderProductItem.Part_Number__c}" />
                                     </apex:column>
 

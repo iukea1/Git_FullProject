@@ -1,0 +1,7 @@
+<apex:component controller="SBQQSubscriptionDataController" access="global" layout="none">
+    <apex:attribute name="Order_Id" type="Id" description="Id of the Order" assignTo="{!OrderId}"></apex:attribute>
+    <apex:repeat value="{!lstOrderAssetView}" var="cx">
+       			{!cx.ProductName}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
+    </apex:repeat>
+       
+</apex:component>

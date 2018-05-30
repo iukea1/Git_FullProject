@@ -201,6 +201,10 @@
                 <behavior>Edit</behavior>
                 <field>TODAY_DATE__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Virtual_Order__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -332,10 +336,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>POC_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Require_Unity_Cloud_Orchestrator__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -158,6 +158,10 @@
                 <behavior>Readonly</behavior>
                 <field>SBCF_Profile_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Virtual_Order__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -219,6 +223,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Order_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Reduction__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

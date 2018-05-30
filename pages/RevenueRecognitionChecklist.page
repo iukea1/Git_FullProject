@@ -240,14 +240,6 @@
                         <img src="{!URLFOR($Resource.HelpText,'/res/pic/questionMark.gif')}" alt="" /></a>                  
                     <apex:inputTextarea value="{!rrChecklist.Finance_Review_Notes__c}" id="finRevDesc" rows="3"  style="width:100%" />
                 </apex:pageBlockSectionItem> 
-                 <apex:pageBlockSectionItem >
-                </apex:pageBlockSectionItem> 
-                <apex:pageBlockSectionItem id="finRevArridItem" >
-                    <span>ARRID </span>
-                    <a title="{!$ObjectType.RevenueRecognitionChecklist__c.Fields.Arrid__c.inlineHelpText}" class="questionMark" href="#">
-                        <img src="{!URLFOR($Resource.HelpText,'/res/pic/questionMark.gif')}" alt="" /></a>                  
-                    <apex:inputField value="{!rrChecklist.ARRID__c}" id="finRevArrid" style="width:100%" />
-                </apex:pageBlockSectionItem> 
             </apex:pageBlockSection>
         </apex:pageBlock>
         

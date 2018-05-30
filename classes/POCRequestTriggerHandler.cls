@@ -123,6 +123,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
     {     
         Map<Id,Id> mapPocContact= new Map<Id,Id>();
         Map<Id,Request__c> mapWanOpEmails= new Map<Id,Request__c>();
+        Set<Id> shippedPocs = new Set<Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id reqId : newItems.keyset())
@@ -133,6 +134,9 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
                 {
                     System.debug('Shipping In');
                     mapPocContact.put(newPOC.Id,newPOC.POC_Contact__c);
+                }
+                if(oldPoc.Status__c != 'Shipped - Extended' && newPOC.Status__c == 'Shipped - Extended') {
+                    shippedPocs.add(newPOC.Id);
                 }
                 if(newPOC.Status__c != oldPOC.Status__c)
                 {
@@ -182,11 +186,68 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             HandlePOCStatusChange();
             UpdatePocStatusToOpportunity();
             SendWANOPFulfillmentEmail(mapWanOpEmails);
+            if(!shippedPocs.isEmpty()) {
+                processContractOnShippedItems(shippedPocs, newItems);
+                deleteRmaForShippedPoc(shippedPocs);
+            }
         }
         
     }
-    public void AfterDelete(Map<Id, SObject> oldItems) 
-    {
+
+    private void processContractOnShippedItems(Set<Id> shippedPocs, Map<Id, Object> newItems) {
+        //get quote
+        Set<Id> oppsId = new Set<Id>();
+        for(Id i : shippedPocs) {
+            oppsId.add(((Request__c)newItems.get(i)).Opportunity__c);
+        }
+
+        Map<Id, Opportunity> oppParent = new Map<Id, Opportunity>([SELECT Id, SBQQ__PrimaryQuote__c FROM Opportunity WHERE Id IN :oppsId]);
+
+        Map<Id, SBQQ__Quote__c> quoteUpdates = new Map<Id, SBQQ__Quote__c>();
+        for(Id i : shippedPocs) {
+            Opportunity op = oppParent.get(((Request__c)newItems.get(i)).Opportunity__c);
+            if(op.SBQQ__PrimaryQuote__c != null) {
+                quoteUpdates.put(
+                    op.SBQQ__PrimaryQuote__c,
+                    new SBQQ__Quote__c(
+                        Id = op.SBQQ__PrimaryQuote__c,
+                        SBQQ__EndDate__c = ((Request__c)newItems.get(i)).Requested_End_Date__c
+                    )
+                );
+            }
+        }
+        update quoteUpdates.values();
+
+        List<Contract> contractUpdate = new List<Contract>();
+        for(Contract c : [SELECT Id, SBQQ__Quote__c FROM Contract WHERE SBQQ__Quote__c IN :quoteUpdates.keySet()]) {
+            c.EndDate = quoteUpdates.get(c.SBQQ__Quote__c).SBQQ__EndDate__c;
+            contractUpdate.add(c);
+        }
+        update contractUpdate;
+    }
+    
+    private void deleteRmaForShippedPoc(Set<Id> shippedPocs) {
+        List<RMA__c> rmaIdsToDelete= [SELECT Id FROM RMA__c WHERE Request__c IN :shippedPocs];
+        List<Asset> lstAssetToUpdate= new List<Asset>();
+
+        List<RMA_Item__c> rmaIList = [SELECT Id, Asset__c FROM RMA_Item__c WHERE RMA__c IN :rmaIdsToDelete];
+        for(RMA_Item__c rmai : rmaIList) {
+            lstAssetToUpdate.add(new Asset(
+                Id = rmai.Asset__c,
+                Status = 'Customer Evaluation'
+            ));
+        }
+
+        List<SBQQ__SubscribedAsset__c> saList = [SELECT Id, SBQQ__Active__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c IN :lstAssetToUpdate];
+        for(SBQQ__SubscribedAsset__c sa : saList) {
+            sa.SBQQ__Active__c = true;
+        }
+        update saList;
+        update lstAssetToUpdate;
+        delete rmaIdsToDelete;
+    }
+    
+    public void AfterDelete(Map<Id, SObject> oldItems) {
         if(oldItems!=null && oldItems.size()>0)
         {
             for (Id reqId : oldItems.keyset())
@@ -198,8 +259,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             UpdatePocStatusToOpportunity();
         }
     }
-    public void AfterUndelete(Map<Id, SObject> newItems) 
-    {
+    public void AfterUndelete(Map<Id, SObject> newItems) {
         if(newItems!=null && newItems.size()>0)
         {
             for (Id reqId : newItems.keyset())
@@ -210,8 +270,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             UpdatePocStatusToOpportunity();
         }
     }
-    private void CopyAccountTeamEmailToPOC(Request__c newPOC, List<AccountTeamMember> acctManager, List<AccountTeamMember> seManager )
-    {
+    private void CopyAccountTeamEmailToPOC(Request__c newPOC, List<AccountTeamMember> acctManager, List<AccountTeamMember> seManager ) {
         newPOC.Account_Manager_Email_1__c=null;
         newPOC.Account_Manager_Email_2__c=null;
         newPOC.System_Engineer_Email_1__c=null;
@@ -237,8 +296,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
         }
         
     }
-    private void UpdatePocStatusToOpportunity()
-    {
+    private void UpdatePocStatusToOpportunity() {
         if(opportunityIds.size() > 0)
         {
             List<Opportunity> opps = [select Id, Has_Active_POCs__c, AccountId, Account.Has_Active_POCs__c, Account.POC_Request_Date__c, (select Id from Requests__r where IsClosed__c=false and Status__c !='Open' limit 1) from Opportunity where Id in :opportunityIds and StageName!='Closed Deleted'];
@@ -280,8 +338,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             }
         }
     }
-    private void SendWANOPFulfillmentEmail(Map<Id,Request__c> mapRequests)
-    {
+    private void SendWANOPFulfillmentEmail(Map<Id,Request__c> mapRequests) {
         List<string>lstVRXModels= new List<string>{'Velocity','VRX-2','VRX-4','VRX-6','VRX-8'};
             List<string>lstVXModels= new List<string>{'VX-0000', 'VX-500','VX-1000','VX-2000','VX-3000','VX-4000','VX-5000','VX-6000','VX-8000','VX-9000'};
                 List<Request__c> lstPOCToUpdate = new List<Request__c>();
@@ -413,8 +470,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             update lstPOCToUpdate;
         }
     }
-    private Set<Id> ValidateUnityOrchestrtatorCanBeAdded (List<Request__c> setPOCRequests)
-    {
+    private Set<Id> ValidateUnityOrchestrtatorCanBeAdded (List<Request__c> setPOCRequests) {
         Set<Id> setResult= new Set<Id>();
         for(Request__c req: setPOCRequests)
         {
@@ -427,8 +483,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
         }
         return setResult;
     }
-    private Set<Id> CheckValidProductsAddedOnECPOCFlag(Map<Id,Request__c> lstNewPOC,Map<Id,Request__c> lstoldPOC)
-    {
+    private Set<Id> CheckValidProductsAddedOnECPOCFlag(Map<Id,Request__c> lstNewPOC,Map<Id,Request__c> lstoldPOC) {
         Set<string> ECProducts= new Set<string>();
         Set<string> NonECProducts= new Set<string>();
         Set<Id> setResult= new Set<Id>();
@@ -535,8 +590,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
         }
         return setResult;
     }
-    private void DeleteRMAForApprovedPendReturnPOC(Map<Id,Id> mapReqs)
-    {
+    private void DeleteRMAForApprovedPendReturnPOC(Map<Id,Id> mapReqs) {
         List<RMA__c> rmaIdsToDelete= new List<RMA__c>();
         List<Asset> lstAssetToUpdate= new List<Asset>();
         System.Savepoint sp= Database.setSavepoint();
@@ -585,8 +639,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             Database.rollback(sp);
         }
     }
-    private  void SendEmailToPOCContactforRMA(Id pocId,Id pocContact)
-    {
+    private  void SendEmailToPOCContactforRMA(Id pocId,Id pocContact) {
         List<EmailTemplate> template = [select Id from EmailTemplate where Name='Extension Approval Pending Return' limit 1];
         if(template.size() > 0)
         {
@@ -606,8 +659,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             Messaging.sendEmail(new List<Messaging.Email> {email}, true);  
         }
     }
-    private List<String> getPOCRecipients(Id pocId)
-    {
+    private List<String> getPOCRecipients(Id pocId) {
         List<Request__c> members = [select Id, SE__r.Email,SE_Manager__r.Email,RSM_Manager__r.Email,RSM__r.Email,CC_List_1__c,CC_List_2__c,CC_List_3__c,CC_List_4__c,CC_List_5__c from Request__c where Id=:pocId];
         List<String> emails = new List<String>();
         if(members!=null && members.size()>0)
@@ -652,8 +704,7 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
         
         return emails;
     }
-    private void HandlePOCStatusChange()
-    {
+    private void HandlePOCStatusChange() {
         try
         {
             if(closedPocs.size() > 0)
@@ -681,8 +732,7 @@ request.addError(ex.getMessage());
 }*/
         }
     }
-    private void ClassifyAccountTeamMember(List<Request__c> lstReq, Map<Id,List<AccountTeamMember>> managerTM, Map<Id,List<AccountTeamMember>> engineerTM )
-    {
+    private void ClassifyAccountTeamMember(List<Request__c> lstReq, Map<Id,List<AccountTeamMember>> managerTM, Map<Id,List<AccountTeamMember>> engineerTM ) {
         Set<Id> accIds= new Set<Id>();
         
         for(Request__c req: lstReq)
@@ -710,8 +760,7 @@ request.addError(ex.getMessage());
         }
         
     }  
-    private void PopulatePOCApprovers(Map<Id,Id> mapReqId)
-    {
+    private void PopulatePOCApprovers(Map<Id,Id> mapReqId) {
         Map<Id,Opportunity> mapOppId= new Map<Id,Opportunity>(); 
         if(mapReqId.size()>0)
         {
