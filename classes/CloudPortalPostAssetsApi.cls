@@ -116,7 +116,10 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
             for(CPAsset item:orchAssets)
             {
                 generator.writeStartObject();
-                generator.writeObjectField('serial',item.SerialNumber);
+                if(item.SerialNumber!=null)
+                {
+                    generator.writeObjectField('serial',item.SerialNumber);
+                }
                 generator.writeObjectField('name',item.Name);
                 generator.writeObjectField('email',item.email);
                 generator.writeObjectField('domain',item.domain);

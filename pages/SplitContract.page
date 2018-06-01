@@ -54,7 +54,8 @@
         }
         table.messageTable tr:first-child > td:first-child { display: none; }
         table.messageTable tr:first-child > td h4 { display: none; }
-        table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
+        table.messageTable tr > td.messageCell, table.messageTable tr > td li { color: white; font-weight: 600;}
+        table.messageTable tr > td ul {list-style-type: circle;}
         
     </style>
     <script>

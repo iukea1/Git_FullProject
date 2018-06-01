@@ -616,6 +616,24 @@ Evaluation_Start_Date__c )</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Convert_lowercase_to_upper_case_asset_na</fullName>
+        <field>Name</field>
+        <formula>UPPER(Name)</formula>
+        <name>Convert lowercase to upper case asset na</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Convert_lowercase_to_upper_case_serial_n</fullName>
+        <field>SerialNumber</field>
+        <formula>UPPER(SerialNumber)</formula>
+        <name>Convert lowercase to upper case serial n</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SBCF_Set_Asset_Name_to_Serial_Number</fullName>
         <field>Name</field>
         <formula>SerialNumber</formula>
@@ -902,6 +920,28 @@ Sync_With_Cloud_Portal__c =true,
 IsPICKVAL(Product2.Family ,&quot;Product&quot;), 
 BEGINS( Product2.Name ,&quot;EC&quot;) 
 )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Convert lowercase to upper case serial number</fullName>
+        <actions>
+            <name>Convert_lowercase_to_upper_case_asset_na</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Convert_lowercase_to_upper_case_serial_n</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Product2.Family</field>
+            <operation>equals</operation>
+            <value>Product</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.SerialNumber</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

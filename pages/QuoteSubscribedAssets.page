@@ -1,0 +1,52 @@
+<apex:page standardcontroller="SBQQ__Quote__c" extensions="QuoteSubscribedAssetsExtension" showHeader="false" sidebar="false">
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, 'jquery-1.4.3.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.jQuery, 'autoresize.jquery.js')}" />
+    <style type="text/css">
+        .pocLoading {
+        vertical-align: middle;
+        }
+        .pocLoadingText {
+        font-size: 95%;
+        font-weight: bold;
+        color: #666;
+        padding-left: 10px;
+        } 
+    </style>
+    <script type="text/javascript"></script>
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageMessages id="pageMsg" escape="false" />
+                <apex:outputText rendered="{!lstAssets.size==0}" value="There are no assets."/>
+                    <apex:pageBlockSection columns="1" rendered="{!lstAssets.size>0}">
+                        
+                        
+                        Please select the serial numbers you wish to renew
+                        <apex:pageBlockTable width="100%" value="{!lstAssets}" var="item" >
+                            <apex:column width="10%"><apex:inputCheckbox value="{!item.IsChecked}"/></apex:column>
+                            <apex:column width="40%" headerValue="Serial Number" value="{!item.SerialNumber}"/>
+                                <apex:column width="50%" headerValue="Product Name" value="{!item.ProductName}"/>
+                                    </apex:pageBlockTable>
+                                <br/>
+                                    </apex:pageBlockSection>
+                                <apex:pageBlockButtons location="Bottom">
+                                    <apex:actionStatus id="btnStatus">
+                                        <apex:facet name="start">
+                                            <apex:outputPanel >
+                                                <img src="/img/loading.gif" alt="Processing..." title="Processing..." width="16" height="16" class="pocLoading"/>
+                                                    <span class="pocLoading pocLoadingText">Processing...</span>
+                                                    </apex:outputPanel>
+                                                    </apex:facet>
+                                                    <apex:facet name="stop">
+                                                        <apex:outputPanel >
+                                                            <apex:commandButton value="Save" action="{!save}" reRender="pageMsg, encryptForm"  status="btnStatus"/>
+                                                                <input type="button" value="Cancel" class="btn" onclick="top.close();" />
+                                                                    </apex:outputPanel>
+                                                                </apex:facet>
+                                                                </apex:actionStatus>   
+                                                                </apex:pageBlockButtons>
+                                                                
+                                                                
+                                                                </apex:pageblock> 
+                                                                <div class="overlayBackground" style="display: none; width: 1477px; height: 1817px; "></div>
+                                                                </apex:form>
+                                                                </apex:page>

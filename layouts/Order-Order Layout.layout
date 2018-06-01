@@ -111,10 +111,6 @@
                 <field>Virtual_Product_Count__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Order__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VX_Count__c</field>
             </layoutItems>
@@ -125,6 +121,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>GMS_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>First_Order__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

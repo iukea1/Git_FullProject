@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Add_On_Email</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>Add On Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/EC_Add_on</template>
+    </alerts>
+    <alerts>
+        <fullName>EC_Fulfillment_Email</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>EC Fulfillment Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/EC_Fulfillment</template>
+    </alerts>
+    <alerts>
         <fullName>GMS_Fulfillment</fullName>
         <ccEmails>notifications@silver-peak.com</ccEmails>
         <description>GMS Fulfillment</description>
@@ -87,16 +129,6 @@
         <template>unfiled$public/Welcome_Email_Test</template>
     </alerts>
     <fieldUpdates>
-        <fullName>Populate_First_Order_field</fullName>
-        <field>First_Order__c</field>
-        <literalValue>1</literalValue>
-        <name>Populate First Order field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SBCF_Set_Contracted_to_True</fullName>
         <field>SBQQ__Contracted__c</field>
         <literalValue>1</literalValue>
@@ -123,8 +155,86 @@
         <protected>false</protected>
     </fieldUpdates>
     <rules>
+        <fullName>EC Addon</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Addon</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Virtual_Product_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Add_On_Email</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>EC Fulfillment</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Virtual_Product_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>EC_Fulfillment_Email</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
         <fullName>GMS Fulfillment Email</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
             <operation>equals</operation>
@@ -158,11 +268,7 @@
     </rules>
     <rules>
         <fullName>Populate First Order</fullName>
-        <actions>
-            <name>Populate_First_Order_field</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND(
 SBQQ__Quote__r.Order_Count__c==1,
 IsPickVal(Status ,&quot;Activated&quot;),
@@ -196,7 +302,7 @@ Virtual_Product_Count__c &gt;0
     </rules>
     <rules>
         <fullName>VRX Fulfillment Email</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
             <operation>equals</operation>
@@ -230,7 +336,7 @@ Virtual_Product_Count__c &gt;0
     </rules>
     <rules>
         <fullName>VX Fulfillment Email</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
             <operation>equals</operation>

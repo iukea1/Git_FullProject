@@ -333,6 +333,10 @@
                 <behavior>Edit</behavior>
                 <field>Special_Instructions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Serial_Number_Notes__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

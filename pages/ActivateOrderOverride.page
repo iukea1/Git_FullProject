@@ -59,4 +59,7 @@
         <br/>
         <apex:pageMessages />
     </apex:outputPanel>
+    <apex:outputPanel rendered="{!NOT(orderIsActivated || needSerial)}">
+        Activating...
+    </apex:outputPanel>
 </apex:page>

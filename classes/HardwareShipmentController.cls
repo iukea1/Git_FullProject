@@ -171,25 +171,61 @@ public with sharing class HardwareShipmentController {
         return null;
     }
 
-    public PageReference save(){
-        //OLD CODE
-        //List<Order_Product_Item__c> orderProductItemsToUpsert = OrderShipmentHelper.getOrderProductItemsFromWrappers(this.orderProductWrappers);
-        List<Order_Product_Item__c> orderProductItemsToUpsert = new List<Order_Product_Item__c>();
-        for(OrderShipmentHelper.OrderProductWrapper wraps : orderProductWrappers) {
-            for(OrderShipmentHelper.OrderProductItemWrapper wr : wraps.orderProductItems) {
-                orderProductItemsToUpsert.add(wr.orderProductItem);
+    private Boolean checkPartNumber() {
+        Boolean hasMissing = false;
+        Set<String> assetProductNumbers = new Set<String>(); 
+        for(OrderShipmentHelper.OrderProductWrapper opw : orderProductWrappers) {
+            assetProductNumbers.add(opw.orderProduct.Product2.ProductCode);
+        }
+        Map<String, Set<String>> findPn = new Map<String, Set<String>>();
+        for(ReplaceablePartNumberMatrix__c pnMatrix : [SELECT Name, Product_PN__c, Asset_PN__c, HDD_PN__c, SSD_PN__c, PS_PN__c, NVME_PN__c FROM ReplaceablePartNumberMatrix__c WHERE Product_PN__c IN :assetProductNumbers]) {
+            if(!findPn.containsKey(pnMatrix.Product_PN__c)) {
+                findPn.put(pnMatrix.Product_PN__c, new Set<String>());
+            }
+            findPn.get(pnMatrix.Product_PN__c).add(pnMatrix.Asset_PN__c);
+            findPn.get(pnMatrix.Product_PN__c).add(pnMatrix.HDD_PN__c);
+            findPn.get(pnMatrix.Product_PN__c).add(pnMatrix.SSD_PN__c);
+            findPn.get(pnMatrix.Product_PN__c).add(pnMatrix.PS_PN__c);
+            findPn.get(pnMatrix.Product_PN__c).add(pnMatrix.NVME_PN__c);
+            findPn.get(pnMatrix.Product_PN__c).remove(null);
+        }
+        
+        for(OrderShipmentHelper.OrderProductWrapper opw : orderProductWrappers) {
+            for(OrderShipmentHelper.OrderProductItemWrapper opiw : opw.orderProductItems) {
+                if(findPn.containsKey(opw.orderProduct.Product2.ProductCode)) {
+                    if(!findPn.get(opw.orderProduct.Product2.ProductCode).contains(opiw.orderProductItem.Part_Number__c)) {
+                        hasMissing = true;
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Part number for Product ' + opw.orderProduct.Product2.ProductCode + ': ' + opiw.orderProductItem.Part_Number__c));
+                    }
+                }
             }
         }
         
-        if(orderProductItemsToUpsert.size() > 0){
-            upsert orderProductItemsToUpsert;
-        }        
-        
-        update new Order(Id=this.order.Id, SerialNumberApplied__c=true);
-        
-        PageReference page = new PageReference('/' + order.Id);
-        page.setRedirect(true);
-        return page;
+        return hasMissing;
+    }
+    public PageReference save(){
+        if(!checkPartNumber()) {
+            //OLD CODE
+            //List<Order_Product_Item__c> orderProductItemsToUpsert = OrderShipmentHelper.getOrderProductItemsFromWrappers(this.orderProductWrappers);
+            List<Order_Product_Item__c> orderProductItemsToUpsert = new List<Order_Product_Item__c>();
+            for(OrderShipmentHelper.OrderProductWrapper wraps : orderProductWrappers) {
+                for(OrderShipmentHelper.OrderProductItemWrapper wr : wraps.orderProductItems) {
+                    orderProductItemsToUpsert.add(wr.orderProductItem);
+                }
+            }
+            
+            if(orderProductItemsToUpsert.size() > 0){
+                upsert orderProductItemsToUpsert;
+            }        
+            
+            update new Order(Id=this.order.Id, SerialNumberApplied__c=true);
+            
+            PageReference page = new PageReference('/' + order.Id);
+            page.setRedirect(true);
+            return page;
+        } else {
+            return null;
+        }
     }
 
     public PageReference returnToOrder(){

@@ -9,7 +9,7 @@ public class ActivateOrderController {
         this.order = (Order)controller.getRecord();
         this.order = [SELECT Id, Status, Product_Type__c, SBQQ__Quote__c, SerialNumberApplied__c FROM Order WHERE Id = :this.order.Id LIMIT 1];
         this.orderIsActivated = order.Status == 'Activated';
-        
+        this.runUpdate = false;
         if(this.orderIsActivated){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'This order is already Active');
             ApexPages.addMessage(myMsg);
@@ -31,15 +31,23 @@ public class ActivateOrderController {
     }
     public PageReference checkUpdate() {
         if(runUpdate) {
-            update new Order(
-                Id = this.order.Id,
-                Status = 'Activated',
-                ActivatedDate = System.today(),
-                ActivatedById = Userinfo.getUserId()
-            );
-            PageReference page = new PageReference('/' + order.Id);
-            page.setRedirect(true);
-            return page;
+            try {
+            
+                update new Order(
+                    Id = this.order.Id,
+                    Status = 'Activated',
+                    ActivatedDate = System.today(),
+                    ActivatedById = Userinfo.getUserId()
+                );
+                PageReference page = new PageReference('/' + order.Id);
+                page.setRedirect(true);
+                return page;
+            } catch(DmlException dle) {
+                needSerial = true;
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,dle.getMessage());
+                ApexPages.addMessage(myMsg);
+                return null;
+            }
         } else {
             return null;
         }

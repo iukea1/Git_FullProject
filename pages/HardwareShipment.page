@@ -34,6 +34,7 @@
         .message.errorM3 {
             border: none;
             background-color: #c33;
+            color: white;
         }
         .message.confirmM3{
             border: none;
@@ -45,8 +46,8 @@
         }
         table.messageTable tr:first-child > td:first-child { display: none; }
         table.messageTable tr:first-child > td h4 { display: none; }
-        table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
-        
+        table.messageTable tr > td.messageCell, table.messageTable tr > td li { color: white; font-weight: 600;}
+        table.messageTable tr > td ul {list-style-type: circle;}
         
         /* PART NUMBER MODAL */
         #partNumberFiller {
@@ -95,7 +96,7 @@
                 <div style="display: flex; margin-top: 3px;">
                     <button onclick="hideMissingPartNumbers(this)" type="button" class="slds-button">Cancel</button>
                     <div style="flex: 1;" />
-                    <apex:commandButton action="{!returnToOrder}" value="Save" styleClass="slds-button slds-button_brand"/>
+                    <apex:commandButton action="{!fillPartNumbers}" value="Apply" styleClass="slds-button slds-button_brand"/>
                 </div>
             </apex:form>
         </div>

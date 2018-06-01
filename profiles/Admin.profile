@@ -1683,6 +1683,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteSubscribedAssetsExtension</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>QuoteTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1696,6 +1700,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RHX_TEST_Order</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RHX_TEST_SBQQ_SubscribedAsset</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2276,6 +2284,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestQuoteEmailReviewHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestQuoteSubscribedAssets</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -11130,6 +11142,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuoteSubmitApproval</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>QuoteSubscribedAssets</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

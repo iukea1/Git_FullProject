@@ -322,10 +322,6 @@ generator.writeStringField('password', 'Yesadmin4u');
               {
                   cp.salesforceId=item.Id;
               }
-              if(item.SerialNumber__c!=null)
-              {
-                  cp.id=item.SerialNumber__c;
-              }
               if(item.SBQQ__Product__r.Name!=null)
               {
                   cp.name=item.SBQQ__Product__r.Name;

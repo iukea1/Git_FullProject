@@ -10,6 +10,7 @@
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>
     <customButtons>SBQQ__CloneWithRelatedClassic</customButtons>
+    <customButtons>Asset_Renewal</customButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -161,6 +162,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>First_Virtual_Order__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Serial_Number_Notes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
