@@ -25,6 +25,11 @@
                             <apex:column width="10%"><apex:inputCheckbox value="{!item.IsChecked}"/></apex:column>
                             <apex:column width="40%" headerValue="Serial Number" value="{!item.SerialNumber}"/>
                                 <apex:column width="50%" headerValue="Product Name" value="{!item.ProductName}"/>
+                                 <apex:column width="50%" headerValue="Subscription End Date">
+                                     <apex:outputText value="{0,date,MM/dd/yyyy}" label="date"> 
+                                         <apex:param value="{!item.LicenseEndDate}"  />
+                                      </apex:outputText> 
+                                 </apex:column>
                                     </apex:pageBlockTable>
                                 <br/>
                                     </apex:pageBlockSection>

@@ -120,12 +120,14 @@ public class RMAItemTriggerHandler implements ITriggerHandler {
                     lstAsset.add(asset);
                 }                
             }
-            List<SBQQ__SubscribedAsset__c> lstSubscribed=[Select Id,SBQQ__Active__c from SBQQ__SubscribedAsset__c where SBQQ__Asset__c in: setAssetId and SBQQ__Active__c=true];
+            List<SBQQ__Subscription__c> subDeletion = new List<SBQQ__Subscription__c>();
+            List<SBQQ__SubscribedAsset__c> lstSubscribed=[Select Id,SBQQ__Subscription__c, SBQQ__Active__c from SBQQ__SubscribedAsset__c where SBQQ__Asset__c in: setAssetId and SBQQ__Active__c=true];
             if(lstSubscribed!=null && lstSubscribed.size()>0)
             {
                 for(SBQQ__SubscribedAsset__c item:lstSubscribed)
                 {
                     item.SBQQ__Active__c=false;
+                    subDeletion.add(new SBQQ__Subscription__c(Id=item.SBQQ__Subscription__c));
                 }
             }
             if(lstAsset!=null && lstAsset.size()>0)
@@ -134,9 +136,12 @@ public class RMAItemTriggerHandler implements ITriggerHandler {
             {
                 update lstSubscribed;
             }
-            
+            if(!subDeletion.isEmpty()) {
+                delete subDeletion;
+            }
             
         }
         
     }
+
 }

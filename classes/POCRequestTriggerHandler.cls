@@ -186,10 +186,10 @@ public class POCRequestTriggerHandler implements ITriggerHandler {
             HandlePOCStatusChange();
             UpdatePocStatusToOpportunity();
             SendWANOPFulfillmentEmail(mapWanOpEmails);
-            if(!shippedPocs.isEmpty()) {
+            /*if(!shippedPocs.isEmpty()) {
                 processContractOnShippedItems(shippedPocs, newItems);
                 deleteRmaForShippedPoc(shippedPocs);
-            }
+            }*/
         }
         
     }

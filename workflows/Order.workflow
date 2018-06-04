@@ -64,6 +64,27 @@
         <template>Steelbrick_Email_Templates/GMS_Fulfillment</template>
     </alerts>
     <alerts>
+        <fullName>Unity_Cloud_Fulfillment</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>Unity Cloud Fulfillment</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Unity_Cloud_Fulfillment</template>
+    </alerts>
+    <alerts>
         <fullName>VRX_Fulfillment</fullName>
         <ccEmails>notifications@silver-peak.com</ccEmails>
         <description>VRX Fulfillment</description>
@@ -298,6 +319,35 @@ Virtual_Product_Count__c &gt;0
         </actions>
         <active>true</active>
         <formula>ISPICKVAL( SBQQ__Quote__r.Product_Type__c , &quot;EDGECONNECT&quot;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Unity Cloud Fulfillment Email</fullName>
+        <actions>
+            <name>Unity_Cloud_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Unity_Cloud_Orch_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

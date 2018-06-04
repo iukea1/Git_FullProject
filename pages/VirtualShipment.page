@@ -1,52 +1,103 @@
 <apex:page showHeader="true" sidebar="true" standardController="Order" extensions="VirtualShipmentController" tabStyle="Order" action="{!constructor}">
-	
+    <apex:slds />
     <style>
-		#FileUploadContent {text-align: center; width: 100%;}
+        #FileUploadContent {text-align: center; width: 100%;}
 
-		.order-product-header {text-align:center;}
+        .order-product-header {text-align:center;}
 
-		.order-product-top-level-value {vertical-align: text-top !important; padding-top:15px !important; font-weight:bold;}
+        .order-product-top-level-value {vertical-align: text-top !important; padding-top:15px !important; font-weight:bold;}
 
-		.order-product-column {text-align:center;}
+        .order-product-column {text-align:center;}
 
-		.order-product-column-existing-asset {text-align:center; width:150px;}
+        .order-product-column-existing-asset {text-align:center; width:150px;}
 
-		.requiredBlock {display:none;}
+        .requiredBlock {display:none;}
 
-		.detailList .helpOrbOn {  position: relative; }
+        .detailList .helpOrbOn {  position: relative; }
 
-		.serial-number-input { width:95%; }
+        .serial-number-input { width:95%; }
 
-		#DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
+        #DataTableContainer { width: 80%; display:inline-block; vertical-align: text-top;}
 
-		#ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
+        #ProductSerialNumberDisplay { width: 19%; display:inline-block; vertical-align: text-top;}
 
-		.serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
+        .serial-number-link { color: #0645AD !important; text-decoration: underline !important; }
 
-		.copy-sn-textarea { width: 100%; min-height: 150px; }
-
-	</style>
+        .copy-sn-textarea { width: 100%; min-height: 150px; }
+        
+        /* MESSAGING STYLE */
+        .message {
+            margin: 0 4px;
+        }
+        .message.errorM3 {
+            border: none;
+            background-color: #c33;
+            color: white;
+        }
+        .message.confirmM3{
+            border: none;
+            background-color: #390;
+        }
+        .message.warningM3{
+            border: none;
+            background-color: #f90;
+        }
+        table.messageTable tr:first-child > td:first-child { display: none; }
+        table.messageTable tr:first-child > td h4 { display: none; }
+        table.messageTable tr > td.messageCell, table.messageTable tr > td li { color: white; font-weight: 600;}
+        table.messageTable tr > td ul {list-style-type: circle;}
+        
+    </style>
     <apex:pageMessages id="showmsg"></apex:pageMessages>
-	<apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
-		<apex:form >
-			<apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
-		</apex:form>
-		<br/>
-	</apex:outputPanel>
-	<apex:outputPanel Id="NonActivatedOrder" rendered="{!NOT(orderIsActivated)}">
+    
+    
+     <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                            <svg class="slds-icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contracts" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                            <nav>
+                                <ol class="slds-breadcrumb slds-line-height_reset">
+                                    <li class="slds-breadcrumb__item">
+                                        <span>Virtual Shipment Details</span>
+                                    </li>
+                                </ol>
+                            </nav>
+                            <h1 class="slds-page-header__title slds-p-right_x-small">
+                                Order {!Order.OrderNumber}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                </div>
+    
+    
+    <apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
+        <apex:form >
+            <apex:commandButton action="{!returnToOrder}" value="Return to Order"/>
+        </apex:form>
+        <br/>
+    </apex:outputPanel>
+    <apex:outputPanel Id="NonActivatedOrder" rendered="{!NOT(orderIsActivated)}">
 
-		<apex:form >
-		<apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" />
-		<apex:pageblock mode="maindetail">
-			<apex:pageBlockButtons location="top">
-				<!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
+        <apex:form >
+        <!-- apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" / -->
+        <apex:pageblock mode="maindetail">
+            <apex:pageBlockButtons location="top">
+                <!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
                 <apex:commandButton action="{!saveOrder}" value="Save" rerender="showmsg"/>
-				<apex:commandButton action="{!returnToOrder}" value="Cancel"/>
-			</apex:pageBlockButtons>
-		</apex:pageblock>
+                <apex:commandButton action="{!returnToOrder}" value="Cancel"/>
+            </apex:pageBlockButtons>
+        </apex:pageblock>
         
         
-		<div id="DataTableValues">
+        <div id="DataTableValues">
             
             <!--
             <apex:pageBlock rendered="{!NOT(isRenewal)}">
@@ -54,33 +105,33 @@
                     <apex:pageBlockSectionItem >
                         
                         
-                    	<apex:pageBlockTable value="{!orderProducts}" var="orderProd" id="orderProdTable">
+                        <apex:pageBlockTable value="{!orderProducts}" var="orderProd" id="orderProdTable">
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                 <apex:facet name="header">Product Name</apex:facet>
                                     <apex:outputLink value="/{!orderProd.Product2}" target="__blank">
                                         <apex:outputText value="{!orderProd.Product2.Name}"/>
                                     </apex:outputLink>
-                       	 	</apex:column>
+                            </apex:column>
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                            	<apex:facet name="header">Product Code</apex:facet>
+                                <apex:facet name="header">Product Code</apex:facet>
                                 <apex:outputText value="{!orderProd.Product2.ProductCode}"/>
                             </apex:column>
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-								<apex:facet name="header">Quantity</apex:facet>
-								<apex:outputText value="{!orderProd.Quantity}" />
-							</apex:column>
+                                <apex:facet name="header">Quantity</apex:facet>
+                                <apex:outputText value="{!orderProd.Quantity}" />
+                            </apex:column>
                             
                             <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-								<apex:facet name="header">GSM Nodes</apex:facet>
-								<apex:inputField value="{!orderProd.GMS_Nodes__c}" />
-							</apex:column>
+                                <apex:facet name="header">GSM Nodes</apex:facet>
+                                <apex:inputField value="{!orderProd.GMS_Nodes__c}" />
+                            </apex:column>
                         </apex:pageBlockTable>
                         
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
-        	</apex:pageBlock>   
+            </apex:pageBlock>   
             -->
             <!-- rendered="{!isRenewal}" -->
             
@@ -103,18 +154,18 @@
                                 
                                 <apex:facet name="header">Related Assets</apex:facet>
                                 <apex:pageBlockTable value="{!subs.SBQQ__SubscribedAssets__r}" var="subscription" id="childAssets">
-									<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Asset</apex:facet>
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                        <apex:facet name="header">Asset</apex:facet>
                                         <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}" /> 
                                     </apex:column>
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Serial Number</apex:facet>
+                                        <apex:facet name="header">Serial Number</apex:facet>
                                         <apex:outputText value="{!subscription.SBQQ__Asset__r.SerialNumber}"/> 
                                     </apex:column>
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Selected for Renewal</apex:facet>
+                                        <apex:facet name="header">Selected for Renewal</apex:facet>
                                         <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}" /> 
                                     </apex:column>
                                 </apex:pageBlockTable>
@@ -123,7 +174,7 @@
                         </apex:pageBlockTable>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
-        	</apex:pageBlock>
+            </apex:pageBlock>
             
             
             <apex:pageBlock rendered="{!isAmendment}">
@@ -142,9 +193,9 @@
                                         <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
                                             <apex:facet name="header">Ordered Quantity</apex:facet>
                                             <apex:outputText value="{!oi.Quantity}"/>
-                                    	</apex:column>
+                                        </apex:column>
                                  </apex:pageBlockTable>
-								-->
+                                -->
                                 <apex:outputText value="{!subs.SBQQ__Quantity__c}"/>
                             </apex:column>
                             
@@ -152,18 +203,18 @@
                                 
                                 <apex:facet name="header">Related Assets</apex:facet>
                                 <apex:pageBlockTable value="{!subs.SBQQ__SubscribedAssets__r}" var="subscription" id="childAssets">
-									<apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Asset</apex:facet>
+                                    <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
+                                        <apex:facet name="header">Asset</apex:facet>
                                         <apex:outputText value="{!subscription.SBQQ__Asset__r.Name}"/> 
                                     </apex:column>
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Serial Number</apex:facet>
+                                        <apex:facet name="header">Serial Number</apex:facet>
                                         <apex:outputText value="{!subscription.SBQQ__Asset__r.SerialNumber}"/> 
                                     </apex:column>
                                     
                                     <apex:column styleClass="order-product-column order-product-top-level-value" headerClass="order-product-header">
-                                    	<apex:facet name="header">Selected for Amendment</apex:facet>
+                                        <apex:facet name="header">Selected for Amendment</apex:facet>
                                         <apex:inputField value="{!subscription.SBQQ__Asset__r.Is_Selected_For_Renewal__c}" /> 
                                     </apex:column>
                                 </apex:pageBlockTable>
@@ -172,30 +223,30 @@
                         </apex:pageBlockTable>
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>    
-        	</apex:pageBlock>
+            </apex:pageBlock>
             
             
         </div>
         
          
-		<!-- <apex:pageblock >
+        <!-- <apex:pageblock >
 
-			<apex:pageBlockSection columns="1">
-				<apex:pageBlockSectionItem >
-					<apex:pageBlockTable value="{!orderProducts}" var="orderProduct">
-						<apex:column value="{!orderProduct.Product2.Name}"/>
-						<apex:column value="{!orderProduct.Product2.ProductCode}"/>
-						<apex:column value="{!orderProduct.Quantity}"/>
-						<apex:column value="{!orderProduct.UnitPrice}"/>
-						<apex:column value="{!orderProduct.TotalPrice}"/>
-					</apex:pageBlockTable>
-				</apex:pageBlockSectionItem>
-			</apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:pageBlockTable value="{!orderProducts}" var="orderProduct">
+                        <apex:column value="{!orderProduct.Product2.Name}"/>
+                        <apex:column value="{!orderProduct.Product2.ProductCode}"/>
+                        <apex:column value="{!orderProduct.Quantity}"/>
+                        <apex:column value="{!orderProduct.UnitPrice}"/>
+                        <apex:column value="{!orderProduct.TotalPrice}"/>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
 
-		</apex:pageblock> -->	
+        </apex:pageblock> -->   
             
-		</apex:form>
-		
-	</apex:outputPanel>
+        </apex:form>
+        
+    </apex:outputPanel>
 
 </apex:page>

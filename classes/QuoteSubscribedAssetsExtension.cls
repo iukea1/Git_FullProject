@@ -11,7 +11,7 @@ public class QuoteSubscribedAssetsExtension {
             SBQQ__Quote__c quoteInfo=[Select Id, SBQQ__Opportunity2__r.SBQQ__RenewedContract__c from SBQQ__Quote__c where Id=:QuoteId];
             if(quoteInfo!=null && quoteInfo.SBQQ__Opportunity2__c!=null && quoteInfo.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c!=null)
             {
-                List<SBQQ__SubscribedAsset__c> lstSubAsset=[Select Id,SBQQ__Asset__r.Product2.Name, SBQQ__Asset__r.SerialNumber from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true and SBQQ__Subscription__c in(Select Id from SBQQ__Subscription__c where SBQQ__Contract__c=:quoteInfo.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c)];
+                List<SBQQ__SubscribedAsset__c> lstSubAsset=[Select Id,SBQQ__Asset__r.Product2.Name, SBQQ__Asset__r.SerialNumber,SBQQ__Subscription__r.SBQQ__Contract__r.EndDate from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true and SBQQ__Subscription__c in(Select Id from SBQQ__Subscription__c where SBQQ__Contract__c=:quoteInfo.SBQQ__Opportunity2__r.SBQQ__RenewedContract__c)];
                 if(lstSubAsset!=null && lstSubAsset.size()>0)
                 {
                     for(SBQQ__SubscribedAsset__c item: lstSubAsset)
@@ -73,12 +73,14 @@ public class QuoteSubscribedAssetsExtension {
         public boolean IsChecked{get;set;}
         public string SerialNumber{get;set;}
         public string ProductName{get;set;}
+        public Date LicenseEndDate{get;set;}
        
         public AssetWrapper(boolean isChecked, SBQQ__SubscribedAsset__c sub)
         {
             IsChecked=isChecked;
             SerialNumber=sub.SBQQ__Asset__r.SerialNumber;
             ProductName=sub.SBQQ__Asset__r.Product2.Name;
+            LicenseEndDate=sub.SBQQ__Subscription__r.SBQQ__Contract__r.EndDate;
         }
     }        
     
