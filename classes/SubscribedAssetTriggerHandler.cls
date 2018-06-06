@@ -227,7 +227,7 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         //        [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__OrderProduct__c FROM SBQQ__SubscribedAsset__c WHERE Id IN :incomingSubAsset]
         //);
         Set<Id> subsSet = new Set<Id>();
-        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
+        for(SBQQ__SubscribedAsset__c sa : [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__OrderProduct__c FROM SBQQ__SubscribedAsset__c WHERE Id IN :incomingSubAsset]) {
             subsSet.add(sa.SBQQ__Subscription__c);
         }
         Map<Id, SBQQ__Subscription__c> fullData = new Map<Id, SBQQ__Subscription__c>(

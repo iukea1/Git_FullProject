@@ -38,9 +38,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             List<Asset> lstNewAssets=(List<Asset>)newItems;
             for(Asset newAsset:lstNewAssets)
             {
-                if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX')
+                if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
-                    lstAsset.add(newAsset);
+                    newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
                 }
                 if(newAsset.AccountId!=null && newAsset.Status!='Customer Evaluation')
                 {
@@ -57,7 +57,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                     }
                 }
             }
-            UpdateEOMDate(lstAsset);
+            //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             //populateAssetFields(newItems);
             groupAssetsByOrderProduct(lstAsset);
@@ -76,9 +76,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
-                if(oldAsset.Ship_Date__c!=newAsset.Ship_Date__c && newAsset.Product_Quote_Type__c=='NX/VX')
+                if(oldAsset.Ship_Date__c!=newAsset.Ship_Date__c && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
-                    lstAsset.add(newAsset);
+                    newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
+                    //lstAsset.add(newAsset);
                 }
                 //decommission asset
                 if(newAsset.AccountId == silverpeakSystemsId && oldAsset.AccountId != newAsset.AccountId)
@@ -119,7 +120,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                     }
                 }
             }
-            UpdateEOMDate(lstAsset);
+            //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             
         }
@@ -168,6 +169,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
         updateAssetStatus(newItems.values());
+
+        System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
     }
     
@@ -251,10 +254,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(Asset asset:lstAssets)
         {
             // added a debug log for testing purposes @Ronald
-           	System.debug('asset.Product_Quote_Type__c : ' + asset.Product_Quote_Type__c);
+            System.debug('asset.Product_Quote_Type__c : ' + asset.Product_Quote_Type__c);
             System.debug('asset.Model__c : ' + asset.Model__c);
             // ----------------- @@ 
-			integer quantity=1;
+            integer quantity=1;
             License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Ship_Date__c,Model__c=asset.Model__c);
             if(asset.Model__c=='GX-V' || asset.Product_Category__c=='GMS')
                 quantity=Integer.valueOf(asset.GMS_Nodes__c);
@@ -388,7 +391,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update lstHardwareAssetToUpdate;
         }
     }
-    private void UpdateEOMDate(List<Asset> lstAssets)
+    /*private void UpdateEOMDate(List<Asset> lstAssets)
     {
         if(lstAssets!=null && lstAssets.size()>0)
         {
@@ -410,7 +413,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 asset.End_of_Maintenance__c = (minEomDate == Date.newInstance(3000, 01, 01) ? null : minEomDate);
             }
         }
-    }
+    }*/
     
     
  // Author : Ronald Pascual
@@ -682,7 +685,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         List<Asset> assetlst = [SELECT Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE Id IN: assetIds];
-        
+        System.debug('assetlst ----------------> ' + assetlst);
+        System.debug('quoteToAsset -------------------> ' + quoteToAsset);
         for(Asset a: assetlst){
             if(quoteToAsset.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)){
                  List<Asset> assetToUpdateTheShipmentDate = quoteToAsset.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c);
@@ -714,7 +718,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update updateAsset;
         }
     }
-	private static Order queryForOrder(Set<Id> assetQuoteIds){
+    private static Order queryForOrder(Set<Id> assetQuoteIds){
         Order parentOrder = new Order();
         
         try{
@@ -740,8 +744,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
            assetIds.add(asset.Id);
         }
         
-        List<Asset> assetlst = [SELECT Id, Name, Product2.Name, SBQQ__QuoteLine__r.POC_ID__c, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE Id IN: assetIds];
-        
+        List<Asset> assetlst = [SELECT Id, Name, Product2.Name, SBQQ__QuoteLine__r.POC_ID__c, SBQQ__QuoteLine__r.SBQQ__Quote__c, SBQQ__OrderProduct__c FROM Asset WHERE Id IN: assetIds];
+        System.debug('ORDER PRODUCT ON CREATE ------>>> ' + assetlst);
         for(Asset a: assetlst){
             
             if(a.SBQQ__QuoteLine__r.POC_ID__c != null && a.SBQQ__QuoteLine__r.POC_ID__c != 0){

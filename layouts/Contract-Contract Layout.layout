@@ -293,6 +293,7 @@
         <fields>SBQQ__Quantity__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>SBQQ__EndDate__c</fields>
+        <fields>End_of_Maintenance__c</fields>
         <fields>SBCF_Subscription_Status__c</fields>
         <fields>SBQQ__ListPrice__c</fields>
         <fields>SBQQ__NetPrice__c</fields>

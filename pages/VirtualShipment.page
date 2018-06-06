@@ -46,36 +46,15 @@
         table.messageTable tr:first-child > td h4 { display: none; }
         table.messageTable tr > td.messageCell, table.messageTable tr > td li { color: white; font-weight: 600;}
         table.messageTable tr > td ul {list-style-type: circle;}
-        
+        table table tr:last-child td {
+            text-align: center;
+        }
+        table tr:last-child td.order-product-column {
+            padding: 0;
+        }
     </style>
-    <apex:pageMessages id="showmsg"></apex:pageMessages>
     
     
-     <div class="slds-grid">
-                <div class="slds-col slds-has-flexi-truncate">
-                    <div class="slds-media slds-no-space slds-grow">
-                        <div class="slds-media__figure">
-                        <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
-                            <svg class="slds-icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contracts" />
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="slds-media__body">
-                            <nav>
-                                <ol class="slds-breadcrumb slds-line-height_reset">
-                                    <li class="slds-breadcrumb__item">
-                                        <span>Virtual Shipment Details</span>
-                                    </li>
-                                </ol>
-                            </nav>
-                            <h1 class="slds-page-header__title slds-p-right_x-small">
-                                Order {!Order.OrderNumber}
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-                </div>
     
     
     <apex:outputPanel Id="ActivatedOrder" rendered="{!orderIsActivated}">
@@ -85,18 +64,45 @@
         <br/>
     </apex:outputPanel>
     <apex:outputPanel Id="NonActivatedOrder" rendered="{!NOT(orderIsActivated)}">
-
+        
         <apex:form >
-        <!-- apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" / -->
-        <apex:pageblock mode="maindetail">
-            <apex:pageBlockButtons location="top">
+         <div class="slds-grid" style="padding: 30px 0;">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                        <svg class="slds-icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contracts" />
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                        <nav>
+                            <ol class="slds-breadcrumb slds-line-height_reset">
+                                <li class="slds-breadcrumb__item">
+                                    <span>Virtual Shipment Details</span>
+                                </li>
+                            </ol>
+                        </nav>
+                        <h1 class="slds-page-header__title slds-p-right_x-small">
+                            Order {!Order.OrderNumber}
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <apex:outputPanel >
+                <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
                 <!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
-                <apex:commandButton action="{!saveOrder}" value="Save" rerender="showmsg"/>
-                <apex:commandButton action="{!returnToOrder}" value="Cancel"/>
-            </apex:pageBlockButtons>
-        </apex:pageblock>
+                <apex:commandButton action="{!saveOrder}" value="Save" rerender="showmsg" styleClass="slds-button slds-button_brand"/>
+                <apex:commandButton action="{!returnToOrder}" value="Cancel" styleClass="slds-button slds-button_brand"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+        <!-- apex:sectionHeader title="Virtual Shipment Details - Order {!Order.OrderNumber}" / -->
         
         
+        <apex:pageMessages id="showmsg" />
+        <br />
         <div id="DataTableValues">
             
             <!--

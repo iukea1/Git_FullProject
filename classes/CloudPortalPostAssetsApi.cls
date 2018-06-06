@@ -121,8 +121,14 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
                     generator.writeObjectField('serial',item.SerialNumber);
                 }
                 generator.writeObjectField('name',item.Name);
-                generator.writeObjectField('email',item.email);
-                generator.writeObjectField('domain',item.domain);
+                if(item.email!=null)
+                {
+                    generator.writeObjectField('email',item.email);
+                }
+                if(item.domain!=null)
+                {
+                    generator.writeObjectField('domain',item.domain);
+                }
                 if(item.ExpiryDate!=null)
                 {
                     generator.writeObjectField('expiry',item.ExpiryDate);
@@ -131,8 +137,12 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
                 {
                     generator.writeObjectField('expiry','');
                 }
+                if(item.region!=null)
+                {
+                    generator.writeObjectField('region',item.region);
+                }
                 //generator.writeObjectField('size',item.size);
-                generator.writeObjectField('region',item.region);
+                
                 if(!string.isEmpty(item.version))
                 {
                     generator.writeObjectField('version',item.version);

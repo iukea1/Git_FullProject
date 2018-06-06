@@ -970,6 +970,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_the_CAM_of_record</fullName>
+        <field>First_CAM_Assigned__c</field>
+        <lookupValue>jknezo@silver-peak.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Update the CAM of record</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Upodate_event_date</fullName>
         <field>Event_Date__c</field>
         <formula>today()</formula>
@@ -1744,6 +1754,20 @@ NOT(ISNULL( AccountId)),
 Account.Is_Partner_Initiated_Account__c,
 NOT(ISPICKVAL(Type,&quot;Marketplace&quot;)),
 NOT(New_Business__c) 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update  CAM of Record for CDW</fullName>
+        <actions>
+            <name>Update_the_CAM_of_record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+ISPICKVAL(StageName,&quot;Closed Won&quot;),
+NOT(ISBLANK(Tier1_Partner__c)),
+Tier1_Partner__c==&quot;0013000000ARVVc&quot;
 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

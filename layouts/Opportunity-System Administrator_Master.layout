@@ -358,6 +358,10 @@
                 <behavior>Edit</behavior>
                 <field>SE_Comp_2__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_CAM_Assigned__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

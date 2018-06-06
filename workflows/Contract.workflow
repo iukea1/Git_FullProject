@@ -1001,6 +1001,20 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Trigger Virtual Sub Sync</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contract.StartDate</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <offsetFromField>Contract.StartDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
         <fullName>Unity Cloud Orchestrator After Expiration</fullName>
         <actions>
             <name>Change_the_status_to_Expired</name>

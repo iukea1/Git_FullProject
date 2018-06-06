@@ -67,7 +67,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             List<RMA__c> rmas = new List<RMA__c>();
             List<SBQQ__SubscribedAsset__c> subsAndAsset = new List<SBQQ__SubscribedAsset__c>();
             List<Contract> expiredContract = new List<Contract>();
-			List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();			
+            List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();           
             
             Set<id> contractIds = new Set<Id>();
             Set<id> accountIds = new Set<Id>();
@@ -99,7 +99,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 
                 else{
                     assetToSubscribedAssetMap.put(asset.SBQQ__Asset__c, new List<SBQQ__SubscribedAsset__c>{asset});
-                }	
+                }   
             }
             
             Set<Id> assetIdsToUpdate = assetToSubscribedAssetMap.keySet();

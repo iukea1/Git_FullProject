@@ -750,6 +750,15 @@ right(Id,4))</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Ship_Date</fullName>
+        <field>Ship_Date__c</field>
+        <formula>today()</formula>
+        <name>Update Ship Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>sample_field_update_on_asset</fullName>
         <field>GMS_Nodes__c</field>
         <name>sample field update on asset</name>
@@ -1633,6 +1642,20 @@ NOT(TriggerAutoFulfillEmail__c)
         </criteriaItems>
         <description>This is created to send out the renewal licence emails for Unity CLOUD INTELLIGENCE PRODUCT</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Ship Date</fullName>
+        <actions>
+            <name>Update_Ship_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Asset.Product_Quote_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>manual trigger</fullName>

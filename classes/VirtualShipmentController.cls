@@ -188,13 +188,18 @@ public with sharing class VirtualShipmentController {
             
             //oldSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Contract__c, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds];
             //parentOfSubscriptionAndAsset = [SELECT Id, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__c IN : renewalContractIds LIMIT 1];
-            existingSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__ProductName__c, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
+            existingSubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__ProductName__c, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, 
+                (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) 
+                FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
             
         
             List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
             
             for(SBQQ__Subscription__c sub: existingSubscription){
-               for(OrderItem oiRec: orderProducts){
+                for(SBQQ__SubscribedAsset__c sa : sub.SBQQ__SubscribedAssets__r) {
+                    sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = true;
+                }
+                for(OrderItem oiRec: orderProducts){
                    if(orderItemNameMap.get(oiRec.Id).substring(0,7) == sub.SBQQ__ProductName__c.substring(0,7)){          
                         sub.Quoted_Quantity__c = oiRec.Quantity;                 
                         subList.add(sub);
@@ -238,6 +243,9 @@ public with sharing class VirtualShipmentController {
             
             for(OrderItem oi: orderItems){
                 for(SBQQ__Subscription__c s: amendedSubscription){
+                    for(SBQQ__SubscribedAsset__c sa : s.SBQQ__SubscribedAssets__r) {
+                        sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = true;
+                    }
                     if(!amendmentUpdates.contains(s.Id)) {
                         if(orderItemAmendmentNameMap.get(oi.Id) != null && s.SBQQ__ProductName__c != null){
                             if(orderItemAmendmentNameMap.get(oi.Id).substring(0,7) == s.SBQQ__ProductName__c.substring(0,7)){
@@ -421,10 +429,12 @@ public with sharing class VirtualShipmentController {
                     
                     assetUpdate = new List<Asset>();
                     
-                    for(SBQQ__SubscribedAsset__c asset: assetSelected){
-                        if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
-                            Asset updateAsset = new Asset(Id = asset.SBQQ__Asset__c, Is_Selected_For_Renewal__c = true);
-                            assetUpdate.add(updateAsset);
+                    if(assetSelected != null && !assetSelected.isEmpty()) {
+                        for(SBQQ__SubscribedAsset__c asset: assetSelected){
+                            if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
+                                Asset updateAsset = new Asset(Id = asset.SBQQ__Asset__c, Is_Selected_For_Renewal__c = true);
+                                assetUpdate.add(updateAsset);
+                            }
                         }
                     }
                     

@@ -7,4 +7,5 @@
       <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
        			GMS-{!cx.GMSNodes}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
     </apex:repeat>
+ 
 </apex:component>
