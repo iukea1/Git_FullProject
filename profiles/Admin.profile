@@ -1223,6 +1223,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OrderTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>POCExtensionController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2136,6 +2140,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestDeletionNotAllowedSyncToCp</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDeploymentEnggNotesTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3165,8 +3173,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DE_Case_Note__c.Deployment_Engineer__c</field>
-        <readable>true</readable>
+        <field>DE_Note__c.Acc_Name__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3184,8 +3192,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>DE_Note__c.Deployment_Engineer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DE_Note__c.Has_Attachment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

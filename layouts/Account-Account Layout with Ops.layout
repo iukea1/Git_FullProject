@@ -152,6 +152,10 @@
                 <behavior>Edit</behavior>
                 <field>Contract_Pricing__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deployment_Engineer__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -701,6 +705,15 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Has_Attachment__c</fields>
+        <fields>DE_Notes__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>DE_Note__c.Account_Name__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.TYPE</fields>
         <fields>NAME</fields>
@@ -897,15 +910,6 @@
         <fields>re10__Status__c</fields>
         <fields>re10__OrderTotal__c</fields>
         <relatedList>re10__GKOrderHeader__c.re10__CustomerId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>DE_Notes__c</fields>
-        <fields>Deployment_Engineer__c</fields>
-        <fields>CREATED_DATE</fields>
-        <relatedList>DE_Note__c.Account_Name__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -17,21 +17,21 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Deployment_Engineer__c</field>
+                <field>DE_Notes__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DE_Notes__c</field>
+                <behavior>Readonly</behavior>
+                <field>Has_Attachment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Deployment_Engineer__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Send_Email_To_Case_Owners__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Attachment_Count__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

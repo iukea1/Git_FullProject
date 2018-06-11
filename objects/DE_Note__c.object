@@ -54,6 +54,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Acc_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_Name__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Name Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
         <label>Account Name</label>
@@ -99,25 +111,26 @@
     </fields>
     <fields>
         <fullName>Deployment_Engineer__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <formula>Account_Name__r.Deployment_Engineer__r.FirstName + &quot; &quot; + Account_Name__r.Deployment_Engineer__r.LastName</formula>
         <label>Deployment Engineer</label>
-        <lookupFilter>
-            <active>true</active>
-            <errorMessage>Only Standard Users can be selected as Deployment Engineers</errorMessage>
-            <filterItems>
-                <field>User.UserType</field>
-                <operation>equals</operation>
-                <value>Standard</value>
-            </filterItems>
-            <isOptional>false</isOptional>
-        </lookupFilter>
-        <referenceTo>User</referenceTo>
-        <relationshipName>DE_Notes</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Has_Attachment__c</fullName>
+        <externalId>false</externalId>
+        <formula>If( Attachment_Count__c != 0, IMAGE(&quot;/servlet/servlet.FileDownload?file=0150x0000008YkY&quot;, &quot;Yes&quot;, 15, 15), null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Has Attachment?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Send_Email_To_Account_Team__c</fullName>

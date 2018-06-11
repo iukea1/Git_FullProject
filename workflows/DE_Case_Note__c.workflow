@@ -17,7 +17,7 @@
             <name>Send_Email_Notification_to_Case_Owners</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>DE_Note__c.Send_Email_To_Case_Owners__c</field>
             <operation>equals</operation>

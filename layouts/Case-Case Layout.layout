@@ -559,13 +559,11 @@
     </relatedContent>
     <relatedLists>
         <fields>DE_Note__c.NAME</fields>
+        <fields>DE_Note__c.Has_Attachment__c</fields>
         <fields>DE_Note__c.DE_Notes__c</fields>
-        <fields>DE_Note__c.Deployment_Engineer__c</fields>
         <fields>User.CREATED</fields>
         <fields>DE_Note__c.CREATED_DATE</fields>
         <relatedList>DE_Case_Note__c.Case_Number__c</relatedList>
-        <sortField>DE_Note__c.Deployment_Engineer__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedTeamMemberList</relatedList>

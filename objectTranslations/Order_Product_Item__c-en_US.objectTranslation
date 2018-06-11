@@ -111,5 +111,12 @@
             <translation><!-- Write-Off --></translation>
         </picklistValues>
     </fields>
+    <layouts>
+        <layout>Order Product Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

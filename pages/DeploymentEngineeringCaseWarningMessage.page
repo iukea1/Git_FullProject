@@ -1,9 +1,9 @@
-<apex:page standardcontroller="Case" extensions="DeploymentEngineeringCaseController">
+<apex:page standardcontroller="Case">
     <table>
-        <tr style="display: {!IF(!IsDEAccount, 'none', 'table-row')};">
+        <tr style="display: {!IF(!Case.Account.Deployment_Engineering__c, 'none', 'table-row')};">
             <td>
-                <apex:outputPanel rendered="{!IsDEAccount}" layout="none"> 
-                    <marquee style="box-shadow: 0px 0px 15px black; border-radius: 5px; padding: 10px; background-color: blue; font-weight: bolder; font-size: 14px; margin: 10px; width:1100px; color: white;">Deployment Customer – please check DE Notes for any special instructions for this customer. </marquee>
+                <apex:outputPanel rendered="{!(Case.Account.Deployment_Engineering__c && !Case.IsClosed)}" layout="none"> 
+                    <marquee style="box-shadow: 0px 0px 15px black; border-radius: 5px; padding: 10px; background-color: blue; font-weight: bolder; font-size: 14px; margin: 10px; width:1100px; color: white;">Deployment Customer – please check DE notes for any special instructions for this customer. </marquee>
                 </apex:outputPanel>
             </td>
         </tr>

@@ -12,6 +12,7 @@
     <customButtons>Define_Channel</customButtons>
     <customButtons>SBQQ__CreateOrder</customButtons>
     <customButtons>Create_Renewal_Quote</customButtons>
+    <customButtons>SBQQ__Amend_Contract</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>

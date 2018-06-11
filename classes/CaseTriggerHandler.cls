@@ -24,6 +24,7 @@ public class CaseTriggerHandler implements ITriggerHandler {
     {
         Map<Id,Id> mapCaseEC= new Map<Id,Id>();
         Map<Id,Id> mapCaseNonEC= new Map<Id,Id>();
+        Map<Id,Id> mapCaseAcc = new map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id caseId : newItems.keyset())
@@ -37,14 +38,19 @@ public class CaseTriggerHandler implements ITriggerHandler {
                 {
                     mapCaseNonEC.put(newCase.Id,newCase.AssetId);
                 }
+                if(newCase.RecordTypeId =='012500000005AuO' || newCase.RecordTypeId == '012500000005Aui')
+                {
+                    mapCaseAcc.put(newcase.Id, newCase.AccountId);
+                }
             }
             PopulateMainContract(mapCaseNonEC);
             PopulateECBaseContract(mapCaseEC);
+            CreateDECaseNotes(mapCaseAcc);
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-         Map<Id,Id> mapCaseEC= new Map<Id,Id>();
+        Map<Id,Id> mapCaseEC= new Map<Id,Id>();
         Map<Id,Id> mapCaseNonEC= new Map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
         {
@@ -121,5 +127,38 @@ public class CaseTriggerHandler implements ITriggerHandler {
             if(lstCases.size()>0)
                 update lstCases;
         }
+    }
+    private void CreateDECaseNotes(Map<Id,Id> mapCaseAccounts)
+    {
+        if(mapCaseAccounts != null && mapCaseAccounts.size()>0)
+        {
+            List<DE_Case_Note__c> lstDECaseNotes = new List<DE_Case_Note__c>();
+            Id caseAccountId;
+            List<DE_Note__c> lstAssocDENotes = [Select Id, Account_Name__c from DE_Note__c where Account_Name__c IN :mapCaseAccounts.values()];
+            if(lstAssocDENotes != null && lstAssocDENotes.size()>0)
+            {
+                for(Id caseId: mapCaseAccounts.keySet())
+                {
+                    caseAccountId = mapCaseAccounts.get(caseId);
+                    if(caseAccountId != null)
+                    {
+                        for(DE_Note__c de: lstAssocDENotes)
+                        {
+                            if(de.Account_Name__c == caseAccountId)
+                            {
+                                DE_Case_Note__c decnote= new DE_Case_Note__c();
+                                decnote.Case_Number__c = caseId;
+                                decnote.DE_Note__c = de.Id;
+                                lstDECaseNotes.add(decnote);
+                            }
+                        }
+                    }
+                }
+            }
+            if(lstDECaseNotes != null && lstDECaseNotes.size()>0)
+            {
+                insert lstDECaseNotes;
+            }    
+        } 
     }
 }

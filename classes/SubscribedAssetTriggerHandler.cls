@@ -12,7 +12,6 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public void BeforeInsert(List<SObject> newItems) 
     {
-        cleanSerialNumberCaller(newItems);
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -24,6 +23,7 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
         //cleanSerialNumber(newItems.values());
+        cleanSerialNumberCaller(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -188,28 +188,32 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public static void cleanSerialNumberCaller(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
         Set<Id> incomingSubAssetIds = new Set<Id>();
-        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) incomingSubAssetIds .add(sa.Id);
+        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) incomingSubAssetIds.add(sa.Id);
         
+        System.debug('------------ cleanSerialNumberCaller ----> ' + incomingSubAssetIds);
         cleanSerialNumber(incomingSubAssetIds);
     }
     @future
     public static void cleanSerialNumber(Set<Id> incomingSubAssetIds) { 
         List<SBQQ__SubscribedAsset__c> incomingSubAsset = [SELECT Id, SBQQ__Asset__c, SBQQ__Active__c, SBQQ__UsageEndDate__c, SBQQ__ContractId__c, External_ID__c, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE Id IN: incomingSubAssetIds];
         System.debug('------------------>>> Entering CleanSerialNumber');
+        System.debug('------------------>>> incomingSubAssetIds ' + incomingSubAssetIds);
+        System.debug('------------------>>> incomingSubAsset ' + incomingSubAsset);
         List<Asset> assetDelete = new List<Asset>();
         List<Asset> assetUpdate = new List<Asset>();
-        Map<String, String> serNumberOldAsset = getAllData(incomingSubAsset);
         Set<Id> asstIds = new Set<Id>();
 
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
             asstIds.add(sa.SBQQ__Asset__c);
         }
 
-        Map<Id, Asset> assetSerial = new Map<Id, Asset>([SELECT Id, SerialNumber FROM Asset WHERE Id IN :asstIds]);
+        Map<Id, Asset> assetSerial = new Map<Id, Asset>([SELECT Id, SerialNumber, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :asstIds]);
+
+        Map<String, String> serNumberOldAsset = getAllData(assetSerial.values());
 
         System.debug('------------------>>> CleanSerialNumber : serNumberOldAsset : ' + serNumberOldAsset);
         System.debug('------------------>>> CleanSerialNumber : assetSerial : ' + assetSerial);
-        
+        Boolean doUpdate = false;
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
             //assetUpdate.add();
             if(assetSerial.containsKey(sa.SBQQ__Asset__c) && serNumberOldAsset.containsKey(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber)) {
@@ -217,36 +221,29 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
                 String assetId = serNumberOldAsset.get(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber);
                 System.debug('------------------>>> CleanSerialNumber : subscribe asset update: from ' + sa.SBQQ__Asset__c + ' to ' + assetId);
                 sa.SBQQ__Asset__c = assetId;
+                doUpdate = true;
             }
         }
         System.debug('------------------>>> CleanSerialNumber : assetDelete: ' + assetDelete);
         if(!assetDelete.isEmpty()) delete assetDelete;
+        update incomingSubAsset;
     }
-    private static Map<String, String> getAllData(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
-        //Map<Id, SBQQ__SubscribedAsset__c> fullData = new Map<Id, SBQQ__SubscribedAsset__c>(
-        //        [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__OrderProduct__c FROM SBQQ__SubscribedAsset__c WHERE Id IN :incomingSubAsset]
-        //);
-        Set<Id> subsSet = new Set<Id>();
-        for(SBQQ__SubscribedAsset__c sa : [SELECT Id, SBQQ__Asset__c, SBQQ__Subscription__c, SBQQ__Subscription__r.SBQQ__OrderProduct__c FROM SBQQ__SubscribedAsset__c WHERE Id IN :incomingSubAsset]) {
-            subsSet.add(sa.SBQQ__Subscription__c);
-        }
-        Map<Id, SBQQ__Subscription__c> fullData = new Map<Id, SBQQ__Subscription__c>(
-                [SELECT Id, SBQQ__OrderProduct__c FROM SBQQ__Subscription__c WHERE Id IN :subsSet]
-        );
-        System.debug('------------------>>> CleanSerialNumber : fullData : ' + fullData );
-        Set<Id> ordProdIds = new Set<Id>();
-        for(SBQQ__Subscription__c sa : fullData.values()) {
-            ordProdIds.add(sa.SBQQ__OrderProduct__c);
-        }
-        System.debug('------------------>>> CleanSerialNumber : ordProdIds: ' + ordProdIds);
-
+    private static Map<String, String> getAllData(List<Asset> createdAssets) {
         Map<String, String> serNumberOldAsset = new Map<String, String>();
-        for(OrderItem op : [SELECT Id, (SELECT Id, Existing_Asset__c, Serial_Number__c FROM Order_Product_Items__r) FROM OrderItem WHERE Id IN :ordProdIds]) {
-            for(Order_Product_Item__c opi : op.Order_Product_Items__r) {
-                serNumberOldAsset.put(opi.Serial_Number__c, opi.Existing_Asset__c);
-            }
+        Set<String> snSet = new Set<String>();
+        Set<Id> orderSet = new Set<Id>();
+        
+        for(Asset a : createdAssets){
+            snSet.add(a.SerialNumber);
+            orderSet.add(a.SBQQ__OrderProduct__r.OrderId);
         }
-        System.debug('------------------>>> CleanSerialNumber : query: ' + [SELECT Id, (SELECT Id, Existing_Asset__c, Serial_Number__c FROM Order_Product_Items__r) FROM OrderItem WHERE Id IN :ordProdIds]);
+        
+        for(Order_Product_Item__c opi : [SELECT Id, Existing_Asset__c, Serial_Number__c FROM Order_Product_Item__c 
+        WHERE (NOT Asset__c IN :createdAssets) AND Serial_Number__c IN :snSet AND Existing_Asset__c != NULL AND Order_Product__r.OrderId IN :orderSet]) {
+            serNumberOldAsset.put(opi.Serial_Number__c, opi.Existing_Asset__c);
+        }
+
+        System.debug('------------------>>> CleanSerialNumber : query: ' + [SELECT Id, Existing_Asset__c, Serial_Number__c FROM Order_Product_Item__c WHERE Asset__c IN :createdAssets AND Existing_Asset__c != NULL]);
         return serNumberOldAsset;
     }
 }

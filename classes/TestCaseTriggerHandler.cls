@@ -1,6 +1,6 @@
 @IsTest
 public class TestCaseTriggerHandler {
-
+    
     @IsTest
     public static void TestECContract_Insert()
     {
@@ -20,7 +20,7 @@ public class TestCaseTriggerHandler {
         product.Family = 'Virtual Image';
         insert product;
         
-         Product2 echw = new Product2();
+        Product2 echw = new Product2();
         echw.Name = 'EC-XS-1Y';
         echw.ProductCode = 'EC-XS-1Y';
         echw.Model__c = 'EC-XS-1Y';
@@ -49,7 +49,7 @@ public class TestCaseTriggerHandler {
         System.assert(outputCase.Asset_Sub_Contract__c!=null);
     }
     
-      @IsTest
+    @IsTest
     public static void TestECContract_Update()
     {
         Account acc= new Account(Name='Test');
@@ -68,7 +68,7 @@ public class TestCaseTriggerHandler {
         product.Family = 'Virtual Image';
         insert product;
         
-         Product2 echw = new Product2();
+        Product2 echw = new Product2();
         echw.Name = 'EC-XS-1Y';
         echw.ProductCode = 'EC-XS-1Y';
         echw.Model__c = 'EC-XS-1Y';
@@ -101,7 +101,7 @@ public class TestCaseTriggerHandler {
         System.assert(outputCase.Asset_Sub_Contract__c!=null);
     }
     
-     @IsTest
+    @IsTest
     public static void TestNonECContract_Insert()
     {
         Account acc= new Account(Name='Test');
@@ -121,7 +121,7 @@ public class TestCaseTriggerHandler {
         insert product;
         
         Product2 hw = new Product2();
-       	hw.Name = 'NX-1700';
+        hw.Name = 'NX-1700';
         hw.ProductCode = 'NX-1700';
         hw.Model__c = 'NX-1700';
         hw.Product_Type__c = 'NX/VX';
@@ -151,10 +151,10 @@ public class TestCaseTriggerHandler {
         System.assert(outputCase.Asset_Sub_Contract__c!=null);
     }
     
-      @IsTest
+    @IsTest
     public static void TestNonECContract_Update()
     {
-         Account acc= new Account(Name='Test');
+        Account acc= new Account(Name='Test');
         insert acc;
         Opportunity testOpp = new Opportunity(Name='acme', CloseDate=Date.today(), StageName='New', ForecastCategoryName ='Omitted', AccountId=acc.Id,Product_Type__c='Both');
         insert testOpp;
@@ -171,7 +171,7 @@ public class TestCaseTriggerHandler {
         insert product;
         
         Product2 hw = new Product2();
-       	hw.Name = 'NX-1700';
+        hw.Name = 'NX-1700';
         hw.ProductCode = 'NX-1700';
         hw.Model__c = 'NX-1700';
         hw.Product_Type__c = 'NX/VX';
@@ -203,5 +203,57 @@ public class TestCaseTriggerHandler {
         update case1;
         outputCase=[Select Id,Asset_Sub_Contract__c from Case where Id=:case1.Id];
         System.assert(outputCase.Asset_Sub_Contract__c!=null);
+    }
+    
+    //A non Tech Support case is created for a account that has DE Notes
+    @isTest
+    static void NewCaseNotTechSupport()
+    {
+        Profile prof = [SELECT Id FROM Profile WHERE Name='Engineering Support']; 
+        User engUser = new User(Alias = 'standt', Email='testUser@testenguser.com', 
+                                EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+                                LocaleSidKey='en_US', ProfileId = prof.Id, 
+                                TimeZoneSidKey='America/Los_Angeles', UserName='testUser@testenguser.com');  
+        
+        Account acc = new Account(Name = 'Hybrid Technologies', Type = 'Customer', Deployment_Engineering__c = True);
+        insert acc;
+        
+        Contact con = new Contact(FirstName = 'John', LastName  = 'Doe', AccountId = acc.Id);
+        insert con;
+        
+        De_Note__c den = new DE_Note__c(Account_Name__c = acc.Id, DE_Notes__c = 'TestNotes', Send_Email_To_Case_Owners__c = True);
+        insert den;
+        
+        Case case1 = new Case(Subject = 'Invalid Case for DE Notes', AccountId = acc.Id, ContactId = con.Id, RecordTypeId = '012500000005HNd', Priority = 'P4 - Low', Type = 'Customer Service', Origin = 'Web');
+        insert case1;
+        
+        List<DE_Case_Note__c> lstDECaseNotes = [Select Id, De_Note__r.Id from DE_Case_Note__c where DE_Note__r.Id =:den.Id];
+        system.assertEquals(0,lstDECaseNotes.size() );
+    }
+    
+    //A Tech Support Case is created for an account that has DE Notes
+    @isTest
+    static void NewCaseIsTechSupport()
+    {
+        Profile prof = [SELECT Id FROM Profile WHERE Name='Engineering Support']; 
+        User engUser = new User(Alias = 'standt', Email='testUser@testenguser.com', 
+                                EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+                                LocaleSidKey='en_US', ProfileId = prof.Id, 
+                                TimeZoneSidKey='America/Los_Angeles', UserName='testUser@testenguser.com');  
+        
+        Account acc = new Account(Name = 'Hybrid Technologies', Type = 'Customer', Deployment_Engineering__c = True);
+        insert acc;
+        
+        Contact con = new Contact(FirstName = 'John', LastName  = 'Doe', AccountId = acc.Id);
+        insert con;
+        
+        De_Note__c den = new DE_Note__c(Account_Name__c = acc.Id, DE_Notes__c = 'TestNotes', Send_Email_To_Case_Owners__c = True);
+        insert den;
+        
+        Case case1 = new Case(Subject = 'Valid Case for DE Notes', AccountId = acc.Id, ContactId = con.Id, RecordTypeId = '012500000005Aui', Priority = 'P4 - Low', Type = 'Customer Service', Origin = 'Web');
+        insert case1;
+        
+        List<DE_Case_Note__c> lstDECaseNotes = [Select Id, De_Note__r.Id from DE_Case_Note__c where DE_Note__r.Id =:den.Id];
+        system.assertEquals(1,lstDECaseNotes.size() );
     }
 }

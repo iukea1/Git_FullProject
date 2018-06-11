@@ -104,7 +104,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             
             Set<Id> assetIdsToUpdate = assetToSubscribedAssetMap.keySet();
             List<RMA_Item__c> items = new List<RMA_Item__c>();
-            List<Asset> assets = [SELECT Id, Product2Id FROM Asset WHERE Id IN: assetIdsToUpdate];
+            List<Asset> assets = [SELECT Id, Product2Id FROM Asset WHERE Id IN: assetIdsToUpdate AND Status != 'Customer Owned'];
             // processing
             
             for(Contract c: contractExpired){

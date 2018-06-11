@@ -10,6 +10,7 @@ public with sharing class VirtualShipmentController {
     public Boolean isDuplicateECProd;
     public Boolean orderProductQuantityIsNotEqual;
     public Boolean orderIsActivated {get;set;}
+    public Boolean notRenewal {get;set;}
     
     public Boolean orderItemsQuantityIsNotEqual;
     
@@ -67,11 +68,12 @@ public with sharing class VirtualShipmentController {
         
         
         //TODO - check if this is correct
-        /*if(this.order.Type != 'Renewal' && this.order.Type != 'Amendment'){
+        if(this.order.Type != 'Renewal' && this.order.Type != 'Amendment'){
+            notRenewal = true;
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Virtual Shipment details can be only applied to Renewals / Amendments');
             ApexPages.addMessage(myMsg);
             return;
-        }*/
+        }
         
         // Determine first if the order is renewal
         // If renewal, then query the related opportunity and the renewed contract. 
@@ -219,6 +221,13 @@ public with sharing class VirtualShipmentController {
             }
     
             displaySubscription = [SELECT Id, SBQQ__Product__r.Name, SBQQ__Quantity__c, Quoted_Quantity__c, SBQQ__Contract__c, (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
+            
+                for(SBQQ__Subscription__c s: displaySubscription ){
+                    for(SBQQ__SubscribedAsset__c sa : s.SBQQ__SubscribedAssets__r) {
+                        sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = true;
+                    }
+                }
+            
             isRenewal = true;
                 
         } else if(this.order.Type == 'Amendment') {

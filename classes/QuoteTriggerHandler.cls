@@ -78,6 +78,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         for(SBQQ__Quote__c qRec : quotes) {
             if(qRec.POC_Status__c == 'Shipped - Extended' && oldItems.get(qRec.Id).POC_Status__c != 'Shipped - Extended') {
                 qRec.SBQQ__EndDate__c = qRec.Requested_Extension_Date__c;
+                qRec.SBQQ__ExpirationDate__c = qRec.Requested_Extension_Date__c;
                 if(opsMap.containsKey(qRec.SBQQ__Opportunity2__c) && opsMap.get(qRec.SBQQ__Opportunity2__c).ContractId != null) {
                     contUpdate.add(
                         new Contract(

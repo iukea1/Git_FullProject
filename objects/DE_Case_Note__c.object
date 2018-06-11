@@ -101,18 +101,6 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <fields>
-        <fullName>Deployment_Engineer__c</fullName>
-        <externalId>false</externalId>
-        <formula>DE_Note__r.Deployment_Engineer__r.FirstName + &quot; &quot; + DE_Note__r.Deployment_Engineer__r.LastName</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Deployment Engineer</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <label>Deployment Engineering Case Note</label>
     <listViews>
         <fullName>All</fullName>

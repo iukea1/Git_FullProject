@@ -39,7 +39,7 @@ public class ContactTriggerHandler implements ITriggerHandler {
                 Contact newContact=(Contact)newItems.get(conId);
                 if(newContact.CanAllowPortalSelfReg && !oldContact.CanAllowPortalSelfReg && SilverPeakUtils.IsUserNameExistswithEmail(newContact.Email))
                 {
-                    newContact.addError('There is an active portal license registered with this email address. Please enter other email address.');
+                    newContact.addError('There is an active portal license registered with this email address. Please enter another email address.');
                 }
                 if(newContact.TechnicalPresalesReady__c!=oldContact.TechnicalPresalesReady__c)
                 {

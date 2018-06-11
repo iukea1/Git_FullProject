@@ -97,6 +97,10 @@
                 <behavior>Edit</behavior>
                 <field>Country_Picklist__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Request_to_Delete_Record__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

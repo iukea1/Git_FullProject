@@ -51,6 +51,10 @@
                 <behavior>Edit</behavior>
                 <field>Contract_Pricing__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deployment_Engineer__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

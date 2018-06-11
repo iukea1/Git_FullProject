@@ -33,6 +33,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('Before Insert');
         Map<Id,Account> cloudPortalAccs= new Map<Id,Account>();
         List<Asset> lstAsset= new List<Asset>();
+        System.debug('Asset trigger : before insert ---------------> ' + newItems);
         if(newItems!=null && newItems.size()>0)
         {
             List<Asset> lstNewAssets=(List<Asset>)newItems;
@@ -41,6 +42,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
+                    lstAsset.add(newAsset);
                 }
                 if(newAsset.AccountId!=null && newAsset.Status!='Customer Evaluation')
                 {
@@ -60,7 +62,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
             //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
             //populateAssetFields(newItems);
-            groupAssetsByOrderProduct(lstAsset);
+            System.debug('Asset trigger : before insert : lstAsset ---------------> ' + lstAsset);
+            //groupAssetsByOrderProduct(lstAsset);
+            updateAssetStatus((List<Asset>)newItems);
+            retrieveAssetSerials(lstAsset);
         }
         
         
@@ -122,7 +127,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
-            
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -168,10 +172,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
-        updateAssetStatus(newItems.values());
 
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
+        
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -733,7 +737,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         return parentOrder;
     }
     
-    private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
+    /*private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
         
         Set<Id> assetIds = new Set<Id>();
         List<Asset> updateAsset = new List<Asset>();
@@ -760,10 +764,91 @@ public class AssetTriggerHandler implements ITriggerHandler {
         if(updateAsset.size()>0){
            update updateAsset; 
         }
+    }*/
+    private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
+        System.debug('updateAssetStatus -----------> ' + assetStatusToUpdate);
+        Set<Id> quoteLineId = new Set<Id>();
+        Set<Id> productId = new Set<Id>();
+        
+        
+        for(Asset asset: assetStatusToUpdate){
+           quoteLineId.add(asset.SBQQ__QuoteLine__c);
+           productId.add(asset.Product2Id);
+        }
+
+        System.debug('quoteLineId -----------> ' + quoteLineId);
+        System.debug('productId-----------> ' + productId);
+        
+        
+        Map<Id, SBQQ__QuoteLine__c> qline = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, POC_ID__c, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :quoteLineId]);
+        Map<Id, Product2> prodMap = new Map<Id, Product2>([SELECT Id, Name FROM Product2 WHERE Id IN :productId]);
+        
+        
+        System.debug('qline -----------> ' + qline);
+        System.debug('prodMap -----------> ' + prodMap);
+        
+        for(Asset a: assetStatusToUpdate){
+            SBQQ__QuoteLine__c ql = qline.get(a.SBQQ__QuoteLine__c);
+            Product2 p2 = prodMap.get(a.Product2Id);
             
+            System.debug('inside asset ' + a + ': ' + ql);
+            System.debug('inside asset ' + a + ': ' + p2);
+            
+            
+            if(ql != null && ql.POC_ID__c != null && ql.POC_ID__c != 0){
+                a.Status = 'Customer Evaluation';
+            }
+            if(p2 != null && p2.Name.contains('Asset') && p2.Name != null){
+                a.Status = 'Customer Subscription';  
+            }
+            if(a.Status == null) {
+                a.Status = 'Customer Subscription'; 
+            }
+            //updateAsset.add(a);
+        }
+    }
+
+    private static void retrieveAssetSerials(List<Asset> newAssets) {
+        Set<Id> qLineCollect = new Set<Id>();
+        for(Asset a : newAssets) {
+            qLineCollect.add(a.SBQQ__QuoteLine__c);
+        }
+        qLineCollect.remove(null);
+
+        Map<Id, SBQQ__QuoteLine__c> quoteLineMap = new Map<Id, SBQQ__QuoteLine__c>(
+            [SELECT Id, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :qLineCollect]
+        );
+        Set<Id> quoteIdCollect = new Set<Id>();
+        for(SBQQ__QuoteLine__c ql : quoteLineMap.values()) {
+            quoteIdCollect.add(ql.SBQQ__Quote__c);
+        }
+
+        Map<Id, Map<Id, Order_Product_Item__c>> opiToQuote = new Map<Id, Map<Id, Order_Product_Item__c>>();
+        for(Order_Product_Item__c opi : [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quoteIdCollect]) {
+            if(!opiToQuote.containsKey(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c)) {
+                opiToQuote.put(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Map<Id, Order_Product_Item__c>());
+            }
+            opiToQuote.get(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c).put(opi.Id, opi);
+        }
+        List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
         
-        
-        
+        for(Asset a : newAssets) {
+            Id quoteId = quoteLineMap.get(a.SBQQ__QuoteLine__c).SBQQ__Quote__c;
+            Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(quoteId);
+            if(opitemMap.size() > 0) {
+                a.Name = opitemMap.values()[0].Serial_Number__c;
+                a.SerialNumber = opitemMap.values()[0].Serial_Number__c;
+                a.Part_Number__c = opitemMap.values()[0].Part_Number__c;
+                a.Status = 'Customer Owned';
+                
+                Order_Product_Item__c opiUp = opiToQuote.get(quoteId).get(opitemMap.values()[0].Id);
+                opiUp.Asset__c = a.Id;
+                opiIdDone.add(opiUp);
+                opiToQuote.get(quoteId).remove(opitemMap.values()[0].Id);
+            }
+        }
+        System.debug('opiIdDone -------------------------> ' + opiIdDone);
+        update opiIdDone;
     }
     
 }

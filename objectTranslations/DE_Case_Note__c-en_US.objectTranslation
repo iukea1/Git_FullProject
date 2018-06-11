@@ -26,10 +26,6 @@
         <label><!-- Deployment Engineering Notes --></label>
         <name>DE_Notes__c</name>
     </fields>
-    <fields>
-        <label><!-- Deployment Engineer --></label>
-        <name>Deployment_Engineer__c</name>
-    </fields>
     <layouts>
         <layout>Deployment Engineering Case Note Layout</layout>
         <sections>

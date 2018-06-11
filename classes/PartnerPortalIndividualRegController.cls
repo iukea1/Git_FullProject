@@ -51,7 +51,7 @@ public without sharing class PartnerPortalIndividualRegController
         }
         if(SilverPeakUtils.IsUserNameExistswithEmail(Email))
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'Our records indicate that you already have customer portal access. Please contact channels team.'));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning, 'Our records indicate that you already have portal access. Please contact support@silver-peak.com to resolve this issue.'));
             return null;
         }
         if(PortalTC == FALSE)
