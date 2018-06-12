@@ -64,6 +64,71 @@
         <template>Steelbrick_Email_Templates/GMS_Fulfillment</template>
     </alerts>
     <alerts>
+        <fullName>Reduction_Email_Future</fullName>
+        <ccEmails>notifications@silver-peak.com,</ccEmails>
+        <ccEmails>RenewalsTeam@silver-peak.com</ccEmails>
+        <description>Reduction Email Future</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Renewal_EC_Reduction_future</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Non_Reduction_Order</fullName>
+        <ccEmails>notifications@silver-peak.com,RenewalsTeam@silver-peak.com</ccEmails>
+        <description>Send Non Reduction Order</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Renewal_EC_Non_Reduction</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Reduction_Email</fullName>
+        <ccEmails>notifications@silver-peak.com,</ccEmails>
+        <ccEmails>RenewalsTeam@silver-peak.com</ccEmails>
+        <description>Send Reduction Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Renewal_EC_Reduction</template>
+    </alerts>
+    <alerts>
         <fullName>Unity_Cloud_Fulfillment</fullName>
         <ccEmails>notifications@silver-peak.com</ccEmails>
         <description>Unity Cloud Fulfillment</description>
@@ -173,6 +238,26 @@
         <name>SBCF Set Shipment Contact to PO Contact</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Order_Record_Type_to_Customer</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Customer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Set Order Record Type to Customer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Order_Record_Type_to_Evaluation</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Evaluation</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Set Order Record Type to Evaluation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <rules>
@@ -288,14 +373,127 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Populate First Order</fullName>
-        <active>false</active>
-        <formula>AND(
-SBQQ__Quote__r.Order_Count__c==1,
-IsPickVal(Status ,&quot;Activated&quot;),
-Virtual_Product_Count__c &gt;0
-)</formula>
+        <fullName>Renewal EC Non Reduction</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Type</field>
+            <operation>equals</operation>
+            <value>Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Standard Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_Non_Reduction_Order</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Renewal EC Reduction</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Type</field>
+            <operation>equals</operation>
+            <value>Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Reduction Renewal</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_Reduction_Email</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Renewal EC Reduction For Future Date</fullName>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Order.Type</field>
+            <operation>equals</operation>
+            <value>Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Reduction Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.EffectiveDate</field>
+            <operation>greaterThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Reduction_Email_Future</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.EffectiveDate</offsetFromField>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>SBCF Set Contracted to True</fullName>
@@ -319,6 +517,26 @@ Virtual_Product_Count__c &gt;0
         </actions>
         <active>true</active>
         <formula>ISPICKVAL( SBQQ__Quote__r.Product_Type__c , &quot;EDGECONNECT&quot;)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set POC Record Type</fullName>
+        <actions>
+            <name>Set_Order_Record_Type_to_Evaluation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>SBQQ__Quote__r.SBCF_Evaluation_Quote__c</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Standard Record Type</fullName>
+        <actions>
+            <name>Set_Order_Record_Type_to_Customer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT(SBQQ__Quote__r.SBCF_Evaluation_Quote__c)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

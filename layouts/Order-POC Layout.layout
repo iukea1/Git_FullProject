@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Apply_Serial_Numbers</customButtons>
+    <customButtons>Virtual_Shipment_Details</customButtons>
     <customButtons>Create_Subscribed_Asset_for_Renewal</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -276,6 +277,7 @@
         <fields>SBQQ__QuotedListPrice__c</fields>
         <fields>TotalPrice</fields>
         <fields>SBQQ__OrderedQuantity__c</fields>
+        <fields>Renewed_Original_Quantity__c</fields>
         <fields>SBQQ__QuotedQuantity__c</fields>
         <fields>SBQQ__QuoteLine__c</fields>
         <fields>ODER_ITEM.START_DATE</fields>

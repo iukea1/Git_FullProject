@@ -149,6 +149,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setAccIds=new Set<Id>();
         Set<Id> setECAcctIds= new Set<Id>();
         Set<Id> setWanOpAcctIds= new Set<Id>();
+        List<Asset> virtualAssets = new List<Asset>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id assetId : newItems.keyset())
@@ -159,6 +160,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
                     hardwareECAssetIds.put(newAsset.Id,newAsset);
                     setAccIds.add(newAsset.AccountId);
                 }
+                
+                if(newAsset.Product_Family__c=='Virtual Image') {
+                    virtualAssets.add(newAsset);
+                }
+                
                 if(newAsset.Product_Quote_Type__c=='EDGECONNECT' && newAsset.Model__c.startsWith('EC-BASE' ) && newAsset.Product_Family__c=='Virtual Image' && (newAsset.Status=='Customer Evaluation' || newAsset.Status=='Customer Subscription Active'))
                 {
                     softwareECBaseAssetIds.put(newAsset.Id,newAsset);
@@ -172,6 +178,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
+        generateVirtualSerialNumber(virtualAssets);
 
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
@@ -187,6 +194,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setECAcctIds= new Set<Id>();
         Set<Id> setWanOpAcctIds= new Set<Id>();
         List<Asset> lstLicenseAssets= new List<Asset>();
+        List<Asset> virtualAssets = new List<Asset>();
+        
         if(newItems!=null && newItems.size()>0)
         {
             for (Id assetId : newItems.keyset())
@@ -197,8 +206,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 {
                     if(newAsset.Status!=null && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
                         lstLicenseAssets.add(newAsset);
-                    else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status!=oldAsset.Status || (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c)) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription'))
+                    else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status!=oldAsset.Status || (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c)) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
                         lstLicenseAssets.add(newAsset);
+                    }
+                    if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
                 }
                     
                 if(oldAsset.AccountId!=newAsset.AccountId || oldAsset.Status!=newAsset.Status)
@@ -219,6 +230,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
             GenerateLicense(lstLicenseAssets);
+            generateVirtualSerialNumber(virtualAssets);
             //populateAssetFields(newItems.values());
         }
         
@@ -770,36 +782,26 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> quoteLineId = new Set<Id>();
         Set<Id> productId = new Set<Id>();
         
-        
         for(Asset asset: assetStatusToUpdate){
            quoteLineId.add(asset.SBQQ__QuoteLine__c);
            productId.add(asset.Product2Id);
         }
-
-        System.debug('quoteLineId -----------> ' + quoteLineId);
-        System.debug('productId-----------> ' + productId);
-        
         
         Map<Id, SBQQ__QuoteLine__c> qline = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, POC_ID__c, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :quoteLineId]);
         Map<Id, Product2> prodMap = new Map<Id, Product2>([SELECT Id, Name FROM Product2 WHERE Id IN :productId]);
         
-        
-        System.debug('qline -----------> ' + qline);
-        System.debug('prodMap -----------> ' + prodMap);
-        
         for(Asset a: assetStatusToUpdate){
             SBQQ__QuoteLine__c ql = qline.get(a.SBQQ__QuoteLine__c);
             Product2 p2 = prodMap.get(a.Product2Id);
-            
-            System.debug('inside asset ' + a + ': ' + ql);
-            System.debug('inside asset ' + a + ': ' + p2);
-            
             
             if(ql != null && ql.POC_ID__c != null && ql.POC_ID__c != 0){
                 a.Status = 'Customer Evaluation';
             }
             if(p2 != null && p2.Name.contains('Asset') && p2.Name != null){
                 a.Status = 'Customer Subscription';  
+            }
+            if(a.Product_Category__c == 'Appliance') {
+                a.Status = 'Customer Owned'; 
             }
             if(a.Status == null) {
                 a.Status = 'Customer Subscription'; 
@@ -815,9 +817,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         qLineCollect.remove(null);
 
-        Map<Id, SBQQ__QuoteLine__c> quoteLineMap = new Map<Id, SBQQ__QuoteLine__c>(
-            [SELECT Id, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :qLineCollect]
-        );
+        Map<Id, SBQQ__QuoteLine__c> quoteLineMap = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :qLineCollect]);
         Set<Id> quoteIdCollect = new Set<Id>();
         for(SBQQ__QuoteLine__c ql : quoteLineMap.values()) {
             quoteIdCollect.add(ql.SBQQ__Quote__c);
@@ -849,6 +849,37 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         System.debug('opiIdDone -------------------------> ' + opiIdDone);
         update opiIdDone;
+    }
+    
+    private static void generateVirtualSerialNumber(List<Asset> newAssets) {
+        List<Asset_Mac__c> macList = new List<Asset_Mac__c>();
+        
+        for(Asset a : newAssets) {
+            macList.add(new Asset_Mac__c(
+                AssetId__c = a.Id,
+                Used__c = true
+            ));
+
+        }
+        Map<Id, Id> macToAsset = new Map<Id, Id>();
+        if(!macList.isEmpty()) insert macList;
+
+        for(Asset_Mac__c am : macList) {
+            macToAsset.put(am.AssetId__c, am.Id);
+        }
+        
+        List<Asset> assetReUpdate = [SELECT Id, SerialNumber FROM Asset WHERE Id IN :macToAsset.keySet()];
+        Map<Id, Asset_Mac__c> macMap = new Map<Id, Asset_Mac__c>();
+        for(Asset_Mac__c am : [SELECT Id, AssetId__c, Name FROM Asset_Mac__c WHERE Id IN :macToAsset.values()]) {
+            macMap.put(am.AssetId__c, am);
+        }
+        
+        for(Asset a : assetReUpdate) {
+            if(macMap.containsKey(a.Id)) {
+                a.SerialNumber = '001BBC' + VirtualAssetManager.toHex(Integer.valueOf(macMap.get(a.Id).Name));
+            }
+        }
+        if(!assetReUpdate.isEmpty()) update assetReUpdate;
     }
     
 }

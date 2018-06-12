@@ -95,7 +95,7 @@
             <apex:outputPanel >
                 <div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom_xx-small">
                 <!-- <apex:commandButton action="{!activateOrder}" value="Activate Order"/> -->
-                <apex:commandButton action="{!saveOrder}" value="Save" rerender="showmsg" styleClass="slds-button slds-button_brand"/>
+                <apex:commandButton action="{!saveOrder}" value="Save" styleClass="slds-button slds-button_brand"/>
                 <apex:commandButton action="{!returnToOrder}" value="Cancel" styleClass="slds-button slds-button_brand"/>
                 </div>
             </apex:outputPanel>

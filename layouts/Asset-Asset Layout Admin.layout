@@ -214,6 +214,10 @@
                 <behavior>Edit</behavior>
                 <field>Smart_Hands_Subscription__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Selected_For_Renewal__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -504,6 +508,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>RMA_Item__c.Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Asset_Mac__c.AssetId__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <relatedObjects>ContactId</relatedObjects>

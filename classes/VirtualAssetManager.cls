@@ -345,7 +345,7 @@ public class VirtualAssetManager
         }
     }
     
-    private String toHex(Integer x) 
+    public static String toHex(Integer x) 
     {
         String s = '';
         String hex = '0123456789ABCDEF';

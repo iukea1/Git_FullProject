@@ -253,6 +253,10 @@
             <section>Address Information</section>
         </sections>
         <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
             <label><!-- Contract Information --></label>
             <section>Contract Information</section>
         </sections>
