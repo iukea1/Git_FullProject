@@ -236,6 +236,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__EndDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__MasterContract__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

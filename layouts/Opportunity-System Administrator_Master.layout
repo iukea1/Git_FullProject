@@ -713,6 +713,17 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>ACCOUNT.SITE</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.FORECAST_CATEGORY</fields>
+        <fields>Primary_Partner__c</fields>
+        <fields>Registered_Partner__c</fields>
+        <relatedList>Opportunity.RenewedOpportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Type__c</fields>
         <fields>Priority__c</fields>

@@ -79,6 +79,7 @@ public without sharing class ConvertRmaToCmaController
         try
         {
             // Opens an RMA of CMA record type
+        //1. Create a RMA record with two RMA items … one  for NX asset and the other for VX
             String cmaRecordTypeId = SilverPeakUtils.getRecordTypeId('CMA', 'RMA__c');
             String accountId = getAccountId(NxAsset);
             RMA__c cma = new RMA__c(RecordTypeId = cmaRecordTypeId, Account__c = accountId, Contact__c = currentUser.ContactId, Status__c = 'Shipped', Type__c = 'Convert to Virtual');
@@ -97,18 +98,48 @@ public without sharing class ConvertRmaToCmaController
             Asset vxAsset = createVirtualAsset(NxAsset);
 
             // Adds the new VX to the CMA record as well
+        //1. Create a RMA record with two RMA items … one  for NX asset and the other for VX
             RMA_Item__c cmaItem = new RMA_Item__c(RMA__c = cma.Id, RecordTypeId = rmaItemRecordTypeId, Asset__c = vxAsset.Id, Product2__c = virtualProductId, Status__c = 'Shipped',
                                                     Type__c = 'Convert to Virtual', ShipToCompany__c = accountName, Ship_To_Contact__c = currentUser.ContactId);
             rmaItems.add(cmaItem);
             insert rmaItems;
 
-            Asset createdVxAsset = [select SerialNumber, Contract_Type__c, Contract_End__c, Model__c from Asset where Id = :vxAsset.Id];
+            Asset createdVxAsset = [select Id, AccountId, SerialNumber, Contract_Type__c, Contract_End__c, Model__c from Asset where Id = :vxAsset.Id];
             update new Asset(Id = NxAsset.Id, Contract_Number__c = null, Status='Pending Return – Conversion'); //sends email CmaRequestProcessedResult
             System.debug('createdVxAsset: ' + createdVxAsset.Model__c);
             if(isRecycling(NxAsset))
             {
                 update new RMA__c(Id = cma.Id, IsRecycling__c = true); // sends email NXApplianceRecyclingInstructions
             }
+          
+            //Deactivate NX subscribed asset
+            SBQQ__SubscribedAsset__c nxSubscribeAsset = [SELECT Id FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
+            nxSubscribeAsset.SBQQ__Active__c = false;
+            
+            //TODO
+            
+            //2. Find the contract associated to the NX asset and add a subscription record for VX maintenance in the same contract.
+            
+            SBQQ__Subscription__c sub = new SBQQ__Subscription__c(
+                SBQQ__Contract__c = NxAsset.Contract_Number__c,
+                SBQQ__QuoteLine__c = NxAsset.SBQQ__QuoteLine__c,
+                SBQQ__Account__c = createdVxAsset.AccountId
+            );
+            insert sub;
+            insert new SBQQ__SubscribedAsset__c(
+                SBQQ__Active__c = true,
+                SBQQ__Asset__c = createdVxAsset.Id,
+                SBQQ__Subscription__c = sub.Id
+            );
+            
+            //3. Deactivate the active flag for NX asset and subscription in the Subscribed Asset object
+            
+            
+            //4. Add and activate the flag for VX asset and its subscription in the Subscribed asset object
+          
+          
+          
+          
           
             result = true;
         }

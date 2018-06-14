@@ -150,6 +150,8 @@ public class AccountTriggerHandler implements ITriggerHandler {
             for (Id accId : newItems.keyset())
             {
                 Account newAccInfo= (Account)newItems.get(accId);
+                if(newAccInfo.Type != 'In Review')
+                {
                 if(newAccInfo.Patch__c == null)
                 {
                     accNeedsPatchAssign.add(newAccInfo.Id);
@@ -157,6 +159,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 else
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
+                }
                 }
             }
             LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, null);
@@ -200,7 +203,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     oppTypeAccIds.put(newAccInfo.Id,newAccInfo.First_Asset_Quarter__c);
                 }
-                if(newAccInfo.Patch_Locked__c == false)
+                if(newAccInfo.Patch_Locked__c == false & newAccInfo.Type != 'In Review')
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
                     PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldAccInfo);
@@ -209,7 +212,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c)
+                if(newAccInfo.Type != 'In Review' && (newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c))
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }

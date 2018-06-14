@@ -345,6 +345,42 @@
         <template>Steelbrick_Email_Templates/Eval_Contract_expired_today</template>
     </alerts>
     <alerts>
+        <fullName>Non_EC_Renewal_Email_Template</fullName>
+        <ccEmails>notifications@silver-peak.com,renewalsTeam@silver-peak.com</ccEmails>
+        <description>Non EC Renewal Email Template</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>CustomerSignedId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Customer_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Reseller_Addl_Notices__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/NonECRenewal</template>
+    </alerts>
+    <alerts>
         <fullName>Send_Contract_expiration_a_day_after</fullName>
         <description>EC Contract 1 Day After</description>
         <protected>false</protected>
@@ -965,6 +1001,27 @@
             <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>-5</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Non EC Renewal Contract</fullName>
+        <active>true</active>
+        <formula>AND(
+NOT( Product_Type__c==&quot;EDGECONNECT&quot;),
+NOT(ISNULL(SBQQ__Order__c)),
+ ISPICKVAL(SBQQ__Order__r.Type,&quot;Renewal&quot;),
+ ISPICKVAL(Status,&quot;Activated&quot;),
+ NOT(Evaluation_Quote__c )
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Non_EC_Renewal_Email_Template</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Contract.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>

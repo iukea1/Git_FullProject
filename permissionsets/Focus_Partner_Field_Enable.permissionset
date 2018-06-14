@@ -1197,6 +1197,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OrderItemTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OrderShipmentHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2278,6 +2282,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestQuoteEmailReviewHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestQuoteLineTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

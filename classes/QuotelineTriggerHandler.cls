@@ -16,7 +16,7 @@ public without sharing class QuotelineTriggerHandler implements ITriggerHandler{
             {
                 SBQQ__QuoteLine__c newItem= (SBQQ__QuoteLine__c)newItems.get(qlId);
                 SBQQ__QuoteLine__c oldItem= (SBQQ__QuoteLine__c)oldItems.get(qlId);
-                if(newItem.SBQQ__Quantity__c<oldItem.SBQQ__Quantity__c)
+                if(newItem.SBQQ__Quantity__c<newItem.Renewal_Original_Quantity__c)
                     newItem.Reduction_QL__c=1;
                 else
                      newItem.Reduction_QL__c=0;

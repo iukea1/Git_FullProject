@@ -34,6 +34,7 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'am', 'arm', 'armenia' }))return 'a0c50000002dtu9AAA';    //ARMENIA
     if(opIn(t.Country, new Set<String> { 'au', 'aus', 'australia' }))return 'a0c50000002dtuAAAQ';    //AUSTRALIA
     if(opIn(t.Country, new Set<String> { 'at', 'aut', 'austria' }))return 'a0c50000002dtuBAAQ';    //AUSTRIA
+    if(opIn(t.Country, new Set<String> { 'at', 'aut', 'austria' }) && opIn(t.State, new Set<String> { 'ax', 'dx' }))return 'a0c0x000000UNx3AAG';    //Test Austria
     if(opIn(t.Country, new Set<String> { 'az', 'aze', 'azerbaijan' }))return 'a0c50000002dtuCAAQ';    //AZERBAIJAN
     if(opIn(t.Country, new Set<String> { 'bh', 'bhr', 'bahrain' }))return 'a0c50000002dtuDAAQ';    //BAHRAIN
     if(opIn(t.Country, new Set<String> { 'bd', 'bgd', 'bangladesh' }))return 'a0c50000002dtuEAAQ';    //BANGLADESH
@@ -48,11 +49,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'bv', 'bvt', 'bouvet island' }))return 'a0c50000002dtuNAAQ';    //BOUVET ISLAND
     if(opIn(t.Country, new Set<String> { 'br', 'bra', 'brazil', 'brasil' }))return 'a0c50000002dtuOAAQ';    //BRAZIL
     if(opIn(t.Country, new Set<String> { 'io', 'iot', 'british indian ocean territory' }))return 'a0c50000002dtuPAAQ';    //BRITISH INDIAN OCEAN TERRITORY
-    if(opIn(t.Country, new Set<String> { 'bn', 'brn', 'brunei darussalam' }))return 'a0c50000002dtuQAAQ';    //BRUNEI DARUSSALAM
     return null;
   }
   private Id matchGroup3(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'bn', 'brn', 'brunei darussalam' }))return 'a0c50000002dtuQAAQ';    //BRUNEI DARUSSALAM
     if(opIn(t.Country, new Set<String> { 'bg', 'bgr', 'bulgaria' }))return 'a0c50000002dtuRAAQ';    //BULGARIA
     if(opIn(t.Country, new Set<String> { 'bf', 'bfa', 'burkina faso' }))return 'a0c50000002dtuSAAQ';    //BURKINA FASO
     if(opIn(t.Country, new Set<String> { 'bi', 'bdi', 'burundi' }))return 'a0c50000002dtuTAAQ';    //BURUNDI
@@ -72,11 +73,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'ck', 'cok', 'cook islands' }))return 'a0c50000002dtuhAAA';    //COOK ISLANDS
     if(opIn(t.Country, new Set<String> { 'cr', 'cri', 'costa rica' }))return 'a0c50000002dtuiAAA';    //COSTA RICA
     if(opIn(t.Country, new Set<String> { 'ci', 'civ', 'cote d\'ivoire', 'ivory coast' }))return 'a0c50000002dtujAAA';    //COTE D'IVOIRE
-    if(opIn(t.Country, new Set<String> { 'hr', 'hrv', 'croatia', 'hrvatska' }))return 'a0c50000002dtukAAA';    //CROATIA (local name: Hrvatska)
     return null;
   }
   private Id matchGroup4(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'hr', 'hrv', 'croatia', 'hrvatska' }))return 'a0c50000002dtukAAA';    //CROATIA (local name: Hrvatska)
     if(opIn(t.Country, new Set<String> { 'cu', 'cub', 'cuba' }))return 'a0c50000002dtulAAA';    //CUBA
     if(opIn(t.Country, new Set<String> { 'cy', 'cyp', 'cyprus' }))return 'a0c50000002dtumAAA';    //CYPRUS
     if(opIn(t.Country, new Set<String> { 'cz', 'cze', 'czech republic' }))return 'a0c50000002dtunAAA';    //CZECH REPUBLIC
@@ -96,11 +97,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'fo', 'fro', 'faroe islands' }))return 'a0c50000002dtv1AAA';    //FAROE ISLANDS
     if(opIn(t.Country, new Set<String> { 'fj', 'fji', 'fiji' }))return 'a0c50000002dtv2AAA';    //FIJI
     if(opIn(t.Country, new Set<String> { 'fi', 'fin', 'finland' }))return 'a0c50000002dtv3AAA';    //FINLAND
-    if(opIn(t.Country, new Set<String> { 'fr', 'fra', 'france' }))return 'a0c50000002dtv4AAA';    //FRANCE
     return null;
   }
   private Id matchGroup5(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'fr', 'fra', 'france' }))return 'a0c50000002dtv4AAA';    //FRANCE
     if(opIn(t.Country, new Set<String> { 'fx', 'fxx' }))return 'a0c50000002dtv5AAA';    //FRANCE, METROPOLITAN
     if(opIn(t.Country, new Set<String> { 'gf', 'guf', 'french guiana' }))return 'a0c50000002dtv6AAA';    //FRENCH GUIANA
     if(opIn(t.Country, new Set<String> { 'pf', 'pyf', 'french polynesia' }))return 'a0c50000002dtv7AAA';    //FRENCH POLYNESIA
@@ -120,11 +121,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'gn', 'gin', 'guinea' }))return 'a0c50000002dtvLAAQ';    //GUINEA
     if(opIn(t.Country, new Set<String> { 'gw', 'gnb', 'guinea-bissau' }))return 'a0c50000002dtvMAAQ';    //GUINEA-BISSAU
     if(opIn(t.Country, new Set<String> { 'gy', 'guy', 'guyana' }))return 'a0c50000002dtvNAAQ';    //GUYANA
-    if(opIn(t.Country, new Set<String> { 'ht', 'hti', 'haiti' }))return 'a0c50000002dtvOAAQ';    //HAITI
     return null;
   }
   private Id matchGroup6(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'ht', 'hti', 'haiti' }))return 'a0c50000002dtvOAAQ';    //HAITI
     if(opIn(t.Country, new Set<String> { 'hm', 'hmd', 'heard and mc donald islands' }))return 'a0c50000002dtvPAAQ';    //HEARD AND MC DONALD ISLANDS
     if(opIn(t.Country, new Set<String> { 'va', 'vat', 'holy see', 'vatican city', 'vatican city state' }))return 'a0c50000002dtvQAAQ';    //HOLY SEE (VATICAN CITY STATE)
     if(opIn(t.Country, new Set<String> { 'hn', 'hnd', 'honduras' }))return 'a0c50000002dtvRAAQ';    //HONDURAS
@@ -144,11 +145,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'jp', 'jpn', 'japan' }))return 'a0c50000002dtvdAAA';    //JAPAN
     if(opIn(t.Country, new Set<String> { 'jo', 'jor', 'jordan' }))return 'a0c50000002dtveAAA';    //JORDAN
     if(opIn(t.Country, new Set<String> { 'kz', 'kaz', 'kazakhstan' }))return 'a0c50000002dtvfAAA';    //KAZAKHSTAN
-    if(opIn(t.Country, new Set<String> { 'ke', 'ken', 'kenya' }))return 'a0c50000002dtvgAAA';    //KENYA
     return null;
   }
   private Id matchGroup7(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'ke', 'ken', 'kenya' }))return 'a0c50000002dtvgAAA';    //KENYA
     if(opIn(t.Country, new Set<String> { 'ki', 'kir', 'kiribati' }))return 'a0c50000002dtvhAAA';    //KIRIBATI
     if(opIn(t.Country, new Set<String> { 'kp', 'prk', 'korea', 'd.p.r.o.', 'democratic people\'s republic of korea(dprk)', 'dprk' }))return 'a0c50000002dtviAAA';    //KOREA, D.P.R.O.
     if(opIn(t.Country, new Set<String> { 'kr', 'kor', 'korea', 'republic of korea', 'south korea' }))return 'a0c50000002dtvjAAA';    //KOREA, REPUBLIC OF
@@ -168,11 +169,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'mg', 'mdg', 'madagascar' }))return 'a0c50000002dtvxAAA';    //MADAGASCAR
     if(opIn(t.Country, new Set<String> { 'mw', 'mwi', 'malawi' }))return 'a0c50000002dtvyAAA';    //MALAWI
     if(opIn(t.Country, new Set<String> { 'my', 'mys', 'malaysia' }))return 'a0c50000002dtvzAAA';    //MALAYSIA
-    if(opIn(t.Country, new Set<String> { 'mv', 'mdv', 'maldives' }))return 'a0c50000002dtw0AAA';    //MALDIVES
     return null;
   }
   private Id matchGroup8(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'mv', 'mdv', 'maldives' }))return 'a0c50000002dtw0AAA';    //MALDIVES
     if(opIn(t.Country, new Set<String> { 'ml', 'mli', 'mali' }))return 'a0c50000002dtw1AAA';    //MALI
     if(opIn(t.Country, new Set<String> { 'mt', 'mlt', 'malta' }))return 'a0c50000002dtw2AAA';    //MALTA
     if(opIn(t.Country, new Set<String> { 'mh', 'mhl', 'marshall islands' }))return 'a0c50000002dtw4AAA';    //MARSHALL ISLANDS
@@ -192,11 +193,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'mm', 'mmr', 'myanmar', 'burma' }))return 'a0c50000002dtwIAAQ';    //MYANMAR (Burma)
     if(opIn(t.Country, new Set<String> { 'na', 'nam', 'namibia' }))return 'a0c50000002dtwJAAQ';    //NAMIBIA
     if(opIn(t.Country, new Set<String> { 'nr', 'nru', 'nauru' }))return 'a0c50000002dtwKAAQ';    //NAURU
-    if(opIn(t.Country, new Set<String> { 'np', 'npl', 'nepal' }))return 'a0c50000002dtwLAAQ';    //NEPAL
     return null;
   }
   private Id matchGroup9(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'np', 'npl', 'nepal' }))return 'a0c50000002dtwLAAQ';    //NEPAL
     if(opIn(t.Country, new Set<String> { 'nl', 'nld', 'netherlands', 'the netherlands' }))return 'a0c50000002dtwMAAQ';    //NETHERLANDS
     if(opIn(t.Country, new Set<String> { 'an', 'ant', 'netherlands antilles' }))return 'a0c50000002dtwNAAQ';    //NETHERLANDS ANTILLES
     if(opIn(t.Country, new Set<String> { 'nc', 'ncl', 'new caledonia' }))return 'a0c50000002dtwOAAQ';    //NEW CALEDONIA
@@ -216,11 +217,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'py', 'pry', 'paraguay' }))return 'a0c50000002dtwcAAA';    //PARAGUAY
     if(opIn(t.Country, new Set<String> { 'pe', 'per', 'peru' }))return 'a0c50000002dtwdAAA';    //PERU
     if(opIn(t.Country, new Set<String> { 'ph', 'phl', 'philippines' }))return 'a0c50000002dtweAAA';    //PHILIPPINES
-    if(opIn(t.Country, new Set<String> { 'pn', 'pcn', 'pitcairn' }))return 'a0c50000002dtwfAAA';    //PITCAIRN
     return null;
   }
   private Id matchGroup10(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'pn', 'pcn', 'pitcairn' }))return 'a0c50000002dtwfAAA';    //PITCAIRN
     if(opIn(t.Country, new Set<String> { 'pl', 'pol', 'poland' }))return 'a0c50000002dtwgAAA';    //POLAND
     if(opIn(t.Country, new Set<String> { 'pt', 'prt', 'portugal' }))return 'a0c50000002dtwhAAA';    //PORTUGAL
     if(opIn(t.Country, new Set<String> { 'pr', 'pri', 'puerto rico' }))return 'a0c50000002dtwiAAA';    //PUERTO RICO
@@ -240,11 +241,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'rs', 'srb', 'serbia' }))return 'a0c50000002dtwwAAA';    //SERBIA
     if(opIn(t.Country, new Set<String> { 'sc', 'syc', 'seychelles' }))return 'a0c50000002dtwxAAA';    //SEYCHELLES
     if(opIn(t.Country, new Set<String> { 'sl', 'sle', 'sierra leone' }))return 'a0c50000002dtwyAAA';    //SIERRA LEONE
-    if(opIn(t.Country, new Set<String> { 'sg', 'sgp', 'singapore' }))return 'a0c50000002dtwzAAA';    //SINGAPORE
     return null;
   }
   private Id matchGroup11(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'sg', 'sgp', 'singapore' }))return 'a0c50000002dtwzAAA';    //SINGAPORE
     if(opIn(t.Country, new Set<String> { 'sk', 'svk', 'slovakia' }))return 'a0c50000002dtx0AAA';    //SLOVAKIA (Slovak Republic)
     if(opIn(t.Country, new Set<String> { 'si', 'svn', 'slovenia' }))return 'a0c50000002dtx1AAA';    //SLOVENIA
     if(opIn(t.Country, new Set<String> { 'sb', 'slb', 'solomon islands' }))return 'a0c50000002dtx2AAA';    //SOLOMON ISLANDS
@@ -264,11 +265,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'sy', 'syr', 'syrian arab republic' }))return 'a0c50000002dttVAAQ';    //SYRIAN ARAB REPUBLIC
     if(opIn(t.Country, new Set<String> { 'r.o.c.', 'republic of china', 'roc', 'taiwan', 'taiwan r.o.c.', 'taiwan, province of china', 'taiwan,province of china', 'tw', 'twn' }))return 'a0c50000002dttWAAQ';    //TAIWAN, PROVINCE OF CHINA
     if(opIn(t.Country, new Set<String> { 'tj', 'tjk', 'tajikistan' }))return 'a0c50000002dttXAAQ';    //TAJIKISTAN
-    if(opIn(t.Country, new Set<String> { 'tz', 'tza', 'tanzania', 'united republic of tanzania' }))return 'a0c50000002dttYAAQ';    //TANZANIA, UNITED REPUBLIC OF
     return null;
   }
   private Id matchGroup12(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'tz', 'tza', 'tanzania', 'united republic of tanzania' }))return 'a0c50000002dttYAAQ';    //TANZANIA, UNITED REPUBLIC OF
     if(opIn(t.Country, new Set<String> { 'th', 'tha', 'thailand' }))return 'a0c50000002dttZAAQ';    //THAILAND
     if(opIn(t.Country, new Set<String> { 'tg', 'tgo', 'togo' }))return 'a0c50000002dttaAAA';    //TOGO
     if(opIn(t.Country, new Set<String> { 'tk', 'tkl', 'tokelau' }))return 'a0c50000002dttbAAA';    //TOKELAU
@@ -282,27 +283,27 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'ug', 'uga', 'uganda' }))return 'a0c50000002dttjAAA';    //UGANDA
     if(opIn(t.Country, new Set<String> { 'ua', 'ukr', 'ukraine' }))return 'a0c50000002dttkAAA';    //UKRAINE
     if(opIn(t.Country, new Set<String> { 'ae', 'are', 'united arab emirates', 'uae' }))return 'a0c50000002dttlAAA';    //UNITED ARAB EMIRATES
-    if(opStart(t.ZipCode, new Set<String> { 'cv', 'dy', 'gl', 'hr', 'le', 'mk', 'nn', 'ox', 'pe', 'st', 'tf', 'wr', 'ws', 'wv' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icedAAA';    //UK - Midlands
-    if(opStart(t.ZipCode, new Set<String> { 'ha', 'kt', 'sm', 'tw', 'ub' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icceAAA';    //UK - London West Extension
-    if(opStart(t.ZipCode, new Set<String> { 'gy', 'je' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccPAAQ';    //UK - Channel Islands
-    if(opStart(t.ZipCode, new Set<String> { 'al', 'br', 'ct', 'da', 'lu', 'me', 'po', 'rg', 'rm', 'sg', 'sl', 'so', 'tn', 'wd' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccZAAQ';    //UK - Home Counties 1
-    if(opStart(t.ZipCode, new Set<String> { 'cb', 'ip', 'nr' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccUAAQ';    //UK - East
-    if(opStart(t.ZipCode, new Set<String> { 'ec1', 'ec3', 'ec 1', 'ec 3' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccjAAA';    //UK - London City West
     if(opStart(t.ZipCode, new Set<String> { 'bc', 'be', 'bf', 'bg', 'bi', 'bj', 'bk', 'bm', 'bo', 'bp', 'bq', 'bu', 'bv', 'bw', 'bx', 'by', 'bz', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccKAAQ';    //UK - Birmingham
+    if(opStart(t.ZipCode, new Set<String> { 'bn', 'cm', 'co', 'cr', 'en', 'gu', 'hp', 'ig', 'rh', 'ss' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c380000060wDfAAI';    //UK - Home Counties 2
+    if(opStart(t.ZipCode, new Set<String> { 'bb', 'bl', 'ch', 'ol', 'sk', 'wn' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c380000060wDVAAY';    //UK - North West 2
+    if(opStart(t.ZipCode, new Set<String> { 'cw', 'fy', 'pr', 'wa', 'l0', 'l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9', 'lb', 'lc', 'ld', 'lf', 'lg', 'lh', 'li', 'lk', 'lm', 'lo', 'lp', 'lq', 'lr', 'lt', 'lv', 'lw', 'lx', 'ly', 'lz' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icexAAA';    //UK - North West 1
+    if(opStart(t.ZipCode, new Set<String> { 'ba', 'bh', 'bs', 'dt', 'ex', 'pl', 'sn', 'sp', 'ta', 'tq', 'tr' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icesAAA';    //UK - South West
+    if(opStart(t.ZipCode, new Set<String> { 'bd', 'ca', 'de', 'dh', 'dl', 'dn', 'hd', 'hg', 'hu', 'hx', 'la', 'ln', 'ls', 'ne', 'ng', 'sr', 'ts', 'wf', 'yo', 'sb', 'sc', 'sd', 'sf', 'sh', 'si', 'sj', 'sq', 'su', 'sv', 'sx', 'sz', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iceiAAA';    //UK - North
     return null;
   }
   private Id matchGroup13(Target t, List<Id> overlays)
   {
-    if(opStart(t.ZipCode, new Set<String> { 'na', 'nb', 'nc', 'nd', 'nf', 'nh', 'ni', 'nk', 'nl', 'nm', 'no', 'nq', 'ns', 'nt', 'nu', 'nv', 'nw', 'nx', 'ny', 'nz', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n0', 'sw', 'wb', 'wc', 'we', 'wg', 'wh', 'wi', 'wj', 'wk', 'wl', 'wm', 'wp', 'wo', 'wq', 'wt', 'wu', 'ww', 'wx', 'wy', 'wz', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9', 'w0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icd8AAA';    //UK - London Greater North/West
-    if(opStart(t.ZipCode, new Set<String> { 'ec2', 'ec4', 'ec 2', 'ec 4' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccoAAA';    //UK - London City East
-    if(opStart(t.ZipCode, new Set<String> { 'ea', 'eb', 'ed', 'ef', 'eg', 'ee', 'eh', 'ei', 'ej', 'ek', 'el', 'em', 'en', 'eo', 'ep', 'eq', 'er', 'es', 'et', 'eu', 'ev', 'ew', 'ex', 'ey', 'ez', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icctAAA';    //UK - London Greater East
-    if(opStart(t.ZipCode, new Set<String> { 'bb', 'bl', 'ch', 'ol', 'sk', 'wn' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c380000060wDVAAY';    //UK - North West 2
-    if(opStart(t.ZipCode, new Set<String> { 'bn', 'cm', 'co', 'cr', 'en', 'gu', 'hp', 'ig', 'rh', 'ss' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c380000060wDfAAI';    //UK - Home Counties 2
-    if(opStart(t.ZipCode, new Set<String> { 'cw', 'fy', 'pr', 'wa', 'l0', 'l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7', 'l8', 'l9', 'lb', 'lc', 'ld', 'lf', 'lg', 'lh', 'li', 'lk', 'lm', 'lo', 'lp', 'lq', 'lr', 'lt', 'lv', 'lw', 'lx', 'ly', 'lz' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icexAAA';    //UK - North West 1
-    if(opStart(t.ZipCode, new Set<String> { 'se' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icdmAAA';    //UK - London Greater South/East
-    if(opStart(t.ZipCode, new Set<String> { 'bd', 'ca', 'de', 'dh', 'dl', 'dn', 'hd', 'hg', 'hu', 'hx', 'la', 'ln', 'ls', 'ne', 'ng', 'sr', 'ts', 'wf', 'yo', 'sb', 'sc', 'sd', 'sf', 'sh', 'si', 'sj', 'sq', 'su', 'sv', 'sx', 'sz', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iceiAAA';    //UK - North
+    if(opStart(t.ZipCode, new Set<String> { 'cv', 'dy', 'gl', 'hr', 'le', 'mk', 'nn', 'ox', 'pe', 'st', 'tf', 'wr', 'ws', 'wv' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icedAAA';    //UK - Midlands
     if(opStart(t.ZipCode, new Set<String> { 'ma', 'mb', 'mc', 'md', 'mf', 'mg', 'mh', 'mi', 'mj', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms', 'mt', 'mw', 'mu', 'mv', 'mx', 'my', 'mz', 'm1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8', 'm9', 'm0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icdrAAA';    //UK - Manchester
-    if(opStart(t.ZipCode, new Set<String> { 'ba', 'bh', 'bs', 'dt', 'ex', 'pl', 'sn', 'sp', 'ta', 'tq', 'tr' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icesAAA';    //UK - South West
+    if(opStart(t.ZipCode, new Set<String> { 'se' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icdmAAA';    //UK - London Greater South/East
+    if(opStart(t.ZipCode, new Set<String> { 'na', 'nb', 'nc', 'nd', 'nf', 'nh', 'ni', 'nk', 'nl', 'nm', 'no', 'nq', 'ns', 'nt', 'nu', 'nv', 'nw', 'nx', 'ny', 'nz', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9', 'n0', 'sw', 'wb', 'wc', 'we', 'wg', 'wh', 'wi', 'wj', 'wk', 'wl', 'wm', 'wp', 'wo', 'wq', 'wt', 'wu', 'ww', 'wx', 'wy', 'wz', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9', 'w0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icd8AAA';    //UK - London Greater North/West
+    if(opStart(t.ZipCode, new Set<String> { 'ea', 'eb', 'ed', 'ef', 'eg', 'ee', 'eh', 'ei', 'ej', 'ek', 'el', 'em', 'en', 'eo', 'ep', 'eq', 'er', 'es', 'et', 'eu', 'ev', 'ew', 'ex', 'ey', 'ez', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e0' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icctAAA';    //UK - London Greater East
+    if(opStart(t.ZipCode, new Set<String> { 'ec2', 'ec4', 'ec 2', 'ec 4' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccoAAA';    //UK - London City East
+    if(opStart(t.ZipCode, new Set<String> { 'ec1', 'ec3', 'ec 1', 'ec 3' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccjAAA';    //UK - London City West
+    if(opStart(t.ZipCode, new Set<String> { 'ha', 'kt', 'sm', 'tw', 'ub' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005icceAAA';    //UK - London West Extension
+    if(opStart(t.ZipCode, new Set<String> { 'al', 'br', 'ct', 'da', 'lu', 'me', 'po', 'rg', 'rm', 'sg', 'sl', 'so', 'tn', 'wd' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccZAAQ';    //UK - Home Counties 1
+    if(opStart(t.ZipCode, new Set<String> { 'cb', 'ip', 'nr' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccUAAQ';    //UK - East
+    if(opStart(t.ZipCode, new Set<String> { 'gy', 'je' }) && opIn(t.Country, new Set<String> { 'gb', 'gbr', 'united kingdom', 'uk', 'great britain' }))return 'a0c38000005iccPAAQ';    //UK - Channel Islands
     if(opIn(t.Country, new Set<String> { 'um', 'umi', 'u.s. minor islands' }))return 'a0c50000002dttnAAA';    //U.S. MINOR ISLANDS
     if(opIn(t.Country, new Set<String> { 'uy', 'ury', 'uruguay' }))return 'a0c50000002dttoAAA';    //URUGUAY
     if(opIn(t.Country, new Set<String> { 'uz', 'uzb', 'uzbekistan' }))return 'a0c50000002dttpAAA';    //UZBEKISTAN
@@ -312,11 +313,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.Country, new Set<String> { 'vg', 'vgb', 'british virgin islands', 'virgin islands' }))return 'a0c50000002dtttAAA';    //VIRGIN ISLANDS (BRITISH)
     if(opIn(t.Country, new Set<String> { 'vi', 'vir', 'us virgin islands', 'u.s. virgin islands' }))return 'a0c50000002dttuAAA';    //VIRGIN ISLANDS (U.S.)
     if(opIn(t.Country, new Set<String> { 'wf', 'wlf', 'wallis and futuna islands' }))return 'a0c50000002dttvAAA';    //WALLIS AND FUTUNA ISLANDS
-    if(opIn(t.Country, new Set<String> { 'eh', 'esh', 'western sahara' }))return 'a0c50000002dttwAAA';    //WESTERN SAHARA
     return null;
   }
   private Id matchGroup14(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'eh', 'esh', 'western sahara' }))return 'a0c50000002dttwAAA';    //WESTERN SAHARA
     if(opIn(t.Country, new Set<String> { 'ye', 'yem', 'yemen' }))return 'a0c50000002dttxAAA';    //YEMEN
     if(opIn(t.Country, new Set<String> { 'zm', 'zmb', 'zambia' }))return 'a0c50000002dttyAAA';    //ZAMBIA
     if(opIn(t.Country, new Set<String> { 'zw', 'zwe', 'zimbabwe' }))return 'a0c50000002dttzAAA';    //ZIMBABWE
@@ -336,11 +337,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.State, new Set<String> { 'dc', 'dist of columbia', 'district of columbia', 'd.c.' }) && opStart(t.Company, new Set<String> { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '1', '2', '3', '4', '5' }))return 'a0c50000002dtyGAAQ';    //Dist of Columbia A-L
     if(opIn(t.State, new Set<String> { 'dc', 'dist of columbia', 'district of columbia', 'd.c.' }) && opStart(t.Company, new Set<String> { 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '6', '7', '8', '9', '0' }))return 'a0c38000005XRuDAAW';    //Dist of Columbia M-Z
     if(opIn(t.State, new Set<String> { 'de', 'delaware' }) && opStart(t.Company, new Set<String> { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '1', '2', '3', '4', '5' }))return 'a0c50000002dtyHAAQ';    //Delaware A-L
-    if(opIn(t.State, new Set<String> { 'de', 'delaware' }) && opStart(t.Company, new Set<String> { 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '6', '7', '8', '9', '0' }))return 'a0c38000005XRuNAAW';    //Delaware M-Z
     return null;
   }
   private Id matchGroup15(Target t, List<Id> overlays)
   {
+    if(opIn(t.State, new Set<String> { 'de', 'delaware' }) && opStart(t.Company, new Set<String> { 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '6', '7', '8', '9', '0' }))return 'a0c38000005XRuNAAW';    //Delaware M-Z
     if(opIn(t.State, new Set<String> { 'fl', 'florida' }))return 'a0c50000002dtyIAAQ';    //Florida
     if(opIn(t.State, new Set<String> { 'ga', 'georgia' }))return 'a0c50000002dtyJAAQ';    //Georgia
     if(opIn(t.State, new Set<String> { 'hi', 'hawaii' }))return 'a0c50000002dtyKAAQ';    //Hawaii
@@ -360,11 +361,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.State, new Set<String> { 'me', 'maine' }))return 'a0c50000002dtyUAAQ';    //Maine
     if(opIn(t.State, new Set<String> { 'mi', 'michigan' }))return 'a0c50000002dtyVAAQ';    //Michigan
     if(opIn(t.State, new Set<String> { 'mn', 'minnesota' }))return 'a0c50000002dtyWAAQ';    //Minnesota
-    if(opZipcode(t.ZipCode, '63005,63010~63017,63019~63021,63023,63025~63026,63028,63031,63033~63034,63037~63045,63047~63053,63055~63057,63060~63061,63065~63066,63068~63070,63072~63074,63077,63079,63084,63088~63090,63101~63141,63143~63147,63166~63167,63301,63303~63304,63332,63341~63343,63347~63349,63357,63362,63366~63370,63373,63376~63379,63381,63383,63385~63387,63389~63390') || opEqual(t.State, 'MO, Missouri'))return 'a0c38000004tLU0AAM';    //St Louis Metro
     return null;
   }
   private Id matchGroup16(Target t, List<Id> overlays)
   {
+    if(opZipcode(t.ZipCode, '63005,63010~63017,63019~63021,63023,63025~63026,63028,63031,63033~63034,63037~63045,63047~63053,63055~63057,63060~63061,63065~63066,63068~63070,63072~63074,63077,63079,63084,63088~63090,63101~63141,63143~63147,63166~63167,63301,63303~63304,63332,63341~63343,63347~63349,63357,63362,63366~63370,63373,63376~63379,63381,63383,63385~63387,63389~63390') || opEqual(t.State, 'MO, Missouri'))return 'a0c38000004tLU0AAM';    //St Louis Metro
     if(opZipcode(t.ZipCode, '63006,63022,63024,63030,63032,63036,63071,63080,63087,63091,63099,63150~63151,63155~63158,63160,63163~63164,63169,63171,63177~63180,63182,63188,63190,63195~63199,63302,63333~63334,63336,63338~63339,63344~63346,63350~63353,63359,63361,63363,63365,63382,63384,63388,63401,63434~63443,63445~63448,63450~63454,63456~63469,63471~63474,63501,63531~63541,63543~63549,63551~63552,63555~63561,63563,63565~63567,63601,63622~63633,63636~63638,63640,63645,63648,63650~63651,63653~63656,63660,63662~63666,63670,63673~63675,63701~63703,63735~63740,63742~63748,63750~63752,63755,63758,63760,63763~63764,63766~63767,63769~63771,63774~63776,63779~63785,63787,63801,63822~63830,63833~63834,63837,63839~63841,63845~63853,63855,63857,63860,63862~63863,63866~63870,63873~63882,63901~63902,63931~63945,63950~63957,63960~63967,64002,64011~64022,64024,64028~64030,64034~64037,64040,64048,64050~64058,64060~64086,64088~64090,64092~64093,64096~64098,64101~64102,64105~64106,64108~64114,64116~64121,64123~64134,64136~64139,64141,64144~64158,64161,64163~64168,64170~64172,64179~64180,64183~64185,64187~64188,64190~64199,64423~64424,64426~64434,64436~64449,64451,64453~64459,64461,64463,64465~64471,64473~64477,64479~64487,64489~64494,64496~64499,64501~64508,64601,64622~64625,64628,64630~64633,64635~64661,64664,64667~64668,64670~64674,64676,64679~64683,64686,64688~64689,64701,64726,64728,64730,64733~64735,64738~64748,64750,64752,64755~64756,64759,64761~64763,64765~64767,64769~64772,64776,64778~64781,64783~64784,64788~64790,64801~64804,64833~64836,64840~64844,64847~64850,64853~64859,64861~64870,64873~64874,64944,64999,65011,65013~65014,65016~65018,65020,65023~65026,65032,65034~65043,65046~65055,65058~65059,65061~65069,65072,65074~65085,65101~65111,65201~65203,65205,65211~65212,65215~65218,65231~65233,65236~65237,65239~65240,65243~65244,65246~65248,65250~65251,65254~65265,65270,65274~65276,65278~65287,65299,65301~65302,65305,65321~65327,65329~65330,65332~65340,65344~65345,65347~65351,65354~65355,65360,65401~65402,65409,65436,65438~65441,65443~65444,65446,65449,65452~65453,65456~65457,65459,65461~65464,65466,65468,65470,65473,65479,65483~65484,65486,65501,65529,65532,65534~65536,65541~65543,65546,65548,65550,65552,65555~65557,65559~65560,65564~65567,65570~65571,65580,65582~65584,65586,65588~65591,65607~65620,65622~65627,65629~65638,65640~65641,65644~65650,65652~65658,65660~65664,65666~65669,65672~65676,65679~65682,65685~65686,65688~65690,65692,65701~65702,65704~65708,65710~65715,65717,65720~65735,65737~65742,65744~65747,65752~65757,65759~65762,65764~65779,65781,65783~65791,65793,65801~65810,65814,65817,65890,65897~65899') || opIn(t.State, new Set<String> { 'mo', 'missouri' }))return 'a0c50000002dtyXAAQ';    //Missouri
     if(opIn(t.State, new Set<String> { 'ms', 'mississippi' }))return 'a0c50000002dtxHAAQ';    //Mississippi
     if(opIn(t.State, new Set<String> { 'mt', 'montana' }))return 'a0c50000002dtxIAAQ';    //Montana
@@ -384,11 +385,11 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opZipcode(t.ZipCode, '43001~43004,43007~43010,43013,43015~43018,43021,43023,43025~43027,43029~43033,43035~43036,43040~43041,43044~43047,43054~43056,43058,43060~43062,43064~43074,43076~43078,43080~43086,43093,43098,43101~43103,43105~43107,43109~43113,43115~43117,43119,43123,43125~43128,43130,43135~43138,43140,43142~43158,43160,43162~43164,43194~43196,43198~43199,43201~43207,43209~43224,43226~43232,43234~43236,43240,43251,43260,43265~43266,43268,43270~43272,43279,43287,43291,43299,43310~43311,43318~43319,43324,43331,43333,43336,43343~43345,43347~43348,43357~43358,43360,43701~43702,43711,43713,43716~43725,43727~43728,43730~43736,43738~43740,43746~43750,43752,43754~43762,43764,43766~43768,43771~43773,43777~43780,43782~43783,43786~43789,43791,43793,43802,43821~43822,43830,43842,43902,43905~43906,43909,43912,43914~43916,43927~43928,43931,43933~43935,43937,43940,43942,43946~43947,43950~43951,43967,43972,43977,43983,43985,45001~45005,45011~45015,45018,45025~45026,45030,45032~45034,45036,45039~45044,45050~45056,45061~45071,45101~45103,45105~45106,45110~45112,45115,45118~45123,45130~45133,45135,45140,45142,45144~45145,45147,45150,45152~45158,45160,45162,45167~45168,45171~45172,45174,45176,45201~45209,45211~45255,45258,45262~45264,45267~45271,45273~45275,45277,45280,45296,45298~45299,45301~45312,45314~45328,45330~45354,45356,45358~45363,45365,45367~45374,45377~45378,45380~45385,45387~45390,45400~45406,45408~45410,45412~45420,45422~45424,45426~45435,45437,45439~45441,45448~45449,45454,45458~45459,45463,45469~45470,45475,45479,45481~45482,45490,45501~45506,45601,45612~45614,45616~45624,45628~45631,45633~45634,45636,45638,45640,45642~45648,45650~45654,45656~45663,45669,45671~45675,45677~45688,45690,45692~45699,45712~45715,45720~45721,45724,45727,45729,45734,45741~45746,45750,45760,45767~45773,45775,45779,45783~45784,45786~45789,45819,45822,45826,45828,45845~45846,45860,45862,45865~45866,45869~45871,45882~45885,45888,45895~45896,45999') && opIn(t.State, new Set<String> { 'oh', 'ohio' }))return 'a0c38000005L0vrAAC';    //South Ohio
     if(opZipcode(t.ZipCode, '43005~43006,43011,43014,43019,43022,43028,43037,43048,43050,43301~43302,43306~43307,43314~43317,43320~43323,43325~43326,43330,43332,43334~43335,43337~43338,43340~43342,43346,43349~43351,43356,43359,43402~43403,43406~43408,43410,43412~43414,43416,43420,43430~43443,43445~43447,43449~43452,43456~43458,43460,43462~43469,43501~43502,43504~43506,43510~43512,43515~43537,43540~43543,43545,43547~43558,43560,43565~43567,43569~43571,43601,43603~43620,43623,43635,43652,43654,43656~43657,43659~43661,43666~43667,43681~43682,43697,43699,43803~43805,43811~43812,43824,43828,43832,43836~43837,43840,43843~43845,43901,43903,43907~43908,43910,43913,43917,43920,43925~43926,43930,43932,43938~43939,43941,43943~43945,43948,43952~43953,43961~43964,43968,43970~43971,43973~43974,43976,43981,43984,43986,43988,44001,44003~44005,44010~44012,44017,44021~44024,44026,44028,44030,44032~44033,44035~44036,44039~44041,44044~44050,44052~44057,44060~44062,44064~44065,44067~44068,44070,44072~44074,44076~44077,44080~44082,44084~44090,44092~44097,44099,44101~44147,44149,44178,44181,44185,44188~44195,44197~44199,44201~44203,44210~44212,44214~44217,44221~44224,44230~44237,44240~44243,44250~44251,44253~44256,44258,44260,44262,44264~44266,44270,44272~44276,44278,44280~44282,44285~44288,44301~44317,44319~44322,44325~44326,44328,44333~44334,44372,44393,44396,44398~44399,44401~44406,44408,44410~44413,44415~44418,44420,44422~44425,44427~44432,44436~44446,44449~44455,44460,44470~44471,44473,44481~44486,44488,44490~44493,44501~44507,44509~44515,44555,44601,44606~44615,44617~44622,44624~44634,44636~44641,44643~44648,44650~44654,44656~44657,44659~44663,44665~44667,44669~44672,44675~44683,44685,44687~44691,44693,44695,44697,44699,44701~44711,44714,44718,44720~44721,44730,44735,44750,44767,44799,44802,44804~44805,44807,44809,44811,44813~44818,44820,44822,44824~44828,44830,44833,44836~44851,44853~44857,44859~44862,44864~44867,44870~44871,44874~44875,44878,44880~44883,44887~44890,44901~44907,44999,45107,45113~45114,45138,45146,45148,45159,45164,45166,45169,45177,45701,45710~45711,45716~45717,45719,45723,45732,45735,45739~45740,45761,45764,45766,45776~45778,45780,45782,45801~45802,45804~45810,45812~45817,45820~45821,45827,45830~45833,45835~45841,45843~45844,45848~45851,45853~45856,45858~45859,45861,45863~45864,45867~45868,45872~45877,45879~45881,45886~45887,45889~45891,45893~45894,45897~45899') || opIn(t.State, new Set<String> { 'oh', 'ohio' }))return 'a0c50000002dtxTAAQ';    //Ohio
     if(opIn(t.State, new Set<String> { 'ok', 'oklahoma' }))return 'a0c50000002dtxUAAQ';    //Oklahoma
-    if(opZipcode(t.ZipCode, '15001,15003~15007,15009~15010,15012,15014~15015,15017~15022,15024~15028,15030~15035,15037~15038,15042~15047,15049~15057,15059~15069,15071~15072,15074~15078,15081~15091,15095~15096,15101~15102,15104,15106,15108,15110,15112,15116,15120,15122~15123,15126~15127,15129,15131~15137,15139~15140,15142~15148,15201~15244,15250~15255,15257~15265,15267~15268,15270,15272,15274~15279,15281~15283,15285~15286,15289~15290,15295,15301,15310~15317,15320~15325,15327,15329~15334,15336~15342,15344~15353,15357~15368,15370,15376~15380,15401,15410~15413,15415~15417,15419~15425,15427~15438,15440,15442~15451,15454~15456,15458~15470,15472~15480,15482~15486,15488~15490,15492,15501~15502,15510,15520~15522,15530~15535,15537~15542,15544~15555,15557~15565,15601,15605~15606,15610~15613,15615~15629,15631~15642,15644,15646~15647,15650,15655~15656,15658,15660~15666,15668,15670~15693,15695~15698,15701,15705,15710~15717,15720~15725,15727~15734,15736~15742,15744~15748,15750,15752~15754,15756~15765,15767,15770~15781,15783~15784,15801,15821~15825,15827~15829,15831~15832,15834,15840~15841,15845~15849,15851,15853,15856~15857,15860~15861,15863~15866,15868,15870,15901~15902,15904~15907,15909,15915,15920~15931,15934~15938,15940,15942~15946,15948~15949,15951~15963,16001~16003,16016~16018,16020~16025,16027~16030,16033~16041,16045~16046,16048~16059,16061,16063,16066,16101~16103,16105,16107~16108,16110~16117,16120~16121,16123~16125,16127,16130~16134,16136~16137,16141~16143,16145~16146,16148,16150~16151,16153~16154,16156~16157,16159~16161,16172,16201,16210~16215,16217~16218,16220~16226,16228~16230,16232~16236,16238~16240,16242,16244~16246,16248~16250,16253~16263,16301,16311~16314,16316~16317,16319,16321~16323,16326~16329,16331~16335,16340~16347,16350~16354,16360~16362,16364~16375,16388,16401~16407,16410~16413,16415~16417,16420~16424,16426~16428,16430,16432~16436,16438,16440~16444,16475,16501~16512,16514~16515,16522,16530~16534,16538,16541,16544,16546,16550,16553~16554,16563,16565,16611,16613,16616,16619~16624,16627,16629~16630,16633~16634,16636,16638~16641,16644~16647,16650~16652,16654~16657,16659~16661,16663~16664,16666~16672,16674~16675,16677~16681,16683,16685,16692,16694~16695,16698~16699,16701,16720,16724~16735,16738,16740,16743~16746,16748~16750,16801~16805,16820~16821,16823,16825~16830,16832~16841,16843~16845,16847,16849~16856,16858~16861,16863~16866,16868,16870,16872~16879,16881~16882,16915,16922~16923,16927,16937,16941,16948,17002,17052,17060,17211,17213,17239,17243,17249,17253,17255,17260,17264,17729') && opIn(t.State, new Set<String> { 'pa', 'pennsylvania' }))return 'a0c50000002dtxWAAQ';    //Pennsylvania -Western
     return null;
   }
   private Id matchGroup17(Target t, List<Id> overlays)
   {
+    if(opZipcode(t.ZipCode, '15001,15003~15007,15009~15010,15012,15014~15015,15017~15022,15024~15028,15030~15035,15037~15038,15042~15047,15049~15057,15059~15069,15071~15072,15074~15078,15081~15091,15095~15096,15101~15102,15104,15106,15108,15110,15112,15116,15120,15122~15123,15126~15127,15129,15131~15137,15139~15140,15142~15148,15201~15244,15250~15255,15257~15265,15267~15268,15270,15272,15274~15279,15281~15283,15285~15286,15289~15290,15295,15301,15310~15317,15320~15325,15327,15329~15334,15336~15342,15344~15353,15357~15368,15370,15376~15380,15401,15410~15413,15415~15417,15419~15425,15427~15438,15440,15442~15451,15454~15456,15458~15470,15472~15480,15482~15486,15488~15490,15492,15501~15502,15510,15520~15522,15530~15535,15537~15542,15544~15555,15557~15565,15601,15605~15606,15610~15613,15615~15629,15631~15642,15644,15646~15647,15650,15655~15656,15658,15660~15666,15668,15670~15693,15695~15698,15701,15705,15710~15717,15720~15725,15727~15734,15736~15742,15744~15748,15750,15752~15754,15756~15765,15767,15770~15781,15783~15784,15801,15821~15825,15827~15829,15831~15832,15834,15840~15841,15845~15849,15851,15853,15856~15857,15860~15861,15863~15866,15868,15870,15901~15902,15904~15907,15909,15915,15920~15931,15934~15938,15940,15942~15946,15948~15949,15951~15963,16001~16003,16016~16018,16020~16025,16027~16030,16033~16041,16045~16046,16048~16059,16061,16063,16066,16101~16103,16105,16107~16108,16110~16117,16120~16121,16123~16125,16127,16130~16134,16136~16137,16141~16143,16145~16146,16148,16150~16151,16153~16154,16156~16157,16159~16161,16172,16201,16210~16215,16217~16218,16220~16226,16228~16230,16232~16236,16238~16240,16242,16244~16246,16248~16250,16253~16263,16301,16311~16314,16316~16317,16319,16321~16323,16326~16329,16331~16335,16340~16347,16350~16354,16360~16362,16364~16375,16388,16401~16407,16410~16413,16415~16417,16420~16424,16426~16428,16430,16432~16436,16438,16440~16444,16475,16501~16512,16514~16515,16522,16530~16534,16538,16541,16544,16546,16550,16553~16554,16563,16565,16611,16613,16616,16619~16624,16627,16629~16630,16633~16634,16636,16638~16641,16644~16647,16650~16652,16654~16657,16659~16661,16663~16664,16666~16672,16674~16675,16677~16681,16683,16685,16692,16694~16695,16698~16699,16701,16720,16724~16735,16738,16740,16743~16746,16748~16750,16801~16805,16820~16821,16823,16825~16830,16832~16841,16843~16845,16847,16849~16856,16858~16861,16863~16866,16868,16870,16872~16879,16881~16882,16915,16922~16923,16927,16937,16941,16948,17002,17052,17060,17211,17213,17239,17243,17249,17253,17255,17260,17264,17729') && opIn(t.State, new Set<String> { 'pa', 'pennsylvania' }))return 'a0c50000002dtxWAAQ';    //Pennsylvania -Western
     if(opZipcode(t.ZipCode, '15266,15273,15288,15439,15536,16140,16155,16601~16603,16617,16625,16631,16635,16637,16648,16662,16665,16673,16682,16684,16686,16689,16691,16693,16822,16848,16871,16901,16910~16912,16914,16917~16918,16920~16921,16925~16926,16928~16930,16932~16933,16935~16936,16938~16940,16942~16943,16945~16947,16950,17001,17003~17030,17032~17051,17053~17059,17061~17078,17080~17091,17093~17094,17097~17099,17101~17113,17120~17130,17140,17177,17201~17202,17210,17212,17214~17215,17217,17219~17225,17228~17229,17231~17233,17235~17238,17240~17241,17244,17246~17247,17250~17252,17254,17256~17257,17261~17263,17265~17268,17270~17272,17301~17304,17306~17307,17309~17327,17329,17331~17335,17337,17339~17340,17342~17345,17347,17349~17350,17352~17356,17358,17360~17366,17368,17370~17372,17375,17401~17408,17415,17501~17509,17512,17516~17522,17527~17529,17532~17538,17540,17543,17545,17547,17549~17552,17554~17555,17557,17560,17562~17570,17572~17573,17575~17576,17578~17585,17601~17608,17611,17622,17699,17701~17703,17705,17720~17721,17723~17724,17726~17728,17730~17731,17735,17737~17740,17742,17744~17745,17747~17752,17754,17756,17758,17760,17762~17765,17767~17769,17771~17774,17776~17779,17801,17810,17812~17815,17820~17824,17827,17829~17837,17839~17847,17850~17851,17853,17855~17862,17864~17868,17870,17872,17876~17878,17880~17889,17901,17920~17923,17925,17929~17936,17938,17941~17946,17948~17949,17951~17954,17957,17959~17961,17963~17968,17970,17972,17974,17976,17978~17983,17985,18001~18003,18010~18018,18020,18025,18030~18032,18034~18046,18049~18056,18058~18060,18062~18074,18076~18081,18083~18088,18091~18092,18098~18099,18101~18106,18109,18175,18195,18201~18202,18210~18212,18214,18216,18218~18225,18229~18232,18234~18235,18237,18239~18242,18244~18252,18254~18256,18301~18302,18320~18328,18330~18337,18340~18344,18346~18357,18360,18370~18373,18403,18405,18407,18410~18411,18413~18417,18419~18421,18424~18428,18430~18431,18433~18441,18443~18449,18451~18466,18469~18473,18501~18505,18507~18510,18512,18514~18515,18517~18519,18522,18540,18577,18601~18603,18610~18612,18614~18619,18621~18632,18634~18636,18640~18644,18651,18653~18657,18660~18661,18690,18701~18711,18762,18764~18767,18769,18773,18801,18810,18812~18818,18820~18834,18837,18840,18842~18848,18850~18851,18853~18854,18901~18902,18910~18918,18920~18936,18938,18940,18942~18944,18946~18947,18949~18951,18953~18958,18960,18962~18964,18966,18968~18972,18974,18976~18977,18979~18981,18991,19001~19004,19006~19010,19012~19023,19025~19041,19043~19044,19046~19050,19052~19058,19060~19061,19063~19067,19070,19072~19076,19078~19083,19085~19096,19098~19099,19101~19116,19118~19155,19160~19162,19170~19173,19175~19179,19181~19185,19187~19188,19190~19197,19244,19255,19301,19310~19312,19316~19320,19330~19331,19333,19335,19339~19348,19350~19355,19357~19358,19360,19362~19363,19365~19367,19369,19371~19376,19380~19383,19388,19390,19395,19397~19399,19401,19403~19409,19415,19420~19426,19428~19430,19432,19435~19438,19440~19444,19446,19450~19451,19453~19457,19460,19462,19464~19465,19468,19470,19472~19475,19477~19478,19480~19490,19492~19496,19501,19503~19508,19510~19512,19516,19518~19520,19522~19523,19525~19526,19529~19530,19533~19536,19538~19545,19547~19551,19554~19555,19559~19560,19562,19564~19565,19567,19601~19612,19640') && opIn(t.State, new Set<String> { 'pa', 'pennsylvania' }) && opStart(t.Company, new Set<String> { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', '1', '2', '3', '4', '5' }))return 'a0c50000002dtxXAAQ';    //Pennsylvania -Eastern A-L
     if(opZipcode(t.ZipCode, '15266,15273,15288,15439,15536,16140,16155,16601~16603,16617,16625,16631,16635,16637,16648,16662,16665,16673,16682,16684,16686,16689,16691,16693,16822,16848,16871,16901,16910~16912,16914,16917~16918,16920~16921,16925~16926,16928~16930,16932~16933,16935~16936,16938~16940,16942~16943,16945~16947,16950,17001,17003~17030,17032~17051,17053~17059,17061~17078,17080~17091,17093~17094,17097~17099,17101~17113,17120~17130,17140,17177,17201~17202,17210,17212,17214~17215,17217,17219~17225,17228~17229,17231~17233,17235~17238,17240~17241,17244,17246~17247,17250~17252,17254,17256~17257,17261~17263,17265~17268,17270~17272,17301~17304,17306~17307,17309~17327,17329,17331~17335,17337,17339~17340,17342~17345,17347,17349~17350,17352~17356,17358,17360~17366,17368,17370~17372,17375,17401~17408,17415,17501~17509,17512,17516~17522,17527~17529,17532~17538,17540,17543,17545,17547,17549~17552,17554~17555,17557,17560,17562~17570,17572~17573,17575~17576,17578~17585,17601~17608,17611,17622,17699,17701~17703,17705,17720~17721,17723~17724,17726~17728,17730~17731,17735,17737~17740,17742,17744~17745,17747~17752,17754,17756,17758,17760,17762~17765,17767~17769,17771~17774,17776~17779,17801,17810,17812~17815,17820~17824,17827,17829~17837,17839~17847,17850~17851,17853,17855~17862,17864~17868,17870,17872,17876~17878,17880~17889,17901,17920~17923,17925,17929~17936,17938,17941~17946,17948~17949,17951~17954,17957,17959~17961,17963~17968,17970,17972,17974,17976,17978~17983,17985,18001~18003,18010~18018,18020,18025,18030~18032,18034~18046,18049~18056,18058~18060,18062~18074,18076~18081,18083~18088,18091~18092,18098~18099,18101~18106,18109,18175,18195,18201~18202,18210~18212,18214,18216,18218~18225,18229~18232,18234~18235,18237,18239~18242,18244~18252,18254~18256,18301~18302,18320~18328,18330~18337,18340~18344,18346~18357,18360,18370~18373,18403,18405,18407,18410~18411,18413~18417,18419~18421,18424~18428,18430~18431,18433~18441,18443~18449,18451~18466,18469~18473,18501~18505,18507~18510,18512,18514~18515,18517~18519,18522,18540,18577,18601~18603,18610~18612,18614~18619,18621~18632,18634~18636,18640~18644,18651,18653~18657,18660~18661,18690,18701~18711,18762,18764~18767,18769,18773,18801,18810,18812~18818,18820~18834,18837,18840,18842~18848,18850~18851,18853~18854,18901~18902,18910~18918,18920~18936,18938,18940,18942~18944,18946~18947,18949~18951,18953~18958,18960,18962~18964,18966,18968~18972,18974,18976~18977,18979~18981,18991,19001~19004,19006~19010,19012~19023,19025~19041,19043~19044,19046~19050,19052~19058,19060~19061,19063~19067,19070,19072~19076,19078~19083,19085~19096,19098~19099,19101~19116,19118~19155,19160~19162,19170~19173,19175~19179,19181~19185,19187~19188,19190~19197,19244,19255,19301,19310~19312,19316~19320,19330~19331,19333,19335,19339~19348,19350~19355,19357~19358,19360,19362~19363,19365~19367,19369,19371~19376,19380~19383,19388,19390,19395,19397~19399,19401,19403~19409,19415,19420~19426,19428~19430,19432,19435~19438,19440~19444,19446,19450~19451,19453~19457,19460,19462,19464~19465,19468,19470,19472~19475,19477~19478,19480~19490,19492~19496,19501,19503~19508,19510~19512,19516,19518~19520,19522~19523,19525~19526,19529~19530,19533~19536,19538~19545,19547~19551,19554~19555,19559~19560,19562,19564~19565,19567,19601~19612,19640') && opIn(t.State, new Set<String> { 'pa', 'pennsylvania' }) && opStart(t.Company, new Set<String> { 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '6', '7', '8', '9', '0' }))return 'a0c38000005XRt5AAG';    //Pennsylvania -Eastern M-Z
     if(opIn(t.State, new Set<String> { 'pr', 'puerto rico' }))return 'a0c50000002dtxYAAQ';    //Puerto Rico
@@ -408,17 +409,17 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.State, new Set<String> { 'wy', 'wyoming' }))return 'a0c50000002dtxlAAA';    //Wyoming
     if(opIn(t.State, new Set<String> { 'ny', 'new york' }))return 'a0c50000002dtxSAAQ';    //New York - Catch All
     if(opIn(t.State, new Set<String> { 'ca', 'california' }))return 'a0c50000002dtyCAAQ';    //California -Catchall
-    if(opIn(t.Country, new Set<String> { 'ai', 'aia', 'anguilla', 'aw', 'abw', 'aruba', 'bs', 'bhs', 'bahamas', 'bb', 'brb', 'barbados', 'bm', 'bmu', 'bermuda', 'ky', 'cym', 'cayman islands', 'pm', 'spm', 'st. pierre and miquelon' }))return 'a0c50000002dttTAAQ';    //Carribean Catchall
     return null;
   }
   private Id matchGroup18(Target t, List<Id> overlays)
   {
     if(opIn(t.State, new Set<String> { 'tx', 'texas' }))return 'a0c50000002dtxeAAA';    //Texas -Catch All
+    if(opIn(t.Country, new Set<String> { 'ai', 'aia', 'anguilla', 'aw', 'abw', 'aruba', 'bs', 'bhs', 'bahamas', 'bb', 'brb', 'barbados', 'bm', 'bmu', 'bermuda', 'ky', 'cym', 'cayman islands', 'pm', 'spm', 'st. pierre and miquelon' }))return 'a0c50000002dttTAAQ';    //Carribean Catchall
     if(opIn(t.State, new Set<String> { 'al', 'alabama', 'ar', 'arkansas', 'ct', 'connecticut', 'dc', 'dist of columbia', 'de', 'delaware', 'fl', 'florida', 'ga', 'georgia' }) || opIn(t.State, new Set<String> { 'ia', 'iowa', 'il', 'illinois', 'in', 'indiana', 'ky', 'kentucky', 'ma', 'massachusetts', 'md', 'maryland', 'me', 'maine', 'mi', 'michigan' }) || opIn(t.State, new Set<String> { 'mn', 'minnesota', 'ms', 'mississippi', 'nc', 'north carolina', 'nd', 'north dakota', 'nh', 'new hampshire', 'nj', 'new jersey' }) || opIn(t.State, new Set<String> { 'ny', 'new york', 'pa', 'pennsylvania', 'pr', 'puerto rico', 'ri', 'rhode island', 'sc', 'south carolina', 'sd', 'south dakota', 'oh', 'ohio' }) || opIn(t.State, new Set<String> { 'tn', 'tennessee', 'va', 'virginia', 'vt', 'vermont', 'wi', 'wisconsin', 'wv', 'west virginia' }))return 'a0c50000002dtyYAAQ';    //Eastern US Catchall
     if(opIn(t.State, new Set<String> { 'ak', 'alaska', 'az', 'arizona', 'ca', 'california', 'co', 'colorado', 'hi', 'hawaii', 'id', 'idaho', 'ks', 'kansas' }) || opIn(t.State, new Set<String> { 'la', 'louisiana', 'mo', 'missouri', 'mt', 'montana', 'ne', 'nebraska' }) || opIn(t.State, new Set<String> { 'nm', 'new mexico', 'nv', 'nevada', 'ok', 'oklahoma', 'or', 'oregon', 'tx', 'texas', 'ut', 'utah', 'wa', 'washington', 'wy', 'wyoming' }))return 'a0c50000002dtyZAAQ';    //Western US catchall
     if(opIn(t.Country, new Set<String> { 'us', 'usa', 'u.s.', 'u.s.a', 'united states', 'united stated of america' }))return 'a0c50000002dtxmAAA';    //UNITED STATES -Catch All
-    if(opIn(t.State, new Set<String> { 'ab', 'alberta' }))return 'a0c38000003VdbMAAS';    //Alberta
     if(opIn(t.State, new Set<String> { 'bc', 'british columbia' }))return 'a0c50000002dtxnAAA';    //British Columbia
+    if(opIn(t.State, new Set<String> { 'ab', 'alberta' }))return 'a0c38000003VdbMAAS';    //Alberta
     if(opIn(t.State, new Set<String> { 'lb', 'labrador' }))return 'a0c50000002dtxoAAA';    //Labrador
     if(opIn(t.State, new Set<String> { 'mb', 'manitoba' }))return 'a0c50000002dtxpAAA';    //Manitoba
     if(opIn(t.State, new Set<String> { 'nb', 'new brunswick' }))return 'a0c50000002dtxqAAA';    //New Brunswick
@@ -426,17 +427,17 @@ public class PatchRuleEngine extends PatchRuleEngineBase
     if(opIn(t.State, new Set<String> { 'ns', 'nova scotia' }))return 'a0c50000002dtxsAAA';    //Nova Scotia
     if(opIn(t.State, new Set<String> { 'nu', 'nunavut' }))return 'a0c50000002dtxtAAA';    //Nunavut
     if(opIn(t.State, new Set<String> { 'nw', 'north west terr.' }))return 'a0c50000002dtxuAAA';    //North West Terr.
-    if(opIn(t.State, new Set<String> { 'on', 'ontario' }) && opStart(t.ZipCode, new Set<String> { 'm' }))return 'a0c38000005aFgPAAU';    //Toronto
     if(opIn(t.State, new Set<String> { 'on', 'ontario' }) && opStart(t.ZipCode, new Set<String> { 'k', 'l', 'n', 'p' }))return 'a0c50000002dtxvAAA';    //Ontario (Less Toronto)
+    if(opIn(t.State, new Set<String> { 'on', 'ontario' }) && opStart(t.ZipCode, new Set<String> { 'm' }))return 'a0c38000005aFgPAAU';    //Toronto
     if(opIn(t.State, new Set<String> { 'pe', 'prince edward is.' }))return 'a0c50000002dtxwAAA';    //Prince Edward Is.
     if(opIn(t.State, new Set<String> { 'qc', 'quebec' }))return 'a0c50000002dtxxAAA';    //Quebec
     if(opIn(t.State, new Set<String> { 'sk', 'saskatchewen' }))return 'a0c50000002dtxyAAA';    //Saskatchewen
     if(opIn(t.State, new Set<String> { 'yu', 'yukon' }))return 'a0c50000002dtxzAAA';    //Yukon
-    if(opIn(t.Country, new Set<String> { 'ca', 'canada' }))return 'a0c50000002dty0AAA';    //CANADA Catch All
     return null;
   }
   private Id matchGroup19(Target t, List<Id> overlays)
   {
+    if(opIn(t.Country, new Set<String> { 'ca', 'canada' }))return 'a0c50000002dty0AAA';    //CANADA Catch All
     if(opStart(t.Company, new Set<String> { 'ntt' }))return 'a0c380000060zedAAA';    //Service Provider 9
     if(!opEqual(t.Company, '') || !opEqual(t.EmailDomain, ''))return 'a0c50000002dtw3AAA';    //ROW Catchall
     return null;

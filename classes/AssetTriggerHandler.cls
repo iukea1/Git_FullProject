@@ -798,13 +798,13 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 a.Status = 'Customer Evaluation';
             }
             if(p2 != null && p2.Name.contains('Asset') && p2.Name != null){
-                a.Status = 'Customer Subscription';  
+                a.Status = 'Customer Subscription Active';  
             }
             if(a.Product_Category__c == 'Appliance') {
                 a.Status = 'Customer Owned'; 
             }
             if(a.Status == null) {
-                a.Status = 'Customer Subscription'; 
+                a.Status = 'Customer Subscription Active'; 
             }
             //updateAsset.add(a);
         }

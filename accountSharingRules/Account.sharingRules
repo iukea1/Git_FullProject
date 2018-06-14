@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AccountSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
-    <ownerRules>
-        <fullName>AllInternalUsers</fullName>
+    <criteriaBasedRules>
+        <fullName>Share_In_Review_Accounts_with_Sales_Power_Users</fullName>
         <sharedTo>
-            <allInternalUsers></allInternalUsers>
+            <group>In_Review_Accounts</group>
         </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>In Review</value>
+        </criteriaItems>
         <accountAccessLevel>Edit</accountAccessLevel>
         <caseAccessLevel>None</caseAccessLevel>
         <contactAccessLevel>Edit</contactAccessLevel>
-        <name>AllInternalUsers</name>
+        <description>Share Accounts that are of type &apos;In Review&apos; with Sales Power User</description>
+        <name>Share In Review Accounts with Sales Power Users</name>
         <opportunityAccessLevel>None</opportunityAccessLevel>
-    </ownerRules>
+    </criteriaBasedRules>
+    <criteriaBasedRules>
+        <fullName>Share_Non_In_Review_Accounts</fullName>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>notEqual</operation>
+            <value>In Review</value>
+        </criteriaItems>
+        <accountAccessLevel>Edit</accountAccessLevel>
+        <caseAccessLevel>None</caseAccessLevel>
+        <contactAccessLevel>Edit</contactAccessLevel>
+        <description>Share non &apos;In Review&apos; Accounts with All Internal Users</description>
+        <name>Share Non &apos;In Review&apos; Accounts</name>
+        <opportunityAccessLevel>None</opportunityAccessLevel>
+    </criteriaBasedRules>
 </AccountSharingRules>

@@ -28,6 +28,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         public void AfterInsert(Map<Id, SObject> newItems) 
         {
             populateQuoteNumberToPOCIdInContract(newItems.values());
+            //renewalContractDateSetup(newItems.values());
         }
         public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
         {
@@ -177,5 +178,49 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 System.debug(qe.getMessage());
             }
         }
+        
+        
+        /*
+        Incorrect build
+        public static void renewalContractDateSetup(List<Contract> incomingContract) {
+            //collect old contract
+            Set<Id> renewalOppIds = new Set<Id>();
+            for(Contract c : incomingContract) {
+                renewalOppIds.add(c.SBQQ__RenewalOpportunity__c);
+            }
+
+            Map<Id, Opportunity> renewalOpp = new Map<Id, Opportunity>(
+                [SELECT Id, SBQQ__RenewedContract__r.Id, SBQQ__RenewedContract__r.EndDate, SBQQ__RenewedContract__r.StartDate,
+                SBQQ__RenewedContract__r.SBQQ__Order__r.Id, SBQQ__RenewedContract__r.SBQQ__Order__r.EndDate, SBQQ__RenewedContract__r.SBQQ__Order__r.EffectiveDate 
+                FROM Opportunity WHERE SBQQ__Renewal__c = true AND Id IN :renewalOppIds]
+            );
+            //iterate and setup contract mapping
+            Map<Id, Contract> newToOldContract = new Map<Id, Contract>();
+
+            Map<Id, Integer> renewalCountPerOpp = new Map<Id, Integer>();
+            List<Order> orderUpdate = new List<Order>();
+            for(Contract c : incomingContract) {
+                if(renewalOpp.containsKey(c.SBQQ__RenewalOpportunity__c)) {
+                    if(!renewalCountPerOpp.containsKey(c.SBQQ__RenewalOpportunity__c)) renewalCountPerOpp.put(c.SBQQ__RenewalOpportunity__c, 0);
+                    renewalCountPerOpp.put(c.SBQQ__RenewalOpportunity__c, renewalCountPerOpp.get(c.SBQQ__RenewalOpportunity__c) + 1);
+
+                    Contract oldC = renewalOpp.get(c.SBQQ__RenewalOpportunity__c).SBQQ__RenewedContract__r;
+                    newToOldContract.put(c.Id, oldC);
+                    //update order dates 
+                    orderUpdate.add(
+                        new Order(
+                            Id = oldC.Id,
+                            //EndDate = oldC.EndDate,
+                            EffectiveDate = oldC.EndDate + 1
+                        )
+                    );
+                }
+            }
+            if(!orderUpdate.isEmpty()) update orderUpdate;
+
+            //check lines 
+
+        }
+        */
         
     }
