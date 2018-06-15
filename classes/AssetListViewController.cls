@@ -113,6 +113,7 @@ public with sharing class AssetListViewController extends AssetListViewBase
     
     
     public PageReference next()
+        
     {
         PageNumber++;
         loadAssets();
@@ -211,7 +212,7 @@ public with sharing class AssetListViewController extends AssetListViewBase
     {
         String escapedKeyword = String.escapeSingleQuotes(SearchAsset == null ? '' : SearchAsset);
         String maskKeyword = '%' + escapedKeyword.replaceAll('\\*', '_') + '%';
-        
+        System.debug(maskKeyword);
         String query = '';
         
         query = 'select ';

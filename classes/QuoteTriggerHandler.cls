@@ -17,6 +17,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
        runShippedExtendedLogic((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
+       recalculateEcAddOnValues((List<SBQQ__Quote__c>)newItems.values(), (Map<Id, SBQQ__Quote__c>)oldItems);
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
     {
@@ -130,14 +131,15 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         
     }
     
-    public static void populateRequestedEndDateToQuoteEndDate(List<SBQQ__Quote__c> quotes){ 
-        
-        system.debug('before update quotes: ' + quotes);
+    /**
+    *   Sets End date and expiration dates of quote record to the value from requested extension date when record gets approved
+    *
+    **/
+    public static void populateRequestedEndDateToQuoteEndDate(List<SBQQ__Quote__c> quotes) {
         Set<Id> quotesIds = new Set<Id>();
         
         for(SBQQ__Quote__c quote: quotes){
-            System.debug('quote 1-------@@ ' + quote);
-                quotesIds.add(quote.Id);        
+            quotesIds.add(quote.Id);        
         }
         
         List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
@@ -152,26 +154,90 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
                           quoteRec.SBQQ__EndDate__c = quoteRec.Requested_Extension_Date__c;
                           quoteRec.SBQQ__ExpirationDate__c = quoteRec.Requested_Extension_Date__c;
                           quotesToUpdate.add(quoteRec);
-                      }
-                      
-                          
-                      
+                      }    
                   }
               }
                        
         }
         
-        try{
+        try {
             if(quotesToUpdate.size()>0){
                 update quotesToUpdate;
             } 
+        } catch(Exception e) {}
+    }
+
+    private static void recalculateEcAddOnValues(List<SBQQ__Quote__c> quotes, Map<Id, SBQQ__Quote__c> oldQuotes) {
+        System.debug('----------------> recalculateEcAddOnValues');
+        Map<Id, List<SBQQ__QuoteLine__c>> quoteLinesOriginal = new Map<Id, List<SBQQ__QuoteLine__c>>();
+        Map<Id, List<SBQQ__QuoteLine__c>> quoteLinesAddOn = new Map<Id, List<SBQQ__QuoteLine__c>>();
+
+        for(SBQQ__QuoteLine__c ql : [SELECT Id, SBQQ__NetTotal__c, SBQQ__EffectiveEndDate__c, SBQQ__Quote__c, SBQQ__EffectiveQuantity__c, Term__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c IN :quotes AND SBQQ__Quote__r.Calculate_EC_End_Date__c = TRUE]) {
+            if(!quoteLinesOriginal.containsKey(ql.SBQQ__Quote__c)) quoteLinesOriginal.put(ql.SBQQ__Quote__c, new List<SBQQ__QuoteLine__c>());
+            if(!quoteLinesAddOn.containsKey(ql.SBQQ__Quote__c)) quoteLinesAddOn.put(ql.SBQQ__Quote__c, new List<SBQQ__QuoteLine__c>());
+
+            if(ql.SBQQ__EffectiveQuantity__c <= 0) {
+                quoteLinesOriginal.get(ql.SBQQ__Quote__c).add(ql);
+            } else {
+                quoteLinesAddOn.get(ql.SBQQ__Quote__c).add(ql);
+            }
+        }   
+
+        for(SBQQ__Quote__c q : quotes) {
+            if(q.SBQQ__Type__c == 'Amendment') {
+                if(q.Calculate_EC_End_Date__c == true && oldQuotes.get(q.Id).Calculate_EC_End_Date__c != true) {
+                    Decimal totalPriceOriginal = 0.0;
+                    Decimal totalPriceAddOn = 0.0;
+                    Date lastEndDateAddOn = System.today();
+                    Integer term = Integer.valueOf(q.Term__c != null ? q.Term__c : '1');
+                    //collect totals
+                    if(quoteLinesOriginal.containsKey(q.Id)) {
+                        for(SBQQ__QuoteLine__c ql : quoteLinesOriginal.get(q.Id)) {
+                            totalPriceOriginal += ql.SBQQ__NetTotal__c;
+                        }
+                    }
+                    if(quoteLinesAddOn.containsKey(q.Id)) {
+                        for(SBQQ__QuoteLine__c ql : quoteLinesAddOn.get(q.Id)) {
+                            totalPriceAddOn += ql.SBQQ__NetTotal__c;
+                            if(lastEndDateAddOn < ql.SBQQ__EffectiveEndDate__c) lastEndDateAddOn = ql.SBQQ__EffectiveEndDate__c;
+                        }
+                    }
+
+
+                    //do calcs
+                    
+                    System.debug('--------------> Quote calculated values');
+                    
+                    System.debug('q.Daily_Rate_Original__c >> ' + q.Daily_Rate_Original__c);
+                    q.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
+                    System.debug('q.Daily_Rate_Original__c >> ' + q.Daily_Rate_Original__c);
+                    
+                    System.debug('q.Daily_Rate_Add_on__c >> ' + q.Daily_Rate_Add_on__c );
+                    q.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
+                    System.debug('q.Daily_Rate_Add_on__c >> ' + q.Daily_Rate_Add_on__c );
+                    
+                    System.debug('q.Cumulative_Daily_Value__c >> ' + q.Cumulative_Daily_Value__c );
+                    q.Cumulative_Daily_Value__c = q.Daily_Rate_Original__c + q.Daily_Rate_Add_on__c;
+                    System.debug('q.Cumulative_Daily_Value__c >> ' + q.Cumulative_Daily_Value__c );
+                    
+                    System.debug('q.Days_to_Credit__c >> ' + q.Days_to_Credit__c );
+                    q.Days_to_Credit__c = lastEndDateAddOn.daysBetween(q.License_End_Date__c);
+                    System.debug('q.Days_to_Credit__c >> ' + q.Days_to_Credit__c );
+                    
+                    System.debug('q.Credit_Value__c >> ' + q.Credit_Value__c  );
+                    q.Credit_Value__c = q.Daily_Rate_Add_on__c * q.Days_to_Credit__c;
+                    System.debug('q.Credit_Value__c >> ' + q.Credit_Value__c  );
+                    
+                    System.debug('q.Days_of_Value__c >> ' + q.Days_of_Value__c );
+                    q.Days_of_Value__c = q.Credit_Value__c / q.Cumulative_Daily_Value__c;
+                    System.debug('q.Days_of_Value__c >> ' + q.Days_of_Value__c );
+                    
+                    System.debug('q.License_End_Date__c >> ' + q.License_End_Date__c );
+                    q.License_End_Date__c = q.License_End_Date__c.addDays(Integer.valueOf(q.Days_of_Value__c));
+                    System.debug('q.License_End_Date__c >> ' + q.License_End_Date__c );
+                    
+                }
+            }
         }
-        catch(Exception e){
-            
-        }
-        
-        
-        
-       
     }
 }

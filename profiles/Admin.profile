@@ -111,6 +111,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>AccountClass</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountSummaryController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -140,6 +144,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountWrappercls</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1652,6 +1660,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PocRequestNotification</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalDataWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalViewBase</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalViewController_WanOp</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -10410,6 +10430,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>AccountViewData</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ActivateOrderOverride</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -11135,6 +11159,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalReleases</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PortalViewWanOp</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
