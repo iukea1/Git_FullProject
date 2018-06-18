@@ -143,6 +143,14 @@
                 <behavior>Readonly</behavior>
                 <field>Annual_Contract_Value__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Comp_Rate1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Comp_Rate2__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -443,6 +451,14 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <fields>SplitOwner</fields>
+        <fields>SplitType</fields>
+        <fields>SplitPercentage</fields>
+        <fields>SplitAmount</fields>
+        <fields>SplitNote</fields>
+        <relatedList>RelatedOpportunitySplits</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>MemberName</fields>
         <fields>OppAccessLevel</fields>

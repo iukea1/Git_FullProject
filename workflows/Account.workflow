@@ -163,7 +163,7 @@
         <description>Expired Flag is unchecked</description>
         <protected>false</protected>
         <recipients>
-            <recipient>lcrawford@silver-peak.com</recipient>
+            <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
@@ -202,7 +202,7 @@
         <description>Send Email To Shari</description>
         <protected>false</protected>
         <recipients>
-            <recipient>lcrawford@silver-peak.com</recipient>
+            <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>
@@ -214,7 +214,7 @@
         <description>Send Email to Marketing when the expired customer is checked</description>
         <protected>false</protected>
         <recipients>
-            <recipient>lcrawford@silver-peak.com</recipient>
+            <recipient>ewhite@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@silver-peak.com</senderAddress>

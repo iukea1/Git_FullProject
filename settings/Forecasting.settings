@@ -11,58 +11,6 @@
             <displaying>3</displaying>
             <periodType>Month</periodType>
         </forecastRangeSettings>
-        <name>Opportunity_00N380000033yrI_Overlay</name>
-        <opportunityListFieldsSelectedSettings>
-            <field>OPPORTUNITY.NAME</field>
-            <field>ACCOUNT.NAME</field>
-            <field>SPLITAMOUNT</field>
-            <field>SPLITPERCENTAGE</field>
-            <field>OPPORTUNITY.CLOSE_DATE</field>
-            <field>OPPORTUNITY.STAGE_NAME</field>
-            <field>OPPORTUNITY.PROBABILITY</field>
-            <field>FORECAST_CATEGORY</field>
-            <field>FULL_NAME</field>
-        </opportunityListFieldsSelectedSettings>
-        <quotasSettings>
-            <showQuotas>false</showQuotas>
-        </quotasSettings>
-    </forecastingTypeSettings>
-    <forecastingTypeSettings>
-        <active>true</active>
-        <adjustmentsSettings>
-            <enableAdjustments>true</enableAdjustments>
-        </adjustmentsSettings>
-        <forecastRangeSettings>
-            <beginning>0</beginning>
-            <displaying>3</displaying>
-            <periodType>Month</periodType>
-        </forecastRangeSettings>
-        <name>Opportunity_00N380000033yrH_Overlay</name>
-        <opportunityListFieldsSelectedSettings>
-            <field>OPPORTUNITY.NAME</field>
-            <field>ACCOUNT.NAME</field>
-            <field>SPLITAMOUNT</field>
-            <field>SPLITPERCENTAGE</field>
-            <field>OPPORTUNITY.CLOSE_DATE</field>
-            <field>OPPORTUNITY.STAGE_NAME</field>
-            <field>OPPORTUNITY.PROBABILITY</field>
-            <field>FORECAST_CATEGORY</field>
-            <field>FULL_NAME</field>
-        </opportunityListFieldsSelectedSettings>
-        <quotasSettings>
-            <showQuotas>false</showQuotas>
-        </quotasSettings>
-    </forecastingTypeSettings>
-    <forecastingTypeSettings>
-        <active>true</active>
-        <adjustmentsSettings>
-            <enableAdjustments>true</enableAdjustments>
-        </adjustmentsSettings>
-        <forecastRangeSettings>
-            <beginning>0</beginning>
-            <displaying>3</displaying>
-            <periodType>Month</periodType>
-        </forecastRangeSettings>
         <name>OpportunityRevenue</name>
         <opportunityListFieldsSelectedSettings>
             <field>OPPORTUNITY.NAME</field>

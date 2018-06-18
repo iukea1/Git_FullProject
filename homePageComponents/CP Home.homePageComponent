@@ -9,9 +9,9 @@
 
 &lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;a class=&quot;home&quot; href=&quot;/apex/PickAssetForNewRMA?sfdc.tabName=01r500000001oeT&quot;&gt;Open a Self Service RMA&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
 
-&lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;a href=&quot;/apex/AssetListView_EC?sfdc.tabName=01r38000000HtDc&quot;&gt;EdgeConnect Subscriptions &amp;amp; Appliances&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;a href=&quot;/apex/PortalViewSDWAN?sfdc.tabName=01r0x000000Csqk&quot;&gt;EdgeConnect Subscriptions &amp;amp; Appliances&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
 
-&lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;a href=&quot;/apex/AssetListView?sfdc.tabName=01r38000000HtDm&quot;&gt;VX/VRX Licenses &amp;amp; NX Appliances&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;a href=&quot;/apex/PortalViewWanOp?sfdc.tabName=01r0x000000Csq6&quot;&gt;VX/VRX Licenses &amp;amp; NX Appliances&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
 
 &lt;div class=&quot;btn_home&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;a href=&quot;/apex/AssetListView_SP&quot;&gt;Service Provider Subscription &amp;amp; Appliances&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
 

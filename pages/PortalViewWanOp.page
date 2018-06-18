@@ -200,6 +200,7 @@
         <span id="searchSection">
             <input type="search" class="search-control"  onsearch="searchAsset();"/>
             <apex:inputHidden value="{!SearchParameter}" id="seachValue"></apex:inputHidden>
+            View Active Assets<apex:inputCheckbox value="{!IsSearchForActive}" />
             <apex:commandButton value="Search" onclick="setSearch();" action="{!searchAssets}" reRender="assetListBlock,errorMsg" status="loading"></apex:commandButton>
             <apex:commandLink value="Send Me the List" onclick="return confirmOperation();" action="{!sendListToCurrentUser}" style="float: right; margin-top: 6px;"></apex:commandLink>
             <apex:actionStatus id="loading">
@@ -252,7 +253,105 @@
                             </apex:facet>
                             <apex:outputText value="{!item.AccountName}"/>
                         </apex:column>
-                       
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="ContractEndDate"/>
+                                    <span>Contract End</span>
+                                    <apex:outputText rendered="{!FieldName == 'ContractEndDate'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.ContractEndDate}"/> </apex:outputText>
+                        </apex:column>
+                         <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="ShipDate"/>
+                                    <span>Ship Date</span>
+                                    <apex:outputText rendered="{!FieldName == 'ShipDate'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.ShipDate}"/> </apex:outputText>
+                        </apex:column>
+                         <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="EndOfMaintenance"/>
+                                    <span>End Of Maintenance </span>
+                                    <apex:outputText rendered="{!FieldName == 'EndOfMaintenance'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.EndOfMaintenance}"/> </apex:outputText>
+                        </apex:column>
+                         <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="WarrantyStartDate"/>
+                                    <span>Warranty Start Date </span>
+                                    <apex:outputText rendered="{!FieldName == 'WarrantyStartDate'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.WarrantyStartDate}"/> </apex:outputText>
+                        </apex:column>
+                         <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="WarrantyEndDate"/>
+                                    <span>Warranty End Date </span>
+                                    <apex:outputText rendered="{!FieldName == 'WarrantyEndDate'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.WarrantyEndDate}"/> </apex:outputText>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="LicenseEndDate"/>
+                                    <span>License End Date </span>
+                                    <apex:outputText rendered="{!FieldName == 'LicenseEndDate'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.LicenseEndDate}"/> </apex:outputText>
+                        </apex:column>
+                          <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="LicenseKey"/>
+                                    <span>License Key</span>
+                                    <apex:outputText rendered="{!FieldName == 'LicenseKey'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{!item.LicenseKey}"/>
+                        </apex:column>
+                          <apex:column style="width: 15%;" onmouseover="showPencil(this);" onmouseout="hidePencil(this);" ondblclick="showInlineEditPopup(this, 'input-notes', 'output-notes');" id="custCell">
+                            <apex:facet name="header">
+                                <apex:commandLink action="{!sortTable}" reRender="assetListBlock,errorMsg" status="loading">
+                                    <apex:param name="fieldName" value="CustomerNotes"/>
+                                    <span>Customer Notes</span>
+                                    <apex:outputText rendered="{!FieldName == 'CustomerNotes'}">
+                                        <img src="/s.gif" class="{!SortFunction}"/>
+                                    </apex:outputText>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputPanel >
+                                <apex:outputText value="{!item.CustomerNotes}" styleClass="output-notes"></apex:outputText>
+                                <apex:inputText value="{!item.CustomerNotes}" styleClass="input-notes" style="display:none" onblur="hideInlineEditPopup(this, 'output-notes');" id="custNotes" />
+                            </apex:outputPanel>
+                        </apex:column>
                     </apex:pageBlockTable>
                     <apex:panelGrid id="buttonsSection" columns="4" cellspacing="5" style="padding: 5px 35%;" width="80%">
                         <apex:commandLink value="<Previous" rendered="{!PageNumber > 0}" action="{!previous}" reRender="assetListBlock,errorMsg" status="loading2"/>

@@ -1649,6 +1649,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PortalViewController_NXVX</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalViewController_SDWAN</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalViewController_SP</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalViewController_WanOp</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -9897,6 +9909,18 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>PortalViewNXVX</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PortalViewSDWAN</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PortalViewSP</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>PortalViewWanOp</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -10378,6 +10402,14 @@
     </tabSettings>
     <tabSettings>
         <tab>Patches</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Portal_SD_WAn</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Portal_Wan_OpView</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

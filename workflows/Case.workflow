@@ -1035,6 +1035,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Get_Product_Quote_Type</fullName>
+        <field>Product_Quote_Type__c</field>
+        <formula>TEXT(Asset.Product2.Product_Type__c)</formula>
+        <name>Get Product Quote Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SendFieldFalse</fullName>
         <field>CreatedByApex__c</field>
         <literalValue>0</literalValue>
@@ -1644,6 +1653,16 @@ NOT(Contact.Testing__c)
         <description>This workflow is used to notify the facilities team when a case is assigned to a team member.</description>
         <formula>AND(ISCHANGED(OwnerId), 
 RecordType.Id =&apos;01238000000E9ik&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Get Product Quote Type on Case</fullName>
+        <actions>
+            <name>Get_Product_Quote_Type</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(AssetId)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

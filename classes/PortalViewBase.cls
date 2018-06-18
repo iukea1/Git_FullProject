@@ -1,4 +1,4 @@
-public abstract class PortalViewBase {
+public with sharing abstract class PortalViewBase {
     
     public string SearchParameter{get;set;}
     public boolean IsSearchForActive{get;set;}
@@ -9,7 +9,7 @@ public abstract class PortalViewBase {
     public String SortFunction { get; set; }
     public String FieldName { get; set; } 
     public String PreviousFieldName { get; set; } 
-    public Double PAGE_SIZE = 10.0; //The number of records on each page.
+    public Double PAGE_SIZE = 50.0; //The number of records on each page.
     public String sortField = '';
     
     public Boolean HasNext
@@ -32,10 +32,13 @@ public abstract class PortalViewBase {
     protected List<PortalDataWrapper> doQuery()
     {
         List<Asset> allAssetRecords= new List<Asset>();
-        String query='';
         List<SBQQ__Subscription__c> allSubRecords= new List<SBQQ__Subscription__c>();
-        if(String.isNotBlank(SearchParameter) && SearchParameter.length() >= 2)
+        String query='';
+        System.debug('SearchParameter'+ SearchParameter);
+         System.debug('IsSearchForActive'+ IsSearchForActive);
+        if((String.isNotBlank(SearchParameter) && SearchParameter.length() >= 2)|| IsSearchForActive)
         {
+            System.debug('In Search');
             query = BuildAssetSearch();
             if(query!='')
                 allAssetRecords = Database.query(query);
@@ -62,10 +65,23 @@ public abstract class PortalViewBase {
     }
     
     
-    public PageReference saveAsset()
+    public virtual PageReference  saveAsset()
     {
         try
         {
+            List<Asset> lstAsset= new List<Asset>();
+            InternalAssetUpdator updator = new InternalAssetUpdator();
+            if(lstResults!=null && lstResults.size()>0)
+            {
+                for(PortalDataWrapper data: lstResults)
+                {
+                    if(data.OldCustomerNotes!=data.CustomerNotes)
+                        updator.addAsset(data.RecordId, data.CustomerNotes);
+                    
+                }
+                updator.save();
+            
+            }
             
         } catch(Exception ex) {
             ApexPages.addMessages(ex);
@@ -90,6 +106,7 @@ public abstract class PortalViewBase {
     
     public PageReference searchAssets()
     {
+        System.debug('isSearchforactive' + IsSearchForActive);
         loadData();
         PageNumber = 0;
         return null;
@@ -221,15 +238,29 @@ public abstract class PortalViewBase {
                     portalData.AccountName= lstData[i].AccountName;
                     portalData.ProductName= lstData[i].ProductName;
                     portalData.SerialNumber= lstData[i].SerialNumber;
+                    portalData.RecordId= lstData[i].RecordId;
+                    portalData.Status= lstData[i].Status;
+                    portalData.ProductType= lstData[i].ProductType;
+                    portalData.ProductFamily= lstData[i].ProductFamily;
+                    portalData.Model= lstData[i].Model;
+                    portalData.CustomerNotes= lstData[i].CustomerNotes;
+                    portalData.LicenseKey=lstData[i].LicenseKey;
+                    portalData.LicenseEndDate= lstData[i].LicenseEndDate;
+                    portalData.ContractEndDate= lstData[i].ContractEndDate;
+                    portalData.WarrantyEndDate= lstData[i].WarrantyEndDate;
+                    portalData.WarrantyStartDate= lstData[i].WarrantyStartDate;
+                    portalData.EndOfMaintenance= lstData[i].EndOfMaintenance;
+                    portalData.ShipDate= lstData[i].ShipDate;
+                    portalData.oldCustomerNotes= lstData[i].CustomerNotes;
                     lstResults.add(portalData);
                 }      
-        		
+                
             }
             
         } 
         catch(Exception ex) 
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failed to query data. ' + ex.getMessage()));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Failed to query data. ' + ex.getMessage()+  ex.getStackTraceString()));
         }
     }
     private String escapeCsvCell(String value)
@@ -290,6 +321,28 @@ public abstract class PortalViewBase {
     protected abstract string BuildSubSearch();
     protected abstract string BuildSubQuery();
     protected abstract List<PortalDataWrapper> BuildData(List<Asset> lstAssetData,List<SBQQ__Subscription__c> lstSubscriptions);
-   
+    
+     public without sharing class InternalAssetUpdator
+    {
+        private List<Asset> assets = new List<Asset>();
+        
+        public void addAsset(Id assetId, String customerNotes)
+        {
+            assets.add(new Asset(Id=assetId, Customer_Notes__c=customerNotes));
+        }
+        
+        public void addAsset(Id assetId, String customerNotes, Date deploymentDate, String endCustomer, String reference)
+        {
+            assets.add(new Asset(Id=assetId, Customer_Notes__c=customerNotes, Deployment_Date__c = deploymentDate, End_Customer__c = endCustomer, Reference__c = reference));
+        }
+        
+        public void save()
+        {
+            if(assets.size() > 0)
+            {
+                update assets;
+            }
+        }
+    }
     
 }

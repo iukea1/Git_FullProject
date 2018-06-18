@@ -17,6 +17,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
        runShippedExtendedLogic((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
+        System.debug('----------------> recalculateEcAddOnValues trig');
        recalculateEcAddOnValues((List<SBQQ__Quote__c>)newItems.values(), (Map<Id, SBQQ__Quote__c>)oldItems);
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
