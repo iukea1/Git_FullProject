@@ -34,4 +34,18 @@
         <name>Share Non &apos;In Review&apos; Accounts</name>
         <opportunityAccessLevel>None</opportunityAccessLevel>
     </criteriaBasedRules>
+    <ownerRules>
+        <fullName>All_Internal_User</fullName>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+        <accountAccessLevel>Edit</accountAccessLevel>
+        <caseAccessLevel>None</caseAccessLevel>
+        <contactAccessLevel>Edit</contactAccessLevel>
+        <name>All_Internal_User</name>
+        <opportunityAccessLevel>None</opportunityAccessLevel>
+    </ownerRules>
 </AccountSharingRules>

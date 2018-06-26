@@ -51,7 +51,7 @@ public without sharing class ConvertRmaToCmaController
 
     private void buildData()
     {
-        NxAsset = [select Id, Model__c, SerialNumber, Ship_Date__c, CreatedDate, ContactId, AccountId, Account.Name, Product2Id,
+        NxAsset = [select Id, Model__c, SerialNumber, Ship_Date__c, CreatedDate, ContactId, AccountId, Account.Name, Product2Id, Product2.Name, SBQQ__QuoteLine__c, Quantity,
                         Contract_Number__c,GMS_Nodes__c, Contract_Type__c, Contract_End__c from Asset where Id = :assetId];
         if(NxAsset != null && String.IsNotEmpty(NxAsset.Model__c))
         {
@@ -76,8 +76,7 @@ public without sharing class ConvertRmaToCmaController
     {
         Boolean result = false;
         SavePoint sp = Database.setSavePoint();
-        try
-        {
+        try {
             // Opens an RMA of CMA record type
         //1. Create a RMA record with two RMA items … one  for NX asset and the other for VX
             String cmaRecordTypeId = SilverPeakUtils.getRecordTypeId('CMA', 'RMA__c');
@@ -113,8 +112,11 @@ public without sharing class ConvertRmaToCmaController
             }
           
             //Deactivate NX subscribed asset
-            SBQQ__SubscribedAsset__c nxSubscribeAsset = [SELECT Id FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
-            nxSubscribeAsset.SBQQ__Active__c = false;
+            List<SBQQ__SubscribedAsset__c> nxSubscribeAsset = [SELECT Id FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
+            if(!nxSubscribeAsset.isEmpty()) {
+                nxSubscribeAsset[0].SBQQ__Active__c = false;
+                update nxSubscribeAsset;
+            } 
             
             //TODO
             
@@ -123,7 +125,9 @@ public without sharing class ConvertRmaToCmaController
             SBQQ__Subscription__c sub = new SBQQ__Subscription__c(
                 SBQQ__Contract__c = NxAsset.Contract_Number__c,
                 SBQQ__QuoteLine__c = NxAsset.SBQQ__QuoteLine__c,
-                SBQQ__Account__c = createdVxAsset.AccountId
+                SBQQ__Account__c = createdVxAsset.AccountId,
+                SBQQ__Quantity__c = NxAsset.Quantity,
+                SBQQ__Product__c = NxAsset.Product2Id
             );
             insert sub;
             insert new SBQQ__SubscribedAsset__c(

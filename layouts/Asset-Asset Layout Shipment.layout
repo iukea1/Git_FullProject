@@ -91,6 +91,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Selected_to_Split__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deployment_End_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -245,10 +249,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Term__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Deployment_End_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

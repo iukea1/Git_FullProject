@@ -1,5 +1,5 @@
 public with sharing class PortalViewController_NXVX extends PortalViewBase{
-    private Set<String> models;
+  
     public PortalViewController_NXVX()
     {
         PageNumber = 0;
@@ -19,10 +19,10 @@ public with sharing class PortalViewController_NXVX extends PortalViewBase{
     {
         String escapedKeyword = String.escapeSingleQuotes(SearchParameter == null ? '' : SearchParameter);
         String maskKeyword = '%' + escapedKeyword.replaceAll('\\*', '_') + '%';
-        string result='Select Id,Product2.Name,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c	,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c from Asset';
+        string result='Select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c	,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c from Asset';
         result += ' where (NOT Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true) and Status =\'Customer Owned\' and Contract_Status__c = \'Activated\' and Contract_End__c >=today and Model__c in :models  and (SerialNumber=\'' + escapedKeyword + '\' or Model__c like \'' + maskKeyword + '\' or Product2.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';
         if(IsSearchForActive==true)
-            result+= 'and SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c!=null and SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c >=today';
+            result+= 'and Contract_End__c!=null and Contract_End__c >=today';
         
         result += ' limit 10000';
         
@@ -31,12 +31,13 @@ public with sharing class PortalViewController_NXVX extends PortalViewBase{
     }
     protected override string BuildAssetQuery()
     {
+        System.debug(models);
        	String query = '';
-        query = 'select Id,Product2.Name,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c	,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c';
+        query = 'select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c';
         query += ' from Asset';
         query += ' where (NOT Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Status =\'Customer Owned\' and Contract_Status__c = \'Activated\' and Contract_End__c >=today and Model__c in :models';
         query += ' limit 10000';
-        System.debug(query);
+        System.debug('query' + query);
         return query;
     }
     public PageReference goToCma()

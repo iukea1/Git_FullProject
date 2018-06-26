@@ -506,6 +506,15 @@ Standard_Discount_Service__c
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SBCF_Set_Renewal_Pricing_Method</fullName>
+        <field>SBQQ__RenewalPricingMethod__c</field>
+        <literalValue>List</literalValue>
+        <name>SBCF Set Renewal Pricing Method</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SetRecTypetoReseller</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Resellers</lookupValue>
@@ -547,6 +556,15 @@ Standard_Discount_Service__c
         <field>Expired_Customer__c</field>
         <literalValue>0</literalValue>
         <name>UnCheckExpiredCustomerFlag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UnCheck_Trigger_Assignment</fullName>
+        <field>Trigger_Assignment__c</field>
+        <literalValue>0</literalValue>
+        <name>UnCheck Trigger Assignment</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -859,6 +877,16 @@ Standard_Discount_Service__c
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>SBCF Set Renewal Pricing Method</fullName>
+        <actions>
+            <name>SBCF_Set_Renewal_Pricing_Method</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Send an email to Evan for Catch All Patch</fullName>
         <actions>
             <name>Send_an_alert_to_Evan</name>
@@ -960,6 +988,17 @@ NOT(ISPICKVAL(Type,&quot;Partner&quot;))
         <description>if there is a process that feeds Number of Employees, since the value to employees since it is the only field displayed on the page layout</description>
         <formula>AND(ISCHANGED(Number_of_Employees__c),  ISBLANK( NumberOfEmployees ) )</formula>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Uncheck Trigger Assignment for %27In Review Accounts%27</fullName>
+        <actions>
+            <name>UnCheck_Trigger_Assignment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>AND(ISPICKVAL(Type, &apos;In Review&apos;),
+     Trigger_Assignment__c)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Update Clean Status Change</fullName>

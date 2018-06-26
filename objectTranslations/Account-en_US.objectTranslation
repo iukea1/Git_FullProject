@@ -31,6 +31,10 @@
             <section>Cloud Portal Information</section>
         </sections>
         <sections>
+            <label><!-- Course Completion --></label>
+            <section>Course Completion</section>
+        </sections>
+        <sections>
             <label><!-- Data.com --></label>
             <section>Data.com</section>
         </sections>

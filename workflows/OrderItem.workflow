@@ -10,6 +10,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_End_Date</fullName>
+        <field>EndDate</field>
+        <formula>SBQQ__QuoteLine__r.SBQQ__EndDate__c</formula>
+        <name>Update End Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Product_Family_field</fullName>
         <field>Product_Family__c</field>
         <formula>TEXT(PricebookEntry.Product2.Family)</formula>
@@ -23,6 +32,15 @@
         <field>Product_Name__c</field>
         <formula>PricebookEntry.Product2.Name</formula>
         <name>Update Product Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Start_Date</fullName>
+        <field>ServiceDate</field>
+        <formula>SBQQ__QuoteLine__r.SBQQ__StartDate__c</formula>
+        <name>Update Start Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -86,5 +104,20 @@ CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
             <value>SMRT-HND</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Start%2FEnd Date</fullName>
+        <actions>
+            <name>Update_End_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Start_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used to set Start and End Date based off quote line. Currently order products is inheriting a random date. This is a workaround until the bug can be identified.</description>
+        <formula>true</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

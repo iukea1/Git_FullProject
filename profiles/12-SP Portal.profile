@@ -1672,7 +1672,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalViewController_NXVX</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalViewController_SDWAN</apexClass>
@@ -2332,6 +2332,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPopulatePOCApprovers</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestPortalViewController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3089,12 +3093,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract_to_Opportunity__c.Contract__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract_to_Opportunity__c.Opportunity__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -9678,6 +9682,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Contract_to_Opportunity__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Customer_Documents__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -10481,7 +10494,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalViewNXVX</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalViewSDWAN</apexPage>
@@ -10882,6 +10895,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Portal_SD_WAn</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Portal_View_NXVX</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

@@ -103,7 +103,7 @@
     <applicationVisibilities>
         <application>standard__Service</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__ServiceConsole</application>
@@ -2332,6 +2332,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPopulatePOCApprovers</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestPortalViewController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10739,6 +10743,10 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Portal_SD_WAn</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Portal_View_NXVX</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

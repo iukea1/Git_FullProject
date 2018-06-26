@@ -48,6 +48,10 @@ public class PatchRealignJob implements Database.Batchable<SObject>, Database.St
             criteria.add('Type != \'Marketplace\'');
             criteria.add('IsClosed=false');
         }
+        else if(JobType == PatchRealignJobType.Account)
+        {
+            criteria.add('Type != \'In Review\'');
+        }
         if(criteria.size() > 0)
         {
             soql += ' where ';

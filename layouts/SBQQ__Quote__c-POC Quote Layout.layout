@@ -99,6 +99,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>SBQQ__StartDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>POC_Contact__c</field>
             </layoutItems>
         </layoutColumns>
@@ -390,10 +394,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Hw_Sum_Qty_QLA__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__StartDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

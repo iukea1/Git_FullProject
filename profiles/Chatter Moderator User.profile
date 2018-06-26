@@ -2335,6 +2335,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestPortalViewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestQuoteEmailReviewHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>

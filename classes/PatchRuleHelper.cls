@@ -134,14 +134,11 @@ public class PatchRuleHelper
             }
             else if(obj instanceOf Account)
             {
-                Account acc = (Account)obj;
-                if(acc.Type != 'In Review')
-                {
-                    if(locked == true)
+                if(locked == true)
                     {
                         throw new SilverPeakException('Patch is locked, and cannot be reassigned.');
                     }
-                    
+                Account acc = (Account)obj;  
                     if(acc.ECSP__c)
                     {
                         if(patch.Type__c!='Named Accounts')
@@ -161,7 +158,7 @@ if(patch.CSM__c != null && obj.get('Type') == 'Partner' && !geo.contains('APAC')
 obj.put('OwnerId', patch.CSM__c);
 }
 */
-                }
+                
             }
             else if(obj instanceOf Opportunity)
             {
@@ -199,7 +196,9 @@ opportunity.Technical_Responsible__c = patch.SE__c;
                 obj.put('Patch__c', null);
             }
         }
+
         obj.put('Trigger_Assignment__c', false);
+
     }
     
     public static List<sObject> getPatchSharings(List<sObject> objs)

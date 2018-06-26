@@ -725,7 +725,7 @@ insert lstCapCase;
             {
                 recipients.add(user2TREmail.get(acc.OwnerId));
             }
-            recipients.addAll(directorEmails);
+            //recipients.addAll(directorEmails);
             mail.setccAddresses(recipients);
             mail.setWhatId(ct.Id);
             mail.setUseSignature(false);

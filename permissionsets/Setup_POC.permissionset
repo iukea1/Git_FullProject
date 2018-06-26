@@ -2313,6 +2313,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestPortalViewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestQuoteEmailReviewHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10406,6 +10410,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Portal_SD_WAn</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Portal_View_NXVX</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

@@ -16,11 +16,14 @@ public class ActivateOrderController {
             return;
         } else {
             //check if hardware or software
-            this.quote = [SELECT Id FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
-            List<SBQQ__QuoteLine__c> qLineItems = [SELECT Id, SBQQ__ProductFamily__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quote.Id AND SBQQ__ProductFamily__c = 'Product'];
-            if(!qLineItems.isEmpty() && !order.SerialNumberApplied__c) {
+            this.quote = [SELECT Id, SBCF_Evaluation_Quote__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
+            //List<SBQQ__QuoteLine__c> qLineItems = [SELECT Id, SBQQ__ProductFamily__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quote.Id AND SBQQ__ProductFamily__c = 'Product'];
+            
+            List<OrderItem> oiList = [SELECT Id, Product2.Product_Family_Clean__c FROM OrderItem WHERE OrderId = :order.Id AND Product2.Product_Family_Clean__c = 'Physical'];
+            
+            if(!oiList.isEmpty() && !order.SerialNumberApplied__c) {
                 needSerial = true;
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Serial Numbers are required when Hardware products are quoted.');
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, 'Serial Numbers are required when Hardware products are quoted.');
                 ApexPages.addMessage(myMsg);
                 return;
             } else {
@@ -39,6 +42,12 @@ public class ActivateOrderController {
                     ActivatedDate = System.today(),
                     ActivatedById = Userinfo.getUserId()
                 );
+                
+                if(this.quote.SBCF_Evaluation_Quote__c) {
+                    this.quote.POC_Status__c = 'Shipped';
+                    update this.quote;
+                }
+                
                 PageReference page = new PageReference('/' + order.Id);
                 page.setRedirect(true);
                 return page;

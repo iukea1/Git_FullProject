@@ -1672,7 +1672,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalViewController_NXVX</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalViewController_SDWAN</apexClass>
@@ -2332,6 +2332,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPopulatePOCApprovers</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestPortalViewController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10481,7 +10485,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalViewNXVX</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PortalViewSDWAN</apexPage>
@@ -10882,6 +10886,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Portal_SD_WAn</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Portal_View_NXVX</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

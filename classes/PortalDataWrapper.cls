@@ -5,6 +5,7 @@ public class PortalDataWrapper implements comparable
         public string SerialNumber {get;set;}
         public string AccountName {get;set;}
         public Date ShipDate {get;set;}
+        public decimal Quantity {get;set;}
         public Date ContractEndDate {get;set;}
         public Date LicenseEndDate {get;set;}
         public Date SmartHandsEndDate {get;set;}
@@ -82,6 +83,16 @@ public class PortalDataWrapper implements comparable
                     if (CustomerNotes > compWrap.CustomerNotes) return 1;
                     return -1;        
                 }
+                if(sortableField == 'Quantity'){     
+                    if (Quantity == compWrap.Quantity) return 0;
+                    if (Quantity > compWrap.Quantity) return 1;
+                    return -1;        
+                }
+                  if(sortableField == 'Status'){     
+                    if (Status == compWrap.Status) return 0;
+                    if (Status > compWrap.Status) return 1;
+                    return -1;        
+                }
             }      
             else{
                 if(sortableField == 'ProductName'){     
@@ -137,6 +148,16 @@ public class PortalDataWrapper implements comparable
                 if(sortableField == 'CustomerNotes'){     
                     if (CustomerNotes == compWrap.CustomerNotes) return 0;
                     if (CustomerNotes > compWrap.CustomerNotes) return -1;
+                    return 1;        
+                }
+                if(sortableField == 'Quantity'){     
+                    if (Quantity == compWrap.Quantity) return 0;
+                    if (Quantity > compWrap.Quantity) return -1;
+                    return 1;        
+                }
+                 if(sortableField == 'Status'){     
+                    if (Status == compWrap.Status) return 0;
+                    if (Status > compWrap.Status) return -1;
                     return 1;        
                 }
                 

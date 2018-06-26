@@ -1,5 +1,6 @@
 public with sharing abstract class PortalViewBase {
-    
+    public List<AccountInfo> AccountKeyList{get;set;}
+    public Set<String> models;
     public string SearchParameter{get;set;}
     public boolean IsSearchForActive{get;set;}
     public List<PortalDataWrapper> lstResults{get;set;}
@@ -27,7 +28,31 @@ public with sharing abstract class PortalViewBase {
         SortFunction = 'asc';
     }
     
-    
+    protected void InitiateAccountNameKey()
+    {
+        List<User> lstUser=  [Select Id , Name, ProfileId,UserType,Contact.Account.Name,Contact.AccountId from User where Id=:UserInfo.getUserId()];
+        
+        if(lstUser!=null && lstUser.size()>0)
+        {
+            AccountKeyList = new List<AccountInfo>();
+            List<Account> lstAccount=null;
+            
+            lstAccount=[Select Id,Name,Cloud_Portal_Account_Key__c,Cloud_Portal_Account_Name__c from Account where Id=:lstUser[0].Contact.AccountId ];
+            
+            if(lstAccount!=null && lstAccount.size()>0)
+            {
+                for(Account acc: lstAccount)
+                {
+                    AccountInfo acctInfo=new AccountInfo();
+                    acctInfo.AccountKey=acc.Cloud_Portal_Account_Key__c;
+                    acctInfo.ProductName='EC';
+                    acctInfo.AccountName=string.isBlank(acc.Cloud_Portal_Account_Name__c)?acc.Name:acc.Cloud_Portal_Account_Name__c;
+                    AccountKeyList.add(acctInfo);
+                }
+                
+            }
+        }
+    }
     
     protected List<PortalDataWrapper> doQuery()
     {
@@ -35,31 +60,27 @@ public with sharing abstract class PortalViewBase {
         List<SBQQ__Subscription__c> allSubRecords= new List<SBQQ__Subscription__c>();
         String query='';
         System.debug('SearchParameter'+ SearchParameter);
-         System.debug('IsSearchForActive'+ IsSearchForActive);
+        System.debug('IsSearchForActive'+ IsSearchForActive);
         if((String.isNotBlank(SearchParameter) && SearchParameter.length() >= 2)|| IsSearchForActive)
         {
             System.debug('In Search');
             query = BuildAssetSearch();
             if(query!='')
                 allAssetRecords = Database.query(query);
-            if(allAssetRecords!=null && allAssetRecords.size()==0)
-            {	
-                query = BuildSubSearch();
-                if(query!='')
-                    allSubRecords = Database.query(query);
-            }
+            query = BuildSubSearch();
+            if(query!='')
+                allSubRecords = Database.query(query);
+            
         }
         else
         {
             query = BuildAssetQuery();
             if(query!='')
                 allAssetRecords = Database.query(query);
-            if(allAssetRecords!=null && allAssetRecords.size()==0)
-            {	
-                query = BuildSubQuery();
-                if(query!='')
-                    allSubRecords = Database.query(query);
-            }
+            query = BuildSubQuery();
+            if(query!='')
+                allSubRecords = Database.query(query);
+            
         }
         return BuildData(allAssetRecords,allSubRecords); 
     }
@@ -244,6 +265,7 @@ public with sharing abstract class PortalViewBase {
                     portalData.ProductFamily= lstData[i].ProductFamily;
                     portalData.Model= lstData[i].Model;
                     portalData.CustomerNotes= lstData[i].CustomerNotes;
+                    portalData.Quantity= lstData[i].Quantity;
                     portalData.LicenseKey=lstData[i].LicenseKey;
                     portalData.LicenseEndDate= lstData[i].LicenseEndDate;
                     portalData.ContractEndDate= lstData[i].ContractEndDate;
@@ -315,7 +337,10 @@ public with sharing abstract class PortalViewBase {
         }
         return null;
     }
-    
+     protected void SetAccountNameKey()
+    {
+        
+    }
     protected abstract string BuildAssetSearch();
     protected abstract string BuildAssetQuery();
     protected abstract string BuildSubSearch();
@@ -345,4 +370,15 @@ public with sharing abstract class PortalViewBase {
         }
     }
     
+    public class AccountInfo
+    {
+        public string AccountName {get;set;}
+        public string ProductName {get;set;}
+        public string AccountKey {get;set;}
+        public AccountInfo()
+        {
+            
+        }
+        
+    }
 }

@@ -439,7 +439,8 @@
     <fieldUpdates>
         <fullName>Add_Software_Support_Date</fullName>
         <field>End_of_Software_Support__c</field>
-        <formula>DATE( (YEAR( Ship_Date__c   )+ 5) ,MONTH( Ship_Date__c) , DAY( Ship_Date__c) )</formula>
+        <formula>IF(AND(NOT(CONTAINS( Product2.Name,&quot;-SR&quot;)),NOT(CONTAINS( Product2.Name,&quot;-LR&quot;))),
+DATE( (YEAR( Ship_Date__c   )+ 5) ,MONTH( Ship_Date__c) , DAY( Ship_Date__c)),null)</formula>
         <name>Add Software Support Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -747,6 +748,21 @@ right(Id,4))</formula>
         <name>Unity Uncheck Renewal Licen Key</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Deployment_End_Date</fullName>
+        <field>Deployment_End_Date__c</field>
+        <formula>DATE( 
+YEAR(Deployment_Date__c)+(VALUE(TEXT(Term__c))-1)/12+IF(MONTH(Deployment_Date__c)+VALUE(TEXT(Term__c))&gt;12, 1, 0), 
+
+IF(MONTH(Deployment_Date__c)+MOD(VALUE(TEXT(Term__c)),12)&gt;12, MONTH(Deployment_Date__c)+MOD(VALUE(TEXT(Term__c)),12)-12, MONTH(Deployment_Date__c)+MOD(VALUE(TEXT(Term__c)),12)), 
+
+DAY(Deployment_Date__c) 
+)</formula>
+        <name>Update Deployment End Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -1642,6 +1658,23 @@ NOT(TriggerAutoFulfillEmail__c)
         </criteriaItems>
         <description>This is created to send out the renewal licence emails for Unity CLOUD INTELLIGENCE PRODUCT</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Deployment End Date</fullName>
+        <actions>
+            <name>Update_Deployment_End_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Asset.Deployment_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.Term__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Update Ship Date</fullName>

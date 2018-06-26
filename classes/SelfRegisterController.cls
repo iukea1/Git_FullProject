@@ -14,6 +14,7 @@ public class SelfRegisterController
     public String LastName { get; set; }
     public String PhoneNumber { get; set; }
     public String CompanyName { get; set; }
+    public String ContactCountry { get; set; }
     public String Email { get; set; }
     public String SerialNumber { get; set; }
     public String Subject { get; set; }
@@ -28,17 +29,27 @@ public class SelfRegisterController
         parseContactName(FullName);
         Contact contact = findContact(Email);
         Asset asset = findAsset(SerialNumber);
-        if(asset == null || contact == null)
+        SBQQ__Subscription__c sub= findSubscription(SerialNumber);
+        System.debug(asset);
+        System.debug(sub);
+        System.debug(contact);
+        if((asset == null && sub==null)  || contact == null)
         {
             try
             {
+                Id recordId= null;
+                if(sub!=null && sub.Id!=null)
+                    recordId=sub.Id;
+                 else if(asset!=null && asset.Id!=null)
+                    recordId=asset.Id;
                 if(contact == null && asset == null)
                 {
                     List<Account> accs = [select Id from Account where Name='Email Support Contacts' limit 1];
                     if(accs.size() > 0)
                     {
                         contact = createContact(accs[0].Id);
-                        createCase(contact, asset);
+                        //createCase(contact, asset);
+                        createCase(contact, recordId);
                     }
                 }
                 else if(contact == null && asset != null)
@@ -49,17 +60,20 @@ public class SelfRegisterController
                 }
                 else if(contact != null && asset == null)
                 {
-                    createCase(contact, asset);
+                    //createCase(contact, asset);
+                    createCase(contact, recordId);
                 }
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Your request was submitted.'));
                 Succeeded = true;
             }
             catch(DmlException ex)
             {
+                SilverPeakUtils.logException(ex);	
                 ApexPages.addMessages(ex);
             }
             catch(Exception ex)
             {
+              	SilverPeakUtils.logException(ex);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Error occured on registering, please contact the admin.'));
             }
         }
@@ -98,6 +112,11 @@ public class SelfRegisterController
             result = false;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Phone: Value is required.'));
         }
+        if(ContactCountry == null || ContactCountry == '--None--')
+        {
+            result = false;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Country: Value is required.'));
+        } 
         if(CompanyName == null || CompanyName == '')
         {
             result = false;
@@ -164,12 +183,38 @@ public class SelfRegisterController
         } 
         return mailAddresses;
     }
-    private void createCase(Contact ct, Asset asset)
+   /* private void createCase(Contact ct, Asset asset)
     {
         List<RecordType> types = [select Id from RecordType where Name='Incoming Email' and SObjectType='Case' limit 1];
         Id recordTypeId = (types.size() > 0) ? types[0].Id : null;
         Id assetId = (asset == null) ? null : asset.Id;
         Case newCase = new Case(Subject=Subject, ContactId=ct.Id, AssetId=assetId, AccountId=ct.AccountId, RecordTypeId=recordTypeId, Status='Qualifying', Type='Incoming Email');
+        newCase.Description = 'Request Support Center Access \r\n' +
+            'Contact Name: ' + FullName + '\r\n' +
+            'Email: ' + Email + '\r\n' +
+            'Phone: ' + PhoneNumber + '\r\n' +
+            'Company: ' + CompanyName + '\r\n' +
+            'SN: ' + SerialNumber + '\r\n';
+        insert newCase;
+    }*/
+    
+     private void createCase(Contact ct, Id recordId)
+    {
+        List<RecordType> types = [select Id from RecordType where Name='Incoming Email' and SObjectType='Case' limit 1];
+        Id recordTypeId = (types.size() > 0) ? types[0].Id : null;
+        Case newCase = new Case(Subject=Subject, ContactId=ct.Id, AccountId=ct.AccountId, RecordTypeId=recordTypeId, Status='Qualifying', Type='Incoming Email');
+        if(recordId!=null)
+        {
+            Schema.DescribeSObjectResult r= recordId.getsobjecttype().getDescribe();
+            if(r.getName()=='Asset')
+            {
+                newCase.AssetId=recordId;
+            }
+            else
+            {
+                newCase.Subscription__c=recordId;
+            }
+        }
         newCase.Description = 'Request Support Center Access \r\n' +
             'Contact Name: ' + FullName + '\r\n' +
             'Email: ' + Email + '\r\n' +
@@ -203,9 +248,22 @@ public class SelfRegisterController
         }
     }
     
+    public List<SelectOption> getCountryPicklistValues()
+    {
+        List<SelectOption> lstCountryValues = new List<SelectOption>();
+        lstCountryValues.add(new SelectOption('','--None--'));
+        Schema.DescribeFieldResult fieldResult = Contact.Country_Picklist__c.getDescribe();
+        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+        for(Schema.PicklistEntry f : ple)
+        {
+            lstCountryValues.add(new SelectOption(f.getLabel(), f.getValue()));
+        }
+        return lstCountryValues;
+    }
+    
     private Contact createContact(Id accountId)
     {
-        Contact ct = new Contact(FirstName=FirstName, LastName=LastName, Email=Email, Phone=PhoneNumber, AccountId=accountId, LeadSource='Customer Service');
+        Contact ct = new Contact(FirstName=FirstName, LastName=LastName, Email=Email, Phone=PhoneNumber, AccountId=accountId, Country_Picklist__c =ContactCountry, LeadSource='Customer Service');
         insert ct;
         return ct;
     }
@@ -227,10 +285,29 @@ public class SelfRegisterController
         }
     }
     
+    private SBQQ__Subscription__c findSubscription(String sn)
+    {
+        if(sn != null && !sn.startsWith('SUB'))
+        {
+            sn = sn.replaceAll('[\\.\\-]', '');
+        }
+        List<SBQQ__Subscription__c> assets = [select Id from SBQQ__Subscription__c where SerialNumber__c=:sn and SBQQ__Contract__r.EndDate>today];
+        if(assets.size() > 0)
+        {
+            return assets[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
     @isTest
     static void testSelfRegisterController()
     {
-        Contact ct = new Contact(FirstName='Test', LastName='Acme', Email='existing@testacme.com');
+        Account acc= new Account(Name='test');
+        insert acc;
+        Contact ct = new Contact(AccountId=acc.id,FirstName='Test', LastName='Acme', Email='existing@testacme.com');
         insert ct;
         
         SelfRegisterController controller = new SelfRegisterController();
@@ -241,6 +318,7 @@ public class SelfRegisterController
         controller.PhoneNumber = '1';
         controller.CompanyName = '1';
         controller.SerialNumber = '1';
+        controller.ContactCountry = 'United States';
         controller.submit();
         
         controller = new SelfRegisterController();
@@ -249,7 +327,65 @@ public class SelfRegisterController
         controller.PhoneNumber = '1';
         controller.CompanyName = '1';
         controller.SerialNumber = '1';
+        controller.ContactCountry = 'United States';
+        controller.submit();
+    }
+     @isTest
+    static void testSelfRegisterController_Asset()
+    {
+        Account acc= new Account(Name='test');
+        insert acc;
+        Contact ct = new Contact(AccountId=acc.id,FirstName='Test', LastName='Acme', Email='existing@testacme.com');
+        insert ct;
+        Asset asset = new Asset(Name='001BBC122122',SerialNumber='001BBC122122',AccountId=acc.Id,Status='Customer Subscription Active');
+        insert asset;
+        SelfRegisterController controller = new SelfRegisterController();
+        controller.submit();
         
+        controller.FullName = 'Test Acme';
+        controller.Email = 'existing@testacme.com';
+        controller.PhoneNumber = '1';
+        controller.CompanyName = '1';
+        controller.SerialNumber = '001BBC122122';
+        controller.ContactCountry = 'United States';
+        controller.submit();
+        
+        controller = new SelfRegisterController();
+        controller.FullName = 'None Existing Contact';
+        controller.Email = 'nonexisting@testacme.com';
+        controller.PhoneNumber = '1';
+        controller.CompanyName = '1';
+        controller.SerialNumber = '1';
+        controller.ContactCountry = 'United States';
+        controller.submit();
+    }
+     @isTest
+    static void testSelfRegisterController_Asset_NoContact()
+    {
+        Account acc= new Account(Name='test');
+        insert acc;
+        Contact ct = new Contact(AccountId=acc.id,FirstName='Test', LastName='Acme', Email='existing@testacme.com');
+        insert ct;
+        Asset asset = new Asset(Name='001BBC122122',SerialNumber='001BBC122122',AccountId=acc.Id,Status='Customer Subscription Active');
+        insert asset;
+        SelfRegisterController controller = new SelfRegisterController();
+        controller.submit();
+        
+        controller.FullName = 'Test Acme';
+        controller.Email = 'existing1222@testacme.com';
+        controller.PhoneNumber = '1';
+        controller.CompanyName = '1';
+        controller.SerialNumber = '001BBC122122';
+        controller.ContactCountry = 'United States';
+        controller.submit();
+        
+        controller = new SelfRegisterController();
+        controller.FullName = 'None Existing Contact';
+        controller.Email = 'nonexisting@testacme.com';
+        controller.PhoneNumber = '1';
+        controller.CompanyName = '1';
+        controller.SerialNumber = '1';
+        controller.ContactCountry = 'United States';
         controller.submit();
     }
 }

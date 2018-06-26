@@ -18,7 +18,7 @@
                 <apex:outputLabel value="Serial Number" />
                 <apex:outputPanel >
                     <apex:inputText value="{!SerialNo}" />
-                    <apex:commandButton value=" Go! " action="{!searchAsset}" oncomplete="setCaseAssetId('{!assetId}'); return false;" />
+                    <apex:commandButton value=" Go! " action="{!searchAsset}" oncomplete="setCaseAssetId('{!AssetId}');  return false;" />
                 </apex:outputPanel>
             </apex:pageBlockSectionItem>
         </apex:pageBlockSection>

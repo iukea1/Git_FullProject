@@ -8,6 +8,7 @@ global with sharing class CloudPortalCaseRestAPI {
         RestRequest req = RestContext.request;
         RestResponse res=RestContext.response;
         Asset existAsset=null;
+        SBQQ__Subscription__c existSub=null;
         Contact existContact=null;
         Id acctId=null;
         Case insertCase= new Case();
@@ -20,6 +21,10 @@ global with sharing class CloudPortalCaseRestAPI {
                 {
                     existAsset=findAssetByNumber(caseInfo.serialNumber);
                 }
+                if(existAsset==null)
+                {
+                    existSub=findSubByNumber(caseInfo.serialNumber);
+                }
                 if(caseInfo.salesforceId!=null)
                 {
                     acctId=FindAccountBySalesforceId(caseInfo.salesforceId);
@@ -27,6 +32,10 @@ global with sharing class CloudPortalCaseRestAPI {
                 if(acctId==null && existAsset!=null && existAsset.AccountId!=null)
                 {
                     acctId=existAsset.AccountId;
+                }
+                if(acctId==null && existSub!=null && existSub.SBQQ__Account__c!=null)
+                {
+                    acctId=existSub.SBQQ__Account__c;
                 }
                 if(caseInfo.emailAddress!=null)
                 {
@@ -48,7 +57,7 @@ global with sharing class CloudPortalCaseRestAPI {
                         existContact= CreateContactByMail(caseInfo.emailAddress,caseInfo.conFullName,caseInfo.conPhoneNumber,acctId);
                     }
                 }
-                if(existAsset==null)
+                if(existAsset==null && existSub==null)
                 {
                      caseInfo.description=string.format('{0} \n SerialNumber: {1}', new String[]{caseInfo.description,caseInfo.serialNumber});
                 }
@@ -57,6 +66,7 @@ global with sharing class CloudPortalCaseRestAPI {
                      caseInfo.description=string.format('{0} \n EmailAddress: {1}', new String[]{caseInfo.description,caseInfo.emailAddress});
                 }
                 insertCase.AssetId=existAsset==null?null:existAsset.Id;
+                insertCase.Subscription__c=existSub==null?null:existSub.Id;
                 insertCase.AccountId=acctId;
                 insertCase.Subject=caseInfo.subject;
                 insertCase.Description=caseInfo.description;
@@ -131,6 +141,29 @@ return lstCases;
         {
             assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
             assets = [select Id, AccountId from Asset where Name=:assetNumber];
+            System.debug('assets serial'+ assets);
+        }
+        if( assets.size() > 0)
+        {
+            
+            return assets[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
+    private static SBQQ__Subscription__c FindSubByNumber(String assetNumber)
+    {
+        List<SBQQ__Subscription__c> assets= new List<SBQQ__Subscription__c>();
+        System.debug(assetNumber);
+        if(assetNumber!=null && assetNumber!='')
+        {
+            if(assetNumber!=null && !assetNumber.startsWith('SUB'))
+            	assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
+            
+            assets = [select Id, SBQQ__Account__c from SBQQ__Subscription__c where Name=:assetNumber];
             System.debug('assets serial'+ assets);
         }
         if( assets.size() > 0)

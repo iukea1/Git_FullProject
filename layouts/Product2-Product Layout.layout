@@ -87,6 +87,10 @@
                 <behavior>Edit</behavior>
                 <field>SBCF_Available_on_Add_Upgrades__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Promotional_Product__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

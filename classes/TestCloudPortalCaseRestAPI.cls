@@ -26,6 +26,48 @@ public class TestCloudPortalCaseRestAPI {
         System.assert(caseInfo.statusCode==400);
         Test.stopTest();
     }
+     @Istest
+    public static void TestCaseAPI_Subscription()
+    {
+        Account acc= new Account(Name='test');
+        insert acc;
+       
+        Contact contact = new Contact(LastName='acme', AccountId=acc.Id,Email='abc@abc.com');
+        insert contact;
+         Product2 product = new Product2(Name='EC-BASE-1Y', Family='Virtual Image', Product_Category__c='Subscription', IsActive=true);
+        insert product;
+        SBQQ__Subscription__c obj1= new SBQQ__Subscription__c();
+        obj1.SerialNumber__c='Test';
+        obj1.SBQQ__Quantity__c=10;
+        obj1.SBQQ__Product__c=product.Id;
+        obj1.SbQQ__Account__c=acc.Id;
+        insert obj1;
+        CloudPortalCaseRestAPI.CaseData obj= new CloudPortalCaseRestAPI.CaseData();
+        obj.subject='test';
+        obj.description='test';
+        obj.emailAddress='abc@abc.com';
+        obj.priority='P3 - Normal';
+        obj.SerialNumber='Test';
+        obj.salesforceId=acc.Id;
+        string jsonData=Json.serialize(obj);
+        Test.startTest();
+        
+        RestRequest req = new RestRequest(); 
+        RestResponse res = new RestResponse();
+        
+        req.requestURI = '/services/apexrest/CPCaseInfo';  //Request URL
+        req.httpMethod = 'POST';//HTTP Request Type
+        req.requestBody = Blob.valueof(jsonData);
+        RestContext.request = req;
+        RestContext.response= res;
+        
+        CloudPortalCaseRestAPI.CaseInfo caseInfo=CloudPortalCaseRestAPI.CreateNewCase(obj); //Call the Method of the Class with Proper       Constructor 
+        System.debug(caseInfo.statusCode);
+        System.debug(caseInfo.statusCode);
+        System.assert(caseInfo.caseId!=null);//Assert that the Account is inserted and has Id   
+        System.assert(caseInfo.statusCode==200);
+        Test.stopTest();
+    }
     @Istest
     public static void TestCaseAPI_Asset()
     {
@@ -45,6 +87,7 @@ public class TestCloudPortalCaseRestAPI {
         obj.emailAddress='abc@abc.com';
         obj.priority='P3 - Normal';
         obj.serialNumber=asset1.SerialNumber;
+        obj.salesforceId=acc.Id;
         string jsonData=Json.serialize(obj);
         Test.startTest();
         

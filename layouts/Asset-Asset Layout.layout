@@ -95,6 +95,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Selected_to_Split__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Deployment_End_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -142,6 +146,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__CurrentSubscription__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -211,10 +219,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Term__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Deployment_End_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -468,13 +472,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>SBQQ__ContractNumber__c</fields>
-        <fields>SBQQ__Contract__c</fields>
-        <fields>SBQQ__Product__c</fields>
-        <fields>SBQQ__NetPrice__c</fields>
-        <fields>SBQQ__SubscriptionStartDate__c</fields>
-        <fields>SBQQ__SubscriptionEndDate__c</fields>
-        <relatedList>SBQQ__Subscription__c.SBCF_Asset__c</relatedList>
+        <relatedList>SBQQ__SubscribedAsset__c.SBQQ__Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

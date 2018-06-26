@@ -466,4 +466,35 @@ public class TestAccountTriggerHandler {
         }
     }
     
+    @IsTest(SeeAllData=true)
+    public static void NewInReviewAccount()
+    {
+        Account acc = new Account(Name='Test In Review Account', Type='In Review');
+        insert acc;
+        Account acc1= [Select Id, Patch__c from Account where id =: acc.id];
+        system.assertEquals(Null, acc1.Patch__c); 
+        acc.BillingCountry = 'Austria';
+        update acc;
+        Account acc2= [Select Id, Patch__c from Account where id =: acc.id];
+        system.assertEquals(Null, acc2.Patch__c);
+        acc.Trigger_Assignment__c = True;
+        update acc;
+        Account acc3= [Select Id, Patch__c from Account where id =: acc.id];
+        system.assertEquals(Null, acc3.Patch__c);
+    } 
+   @IsTest(SeeAllData=true)
+    public static void NotInReviewAccount()
+    {
+        Account acc = new Account(Name='Test Prospect Account', Type='Prospect');
+        insert acc;
+        Account acc1= [Select Id, Patch__c from Account where id =: acc.id];
+        Patch__c p= [Select Id from Patch__c where Name='P-480'];
+        system.assertEquals(p.Id, acc1.Patch__c); 
+        acc.BillingCountry = 'Austria';
+        update acc;
+        Account acc2= [Select Id, Patch__c from Account where id =: acc.id];
+        Patch__c p1= [Select Id from Patch__c where Name='P-364'];
+        system.assertEquals(p1.Id, acc2.Patch__c);
+    }
+    
 }

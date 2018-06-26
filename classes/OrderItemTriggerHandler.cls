@@ -4,38 +4,50 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
         return false;
     }
     public void BeforeInsert(List<SObject> newItems) {
-        updateStartDateForRenewals(newItems);
+        //setDates(newItems);
     }
-    public void AfterInsert(Map<Id, SObject> newItems) {}
-    public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {}
+    public void AfterInsert(Map<Id, SObject> newItems) {
+       // updateStartDateForRenewals(newItems);
+       runRecalcs(newItems.values());
+   }
+    public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
+        setDates(newItems.values());
+    }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {}
     public void BeforeDelete(Map<Id,SObject> oldItems) {}
     public void AfterDelete(Map<Id, SObject> oldItems) {}
     public void AfterUndelete(Map<Id, SObject> newItems) {}
     
-    private static Boolean isOnInsertState = false;
-    private static void updateStartDateForRenewals(List<OrderItem> newList) {
-        Map<Id, Date> orderOnRenewal = OrderTriggerHandler.orderOnRenewal;
-        Map<Id, Date> orderEndOnRenewal = OrderTriggerHandler.orderEndOnRenewal;
-        Map<Id, Date> newEndDates = OrderTriggerHandler.orderEndOnRenewal;
+    private static void runRecalcs(List<OrderItem> newList) {
         Set<Id> orderIdUpdate = new Set<Id>();
         //get renewed contracts
         
-        if(!orderOnRenewal.isEmpty()) {
-            for(OrderItem oi : newList) {
-                if(orderOnRenewal.containsKey(oi.OrderId)) {
-                    isOnInsertState = true;
-                    Integer daysBtwn = oi.ServiceDate.daysBetween(oi.EndDate);
-                    oi.ServiceDate = orderOnRenewal.get(oi.OrderId);
-                    oi.EndDate = oi.ServiceDate.addDays(daysBtwn);
-                    
-                    /*if(newEndDates.get(oi.OrderId) == null || newEndDates.get(oi.OrderId) < oi.EndDate) {
-                        newEndDates.put(oi.OrderId, oi.EndDate);
-                        if(oi.EndDate > orderEndOnRenewal.get(oi.OrderId)) orderIdUpdate.add(oi.OrderId);
-                    }*/
-                }
+        for(OrderItem oi : newList) {
+            orderIdUpdate.add(oi.OrderId);
+        }
+        List<Order> oUpdate = new List<Order>();
+        for(Id i : orderIdUpdate) {
+            oUpdate.add(new Order(Id=i));
+        }
+        update oUpdate;
+    }
+    
+    
+    private static void setDates(List<OrderItem> newList) {
+        Set<Id> orderIds = new Set<Id>();
+        
+        for(OrderItem oi : newList) {
+            orderIds.add(oi.OrderId);
+        }
+        Map<Id, Order> parentOrders = new Map<Id, Order>([SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate FROM Order WHERE Id IN :orderIds AND TemporaryStartDateHolder__c != null]);
+        
+        for(OrderItem oi : newList) {
+            if(parentOrders .containsKey(oi.OrderId) && oi.ServiceDate < parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c) {
+                Integer daysBetween = oi.ServiceDate.daysBetween(oi.EndDate);
+                oi.ServiceDate = parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c;
+                oi.EndDate = oi.ServiceDate.addDays(daysBetween);
             }
         }
+        
     }
-   
 }

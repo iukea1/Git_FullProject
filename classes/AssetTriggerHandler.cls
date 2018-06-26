@@ -33,10 +33,14 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('Before Insert');
         Map<Id,Account> cloudPortalAccs= new Map<Id,Account>();
         List<Asset> lstAsset= new List<Asset>();
+        List<Asset> virtualAssets = new List<Asset>();
         System.debug('Asset trigger : before insert ---------------> ' + newItems);
+        
+        
         if(newItems!=null && newItems.size()>0)
         {
             List<Asset> lstNewAssets=(List<Asset>)newItems;
+            Integer idx = 0;
             for(Asset newAsset:lstNewAssets)
             {
                 if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
@@ -48,6 +52,13 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 {
                     newAsset.Is_Customer_Asset__c=true;
                 }
+                
+                
+                if(newAsset.Product_Family__c=='Virtual Image') {
+                    virtualAssets.add(newAsset);
+                    macAssets.add(idx);
+                }
+                
                 //provision asset
                 System.debug('silverpeakSystemsId'+silverpeakSystemsId);
                 if(newAsset.AccountId!=silverpeakSystemsId && (newAsset.Product_Quote_Type__c=='EDGECONNECT'|| newAsset.Product_Quote_Type__c=='EC-SP-Term'|| newAsset.Product_Quote_Type__c=='EC-SP-Perpetual'|| newAsset.Product_Quote_Type__c=='EC-SP-Metered') && newAsset.Product_Family__c=='Product')
@@ -58,6 +69,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                         newAsset.Sync_With_Cloud_Portal__c=true;
                     }
                 }
+                idx+=1;
             }
             //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
@@ -66,6 +78,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             //groupAssetsByOrderProduct(lstAsset);
             updateAssetStatus((List<Asset>)newItems);
             retrieveAssetSerials(lstAsset);
+            generateVirtualSerialNumber(virtualAssets);
         }
         
         
@@ -75,8 +88,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('BeforeUpdate');
         List<Asset> lstAsset= new List<Asset>();
         Map<Id,Account> cloudPortalAccs= new Map<Id,Account>();
+        List<Asset> virtualAssets = new List<Asset>();
         if(newItems!=null && newItems.size()>0)
         {
+            Integer idx = 0;
             for(Id assetId:newItems.keyset())
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
@@ -85,6 +100,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
                     //lstAsset.add(newAsset);
+                }
+                if(newAsset.Product_Family__c=='Virtual Image' && newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) {
+                    virtualAssets.add(newAsset);
+                    macAssets.add(idx);
                 }
                 //decommission asset
                 if(newAsset.AccountId == silverpeakSystemsId && oldAsset.AccountId != newAsset.AccountId)
@@ -124,9 +143,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
                         }
                     }
                 }
+                idx += 1;
             }
             //UpdateEOMDate(lstAsset);
             MakeFinalUpdateToAccount();
+            generateVirtualSerialNumber(virtualAssets);
+            runSetupMac(newItems.values());
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -143,7 +165,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
         System.debug('After Insert' + newItems);
-        
+        List<Asset> lstLicenseAssets= new List<Asset>();
         Map<Id,Asset> hardwareECAssetIds= new  Map<Id,Asset>();
         Map<Id,Asset> softwareECBaseAssetIds= new  Map<Id,Asset>();
         Set<Id> setAccIds=new Set<Id>();
@@ -155,15 +177,21 @@ public class AssetTriggerHandler implements ITriggerHandler {
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset= (Asset)newItems.get(assetId);
+                
+                if(newAsset.Product_Family__c=='Virtual Image')
+                {
+                    if(newAsset.Status!=null && newAsset.Status=='Customer Owned')
+                        lstLicenseAssets.add(newAsset);
+                    else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
+                        lstLicenseAssets.add(newAsset);
+                }
+                 
                 if(newAsset.Product_Quote_Type__c=='EDGECONNECT' && newAsset.Product_Family__c=='Product' && (newAsset.Status=='Customer Evaluation' || newAsset.Status=='Customer Owned'))
                 {
                     hardwareECAssetIds.put(newAsset.Id,newAsset);
                     setAccIds.add(newAsset.AccountId);
                 }
                 
-                if(newAsset.Product_Family__c=='Virtual Image') {
-                    virtualAssets.add(newAsset);
-                }
                 
                 if(newAsset.Product_Quote_Type__c=='EDGECONNECT' && newAsset.Model__c.startsWith('EC-BASE' ) && newAsset.Product_Family__c=='Virtual Image' && (newAsset.Status=='Customer Evaluation' || newAsset.Status=='Customer Subscription Active'))
                 {
@@ -178,11 +206,14 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
-        generateVirtualSerialNumber(virtualAssets);
-
+        
+        //generateVirtualSerialNumber(virtualAssets);
+        runSetupMac(newItems.values());
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
+        GenerateLicense(lstLicenseAssets);
         
+        }  
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -194,10 +225,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setECAcctIds= new Set<Id>();
         Set<Id> setWanOpAcctIds= new Set<Id>();
         List<Asset> lstLicenseAssets= new List<Asset>();
-        List<Asset> virtualAssets = new List<Asset>();
         
         if(newItems!=null && newItems.size()>0)
         {
+            Integer idx = 0;
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
@@ -209,7 +240,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                     else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status!=oldAsset.Status || (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c)) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
                         lstLicenseAssets.add(newAsset);
                     }
-                    if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
                 }
                     
                 if(oldAsset.AccountId!=newAsset.AccountId || oldAsset.Status!=newAsset.Status)
@@ -226,11 +256,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
                         setAccIds.add(newAsset.AccountId);
                     }
                 }
+                idx+=1;
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
             GenerateLicense(lstLicenseAssets);
-            generateVirtualSerialNumber(virtualAssets);
             //populateAssetFields(newItems.values());
         }
         
@@ -835,7 +865,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(Asset a : newAssets) {
             Id quoteId = quoteLineMap.get(a.SBQQ__QuoteLine__c).SBQQ__Quote__c;
             Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(quoteId);
-            if(opitemMap.size() > 0) {
+            if(opitemMap!=null && opitemMap.size() > 0) {
                 a.Name = opitemMap.values()[0].Serial_Number__c;
                 a.SerialNumber = opitemMap.values()[0].Serial_Number__c;
                 a.Part_Number__c = opitemMap.values()[0].Part_Number__c;
@@ -851,35 +881,55 @@ public class AssetTriggerHandler implements ITriggerHandler {
         update opiIdDone;
     }
     
+    private static Set<Integer> macAssets = new Set<Integer>();
+    private static Integer lastMacDigit = 0;
     private static void generateVirtualSerialNumber(List<Asset> newAssets) {
-        List<Asset_Mac__c> macList = new List<Asset_Mac__c>();
+        /*List<Asset_Mac__c> macList = new List<Asset_Mac__c>();
         
         for(Asset a : newAssets) {
             macList.add(new Asset_Mac__c(
                 AssetId__c = a.Id,
                 Used__c = true
             ));
-
         }
+
+
+
         Map<Id, Id> macToAsset = new Map<Id, Id>();
         if(!macList.isEmpty()) insert macList;
+        */
 
-        for(Asset_Mac__c am : macList) {
-            macToAsset.put(am.AssetId__c, am.Id);
-        }
+        List<Asset_Mac__c> macList = [SELECT Id, Name FROM Asset_Mac__c ORDER BY Name DESC LIMIT 1];
+        Integer lastDigit = 0;
+        if(!macList.isEmpty()) lastDigit = Integer.valueOf(macList[0].Name);
+
+        if(lastDigit < lastMacDigit) lastDigit = lastMacDigit;
+
         
-        List<Asset> assetReUpdate = [SELECT Id, SerialNumber FROM Asset WHERE Id IN :macToAsset.keySet()];
-        Map<Id, Asset_Mac__c> macMap = new Map<Id, Asset_Mac__c>();
-        for(Asset_Mac__c am : [SELECT Id, AssetId__c, Name FROM Asset_Mac__c WHERE Id IN :macToAsset.values()]) {
-            macMap.put(am.AssetId__c, am);
+        for(Asset a : newAssets) {
+            a.SerialNumber = '001BBC' + VirtualAssetManager.toHex(Integer.valueOf(lastDigit));
+            lastDigit += 1;
         }
-        
-        for(Asset a : assetReUpdate) {
-            if(macMap.containsKey(a.Id)) {
-                a.SerialNumber = '001BBC' + VirtualAssetManager.toHex(Integer.valueOf(macMap.get(a.Id).Name));
+    }
+
+    private static void runSetupMac(List<Asset> newAssets) {
+        List<Asset_Mac__c> macList = new List<Asset_Mac__c>();
+        for(Integer i = 0; i < newAssets.size(); i+=1) {
+            if(macAssets.contains(i)) {
+                macList.add(
+                    new Asset_Mac__c(
+                        AssetId__c = newAssets[i].Id,
+                        Used__c = true
+                    )
+                );
             }
         }
-        if(!assetReUpdate.isEmpty()) update assetReUpdate;
+        if(!macList.isEmpty()) {
+            insert macList;
+            List<Asset_Mac__c> macListAfterInsert = [SELECT Id, Name FROM Asset_Mac__c ORDER BY Name DESC LIMIT 1];
+            lastMacDigit = Integer.valueOf(macListAfterInsert[0].Name);
+        }
+        macAssets.clear();
     }
     
 }

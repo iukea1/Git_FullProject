@@ -69,7 +69,7 @@
     </ul>
     <p class="text-warning">I agree with the above. &nbsp;<apex:inputCheckBox value="{!IsConverted}" id="check"/> </p><br/>
     <p>The VX/GMS appliance serial number and perpetual license key will be available immediately the conversion is processed.</p>
-    <apex:actionFunction action="{!convert}" name="convertRmaToCma" status="status" rerender="page" />
+    <apex:actionFunction action="{!convert}" name="convertRmaToCma" status="status"  />
     <apex:actionStatus id="status">
         <apex:facet name="start">
             <apex:image value="/img/loading.gif"/>
