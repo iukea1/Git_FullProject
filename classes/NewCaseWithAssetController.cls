@@ -9,7 +9,14 @@ public with sharing class NewCaseWithAssetController
     public Integer  AssetsPageCount { get; private set; }
     public Integer  AssetsPageSize  { get; private set; }
     public String   AssetId         { get; private set; }
-    public List<AssetWrapper> lstData {get; private set;}
+    public string  AssetType         { get; private set; }
+    public List<AssetWrapper> lstData 
+    {
+        get
+        {
+           return LoadData();
+        }
+    }
     public List<Asset> MyAssets
     {
         get
@@ -23,20 +30,29 @@ public with sharing class NewCaseWithAssetController
         AssetsPageNo = 0;
         AssetsPageSize = 50;
         Integer rmaCount=0;
-        LoadData();
+        List<AssetWrapper> lstAW= LoadData();
         //Integer rmaCount = [select count() from Asset where Status in('Customer Owned','Customer Subscription Active','Customer Subscription','Customer Evaluation') limit 1000];
-        if(lstData!=null && lstData.size()>0)
-            rmaCount=lstData.size();
+        if(lstAW!=null && lstAW.size()>0)
+            rmaCount=lstAW.size();
+        
+        System.debug('rmaCount' + rmaCount);
         
         AssetsPageCount = rmaCount / AssetsPageSize;
+        System.debug('AssetsPageCount'+ AssetsPageCount);
     }
 
     public PageReference searchAsset()
     {
         AssetWrapper asset = findValidAssetSub(SerialNo);
-        if(asset != null)
+        if(asset != null && asset.RecordId!=null)
         {
-            AssetId = asset.RecordId;
+            AssetId=asset.RecordId;
+            Schema.DescribeSObjectResult r= asset.RecordId.getsobjecttype().getDescribe();
+            if(r.getName()=='Asset')
+                AssetType = 'Asset';
+            else
+                AssetType= 'Subscription';
+         
         }
         else
         {
@@ -69,18 +85,20 @@ public with sharing class NewCaseWithAssetController
         AssetWrapper result= new AssetWrapper();
         assetName = trimName(assetName);
         List<Asset> assets = [select Id, Name,SerialNumber,Model__c from Asset where Name = :assetName and status in('Customer Owned','Customer Subscription Active','Customer Evaluation')];
-        if(assets.size() > 0)
+        if(assets!=null && assets.size() > 0)
         {
             result.RecordId=assets[0].Id;
             result.SerialNumber=assets[0].SerialNumber;
             result.Model=assets[0].Model__c;
+            result.AssetType= 'Asset';
         }
         List<SBQQ__Subscription__c> subs = [select Id, SBQQ__Product__r.Model__c,SerialNumber__c from SBQQ__Subscription__c where SerialNumber__c = :assetName and SBCF_Subscription_Status__c in('Customer Owned','Customer Subscription Active','Customer Evaluation')];
-        if(subs.size() > 0)
+        if(subs!=null && subs.size() > 0)
         {
             result.RecordId=subs[0].Id;
             result.SerialNumber=subs[0].SerialNumber__c;
             result.Model=subs[0].SBQQ__Product__r.Model__c;
+            result.AssetType= 'Subscription';
         }
         
         
@@ -88,33 +106,38 @@ public with sharing class NewCaseWithAssetController
     }
     private String trimName(String assetName)
     {
-        return assetName.replaceAll('-', '');
+        string assetData= !assetName.startsWith('SUB')?assetName.replaceAll('-', ''):assetName;
+        return assetData;
     }
     
     public PageReference nextPage()
     {
+        System.debug('nextPage AssetsPageNo'+ AssetsPageNo);
         AssetsPageNo++;
         if(AssetsPageNo <=0)
         {
             AssetsPageNo = 0;
         }
+        System.debug('Now AssetsPageNo'+ AssetsPageNo);
         return null;
     }
     
     public PageReference previousPage()
     {
+        System.debug('previousPage AssetsPageNo'+ AssetsPageNo);
         AssetsPageNo--;
         if(AssetsPageNo >= AssetsPageCount)
         {
             AssetsPageNo = AssetsPageCount -1;
         }
+        System.debug('Prev AssetsPageNo'+ AssetsPageNo);
         return null;
     }
-    private void LoadData()
+    private List<AssetWrapper> LoadData()
     {
-        lstData= new List<AssetWrapper>();
-        List<Asset> lstAsset=[select Id, Name, SerialNumber, Model__c from Asset where Status in('Customer Owned','Customer Subscription Active','Customer Subscription','Customer Evaluation') order by Model__c limit 1000];
-        List<SBQQ__Subscription__c> lstSub=[Select Id,SerialNumber__c, SBQQ__Product__r.Model__c from SBQQ__Subscription__c where SBCF_Subscription_Status__c in('Customer Subscription Active','Customer Evaluation') order by SBQQ__Product__r.Model__c limit 1000];
+        List<AssetWrapper> lstAssetWrapper= new List<AssetWrapper>();
+        List<Asset> lstAsset=[select Id, Name, SerialNumber, Model__c from Asset where Status in('Customer Owned','Customer Subscription Active','Customer Subscription','Customer Evaluation')  order by Model__c limit 1000];
+        List<SBQQ__Subscription__c> lstSub=[Select Id,SerialNumber__c, SBQQ__Product__r.Model__c from SBQQ__Subscription__c where SBCF_Subscription_Status__c in('Customer Subscription Active','Customer Evaluation') and SBQQ__Contract__r.Product_Type__c!='NX/VX' order by SBQQ__Product__r.Model__c limit 1000];
         if(lstAsset!=null && lstAsset.size()>0)
         {
             for(Asset asset:lstAsset)
@@ -123,9 +146,10 @@ public with sharing class NewCaseWithAssetController
                 data.RecordId=asset.Id;
                 data.SerialNumber=asset.SerialNumber;
                 data.Model=asset.Model__c;
-                lstData.add(data);
+                data.AssetType= 'Asset';
+                lstAssetWrapper.add(data);
             }
-				
+			  System.debug('lstAssetWrapper' +lstAsset);	
         }
         
         if(lstSub!=null && lstSub.size()>0)
@@ -136,36 +160,20 @@ public with sharing class NewCaseWithAssetController
                 data.RecordId=sub.Id;
                 data.SerialNumber=sub.SerialNumber__c;
                 data.Model=sub.SBQQ__Product__r.Model__c;
-                lstData.add(data);
+                data.AssetType='Subscription';
+                lstAssetWrapper.add(data);
             }
-				
+			  System.debug('lstSubWrapper' +lstSub);	
         }
-            
-            
+      	System.debug('lstAssetWrapper count' +lstAssetWrapper.size());	
+		return lstAssetWrapper;            
     }
     public class AssetWrapper{
         public Id RecordId{get;set;}
         public string SerialNumber{get;set;}
         public string Model{get;set;}
-        public boolean IsAsset
-        {
-            get
-            {
-                Schema.DescribeSObjectResult r= this.RecordId.getsobjecttype().getDescribe();
-                if(r.getName()=='Asset')
-                    return true;
-                
-                return false;
-            }
-        }
+        public string AssetType {get;set;}
         public AssetWrapper(){}
-        public AssetWrapper(string sn, string model,Id recordId)
-        {
-            this.SerialNumber=sn;
-            this.Model=model;
-            this.RecordId=recordId;
-            
-        }
         
         
     }
@@ -173,12 +181,47 @@ public with sharing class NewCaseWithAssetController
     @isTest
     static void test()
     {
+        
         NewCaseWithAssetController controller = new NewCaseWithAssetController();
-        List<Asset> assets = controller.MyAssets;
-        controller.SerialNo = 'acme';
+        List<AssetWrapper> assets = controller.lstData;
+        controller.SerialNo = '001BBC231231';
         controller.searchAsset();
         controller.showAssets();
         controller.nextPage();
         controller.previousPage();
+    }
+    @IsTest
+    static void testNXVX()
+    {
+         Account acc= new Account(Name='Test');
+        insert acc;
+        Account spacc= new Account(Name='Silver Peak Systems');
+        insert spAcc;
+        Product2 vxSub= new Product2(Name='VX-1000 Sub ',Model__c='VX-1000',Family='Virtual Image', PRoduct_Type__c='NX/VX');
+        insert vxSub;
+        Product2 vxProd= new Product2(Name='VX-1000 Sub(Asset)',Model__c='VX-1000',Family='Virtual Image', PRoduct_Type__c='NX/VX');
+        insert vxProd;
+        Asset asset1= new Asset(Status='Customer Owned',Name='001BBC231231',SerialNumber='001BBC231231',AccountId=acc.Id,Product2Id=vxProd.Id);
+        insert asset1;
+        Contract con= new Contract(AccountId=acc.Id);
+        insert con;
+        
+        
+        con.status='Activated';
+        update con;
+        SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=vxSub.Id);
+        insert sub;
+        
+        asset1.SBQQ__CurrentSubscription__c=sub.Id;
+        update asset1;
+        NewCaseWithAssetController controller = new NewCaseWithAssetController();
+        List<AssetWrapper> assets = controller.lstData;
+        controller.SerialNo = '001BBC231231';
+        controller.searchAsset();
+        System.assert(assets.size()>0);
+        controller.showAssets();
+        controller.nextPage();
+        controller.previousPage();
+        
     }
 }

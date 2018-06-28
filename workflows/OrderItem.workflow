@@ -115,7 +115,7 @@ CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
             <name>Update_Start_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Used to set Start and End Date based off quote line. Currently order products is inheriting a random date. This is a workaround until the bug can be identified.</description>
         <formula>true</formula>
         <triggerType>onAllChanges</triggerType>

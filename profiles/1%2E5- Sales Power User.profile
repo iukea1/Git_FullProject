@@ -228,11 +228,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AssociateToQuoteLineAddConTest</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AssociateToQuoteLineAddressController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
@@ -10386,7 +10386,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>AssociateToQuoteLineAddress</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AuthorizationCodesTable</apexPage>

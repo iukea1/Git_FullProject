@@ -18,7 +18,7 @@
                 <apex:outputLabel value="Serial Number" />
                 <apex:outputPanel >
                     <apex:inputText value="{!SerialNo}" />
-                    <apex:commandButton value=" Go! " action="{!searchAsset}" oncomplete="setCaseAssetId('{!AssetId}');  return false;" />
+                    <apex:commandButton value=" Go! " action="{!searchAsset}" oncomplete="setCaseAssetIdNew('{!AssetId}','{!AssetType}');  return false;" />
                 </apex:outputPanel>
             </apex:pageBlockSectionItem>
         </apex:pageBlockSection>
@@ -38,12 +38,12 @@
                     <apex:commandLink value="Next Page" action="{!nextPage}" reRender="assetsList"  rendered="{!AssetsPageNo < AssetsPageCount }" />
                     <apex:outputText value="Next Page" rendered="{!AssetsPageNo >= AssetsPageCount}" />
                 </apex:outputPanel>
-                <apex:pageBlockTable id="assetsTable" value="{!MyAssets}" var="asset" rows="{!AssetsPageSize}" first="{!AssetsPageNo * AssetsPageSize}" rendered="{!ShowAssets}">
+                <apex:pageBlockTable id="assetsTable" value="{!lstData}" var="asset" rows="{!AssetsPageSize}" first="{!AssetsPageNo * AssetsPageSize}" rendered="{!ShowAssets}">
                     <apex:column headerValue="Serial Number">
-                        <apex:commandLink value="{!asset.SerialNumber}" onclick="setCaseAssetId('{!asset.Id}'); return false;">
+                        <apex:commandLink value="{!asset.SerialNumber}" onclick="setCaseAssetIdNew('{!asset.RecordId}','{!asset.AssetType}'); return false;">
                         </apex:commandLink>
                     </apex:column>
-                    <apex:column value="{!asset.Model__c}" />
+                    <apex:column value="{!asset.Model}" />
                 </apex:pageBlockTable>
                 <apex:outputPanel rendered="{!showAssets}" style="float:right">
                     <apex:commandLink value="Previous Page" action="{!previousPage}" reRender="assetsList" rendered="{!AssetsPageNo > 0}" />

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>SBQQ__CloneWithRelated</customButtons>
     <customButtons>SBQQ__IncludeDocument</customButtons>
     <customButtons>SBQQ__GenerateDocument</customButtons>
+    <customButtons>Asset_Renewal</customButtons>
+    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -240,6 +243,14 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__MasterContract__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Credit_Hold__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Print_Special_Instructions__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -358,6 +369,10 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Account_Terms__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Serial_Number_Notes__c</field>
             </layoutItems>
@@ -380,6 +395,10 @@
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__PriceBook__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -398,13 +417,12 @@
         <fields>NAME</fields>
         <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__ProductName__c</fields>
-        <fields>SBQQ__Description__c</fields>
         <fields>SBQQ__Quantity__c</fields>
-        <fields>Program_Discount__c</fields>
-        <fields>Reseller_Discount__c</fields>
-        <fields>SBQQ__DistributorDiscount__c</fields>
         <fields>SBQQ__NetPrice__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
+        <fields>Level__c</fields>
+        <fields>SBQQ__EffectiveStartDate__c</fields>
+        <fields>SBQQ__EffectiveEndDate__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

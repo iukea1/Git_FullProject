@@ -87,7 +87,7 @@ public with sharing class HardwareShipmentController {
             return;
         }
 
-        List<OrderItem> orderProducts = OrderShipmentHelper.queryForOrderProducts(order.Id, OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE);
+        List<OrderItem> orderProducts = OrderShipmentHelper.queryForOrderProducts(order.Id, new Set<String>{'Product'});//OrderShipmentHelper.PRODUCT_CATEGORY_HARDWARE);
         System.debug('Order Products: ' + orderProducts);
 
         if(orderProducts == null || orderProducts.size() == 0){

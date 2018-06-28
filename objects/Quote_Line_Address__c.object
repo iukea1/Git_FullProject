@@ -102,7 +102,7 @@
         <externalId>false</externalId>
         <label>Quote Line</label>
         <lookupFilter>
-            <active>true</active>
+            <active>false</active>
             <filterItems>
                 <field>SBQQ__QuoteLine__c.SBQQ__ProductFamily__c</field>
                 <operation>equals</operation>

@@ -471,6 +471,10 @@
                 <field>Subscription_Serial_Number__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Subscription_Contract__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Contract_Status__c</field>
             </layoutItems>

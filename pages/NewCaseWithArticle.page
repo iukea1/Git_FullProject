@@ -130,6 +130,7 @@
                 </apex:pageBlockSection>
                 <apex:pageBlockSection title="Appliance Information" columns="1">
                     <apex:inputField value="{!Case.AssetId}"></apex:inputField>
+                     <apex:inputField value="{!Case.Subscription__c}"></apex:inputField>
                     <apex:inputField value="{!Case.BuildLink__c}"></apex:inputField>
                     <apex:inputField value="{!Case.Version__c}"></apex:inputField>
                 </apex:pageBlockSection>
@@ -154,7 +155,8 @@
     </apex:outputPanel>
 
     <apex:form >
-        <apex:inputHidden value="{!Case.AssetId}" id="hidAssetId" />
+        <apex:inputHidden value="{!Case.AssetId}" id="hidAssetId"  />
+        <apex:inputHidden value="{!Case.Subscription__c}" id="hidSubId" />
         <apex:actionFunction name="openCaseAnyway" action="{!openCaseAnyway}" />
     </apex:form>
 </apex:page>

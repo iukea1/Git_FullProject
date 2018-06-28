@@ -13,7 +13,14 @@
                 </apex:column>
             </apex:pageBlockTable>
            <apex:pageBlockButtons location="bottom">
-            	<apex:commandButton value="Save" action="{!SaveData}"   />
+            	<apex:commandButton value="Save" action="{!SaveData}"  rerender="redirectPanel"  />
+                 <apex:outputPanel id="redirectPanel" >
+            <apex:outputText rendered="{!shouldRedirect}">
+                <script type="text/javascript">
+                    window.top.location.href = '{!redirectUrl}';
+                </script>
+            </apex:outputText>
+        </apex:outputPanel>
            </apex:pageBlockButtons>
            
         </apex:pageBlock>

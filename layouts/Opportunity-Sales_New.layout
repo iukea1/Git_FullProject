@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Custom_Clone</customButtons>
+    <customButtons>Add_Revenue_Recognition</customButtons>
+    <customButtons>SBQQ__CreateOrder</customButtons>
+    <customButtons>Create_POC</customButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -147,6 +150,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Trigger_Assignment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier1_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier2_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__PrimaryQuote__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -465,6 +484,17 @@
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>New_SP_Quote</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ApprovalStatus__c</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <fields>Product_Type__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>MemberName</fields>
         <fields>OppAccessLevel</fields>
         <fields>TeamMemberRole</fields>
@@ -479,21 +509,6 @@
         <fields>Priority__c</fields>
         <fields>Status__c</fields>
         <relatedList>Request__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>NewQuoteFromOpportunity</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Quote_Name__c</fields>
-        <fields>Quote_Date__c</fields>
-        <fields>Quote_Valid_Until__c</fields>
-        <fields>Approval_Status__c</fields>
-        <fields>Quote_Amount_Rollup__c</fields>
-        <fields>PreparedFor__c</fields>
-        <fields>Primary__c</fields>
-        <relatedList>Quote__c.Opportunity__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>AddProduct</excludeButtons>
@@ -527,17 +542,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedOpportunityHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>New_SP_Quote</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>ApprovalStatus__c</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <fields>Product_Type__c</fields>
-        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

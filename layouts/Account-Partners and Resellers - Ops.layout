@@ -700,6 +700,10 @@
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SBQQ__Subscription__c.SBQQ__Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>New_Virtual_Asset</customButtons>
         <fields>ASSET.NAME</fields>
         <fields>Product_Name_And_Nodes__c</fields>

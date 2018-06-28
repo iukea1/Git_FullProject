@@ -83,7 +83,9 @@ public with sharing class OrderShipmentHelper {
         
         try{
             orderProducts = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
-                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+                             FROM OrderItem WHERE OrderId = :orderId AND 
+                             Product2.Family IN :productForecastCategories];
+                             //CHANGE IN FILTER : Product2.Forecast_Category__c IN :productForecastCategories];
                              
             System.debug('-------->OrderItemFromHelper<------------- ' + orderProducts);     
         
@@ -102,7 +104,9 @@ public with sharing class OrderShipmentHelper {
         
         try{
             orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
-                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+                             FROM OrderItem WHERE OrderId = :orderId AND 
+                             Product2.Family IN :productForecastCategories];
+                             //CHANGE IN FILTER : Product2.Forecast_Category__c IN :productForecastCategories];
             
             for(OrderItem oi: orderProductsList){
                 if(oi.Product2.Name.startsWith('EC') && isECProducts == False){
@@ -120,7 +124,7 @@ public with sharing class OrderShipmentHelper {
 
         return isDuplicateECProd;
     }
-	
+    
     public static Boolean queryOrderProdIfContainsSmartHands(String orderId, Set<String> productForecastCategories){
         List<OrderItem> orderProductsList = new List<OrderItem>();
         boolean isSmartHands = false;
@@ -128,7 +132,9 @@ public with sharing class OrderShipmentHelper {
         
         try{
             orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
-                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];
+                             FROM OrderItem WHERE OrderId = :orderId AND 
+                             Product2.Family IN :productForecastCategories];
+                             //CHANGE IN FILTER : Product2.Forecast_Category__c IN :productForecastCategories];
             
             for(OrderItem oi: orderProductsList){
                 if(string.ValueOf(oi.Product2.Name).startsWith('SMRT-HND') && isSmartHands == False){
@@ -153,7 +159,9 @@ public with sharing class OrderShipmentHelper {
         Boolean isDuplicateECProd = false;
         try{
             orderProductsList = [SELECT Id, Product2.Name, Product2.ProductCode, Quantity, UnitPrice, TotalPrice, SBCF_Status__c, GMS_Nodes__c
-                             FROM OrderItem WHERE OrderId = :orderId AND Product2.Forecast_Category__c IN :productForecastCategories];   
+                             FROM OrderItem WHERE OrderId = :orderId AND 
+                             Product2.Family IN :productForecastCategories];
+                             //CHANGE IN FILTER : Product2.Forecast_Category__c IN :productForecastCategories]; 
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());
@@ -166,7 +174,7 @@ public with sharing class OrderShipmentHelper {
         List<Order> orderList = new List<Order>();
         
         try{        
-         	orderList = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: orderId LIMIT 1];      
+            orderList = [SELECT Id, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__Contracted__c, Status FROM Order WHERE Id =: orderId LIMIT 1];      
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());
@@ -174,7 +182,7 @@ public with sharing class OrderShipmentHelper {
         
         return orderList;
     }
-	
+    
     
     public static List<String> getAllOrderFieldsAPINames(){
         List<String> orderFieldAPINames = new List<String>();

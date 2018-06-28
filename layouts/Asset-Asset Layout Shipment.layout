@@ -95,6 +95,10 @@
                 <behavior>Edit</behavior>
                 <field>Deployment_End_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tracking_Information__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -421,6 +425,10 @@
         <fields>QuantityForDisplay__c</fields>
         <fields>Key__c</fields>
         <relatedList>License__c.AssetId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SBQQ__SubscribedAsset__c.SBQQ__Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>

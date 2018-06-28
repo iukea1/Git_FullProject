@@ -119,6 +119,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Selected_to_Split__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tracking_Information__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

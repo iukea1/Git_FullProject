@@ -19,7 +19,7 @@ public class ActivateOrderController {
             this.quote = [SELECT Id, SBCF_Evaluation_Quote__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
             //List<SBQQ__QuoteLine__c> qLineItems = [SELECT Id, SBQQ__ProductFamily__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quote.Id AND SBQQ__ProductFamily__c = 'Product'];
             
-            List<OrderItem> oiList = [SELECT Id, Product2.Product_Family_Clean__c FROM OrderItem WHERE OrderId = :order.Id AND Product2.Product_Family_Clean__c = 'Physical'];
+            List<OrderItem> oiList = [SELECT Id, Product2.Product_Family_Clean__c FROM OrderItem WHERE OrderId = :order.Id AND Product2.Family = 'Physical'];
             
             if(!oiList.isEmpty() && !order.SerialNumberApplied__c) {
                 needSerial = true;

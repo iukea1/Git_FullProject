@@ -237,6 +237,10 @@
                 <behavior>Readonly</behavior>
                 <field>Is_Reduction__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Distributor_Margin__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -537,13 +541,12 @@
         <fields>NAME</fields>
         <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__ProductName__c</fields>
-        <fields>SBQQ__Description__c</fields>
         <fields>SBQQ__Quantity__c</fields>
-        <fields>Program_Discount__c</fields>
-        <fields>Reseller_Discount__c</fields>
-        <fields>SBQQ__DistributorDiscount__c</fields>
         <fields>SBQQ__NetPrice__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
+        <fields>Level__c</fields>
+        <fields>SBQQ__EffectiveStartDate__c</fields>
+        <fields>SBQQ__EffectiveEndDate__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
