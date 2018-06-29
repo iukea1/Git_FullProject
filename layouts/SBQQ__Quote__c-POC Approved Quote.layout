@@ -221,6 +221,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>POC_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SBQQ__Opportunity2__c</field>
             </layoutItems>
             <layoutItems>
@@ -344,10 +348,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SE_Director_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>POC_Status__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -518,14 +518,23 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SBQQ__ProductCode__c</fields>
+        <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>SBQQ__NetPrice__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
-        <fields>Level__c</fields>
-        <fields>SBQQ__EffectiveStartDate__c</fields>
-        <fields>SBQQ__EffectiveEndDate__c</fields>
+        <fields>Total_Discount__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>Contract.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>sbaa__Actions__c</fields>
@@ -558,6 +567,19 @@
         <fields>ORDERS.STATUS</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <relatedList>Order.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Country__c</fields>
+        <fields>Is_EU__c</fields>
+        <relatedList>Quote_Address__c.Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Quote_Address__c</fields>
+        <fields>Product_Name__c</fields>
+        <fields>Shipping_Quantity__c</fields>
+        <relatedList>Quote_Line_Address__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -600,16 +622,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Country__c</fields>
-        <fields>Is_EU__c</fields>
-        <relatedList>Quote_Address__c.Quote__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Quote_Line_Address__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

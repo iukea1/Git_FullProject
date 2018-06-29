@@ -13,6 +13,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     }
     public void BeforeInsert(List<SObject> newItems) 
     {
+        defaultTerms(newItems);
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -43,6 +44,20 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     {
     }
     
+    public static void defaultTerms(List<SBQQ__Quote__c> quotes) {
+        Set<Id> oppCollect = new Set<Id>();
+        for(SBQQ__Quote__c q : quotes) {
+            oppCollect.add(q.SBQQ__Opportunity2__c);
+        }
+        
+        Map<Id, Opportunity> parentOps = new Map<Id, Opportunity>([SELECT Id, Account.Payment_Terms__c FROM Opportunity WHERE Id IN :oppCollect]);
+        
+        for(SBQQ__Quote__c q : quotes) {
+            if(parentOps.containsKey(q.SBQQ__Opportunity2__c)) {
+                q.SBQQ__PaymentTerms__c = parentOps.get(q.SBQQ__Opportunity2__c).Account.Payment_Terms__c;
+            }
+        }
+    }
     
     public static void pocDataDeletion(Map<Id, SBQQ__Quote__c> oldItems, List<SBQQ__Quote__c> quotes) {
         //run for evaluation quotes only

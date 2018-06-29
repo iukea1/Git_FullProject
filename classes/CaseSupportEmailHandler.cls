@@ -14,7 +14,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
         String emailSubject = (email.subject != null && email.subject.length() > 80)?email.subject.substring(0, 80):email.subject;
         Email_Log__c emailLog = new Email_Log__c(Name = emailSubject);
         insert emailLog;
-    
+   		System.debug('1'+ result);
         String fromAddress = email.fromAddress;
         System.debug('fromAddress' + fromAddress);
         //filter the email from system administrator
@@ -26,14 +26,15 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
                 return result;
             }
         }
-    
+         System.debug('2'+ result);
         //filter to avoid duplicate cases being created in a short time
         if(isDuplicateCase(email.subject, fromAddress))
         {
             result.success = false;
+            System.debug('isDuplicateCase'+ result);
             return result;
         } 
-    
+       	System.debug('3'+ result);
         //filter spam keywords
         String tempSubject = email.subject.toLowerCase();
         for(String keyword : emailSetup.spamKeywordList)
@@ -47,33 +48,42 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
                 if(tempSubject.contains(keyword.toLowerCase()))
                 { 
                     result.success = true;
+                    System.debug('keyword'+ result);
                     return result; 
                 }
             } 
         }
-    
+     	System.debug('4'+ result);
         //filter drop email address
         for(String address : emailSetup.dropEmailList)
         {
             if(fromAddress == address)
             {
                 result.success = true;
+                System.debug('filter drop email address'+ result);
                 return result;
             }
         }
-    
+        System.debug('5'+ result);
         try
         {
             if(isAutoEmail(email.subject))
             {
+                System.debug('6'+ result);
+                System.debug('AutoEmail');
                 String[] subjectValues = parseSubjectValues(email.subject);
                 String assetNumber = subjectValues[0];
                 String emailAddress = subjectValues[1];
                 String priority = subjectValues[2];
                 Contact contact = findContactByEmail(emailAddress);
                 Asset asset = findAssetByNumber(assetNumber);
-                if(asset != null)
+                SBQQ__Subscription__c sub = findSubscriptionByNumber(assetNumber);
+                System.debug('asset'+asset);
+                System.debug('sub'+ sub);
+                if(asset != null || sub!=null)
                 {
+                    Id assetId=asset!=null?asset.Id:sub.Id;
+                    Id accountId=asset!=null?asset.AccountId:sub.SBQQ__Account__c;
                     if(contact == null)
                     {
                         Map<String, String> bodyValues = parseBodyValues(email.plainTextBody);
@@ -82,19 +92,20 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
                         {
                             contactName = bodyValues.get('Name');
                         }
-                        contact = createContactByMail(emailAddress, contactName, asset.AccountId);
+                        contact = createContactByMail(emailAddress, contactName, accountId);
                     }
-                    createCaseByMail(email, contact.Id, asset.Id, priority);
+                    createCaseByMail(email, contact.Id, assetId, priority);
                     result.success = true;
                 }
                 else
                 {
                     result.success = false;
-                    result.message = 'Asset cannot be found.';
+                    result.message = 'Asset/Subscription cannot be found.';
                 }
             }
             else
             {
+                    System.debug('7'+ result);
                 //check whether the contact exists, we'll create a new contact if not
                 Contact contact = findContactByEmail(email.fromAddress);
                 System.debug('contact' + contact.Id);
@@ -122,6 +133,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
                     //Stop creating contact, Feb 27, 2014
                     //contact = createContactByMail(email.fromAddress, email.fromName);
                     bounceEmailBack(email.fromAddress, result);
+                       System.debug('8'+ result);
                 }
             }
         }
@@ -160,7 +172,8 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     {
         String regex1 = 'AUTOCASE:[\\s]*\\[[\\w\\d\\-]{17}\\]:\\[.+\\]:\\[.+\\]';
         String regex2 = 'AUTOCASE:[\\s]*\\[[\\w\\d]{12}\\]:\\[.+\\]:\\[.+\\]';
-        return Pattern.matches(regex1, subject) || Pattern.matches(regex2, subject);
+        String regex3 = 'AUTOCASE:[\\s]*\\[SUB-[0-9]{7,}\\]:\\[.+\\]:\\[.+\\]';
+        return Pattern.matches(regex1, subject) || Pattern.matches(regex2, subject)|| Pattern.matches(regex3, subject);
     }
     
     @testvisible
@@ -202,6 +215,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     
     private static Contact findContactByEmail(String email)
     {
+        System.debug(email);
         if(String.isNotBlank(email) && email.length() >= 2)
         {
             List<List<Contact>> result = [find :email In EMAIL FIELDS RETURNING Contact(Id, Name) limit 1];
@@ -222,6 +236,19 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
         if(assets.size() > 0)
         {
             return assets[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    private static SBQQ__Subscription__c findSubscriptionByNumber(String assetNumber)
+    {
+        assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
+        SBQQ__Subscription__c[] subs = [select Id, SBQQ__Account__c from SBQQ__Subscription__c where SerialNumber__c=:assetNumber limit 1];
+        if(subs.size() > 0)
+        {
+            return subs[0];
         }
         else
         {
@@ -301,8 +328,17 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     //create a new case by email info.
     private static Case createCaseByMail(Messaging.InboundEmail email, Id contactId, Id assetId, String priority)
     {
-        Case cs = new Case(ContactId=contactId, subject=email.subject, AssetId=assetId, description=email.plainTextBody, status='Qualifying', Type='Incoming Email', CreatedByApex__c=true, RecordTypeId=emailSetup.caseRecordTypeId);          
+        Case cs = new Case(ContactId=contactId, subject=email.subject, description=email.plainTextBody, status='Qualifying', Type='Incoming Email', CreatedByApex__c=true, RecordTypeId=emailSetup.caseRecordTypeId);          
         cs.OwnerId = Tier1Id;  //default owner is queue Tier1
+        if(assetId!=null)
+        {
+            Schema.DescribeSObjectResult descObj= assetId.getsobjecttype().getDescribe();
+            if(descObj.getName()=='Asset')
+                cs.AssetId=assetId;
+            else
+                cs.Subscription__c=assetId;
+               
+        }
         if(priority != null)
         {
             cs.Priority = matchPriority(priority);

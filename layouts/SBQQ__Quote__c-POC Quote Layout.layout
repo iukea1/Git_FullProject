@@ -27,6 +27,10 @@
                 <field>SBQQ__Opportunity2__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBCF_Evaluation_Quote__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>POC_Status__c</field>
             </layoutItems>
@@ -254,10 +258,6 @@
                 <field>SBQQ__SubscriptionTerm__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SBCF_Evaluation_Quote__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
@@ -447,13 +447,12 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SBQQ__ProductCode__c</fields>
+        <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>SBQQ__NetPrice__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
-        <fields>Level__c</fields>
-        <fields>SBQQ__EffectiveStartDate__c</fields>
-        <fields>SBQQ__EffectiveEndDate__c</fields>
+        <fields>Total_Discount__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

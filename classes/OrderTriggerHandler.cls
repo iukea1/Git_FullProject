@@ -12,6 +12,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
         recalculateEcAddOnValues((List<Order>)newItems.values(), (Map<Id, Order>) oldItems);
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
+        rolldownShipDate((List<Order>)newItems.values(), (Map<Id, Order>) oldItems);
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) {}
     public void AfterDelete(Map<Id, SObject> oldItems) {}
@@ -49,7 +50,24 @@ public class OrderTriggerHandler implements ITriggerHandler {
             o.RecalculateFields__c = true;
         }
     }
-
+    
+    private static void rolldownShipDate(List<Order> newItems, Map<Id, Order> oldItems) {
+        Map<Id, Date> newShipDate = new Map<Id, Date>();
+        for(Order o : newItems) {
+            if(o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__C) {
+                newShipDate.put(o.Id, o.Ship_Date__c);
+            }
+        }
+        List<Asset> assetUpdate = new List<Asset>();
+        for(SBQQ__SubscribedAsset__c sa : [SELECT Id, SBQQ__Subscription__r.SBQQ__Contract__r.SBQQ__Order__c, SBQQ__Asset__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__r.SBQQ__Contract__r.SBQQ__Order__c IN :newShipDate.keySet()]) {
+            assetUpdate.add(new Asset(
+                Id = sa.SBQQ__Asset__c,
+                Ship_Date__c = newShipDate.get(sa.SBQQ__Subscription__r.SBQQ__Contract__r.SBQQ__Order__c)
+            ));
+        }
+        if(!assetUpdate.isEmpty()) update assetUpdate;
+    }
+    
     private static void recalculateEcAddOnValues(List<Order> newItems, Map<Id, Order> oldItems) {
         Set<Id> orderIds = new Set<Id>();
         //System.assertEquals(123, 234);

@@ -125,8 +125,59 @@ public class CaseSupportEmailHandlerTest
         System.assertEquals(null, result.message);
         System.assertEquals(true, result.success);
         System.assertEquals(1, [select count() from Case]);
-        Case theCase = [select Id, CaseNumber, AssetId, Priority, ContactId from Case where Subject = :testEmail.subject];
+        Case theCase = [select Id, Subscription__c,CaseNumber, AssetId, Priority, ContactId from Case where Subject = :testEmail.subject];
         System.assertEquals(asset.Id, theCase.AssetId);
+            System.assertEquals(null, theCase.Subscription__c);
+        System.assert(theCase.ContactId != null);
+    }
+    
+    @isTest
+    static void testECEmail()
+    {
+        EmailSetup__c setup = new EmailSetup__c(Name='Support', Drop_Email_From__c='spam', Case_Record_Type__c='Incoming Email');
+        insert setup;
+        Account acc = new Account(Name='acme');
+        insert acc;
+        Contact newContact = new Contact(LastName = 'acmeLastName', Email='Acme.InTestMethod@acme.com',AccountId=acc.Id);
+        insert newContact;
+        Product2 ecBase= new Product2(Name='EC-BASE-1Y ',Model__c='EC-BASE-1Y',Family='Virtual Image', PRoduct_Type__c='EDGECONNECT');
+        insert ecBase;
+      
+        SBQQ__Quote__c objQuote= new SBQQ__Quote__c(Product_Type__c='EDGECONNECT',SBQQ__StartDate__c=Date.today());
+        insert objQuote;
+        Contract con= new Contract(AccountId=acc.Id,SBQQ__Quote__c=objQuote.Id);
+        insert con;
+        
+        con.status='Activated';
+        update con;
+        SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=ecBase.Id);
+        insert sub;
+        SBQQ__Subscription__c sub1=[Select Id,Name from SBQQ__Subscription__c where Id=:sub.Id];
+        Id [] fixedSearchResults = new Id[]{newContact.Id};
+        Test.setFixedSearchResults(fixedSearchResults);
+        Test.startTest();
+        Messaging.Inboundemail testEmail = new Messaging.Inboundemail();
+        testEmail.subject = 'AUTOCASE: [' + sub1.Name + ']:[acme@test.com]:[P3]';
+        testEmail.fromAddress = 'Acme.InTestMethod@acme.com';
+        testEmail.plainTextBody = 'Priority: P3 \r\n' + 
+            'Name: Acme Test \r\n' + 
+            'Email: acme@test.com \r\n' + 
+            'phone: x1822 \r\n' + 
+            'NX IP: 10.0.40.38 \r\n' + 
+            'NX name: mars \r\n' + 
+            'NX Serial 00-e0-81-78-58-8e \r\n' + 
+            'Sysdump name: http://autosupport.silverpeaksystems.com/files/gms/speak.local/debug-2011-05-10-074155.zip \r\n' + 
+            'Description: \r\n' + 
+            'hello';
+        CaseSupportEmailHandler handler = new CaseSupportEmailHandler();
+        Messaging.InboundEmailResult result = handler.handleInboundEmail(testEmail, null);
+		Test.stoptest();
+        System.assertEquals(true, result.success);
+        System.assertEquals(null, result.message);
+        System.assertEquals(1, [select count() from Case]);
+        Case theCase = [select Id, Subscription__c,CaseNumber, AssetId, Priority, ContactId from Case where Subject = :testEmail.subject];
+        System.assertEquals(null,theCase.AssetId);
+        System.assertEquals(sub1.Id, theCase.Subscription__c);
         System.assert(theCase.ContactId != null);
     }
     
@@ -144,6 +195,13 @@ public class CaseSupportEmailHandlerTest
         testEmail.fromAddress = 'Acme.InTestMethod@acme.com';
         testEmail.plainTextBody = 'This is a test Email plainTextBody !';
         System.assertNotEquals(null,CaseSupportEmailHandler.insertCaseComment(newCase, testEmail));
+    }
+    @IsTest
+    static void TestisAutoEmail_Sub()
+    {
+       string s='AUTOCASE: [' + 'SUB-0001232' + ']:[acme@test.com]:[P3]';
+       System.debug(s);
+       System.assertEquals(true,(CaseSupportEmailHandler.isAutoEmail(s)));
     }
    
 }

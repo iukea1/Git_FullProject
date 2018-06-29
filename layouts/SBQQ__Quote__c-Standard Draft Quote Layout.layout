@@ -104,10 +104,6 @@
                 <field>Quote_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>invalidECCombinationFlag__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Approval_Level_Triggered__c</field>
             </layoutItems>
@@ -540,13 +536,12 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SBQQ__ProductCode__c</fields>
+        <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>SBQQ__NetPrice__c</fields>
         <fields>SBQQ__NetTotal__c</fields>
-        <fields>Level__c</fields>
-        <fields>SBQQ__EffectiveStartDate__c</fields>
-        <fields>SBQQ__EffectiveEndDate__c</fields>
+        <fields>Total_Discount__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

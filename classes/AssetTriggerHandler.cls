@@ -828,6 +828,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
 
     private static void retrieveAssetSerials(List<Asset> newAssets) {
         Set<Id> qLineCollect = new Set<Id>();
+        Set<Id> orderId = new Set<Id>();
         for(Asset a : newAssets) {
             qLineCollect.add(a.SBQQ__QuoteLine__c);
         }
@@ -840,7 +841,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
 
         Map<Id, Map<Id, Order_Product_Item__c>> opiToQuote = new Map<Id, Map<Id, Order_Product_Item__c>>();
-        for(Order_Product_Item__c opi : [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quoteIdCollect]) {
+        for(Order_Product_Item__c opi : [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c,Order_Product__r.OrderId, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quoteIdCollect AND Asset__c = NULL]) {
             if(!opiToQuote.containsKey(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c)) {
                 opiToQuote.put(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Map<Id, Order_Product_Item__c>());
             }
@@ -852,9 +853,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
             Id quoteId = quoteLineMap.get(a.SBQQ__QuoteLine__c).SBQQ__Quote__c;
             Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(quoteId);
             if(opitemMap!=null && opitemMap.size() > 0) {
+            
                 a.Name = opitemMap.values()[0].Serial_Number__c;
                 a.SerialNumber = opitemMap.values()[0].Serial_Number__c;
                 a.Part_Number__c = opitemMap.values()[0].Part_Number__c;
+                a.Status = opitemMap.values()[0].Status__c;
                 if(a.Status == null) a.Status = 'Customer Owned';
                 
                 Order_Product_Item__c opiUp = opiToQuote.get(quoteId).get(opitemMap.values()[0].Id);
