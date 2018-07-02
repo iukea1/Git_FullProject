@@ -41,7 +41,7 @@ public class CaseSupportEmailHandlerTest
         System.assertEquals(1, contacts.size());
     }
   
-    @isTest
+	@isTest
     static void testNonAutoEmail()
     {
         Test.startTest();
@@ -152,10 +152,11 @@ public class CaseSupportEmailHandlerTest
         update con;
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=ecBase.Id);
         insert sub;
-        SBQQ__Subscription__c sub1=[Select Id,Name from SBQQ__Subscription__c where Id=:sub.Id];
+        SBQQ__Subscription__c sub1=[Select Id,Name,SerialNumber__c from SBQQ__Subscription__c where Id=:sub.Id];
+        System.assertEquals(sub1.Name, sub1.SerialNumber__c);
         Id [] fixedSearchResults = new Id[]{newContact.Id};
         Test.setFixedSearchResults(fixedSearchResults);
-        Test.startTest();
+      
         Messaging.Inboundemail testEmail = new Messaging.Inboundemail();
         testEmail.subject = 'AUTOCASE: [' + sub1.Name + ']:[acme@test.com]:[P3]';
         testEmail.fromAddress = 'Acme.InTestMethod@acme.com';
@@ -171,7 +172,7 @@ public class CaseSupportEmailHandlerTest
             'hello';
         CaseSupportEmailHandler handler = new CaseSupportEmailHandler();
         Messaging.InboundEmailResult result = handler.handleInboundEmail(testEmail, null);
-		Test.stoptest();
+	
         System.assertEquals(true, result.success);
         System.assertEquals(null, result.message);
         System.assertEquals(1, [select count() from Case]);

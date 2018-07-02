@@ -9,6 +9,7 @@
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
     <customButtons>Define_Channel</customButtons>
+    <customButtons>refedge__Find_References</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
@@ -305,6 +306,38 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Recommended Reference Resources</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>80</height>
+                <page>refedge__RecommendedReferenceContent</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Reference Requests</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>refedge__AllOpportunitysARandUR</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Opportunity Registration Information- Imported from Deal Registration Conversion</label>
         <layoutColumns>
             <layoutItems>
@@ -488,6 +521,18 @@
         <fields>PARTNER.ROLE</fields>
         <fields>PARTNER.PRIMARY</fields>
         <relatedList>RelatedPartnerList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>refedge__Subject__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>refedge__Invitation_Expiration__c</fields>
+        <fields>refedge__Is_Expired__c</fields>
+        <fields>refedge__Notes__c</fields>
+        <relatedList>refedge__Invitation__c.refedge__Opportunity__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

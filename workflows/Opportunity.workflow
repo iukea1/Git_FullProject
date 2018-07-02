@@ -777,7 +777,7 @@
     <fieldUpdates>
         <fullName>SBCF_Set_Renewal_Opportunity_Name</fullName>
         <field>Name</field>
-        <formula>Account.Name &amp; &apos; - &apos; &amp; &apos;Renewal&apos; &amp; &apos; - &apos; &amp; SBQQ__RenewedContract__r.Name</formula>
+        <formula>Account.Name &amp; &apos; - &apos; &amp; &apos;Renewal&apos; &amp; &apos; - &apos; &amp;  SBQQ__RenewedContract__r.ContractNumber</formula>
         <name>SBCF Set Renewal Opportunity Name</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -1531,7 +1531,7 @@ ISBLANK(Signed_By__c)
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Send Competition Data For Lost Opp</fullName>

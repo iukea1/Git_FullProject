@@ -210,6 +210,7 @@ public with sharing class HardwareShipmentController {
             List<Order_Product_Item__c> orderProductItemsToUpsert = new List<Order_Product_Item__c>();
             for(OrderShipmentHelper.OrderProductWrapper wraps : orderProductWrappers) {
                 for(OrderShipmentHelper.OrderProductItemWrapper wr : wraps.orderProductItems) {
+                    wr.orderProductItem.Order__c = order.Id;
                     orderProductItemsToUpsert.add(wr.orderProductItem);
                 }
             }

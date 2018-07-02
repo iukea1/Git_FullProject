@@ -2287,6 +2287,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestOpenAssetSubsController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestOpportunityPocStatusBatchJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -4894,6 +4898,11 @@
         <editable>false</editable>
         <field>Order_Product_Item__c.Order_Product__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order_Product_Item__c.Order__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

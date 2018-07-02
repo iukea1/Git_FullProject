@@ -4,6 +4,7 @@
     <customButtons>Patch_Override</customButtons>
     <customButtons>absorblms__Enroll_in_Training</customButtons>
     <customButtons>absorblms__View_Course_Completion</customButtons>
+    <customButtons>refedge__Nominate</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -514,6 +515,22 @@
                 <scontrol>RainKing__RainKingAccount</scontrol>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Reference Profile</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>500</height>
+                <page>refedge__AccountLevelRULPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

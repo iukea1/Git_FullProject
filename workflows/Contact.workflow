@@ -74,6 +74,16 @@ Sales_Rejected_Comments__c</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>refedge__Joined_Reference_Program_Date</fullName>
+        <description>Update date is written here when &apos;reference program member&apos; flag is first set to checked</description>
+        <field>refedge__Joined_Reference_Program__c</field>
+        <formula>Today()</formula>
+        <name>Joined Reference Program Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>Add Date Time Stamp On Screening Notes</fullName>
         <actions>
@@ -181,6 +191,16 @@ Sales_Rejected_Comments__c</formula>
         <active>false</active>
         <formula>OwnerId =&apos;00550000001DH8p&apos;</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>refedge__WR_InsertJoinedReferenceProgramDate</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Contact.AccountName</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>Depricated(Bound 8)</description>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <tasks>
         <fullName>Reminder_Set_Contact_Role_on_Opportunity</fullName>

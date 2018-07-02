@@ -24,6 +24,11 @@
         <relationshipLabel><!-- Order Product Items --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Order Product Items --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Part Number --></label>
         <name>Part_Number__c</name>
     </fields>

@@ -358,6 +358,12 @@
         <fields>Product_Type__c</fields>
         <relatedList>SBQQ__Quote__c.First_Virtual_Order__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Serial_Number__c</fields>
+        <fields>Asset__c</fields>
+        <relatedList>Order_Product_Item__c.Order__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

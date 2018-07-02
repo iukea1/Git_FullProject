@@ -109,14 +109,15 @@ public class OrderTriggerHandler implements ITriggerHandler {
                         if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
                     }
                 }
-                
-                o.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
-                o.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
-                o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;
-                //o.Days_to_Credit__c = lastEndDateAddOn.daysBetween(o.License_End_Date__c);
-                o.Credit_Value__c = o.Daily_Rate_Add_on__c * 1;// o.Days_to_Credit__c;
-                o.Days_of_Value__c = o.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);
-                //o.License_End_Date__c = o.License_End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c));
+                if(o.Product_Type__c == 'EDGECONNECT') {
+                    o.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
+                    o.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
+                    o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;
+                    //o.Days_to_Credit__c = lastEndDateAddOn.daysBetween(o.License_End_Date__c);
+                    o.Credit_Value__c = o.Daily_Rate_Add_on__c * 1;// o.Days_to_Credit__c;
+                    o.Days_of_Value__c = o.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);
+                    //o.License_End_Date__c = o.License_End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c));
+                }
             }
         }
         

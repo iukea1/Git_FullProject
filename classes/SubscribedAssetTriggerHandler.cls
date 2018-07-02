@@ -12,6 +12,7 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public void BeforeInsert(List<SObject> newItems) 
     {
+        generateHwSerial(newItems);
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -37,7 +38,13 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     public void AfterUndelete(Map<Id, SObject> newItems) 
     {
     }
-    
+    public static void generateHwSerial(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
+        Set<Id> assetCollect = new Set<Id>();
+        for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
+            assetCollect.add(sa.SBQQ__Asset__c);
+        }
+        //AssetTriggerHandler.retrieveAssetSerials([SELECT Id, SBQQ__QuoteLine__c,SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Product_Quote_Type__c = 'NX/VX' AND Product_Family__c = 'Product' AND SerialNumber = NULL AND ID IN :assetCollect]);
+    }
     public static void displayIncomingSubscribedAsset(List<SBQQ__SubscribedAsset__c> incomingSubAsset){
         
         System.debug('Subscribed Asset : ' + incomingSubAsset);
@@ -193,12 +200,13 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         System.debug('------------ cleanSerialNumberCaller ----> ' + incomingSubAssetIds);
         cleanSerialNumber(incomingSubAssetIds);
     }
+    
+    
+    
     @future
     public static void cleanSerialNumber(Set<Id> incomingSubAssetIds) { 
         List<SBQQ__SubscribedAsset__c> incomingSubAsset = [SELECT Id, SBQQ__Asset__c, SBQQ__Active__c, SBQQ__UsageEndDate__c, SBQQ__ContractId__c, External_ID__c, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE Id IN: incomingSubAssetIds];
-        System.debug('------------------>>> Entering CleanSerialNumber');
-        System.debug('------------------>>> incomingSubAssetIds ' + incomingSubAssetIds);
-        System.debug('------------------>>> incomingSubAsset ' + incomingSubAsset);
+
         List<Asset> assetDelete = new List<Asset>();
         List<Asset> assetUpdate = new List<Asset>();
         Set<Id> asstIds = new Set<Id>();
@@ -210,24 +218,21 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         Map<Id, Asset> assetSerial = new Map<Id, Asset>([SELECT Id, SerialNumber, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :asstIds]);
 
         Map<String, String> serNumberOldAsset = getAllData(assetSerial.values());
-
-        System.debug('------------------>>> CleanSerialNumber : serNumberOldAsset : ' + serNumberOldAsset);
-        System.debug('------------------>>> CleanSerialNumber : assetSerial : ' + assetSerial);
         Boolean doUpdate = false;
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
             //assetUpdate.add();
             if(assetSerial.containsKey(sa.SBQQ__Asset__c) && serNumberOldAsset.containsKey(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber)) {
                 assetDelete.add(new Asset(Id=sa.SBQQ__Asset__c));
                 String assetId = serNumberOldAsset.get(assetSerial.get(sa.SBQQ__Asset__c).SerialNumber);
-                System.debug('------------------>>> CleanSerialNumber : subscribe asset update: from ' + sa.SBQQ__Asset__c + ' to ' + assetId);
                 sa.SBQQ__Asset__c = assetId;
                 doUpdate = true;
             }
         }
-        System.debug('------------------>>> CleanSerialNumber : assetDelete: ' + assetDelete);
         if(!assetDelete.isEmpty()) delete assetDelete;
         update incomingSubAsset;
     }
+    
+    
     private static Map<String, String> getAllData(List<Asset> createdAssets) {
         Map<String, String> serNumberOldAsset = new Map<String, String>();
         Set<String> snSet = new Set<String>();

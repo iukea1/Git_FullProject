@@ -3,6 +3,7 @@ public class AssociateToQuoteLineAddressController {
     public List<QLAWrapper> lstQLA {get;set;}
     public Id quoteAddressId {get;set;}
      public Id quoteId {get;set;}
+    public string quoteStatus {get;set;}
     public  Quote_Address__c quoteAddInfo {get;set;}
      public String redirectUrl {public get; private set;}
     public Boolean shouldRedirect {public get; private set;}
@@ -13,11 +14,12 @@ public class AssociateToQuoteLineAddressController {
         quoteAddressId = stdController.getId();
       
         shouldRedirect=false;
-        quoteAddInfo=[Select Quote__c, (Select Id,Quote_Line__c,Shipping_Quantity__c from Quote_Line_Addresses1__r)  from Quote_Address__c where Id=:quoteAddressId];
+        quoteAddInfo=[Select Quote__c, Quote__r.ApprovalStatus__c,(Select Id,Quote_Line__c,Shipping_Quantity__c from Quote_Line_Addresses1__r)  from Quote_Address__c where Id=:quoteAddressId];
         System.debug(quoteAddInfo);
         if(quoteAddInfo!=null && quoteAddInfo.Quote__c!=null)
         {
             quoteId=quoteAddInfo.Quote__c;
+            quoteStatus=quoteAddInfo.Quote__r.ApprovalStatus__c;
             List<SBQQ__QuoteLine__c> lstQuoteLines=[Select Id,Name,SBQQ__Quote__c, SBQQ__Product__r.Name, SBQQ__Quantity__c from SBQQ__QuoteLine__c where SBQQ__Product__r.Family='Product' and SBQQ__Bundle__c=false and SBQQ__Quote__c=:quoteAddInfo.Quote__c];
             List<Quote_Line_Address__c> lstQLAData= quoteAddInfo.Quote_Line_Addresses1__r;
             Map<Id,integer> mapQLA= new Map<Id,integer>();

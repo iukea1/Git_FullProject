@@ -2,7 +2,7 @@ public class OpenAssetSubsController {
 
     
     public List<SBQQ__SubscribedAsset__c> lstSubs {get;set;}
-     public List<SBQQ__SubscribedAsset__c> lstAssets {get;set;}
+    public List<SBQQ__SubscribedAsset__c> lstAssets {get;set;}
     public Case caseRecord;
     public OpenAssetSubsController(ApexPages.StandardController stdController)
     {

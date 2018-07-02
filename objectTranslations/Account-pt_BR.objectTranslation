@@ -51,6 +51,10 @@
             <section>RainKing Data</section>
         </sections>
         <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
             <label><!-- Reseller Discount Information --></label>
             <section>Reseller Discount Information</section>
         </sections>
@@ -88,6 +92,10 @@
         <sections>
             <label><!-- Deployment Engineering --></label>
             <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
         </sections>
         <sections>
             <label><!-- System Information --></label>
@@ -206,6 +214,10 @@
         <sections>
             <label><!-- Reference Info --></label>
             <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
         </sections>
         <sections>
             <label><!-- Reseller Discount Information --></label>
@@ -334,12 +346,83 @@
             <section>RainKing Data</section>
         </sections>
         <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
             <label><!-- Reseller Discount Information --></label>
             <section>Reseller Discount Information</section>
         </sections>
         <sections>
             <label><!-- Service Provider Information --></label>
             <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account Layout with ReferenceEdge</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Demandbase Sales Accelerator --></label>
+            <section>Demandbase Sales Accelerator</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
         </sections>
         <sections>
             <label><!-- System Information --></label>
@@ -407,6 +490,10 @@
         <sections>
             <label><!-- Reference Info --></label>
             <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
         </sections>
         <sections>
             <label><!-- Service Provider Information --></label>
@@ -703,6 +790,10 @@
         <sections>
             <label><!-- Program Information --></label>
             <section>Program Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
         </sections>
         <sections>
             <label><!-- Renewal Opportunities --></label>

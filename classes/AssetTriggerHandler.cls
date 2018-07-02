@@ -74,7 +74,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             System.debug('Asset trigger : before insert : lstAsset ---------------> ' + lstAsset);
             //groupAssetsByOrderProduct(lstAsset);
             updateAssetStatus((List<Asset>)newItems);
-            retrieveAssetSerials(lstAsset);
             generateVirtualSerialNumber(virtualAssets);
         }
         
@@ -160,12 +159,16 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setECAcctIds= new Set<Id>();
         Set<Id> setWanOpAcctIds= new Set<Id>();
         List<Asset> virtualAssets = new List<Asset>();
+        List<Asset> lstAsset = new List<Asset>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset= (Asset)newItems.get(assetId);
                 
+                if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
+                    lstAsset.add(newAsset);
+                }
                 if(newAsset.Product_Family__c=='Virtual Image')     
                     {       
                         if(newAsset.Status!=null && newAsset.Status=='Customer Owned')      
@@ -194,7 +197,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
-        //generateVirtualSerialNumber(virtualAssets);
+        //retrieveAssetSerials(lstAsset);
 
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
@@ -211,6 +214,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Set<Id> setWanOpAcctIds= new Set<Id>();
         List<Asset> lstLicenseAssets= new List<Asset>();
         List<Asset> virtualAssets = new List<Asset>();
+        List<Asset> lstAsset = new List<Asset>();
         
         if(newItems!=null && newItems.size()>0)
         {
@@ -218,6 +222,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
+                if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
+                    lstAsset.add(newAsset);
+                }
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
                     if(newAsset.Status!=null && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
@@ -247,6 +254,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             MakeFinalUpdateToAccount();
             GenerateLicense(lstLicenseAssets);
             generateVirtualSerialNumber(virtualAssets);
+            //retrieveAssetSerials(lstAsset);
             //populateAssetFields(newItems.values());
         }
         
@@ -496,7 +504,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
          Integer counter = 1;
          Integer counter2 = 1;
          /*
-         for(Asset asset: assetProductEqualToPhysical){
+         for(Asset asset: assetProductEqualToPhysical) {
             System.debug('@@----- asset.SBQQ__OrderProduct__c :' + asset.SBQQ__OrderProduct__c);
              
             if(asset.SBQQ__OrderProduct__c == null){
@@ -750,6 +758,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update updateAsset;
         }
     }
+    
     private static Order queryForOrder(Set<Id> assetQuoteIds){
         Order parentOrder = new Order();
         
@@ -765,34 +774,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         return parentOrder;
     }
     
-    /*private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
-        
-        Set<Id> assetIds = new Set<Id>();
-        List<Asset> updateAsset = new List<Asset>();
-        Map<Id, List<Asset>> quoteToAsset = new Map<Id, List<Asset>>();
-        
-        
-        for(Asset asset: assetStatusToUpdate){
-           assetIds.add(asset.Id);
-        }
-        
-        List<Asset> assetlst = [SELECT Id, Name, Product2.Name, SBQQ__QuoteLine__r.POC_ID__c, SBQQ__QuoteLine__r.SBQQ__Quote__c, SBQQ__OrderProduct__c FROM Asset WHERE Id IN: assetIds];
-        System.debug('ORDER PRODUCT ON CREATE ------>>> ' + assetlst);
-        for(Asset a: assetlst){
-            
-            if(a.SBQQ__QuoteLine__r.POC_ID__c != null && a.SBQQ__QuoteLine__r.POC_ID__c != 0){
-                a.Status = 'Customer Evaluation';
-            }
-            if(a.Product2.Name.contains('Asset') && a.Product2.Name != null){
-                a.Status = 'Customer Subscription';  
-            }
-            updateAsset.add(a);
-            
-        }
-        if(updateAsset.size()>0){
-           update updateAsset; 
-        }
-    }*/
     private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
         System.debug('updateAssetStatus -----------> ' + assetStatusToUpdate);
         Set<Id> quoteLineId = new Set<Id>();
@@ -826,48 +807,54 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
     }
 
-    private static void retrieveAssetSerials(List<Asset> newAssets) {
+    public static void retrieveAssetSerials(List<Asset> newAssets) {
         Set<Id> qLineCollect = new Set<Id>();
         Set<Id> orderId = new Set<Id>();
+        
         for(Asset a : newAssets) {
             qLineCollect.add(a.SBQQ__QuoteLine__c);
+            orderId.add(a.SBQQ__OrderProduct__r.OrderId);
         }
         qLineCollect.remove(null);
 
         Map<Id, SBQQ__QuoteLine__c> quoteLineMap = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id IN :qLineCollect]);
         Set<Id> quoteIdCollect = new Set<Id>();
+        
         for(SBQQ__QuoteLine__c ql : quoteLineMap.values()) {
             quoteIdCollect.add(ql.SBQQ__Quote__c);
         }
-
         Map<Id, Map<Id, Order_Product_Item__c>> opiToQuote = new Map<Id, Map<Id, Order_Product_Item__c>>();
-        for(Order_Product_Item__c opi : [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c,Order_Product__r.OrderId, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quoteIdCollect AND Asset__c = NULL]) {
-            if(!opiToQuote.containsKey(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c)) {
-                opiToQuote.put(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Map<Id, Order_Product_Item__c>());
+        List<Order_Product_Item__c> opiQuery = [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c,Order_Product__r.OrderId, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c,Order__c FROM Order_Product_Item__c WHERE Order__c IN :orderId AND Order__c <> NULL AND Asset__c = NULL];
+        for(Order_Product_Item__c opi : opiQuery) {
+            if(!opiToQuote.containsKey(opi.Order__c)) {
+                opiToQuote.put(opi.Order__c, new Map<Id, Order_Product_Item__c>());
             }
-            opiToQuote.get(opi.Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c).put(opi.Id, opi);
+            opiToQuote.get(opi.Order__c).put(opi.Id, opi);
         }
-        List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
+        //System.assertEquals(opiQuery +'', ' '+orderId );
         
-        for(Asset a : newAssets) {
-            Id quoteId = quoteLineMap.get(a.SBQQ__QuoteLine__c).SBQQ__Quote__c;
-            Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(quoteId);
+        List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
+        List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :newAssets]; 
+        for(Asset a : updateAssets) {
+            Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId);
+            
             if(opitemMap!=null && opitemMap.size() > 0) {
             
-                a.Name = opitemMap.values()[0].Serial_Number__c;
-                a.SerialNumber = opitemMap.values()[0].Serial_Number__c;
-                a.Part_Number__c = opitemMap.values()[0].Part_Number__c;
-                a.Status = opitemMap.values()[0].Status__c;
+                Order_Product_Item__c opiUp = opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId).get(opitemMap.values()[0].Id);
+                opiUp.Asset__c = a.Id;
+                
+                a.Name = opiUp.Serial_Number__c;
+                a.SerialNumber = opiUp.Serial_Number__c;
+                a.Part_Number__c = opiUp.Part_Number__c;
+                a.Status = opiUp.Status__c;
                 if(a.Status == null) a.Status = 'Customer Owned';
                 
-                Order_Product_Item__c opiUp = opiToQuote.get(quoteId).get(opitemMap.values()[0].Id);
-                opiUp.Asset__c = a.Id;
                 opiIdDone.add(opiUp);
-                opiToQuote.get(quoteId).remove(opitemMap.values()[0].Id);
+                opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId).remove(opitemMap.values()[0].Id);
             }
         }
-        System.debug('opiIdDone -------------------------> ' + opiIdDone);
         update opiIdDone;
+        update updateAssets;
     }
     
     private static void generateVirtualSerialNumber(List<Asset> newAssets) {
@@ -878,9 +865,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 AssetId__c = a.Id,
                 Used__c = true
             ));
-
-        
-}        Map<Id, Id> macToAsset = new Map<Id, Id>();
+        }        
+        Map<Id, Id> macToAsset = new Map<Id, Id>();
         if(!macList.isEmpty()) insert macList;
 
         for(Asset_Mac__c am : macList) {

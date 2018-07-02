@@ -466,6 +466,14 @@
             <section>Qualification Information</section>
         </sections>
         <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
+        </sections>
+        <sections>
             <label><!-- Sales Team Information --></label>
             <section>Sales Team Information</section>
         </sections>

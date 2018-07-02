@@ -76,6 +76,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
                 String emailAddress = subjectValues[1];
                 String priority = subjectValues[2];
                 Contact contact = findContactByEmail(emailAddress);
+                System.debug('assetNumber' +assetNumber);
                 Asset asset = findAssetByNumber(assetNumber);
                 SBQQ__Subscription__c sub = findSubscriptionByNumber(assetNumber);
                 System.debug('asset'+asset);
@@ -181,13 +182,14 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     {
         Pattern subjectPattern = Pattern.compile('AUTOCASE:[\\s]*\\[(.+)\\]:\\[(.+)\\]:\\[(.+)\\]');
         Matcher subjectMatcher = subjectPattern.matcher(subject);
+        System.debug('subjectMatcher'+subjectMatcher);
         if(subjectMatcher.matches() && subjectMatcher.groupCount() == 3)
         {
             String asset = subjectMatcher.group(1);
             String email = subjectMatcher.group(2);
             String priority = subjectMatcher.group(3);
             return new List<String> { asset, email, priority };
-        }
+        } 
         else
         {
             return new List<String> {'', '', ''};
@@ -232,6 +234,7 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     private static Asset findAssetByNumber(String assetNumber)
     {
         assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
+        System.debug('assetNumber '+ assetNumber);
         Asset[] assets = [select Id, AccountId from Asset where Name=:assetNumber limit 1];
         if(assets.size() > 0)
         {
@@ -244,7 +247,9 @@ global class CaseSupportEmailHandler implements Messaging.InboundEmailHandler
     }
     private static SBQQ__Subscription__c findSubscriptionByNumber(String assetNumber)
     {
-        assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
+        if(!assetNumber.startsWith('SUB-'))
+             assetNumber = assetNumber.replaceAll('\\-', '').replaceAll('\\.', '');
+        
         SBQQ__Subscription__c[] subs = [select Id, SBQQ__Account__c from SBQQ__Subscription__c where SerialNumber__c=:assetNumber limit 1];
         if(subs.size() > 0)
         {

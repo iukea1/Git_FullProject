@@ -17,6 +17,18 @@
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Add_on</template>
@@ -38,6 +50,18 @@
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Fulfillment</template>
@@ -58,6 +82,18 @@
         <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -81,6 +117,18 @@
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/Renewal_EC_Reduction_future</template>
@@ -101,6 +149,18 @@
         <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -124,6 +184,18 @@
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/Renewal_EC_Reduction</template>
@@ -145,6 +217,18 @@
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/Unity_Cloud_Fulfillment</template>
@@ -165,6 +249,18 @@
         <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -194,6 +290,18 @@
         <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>

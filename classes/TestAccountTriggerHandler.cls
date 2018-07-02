@@ -287,7 +287,6 @@ public class TestAccountTriggerHandler {
         Account acc = new Account(Name = 'Test Opp Account');
         insert acc;
         Contact con = new Contact(LastName='test',email='test-user@fakeemail.com',AccountId=acc.Id);
-        con.CanAllowPortalSelfReg=true;
         insert con;
         User u1 = new User( email='test-user@fakeemail.com', IsActive=true,contactid = con.id, profileid = prof.Id, UserName='test-user@fakeemail.com', alias='tuser1', CommunityNickName='tuser1',
                            TimeZoneSidKey='America/New_York', LocaleSidKey='en_US', EmailEncodingKey='ISO-8859-1',

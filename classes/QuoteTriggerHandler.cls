@@ -224,33 +224,13 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
                     
                     System.debug('--------------> Quote calculated values');
                     
-                    System.debug('q.Daily_Rate_Original__c >> ' + q.Daily_Rate_Original__c);
                     q.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
-                    System.debug('q.Daily_Rate_Original__c >> ' + q.Daily_Rate_Original__c);
-                    
-                    System.debug('q.Daily_Rate_Add_on__c >> ' + q.Daily_Rate_Add_on__c );
                     q.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
-                    System.debug('q.Daily_Rate_Add_on__c >> ' + q.Daily_Rate_Add_on__c );
-                    
-                    System.debug('q.Cumulative_Daily_Value__c >> ' + q.Cumulative_Daily_Value__c );
                     q.Cumulative_Daily_Value__c = q.Daily_Rate_Original__c + q.Daily_Rate_Add_on__c;
-                    System.debug('q.Cumulative_Daily_Value__c >> ' + q.Cumulative_Daily_Value__c );
-                    
-                    System.debug('q.Days_to_Credit__c >> ' + q.Days_to_Credit__c );
                     q.Days_to_Credit__c = lastEndDateAddOn.daysBetween(q.License_End_Date__c);
-                    System.debug('q.Days_to_Credit__c >> ' + q.Days_to_Credit__c );
-                    
-                    System.debug('q.Credit_Value__c >> ' + q.Credit_Value__c  );
                     q.Credit_Value__c = q.Daily_Rate_Add_on__c * q.Days_to_Credit__c;
-                    System.debug('q.Credit_Value__c >> ' + q.Credit_Value__c  );
-                    
-                    System.debug('q.Days_of_Value__c >> ' + q.Days_of_Value__c );
                     q.Days_of_Value__c = q.Credit_Value__c / q.Cumulative_Daily_Value__c;
-                    System.debug('q.Days_of_Value__c >> ' + q.Days_of_Value__c );
-                    
-                    System.debug('q.License_End_Date__c >> ' + q.License_End_Date__c );
                     q.License_End_Date__c = q.License_End_Date__c.addDays(Integer.valueOf(q.Days_of_Value__c));
-                    System.debug('q.License_End_Date__c >> ' + q.License_End_Date__c );
                     
                 }
             }
