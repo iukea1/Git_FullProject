@@ -32,7 +32,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         }
         public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
         {
-            createRMAEval(newItems.values());
+            createRMAEval(newItems.values(), oldItems);
         }
         public void AfterDelete(Map<Id, SObject> oldItems) 
         {
@@ -63,7 +63,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             }
         }
         
-        public static void createRMAEval(List<Contract> incomingContract){
+        public static void createRMAEval(List<Contract> incomingContract, Map<Id, SObject> oldItems){
             
             List<RMA__c> rmas = new List<RMA__c>();
             List<SBQQ__SubscribedAsset__c> subsAndAsset = new List<SBQQ__SubscribedAsset__c>();
@@ -110,7 +110,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             
             for(Contract c: contractExpired){
                 
-                    if(c.Status == 'Expired' && c.Evaluation_Quote__c){
+                    if(c.Status == 'Pending Return' && c.Evaluation_Quote__c){
                         
                         SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(Id = c.SBQQ__Quote__c, POC_Status__c='Pending Return');
                         quotesToUpdate.add(quoteToUpdate);

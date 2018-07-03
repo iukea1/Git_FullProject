@@ -82,6 +82,10 @@
                 <behavior>Readonly</behavior>
                 <field>First_Order__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBCF_Shipping_Country__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -136,10 +140,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBCF_Shipping_Address__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBCF_Shipping_Country__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>

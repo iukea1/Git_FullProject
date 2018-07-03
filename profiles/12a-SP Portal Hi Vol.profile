@@ -9046,6 +9046,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>TEST_LOG__c.Body__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>TEST_LOG__c.Counter__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Training_Course__c.Course_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -9637,6 +9647,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Solution-Solution Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>TEST_LOG__c-TEST LOG Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Task-Task Layout</layout>

@@ -221,9 +221,6 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
 
 
                     //do calcs
-                    
-                    System.debug('--------------> Quote calculated values');
-                    
                     q.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
                     q.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
                     q.Cumulative_Daily_Value__c = q.Daily_Rate_Original__c + q.Daily_Rate_Add_on__c;

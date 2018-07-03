@@ -314,6 +314,14 @@
             <section>Partner Resource Center Info</section>
         </sections>
         <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
+        </sections>
+        <sections>
             <label><!-- Sales Team/Channel Information --></label>
             <section>Sales Team/Channel Information</section>
         </sections>
@@ -341,6 +349,14 @@
             <section>Partner Resource Center Info</section>
         </sections>
         <sections>
+            <label><!-- Recommended Resource Recources --></label>
+            <section>Recommended Resource Recources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
+        </sections>
+        <sections>
             <label><!-- Sales Team/Channel Information --></label>
             <section>Sales Team/Channel Information</section>
         </sections>
@@ -366,6 +382,14 @@
         <sections>
             <label><!-- Partner Resource Center Info --></label>
             <section>Partner Resource Center Info</section>
+        </sections>
+        <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
         </sections>
         <sections>
             <label><!-- Sales Team/Channel Information --></label>
@@ -1007,6 +1031,14 @@
             <section>Qualification Information</section>
         </sections>
         <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
+        </sections>
+        <sections>
             <label><!-- Revenue Recognition Checklist --></label>
             <section>Revenue Recognition Checklist</section>
         </sections>
@@ -1046,6 +1078,14 @@
             <section>Qualification Information</section>
         </sections>
         <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
+        </sections>
+        <sections>
             <label><!-- Revenue Recognition Checklist --></label>
             <section>Revenue Recognition Checklist</section>
         </sections>
@@ -1083,6 +1123,14 @@
         <sections>
             <label><!-- Qualification Information --></label>
             <section>Qualification Information</section>
+        </sections>
+        <sections>
+            <label><!-- Recommended Reference Resources --></label>
+            <section>Recommended Reference Resources</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Requests --></label>
+            <section>Reference Requests</section>
         </sections>
         <sections>
             <label><!-- Revenue Recognition Checklist --></label>

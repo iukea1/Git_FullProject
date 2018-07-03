@@ -128,6 +128,24 @@
                     <apex:commandButton rendered="{!assets_setCon.hasNext}" value="last" action="{!assets_setCon.last}"/>
                 </apex:pageBlock>
             </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" collapsible="false" title="Subscriptions">
+                <apex:pageBlock >
+                    <apex:outputText value="There are no subscriptions." rendered="{!PartnerSub.size=0}"></apex:outputText>
+                    <apex:pageBlockTable value="{!PartnerSub}" var="item" width="100%" rendered="{!Assets.size>0}">
+                        <apex:column value="{!item.Name}" headerValue="Subscription Name"/>
+                        <apex:column value="{!item.SBQQ__Product__r.Name}" headerValue="Product Name"/>
+                        <apex:column value="{!item.SerialNumber__c}" headerValue="Serial Number"/>
+                        <apex:column value="{!item.SBQQ__Contract__r.EndDate}" headerValue="End Date"/>
+                        <apex:column value="{!item.SBQQ__Quantity__c}" headerValue="Quantity" />
+                    </apex:pageBlockTable>
+                    <apex:commandButton rendered="{!assets_setCon.hasPrevious}" value="first" action="{!assets_setCon.first}"/>
+                    <apex:commandButton rendered="{!assets_setCon.hasPrevious}" value="Previous" action="{!assets_setCon.previous}"/>
+                    <apex:outputText rendered="{!(assets_setCon.pageNumber * assets_setCon.pageSize) < assets_setCon.ResultSize}" value="{!assets_setCon.pageNumber * assets_setCon.pageSize} Of {!assets_setCon.ResultSize}"></apex:outputText>
+                    <apex:outputText rendered="{!(assets_setCon.pageNumber * assets_setCon.pageSize) >= assets_setCon.ResultSize}" value="{!assets_setCon.ResultSize} Of {!assets_setCon.ResultSize}"></apex:outputText>
+                    <apex:commandButton rendered="{!assets_setCon.hasNext}" value="next" action="{!assets_setCon.next}"/>
+                    <apex:commandButton rendered="{!assets_setCon.hasNext}" value="last" action="{!assets_setCon.last}"/>
+                </apex:pageBlock>
+            </apex:pageBlockSection>
             <apex:pageBlockSection columns="1" collapsible="false" title="Cases">
                 <apex:pageBlock >
                     <apex:outputText value="There are no cases." rendered="{!Cases.size=0}"></apex:outputText>

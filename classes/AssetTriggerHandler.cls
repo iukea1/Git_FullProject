@@ -7,8 +7,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     Map<Id,Account> lstCustomerDateAccount {get;set;} // Customer Date Account
     
     
-    public AssetTriggerHandler()
-    {
+    public AssetTriggerHandler() {
         if(!SilverPeakUtils.IsProduction())
         {
             List<Account> spAccount=[select Id from Account where Name='Silver Peak Systems'];
@@ -24,12 +23,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
         lstTACAccount= new Set<Id>();
         lstCustomerDateAccount= new Map<Id,Account>();
     }
-    public Boolean IsDisabled()
-    {
+    public Boolean IsDisabled() {
         return false;
     }
-    public void BeforeInsert(List<SObject> newItems) 
-    {
+    public void BeforeInsert(List<SObject> newItems) {
         System.debug('Before Insert');
         Map<Id,Account> cloudPortalAccs= new Map<Id,Account>();
         List<Asset> lstAsset= new List<Asset>();
@@ -45,6 +42,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
+                    //newAsset.Get_Serial__c = true;
                     lstAsset.add(newAsset);
                 }
                 if(newAsset.AccountId!=null && newAsset.Status!='Customer Evaluation')
@@ -79,17 +77,16 @@ public class AssetTriggerHandler implements ITriggerHandler {
         
         
     }
-    public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
-    {
+    public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         System.debug('BeforeUpdate');
         List<Asset> lstAsset= new List<Asset>();
         Map<Id,Account> cloudPortalAccs= new Map<Id,Account>();
-        if(newItems!=null && newItems.size()>0)
-        {
+        if(newItems!=null && newItems.size()>0) {
             for(Id assetId:newItems.keyset())
             {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
+                
                 if(oldAsset.Ship_Date__c!=newAsset.Ship_Date__c && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
@@ -138,8 +135,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             MakeFinalUpdateToAccount();
         }
     }
-    public void BeforeDelete(Map<Id,SObject> oldItems) 
-    {
+    public void BeforeDelete(Map<Id,SObject> oldItems) {
         
         if(oldItems.size()>0)
         {
@@ -149,8 +145,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
         }
     }
-    public void AfterInsert(Map<Id, SObject> newItems) 
-    {
+    public void AfterInsert(Map<Id, SObject> newItems) {
         System.debug('After Insert' + newItems);
         List<Asset> lstLicenseAssets= new List<Asset>();
         Map<Id,Asset> hardwareECAssetIds= new  Map<Id,Asset>();
@@ -197,15 +192,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
         //populateAssetFields(newItems.values());
         DeleteGeneratedAsset(newItems.values());
         populatePOCIdInAsset(newItems.values());
-        //retrieveAssetSerials(lstAsset);
 
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
         GenerateLicense(lstLicenseAssets);
     }
-    
-    public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
-    {
+    public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         System.debug('After Update');
         Map<Id,Asset> hardwareECAssetIds= new  Map<Id,Asset>();
         Map<Id,Asset> softwareECBaseAssetIds= new  Map<Id,Asset>();
@@ -223,8 +215,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
                 if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
-                    lstAsset.add(newAsset);
+                    if(newAsset.Get_Serial__c == true) {
+                        newAsset.Get_Serial__c = false;
+                        lstAsset.add(newAsset);
+                    }
                 }
+                
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
                     if(newAsset.Status!=null && newAsset.Status=='Customer Owned' && newAsset.Status!=oldAsset.Status)
@@ -254,13 +250,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
             MakeFinalUpdateToAccount();
             GenerateLicense(lstLicenseAssets);
             generateVirtualSerialNumber(virtualAssets);
-            //retrieveAssetSerials(lstAsset);
             //populateAssetFields(newItems.values());
         }
         
     }
-    public void AfterDelete(Map<Id, SObject> oldItems) 
-    {
+    public void AfterDelete(Map<Id, SObject> oldItems) {
         Map<Id,Account> lstCPAcctIds= new Map<Id,Account>();
         for(Id assetId : oldItems.keySet())
         {
@@ -275,9 +269,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         MakeFinalUpdateToAccount();
     }
-    public void AfterUndelete(Map<Id, SObject> newItems) 
-    {
-        
+    public void AfterUndelete(Map<Id, SObject> newItems) {
         if(newItems!=null)
         {
             for(Id assetId : newItems.keySet())
@@ -287,8 +279,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
         MakeFinalUpdateToAccount(); 
     }
     
-    private void GenerateLicense(List<Asset> lstAssets)
-    {
+    
+    
+    private void GenerateLicense(List<Asset> lstAssets) {
         List<License__c> licenses = new List<License__c>();
         Set<Id> assetIds= new Set<Id>();
         for(Asset asset:lstAssets)
@@ -335,8 +328,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         
     }
     
-    private void MakeFinalUpdateToAccount()
-    {
+    private void MakeFinalUpdateToAccount() {
         Set<Id> acctIds= new Set<Id>();
         acctIds.addAll(lstHWCPAccount);
         acctIds.addAll(lstSWCPAccount);
@@ -380,8 +372,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update lstAccountToUpdate;
         }
     }
-    private void AddActiveECBaseLicense(Map<Id,Asset> hardwareECAssetIds,Map<Id,Asset> softwareECBaseAssetIds, Set<Id> setAccIds)
-    {
+    
+    private void AddActiveECBaseLicense(Map<Id,Asset> hardwareECAssetIds,Map<Id,Asset> softwareECBaseAssetIds, Set<Id> setAccIds) {
         Map<string,Id> firstECBaseLicense= new  Map<string,Id>();
         List<Asset> lstHardwareAssetToUpdate=new List<Asset>();
         if(hardwareECAssetIds.size()>0)
@@ -431,29 +423,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update lstHardwareAssetToUpdate;
         }
     }
-    /*private void UpdateEOMDate(List<Asset> lstAssets)
-    {
-        if(lstAssets!=null && lstAssets.size()>0)
-        {
-            List<EOMDate__c> EOMDates = [select Model__c, EOMDate__c, ShipDate__c from EOMDate__c];
-            for(Asset asset : lstAssets)
-            {
-                Date minEomDate = Date.newInstance(3000, 01, 01);
-                List<EOMDate__c> assetEOMs = new List<EOMDate__c>();
-                for(EOMDate__c eom : EOMDates)
-                {
-                    if(asset.Model__c == eom.Model__c && asset.Ship_Date__c < eom.ShipDate__c)
-                    {
-                        if(minEomDate > eom.EOMDate__c)
-                        {
-                            minEomDate = eom.EOMDate__c;
-                        }
-                    }
-                }
-                asset.End_of_Maintenance__c = (minEomDate == Date.newInstance(3000, 01, 01) ? null : minEomDate);
-            }
-        }
-    }*/
     
     
  // Author : Ronald Pascual
@@ -486,9 +455,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
     }
-    
-    
-    //Map<Id, List<Asset>> orderProductToAssets = groupAssetsByOrderProduct(assetProductEqualToPhysical);
     
     private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
@@ -600,10 +566,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         return orderProductToAssets;
     }
     
-    /*
-    Method to Delete the newly generated Asset if there is already an existing Asset on the Order Product Item
-    */
-    
     private static void DeleteGeneratedAsset (List<Asset> AssetList){
         
         System.debug('DeleteGeneratedAsset List = ' + AssetList);
@@ -714,7 +676,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
     }
     
-    
     private static void updateShipmentDateOfAsset(List<Asset> incomingAsset){
         Map<Id, List<Asset>> quoteToAsset = new Map<Id, List<Asset>>();
         List<Asset> updateAsset = new List<Asset>();
@@ -774,7 +735,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         return parentOrder;
     }
     
-    private static void updateAssetStatus(List<Asset> assetStatusToUpdate){
+    private static void updateAssetStatus(List<Asset> assetStatusToUpdate) {
         System.debug('updateAssetStatus -----------> ' + assetStatusToUpdate);
         Set<Id> quoteLineId = new Set<Id>();
         Set<Id> productId = new Set<Id>();
@@ -808,12 +769,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
 
     public static void retrieveAssetSerials(List<Asset> newAssets) {
+
         Set<Id> qLineCollect = new Set<Id>();
-        Set<Id> orderId = new Set<Id>();
-        
+        Set<Id> orderCollect = new Set<Id>();
         for(Asset a : newAssets) {
             qLineCollect.add(a.SBQQ__QuoteLine__c);
-            orderId.add(a.SBQQ__OrderProduct__r.OrderId);
+            orderCollect.add(a.SBQQ__OrderProduct__r.OrderId);
         }
         qLineCollect.remove(null);
 
@@ -823,24 +784,32 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(SBQQ__QuoteLine__c ql : quoteLineMap.values()) {
             quoteIdCollect.add(ql.SBQQ__Quote__c);
         }
+        
         Map<Id, Map<Id, Order_Product_Item__c>> opiToQuote = new Map<Id, Map<Id, Order_Product_Item__c>>();
-        List<Order_Product_Item__c> opiQuery = [SELECT Id, Existing_Asset__c,Serial_Number__c,Part_Number__c,Order_Product__r.OrderId, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, Status__c,Order__c FROM Order_Product_Item__c WHERE Order__c IN :orderId AND Order__c <> NULL AND Asset__c = NULL];
+        List<Order_Product_Item__c> opiQuery = 
+            [SELECT Id, Existing_Asset__c, Serial_Number__c, Part_Number__c, Order_Product__r.OrderId, 
+                Order_Product__r.SBQQ__QuoteLine__c, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, 
+                Status__c, Order__c 
+                FROM Order_Product_Item__c 
+                WHERE Order__c IN :orderCollect AND (Asset__c = NULL OR Asset__c IN :newAssets)];
+        
+        
         for(Order_Product_Item__c opi : opiQuery) {
             if(!opiToQuote.containsKey(opi.Order__c)) {
                 opiToQuote.put(opi.Order__c, new Map<Id, Order_Product_Item__c>());
             }
             opiToQuote.get(opi.Order__c).put(opi.Id, opi);
         }
-        //System.assertEquals(opiQuery +'', ' '+orderId );
         
         List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
         List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :newAssets]; 
+        
+        
         for(Asset a : updateAssets) {
             Map<Id, Order_Product_Item__c> opitemMap = opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId);
             
             if(opitemMap!=null && opitemMap.size() > 0) {
-            
-                Order_Product_Item__c opiUp = opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId).get(opitemMap.values()[0].Id);
+                Order_Product_Item__c opiUp = opitemMap.get(opitemMap.values()[0].Id);
                 opiUp.Asset__c = a.Id;
                 
                 a.Name = opiUp.Serial_Number__c;
@@ -853,8 +822,10 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 opiToQuote.get(a.SBQQ__OrderProduct__r.OrderId).remove(opitemMap.values()[0].Id);
             }
         }
+        
         update opiIdDone;
         update updateAssets;
+        
     }
     
     private static void generateVirtualSerialNumber(List<Asset> newAssets) {

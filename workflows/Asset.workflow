@@ -635,6 +635,15 @@ Evaluation_Start_Date__c )</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Run_Get_Serial</fullName>
+        <field>Get_Serial__c</field>
+        <literalValue>1</literalValue>
+        <name>Run Get Serial</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SBCF_Set_Asset_Name_to_Serial_Number</fullName>
         <field>Name</field>
         <formula>SerialNumber</formula>
@@ -1477,6 +1486,25 @@ NOT(TriggerAutoFulfillEmail__c)
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Run Get Serial</fullName>
+        <actions>
+            <name>Run_Get_Serial</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Asset.Product_Quote_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.Product_Family__c</field>
+            <operation>equals</operation>
+            <value>Product</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SBCF Set Asset Name to Serial Number</fullName>

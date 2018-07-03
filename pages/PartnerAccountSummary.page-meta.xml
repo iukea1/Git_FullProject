@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>PartnerAccountSummary</label>
+    <packageVersions>
+        <majorNumber>210</majorNumber>
+        <minorNumber>15</minorNumber>
+        <namespace>SBQQ</namespace>
+    </packageVersions>
 </ApexPage>

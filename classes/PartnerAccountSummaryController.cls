@@ -12,6 +12,7 @@ public class PartnerAccountSummaryController {
     public AccountTeamMemberInfo AcctTeamInfo {get;set;}
     public List<Contact> PartnerContacts{get;set;}
     public List<Asset> PartnerAssets{get;set;}
+    public List<SBQQ__Subscription__c> PartnerSub{get;set;}
     public List<Case> PartnerCases{get;set;}
     public PartnerAccountSummaryController()
     {
@@ -28,6 +29,7 @@ public class PartnerAccountSummaryController {
         PartnerContacts = new List<Contact>();
         PartnerAssets= new List<Asset>();
         PartnerCases= new List<Case>();
+        PartnerSub= new List<SBQQ__Subscription__c>();
         string loggedinUser= UserInfo.getUserId();
         User usrDtl=[Select ContactId,UserRole.Name,Profile.Name from User where Id=:loggedinUser LIMIT 1];
         if(usrDtl!=null && usrDtl.ContactId!=null)
@@ -97,8 +99,10 @@ public class PartnerAccountSummaryController {
                 PartnerContacts=[Select Id, Name, Title,Email, Phone,CanAllowPortalSelfReg from Contact where AccountId=:PartnerAccount.Id ];
                 PartnerAssets=[Select Id, Name, SerialNumber,InstallDate, Quantity,Contact.Name,Status, IsCompetitorProduct from Asset where AccountId=:PartnerAccount.Id];
                 PartnerCases=[Select Id, CaseNumber, Contact.Name,Subject, Priority,CreatedDate,Status,Owner.Name,IsClosed from Case where AccountId=:PartnerAccount.Id and IsClosed=false];
+                PartnerSub=[Select Id,Name,SBQQ__Quantity__c,SBQQ__product__r.Name,SerialNumber__c,SBQQ__Contract__r.EndDate from SBQQ__subscription__c where SBQQ__Account__c=:PartnerAccount.Id ];
                 System.debug('Contact'+PartnerContacts.size());
                 System.debug('Assets'+PartnerAssets.size());
+                System.debug('Sub'+PartnerSub.size());
                 System.debug('Cases'+PartnerCases.size());
                 System.debug('Open Opps'+OpenOppsList.size());
                 System.debug('Renewal Opps'+RenewalOppsList.size());

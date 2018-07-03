@@ -12,7 +12,6 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public void BeforeInsert(List<SObject> newItems) 
     {
-        generateHwSerial(newItems);
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -23,7 +22,6 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        //cleanSerialNumber(newItems.values());
         cleanSerialNumberCaller(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -38,12 +36,20 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     public void AfterUndelete(Map<Id, SObject> newItems) 
     {
     }
+    
+    public static Map<Id, Id> assetToOrderMap = new Map<Id,Id>();
+    
+    
     public static void generateHwSerial(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
         Set<Id> assetCollect = new Set<Id>();
+        Set<Id> subsCollect = new Set<Id>();
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) {
             assetCollect.add(sa.SBQQ__Asset__c);
+            subsCollect.add(sa.SBQQ__Subscription__c);
         }
-        //AssetTriggerHandler.retrieveAssetSerials([SELECT Id, SBQQ__QuoteLine__c,SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Product_Quote_Type__c = 'NX/VX' AND Product_Family__c = 'Product' AND SerialNumber = NULL AND ID IN :assetCollect]);
+        List<Asset> newAssetList = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Product_Family__c = 'Product' AND SerialNumber = NULL AND ID IN :assetCollect];
+        
+        AssetTriggerHandler.retrieveAssetSerials(newAssetList);
     }
     public static void displayIncomingSubscribedAsset(List<SBQQ__SubscribedAsset__c> incomingSubAsset){
         
@@ -197,7 +203,6 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         Set<Id> incomingSubAssetIds = new Set<Id>();
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) incomingSubAssetIds.add(sa.Id);
         
-        System.debug('------------ cleanSerialNumberCaller ----> ' + incomingSubAssetIds);
         cleanSerialNumber(incomingSubAssetIds);
     }
     
@@ -206,7 +211,9 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     @future
     public static void cleanSerialNumber(Set<Id> incomingSubAssetIds) { 
         List<SBQQ__SubscribedAsset__c> incomingSubAsset = [SELECT Id, SBQQ__Asset__c, SBQQ__Active__c, SBQQ__UsageEndDate__c, SBQQ__ContractId__c, External_ID__c, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE Id IN: incomingSubAssetIds];
-
+    
+        generateHwSerial(incomingSubAsset);
+    
         List<Asset> assetDelete = new List<Asset>();
         List<Asset> assetUpdate = new List<Asset>();
         Set<Id> asstIds = new Set<Id>();
