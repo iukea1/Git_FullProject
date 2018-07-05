@@ -24,6 +24,7 @@ public class PartnerAccountSummaryController {
         PartnerAccount= new Account();
         AcctTeamInfo= new AccountTeamMemberInfo();
         PendingDealReg= new List<Lead>();
+        RejectedDealReg= new List<Lead>();
         OpenOppsList= new List<OpportunityWrapper>();
         RenewalOppsList= new List<Opportunity>();
         PartnerContacts = new List<Contact>();
@@ -99,7 +100,7 @@ public class PartnerAccountSummaryController {
                 PartnerContacts=[Select Id, Name, Title,Email, Phone,CanAllowPortalSelfReg from Contact where AccountId=:PartnerAccount.Id ];
                 PartnerAssets=[Select Id, Name, SerialNumber,InstallDate, Quantity,Contact.Name,Status, IsCompetitorProduct from Asset where AccountId=:PartnerAccount.Id];
                 PartnerCases=[Select Id, CaseNumber, Contact.Name,Subject, Priority,CreatedDate,Status,Owner.Name,IsClosed from Case where AccountId=:PartnerAccount.Id and IsClosed=false];
-                PartnerSub=[Select Id,Name,SBQQ__Quantity__c,SBQQ__product__r.Name,SerialNumber__c,SBQQ__Contract__r.EndDate from SBQQ__subscription__c where SBQQ__Account__c=:PartnerAccount.Id ];
+                PartnerSub=[Select Id,Name,SBQQ__Quantity__c,SBQQ__product__r.Name,SerialNumber__c,SBQQ__Contract__r.EndDate from SBQQ__subscription__c where SBCF_Subscription_Status__c ='Customer Subscription Active' and SBQQ__Product__r.Product_Type__c !='NX/VX' and SBQQ__Account__c=:PartnerAccount.Id ];
                 System.debug('Contact'+PartnerContacts.size());
                 System.debug('Assets'+PartnerAssets.size());
                 System.debug('Sub'+PartnerSub.size());
@@ -122,6 +123,20 @@ public class PartnerAccountSummaryController {
         set;
     }
     
+    public ApexPages.StandardSetController sub_setCon {
+        get {
+            if(sub_setCon == null) {
+                sub_setCon = new ApexPages.StandardSetController(PartnerSub);
+            }
+            return sub_setCon;
+        }
+        set;
+    }
+     // Initialize setCon and return a list of records
+    public List<SBQQ__Subscription__c> getSubscriptions() {
+        sub_setCon.setpagesize(limitSize);
+        return (List<SBQQ__Subscription__c>) sub_setCon.getRecords();
+    }
     // Initialize setCon and return a list of records
     public List<Case> getCases() {
         cases_setCon.setpagesize(limitSize);

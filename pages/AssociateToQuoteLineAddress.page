@@ -9,7 +9,7 @@
                 <apex:column width="30%">
                     <apex:facet name="header">Quantity</apex:facet>{!c.QLData.SBQQ__Quantity__c}</apex:column>
      			 <apex:column >
-                     <apex:facet name="header">Shipping Quantity </apex:facet><apex:inputText html-readonly="{!quoteStatus!='Draft'}" value="{!c.ShippingQuantity}" />
+                     <apex:facet name="header">Shipping Quantity </apex:facet><apex:inputText disabled="{!quoteStatus=='Approved' || quoteStatus=='Rejected'|| quoteStatus=='Pending'}"  value="{!c.ShippingQuantity}" />
                 </apex:column>
             </apex:pageBlockTable>
            <apex:pageBlockButtons location="bottom">
