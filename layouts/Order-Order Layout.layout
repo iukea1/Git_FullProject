@@ -126,6 +126,10 @@
                 <behavior>Edit</behavior>
                 <field>SBCF_Shipping_Country__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>End_User_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

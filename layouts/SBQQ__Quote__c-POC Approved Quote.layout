@@ -11,6 +11,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Eval_Quote_Icon__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
@@ -208,10 +212,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Days_to_Credit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Eval_Quote_Icon__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

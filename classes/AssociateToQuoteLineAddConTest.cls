@@ -48,7 +48,7 @@ public class AssociateToQuoteLineAddConTest {
         con.SaveData();
     }
     
-      @IsTest
+    @IsTest
     public static void TestAssociateToQL_Update()
     {
         Account acc= new Account(Name='Test');

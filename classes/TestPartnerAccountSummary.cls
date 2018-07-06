@@ -86,8 +86,6 @@ public class TestPartnerAccountSummary {
         opportunity.First_CAM_Assigned__c=usr.Id;
         insert opportunity;
         
-        
-        
         OpportunityShare oppShare = new OpportunityShare(OpportunityId=opportunity.Id,UserOrGroupId=usr.Id,OpportunityAccessLevel='Edit');
         insert oppShare;
         System.runAs(usr)

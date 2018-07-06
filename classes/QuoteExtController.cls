@@ -39,8 +39,8 @@ public with sharing class QuoteExtController {
         SBQQ__Quote__c quoteInfo=[Select Id,SBCF_Evaluation_Quote__c,Hw_Count_Qty_QL__c,Hw_Count_Qty_QLA__c,Hw_Sum_Qty_QLA__c,Hw_Sum_Qty_QL__c from SBQQ__Quote__c where Id=:quoteId];
         if(quoteInfo.SBCF_Evaluation_Quote__c && quoteInfo.Hw_Count_Qty_QL__c>0 )
         {
-            if(quoteInfo.Hw_Count_Qty_QL__c>0 && quoteInfo.Hw_Count_Qty_QL__c!=quoteInfo.Hw_Count_Qty_QLA__c)
-                return true;
+            //if(quoteInfo.Hw_Count_Qty_QL__c>0 && quoteInfo.Hw_Count_Qty_QL__c!=quoteInfo.Hw_Count_Qty_QLA__c)
+               // return true;
              if(quoteInfo.Hw_Sum_Qty_QL__c>0 && quoteInfo.Hw_Sum_Qty_QL__c!=quoteInfo.Hw_Sum_Qty_QLA__c)
                 return true;
             

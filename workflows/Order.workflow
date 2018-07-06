@@ -14,6 +14,10 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -47,6 +51,10 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -78,6 +86,10 @@
         <recipients>
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
         </recipients>
         <recipients>
             <field>Shipment_Contact__c</field>
@@ -114,6 +126,10 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -145,6 +161,10 @@
         <recipients>
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
         </recipients>
         <recipients>
             <field>Shipment_Contact__c</field>
@@ -181,6 +201,10 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -214,6 +238,10 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
             <field>Shipment_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
@@ -245,6 +273,10 @@
         <recipients>
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
         </recipients>
         <recipients>
             <field>Shipment_Contact__c</field>
@@ -286,6 +318,10 @@
         <recipients>
             <recipient>Systems Engineer</recipient>
             <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
         </recipients>
         <recipients>
             <field>Shipment_Contact__c</field>
