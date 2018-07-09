@@ -138,7 +138,7 @@ public class AssociateToQuoteLineAddressController {
         {
             for(QLAWrapper obj : lstQLA)
             {
-                if(obj.ShippingQuantity>0 && (obj.QLData.SBQQ__Quantity__c!= (obj.OrderedQuantity+obj.ShippingQuantity )))
+                if(obj.ShippingQuantity>0 && ((obj.OrderedQuantity+obj.ShippingQuantity )>obj.QLData.SBQQ__Quantity__c))
                     return true;
             }
         }

@@ -160,7 +160,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset= (Asset)newItems.get(assetId);
-                
                 if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
                     lstAsset.add(newAsset);
                 }
@@ -196,6 +195,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
         GenerateLicense(lstLicenseAssets);
+        mapPocBundleAssetToSubscription(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         System.debug('After Update');
@@ -372,6 +372,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             update lstAccountToUpdate;
         }
     }
+
     
     private void AddActiveECBaseLicense(Map<Id,Asset> hardwareECAssetIds,Map<Id,Asset> softwareECBaseAssetIds, Set<Id> setAccIds) {
         Map<string,Id> firstECBaseLicense= new  Map<string,Id>();
@@ -736,7 +737,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
     }
     
     private static void updateAssetStatus(List<Asset> assetStatusToUpdate) {
-        System.debug('updateAssetStatus -----------> ' + assetStatusToUpdate);
         Set<Id> quoteLineId = new Set<Id>();
         Set<Id> productId = new Set<Id>();
         
@@ -856,6 +856,59 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
         }
         if(!assetReUpdate.isEmpty()) update assetReUpdate;
+    }
+
+    private void mapPocBundleAssetToSubscription(List<Asset> newList) {
+        Set<Id> quoteLineId = new Set<Id>();
+        for(Asset a : newList) {
+            quoteLineId.add(a.SBQQ__QuoteLine__c);
+        }
+
+        Map<Id, SBQQ__QuoteLine__c> quoteLineMap = new Map<Id, SBQQ__QuoteLine__c>(
+            [SELECT Id, SBQQ__Quote__c, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, SBQQ__ProductOption__r.SBQQ__ConfiguredSKU__c 
+            FROM SBQQ__QuoteLine__c 
+            WHERE Id IN :quoteLineId AND SBQQ__ProductOption__r.SBQQ__ConfiguredSKU__r.Name LIKE '%POC Bundle%']
+        );
+        
+        Set<Id> assetIdToUpdate = new Set<Id>();
+        for(Asset a : newList) {
+            if(quoteLineMap.containsKey(a.SBQQ__QuoteLine__c)) {
+                assetIdToUpdate.add(a.Id);
+            }
+        }   
+        insert new TEST_LOG__c(body__c=assetIdToUpdate+'///'+newList);
+        runMapPocBundleAsset(assetIdToUpdate);
+    }
+
+    
+    @future
+    private static void runMapPocBundleAsset(Set<Id> assetId) {
+        SubscribedAssetTriggerHandler.isFuture = true;
+        List<Asset> newAssets = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__QuoteLine__r.SBQQ__RequiredBy__c, SBQQ__QuoteLine__r.SBQQ__Quote__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :assetId];
+
+        Set<Id> orderId = new Set<Id>();
+
+        for(Asset a : newAssets) {
+            orderId.add(a.SBQQ__OrderProduct__r.OrderId);
+        }
+
+        Map<String, SBQQ__Subscription__c> comboToSubMapping = new Map<String, SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : [SELECT Id, SBQQ__QuoteLine__r.SBQQ__RequiredBy__c, SBQQ__Contract__r.SBQQ__Order__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__r.SBQQ__Order__c IN :orderId]) {
+            //concat required by quote and order Id
+            comboToSubMapping.put(sub.SBQQ__QuoteLine__r.SBQQ__RequiredBy__c + '/' + sub.SBQQ__Contract__r.SBQQ__Order__c, sub);
+        }
+
+        List<SBQQ__SubscribedAsset__c> subAssetToInsert = new List<SBQQ__SubscribedAsset__c>();
+        for(Asset a : newAssets) {
+            subAssetToInsert.add(
+                new SBQQ__SubscribedAsset__c(
+                    SBQQ__Asset__c=a.Id, 
+                    SBQQ__Subscription__c=comboToSubMapping.get(a.SBQQ__QuoteLine__r.SBQQ__RequiredBy__c+'/'+a.SBQQ__OrderProduct__r.OrderId).Id
+                )
+            );
+        }
+        insert subAssetToInsert;
+
     }
     
 }

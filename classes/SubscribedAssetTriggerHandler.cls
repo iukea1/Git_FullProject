@@ -199,17 +199,18 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         */
         
     }
+    public static Boolean isFuture = false;
     public static void cleanSerialNumberCaller(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
         Set<Id> incomingSubAssetIds = new Set<Id>();
         for(SBQQ__SubscribedAsset__c sa : incomingSubAsset) incomingSubAssetIds.add(sa.Id);
         
-        cleanSerialNumber(incomingSubAssetIds);
+        if(!isFuture) cleanSerialNumber(incomingSubAssetIds);
+        else cleanSerialSync(incomingSubAssetIds);
     }
     
     
+    public static void cleanSerialSync(Set<Id> incomingSubAssetIds) {
     
-    @future
-    public static void cleanSerialNumber(Set<Id> incomingSubAssetIds) { 
         List<SBQQ__SubscribedAsset__c> incomingSubAsset = [SELECT Id, SBQQ__Asset__c, SBQQ__Active__c, SBQQ__UsageEndDate__c, SBQQ__ContractId__c, External_ID__c, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE Id IN: incomingSubAssetIds];
     
         generateHwSerial(incomingSubAsset);
@@ -236,7 +237,12 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
             }
         }
         if(!assetDelete.isEmpty()) delete assetDelete;
-        update incomingSubAsset;
+        if(doUpdate) update incomingSubAsset;
+    }
+    
+    @future
+    public static void cleanSerialNumber(Set<Id> incomingSubAssetIds) {
+        cleanSerialSync(incomingSubAssetIds);
     }
     
     
