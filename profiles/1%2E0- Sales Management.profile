@@ -1703,6 +1703,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteDiscountInfoController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>QuoteEmailController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2340,6 +2344,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPortalViewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestQuoteDiscountInfoController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10937,6 +10945,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuoteCloneNoProducts</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>QuoteDiscountInfo</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

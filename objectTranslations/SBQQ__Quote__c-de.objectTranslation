@@ -65,13 +65,6 @@
         </sections>
     </layouts>
     <layouts>
-        <layout>Copy of Quote Layout</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-    </layouts>
-    <layouts>
         <layout>Evaluation Submitted Quote</layout>
         <sections>
             <label><!-- Additional Text --></label>
@@ -111,6 +104,13 @@
         <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Master Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
@@ -271,6 +271,10 @@
             <section>Custom Links</section>
         </sections>
         <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
         </sections>
@@ -306,6 +310,10 @@
             <section>Debug for Testing - To Be Removed</section>
         </sections>
         <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
         </sections>
@@ -329,6 +337,10 @@
             <section>Custom Links</section>
         </sections>
         <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
         </sections>
@@ -350,6 +362,10 @@
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
         </sections>
         <sections>
             <label><!-- Discount Information --></label>

@@ -195,6 +195,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
         GenerateLicense(lstLicenseAssets);
+        runNonSubscriptionSerialRetrieve(newItems.values());
         mapPocBundleAssetToSubscription(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
@@ -876,10 +877,36 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 assetIdToUpdate.add(a.Id);
             }
         }   
+        if(!assetIdToUpdate.isEmpty()) runMapPocBundleAsset(assetIdToUpdate);
+    }
+    
+    private void runNonSubscriptionSerialRetrieve(List<Asset> newList) {
+        Set<Id> productMap = new Set<Id>();
+        for(Asset a : newList) {
+            productMap.add(a.Product2Id);
+        }
+
+        Map<Id, Product2> productAssetMap= new Map<Id, Product2>(
+            [SELECT Id
+            FROM Product2
+            WHERE Id IN :productMap AND SBQQ__SubscriptionTerm__c = NULL AND (Family = 'Physical' OR Family = 'Product')]
+        );
+        
+        Set<Id> assetIdToUpdate = new Set<Id>();
+        for(Asset a : newList) {
+            if(productAssetMap.containsKey(a.Product2Id)) {
+                assetIdToUpdate.add(a.Id);
+            }
+        }   
         insert new TEST_LOG__c(body__c=assetIdToUpdate+'///'+newList);
-        runMapPocBundleAsset(assetIdToUpdate);
+        if(!assetIdToUpdate.isEmpty()) nonSubscriptionSerialRetrieve(assetIdToUpdate);
     }
 
+    @future
+    private static void nonSubscriptionSerialRetrieve(Set<Id> assetId) {
+        SubscribedAssetTriggerHandler.isFuture = true;
+        retrieveAssetSerials( [SELECT Id, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Product_Family__c = 'Product' AND SerialNumber = NULL AND ID IN :assetId]);
+    }
     
     @future
     private static void runMapPocBundleAsset(Set<Id> assetId) {

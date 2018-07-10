@@ -235,6 +235,10 @@
     <layouts>
         <layout>Account Layout with Ops</layout>
         <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
         </sections>
@@ -297,6 +301,10 @@
     </layouts>
     <layouts>
         <layout>Account Layout with Ops Temp</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
         <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
@@ -751,6 +759,10 @@
     </layouts>
     <layouts>
         <layout>Partner Portal Layout (New)</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
         <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>

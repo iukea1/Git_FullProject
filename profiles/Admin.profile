@@ -1703,6 +1703,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>QuoteDiscountInfoController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>QuoteEmailController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2340,6 +2344,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestPortalViewController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestQuoteDiscountInfoController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -9610,7 +9618,7 @@
         <layout>RevenueRecognitionChecklist__c-Revenue Recognition Checklist Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SBQQ__Quote__c-Copy of Quote Layout</layout>
+        <layout>SBQQ__Quote__c-Master Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SE_Activity__c-SE Activity Layout</layout>
@@ -11246,6 +11254,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>QuoteCloneNoProducts</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>QuoteDiscountInfo</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
