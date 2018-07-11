@@ -58,6 +58,10 @@
                 <behavior>Readonly</behavior>
                 <field>Fulfillment_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Ec_Orch_Aas_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

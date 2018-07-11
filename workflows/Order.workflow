@@ -225,6 +225,43 @@
         <template>Steelbrick_Email_Templates/Renewal_EC_Reduction</template>
     </alerts>
     <alerts>
+        <fullName>Send_a_notification_to_Unity_Cloud_Orchestrator</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>Send a notification to Unity Cloud Orchestrator</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/EC_Add_on</template>
+    </alerts>
+    <alerts>
         <fullName>Unity_Cloud_Fulfillment</fullName>
         <ccEmails>notifications@silver-peak.com</ccEmails>
         <description>Unity Cloud Fulfillment</description>
@@ -685,10 +722,6 @@
     </rules>
     <rules>
         <fullName>Unity Cloud Fulfillment Email</fullName>
-        <actions>
-            <name>Unity_Cloud_Fulfillment</name>
-            <type>Alert</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -711,6 +744,49 @@
             <value>NX/VX</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Unity_Cloud_Fulfillment</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Unity Cloud Orchestrator as a Service Fulfillment Email</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Ec_Orch_Aas_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Send_a_notification_to_Unity_Cloud_Orchestrator</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Order.ActivatedDate</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>VRX Fulfillment Email</fullName>

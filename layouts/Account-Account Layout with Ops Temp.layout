@@ -3,6 +3,7 @@
     <customButtons>Patch_Lock_Unlock</customButtons>
     <customButtons>Patch_Override</customButtons>
     <customButtons>refedge__Nominate</customButtons>
+    <customButtons>TRIMAO__OrganizeMe</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -239,14 +240,14 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
+        <editHeading>false</editHeading>
         <label>Account Hierarchy</label>
         <layoutColumns>
             <layoutItems>
-                <height>200</height>
+                <height>500</height>
                 <page>TRIMAO__AccountHierarchy</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

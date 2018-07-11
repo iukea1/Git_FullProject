@@ -471,25 +471,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
          Integer OrderQuantity;
          Integer counter = 1;
          Integer counter2 = 1;
-         /*
-         for(Asset asset: assetProductEqualToPhysical) {
-            System.debug('@@----- asset.SBQQ__OrderProduct__c :' + asset.SBQQ__OrderProduct__c);
-             
-            if(asset.SBQQ__OrderProduct__c == null){
-                continue;
-            }
-    
-            List<Asset> assetRelatedToOrderProducts = orderProductToAssets.get(asset.SBQQ__OrderProduct__c);
-    
-            if(assetRelatedToOrderProducts == null){
-                assetRelatedToOrderProducts = new List<Asset>();
-                orderProductToAssets.put(asset.SBQQ__OrderProduct__c, assetRelatedToOrderProducts);
-            }
-    
-            assetRelatedToOrderProducts.add(asset);
-    
-         }
-        */
         
         //Loop through the Assets
         for(Asset a: assetProductEqualToPhysical){
@@ -516,27 +497,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 //counter = 1;
                 NumtoOrderProductItemMap.put(counter, op);
                 counter++;
-                /*
-                a.Status = op.Status__c;
-                a.Part_Number__c = op.Part_Number__c;
-                a.SerialNumber = op.Serial_Number__c;
-                assetRelatedToOrderProducts.add(a);
-                */
-                
-                //SerialNumtoAssetMap.put(op.Serial_Number__c, op);
-                //op.Asset__c = a.id;
-                //OrderProductItemstoUpdateSet.add(op);
-                
             }
             
             //System.debug('OrderProductItemstoUpdateSet values = ' + OrderProductItemstoUpdateSet);
             
             System.debug('NumtoOrderProductItemMap values = ' + NumtoOrderProductItemMap);
-            /*
-            if(a.Serial_Number__c == SerialNumtoAssetMap.get(a.Serial_Number__c).Serial_Number__c){
-                
-            }
-            */
             
             
         }
@@ -656,15 +621,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 update ToExistingUpdateOrderProductsMap.values();
             }
             
-            /*
-            if(!toUpdateExistingAsset.isEmpty()){
-                update toUpdateExistingAsset;
-            }
-            
-            if(!ToDeleteAssets.isEmpty()){
-                delete ToDeleteAssets;
-            }*/
-            
             if(!toUpdateExistingAssetMap.isEmpty()){
                 update toUpdateExistingAssetMap.values();
             }
@@ -688,8 +644,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         List<Asset> assetlst = [SELECT Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE Id IN: assetIds];
-        System.debug('assetlst ----------------> ' + assetlst);
-        System.debug('quoteToAsset -------------------> ' + quoteToAsset);
         for(Asset a: assetlst){
             if(quoteToAsset.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)){
                  List<Asset> assetToUpdateTheShipmentDate = quoteToAsset.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c);
@@ -753,6 +707,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             SBQQ__QuoteLine__c ql = qline.get(a.SBQQ__QuoteLine__c);
             Product2 p2 = prodMap.get(a.Product2Id);
             
+            
             if(ql != null && ql.POC_ID__c != null && ql.POC_ID__c != 0){
                 a.Status = 'Customer Evaluation';
             }
@@ -803,7 +758,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
-        List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Id IN :newAssets]; 
+        List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId, SBQQ__OrderProduct__r.Order.Tracking_Information__c
+             FROM Asset WHERE Id IN :newAssets]; 
         
         
         for(Asset a : updateAssets) {
@@ -812,11 +768,12 @@ public class AssetTriggerHandler implements ITriggerHandler {
             if(opitemMap!=null && opitemMap.size() > 0) {
                 Order_Product_Item__c opiUp = opitemMap.get(opitemMap.values()[0].Id);
                 opiUp.Asset__c = a.Id;
-                
+                insert new TEST_LOG__C(Counter__c=a.Name, Body__c = a+'///'+opiUp);
                 a.Name = opiUp.Serial_Number__c;
                 a.SerialNumber = opiUp.Serial_Number__c;
                 a.Part_Number__c = opiUp.Part_Number__c;
                 a.Status = opiUp.Status__c;
+                a.Tracking_Information__c = a.SBQQ__OrderProduct__r.Order.Tracking_Information__c;
                 if(a.Status == null) a.Status = 'Customer Owned';
                 
                 opiIdDone.add(opiUp);
@@ -898,7 +855,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 assetIdToUpdate.add(a.Id);
             }
         }   
-        insert new TEST_LOG__c(body__c=assetIdToUpdate+'///'+newList);
         if(!assetIdToUpdate.isEmpty()) nonSubscriptionSerialRetrieve(assetIdToUpdate);
     }
 
