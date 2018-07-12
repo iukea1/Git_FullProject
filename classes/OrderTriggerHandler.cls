@@ -70,13 +70,17 @@ public class OrderTriggerHandler implements ITriggerHandler {
     
     private static void recalculateEcAddOnValues(List<Order> newItems, Map<Id, Order> oldItems) {
         Set<Id> orderIds = new Set<Id>();
+        Set<Id> quoteIds = new Set<Id>();
         //System.assertEquals(123, 234);
         Map<Id, List<OrderItem>> quoteLinesOriginal = new Map<Id, List<OrderItem>>();
         Map<Id, List<OrderItem>> quoteLinesAddOn = new Map<Id, List<OrderItem>>();
         
         for(Order o : newItems) {
             orderIds.add(o.Id);
+            quoteIds.add(o.SBQQ__Quote__c);
         }
+        
+        Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>([SELECT Id FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']);
         
         for(OrderItem oi : [SELECT Id, TotalPrice, EndDate, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
             if(!quoteLinesOriginal.containsKey(oi.OrderId)) quoteLinesOriginal.put(oi.OrderId, new List<OrderItem>());

@@ -259,7 +259,7 @@
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>Steelbrick_Email_Templates/EC_Add_on</template>
+        <template>Steelbrick_Email_Templates/EC_Orch_Fulfillment</template>
     </alerts>
     <alerts>
         <fullName>Unity_Cloud_Fulfillment</fullName>

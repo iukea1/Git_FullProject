@@ -4,6 +4,7 @@
     <customButtons>SBQQ__IncludeDocument</customButtons>
     <customButtons>SBQQ__GenerateDocument</customButtons>
     <customButtons>Asset_Renewal</customButtons>
+    <customButtons>SBQQ__CloneWithRelatedClassic</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>

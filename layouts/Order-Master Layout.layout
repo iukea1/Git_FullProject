@@ -26,10 +26,6 @@
                 <behavior>Required</behavior>
                 <field>EffectiveDate</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Ec_Orch_Aas_Count__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

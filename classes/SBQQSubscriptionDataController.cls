@@ -39,7 +39,10 @@ public List<AssetWrapper> lstOrderAssetView
                             {
                                 for(SBQQ__SubscribedAsset__c subAssetData: item.SBQQ__SubscribedAssets__r)
                                 {
-                                    lstData.add(new AssetWrapper(subAssetData.SBQQ__Asset__r.Product2.Name,subAssetData.SBQQ__Asset__r.SerialNumber,subAssetData.SBQQ__Asset__r.License_End_Date__c,subAssetData.SBQQ__Asset__r.GMS_Nodes__c));
+                                    string productName=subAssetData.SBQQ__Asset__r.Product2.Name;
+                                    if(subAssetData.SBQQ__Asset__r.Product2.Name.contains('Asset'))
+                                        productName=productName.remove('(Asset)');
+                                    lstData.add(new AssetWrapper(productName,subAssetData.SBQQ__Asset__r.SerialNumber,subAssetData.SBQQ__Asset__r.License_End_Date__c,subAssetData.SBQQ__Asset__r.GMS_Nodes__c));
                                     
                                 }
                             } 
