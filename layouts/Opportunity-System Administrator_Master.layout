@@ -641,6 +641,16 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>Contract.SBQQ__Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>New_SP_Quote</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>

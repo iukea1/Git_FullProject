@@ -156,7 +156,9 @@ public class CloudPortalPostAssetsApi extends CloudPortalApiBase {
         generator.writeEndObject();
         String parameters = generator.getAsString();
         System.debug('Test'+ parameters);
+        System.debug('request size'+ parameters.length());
         request.setBody(parameters);
+        System.debug('request'+ request.toString());
         return request;
     }
     

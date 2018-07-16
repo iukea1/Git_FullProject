@@ -49,8 +49,13 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         }
         List<Asset> newAssetList = [SELECT Id, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId FROM Asset WHERE Product_Family__c = 'Product' AND SerialNumber = NULL AND ID IN :assetCollect];
         
-        AssetTriggerHandler.retrieveAssetSerials(newAssetList);
+        if(!newAssetList.isEmpty()) AssetTriggerHandler.retrieveAssetSerials(newAssetList);
     }
+    
+    public static void retrieveShipDate(List<SBQQ__SubscribedAsset__c> incomingSubAsset) {
+        
+    }
+    
     public static void displayIncomingSubscribedAsset(List<SBQQ__SubscribedAsset__c> incomingSubAsset){
         
         System.debug('Subscribed Asset : ' + incomingSubAsset);

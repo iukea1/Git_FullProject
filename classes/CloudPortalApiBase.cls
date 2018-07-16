@@ -18,10 +18,11 @@ public abstract class CloudPortalApiBase {
             HttpRequest request = setHeaders(new HttpRequest());
             request.setEndpoint(generateEndPoint());
             request = setBody(request);
-            system.debug(request);
+            system.debug('request Content Length'+ request.getHeader('Content-Length'));
+              
             // Sends request.
             HttpResponse response = new Http().send(request);
-            
+            system.debug('response Content Length'+ response.getHeader('Content-Length'));
             // Process response.
             if(response.getStatusCode() >= 200 && response.getStatusCode() < 400)
             {

@@ -1,11 +1,67 @@
 <apex:component controller="SBQQSubscriptionDataController" access="global" layout="none">
     <apex:attribute name="Order_Id" type="Id" description="Id of the Order" assignTo="{!OrderId}"></apex:attribute>
     <apex:attribute name="Order_Type" type="string" description="Type of the Order" assignTo="{!OrderType}"></apex:attribute>
-    <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType!='GMS'}">
-       			{!cx.ProductName}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
-    </apex:repeat>
-      <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
-       			GMS-{!cx.GMSNodes}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
-    </apex:repeat>
- 
+    <style>
+        table {
+        border-collapse: collapse;
+        }
+        th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: left;
+        }
+    </style>
+    
+    <table width="80%" style="font-size:12px;font-family:Arial" >
+        <tr>
+            <th>Product Name</th>
+            <th>Serial Number</th>
+            <th>Expiration Date</th>
+            <th>Maintenance Type</th>
+        </tr >
+        <tr >
+            <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType!='GMS'}">
+                <td>
+                    {!cx.ProductName}
+                </td>
+                <td>
+                    S/N {!cx.SerialNumber}
+                </td>
+                <td>
+                    <b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b>
+                </td>
+                <td>
+                    {!cx.ProductName}
+                </td>
+            </apex:repeat>
+            
+        </tr>
+        
+        <tr >
+            <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
+                <td>
+                    GMS-{!cx.GMSNodes}
+                </td>
+                <td>
+                    S/N {!cx.SerialNumber}
+                </td>
+                <td>
+                    <b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b>
+                </td>
+                <td>
+                    {!cx.ProductName}
+                </td>
+            </apex:repeat>
+            
+        </tr>
+    </table> 
+    
+    
+    <!-- <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType!='GMS'}">
+{!cx.ProductName}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
+</apex:repeat>
+<apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
+GMS-{!cx.GMSNodes}, S/N {!cx.SerialNumber}, expiration date:<b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b><br/> 
+</apex:repeat>-->
+    
 </apex:component>

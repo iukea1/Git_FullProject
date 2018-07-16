@@ -7,17 +7,18 @@ public class ActivateOrderController {
     
     public ActivateOrderController(ApexPages.StandardController controller) {
         this.order = (Order)controller.getRecord();
-        this.order = [SELECT Id, Status, Product_Type__c, SBQQ__Quote__c, SerialNumberApplied__c, ShippingAddress, PurchaseOrder__c FROM Order WHERE Id = :this.order.Id LIMIT 1];
+        this.order = [SELECT Id, Status, Product_Type__c, SBQQ__Quote__c, SerialNumberApplied__c, SBCF_Shipping_Address__c, PurchaseOrder__c FROM Order WHERE Id = :this.order.Id LIMIT 1];
         this.orderIsActivated = order.Status == 'Activated';
         this.runUpdate = false;
+        
         if(this.orderIsActivated){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'This order is already Active');
             ApexPages.addMessage(myMsg);
             return;
-        } else if (this.order.ShippingAddress == null || this.order.PurchaseOrder__c == null) {
+        } else if (this.order.SBCF_Shipping_Address__c == null || this.order.PurchaseOrder__c == null) {
             String msg = 'Some required fields are missing!';
-            if(this.order.ShippingAddress == null || this.order.PurchaseOrder__c == null) msg = 'Shipping Address and Purchase Order are required to activate an order';
-            else if(this.order.ShippingAddress == null) msg = 'Shipping Address is required to activate an order';
+            if(this.order.SBCF_Shipping_Address__c== null && this.order.PurchaseOrder__c == null) msg = 'Shipping Address and Purchase Order are required to activate an order';
+            else if(this.order.SBCF_Shipping_Address__c== null) msg = 'Shipping Address is required to activate an order';
             else if(this.order.PurchaseOrder__c == null) msg = 'Purchase Order is required to activate an order';
         
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,msg);
@@ -38,7 +39,6 @@ public class ActivateOrderController {
             } else {
                 runUpdate  = true;
             }
-            
         }
     }
     public PageReference checkUpdate() {

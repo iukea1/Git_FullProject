@@ -148,7 +148,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 
                 if(!isRenewal){
                      subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
-                	 System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
+                     System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
                 }
                
             }
@@ -163,11 +163,11 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 system.debug('renewalSubscriptions: ' + renewalSubscriptions);
                 List<SBQQ__SubscribedAsset__c> subAssetList = new List<SBQQ__SubscribedAsset__c>();
                 
-				List<SBQQ__Subscription__c> subList = [SELECT Id, (SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
+                List<SBQQ__Subscription__c> subList = [SELECT Id, (SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
                                                                          FROM SBQQ__SubscribedAssets__r 
                                                                          WHERE SBQQ__Subscription__c IN: renewalSubscriptions 
                                                                          AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE) 
-                                                       					 FROM SBQQ__Subscription__c WHERE ID IN: renewalSubscriptions];
+                                                                         FROM SBQQ__Subscription__c WHERE ID IN: renewalSubscriptions];
                 
                 for(SBQQ__Subscription__c s: subList){
                     List<SBQQ__SubscribedAsset__c> subListAsset = s.SBQQ__SubscribedAssets__r;
@@ -271,7 +271,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         Set<Id> QuoteIds = new Set<Id>();
         Set<Id> subsIds = new Set<Id>();
         
-		List<Asset> updateAsset = new List<Asset>();
+        List<Asset> updateAsset = new List<Asset>();
         Id SubscriptionContract;
         Boolean MatchedContract = false;
         Id toGetAsset;
@@ -417,7 +417,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 if(IsGMS25){
                 //Update the Asset GMS Node field
                     a.GMS_Nodes__c = '25';
-                	a.SBCF_Subscription__c = CurrentSubscription;
+                    a.SBCF_Subscription__c = CurrentSubscription;
                     updateAsset.add(a);
                 //SubAssetUpdated.SBQQ__Subscription__c = CurrentSubscription;
                 }
@@ -460,7 +460,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
             // Continuation for subscribed Asset @@----- ronald
             for(Asset asset: updateAsset){
                 SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = asset.Id, SBQQ__Subscription__c = asset.SBCF_Subscription__c, SBQQ__Active__c = true);
-            	insert subscribedAsset;
+                insert subscribedAsset;
             }
             
         }

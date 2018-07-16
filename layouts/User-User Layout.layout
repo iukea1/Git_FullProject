@@ -108,6 +108,10 @@
                 <behavior>Readonly</behavior>
                 <field>Reseller_Agreement_Acknowledged__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>absorblms__Sync_with_Absorb__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

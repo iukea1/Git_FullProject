@@ -233,4 +233,21 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
             }
         }
     }
+    
+    private static void createRmaForEvals(List<SBQQ__Quote__c> quotes, Map<Id, SBQQ__Quote__c> oldQuotes) {
+        //POC_Quote__c
+        List<RMA__c> rmaInsert = new List<RMA__c>();
+        RecordType rt = [SELECT Id FROM RecordType WHERE DeveloperName = 'Eval_RMA' AND sObjectType = 'RMA__c' LIMIT 1];
+        for(SBQQ__Quote__c q : quotes) {
+            if(oldQuotes.get(q.Id).POC_Status__c != 'Pending Return' && q.POC_Status__c == 'Pending Return' && q.SBCF_Evaluation_Quote__c) {
+                rmaInsert.add(new RMA__c(
+                    POC_Quote__c = q.Id,
+                    RecordTypeId = rt.Id,
+                    Type__c = 'Eval Return',
+                    Status__c = 'Initiated'
+                ));
+            }
+        }
+        if(!rmaInsert.isEmpty()) insert rmaInsert;
+    }
 }

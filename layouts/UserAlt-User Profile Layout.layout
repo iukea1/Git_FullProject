@@ -48,6 +48,10 @@
                 <behavior>Edit</behavior>
                 <field>CompanyName</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>absorblms__Sync_with_Absorb__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -2564,7 +2564,7 @@
         <apexClass>webservicesAbsorbtrainingCom</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <description>Assigned user(s) have the ability to use the Absorb LMS Setup App/Page &amp; manage how data is sync&apos;ed. This permission set needs to be cloned and have additional permissions added or be used in conjunction with custom profiles.</description>
+    <description>Assigned user(s) have the ability to use the Absorb LMS Setup App/Page &amp; manage how data is sync&apos;ed.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>AOContact__c.AOEmail__c</field>

@@ -2564,7 +2564,7 @@
         <apexClass>webservicesAbsorbtrainingCom</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <description>For handling integration between Salesforce &amp; Absorb LMS plus initial setup. Not recommended for use in day-to-day administration. This permission set needs to be cloned and have additional permissions added or be used in conjunction with custom profiles.</description>
+    <description>For handling integration between Salesforce &amp; Absorb LMS plus initial setup. Not recommended for use in day-to-day administration.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>AOContact__c.AOEmail__c</field>

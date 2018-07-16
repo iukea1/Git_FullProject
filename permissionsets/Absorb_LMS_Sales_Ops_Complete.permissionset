@@ -2564,7 +2564,7 @@
         <apexClass>webservicesAbsorbtrainingCom</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <description>Enables management of Featured Courses &amp; grants additional permissions to Absorb LMS custom objects for supporting sales staff. This permission set needs to be cloned &amp; have additional permissions added or be used in conjunction with custom profiles.</description>
+    <description>Enables management of Featured Courses &amp; grants additional permissions to Absorb LMS custom objects for supporting sales staff.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>AOContact__c.AOEmail__c</field>

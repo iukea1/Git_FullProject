@@ -48,7 +48,7 @@
         table.messageTable tr:first-child > td.messageCell { color: white; font-weight: 600;}
         
     </style>
-    <apex:outputPanel Id="ErrorPanel" rendered="{!orderIsActivated || needSerial}">
+    <apex:outputPanel Id="ErrorPanel" rendered="{!orderIsActivated || needSerial || !runUpdate}">
         <br />
         <apex:form style="display: flex;">
             <apex:commandButton action="{!returnToOrder}" value="≪ Return to Order" styleClass="slds-button"/>
