@@ -2,8 +2,30 @@ public abstract class CloudPortalApiBase {
    
     public static Integer ApiTimeOut = 60000;
     public static String ContentCharset = 'UTF-8';
-    public static String BaseEndpoint = SilverPeakUtils.IsProduction()?'https://cloudportal.silver-peak.com/portal/apis/rest':'https://portaleng.silverpeaksystems.net/portal/apis/rest';
+    //public static String BaseEndpoint = SilverPeakUtils.IsProduction()?'https://cloudportal.silver-peak.com/portal/apis/rest':'https://portaleng.silverpeaksystems.net/portal/apis/rest';
     
+    public static string BaseEndpoint
+    {
+        get
+        {
+            Api_Configuration__c apiData;
+            if(SilverPeakUtils.IsProduction())
+            {
+                apiData=ApiConfigurationDataController.RetreiveApiCredentials('Cloud Portal Production');
+                System.debug('apiData.Base_Endpoint__c '+apiData.Base_Endpoint__c);
+                if(apiData!=null && apiData.Base_Endpoint__c!=null)
+                    return apiData.Base_Endpoint__c;
+                
+            }
+            else
+            {
+                apiData=ApiConfigurationDataController.RetreiveApiCredentials('Cloud Portal Testing');
+                if(apiData!=null && apiData.Base_Endpoint__c!=null)
+                    return apiData.Base_Endpoint__c;
+            }
+            return null;    
+        }
+    }
     public Boolean isSucceed { get; set; }
     
     /**

@@ -446,6 +446,9 @@
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>sbaa__Actions__c</fields>
         <fields>NAME</fields>
         <fields>sbaa__ApprovalStep__c</fields>

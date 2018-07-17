@@ -11,11 +11,14 @@ public class ActivateOrderController {
         this.orderIsActivated = order.Status == 'Activated';
         this.runUpdate = false;
         
+        //check if hardware or software
+        this.quote = [SELECT Id, SBCF_Evaluation_Quote__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
+            
         if(this.orderIsActivated){
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'This order is already Active');
             ApexPages.addMessage(myMsg);
             return;
-        } else if (this.order.SBCF_Shipping_Address__c == null || this.order.PurchaseOrder__c == null) {
+        } else if ((this.order.SBCF_Shipping_Address__c == null || this.order.PurchaseOrder__c == null) && !this.quote.SBCF_Evaluation_Quote__c) {
             String msg = 'Some required fields are missing!';
             if(this.order.SBCF_Shipping_Address__c== null && this.order.PurchaseOrder__c == null) msg = 'Shipping Address and Purchase Order are required to activate an order';
             else if(this.order.SBCF_Shipping_Address__c== null) msg = 'Shipping Address is required to activate an order';
@@ -25,8 +28,6 @@ public class ActivateOrderController {
             ApexPages.addMessage(myMsg);
             return;
         } else {
-            //check if hardware or software
-            this.quote = [SELECT Id, SBCF_Evaluation_Quote__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
             //List<SBQQ__QuoteLine__c> qLineItems = [SELECT Id, SBQQ__ProductFamily__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quote.Id AND SBQQ__ProductFamily__c = 'Product'];
             
             List<OrderItem> oiList = [SELECT Id, Product2.Product_Family_Clean__c FROM OrderItem WHERE OrderId = :order.Id AND (Product2.Family = 'Physical' OR Product2.Family = 'Product')];

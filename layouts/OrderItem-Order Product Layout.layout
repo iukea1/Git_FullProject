@@ -202,6 +202,7 @@
         <fields>ACCOUNT.NAME</fields>
         <fields>CONTACT.NAME</fields>
         <fields>PRODUCT2.NAME</fields>
+        <fields>ASSET.CREATED_DATE</fields>
         <relatedList>Asset.SBQQ__OrderProduct__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

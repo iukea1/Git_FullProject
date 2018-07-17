@@ -9,6 +9,7 @@ public class CloudPortalPostProvisionAssetsApi extends CloudPortalApiBase {
     }
     public override String generateEndPoint()
     {
+        System.debug('BaseEndpoint'+ BaseEndpoint);
         return BaseEndpoint+'/salesforce/account/'+cloudPortalId+'/provision';
     }
     

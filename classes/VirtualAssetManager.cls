@@ -11,6 +11,7 @@ public class VirtualAssetManager
     }
     
     public List<VirtualAsset> VirtualAssets { get; set; }
+    public static List<Id> LicenseIds { get; set; }
     public Boolean isFromApex { get; set; }
     
     public Boolean nameRankSerial()
@@ -301,6 +302,8 @@ public class VirtualAssetManager
         }
     }
     
+ 
+    
     public static void encryptLicenses_Batch(List<Id> licenseIds)
     {
         
@@ -316,6 +319,8 @@ public class VirtualAssetManager
             System.enqueueJob(job);
         }
     }
+    
+    
     private void assignProductModel()
     {
         Set<String> productIds = new Set<String>();

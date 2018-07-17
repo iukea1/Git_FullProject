@@ -2754,6 +2754,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Api_Configuration__c.Base_Endpoint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Api_Configuration__c.Endpoint_URL__c</field>
         <readable>false</readable>

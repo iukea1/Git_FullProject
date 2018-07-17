@@ -598,7 +598,7 @@
             <name>New_MFR_Request_Submitted_internal</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>MDF_Request__c.GEO__c</field>
             <operation>equals</operation>

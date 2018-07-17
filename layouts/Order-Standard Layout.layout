@@ -106,7 +106,7 @@
         <label>Shipping Info</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>PurchaseOrder__c</field>
             </layoutItems>
             <layoutItems>

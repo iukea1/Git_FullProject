@@ -33,6 +33,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems){
         if(CheckRecursive.runOnce()){
            populateRequestedEndDateToQuoteEndDate(newItems.values()); 
+           createRmaForEvals(newItems.values(), (Map<Id, SBQQ__Quote__c>)oldItems);
         }  
        pocDataDeletion((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
         

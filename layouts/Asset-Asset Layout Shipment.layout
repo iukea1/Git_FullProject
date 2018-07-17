@@ -99,6 +99,10 @@
                 <behavior>Edit</behavior>
                 <field>Tracking_Information__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Subscription_Start_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -54,6 +54,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Base_Endpoint__c</fullName>
+        <externalId>false</externalId>
+        <label>Base Endpoint</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Endpoint_URL__c</fullName>
         <externalId>false</externalId>
         <label>Endpoint URL</label>

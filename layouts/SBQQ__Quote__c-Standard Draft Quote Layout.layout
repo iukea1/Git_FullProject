@@ -195,6 +195,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>SBQQ__Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SBQQ__Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -240,6 +244,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Distributor_Margin__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__OriginalQuote__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
