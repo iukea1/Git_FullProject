@@ -88,6 +88,15 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
                 
+                if(newAsset.Product_Family__c=='Virtual Image')
+                {
+                    if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.Status=='Customer Owned')
+                        newAsset.Create_License__c=true;
+                    else if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
+                          newAsset.Create_License__c=true;
+                    }
+                    
+                }
                 if(oldAsset.Ship_Date__c!=newAsset.Ship_Date__c && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
@@ -164,14 +173,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
                     lstAsset.add(newAsset);
                 }
-                if(newAsset.Product_Family__c=='Virtual Image')     
-                    {       
-                        if(newAsset.Status!=null && newAsset.Status=='Customer Owned'&& newAsset.SBQQ__OrderProduct__c!=null)      
-                            lstLicenseAssets.add(newAsset);     
-                        else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {       
-                            lstLicenseAssets.add(newAsset);     
-                    }
-                }
+               
                 if(newAsset.Product_Quote_Type__c=='EDGECONNECT' && newAsset.Product_Family__c=='Product' && (newAsset.Status=='Customer Evaluation' || newAsset.Status=='Customer Owned'))
                 {
                     hardwareECAssetIds.put(newAsset.Id,newAsset);
@@ -195,7 +197,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
 
         System.debug('updateShipmentDateOfAsset --------------> ' + newItems.values());
         updateShipmentDateOfAsset(newItems.values());
-        //GenerateLicense(lstLicenseAssets);
         runNonSubscriptionSerialRetrieve(newItems.values());
         mapPocBundleAssetToSubscription(newItems.values());
     }
@@ -225,9 +226,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
-                    if(newAsset.Status!=null && newAsset.Status=='Customer Owned' && (newAsset.SBQQ__OrderProduct__c!=oldAsset.SBQQ__OrderProduct__c))
+                    if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.Status=='Customer Owned' && (newAsset.SBQQ__OrderProduct__c!=oldAsset.SBQQ__OrderProduct__c))
                         lstLicenseAssets.add(newAsset);
-                    else if(newAsset.Status!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
+                    else if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
                         lstLicenseAssets.add(newAsset);
                     }
                     if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
@@ -250,7 +251,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
             MakeFinalUpdateToAccount();
-            GenerateLicense(lstLicenseAssets);
             generateVirtualSerialNumber(virtualAssets);
             //populateAssetFields(newItems.values());
         }
@@ -283,85 +283,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
     
     
     
-    private static void GenerateLicense(List<Asset> lstAssets) {
-        List<License__c> licenses = new List<License__c>();
-        Set<Id> assetIds= new Set<Id>();
-        for(Asset asset:lstAssets)
-        {
-            // added a debug log for testing purposes @Ronald
-            System.debug('asset.Product_Quote_Type__c : ' + asset.Product_Quote_Type__c);
-            System.debug('asset.Model__c : ' + asset.Model__c);
-             System.debug('asset.Ship_Date__c : ' + asset.Ship_Date__c);
-            // ----------------- @@ 
-            integer quantity=1;
-            License__c lic =new License__c(AssetId__c=asset.Id,Start_Date__c=asset.Subscription_Start_Date__c,Model__c=asset.Model__c);
-            if(asset.Model__c=='GX-V' || asset.Product_Category__c=='GMS')
-                quantity=Integer.valueOf(asset.GMS_Nodes__c);
-            lic.Quantity__c=quantity;
-            if(asset.status=='Customer Owned')
-            {
-                lic.License_Expiration__c=null;
-            }
-            if(asset.status=='Customer Subscription Active' || asset.status=='Customer Subscription')
-            {
-                lic.License_Expiration__c=asset.Subscription_End_Date__c;
-            }
-            // added the not equal to null condition @Ronald
-            if(asset.Model__c != null){
-              if(asset.Product_Quote_Type__c=='NX/VX' && !asset.Model__c.startsWith('UNITY CLOUD') ) 
-                    assetIds.add(asset.id);
-                licenses.add(lic);  
-            }
-                
-        }
-        if(licenses.size()>0)
-        {
-           insert licenses; 
-           System.debug('licenses ' +licenses);
-           Set<Id> licenseIds = new  Set<Id>();
-          
-           for(License__c lic:licenses)
-           {
-               if(assetIds.size()>0 && assetIds.contains(lic.AssetId__c))
-                   licenseIds.add(lic.Id);
-           }
-            EncryptLicenses(licenseIds);
-        }
-            
-        
-    }
-    @future
-    public static void EncryptLicenses(Set<Id> licenseIds)
-    {
-        Set<Id> gmsLicenseIds = new Set<Id>();
-        System.debug('licenseIds' + LicenseIds);
-        if(LicenseIds!=null && LicenseIds.size()>0)
-        {
-            for(License__c gmsLicense : [select Id from License__c where Id in :licenseIds and (AssetId__r.Product2.Model__c='GX-V' OR AssetId__r.Product2.Product_Category__c = 'GMS')])
-            {
-                gmsLicenseIds.add(gmsLicense.Id);
-            }
-            if(gmsLicenseIds.size() > 0)
-            {
-                LicenseEncryptionJob job = new LicenseEncryptionJob();
-                job.LicenseIds = new List<Id>(gmsLicenseIds);
-                System.enqueueJob(job);
-            }
-            
-            Set<Id> virtualLicenseIds = new Set<Id>();
-            for(License__c virtualLicense : [select Id from License__c where Id in :licenseIds and AssetId__r.Product2.Model__c!='GX-V' And AssetId__r.Product2.Product_Category__c !='GMS'])
-            {
-                virtualLicenseIds.add(virtualLicense.Id);
-            }
-            if(virtualLicenseIds.size() > 0)
-            {
-                LicenseEncryptionJob job = new LicenseEncryptionJob();
-                job.LicenseIds = new List<Id>(virtualLicenseIds);
-                System.enqueueJob(job);
-            }
-        }
-        
-    }
+    
+   
     private void MakeFinalUpdateToAccount() {
         Set<Id> acctIds= new Set<Id>();
         acctIds.addAll(lstHWCPAccount);
@@ -849,6 +772,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(Asset a : assetReUpdate) {
             if(macMap.containsKey(a.Id)) {
                 a.SerialNumber = '001BBC' + VirtualAssetManager.toHex(Integer.valueOf(macMap.get(a.Id).Name));
+                a.Name = '001BBC' + VirtualAssetManager.toHex(Integer.valueOf(macMap.get(a.Id).Name));
             }
         }
         if(!assetReUpdate.isEmpty()) update assetReUpdate;

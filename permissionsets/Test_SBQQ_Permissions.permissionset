@@ -218,7 +218,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AttachmentForAuthCodesController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AutomateGMSLicenseJob</apexClass>
@@ -1066,7 +1066,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NewAuthorizationCodesController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NewAuthorizationCodesControllerTest</apexClass>
@@ -2809,29 +2809,29 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AuthCode__c.Account__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>AuthCode__c.Authorization_Code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AuthCode__c.Course_Code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AuthCode__c.Expiration_Date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AuthCode__c.Valid__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9193,16 +9193,7 @@
         <field>Vendor_List__c.Account__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <label>Issue Training Authorization Codes</label>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>AuthCode__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
+    <label>Test - SBQQ Permissions</label>
     <pageAccesses>
         <apexPage>AccountCampaigns</apexPage>
         <enabled>false</enabled>
@@ -9269,11 +9260,11 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>AuthorizationCodesTable</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AuthorizationCodesTablePartner</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>BandwidthExceeded</apexPage>
@@ -9685,7 +9676,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>NewAuthorizationCodes</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NewBuildDetail</apexPage>
@@ -10567,9 +10558,5 @@
         <tab>sbaa__Approval__c</tab>
         <visibility>None</visibility>
     </tabSettings>
-    <userLicense>Salesforce</userLicense>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>AllowViewKnowledge</name>
-    </userPermissions>
+    <userLicense>Customer Portal Manager Standard</userLicense>
 </PermissionSet>

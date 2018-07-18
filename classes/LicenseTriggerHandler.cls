@@ -27,7 +27,7 @@ public class LicenseTriggerHandler implements ITriggerHandler {
             {
                 License__c  newLicense=(License__c )newItems.get(licId);
                 License__c  oldLicense=(License__c )oldItems.get(licId);
-                
+               
                 
                 
             }
@@ -40,6 +40,7 @@ public class LicenseTriggerHandler implements ITriggerHandler {
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
         List<Account> lstAccount= new List<Account>();
+        Set<Id> lstLicenseIds= new Set<Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for(Id licId: newItems.keyset())
@@ -49,11 +50,13 @@ public class LicenseTriggerHandler implements ITriggerHandler {
                 {
                     lstAccount.add(new Account(Id=newLic.AccountId__c,EC_End_Date__c=newLic.License_Expiration__c));
                 }
+               
             }
             if(lstAccount.size()>0)
             {
                 update lstAccount;
             }
+            
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -88,4 +91,5 @@ public class LicenseTriggerHandler implements ITriggerHandler {
     {
        
     }
+    
 }

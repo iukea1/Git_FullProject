@@ -999,6 +999,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LicenseGenerationJob</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LicenseKeyForVirtualAssetController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
