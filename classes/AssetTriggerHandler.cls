@@ -3,11 +3,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     Id silverpeakSystemsId='00130000007mEjX';// production Id
     Set<Id> lstHWCPAccount {get;set;} //Provision Decommission Account
     Set<Id> lstSWCPAccount {get;set;} //Provision Decommission Account
-    Set<Id> lstTACAccount {get;set;}//ActiveAssetCount
- 
-    Map<Id,Account> lstCustomerDateAccount {get;set;} // Customer Date Account
-    
-    
+   
     public AssetTriggerHandler() {
         if(!SilverPeakUtils.IsProduction())
         {
@@ -21,8 +17,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('silverpeakSystemsId'+silverpeakSystemsId);
         lstHWCPAccount= new Set<Id>();
         lstSWCPAccount= new Set<Id>();
-        lstTACAccount= new Set<Id>();
-        lstCustomerDateAccount= new Map<Id,Account>();
+       
     }
     public Boolean IsDisabled() {
         return false;
@@ -40,6 +35,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             List<Asset> lstNewAssets=(List<Asset>)newItems;
             for(Asset newAsset:lstNewAssets)
             {
+               
                 if(newAsset.End_of_Maintenance__c== null && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
@@ -52,9 +48,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 }
                 
                 
-                if(newAsset.Product_Family__c=='Virtual Image') {
-                    virtualAssets.add(newAsset);
-                }
                 
                 //provision asset
                 System.debug('silverpeakSystemsId'+silverpeakSystemsId);
@@ -73,7 +66,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             System.debug('Asset trigger : before insert : lstAsset ---------------> ' + lstAsset);
             //groupAssetsByOrderProduct(lstAsset);
             updateAssetStatus((List<Asset>)newItems);
-            generateVirtualSerialNumber(virtualAssets);
+            //generateVirtualSerialNumber(virtualAssets);
         }
         
         
@@ -88,15 +81,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 Asset newAsset=(Asset)newItems.get(assetId);
                 Asset oldAsset=(Asset)oldItems.get(assetId);
                 
-                if(newAsset.Product_Family__c=='Virtual Image')
-                {
-                    if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.Status=='Customer Owned')
-                        newAsset.Create_License__c=true;
-                    else if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
-                          newAsset.Create_License__c=true;
-                    }
-                    
-                }
                 if(oldAsset.Ship_Date__c!=newAsset.Ship_Date__c && newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product')
                 {
                     newAsset.End_of_Maintenance__c=newAsset.Ship_Date__c!=null?newAsset.Ship_Date__c.addYears(5):null;
@@ -170,6 +154,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
             for (Id assetId : newItems.keyset())
             {
                 Asset newAsset= (Asset)newItems.get(assetId);
+                if(newAsset.Product_Family__c=='Virtual Image') {
+                    virtualAssets.add(newAsset);
+                }
                 if(newAsset.Product_Quote_Type__c=='NX/VX' && newAsset.Product_Family__c=='Product' && newAsset.SerialNumber == null) {
                     lstAsset.add(newAsset);
                 }
@@ -199,6 +186,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         updateShipmentDateOfAsset(newItems.values());
         runNonSubscriptionSerialRetrieve(newItems.values());
         mapPocBundleAssetToSubscription(newItems.values());
+        generateVirtualSerialNumber(virtualAssets);
+        
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         System.debug('After Update');
@@ -210,7 +199,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> lstLicenseAssets= new List<Asset>();
         List<Asset> virtualAssets = new List<Asset>();
         List<Asset> lstAsset = new List<Asset>();
-        
         if(newItems!=null && newItems.size()>0)
         {
             for (Id assetId : newItems.keyset())
@@ -226,11 +214,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
-                    if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.Status=='Customer Owned' && (newAsset.SBQQ__OrderProduct__c!=oldAsset.SBQQ__OrderProduct__c))
-                        lstLicenseAssets.add(newAsset);
-                    else if(newAsset.Status!=null && newAsset.Ship_Date__c!=null && newAsset.SBQQ__CurrentSubscription__c!=null && (newAsset.SBQQ__CurrentSubscription__c!=oldAsset.SBQQ__CurrentSubscription__c) && (newAsset.Status=='Customer Evaluation'|| newAsset.Status=='Customer Subscription Active' || newAsset.Status=='Customer Subscription')) {
-                        lstLicenseAssets.add(newAsset);
-                    }
                     if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
                 }
                     
@@ -249,7 +232,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                     }
                 }
             }
-            AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds);
+            AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds); //Prajakta this is not required as in CPQ there will be subscription record for EC
             MakeFinalUpdateToAccount();
             generateVirtualSerialNumber(virtualAssets);
             //populateAssetFields(newItems.values());
@@ -278,19 +261,13 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
             }
         }
-        MakeFinalUpdateToAccount(); 
+       
     }
-    
-    
-    
-    
    
     private void MakeFinalUpdateToAccount() {
         Set<Id> acctIds= new Set<Id>();
         acctIds.addAll(lstHWCPAccount);
         acctIds.addAll(lstSWCPAccount);
-        acctIds.addAll(lstTACAccount);
-        acctIds.addAll(lstCustomerDateAccount.keySet());
         List<Account> lstAccountToUpdate = new List<Account>();
         if(acctIds.size()>0)
         {
@@ -305,22 +282,6 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 {
                     accountInfo.Sync_Virtual_Assets_with_CP__c=true;
                 }   
-                if(lstTACAccount!=null && lstTACAccount.contains(accountId))
-                {
-                    accountInfo.Trigger_Active_Asset_Count__c=true;
-                }   
-                if(lstCustomerDateAccount!=null && lstCustomerDateAccount.containsKey(accountId))
-                {
-                    Account accData= lstCustomerDateAccount.get(accountId);
-                    if(accData.EC_Customer_Date__c!=null)
-                    {
-                        accountInfo.EC_Customer_Date__c=accData.EC_Customer_Date__c;
-                    }
-                    if(accData.WAN_OP_Customer_Date__c!=null)
-                    {
-                        accountInfo.WAN_OP_Customer_Date__c=accData.WAN_OP_Customer_Date__c;
-                    }
-                }
                 lstAccountToUpdate.add(accountInfo);
             }
         }

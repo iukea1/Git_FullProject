@@ -532,6 +532,15 @@ Evaluation_Start_Date__c )</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Check_Create_License_equal_to_true</fullName>
+        <field>Create_License__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Create License equal to true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>CleaEvalEnd</fullName>
         <field>Evaluation_End_Date__c</field>
         <name>CleaEvalEnd</name>
@@ -1054,6 +1063,44 @@ BEGINS( Product2.Name ,&quot;EC&quot;)
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Generate License for Customer Owned Virtual Asset</fullName>
+        <actions>
+            <name>Check_Create_License_equal_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Asset.Product_Family__c</field>
+            <operation>equals</operation>
+            <value>Virtual Image</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.Status</field>
+            <operation>equals</operation>
+            <value>Customer Owned</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Generate License for Customer Subscription Virtual Asset</fullName>
+        <actions>
+            <name>Check_Create_License_equal_to_true</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+OR(ISNEW(),ISCHANGED(SBQQ__CurrentSubscription__c)),
+ISPICKVAL(Status,&quot;Customer Subscription Active&quot;),
+Product_Family__c == &quot;Virtual Image&quot;,
+NOT(ISNULL(SBQQ__CurrentSubscription__c))
+
+
+
+
+)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Hosted GMS asset was created</fullName>

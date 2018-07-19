@@ -331,7 +331,7 @@ public class TestAssetTriggerHandler {
         Test.stopTest();
         
     }
-   @isTest
+    @isTest
     static void testUpdateEOM()
     {
         Account spAccount = new Account(Name='Silver Peak Systems');
@@ -359,7 +359,7 @@ public class TestAssetTriggerHandler {
         Asset asset2 = new Asset(Name='acme', Ship_Date__c = Date.newInstance(2000,01,01), SerialNumber='acme', Quantity=1.00, Status='Conditional PO', Product2Id=product2.Id, AccountId=testAccount.Id, ContactId=testContact.Id);
         insert new Asset[]{ asset1, asset2 };        
             
-        system.assertEquals(asset1.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset1.id][0].End_of_Maintenance__c);
+            system.assertEquals(asset1.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset1.id][0].End_of_Maintenance__c);
         system.assertEquals(asset2.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset2.id][0].End_of_Maintenance__c);        
         
         asset1.Product2Id = product3.Id;
@@ -367,7 +367,7 @@ public class TestAssetTriggerHandler {
         asset2.Product2Id = product4.Id;        
         asset2.Ship_Date__c = Date.newInstance(2001,01,01);        
         update new Asset[]{ asset1, asset2 };
-        system.assertEquals(asset1.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset1.id][0].End_of_Maintenance__c);
+            system.assertEquals(asset1.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset1.id][0].End_of_Maintenance__c);
         system.assertEquals(asset2.Ship_Date__c.addYears(5), [select End_of_Maintenance__c from Asset where id = :asset2.id][0].End_of_Maintenance__c);                
     }
     @IsTest
@@ -395,7 +395,7 @@ public class TestAssetTriggerHandler {
         System.assertEquals(true, acc.Sync_Virtual_Assets_with_CP__c);
         test.stopTest();
     }
-     @IsTest
+    @IsTest
     public static void CheckLicenseGeneration_CustomerOwned()
     {
         Product2 vxProd = new Product2(Name='GMS-10',Model__c='GX-V',Product_Category__c='GMS', Forecast_Category__c = 'Virtual', Family='Virtual Image', IsActive=true,Product_Type__c='NX/VX');
@@ -410,8 +410,13 @@ public class TestAssetTriggerHandler {
         insert asset;
         asset.Status='Customer Owned';
         update asset;
+        Test.startTest();
+        LicenseGenerationJob obj= new LicenseGenerationJob();
+        Database.executeBatch(obj,1);
+        Test.stopTest();
         License__c lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id LIMIT 1];
         System.assert(lic.Id!=null);
+        
     }
     @IsTest
     public static void CheckLicenseGeneration_CustomerSub()
@@ -434,8 +439,13 @@ public class TestAssetTriggerHandler {
         asset.SBQQ__CurrentSubscription__c=sub.Id;
         asset.Status='Customer Subscription Active';
         update asset;
+        Test.startTest();
+        LicenseGenerationJob obj= new LicenseGenerationJob();
+        Database.executeBatch(obj,1);
+        Test.stopTest();
         License__c lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id LIMIT 1];
         System.assert(lic.Id!=null);
+        
     }
     @IsTest
     public static void CheckLicenseGeneration_CustomerSubChange()
@@ -458,11 +468,25 @@ public class TestAssetTriggerHandler {
         asset.SBQQ__CurrentSubscription__c=sub.Id;
         asset.Status='Customer Subscription Active';
         update asset;
+        
+        LicenseGenerationJob obj1= new LicenseGenerationJob();
+        Database.executeBatch(obj1,1);
+        
         SBQQ__Subscription__c sub2= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=maint.Id);
         insert sub2;
+        SBQQ__SubscribedAsset__c subAsset2= new SBQQ__SubscribedAsset__c(SBQQ__Asset__c=asset.Id,SBQQ__Subscription__c=sub2.Id);
+        insert subAsset2;
         asset.SBQQ__CurrentSubscription__c=sub2.Id;
         update asset;
+        
+        Test.startTest();
+        LicenseGenerationJob obj= new LicenseGenerationJob();
+        Database.executeBatch(obj,1);
+        Test.stopTest();
         List<License__c> lic=[Select Id, Key__c from License__c where AssetId__c=:asset.Id];
+        System.debug('lic'+ lic);
         System.assert(lic.size()==2);
+        
+        
     }
 }

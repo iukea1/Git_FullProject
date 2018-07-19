@@ -848,6 +848,8 @@
         <fields>SplitOwner</fields>
         <fields>SplitType</fields>
         <fields>SplitPercentage</fields>
+        <fields>Rate_1_Split__c</fields>
+        <fields>Rate_2_Split__c</fields>
         <fields>SplitAmount</fields>
         <fields>SplitNote</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>

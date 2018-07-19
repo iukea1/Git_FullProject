@@ -26,7 +26,7 @@ public class LicenseGenerationJob implements  Database.Batchable<sObject>, Datab
                 {
                     lic.License_Expiration__c=null;
                 }
-                if(asset.status=='Customer Subscription Active' || asset.status=='Customer Subscription')
+                if(asset.status=='Customer Subscription Active' || asset.status=='Customer Subscription' || asset.Status=='Customer Evaluation')
                 {
                     lic.License_Expiration__c=asset.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate;
                 }

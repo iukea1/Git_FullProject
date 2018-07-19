@@ -60,6 +60,8 @@ public with sharing class HardwareShipmentController {
     public Boolean hasUpdatedSNsSinceSNsChecked {get;set;}
     
     public String partNumberFiller {get;set;}
+    public String serialNumberFiller {get;set;}
+    public String serialNumberAssetId {get;set;}
     
     public Boolean displayErrorOnly{
         get{

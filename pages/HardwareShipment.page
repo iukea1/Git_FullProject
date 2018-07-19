@@ -50,7 +50,7 @@
         table.messageTable tr > td ul {list-style-type: circle;}
         
         /* PART NUMBER MODAL */
-        #partNumberFiller {
+        #partNumberFiller, #serialNumberFiller {
             z-index: 999;
             background: rgba(0,0,0,.5);
             position: fixed;
@@ -60,13 +60,23 @@
             height: 100%;
             display: none;
         }
-        #partNumberFiller > #partNumberFillerModal {
+        #partNumberFiller > #partNumberFillerModal, #serialNumberFiller > #serialNumberFillerModal {
             margin-top: 20px;
             background-color: white;
             width: 200px;
             margin-left: auto;
             margin-right: auto;
             padding: 20px;
+        }
+        
+        .fillSerialLink {
+            float: right;
+            color: blue;
+            cursor: pointer;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            font-size: 7.5pt;
+            text-decoration: underline;
         }
     </style>
     <script>
@@ -87,6 +97,15 @@
         function hideMissingPartNumbers() {
             document.getElementById('partNumberFiller').style.display = "none";
         }
+        
+        
+        function fillSerialNumber(prodName, prodId) {
+            document.getElementById('serialNumberFiller').style.display = "initial";
+            alert(prodName + ' ' + prodId);
+        }
+        function hideSerialNumber() {
+            document.getElementById('serialNumberFiller').style.display = "none";
+        }
     </script>
     <div id="partNumberFiller" >
         <div id="partNumberFillerModal">
@@ -95,6 +114,21 @@
                 <apex:inputText value="{!partNumberFiller }" />
                 <div style="display: flex; margin-top: 3px;">
                     <button onclick="hideMissingPartNumbers(this)" type="button" class="slds-button">Cancel</button>
+                    <div style="flex: 1;" />
+                    <apex:commandButton action="{!fillPartNumbers}" value="Apply" styleClass="slds-button slds-button_brand"/>
+                </div>
+            </apex:form>
+        </div>
+    </div>
+    
+    <div id="serialNumberFiller" >
+        <div id="serialNumberFillerModal">
+            <h2 style="font-weight: 600; margin-bottom: 5px;">Fill Serial Numbers</h2>
+            <apex:form >
+                <apex:inputHidden value="{!serialNumberAssetId}" />
+                <apex:inputTextArea value="{!serialNumberFiller}" />
+                <div style="display: flex; margin-top: 3px;">
+                    <button onclick="hideSerialNumber(this)" type="button" class="slds-button">Cancel</button>
                     <div style="flex: 1;" />
                     <apex:commandButton action="{!fillPartNumbers}" value="Apply" styleClass="slds-button slds-button_brand"/>
                 </div>
@@ -182,6 +216,15 @@
 
                             <apex:column styleClass="order-product-column" headerClass="order-product-header">
                                 <apex:facet name="header">Order Product Items</apex:facet>
+                                <span class="fillSerialLink">
+                                    <apex:commandLink value="view existing" action="{!updateCopySerialNumberView}" styleClass="serial-number-link">
+                                        <apex:param name="copySerialNumberOrderProductId" assignTo="{!copySerialNumberOrderProductId}" value="{!orderProductWrapper.orderProduct.Id}" />
+                                    </apex:commandLink>
+                                </span>
+                                <apex:outputPanel rendered="{!orderProductWrapper.orderProduct.Quantity > 1}">
+                                    <span class="fillSerialLink" onclick='fillSerialNumber("{!orderProductWrapper.orderProduct.Product2.Name}", "{!orderProductWrapper.orderProduct.Product2.ProductCode}")'>fill serial number</span>
+                                </apex:outputPanel>
+                                
                                 <apex:pageBlockTable value="{!orderProductWrapper.orderProductItems}" var="orderProductItemWrapper" Id="OrderProductItemTable">
                                     <apex:column styleClass="order-product-column" headerClass="order-product-header">
                                         <apex:facet name="header">Status</apex:facet>
@@ -197,9 +240,10 @@
 
                                     <apex:column styleClass="order-product-column" headerClass="order-product-header">
                                         <apex:facet name="header">
-                                            <apex:commandLink value="Serial Number" action="{!updateCopySerialNumberView}" styleClass="serial-number-link">
+                                            Serial Number
+                                            <!-- apex:commandLink value="Serial Number" action="{!updateCopySerialNumberView}" styleClass="serial-number-link">
                                                 <apex:param name="copySerialNumberOrderProductId" assignTo="{!copySerialNumberOrderProductId}" value="{!orderProductWrapper.orderProduct.Id}" />
-                                            </apex:commandLink>
+                                            </apex:commandLink -->
                                         </apex:facet>
                                         <apex:inputField value="{!orderProductItemWrapper.orderProductItem.Serial_Number__c}" onChange="updateSNchangeFlag();" />
                                     </apex:column>
