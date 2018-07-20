@@ -619,6 +619,24 @@ public with sharing class HardwareShipmentController {
             }
         }
     }
+    
+    public void fillSerialNumbers() {
+        //System.assertEquals('/'+serialNumberAssetId,''+serialNumberFiller);
+        if(serialNumberFiller != null && serialNumberFiller != '') {
+            List<String> snSplit = serialNumberFiller.split(',');
+            Integer snIndex = 0;
+            for(OrderShipmentHelper.OrderProductWrapper op : orderProductWrappers) {
+                if(serialNumberAssetId == op.orderProduct.Product2.Name) {
+                    for(OrderShipmentHelper.OrderProductItemWrapper opw : op.orderProductItems) {
+                        if(snIndex < snSplit.size()) {
+                            opw.orderProductItem.Serial_Number__c = snSplit[snIndex];
+                            snIndex += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /*
     * Filter file rows that 

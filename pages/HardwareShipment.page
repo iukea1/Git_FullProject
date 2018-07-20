@@ -63,12 +63,14 @@
         #partNumberFiller > #partNumberFillerModal, #serialNumberFiller > #serialNumberFillerModal {
             margin-top: 20px;
             background-color: white;
-            width: 200px;
+            width: 450px;
             margin-left: auto;
             margin-right: auto;
             padding: 20px;
         }
-        
+        #serialNumberFillerModal textarea {
+            width: 100%;
+        }
         .fillSerialLink {
             float: right;
             color: blue;
@@ -77,6 +79,9 @@
             padding-right: 10px;
             font-size: 7.5pt;
             text-decoration: underline;
+        }
+        .snHidden {
+            visibility: hidden;
         }
     </style>
     <script>
@@ -99,9 +104,11 @@
         }
         
         
-        function fillSerialNumber(prodName, prodId) {
+        function fillSerialNumber(prodName, prodId, orderQty) {
             document.getElementById('serialNumberFiller').style.display = "initial";
-            alert(prodName + ' ' + prodId);
+            document.getElementsByClassName('snHidden')[0].value = prodName;
+            document.getElementById('serialProductName').innerText = prodName;
+            document.getElementById('orderQtyName').innerText = orderQty;
         }
         function hideSerialNumber() {
             document.getElementById('serialNumberFiller').style.display = "none";
@@ -125,31 +132,32 @@
         <div id="serialNumberFillerModal">
             <h2 style="font-weight: 600; margin-bottom: 5px;">Fill Serial Numbers</h2>
             <apex:form >
-                <apex:inputHidden value="{!serialNumberAssetId}" />
+                <div>
+                Fill serial numbers for Product <span id="serialProductName"></span>
+                <br/>
+                Enter [<span id="orderQtyName"></span>] Serial numbers separated by a comma(,).
+                </div>
                 <apex:inputTextArea value="{!serialNumberFiller}" />
+                <br />
+                <apex:inputText styleClass="snHidden" value="{!serialNumberAssetId}" />
                 <div style="display: flex; margin-top: 3px;">
                     <button onclick="hideSerialNumber(this)" type="button" class="slds-button">Cancel</button>
                     <div style="flex: 1;" />
-                    <apex:commandButton action="{!fillPartNumbers}" value="Apply" styleClass="slds-button slds-button_brand"/>
+                    <apex:commandButton action="{!fillSerialNumbers}" value="Apply" styleClass="slds-button slds-button_brand"/>
                 </div>
             </apex:form>
         </div>
     </div>
     <apex:outputPanel Id="ErrorPanel" rendered="{!displayErrorOnly}">
-
         <apex:form >
             <apex:commandButton action="{!returnToOrder}" value="≪ Return to Order" styleClass="slds-button"/>
         </apex:form>
         <br/>
-
         <apex:pageMessages />
-
     </apex:outputPanel>
 
     <apex:outputPanel Id="HardwareShipmentPanel" rendered="{!displayErrorOnly == false}">
-
         <apex:form Id="Form">
-
         <div style="padding: 30px 0;">
             <div class="slds-grid">
                 <div class="slds-col slds-has-flexi-truncate">
@@ -222,9 +230,8 @@
                                     </apex:commandLink>
                                 </span>
                                 <apex:outputPanel rendered="{!orderProductWrapper.orderProduct.Quantity > 1}">
-                                    <span class="fillSerialLink" onclick='fillSerialNumber("{!orderProductWrapper.orderProduct.Product2.Name}", "{!orderProductWrapper.orderProduct.Product2.ProductCode}")'>fill serial number</span>
+                                    <span class="fillSerialLink" onclick='fillSerialNumber("{!orderProductWrapper.orderProduct.Product2.Name}", "{!orderProductWrapper.orderProduct.Product2.ProductCode}", {!orderProductWrapper.orderProduct.Quantity})'>fill serial number</span>
                                 </apex:outputPanel>
-                                
                                 <apex:pageBlockTable value="{!orderProductWrapper.orderProductItems}" var="orderProductItemWrapper" Id="OrderProductItemTable">
                                     <apex:column styleClass="order-product-column" headerClass="order-product-header">
                                         <apex:facet name="header">Status</apex:facet>
@@ -301,7 +308,7 @@
                 <apex:pageBlockSection columns="1">
                     <apex:pageBlockSectionItem >
                         <apex:outputPanel >
-                            <apex:outputText value="Click a Serial Number column heading to display a list of serial numbers for the respective product."  rendered="{!copySerialNumberOrderProductId == null}" />
+                            <apex:outputText value="Click 'View existing' to display a list of serial numbers for the respective product."  rendered="{!copySerialNumberOrderProductId == null}" />
 
                             <apex:outputPanel rendered="{!copySerialNumberOrderProductId != null}">
                                 <apex:outputText value="Order Product Serial Numbers: {!copySerialNumberOrderProductWrapper.orderProduct.Product2.Name}"/>

@@ -30,6 +30,14 @@
                 <behavior>Edit</behavior>
                 <field>SplitNote</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>rate_1_amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Rate_2_Split_Amount__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
@@ -44,10 +52,19 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>SplitOwnerId</fields>
+        <fields>SplitPercentage</fields>
+        <fields>SplitAmount</fields>
+        <fields>Rate_1_Split__c</fields>
+        <fields>Rate_2_Split__c</fields>
+    </miniLayout>
     <multilineLayoutFields>SplitOwnerId</multilineLayoutFields>
     <multilineLayoutFields>SplitPercentage</multilineLayoutFields>
     <multilineLayoutFields>SplitAmount</multilineLayoutFields>
     <multilineLayoutFields>SplitNote</multilineLayoutFields>
+    <multilineLayoutFields>Rate_2_Split__c</multilineLayoutFields>
+    <multilineLayoutFields>Rate_1_Split__c</multilineLayoutFields>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>

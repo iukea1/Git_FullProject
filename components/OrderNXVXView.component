@@ -19,8 +19,9 @@
             <th>Expiration Date</th>
             <th>Maintenance Type</th>
         </tr >
-        <tr >
-            <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType!='GMS'}">
+        
+        <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType!='GMS'}">
+            <tr >
                 <td>
                     {!cx.ProductName}
                 </td>
@@ -33,12 +34,13 @@
                 <td>
                     {!cx.ProductName}
                 </td>
-            </apex:repeat>
-            
-        </tr>
+            </tr>
+        </apex:repeat>
         
-        <tr >
-            <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
+        
+        
+        <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
+            <tr >
                 <td>
                     GMS-{!cx.GMSNodes}
                 </td>
@@ -51,9 +53,10 @@
                 <td>
                     {!cx.ProductName}
                 </td>
-            </apex:repeat>
-            
-        </tr>
+            </tr>
+        </apex:repeat>
+        
+        
     </table> 
     
     

@@ -2019,6 +2019,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubscriptionSharingJob</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SubscriptionSummaryController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2212,6 +2216,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestGEORegionChangeTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestGroup</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

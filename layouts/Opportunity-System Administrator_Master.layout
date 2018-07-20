@@ -641,6 +641,16 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>SplitOwner</fields>
+        <fields>SplitType</fields>
+        <fields>SplitPercentage</fields>
+        <fields>SplitAmount</fields>
+        <fields>SplitNote</fields>
+        <fields>Rate_1_Split__c</fields>
+        <fields>Rate_2_Split__c</fields>
+        <relatedList>RelatedOpportunitySplits</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SP_Contract_Number__c</fields>
         <fields>SALES.ACCOUNT.NAME</fields>

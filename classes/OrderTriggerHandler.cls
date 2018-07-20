@@ -96,7 +96,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
         for(Order o : newItems) {
             Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c!= oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
             
-            if(runCode) {
+            if(runCode && o.Type == 'Amendment') {
                 Decimal totalPriceOriginal = 0.0;
                 Decimal totalPriceAddOn = 0.0;
                 Date lastEndDateAddOn = System.today();
