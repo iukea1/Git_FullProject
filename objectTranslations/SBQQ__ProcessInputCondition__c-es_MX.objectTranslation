@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Condiciones de entradas de procesos</value>
+        <value>Condiciones de entrada de proceso</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de condiciones de entrada de proc</nameFieldLabel>

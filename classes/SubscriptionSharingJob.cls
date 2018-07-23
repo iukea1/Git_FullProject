@@ -7,16 +7,10 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
     public void execute(Database.BatchableContext BC, List<SObject> scope)
     {
         DateTime targetDate=null;
-        ID roleID;
-        String str;
-        UserRole role;
-        List<ID> roleIDs;
-        ID UserOrGroupId;
-        Group shareGroup;
-        Map<ID, UserRole> roles;
-        Map<ID, Group> shareGroups;
         List<AccountShare> accShares;
+        Set<Id> setAccIds= new Set<ID>();
         List<AsyncApexJob> lstJobs = (List<AsyncApexJob>)scope;
+        List<SBQQ__Subscription__Share> lstSubscriptionShare= new List<SBQQ__Subscription__Share>();
         if(lstJobs!=null&& lstJobs.size()>0)
         {
             targetDate=lstJobs[0].CompletedDate;
@@ -26,20 +20,28 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
             accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE Account.Type in('Customer','Partner')and LastModifiedDate >=:targetDate AND isDeleted = false];
         else
             accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE Account.Type in('Customer','Partner')and isDeleted = false];
-        try
+        
+        for(AccountShare accShare: accShares)
+            setAccIds.add(accShare.AccountId);
+        
+        for(Id acctId: setAccIds)
         {
+            //List<SBQQ__Subscription__Share> lstSubShares= [Select ParentId,UserOrGroupId from SBQQ__Subscription__Share where ParentId in(Select Id from SBQQ__Subscription__c where SBQQ__Account__c in:setAccIds)];
             
-            
-            
-            
+            try{
+                
+                
+                
+            }
+            catch(Exception ex)
+            {
+                //Database.rollback(sp);
+                System.debug(ex);
+                SilverPeakUtils.logException('Subscription Sharing Job Failure',ex.getMessage());
+            }
         }
         
-        catch(Exception ex)
-        {
-            //Database.rollback(sp);
-            System.debug(ex);
-            SilverPeakUtils.logException('Subscription Sharing Job Failure',ex.getMessage());
-        }
+        
     }  
     public void finish(Database.BatchableContext BC)
     {
@@ -50,34 +52,6 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         }
     }
     
-    private Set<Id> GetUserAndRoleIds(Id AccountID)
-    {
-        Map<ID, Group> shareGroups;
-        List<User> shareUsers;
-        List<UserRole> roles;
-        List<ID> roleIDs;
-        Set<Id> setResultIds= new Set<Id>();
-        shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN (SELECT UserOrGroupId FROM AccountShare WHERE AccountId = :AccountID)]);
-        shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN (SELECT UserOrGroupId FROM AccountShare WHERE AccountId = :AccountID)];
-        // Get Role IDs
-        roleIDs = new List<ID>();
-        for (Group shareGroup1 : shareGroups.values()) {
-            roleIDs.add(shareGroup1.RelatedId);
-        }
-        
-        roles = [SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs and PortalType in('CustomerPortal','Partner')];
-        if(roles!=null && roles.size()>0)
-        {
-            for (UserRole role : roles) {
-                setResultIds.add(role.Id);
-            }
-        }
-        if(shareUsers!=null && shareUsers.size()>0)
-        {
-            for (User user : shareUsers) {
-                setResultIds.add(user.Id);
-            }
-        }
-        return setResultIds;
-    }
+   
+    
 }

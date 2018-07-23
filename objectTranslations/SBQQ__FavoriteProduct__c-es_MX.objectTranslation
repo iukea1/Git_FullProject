@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Productos favoritos</value>
+        <value>Producto favorito</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nombre de producto favorito</nameFieldLabel>

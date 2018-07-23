@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value><!-- Restricción de opción --></value>
+        <value>Restricciones de opción</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de restricción</nameFieldLabel>

@@ -2,7 +2,7 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>商品属性</value>
+        <value>属性項目</value>
     </caseValues>
     <nameFieldLabel>項目番号</nameFieldLabel>
 </CustomObjectTranslation>

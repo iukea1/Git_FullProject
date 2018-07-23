@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Partidas de presupuestos</value>
+        <value>Partidas de presupuesto</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de partida</nameFieldLabel>

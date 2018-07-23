@@ -8,6 +8,6 @@
         <plural>true</plural>
         <value>Temas</value>
     </caseValues>
-    <gender>Feminine</gender>
+    <gender>Masculine</gender>
     <nameFieldLabel>Nombre del tema</nameFieldLabel>
 </CustomObjectTranslation>

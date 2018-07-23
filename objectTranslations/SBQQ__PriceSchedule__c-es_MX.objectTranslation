@@ -8,6 +8,6 @@
         <plural>true</plural>
         <value>Programaciones de precios</value>
     </caseValues>
-    <gender>Masculine</gender>
+    <gender>Feminine</gender>
     <nameFieldLabel>Nombre de programación</nameFieldLabel>
 </CustomObjectTranslation>

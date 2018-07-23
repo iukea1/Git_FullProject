@@ -2,11 +2,11 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Origem da atualização</value>
+        <value>Fonte de atualização</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Origens da atualização</value>
+        <value>Fontes de atualizações</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nome da origem</nameFieldLabel>

@@ -49,6 +49,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
        populateRelatedAssetSubscriptionLookups(newItems.values());
        UpdateGMS_Nodes(newItems.values());
+        
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -61,7 +62,13 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     {
     }
     
-    
+    private static void ShareSubscriptionRecords(List<SBQQ__Subscription__c> lstSubs)
+    {
+        if(lstSubs!=null && lstSubs.size()>0)
+        {
+            for(SBQQ__Subscription__c sub:lstSubs){}
+        }
+    }
     
   
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){

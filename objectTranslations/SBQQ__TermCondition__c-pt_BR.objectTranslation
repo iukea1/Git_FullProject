@@ -2,12 +2,12 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Condição de termo</value>
+        <value>Termo e condição</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Condições de termo</value>
+        <value>Termos e condições</value>
     </caseValues>
-    <gender>Feminine</gender>
+    <gender>Masculine</gender>
     <nameFieldLabel>Nº da condição</nameFieldLabel>
 </CustomObjectTranslation>

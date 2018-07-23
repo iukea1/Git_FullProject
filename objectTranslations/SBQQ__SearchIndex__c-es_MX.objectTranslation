@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Índices de búsquedas</value>
+        <value>Índice de búsqueda</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nombre</nameFieldLabel>

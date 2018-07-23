@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Valores de atributos</value>
+        <value>Valores de atributo</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nombre</nameFieldLabel>

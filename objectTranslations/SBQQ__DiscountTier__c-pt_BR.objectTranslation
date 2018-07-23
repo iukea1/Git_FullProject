@@ -2,12 +2,12 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Camada de desconto</value>
+        <value>Nível de desconto</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Camadas de desconto</value>
+        <value>Níveis de desconto</value>
     </caseValues>
-    <gender>Feminine</gender>
+    <gender>Masculine</gender>
     <nameFieldLabel>Nome do nível</nameFieldLabel>
 </CustomObjectTranslation>

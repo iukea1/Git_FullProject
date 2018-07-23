@@ -2019,6 +2019,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubscriptionHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SubscriptionSharingJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>

@@ -2,11 +2,11 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Agenda de preço</value>
+        <value>Programação de preços</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Agendas de preço</value>
+        <value>Programações de preços</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nome do cronograma</nameFieldLabel>

@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Funciones de productos</value>
+        <value>Funciones de producto</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de función</nameFieldLabel>

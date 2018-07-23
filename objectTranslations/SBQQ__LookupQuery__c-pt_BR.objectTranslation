@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Consultas de pesquisa</value>
+        <value>Consultas de pesquisas</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nº da consulta de pesquisa</nameFieldLabel>

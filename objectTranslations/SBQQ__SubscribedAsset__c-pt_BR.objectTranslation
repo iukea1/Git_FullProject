@@ -2,11 +2,11 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Ativo inscrito</value>
+        <value>Ativo subscrito</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Ativos inscritos</value>
+        <value>Ativos subscritos</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nº do ativo assinado</nameFieldLabel>

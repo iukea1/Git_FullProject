@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Conditions d&apos;erreur</value>
+        <value>Conditions d&apos;erreurs</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>N° de condition</nameFieldLabel>

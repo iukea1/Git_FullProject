@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Entradas de procesos</value>
+        <value>Entradas de proceso</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de entrada</nameFieldLabel>

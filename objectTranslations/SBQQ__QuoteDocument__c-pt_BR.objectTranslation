@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Documentos de cotação</value>
+        <value>Documentos de cotações</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome do documento</nameFieldLabel>

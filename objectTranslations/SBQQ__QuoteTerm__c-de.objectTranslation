@@ -40,6 +40,6 @@
         <plural>true</plural>
         <value><!-- Angebotsklauseln --></value>
     </caseValues>
-    <gender>Masculine</gender>
+    <gender>Feminine</gender>
     <nameFieldLabel>Klauselnummer</nameFieldLabel>
 </CustomObjectTranslation>
