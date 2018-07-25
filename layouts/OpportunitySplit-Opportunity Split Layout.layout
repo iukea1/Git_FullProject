@@ -11,11 +11,15 @@
                 <field>SplitOwnerId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
+                <field>Role_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Rate_1_Split__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Rate_2_Split__c</field>
             </layoutItems>
             <layoutItems>
@@ -60,11 +64,10 @@
         <fields>Rate_2_Split__c</fields>
     </miniLayout>
     <multilineLayoutFields>SplitOwnerId</multilineLayoutFields>
+    <multilineLayoutFields>Rate_1_Split__c</multilineLayoutFields>
+    <multilineLayoutFields>Rate_2_Split__c</multilineLayoutFields>
     <multilineLayoutFields>SplitPercentage</multilineLayoutFields>
     <multilineLayoutFields>SplitAmount</multilineLayoutFields>
-    <multilineLayoutFields>SplitNote</multilineLayoutFields>
-    <multilineLayoutFields>Rate_2_Split__c</multilineLayoutFields>
-    <multilineLayoutFields>Rate_1_Split__c</multilineLayoutFields>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>

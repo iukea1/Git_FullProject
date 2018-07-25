@@ -782,12 +782,12 @@
     </relatedLists>
     <relatedLists>
         <fields>SplitOwner</fields>
-        <fields>SplitType</fields>
-        <fields>SplitPercentage</fields>
-        <fields>SplitAmount</fields>
-        <fields>SplitNote</fields>
+        <fields>Role_Type__c</fields>
         <fields>Rate_1_Split__c</fields>
+        <fields>rate_1_amount__c</fields>
         <fields>Rate_2_Split__c</fields>
+        <fields>Rate_2_Split_Amount__c</fields>
+        <fields>SplitNote</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>

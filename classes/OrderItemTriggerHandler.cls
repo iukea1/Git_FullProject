@@ -41,13 +41,25 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
         }
         Map<Id, Order> parentOrders = new Map<Id, Order>([SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate FROM Order WHERE Id IN :orderIds AND TemporaryStartDateHolder__c != null]);
         
+        Set<Id> parentOrderIds = new Set<Id>();
         for(OrderItem oi : newList) {
-            if(parentOrders .containsKey(oi.OrderId) && oi.ServiceDate < parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c) {
+            if(parentOrders.containsKey(oi.OrderId) && oi.ServiceDate < parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c) {
                 Integer daysBetween = oi.ServiceDate.daysBetween(oi.EndDate);
                 oi.ServiceDate = parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c;
                 oi.EndDate = oi.ServiceDate.addDays(daysBetween);
+                orderIds.add(oi.OrderId);
             }
         }
-        
+        if(!parentOrderIds.isEmpty()) setParentDate(parentOrderIds);
+    }
+    
+    //@future
+    private static void setParentDate(Set<Id> parentOrderId) {
+        List<Order> parentOrders = [SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate FROM Order WHERE Id IN :parentOrderId AND TemporaryStartDateHolder__c != null];
+        for(Order o : parentOrders) {
+            o.EffectiveDate = o.TemporaryStartDateHolder__c;
+            o.TemporaryStartDateHolder__c = null;
+        }
+        update parentOrders;
     }
 }
