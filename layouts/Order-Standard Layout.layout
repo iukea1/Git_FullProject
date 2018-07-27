@@ -96,6 +96,10 @@
                 <behavior>Edit</behavior>
                 <field>Ship_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__PriceCalcStatusMessage__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -207,8 +211,8 @@
         <label>DEBUG</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SBCF_Order_End_Date__c</field>
+                <behavior>Edit</behavior>
+                <field>End_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

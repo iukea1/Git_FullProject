@@ -12,7 +12,7 @@
     <fieldUpdates>
         <fullName>Update_End_Date</fullName>
         <field>EndDate</field>
-        <formula>SBQQ__QuoteLine__r.SBQQ__EndDate__c</formula>
+        <formula>SBQQ__QuoteLine__r.End_Date__c</formula>
         <name>Update End Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

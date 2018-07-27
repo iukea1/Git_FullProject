@@ -104,6 +104,10 @@
                 <behavior>Edit</behavior>
                 <field>Patch__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geo_Patch__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -1,55 +1,130 @@
 public class SubscriptionHelper {
     
-    
-    
-    //This method returns the list of UserGroupId and roleId.
-    public static Map<Id,Id> GetAccountRoleIds(Id AccountID)
+    //This method returns the list of AccountId and GroupID.
+    public static Map<Id,Set<Id>> GetAccountRoleIds(Set<Id> setAcctIds)
     {
         Map<ID, Group> shareGroups;
-        List<User> shareUsers;
-        List<UserRole> roles;
         Map<ID,Id> roleIDs;
-        Map<Id,Id> setResultIds= new Map<Id,Id>();// roleId and UserOrGroupId
-        shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN (SELECT UserOrGroupId FROM AccountShare WHERE AccountId = :AccountID)]);
-        shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN (SELECT UserOrGroupId FROM AccountShare WHERE AccountId = :AccountID)];
-        // Get Role IDs
-        roleIDs = new Map<ID,Id>();
-        for (Group shareGroup1 : shareGroups.values()) {
-            roleIDs.put(shareGroup1.RelatedId,shareGroup1.Id);
-        }
+        Set<Id> setPortalGroupIds= new Set<Id>();
+        Map<Id,Set<Id>>setResultIds= new Map<Id,Set<Id>>();// roleId and UserOrGroupId
         
-        roles = [SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.keyset() and PortalType in('CustomerPortal','Partner')];
-        if(roles!=null && roles.size()>0)
+        Map<Id,Set<Id>> mapAcctIdsShareIds= new Map<Id,Set<Id>>();
+        Set<Id> setUserGroupIds= new Set<Id>();
+        List<AccountShare> lstAccountsShares=[Select Id,AccountId,UserOrGroupId from AccountShare where AccountId in:setAcctIds ];
+        if(setAcctIds!=null && setAcctIds.size()>0)
         {
-            for (UserRole role : roles) {
-                Id groupId= roleIDs.get(role.Id);
-                setResultIds.put(groupId,role.Id);
-                
+            for(Id acctId:setAcctIds)
+            {
+                Set<Id> userGroupIds= new Set<Id>();
+                if(lstAccountsShares!=null && lstAccountsShares.size()>0)
+                {
+                    
+                    for(AccountShare accShare:lstAccountsShares)
+                    {
+                        setUserGroupIds.add(accShare.UserOrGroupId);
+                        if(accShare.AccountId==acctId)
+                            userGroupIds.add(accShare.UserOrGroupId);
+                    }
+                    System.debug('userGroupIds'+ userGroupIds.size());
+                }
+                mapAcctIdsShareIds.put(acctId,userGroupIds);
             }
+            
+            
+            System.debug('mapAcctIdsShareIds'+ mapAcctIdsShareIds.size());
+            shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN:setUserGroupIds]);
+            // Get Role IDs
+            roleIDs = new Map<ID,Id>();
+            for (Group shareGroup1 : shareGroups.values()) {
+                roleIDs.put(shareGroup1.Id,shareGroup1.RelatedId);
+            }
+            System.debug('roleIDs'+ roleIDs);
+            Map<Id,UserRole>mapRoles = new Map<Id,UserRole>([SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.values() and PortalType in('CustomerPortal','Partner')]);
+            Set<Id> setRoleIds=mapRoles.keyset();
+            System.debug('setRoleIds' + setRoleIds);
+            
+            Set<Id> setGroupIds= new Set<Id>();
+            for(Id groupId:roleIds.keyset())
+            {
+                Id roleId=roleIds.get(groupId);
+                if(setRoleIds.contains(roleId))
+                {
+                    setPortalGroupIds.add(groupId);
+                }
+            }
+            System.debug('setPortalGroupIds'+setPortalGroupIds);
+            
+            for(Id item:mapAcctIdsShareIds.keySet())
+            {
+                Set<Id> lstGroupIds=mapAcctIdsShareIds.get(item);
+                Set<Id> finalGroupIds= new Set<Id>();
+                System.debug('lstRoleIds'+ lstGroupIds);
+                for(Id roleId:lstGroupIds)
+                {
+                    if(setPortalGroupIds.contains(roleId))
+                        finalGroupIds.add(roleId);
+                }
+                System.debug('lstRoleIds'+ finalGroupIds);
+                setResultIds.put(item,finalGroupIds);
+                
+            } 
         }
-        
+        System.debug('setResultIds'+setResultIds);
         return setResultIds;
     }
-    
-    public static Set<Id> GetAccountUserIds(Id AccountID)
+    public static Map<Id,Set<Id>> GetAccountUserIds(Set<Id> setAcctIds)
     {
         Map<ID, Group> shareGroups;
-        List<User> shareUsers;
+        Map<Id,User> shareUsers;
         List<UserRole> roles;
         List<ID> roleIDs;
-        Set<Id> setResultIds= new Set<Id>();
+        Map<Id,Set<Id>> setResultIds= new Map<Id,Set<Id>>();
+        Map<Id,Set<Id>> mapAcctIdsShareIds= new Map<Id,Set<Id>>();
+        Set<Id> setUserGroupIds= new Set<Id>();
+        List<AccountShare> lstAccountsShares=[Select AccountId,UserOrGroupId from AccountShare where AccountId in:setAcctIds ];
         
-        shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN (SELECT UserOrGroupId FROM AccountShare WHERE AccountId = :AccountID)];
-        if(shareUsers!=null && shareUsers.size()>0)
+        
+        for(Id acctId:setAcctIds)
         {
-            for (User user : shareUsers) {
-                setResultIds.add(user.Id);
+            Set<Id> userGroupIds= new Set<Id>();
+            if(lstAccountsShares!=null && lstAccountsShares.size()>0)
+            {
+                for(AccountShare accShare:lstAccountsShares)
+                {
+                    setUserGroupIds.add(accShare.UserOrGroupId);
+                    if(accShare.AccountId==acctId)
+                        userGroupIds.add(accShare.UserOrGroupId);
+                }
+                System.debug('userGroupIds'+ userGroupIds.size());
             }
+            mapAcctIdsShareIds.put(acctId,userGroupIds);
         }
+        
+        shareUsers= new Map<Id,User>([SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN :(setUserGroupIds)]);
+        Set<Id> portalUserIds= shareUsers.keyset();
+        System.debug('portalUserIds'+ portalUserIds);
+        for(Id accId:mapAcctIdsShareIds.keySet())
+        {
+            Set<Id> userOrGroupIdonAcc= mapAcctIdsShareIds.get(accId);
+            Set<Id> finalUserIds= new Set<Id>();
+            for (Id userId : userOrGroupIdonAcc) {
+                if(portalUserIds!=null && portalUserIds.size()>0)
+                {
+                    if(portalUserIds.contains(userId))
+                    {
+                        finalUserIds.add(userId);
+                    }
+                }
+            }
+            setResultIds.put(accId,finalUserIds);
+        }
+        
+        
+        
         return setResultIds;
     }
     
-    //This method returns the list of Subscription Based UserOrGroupId and role Id 
+    //This method returns the List of Share Id and PortalRoleIds
     public static Map<Id,Id> GetSubRoleIds(Id AccountID)
     {
         Map<ID, Group> shareGroups;
@@ -59,7 +134,7 @@ public class SubscriptionHelper {
         Set<Id> setSubShare= new Set<Id>();
         Map<Id,Id> mapRoleGroupIds= new Map<Id,Id>();// ShareId and UserOrGroupId
         Map<Id,Id> setResultIds= new Map<Id,Id>();// ShareId and UserOrGroupId
-        
+         Set<Id> setPortalGroupIds= new Set<Id>();
         List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
         if(lstSubShares!=null && lstSubShares.size()>0)
         {
@@ -71,28 +146,33 @@ public class SubscriptionHelper {
             // Get Role IDs
             roleIDs = new Map<ID,Id>();
             for (Group shareGroup1 : shareGroups.values()) {
-                roleIDs.put(shareGroup1.RelatedId,shareGroup1.Id);
+                roleIDs.put(shareGroup1.Id,shareGroup1.RelatedId);
             }
             
-            roles = [SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.keyset() and PortalType in('CustomerPortal','Partner')];
-            if(roles!=null && roles.size()>0)
+            System.debug('roleIDs'+ roleIDs);
+            Map<Id,UserRole>mapRoles = new Map<Id,UserRole>([SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.values() and PortalType in('CustomerPortal','Partner')]);
+            Set<Id> setRoleIds=mapRoles.keyset();
+            System.debug('setRoleIds' + setRoleIds);
+            
+            Set<Id> setGroupIds= new Set<Id>();
+            for(Id groupId:roleIds.keyset())
             {
-                for (UserRole role : roles) {
-                    Id groupId= roleIDs.get(role.Id);
-                    mapRoleGroupIds.put(groupId,role.Id);// userOrgroupId and roleID
-                    
+                Id roleId=roleIds.get(groupId);
+                if(setRoleIds.contains(roleId))
+                {
+                    setPortalGroupIds.add(groupId);
                 }
             }
-             for (SBQQ__Subscription__Share subShare : lstSubShares) {
-                if(mapRoleGroupIds.containsKey(subshare.UserOrGroupId))
-                	setResultIds.put(subShare.Id,subShare.UserOrGroupId);
+            for (SBQQ__Subscription__Share subShare : lstSubShares) {
+                if(setPortalGroupIds.contains(subshare.UserOrGroupId))
+                    setResultIds.put(subShare.Id,subShare.UserOrGroupId);
             }
         }
         
         
         return setResultIds;
     }
-    
+    //This method returns the List of Share Id and UserIds
     public static Map<Id,Id> GetSubUserIds(Id AccountID)
     {
         Map<Id,Id> mapResult= new Map<Id,Id>();// userId--subId

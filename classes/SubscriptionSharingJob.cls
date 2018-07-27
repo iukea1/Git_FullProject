@@ -24,7 +24,10 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         for(AccountShare accShare: accShares)
             setAccIds.add(accShare.AccountId);
         
-        for(Id acctId: setAccIds)
+        if(setAccIds!=null && setAccIds.size()>0)
+        {
+           
+            for(Id acctId: setAccIds)
         {
             //List<SBQQ__Subscription__Share> lstSubShares= [Select ParentId,UserOrGroupId from SBQQ__Subscription__Share where ParentId in(Select Id from SBQQ__Subscription__c where SBQQ__Account__c in:setAccIds)];
             
@@ -40,6 +43,9 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
                 SilverPeakUtils.logException('Subscription Sharing Job Failure',ex.getMessage());
             }
         }
+        }
+        
+        
         
         
     }  

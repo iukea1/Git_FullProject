@@ -16,7 +16,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     public static final String PRODUCT_NAME_PREFIX_SMART_HANDS = 'SMRT-HND';
     public static final String PRODUCT_NAME_PREFIX_RENEWAL = 'RENEWAL';
     public static final String PRODUCT_FORECAST_CATEGORY_VIRTUAL = 'Virtual';
-
+    
     public static final Datetime THIRTY_SECONDS_AGO = System.now().addSeconds(-30);
     
     public SubscriptionTriggerHandler()
@@ -42,14 +42,14 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         {
             for (Id subId : newItems.keyset())
             {
-               
+                
             }
             
         }
         
-       populateRelatedAssetSubscriptionLookups(newItems.values());
-       UpdateGMS_Nodes(newItems.values());
-        
+        populateRelatedAssetSubscriptionLookups(newItems.values());
+        UpdateGMS_Nodes(newItems.values());
+        ShareSubscriptionRecordsWithPortalAccounts(newItems.values());
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -70,26 +70,26 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         }
     }
     
-  
+    
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         
         // Used in action method
         List<SBQQ__SubscribedAsset__c> subscriptionAndAssetList = new List<SBQQ__SubscribedAsset__c>();
         List<SBQQ__Subscription__c> newlyGeneratedSubscription = new List<SBQQ__Subscription__c>();
         Set<id> renewalSubscriptions = new Set<id>();
-   
+        
         //Start of the process for renewal
         for(SBQQ__Subscription__c subs: incomingSubscriptions){
             if(!String.isEmpty(subs.SBQQ__ProductName__c) && 
                subs.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_RENEWAL)){
-               
+                   
                    System.debug('Renewal Subscription : ' + subs);
                    
                    renewalSubscriptions.add(subs.id); 
                    
-            }
+               }
             else{
-               newlyGeneratedSubscription.add(subs); 
+                newlyGeneratedSubscription.add(subs); 
             }
         }
         
@@ -100,7 +100,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         if(newlyGeneratedSubscription.size()>0){
             
             Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = buildQuoteLineIdsToSubscriptions(newlyGeneratedSubscription);
-        
+            
             if(quoteLineIdsToSubscriptions.keySet() == null){
                 System.debug('There are no quote lines related to incoming subscriptions. ');
                 return;
@@ -142,10 +142,10 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                                                 FROM SBQQ__Subscription__c 
                                                 WHERE Id IN: newSubs 
                                                 AND SBQQ__ProductName__c LIKE '%RENEWAL%']){
-                if(subRecs.SBQQ__ProductName__c.contains('RENEWAL')){
-                    isRenewal = true;
-                }
-            }
+                                                    if(subRecs.SBQQ__ProductName__c.contains('RENEWAL')){
+                                                        isRenewal = true;
+                                                    }
+                                                }
             System.debug(' isRnewal :' + isRenewal);
             // This is the process to populate the related asset to Subscription detail page. 
             for(Asset assetRec: assetsToUpdate){
@@ -154,16 +154,16 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 System.debug('assetRec.Id   : ' + assetRec.Id);
                 
                 if(!isRenewal){
-                     subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
-                     System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
+                    subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
+                    System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
                 }
-               
+                
             }
             
-                if(subscriptionAndAssetList.size()>0){
-                    insert subscriptionAndAssetList;
-                }
+            if(subscriptionAndAssetList.size()>0){
+                insert subscriptionAndAssetList;
             }
+        }
         
         else{
             if(renewalSubscriptions.size()>0){
@@ -171,16 +171,16 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 List<SBQQ__SubscribedAsset__c> subAssetList = new List<SBQQ__SubscribedAsset__c>();
                 
                 List<SBQQ__Subscription__c> subList = [SELECT Id, (SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
-                                                                         FROM SBQQ__SubscribedAssets__r 
-                                                                         WHERE SBQQ__Subscription__c IN: renewalSubscriptions 
-                                                                         AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE) 
-                                                                         FROM SBQQ__Subscription__c WHERE ID IN: renewalSubscriptions];
+                                                                   FROM SBQQ__SubscribedAssets__r 
+                                                                   WHERE SBQQ__Subscription__c IN: renewalSubscriptions 
+                                                                   AND SBQQ__Asset__r.Is_Selected_For_Renewal__c = TRUE) 
+                                                       FROM SBQQ__Subscription__c WHERE ID IN: renewalSubscriptions];
                 
                 for(SBQQ__Subscription__c s: subList){
                     List<SBQQ__SubscribedAsset__c> subListAsset = s.SBQQ__SubscribedAssets__r;
-                        for(SBQQ__SubscribedAsset__c sa: subListAsset){
-                            system.debug('renewal sub asset ' + sa);
-                        }
+                    for(SBQQ__SubscribedAsset__c sa: subListAsset){
+                        system.debug('renewal sub asset ' + sa);
+                    }
                 }
                 
                 List<SBQQ__SubscribedAsset__c> renewalSubscribedAsset = [SELECT Id, Name, SBQQ__Subscription__c, SBQQ__Asset__c, SBQQ__Asset__r.Is_Selected_For_Renewal__c 
@@ -264,10 +264,10 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                                                                        
                                                                        return assetsToUpdate;
                                                                    }
-                                                                   
+    
     /*
-    Method to update the Asset's GMS Nodes field if the Subscription's Product is Upgraded
-    */
+Method to update the Asset's GMS Nodes field if the Subscription's Product is Upgraded
+*/
     private static void UpdateGMS_Nodes (List<SBQQ__Subscription__c> SubscriptionList){
         
         Set<Id> ContractIds = new Set<Id>();
@@ -338,140 +338,140 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         System.debug('CurrentSubscription = ' + CurrentSubscription);
         
         if(!isNotGMS){
-             //Loop through Quote Line to get Quote Ids
-        for(SBQQ__QuoteLine__c ql: [SELECT Id, Name, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id =: QuoteLineIds]){
-            QuoteIds.add(ql.SBQQ__Quote__c);
-        }
-        
-        //Loop through Quote to get Opportunity
-        for(SBQQ__Quote__c q: [SELECT Id, Name, SBQQ__Opportunity2__c FROM SBQQ__Quote__c WHERE Id =: QuoteIds]){
-            OpportunityIds.add(q.SBQQ__Opportunity2__c);
-        }
-        
-        System.debug('QuoteIds = ' + QuoteIds);
-        
-        /*
-        //Loop through Order Product to get Order Ids
-        for(OrderItem op: [SELECT Id, OrderId FROM OrderItem WHERE Id =: OrderProdIds]){
-            OrderIds.add(op.OrderId);
-        }
-        
-        //Loop through Contract and get Order Product 
-        for(Contract con: [SELECT Id, SBQQ__Order__c,SBQQ__Order__r.OpportunityId, SBQQ__Order__r.Opportunity.SBQQ__AmendedContract__c FROM Contract WHERE Id =: ContractIds]){
-            
-            System.debug('Contract query = ' + con);
-            OrderIds.add(con.SBQQ__Order__c);
-        }
-        
-        
-        System.debug('OrderIds = ' + OrderIds);
-        
-        //Loop through Order and get Opportunity
-        for(Order ord : [SELECT Id, OpportunityId FROM Order WHERE Id =: OrderIds]){
-            
-            System.debug('Order query = ' + ord);
-            OpportunityIds.add(ord.OpportunityId);
-        }
-        */
-        
-        System.debug('OpportunityIds = ' + OpportunityIds);
-        
-        //Loop through Opportunity and check if it has amended Contract and the Contract == Subscription's Contract
-        for(Opportunity opp: [SELECT Id, Name, SBQQ__AmendedContract__c, SBQQ__AmendedContract__r.id FROM Opportunity WHERE Id =: OpportunityIds]){
-            
-            System.debug('Opportunity query = ' + opp);
-            System.debug('Amended contract = ' + opp.SBQQ__AmendedContract__c);
-            System.debug('Amended contract __r id = ' + opp.SBQQ__AmendedContract__r.id);
-            
-            if(opp.SBQQ__AmendedContract__c == SubscriptionContract){
-                MatchedContract = true;
-            }
-        }
-        
-        System.debug('SubscriptionContract = ' + SubscriptionContract);
-        //System.debug('ContractIds = ' + ContractIds);
-        System.debug('MatchedContract = ' + MatchedContract);
-        
-        //If Contract matches with Amended from Opportunity, query subscriptions to get the Asset
-        if(MatchedContract){
-            
-            //Query the second to the last Subscription
-            for(SBQQ__Subscription__c s:  [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract]){
-                subsIds.add(s.Id);
+            //Loop through Quote Line to get Quote Ids
+            for(SBQQ__QuoteLine__c ql: [SELECT Id, Name, SBQQ__Quote__c FROM SBQQ__QuoteLine__c WHERE Id =: QuoteLineIds]){
+                QuoteIds.add(ql.SBQQ__Quote__c);
             }
             
-            System.debug('SectoLast value = ' + subsIds);
-            
-            //Query the Subscribed Asset to update
-            //SBQQ__SubscribedAsset__c[] SubAsset = [SELECT Id, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__c =: SectoLast.Id];
-            
-            //SBQQ__SubscribedAsset__c SubAssetUpdated = SubAsset[0];
-            
-            //System.debug('SubAssetUpdated value = ' + SubAssetUpdated);
-            
-            //Query the Asset from the Subscription
-            Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c IN: subsIds AND  Product2.Name LIKE '%GMS-10%'];
-            
-            System.debug('AssetToUpdate value = ' + AssetToUpdate);
-            
-            Asset AssetUpdated = AssetToUpdate[0];
-            //Query the Product Name
-            //Product2 AssetProd = [SELECT Id, Name FROM Product2 WHERE Id =: AssetToUpdate.Product2Id];
-            
-            
-            System.debug('AssetUpdated value = ' + AssetUpdated);
-            for(Asset a: AssetToUpdate){
-                if(IsGMS25){
-                //Update the Asset GMS Node field
-                    a.GMS_Nodes__c = '25';
-                    a.SBCF_Subscription__c = CurrentSubscription;
-                    updateAsset.add(a);
-                //SubAssetUpdated.SBQQ__Subscription__c = CurrentSubscription;
-                }
-            // ----- additional validation @-- ronald
-                else if(IsGMS50){
-                    a.GMS_Nodes__c = '50';
-                    a.SBCF_Subscription__c = CurrentSubscription;
-                    updateAsset.add(a);
-                }
-                else if(IsGMS100){
-                    a.GMS_Nodes__c = '100';
-                    a.SBCF_Subscription__c = CurrentSubscription;
-                    updateAsset.add(a);
-                    
-                }
-                else if(IsGMS200){
-                    a.GMS_Nodes__c = '200';
-                    a.SBCF_Subscription__c = CurrentSubscription;
-                    updateAsset.add(a);
-                }
-                else if(IsGMS500){
-                    a.GMS_Nodes__c = '500';
-                    a.SBCF_Subscription__c = CurrentSubscription;
-                    updateAsset.add(a);
-                    
-                }
-            }
-            //Check if the Asset's Product Name is GMS-10
-            
-            
-            
-            System.debug('AssetToUpdate value = ' + AssetToUpdate);
-            
-            //update SubAssetUpdated;
-            
-            if(updateAsset.size()>0){
-                update updateAsset;
+            //Loop through Quote to get Opportunity
+            for(SBQQ__Quote__c q: [SELECT Id, Name, SBQQ__Opportunity2__c FROM SBQQ__Quote__c WHERE Id =: QuoteIds]){
+                OpportunityIds.add(q.SBQQ__Opportunity2__c);
             }
             
-            // Continuation for subscribed Asset @@----- ronald
-            for(Asset asset: updateAsset){
-                SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = asset.Id, SBQQ__Subscription__c = asset.SBCF_Subscription__c, SBQQ__Active__c = true);
-                insert subscribedAsset;
+            System.debug('QuoteIds = ' + QuoteIds);
+            
+            /*
+//Loop through Order Product to get Order Ids
+for(OrderItem op: [SELECT Id, OrderId FROM OrderItem WHERE Id =: OrderProdIds]){
+OrderIds.add(op.OrderId);
+}
+
+//Loop through Contract and get Order Product 
+for(Contract con: [SELECT Id, SBQQ__Order__c,SBQQ__Order__r.OpportunityId, SBQQ__Order__r.Opportunity.SBQQ__AmendedContract__c FROM Contract WHERE Id =: ContractIds]){
+
+System.debug('Contract query = ' + con);
+OrderIds.add(con.SBQQ__Order__c);
+}
+
+
+System.debug('OrderIds = ' + OrderIds);
+
+//Loop through Order and get Opportunity
+for(Order ord : [SELECT Id, OpportunityId FROM Order WHERE Id =: OrderIds]){
+
+System.debug('Order query = ' + ord);
+OpportunityIds.add(ord.OpportunityId);
+}
+*/
+            
+            System.debug('OpportunityIds = ' + OpportunityIds);
+            
+            //Loop through Opportunity and check if it has amended Contract and the Contract == Subscription's Contract
+            for(Opportunity opp: [SELECT Id, Name, SBQQ__AmendedContract__c, SBQQ__AmendedContract__r.id FROM Opportunity WHERE Id =: OpportunityIds]){
+                
+                System.debug('Opportunity query = ' + opp);
+                System.debug('Amended contract = ' + opp.SBQQ__AmendedContract__c);
+                System.debug('Amended contract __r id = ' + opp.SBQQ__AmendedContract__r.id);
+                
+                if(opp.SBQQ__AmendedContract__c == SubscriptionContract){
+                    MatchedContract = true;
+                }
             }
             
-        }
-       
+            System.debug('SubscriptionContract = ' + SubscriptionContract);
+            //System.debug('ContractIds = ' + ContractIds);
+            System.debug('MatchedContract = ' + MatchedContract);
+            
+            //If Contract matches with Amended from Opportunity, query subscriptions to get the Asset
+            if(MatchedContract){
+                
+                //Query the second to the last Subscription
+                for(SBQQ__Subscription__c s:  [SELECT Id, Name, SBQQ__Contract__c, CreatedDate  FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c =: SubscriptionContract]){
+                    subsIds.add(s.Id);
+                }
+                
+                System.debug('SectoLast value = ' + subsIds);
+                
+                //Query the Subscribed Asset to update
+                //SBQQ__SubscribedAsset__c[] SubAsset = [SELECT Id, SBQQ__Subscription__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Subscription__c =: SectoLast.Id];
+                
+                //SBQQ__SubscribedAsset__c SubAssetUpdated = SubAsset[0];
+                
+                //System.debug('SubAssetUpdated value = ' + SubAssetUpdated);
+                
+                //Query the Asset from the Subscription
+                Asset[] AssetToUpdate = [SELECT Id, Name, Product2.Name, SBQQ__Subscription__c FROM Asset WHERE SBCF_Subscription__c IN: subsIds AND  Product2.Name LIKE '%GMS-10%'];
+                
+                System.debug('AssetToUpdate value = ' + AssetToUpdate);
+                
+                Asset AssetUpdated = AssetToUpdate[0];
+                //Query the Product Name
+                //Product2 AssetProd = [SELECT Id, Name FROM Product2 WHERE Id =: AssetToUpdate.Product2Id];
+                
+                
+                System.debug('AssetUpdated value = ' + AssetUpdated);
+                for(Asset a: AssetToUpdate){
+                    if(IsGMS25){
+                        //Update the Asset GMS Node field
+                        a.GMS_Nodes__c = '25';
+                        a.SBCF_Subscription__c = CurrentSubscription;
+                        updateAsset.add(a);
+                        //SubAssetUpdated.SBQQ__Subscription__c = CurrentSubscription;
+                    }
+                    // ----- additional validation @-- ronald
+                    else if(IsGMS50){
+                        a.GMS_Nodes__c = '50';
+                        a.SBCF_Subscription__c = CurrentSubscription;
+                        updateAsset.add(a);
+                    }
+                    else if(IsGMS100){
+                        a.GMS_Nodes__c = '100';
+                        a.SBCF_Subscription__c = CurrentSubscription;
+                        updateAsset.add(a);
+                        
+                    }
+                    else if(IsGMS200){
+                        a.GMS_Nodes__c = '200';
+                        a.SBCF_Subscription__c = CurrentSubscription;
+                        updateAsset.add(a);
+                    }
+                    else if(IsGMS500){
+                        a.GMS_Nodes__c = '500';
+                        a.SBCF_Subscription__c = CurrentSubscription;
+                        updateAsset.add(a);
+                        
+                    }
+                }
+                //Check if the Asset's Product Name is GMS-10
+                
+                
+                
+                System.debug('AssetToUpdate value = ' + AssetToUpdate);
+                
+                //update SubAssetUpdated;
+                
+                if(updateAsset.size()>0){
+                    update updateAsset;
+                }
+                
+                // Continuation for subscribed Asset @@----- ronald
+                for(Asset asset: updateAsset){
+                    SBQQ__SubscribedAsset__c subscribedAsset = new SBQQ__SubscribedAsset__c(SBQQ__Asset__c = asset.Id, SBQQ__Subscription__c = asset.SBCF_Subscription__c, SBQQ__Active__c = true);
+                    insert subscribedAsset;
+                }
+                
+            }
+            
         }
         
         
@@ -517,7 +517,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         return assetsRelatedToSubscriptions;
     } 
-
+    
     private static Set<Id> getRequiredByQuoteLineIds(List<SBQQ__QuoteLine__c> subscriptionQuoteLines){
         Set<Id> requiredByQuoteLineIds = new Set<Id>();
         
@@ -531,14 +531,14 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         return requiredByQuoteLineIds;
     }
-   
+    
     
     private static Map<Id, List<SBQQ__Subscription__c>> buildQuoteLineIdsToSubscriptions(List<SBQQ__Subscription__c> incomingSubscriptions){
         Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions = new Map<Id, List<SBQQ__Subscription__c>>();
         
         for(SBQQ__Subscription__c subscription: incomingSubscriptions){
-           System.debug('Subscription product name : ' + subscription.SBQQ__Product__c); 
-           
+            System.debug('Subscription product name : ' + subscription.SBQQ__Product__c); 
+            
             if(subscription.SBQQ__QuoteLine__c == null){
                 continue;
             }
@@ -571,7 +571,62 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         return subscriptionQuoteLineMap;
     }
     
-   
+    private static Void ShareSubscriptionRecordsWithPortalAccounts(List<SBQQ__Subscription__c> lstSubs)
+    {
+        Set<Id> setAcctIds= new Set<Id>();
+        List<SBQQ__Subscription__Share> lstSubShares= new List<SBQQ__Subscription__Share>();
+        if(lstSubs!=null && lstSubs.size()>0)
+        {
+            for(SBQQ__Subscription__c sub:lstSubs)
+            {
+                setAcctIds.add(sub.SBQQ__Account__c);
+            }
+            Map<Id,Set<Id>> mapActSubs= new  Map<Id,Set<Id>>();
+            Map<Id,Set<Id>> mapPortalRoles=SubscriptionHelper.GetAccountRoleIds(setAcctIds);
+            Map<Id,Set<Id>> mapPortalUsers=SubscriptionHelper.GetAccountUserIds(setAcctIds);
+            
+            for(Id accId:setAcctIds)
+            {
+                Set<Id> setShareIds= new Set<Id>();
+                for(SBQQ__Subscription__c sub:lstSubs)
+                {
+                    if(accId==sub.SBQQ__Account__c)
+                        setShareIds.add(sub.Id);
+                }
+                mapActSubs.put(accId,setShareIds);
+            }
+            for(Id accId:setAcctIds)
+            {
+                Set<Id> setRoles=mapPortalRoles.get(accId);
+                Set<Id>setUsers=mapPortalUsers.get(accId);
+                Set<Id> setShareIds=mapActSubs.get(accId);
+                for(Id subId:setShareIds)
+                {
+                    if(setRoles!=null && setRoles.size()>0)
+                    {
+                        for(Id roleId:setRoles)
+                        {
+                            SBQQ__Subscription__Share subShare= new SBQQ__Subscription__Share(ParentId=subId,UserOrGroupId=roleId,AccessLevel='Read');
+                            lstSubShares.add(subShare);
+                        }
+                    }
+                    if(setUsers!=null && setUsers.size()>0)
+                    {
+                        for(Id userId:setUsers)
+                        {
+                            SBQQ__Subscription__Share subShare= new SBQQ__Subscription__Share(ParentId=subId,UserOrGroupId=userId,AccessLevel='Read');
+                            lstSubShares.add(subShare);
+                        }
+                    }
+                }
+            }
+            if(lstSubShares!=null && lstSubShares.size()>0)
+            {
+                SubscriptionHelper.AddSubscriptionShare(lstSubShares);
+            }
+            
+        }
+    }
     
     
     

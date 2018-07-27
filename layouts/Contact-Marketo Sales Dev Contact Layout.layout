@@ -12,7 +12,6 @@
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnablePrmSuperUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewCustomerPortal</excludeButtons>
     <excludeButtons>ViewPartnerPortalUser</excludeButtons>
@@ -52,7 +51,7 @@
                 <field>SBCF_Parent_Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Country_Picklist__c</field>
             </layoutItems>
         </layoutColumns>

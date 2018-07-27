@@ -441,6 +441,15 @@
         <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_End_Date</fullName>
+        <field>EndDate</field>
+        <formula>SBQQ__Quote__r.End_Date__c</formula>
+        <name>Update Order End Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>EC Addon</fullName>
         <active>true</active>
@@ -699,6 +708,16 @@
         <active>true</active>
         <formula>ISPICKVAL( SBQQ__Quote__r.Product_Type__c , &quot;EDGECONNECT&quot;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Order End Date</fullName>
+        <actions>
+            <name>Update_Order_End_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Set POC Record Type</fullName>
