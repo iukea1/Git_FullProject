@@ -32,7 +32,7 @@
                     <b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b>
                 </td>
                 <td>
-                    {!cx.ProductName}
+                    {!cx.ProdDesc}
                 </td>
             </tr>
         </apex:repeat>
@@ -51,7 +51,7 @@
                     <b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b>
                 </td>
                 <td>
-                    {!cx.ProductName}
+                    {!cx.ProdDesc}
                 </td>
             </tr>
         </apex:repeat>

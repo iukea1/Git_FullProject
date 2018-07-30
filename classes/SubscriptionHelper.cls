@@ -25,23 +25,23 @@ public class SubscriptionHelper {
                         if(accShare.AccountId==acctId)
                             userGroupIds.add(accShare.UserOrGroupId);
                     }
-                    System.debug('userGroupIds'+ userGroupIds.size());
+                    //System.debug('userGroupIds'+ userGroupIds.size());
                 }
                 mapAcctIdsShareIds.put(acctId,userGroupIds);
             }
             
             
-            System.debug('mapAcctIdsShareIds'+ mapAcctIdsShareIds.size());
+            //System.debug('mapAcctIdsShareIds'+ mapAcctIdsShareIds.size());
             shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN:setUserGroupIds]);
             // Get Role IDs
             roleIDs = new Map<ID,Id>();
             for (Group shareGroup1 : shareGroups.values()) {
                 roleIDs.put(shareGroup1.Id,shareGroup1.RelatedId);
             }
-            System.debug('roleIDs'+ roleIDs);
+            //System.debug('roleIDs'+ roleIDs);
             Map<Id,UserRole>mapRoles = new Map<Id,UserRole>([SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.values() and PortalType in('CustomerPortal','Partner')]);
             Set<Id> setRoleIds=mapRoles.keyset();
-            System.debug('setRoleIds' + setRoleIds);
+            ////System.debug('setRoleIds' + setRoleIds);
             
             Set<Id> setGroupIds= new Set<Id>();
             for(Id groupId:roleIds.keyset())
@@ -52,24 +52,24 @@ public class SubscriptionHelper {
                     setPortalGroupIds.add(groupId);
                 }
             }
-            System.debug('setPortalGroupIds'+setPortalGroupIds);
+            //System.debug('setPortalGroupIds'+setPortalGroupIds);
             
             for(Id item:mapAcctIdsShareIds.keySet())
             {
                 Set<Id> lstGroupIds=mapAcctIdsShareIds.get(item);
                 Set<Id> finalGroupIds= new Set<Id>();
-                System.debug('lstRoleIds'+ lstGroupIds);
+                //System.debug('lstRoleIds'+ lstGroupIds);
                 for(Id roleId:lstGroupIds)
                 {
                     if(setPortalGroupIds.contains(roleId))
                         finalGroupIds.add(roleId);
                 }
-                System.debug('lstRoleIds'+ finalGroupIds);
+                //System.debug('lstRoleIds'+ finalGroupIds);
                 setResultIds.put(item,finalGroupIds);
                 
             } 
         }
-        System.debug('setResultIds'+setResultIds);
+        //System.debug('setResultIds'+setResultIds);
         return setResultIds;
     }
     public static Map<Id,Set<Id>> GetAccountUserIds(Set<Id> setAcctIds)
@@ -95,14 +95,14 @@ public class SubscriptionHelper {
                     if(accShare.AccountId==acctId)
                         userGroupIds.add(accShare.UserOrGroupId);
                 }
-                System.debug('userGroupIds'+ userGroupIds.size());
+                //System.debug('userGroupIds'+ userGroupIds.size());
             }
             mapAcctIdsShareIds.put(acctId,userGroupIds);
         }
         
-        shareUsers= new Map<Id,User>([SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN :(setUserGroupIds)]);
+        shareUsers= new Map<Id,User>([SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner','PowerCustomerSuccess')and IsActive=true and Id IN :(setUserGroupIds)]);
         Set<Id> portalUserIds= shareUsers.keyset();
-        System.debug('portalUserIds'+ portalUserIds);
+        //System.debug('portalUserIds'+ portalUserIds);
         for(Id accId:mapAcctIdsShareIds.keySet())
         {
             Set<Id> userOrGroupIdonAcc= mapAcctIdsShareIds.get(accId);
@@ -135,7 +135,7 @@ public class SubscriptionHelper {
         Map<Id,Id> mapRoleGroupIds= new Map<Id,Id>();// ShareId and UserOrGroupId
         Map<Id,Id> setResultIds= new Map<Id,Id>();// ShareId and UserOrGroupId
          Set<Id> setPortalGroupIds= new Set<Id>();
-        List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
+        List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
         if(lstSubShares!=null && lstSubShares.size()>0)
         {
             for (SBQQ__Subscription__Share subShare : lstSubShares) {
@@ -163,13 +163,12 @@ public class SubscriptionHelper {
                     setPortalGroupIds.add(groupId);
                 }
             }
+            System.debug('setPortalGroupIds'+setPortalGroupIds);
             for (SBQQ__Subscription__Share subShare : lstSubShares) {
                 if(setPortalGroupIds.contains(subshare.UserOrGroupId))
                     setResultIds.put(subShare.Id,subShare.UserOrGroupId);
             }
         }
-        
-        
         return setResultIds;
     }
     //This method returns the List of Share Id and UserIds
@@ -178,26 +177,29 @@ public class SubscriptionHelper {
         Map<Id,Id> mapResult= new Map<Id,Id>();// userId--subId
         Set<Id> setPartnerUsers= new Set<Id>();
         Map<Id,Id> mapSubShare= new Map<Id,Id>();
-        List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
+        List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
+        System.debug('lstSubShares'+lstSubShares.size());
         if(lstSubShares!=null && lstSubShares.size()>0)
         {
             for (SBQQ__Subscription__Share subShare : lstSubShares) {
-                mapSubShare.put(subShare.ParentId, subShare.UserOrGroupId);
+                mapSubShare.put(subShare.Id, subShare.UserOrGroupId);
             }
-            
-            List<User> shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner')and IsActive=true and Id IN:mapSubShare.values() ];
+            System.debug('mapSubShare'+mapSubShare.size());
+            List<User> shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner','PowerCustomerSuccess')and IsActive=true and Id IN:mapSubShare.values() ];
             if(shareUsers!=null && shareUsers.size()>0)
             {
                 for (User user : shareUsers) {
                     setPartnerUsers.add(user.Id);
                 }
             }
+            System.debug('setPartnerUsers'+setPartnerUsers);
             for (Id subShareId : mapSubShare.keySet()) {
                 Id userId=mapSubShare.get(subShareId);
                 if(setPartnerUsers.contains(userId))
                     mapResult.put(subShareId, userId);
             }
         }
+        System.debug('users'+ mapResult);
         return mapResult;
     }
     
@@ -209,10 +211,14 @@ public class SubscriptionHelper {
     public static void AddSubscriptionShare(List<SBQQ__Subscription__Share> lstSubShares)
     {
         if(lstSubShares!=null && lstSubShares.size()>0)
-        {
             insert lstSubShares;
-        }
         
         
+        
+    }
+    
+    public static List<SBQQ__Subscription__c> RetreiveExistingSubs(Id acctId)
+    {
+        return [Select Id from SBQQ__Subscription__c where SBQQ__Account__c=:acctId];
     }
 }

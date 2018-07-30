@@ -20,7 +20,7 @@
         <primary>false</primary>
     </customWebAddresses>
     <customWebAddresses>
-        <certificate>Absorb_SSO</certificate>
+        <certificate>Original_Cert</certificate>
         <domainName>partners.silver-peak.com</domainName>
         <primary>true</primary>
     </customWebAddresses>

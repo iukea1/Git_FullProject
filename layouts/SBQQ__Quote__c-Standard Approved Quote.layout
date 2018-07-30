@@ -32,6 +32,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>SBQQ__EndDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Length_In_Years__c</field>
             </layoutItems>
             <layoutItems>
@@ -264,6 +268,10 @@
                 <behavior>Edit</behavior>
                 <field>Print_Special_Instructions__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__SubscriptionTerm__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -432,6 +440,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__PriceBook__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__ContractingMethod__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -456,7 +468,7 @@
         <fields>SBQQ__NetTotal__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
-        <fields>SBQQ__EndDate__c</fields>
+        <fields>End_Date__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

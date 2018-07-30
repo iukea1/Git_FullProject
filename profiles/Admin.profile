@@ -2443,6 +2443,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestSubscriptionSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestTriggerActiveAssetCountFromContract</apexClass>
         <enabled>true</enabled>
     </classAccesses>

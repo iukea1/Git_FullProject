@@ -418,7 +418,7 @@
         <fields>SBQQ__NetTotal__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
-        <fields>SBQQ__EndDate__c</fields>
+        <fields>End_Date__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
