@@ -143,9 +143,9 @@ public class TestPortalViewController {
         insert cont;
         Account spacc= new Account(Name='Silver Peak Systems');
         insert spAcc;
-        Product2 mainSub= new Product2(Name='EC-L-SP-MAINT-1Y',Model__c='EC-L-SP-MAINT-1Y',Family='Virtual Image', PRoduct_Type__c='EC-SP-Metered');
+        Product2 mainSub= new Product2(Name='EC-L-SP-MAINT-1Y',Model__c='EC-L-SP-MAINT-1Y',Family='Virtual Image', PRoduct_Type__c='Service Provider');
         insert mainSub;
-        Product2 ecHW= new Product2(Name='EC-L-SP',Model__c='EC-L-SP',Family='Product', PRoduct_Type__c='EC-SP-Metered');
+        Product2 ecHW= new Product2(Name='EC-L-SP',Model__c='EC-L-SP',Family='Product', PRoduct_Type__c='Service Provider');
         insert ecHW;
         Contract con= new Contract(AccountId=acc.Id,StartDate=Date.today(),EndDate=Date.today().addYears(1));
         insert con;

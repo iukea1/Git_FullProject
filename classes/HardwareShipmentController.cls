@@ -76,10 +76,18 @@ public with sharing class HardwareShipmentController {
 
     public HardwareShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
-            stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames());
+            //try { stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames()); } catch(Exception e) {}
         }
+        
+        String qBuild = '';
+        for(String s : OrderShipmentHelper.getAllOrderFieldsAPINames()) {
+            qBuild += ','+s;
+        }
+        qBuild = qBuild.substring(1, qBuild.length());
+        String query = 'SELECT ' + qBuild + ' FROM Order WHERE Id = \'' + stdController.getRecord().Id + '\' LIMIT 1';
+        
 
-        this.order = (Order)stdController.getRecord();
+        this.order = [SELECT Id, SBQQ__Quote__c, Status, OrderNumber  FROM Order WHERE Id = :stdController.getRecord().Id LIMIT 1]; //(Order) Database.query(query);
 
         this.orderIsActivated = OrderShipmentHelper.determineIsOrderActivated(this.order);
 
@@ -205,6 +213,7 @@ public with sharing class HardwareShipmentController {
         
         return hasMissing;
     }
+    
     public PageReference save(){
         if(!checkPartNumber()) {
             //OLD CODE
@@ -230,6 +239,10 @@ public with sharing class HardwareShipmentController {
             return null;
         }
     }
+
+
+
+
 
     public PageReference returnToOrder(){
         PageReference page = new PageReference('/' + order.Id);

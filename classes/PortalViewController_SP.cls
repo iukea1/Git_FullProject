@@ -15,7 +15,7 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
         String escapedKeyword = String.escapeSingleQuotes(SearchParameter == null ? '' : SearchParameter);
         String maskKeyword = '%' + escapedKeyword.replaceAll('\\*', '_') + '%';
         string result='Select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c	,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c from Asset';
-        result += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\') and (SerialNumber=\'' + escapedKeyword + '\' or Model__c like \'' + maskKeyword + '\' or Product2.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';
+        result += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\') and (SerialNumber=\'' + escapedKeyword + '\' or Model__c like \'' + maskKeyword + '\' or Product2.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';
         if(IsSearchForActive==true)
             result+= 'and Contract_End__c!=null and Contract_End__c >=today';
         
@@ -29,7 +29,7 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
        	String query = '';
         query = 'select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c';
         query += ' from Asset';
-        query += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\')';
+        query += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\')';
         query += ' limit 10000';
         System.debug(query);
         return query;
@@ -39,7 +39,7 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
         String escapedKeyword = String.escapeSingleQuotes(SearchParameter == null ? '' : SearchParameter);
         String maskKeyword = '%' + escapedKeyword.replaceAll('\\*', '_') + '%';
         string result='Select Id,SBQQ__Product__r.Name,SBQQ__Account__c,SBQQ__Product__r.Product_Type__c,SBQQ__Account__r.Name,SBQQ__StartDate__c,SBQQ__Contract__r.EndDate,Customer_Notes__c,SBCF_Subscription_Status__c,SerialNumber__c,SBQQ__Product__r.Family,SBQQ__Product__r.Model__c from SBQQ__Subscription__c';
-        result += ' where (SBQQ__Product__r.Name like \'EC%\') and SBQQ__RequiredByProduct__c=null and SBCF_Subscription_Status__c in(\'Customer Subscription Active\',\'Customer Subscription Expired\') and SBQQ__Product__r.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\') and (SerialNumber__c=\'' + escapedKeyword + '\' or SBQQ__Product__r.Model__c like \'' + maskKeyword + '\' or SBQQ__Product__r.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';        
+        result += ' where (SBQQ__Product__r.Name like \'EC%\') and SBQQ__RequiredByProduct__c=null and SBCF_Subscription_Status__c in(\'Customer Subscription Active\',\'Customer Subscription Expired\') and SBQQ__Product__r.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\') and (SerialNumber__c=\'' + escapedKeyword + '\' or SBQQ__Product__r.Model__c like \'' + maskKeyword + '\' or SBQQ__Product__r.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';        
         result += ' limit 10000';
         
         System.debug(result);
@@ -49,7 +49,7 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
     {
        	String query = '';
         query = 'Select Id,SBQQ__Product__r.Name,SBQQ__Product__r.Product_Type__c,SBQQ__Account__r.Name,SBQQ__StartDate__c,SBQQ__Contract__r.EndDate,Customer_Notes__c,SBCF_Subscription_Status__c,SerialNumber__c,SBQQ__Product__r.Family,SBQQ__Product__r.Model__c from SBQQ__Subscription__c';
-        query += ' where (SBQQ__Product__r.Name like \'EC%\') and SBQQ__RequiredByProduct__c=null and SBCF_Subscription_Status__c in(\'Customer Subscription Active\',\'Customer Subscription Expired\') and SBQQ__Product__r.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\')';
+        query += ' where (SBQQ__Product__r.Name like \'EC%\') and SBQQ__RequiredByProduct__c=null and SBCF_Subscription_Status__c in(\'Customer Subscription Active\',\'Customer Subscription Expired\') and SBQQ__Product__r.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')';
         query += ' limit 10000';
         System.debug(query);
         return query;

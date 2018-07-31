@@ -1135,6 +1135,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NewSalesDevelopmentController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NewVirtualAssetController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10621,6 +10625,10 @@
     <pageAccesses>
         <apexPage>NewRmaConfirmation</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>NewSalesDevelopment</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>NewVirtualAsset</apexPage>

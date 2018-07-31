@@ -49,7 +49,7 @@ trigger CalculateCompensationAmounts on OpportunityLineItem (before update) {
                 
                 
             }
-            else if(lineItem.Quote_Type__c=='NX/VX' || lineItem.Quote_Type__c=='EC-SP-Metered'|| lineItem.Quote_Type__c=='EC-SP-Perpetual')
+            else if(lineItem.Quote_Type__c=='NX/VX' || lineItem.Quote_Type__c=='Service Provider'|| lineItem.Quote_Type__c=='EC-SP-Metered'|| lineItem.Quote_Type__c=='EC-SP-Perpetual')
             {
                 lineItem.Total_Comp_Rate__c=lineItem.Is_Total_Comp_Rate_Enabled__c?totalPrice:0;
                 lineItem.Comp_Rate1__c= lineItem.Is_Comp_Rate1_Enabled__c?0:0;

@@ -82,6 +82,7 @@ public class ActivateOrderController {
         PageReference page = Page.HardwareShipment;
         page.setRedirect(true);
         page.getParameters().put('Id', this.order.Id);
+        system.debug('this page is ' +  page);
         return page;
     }
 
