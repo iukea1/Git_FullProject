@@ -53,10 +53,10 @@ public with sharing class VirtualShipmentController {
     
     public VirtualShipmentController(ApexPages.StandardController stdController) {
         if(!Test.isRunningTest()){
-            stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames());
+            //stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames());
         }
 
-        this.order = (Order)stdController.getRecord();
+        this.order = [SELECT Id, SBQQ__Quote__c, Status, Type, OrderNumber FROM Order WHERE Id = :stdController.getRecord().Id LIMIT 1];
 
         SBQQ__Quote__c parentQuote = [SELECT Id, Serial_Number_Notes__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__C];
 
@@ -233,7 +233,7 @@ public with sharing class VirtualShipmentController {
             
                 for(SBQQ__Subscription__c s: displaySubscription ){
                     for(SBQQ__SubscribedAsset__c sa : s.SBQQ__SubscribedAssets__r) {
-                        sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = serialStrings.contains(sa.SBQQ__Asset__r.SerialNumber);
+                        sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = serialStrings.contains(sa.SBQQ__Asset__r.SerialNumber) || sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c;
                     }
                 }
             
@@ -385,12 +385,12 @@ public with sharing class VirtualShipmentController {
                     //loop order item
                     for(SBQQ__SubscribedAsset__c asset: selectedAsset){
                         
-                        if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
+                        //if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
                             Asset updateAsset = new Asset();
                             updateAsset.Id = asset.SBQQ__Asset__c;
                             updateAsset.Is_Selected_For_Renewal__c = true;
                             assetToUpdate.add(updateAsset);
-                        }
+                        //}
                         
                     }
                     
@@ -402,7 +402,7 @@ public with sharing class VirtualShipmentController {
                         orderProductQuantityIsNotEqual = false;
                     }
                 }
-         }
+             }
          
             if(orderProductQuantityIsNotEqual){
                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error: The Order for Product quantity must equal to all of your selected asset'));
@@ -442,10 +442,10 @@ public with sharing class VirtualShipmentController {
                     
                     if(assetSelected != null && !assetSelected.isEmpty()) {
                         for(SBQQ__SubscribedAsset__c asset: assetSelected) {
-                            if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c) {
+                            //if(asset.SBQQ__Asset__r.Is_Selected_For_Renewal__c) {
                                 Asset updateAsset = new Asset(Id = asset.SBQQ__Asset__c, Is_Selected_For_Renewal__c = true);
                                 assetUpdate.add(updateAsset);
-                            }
+                            //}
                         }
                     }
                     

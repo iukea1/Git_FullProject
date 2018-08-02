@@ -4,7 +4,7 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
         return false;
     }
     public void BeforeInsert(List<SObject> newItems) {
-        //setDates(newItems);
+        setDates(newItems);
     }
     public void AfterInsert(Map<Id, SObject> newItems) {
        // updateStartDateForRenewals(newItems);
@@ -35,25 +35,36 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
     
     private static void setDates(List<OrderItem> newList) {
         Set<Id> orderIds = new Set<Id>();
-        
+        Set<Id> quoteLineIds = new Set<Id>();
         for(OrderItem oi : newList) {
             orderIds.add(oi.OrderId);
+            quoteLineIds.add(oi.SBQQ__QuoteLine__c);
         }
         Map<Id, Order> parentOrders = new Map<Id, Order>([SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate FROM Order WHERE Id IN :orderIds AND TemporaryStartDateHolder__c != null]);
+        Map<Id, SBQQ__QuoteLine__c> parentQls = new Map<Id, SBQQ__QuoteLine__c>([SELECT Id, End_Date__c FROM SBQQ__QuoteLine__c WHERE Id IN :quoteLineIds]);
         
         Set<Id> parentOrderIds = new Set<Id>();
         for(OrderItem oi : newList) {
+            if(oi.End_Date__c == null && parentQls.containsKey(oi.SBQQ__QuoteLine__c)) {
+                oi.End_Date__c = oi.EndDate; //parentQls.get(oi.SBQQ__QuoteLine__c).End_Date__c;
+                oi.EndDate = parentQls.get(oi.SBQQ__QuoteLine__c).End_Date__c;
+            }
+        
             if(parentOrders.containsKey(oi.OrderId) && oi.ServiceDate < parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c) {
                 Integer daysBetween = oi.ServiceDate.daysBetween(oi.EndDate);
                 oi.ServiceDate = parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c;
                 oi.EndDate = oi.ServiceDate.addDays(daysBetween);
+                oi.End_Date__c = oi.ServiceDate.addDays(daysBetween);
                 orderIds.add(oi.OrderId);
             }
         }
+        
+        //insert new TEST_LOG__C(Body__c = parentQls + '///' + newList);
+        
         if(!parentOrderIds.isEmpty()) setParentDate(parentOrderIds);
     }
     
-    //@future
+    @future
     private static void setParentDate(Set<Id> parentOrderId) {
         List<Order> parentOrders = [SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate FROM Order WHERE Id IN :parentOrderId AND TemporaryStartDateHolder__c != null];
         for(Order o : parentOrders) {

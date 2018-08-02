@@ -4,6 +4,7 @@
     <customButtons>Patch_Override</customButtons>
     <customButtons>refedge__Nominate</customButtons>
     <customButtons>TRIMAO__OrganizeMe</customButtons>
+    <customButtons>CAM_Events</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>

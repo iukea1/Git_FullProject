@@ -152,6 +152,10 @@
                 <behavior>Readonly</behavior>
                 <field>Comp_Rate2__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__Contracted__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -493,6 +497,24 @@
         <fields>Rate_2_Split_Amount__c</fields>
         <fields>SplitNote</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>re10__OrderStage__c</fields>
+        <fields>re10__SignDate__c</fields>
+        <fields>re10__Currency__c</fields>
+        <fields>re10__BusinessUnit__c</fields>
+        <fields>re10__Status__c</fields>
+        <fields>re10__OrderTotal__c</fields>
+        <relatedList>re10__GKOrderHeader__c.re10__Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>MemberName</fields>

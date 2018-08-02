@@ -6,6 +6,7 @@ public class SalesDevelopmentControllerTest
     {
         Campaign c = new Campaign(Name='acme', Sales_Targeting__c=true);
         insert c;
+        
         Lead l = new Lead(LastName='acme', Company='acme');
         insert l;
         CampaignMember member = new CampaignMember(CampaignId=c.Id, LeadId=l.Id, Status='Sent');
@@ -23,6 +24,8 @@ public class SalesDevelopmentControllerTest
     {
         Campaign c = new Campaign(Name='acme', Sales_Targeting__c=true);
         insert c;
+        Campaign salesCamp = new Campaign(Name='Sales Development', Sales_Targeting__c=true);
+        insert salesCamp;
         Lead l = new Lead(LastName='acme', Company='acme');
         insert l;
         CampaignMember member = new CampaignMember(CampaignId=c.Id, LeadId=l.Id, Status='Sent');

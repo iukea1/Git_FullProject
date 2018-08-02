@@ -12,7 +12,6 @@
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnablePrmSuperUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewCustomerPortal</excludeButtons>
     <excludeButtons>ViewPartnerPortalUser</excludeButtons>
@@ -177,6 +176,13 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MailingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <height>200</height>
+                <page>absorblms__contactTranscript</page>
+                <showLabel>true</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

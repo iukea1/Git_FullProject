@@ -96,6 +96,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         System.debug('Renewed Subscription : ' + renewalSubscriptions);
         System.debug('Newly generated subscription : ' + newlyGeneratedSubscription);
         
+        insert new TEST_LOG__c(Counter__c='renewalSubscriptions', Body__c = renewalSubscriptions+ ' ');
         
         if(newlyGeneratedSubscription.size()>0){
             
@@ -190,10 +191,50 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 
                 System.debug('renewal Subscribed Asset : ' +  renewalSubscribedAsset);
                 
-                //createSubscribedAssetForRenewal(renewalSubscriptions);  
+                createSubscribedAssetForRenewal(renewalSubscriptions);  
             }
         }
         
+        
+    }
+    
+    private static void createSubscribedAssetForRenewal(Set<Id> renewalSubscId) {
+    
+        List<SBQQ__Subscription__c> renewalSubsc= [SELECT Id, SBQQ__QuoteLine__c FROM SBQQ__Subscription__c WHERE ID IN :renewalSubscId];
+        List<SBQQ__SubscribedAsset__c> newSas = new List<SBQQ__SubscribedAsset__c>();
+        Set<Id> qlIds = new Set<Id>();
+        for(SBQQ__Subscription__c sa : renewalSubsc) {
+            qlIds.add(sa.SBQQ__QuoteLine__c);
+        }
+        
+        
+        Map<Id, Id> qlToRenewedSub = new Map<Id, Id>();
+        for(SBQQ__QuoteLine__c sql : [SELECT Id, SBQQ__RenewedSubscription__c FROM SBQQ__QuoteLine__c WHERE Id IN :qlIds]) {
+            qlToRenewedSub.put(sql.Id, sql.SBQQ__RenewedSubscription__c);
+        }
+        
+        Map<Id, SBQQ__Subscription__c> renewedSubs = new Map<Id, SBQQ__Subscription__c>([SELECT Id, (SELECT Id, SBQQ__Asset__c FROM SBQQ__SubscribedAssets__r WHERE SBQQ__Asset__r.Is_Selected_For_Renewal__c = true) FROM SBQQ__Subscription__c WHERE Id IN :qlToRenewedSub.values()]);
+        
+        insert new TEST_LOG__c(Counter__c='SUBSCRIPTION', Body__c = renewalSubsc + ' ');
+        insert new TEST_LOG__c(Counter__c='renewedSubs ', Body__c = renewedSubs + ' ');
+        insert new TEST_LOG__c(Counter__c='qlToRenewedSub', Body__c = qlToRenewedSub + ' ');
+        
+        
+        for(SBQQ__Subscription__c sa : renewalSubsc) {
+            if(qlToRenewedSub.containsKey(sa.SBQQ__QuoteLine__c) && renewedSubs.containsKey(qlToRenewedSub.get(sa.SBQQ__QuoteLine__c))) {
+                for(SBQQ__SubscribedAsset__c a : renewedSubs.get(qlToRenewedSub.get(sa.SBQQ__QuoteLine__c)).SBQQ__SubscribedAssets__r) {
+                    newSas.add(
+                        new SBQQ__SubscribedAsset__c(
+                            SBQQ__Asset__c = a.SBQQ__Asset__c, 
+                            SBQQ__Subscription__c = sa.Id,
+                            SBQQ__Active__c = true
+                        )
+                    );
+                }
+            }
+        }
+        insert new TEST_LOG__c(Counter__c='newSas', Body__c = newSas+ ' ');
+        insert newSas;
         
     }
     

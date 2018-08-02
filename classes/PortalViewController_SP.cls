@@ -14,11 +14,8 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
     {
         String escapedKeyword = String.escapeSingleQuotes(SearchParameter == null ? '' : SearchParameter);
         String maskKeyword = '%' + escapedKeyword.replaceAll('\\*', '_') + '%';
-        string result='Select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c	,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c from Asset';
-        result += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\') and (SerialNumber=\'' + escapedKeyword + '\' or Model__c like \'' + maskKeyword + '\' or Product2.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';
-        if(IsSearchForActive==true)
-            result+= 'and Contract_End__c!=null and Contract_End__c >=today';
-        
+        string result='Select Id,Product2.Name,,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c from Asset';
+        result += ' where (Product2.Name like \'EC%\')  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\') and (SerialNumber=\'' + escapedKeyword + '\' or Model__c like \'' + maskKeyword + '\' or Product2.Name like \'' + maskKeyword + '\' or Customer_Notes__c like \'' + maskKeyword + '\')';
         result += ' limit 10000';
         
         System.debug(result);
@@ -27,9 +24,9 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
     protected override string BuildAssetQuery()
     {
        	String query = '';
-        query = 'select Id,Product2.Name,Contract_End__c,SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c';
+        query = 'select Id,Product2.Name,Product2.Product_Type__c,SerialNumber,Status,Account.Name,Product2.Model__c,Product2.Family,Customer_Notes__c,Ship_Date__c,License_End_Date__c,License_Key__c,Warranty_End_Date__c,Warranty_Start_Date__c,End_of_Maintenance__c';
         query += ' from Asset';
-        query += ' where (Product2.Name like \'EC%\') and SBQQ__CurrentSubscription__c in(Select SBQQ__Subscription__c from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true)  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\')';
+        query += ' where (Product2.Name like \'EC%\')  and Product2.Product_Type__c in(\'EC-SP-Metered\',\'EC-SP-Perpetual\',\'EC-SP-Term\',\'Service Provider\')  and Status in(\'Customer Owned\',\'Customer Subscription Active\',\'Customer Evaluation\')';
         query += ' limit 10000';
         System.debug(query);
         return query;
@@ -95,8 +92,8 @@ public with sharing class PortalViewController_SP extends PortalViewBase{
                 data.CustomerNotes= item.Customer_Notes__c;
                 data.LicenseKey=item.License_Key__c;
                 data.ShipDate=item.Ship_Date__c;
-                data.LicenseEndDate= item.Status=='Customer Subscription Active'? item.SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c:null;
-                data.ContractEndDate= item.Status=='Customer Owned'? item.SBQQ__CurrentSubscription__r.SBQQ__SubscriptionEndDate__c:null;
+                data.LicenseEndDate= null;
+                data.ContractEndDate= null;
                 data.WarrantyEndDate= item.Status=='Customer Owned'? item.Warranty_End_Date__c:null;
                 data.WarrantyStartDate= item.Status=='Customer Owned'? item.Warranty_Start_Date__c:null;
                 data.EndOfMaintenance= item.Status=='Customer Owned'? item.End_of_Maintenance__c:null;

@@ -53,10 +53,23 @@ public class ActivateOrderController {
                     ActivatedById = Userinfo.getUserId()
                 );
                 
+                
                 if(this.quote.SBCF_Evaluation_Quote__c) {
                     this.quote.POC_Status__c = 'Shipped';
                     update this.quote;
                 }
+                
+                
+                update new Order(
+                    Id = this.order.Id,
+                    SBQQ__Contracted__c = false
+                );
+                
+                update new Order(
+                    Id = this.order.Id,
+                    SBQQ__Contracted__c = true
+                );
+                
                 
                 PageReference page = new PageReference('/' + order.Id);
                 page.setRedirect(true);

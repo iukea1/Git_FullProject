@@ -2307,6 +2307,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestNewSalesDevelopment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestNotAllowClosedStage_ActiveAssets</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -4347,7 +4351,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MDF_Request__c.Activity_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4407,7 +4411,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MDF_Request__c.CSM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4427,7 +4431,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MDF_Request__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4622,6 +4626,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>MDF_Request__c.Others__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Owner_Role__c</field>
         <readable>true</readable>
@@ -4737,6 +4746,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>MDF_Request__c.Sales_People__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.SendReminder__c</field>
         <readable>false</readable>
@@ -4802,6 +4816,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>MDF_Request__c.System_Engineers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Target_Audience_Profile__c</field>
         <readable>true</readable>
@@ -4837,7 +4856,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MDF_Request__c.Type_of_Program__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9281,7 +9300,7 @@
         <layout>AOLead__c-AOLead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Account Layout</layout>
+        <layout>Account-Account Layout-CAM</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountBrand-Account BrandLayout</layout>
@@ -9481,6 +9500,10 @@
     <layoutAssignments>
         <layout>MDF_Request__c-MDF Request Layout</layout>
         <recordType>MDF_Request__c.Approved_MDF</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>MDF_Request__c-Others Layout</layout>
+        <recordType>MDF_Request__c.Others</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Macro-Macro Layout</layout>
@@ -9913,7 +9936,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
@@ -11220,8 +11243,14 @@
         <enabled>false</enabled>
     </pageAccesses>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>MDF_Request__c.Approved_MDF</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>MDF_Request__c.Others</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -11325,6 +11354,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>EdgeConnect_Assets_upd</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Internal_Discussion__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -11342,6 +11375,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MDF_Request__c</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>NX_GMS_To_VX_GMS_upd</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -11363,18 +11400,6 @@
     <tabVisibilities>
         <tab>Patches</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_SD_WAn</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_View_NXVX</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_Wan_OpView</tab>
-        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Purchase_Order__c</tab>
@@ -11417,6 +11442,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Service_Provider_Assets_upd</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Silver_Peak_Intranet</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -11438,6 +11467,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>VX_VRX_NX_Assets</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>VX_VRX_NX_Assets_upd</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>

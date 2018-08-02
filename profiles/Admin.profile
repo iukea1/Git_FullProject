@@ -2307,6 +2307,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestNewSalesDevelopment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestNotAllowClosedStage_ActiveAssets</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4622,6 +4626,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>MDF_Request__c.Others__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Owner_Role__c</field>
         <readable>true</readable>
@@ -4738,6 +4747,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>MDF_Request__c.Sales_People__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>MDF_Request__c.SendReminder__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4799,6 +4813,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MDF_Request__c.Supplies__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MDF_Request__c.System_Engineers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9483,6 +9502,10 @@
         <recordType>MDF_Request__c.Approved_MDF</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>MDF_Request__c-Others Layout</layout>
+        <recordType>MDF_Request__c.Others</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Macro-Macro Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -11536,6 +11559,11 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>MDF_Request__c.Others</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Purchasing_Request__c.MDF_Request</recordType>
@@ -11662,6 +11690,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>EdgeConnect_Assets_upd</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>EmailSetup__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
@@ -11714,6 +11746,10 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>NX_GMS_To_VX_GMS_upd</tab>
+        <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>NX_To_VX</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
@@ -11740,18 +11776,6 @@
     <tabVisibilities>
         <tab>Patches</tab>
         <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_SD_WAn</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_View_NXVX</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Portal_Wan_OpView</tab>
-        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Purchase_Appliances</tab>
@@ -11818,6 +11842,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Service_Provider_Assets_upd</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Silver_Peak_Intranet</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -11844,6 +11872,10 @@
     <tabVisibilities>
         <tab>VX_VRX_NX_Assets</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>VX_VRX_NX_Assets_upd</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>XactlyExpress__XCDealAttribute__c</tab>

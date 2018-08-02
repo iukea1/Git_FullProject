@@ -4,6 +4,7 @@
     <customButtons>Patch_Override</customButtons>
     <customButtons>absorblms__Enroll_in_Training</customButtons>
     <customButtons>absorblms__View_Course_Completion</customButtons>
+    <customButtons>CAM_Events</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -942,6 +943,10 @@
         <fields>re10__Status__c</fields>
         <fields>re10__OrderTotal__c</fields>
         <relatedList>re10__GKOrderHeader__c.re10__CustomerId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>MDF_Request__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

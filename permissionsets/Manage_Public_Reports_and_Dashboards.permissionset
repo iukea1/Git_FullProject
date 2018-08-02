@@ -2285,6 +2285,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestNewSalesDevelopment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestNotAllowClosedStage_ActiveAssets</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -4600,6 +4604,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>MDF_Request__c.Others__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MDF_Request__c.Owner_Role__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4715,6 +4724,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>MDF_Request__c.Sales_People__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>MDF_Request__c.SendReminder__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4776,6 +4790,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>MDF_Request__c.Supplies__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>MDF_Request__c.System_Engineers__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11030,6 +11049,10 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>MDF_Request__c.Others</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>Purchasing_Request__c.MDF_Request</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -11142,6 +11165,10 @@
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>EdgeConnect_Assets_upd</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>EmailSetup__c</tab>
         <visibility>None</visibility>
     </tabSettings>
@@ -11210,6 +11237,10 @@
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>NX_GMS_To_VX_GMS_upd</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>NX_To_VX</tab>
         <visibility>None</visibility>
     </tabSettings>
@@ -11243,18 +11274,6 @@
     </tabSettings>
     <tabSettings>
         <tab>Patches</tab>
-        <visibility>None</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Portal_SD_WAn</tab>
-        <visibility>None</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Portal_View_NXVX</tab>
-        <visibility>None</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Portal_Wan_OpView</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
@@ -11326,6 +11345,10 @@
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Service_Provider_Assets_upd</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Silver_Peak_Intranet</tab>
         <visibility>None</visibility>
     </tabSettings>
@@ -11351,6 +11374,10 @@
     </tabSettings>
     <tabSettings>
         <tab>VX_VRX_NX_Assets</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>VX_VRX_NX_Assets_upd</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

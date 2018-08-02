@@ -6,7 +6,7 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
     
     public void execute(Database.BatchableContext BC, List<SObject> scope)
     {
-        DateTime targetDate=Date.today();
+        Date targetDate=Date.today();
         
         System.debug('New Batch');
         List<AccountShare> accShares= new List<AccountShare>();
@@ -17,11 +17,10 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         List<SBQQ__Subscription__Share> lstDeleteSubShareIds= new List<SBQQ__Subscription__Share>();
         if(lstJobs!=null&& lstJobs.size()>0)
         {
-            targetDate=Datetime.newInstance(lstJobs[0].CompletedDate.date(), lstJobs[0].CompletedDate.time())   ;
-            System.debug('targetDate.time()'+targetDate.time());
-            System.debug('targetDate.time()'+targetDate.timeGMT());
+            targetDate=Date.valueOf(lstJobs[0].CompletedDate)   ;
+             System.debug('targetDate.time()'+lstJobs[0].CompletedDate);
         }
-        System.debug('targetDate'+targetDate);
+        System.debug('targetDate'+targetDate.format());
         // Find Account Shares For Account
         if(targetDate!=null)
             accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE Account.Type in('Customer','Partner')and LastModifiedDate >=:targetDate AND isDeleted = false];

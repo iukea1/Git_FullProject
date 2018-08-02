@@ -564,7 +564,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Lifecycle_Stage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_AQL_Stage_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_TAL_Stage_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

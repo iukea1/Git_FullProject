@@ -101,6 +101,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__PriceCalcStatusMessage__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TemporaryStartDateHolder__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -301,8 +305,7 @@
         <fields>SBQQ__OrderedQuantity__c</fields>
         <fields>Renewed_Original_Quantity__c</fields>
         <fields>SBQQ__QuotedQuantity__c</fields>
-        <fields>SBQQ__QuoteLine__c</fields>
-        <fields>ODER_ITEM.END_DATE</fields>
+        <fields>ODER_ITEM.START_DATE</fields>
         <fields>End_Date__c</fields>
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
