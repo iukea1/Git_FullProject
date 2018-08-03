@@ -103,6 +103,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Geo_Patch__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Service_Provider_Type__c</field>
             </layoutItems>
             <layoutItems>

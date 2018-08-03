@@ -96,7 +96,6 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         System.debug('Renewed Subscription : ' + renewalSubscriptions);
         System.debug('Newly generated subscription : ' + newlyGeneratedSubscription);
         
-        insert new TEST_LOG__c(Counter__c='renewalSubscriptions', Body__c = renewalSubscriptions+ ' ');
         
         if(newlyGeneratedSubscription.size()>0){
             
@@ -215,10 +214,6 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         
         Map<Id, SBQQ__Subscription__c> renewedSubs = new Map<Id, SBQQ__Subscription__c>([SELECT Id, (SELECT Id, SBQQ__Asset__c FROM SBQQ__SubscribedAssets__r WHERE SBQQ__Asset__r.Is_Selected_For_Renewal__c = true) FROM SBQQ__Subscription__c WHERE Id IN :qlToRenewedSub.values()]);
         
-        insert new TEST_LOG__c(Counter__c='SUBSCRIPTION', Body__c = renewalSubsc + ' ');
-        insert new TEST_LOG__c(Counter__c='renewedSubs ', Body__c = renewedSubs + ' ');
-        insert new TEST_LOG__c(Counter__c='qlToRenewedSub', Body__c = qlToRenewedSub + ' ');
-        
         
         for(SBQQ__Subscription__c sa : renewalSubsc) {
             if(qlToRenewedSub.containsKey(sa.SBQQ__QuoteLine__c) && renewedSubs.containsKey(qlToRenewedSub.get(sa.SBQQ__QuoteLine__c))) {
@@ -233,7 +228,6 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 }
             }
         }
-        insert new TEST_LOG__c(Counter__c='newSas', Body__c = newSas+ ' ');
         insert newSas;
         
     }

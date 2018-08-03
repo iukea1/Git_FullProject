@@ -4846,6 +4846,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>MDF_Request__c.Total_Number_of_People__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>MDF_Request__c.Total_Qualified_Leads__c</field>
         <readable>true</readable>

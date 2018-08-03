@@ -29,7 +29,7 @@ public List<AssetWrapper> lstOrderAssetView
                 if(lstContract!=null && lstContract.size()>0)
                 {
                     Id contractId=lstContract[0].Id;
-                    List<SBQQ__Subscription__c> lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description,SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.License_End_Date__c,SBQQ__Asset__r.GMS_Nodes__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__ProductName__c like : OrderType +'%' and  SBQQ__Contract__c =:contractId ];
+                    List<SBQQ__Subscription__c> lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate,SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description,SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.License_End_Date__c,SBQQ__Asset__r.GMS_Nodes__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__ProductName__c like : OrderType +'%' and  SBQQ__Contract__c =:contractId ];
                     if(lstSubsData!=null && lstSubsData.size()>0)
                     {
                         for(SBQQ__Subscription__c item: lstSubsData)
@@ -45,7 +45,7 @@ public List<AssetWrapper> lstOrderAssetView
                                         productName=productName.remove('(Asset)');
                                     if(subAssetData.SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description.contains('PLATINUM') || subAssetData.SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description.contains('GOLD'))
                                         productDesc=subAssetData.SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description;
-                                    lstData.add(new AssetWrapper(productName,subAssetData.SBQQ__Asset__r.SerialNumber,subAssetData.SBQQ__Asset__r.License_End_Date__c,subAssetData.SBQQ__Asset__r.GMS_Nodes__c,productDesc));
+                                    lstData.add(new AssetWrapper(productName,subAssetData.SBQQ__Asset__r.SerialNumber,subAssetData.SBQQ__Asset__r.License_End_Date__c,subAssetData.SBQQ__Asset__r.GMS_Nodes__c,productDesc,subAssetData.SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate));
                                     
                                 }
                             } 
@@ -98,21 +98,26 @@ public class AssetWrapper
     public Date LicenseEndDate {get;private set;}
     public string GmsNodes {get;private set;}
     public string ProdDesc {get;private set;}
+    public Date ConEndDate {get;private set;}
     public AssetWrapper(string prodName,String sn,Date licEndDate,string gmsNodes)
     {
         ProductName=prodName;
         SerialNumber=sn;
         LicenseEndDate=licEndDate;
         GMSNodes=gmsNodes;
-        ProdDesc='';
+        ProdDesc='N/A';
+        ConEndDate=null;
     }
-     public AssetWrapper(string prodName,String sn,Date licEndDate,string gmsNodes,string description)
+     public AssetWrapper(string prodName,String sn,Date licEndDate,string gmsNodes,string description,Date contractEndDate)
     {
         ProductName=prodName;
         SerialNumber=sn;
         LicenseEndDate=licEndDate;
         GMSNodes=gmsNodes;
         ProdDesc=description;
+        ConEndDate=contractEndDate;
+            
     }
+    
 }
 }

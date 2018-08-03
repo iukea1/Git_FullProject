@@ -37,7 +37,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainDuplicate_Update()
     {
         
@@ -58,7 +58,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainVersion_Insert()
     {
         
@@ -66,7 +66,7 @@ public class TestAccountTriggerHandler {
         {
             Account acc = new Account(Name='test', Unity_Orch_Version__c='1222.21.1.12222');
             insert acc;
-         
+            
         }
         catch(Exception e)
         {
@@ -76,7 +76,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainVersion_Update()
     {
         
@@ -86,7 +86,7 @@ public class TestAccountTriggerHandler {
             insert acc;
             acc.Unity_Orch_Version__c='12.21.1.1222';
             update acc;
-         
+            
         }
         catch(Exception e)
         {
@@ -97,7 +97,7 @@ public class TestAccountTriggerHandler {
         
     }
     
-     @IsTest
+    @IsTest
     public static void OrchDomainVersion_NotInSystem_Insert()
     {
         
@@ -119,7 +119,7 @@ public class TestAccountTriggerHandler {
             
             Account acc = new Account(Name='test', Unity_Orch_Version__c='1.21.1.12222');
             insert acc;
-         
+            
         }
         catch(Exception e)
         {
@@ -129,7 +129,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainVersion_NotInSystem_Update()
     {
         
@@ -150,7 +150,7 @@ public class TestAccountTriggerHandler {
             insert build;
             Account acc = new Account(Name='test', Unity_Orch_Admin_User__c='abc@abc.com',Unity_Orch_Domain__c='testabc6',Unity_Orch_Location__c='Canada (Central)');
             insert acc;
-           	acc.Unity_Orch_Version__c='12.21.1.12222';
+            acc.Unity_Orch_Version__c='12.21.1.12222';
             update acc;
         }
         catch(Exception e)
@@ -161,7 +161,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainVersion_InSystem_Update()
     {
         
@@ -182,7 +182,7 @@ public class TestAccountTriggerHandler {
             insert build;
             Account acc = new Account(Name='test', Unity_Orch_Admin_User__c='abc@abc.com',Unity_Orch_Domain__c='testabc6',Unity_Orch_Location__c='Canada (Central)');
             insert acc;
-           	acc.Unity_Orch_Version__c='8.1.1.12222';
+            acc.Unity_Orch_Version__c='8.1.1.12222';
             update acc;
         }
         catch(Exception e)
@@ -193,7 +193,7 @@ public class TestAccountTriggerHandler {
         } 
         
     }
-      @IsTest
+    @IsTest
     public static void OrchDomainVersion_InSystem_Update_Underscore()
     {
         
@@ -214,7 +214,7 @@ public class TestAccountTriggerHandler {
             insert build;
             Account acc = new Account(Name='test', Unity_Orch_Admin_User__c='abc@abc.com',Unity_Orch_Domain__c='testabc6',Unity_Orch_Location__c='Canada (Central)');
             insert acc;
-           	acc.Unity_Orch_Version__c='8.1.1.12222';
+            acc.Unity_Orch_Version__c='8.1.1.12222';
             update acc;
         }
         catch(Exception e)
@@ -284,7 +284,7 @@ public class TestAccountTriggerHandler {
         Test.startTest();
         Set<String> customerUserTypes = new Set<String> {'PowerCustomerSuccess'};
             Profile prof = [select Id,name from Profile where UserType in :customerUserTypes limit 1];
-        Account acc = new Account(Name = 'Test Opp Account');
+        Account acc = new Account(Name = 'Test Opp Account',Type='Prospect');
         insert acc;
         Contact con = new Contact(LastName='test',email='test-user@fakeemail.com',AccountId=acc.Id);
         insert con;
@@ -382,7 +382,7 @@ public class TestAccountTriggerHandler {
         acc.Partner_Application_Status__c='Approved';
         update acc;
     }
-   @IsTest
+    @IsTest
     public static void AllowECSPFlagChange()
     {
         Account acc=new Account(Name='Test',ECSP__c=true,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
@@ -464,7 +464,6 @@ public class TestAccountTriggerHandler {
             
         }
     }
-    
     @IsTest(SeeAllData=true)
     public static void NewInReviewAccount()
     {
@@ -481,7 +480,7 @@ public class TestAccountTriggerHandler {
         Account acc3= [Select Id, Patch__c from Account where id =: acc.id];
         system.assertEquals(Null, acc3.Patch__c);
     } 
-   @IsTest(SeeAllData=true)
+    @IsTest(SeeAllData=true)
     public static void NotInReviewAccount()
     {
         Account acc = new Account(Name='Test Prospect Account', Type='Prospect');
@@ -494,6 +493,5 @@ public class TestAccountTriggerHandler {
         Account acc2= [Select Id, Patch__c from Account where id =: acc.id];
         Patch__c p1= [Select Id from Patch__c where Name='P-364'];
         system.assertEquals(p1.Id, acc2.Patch__c);
-    }
-    
+    } 
 }

@@ -101,10 +101,6 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__PriceCalcStatusMessage__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TemporaryStartDateHolder__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

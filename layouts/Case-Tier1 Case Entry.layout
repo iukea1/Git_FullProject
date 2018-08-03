@@ -163,6 +163,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Asset_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Model_Asset_Link__c</field>
             </layoutItems>
             <layoutItems>

@@ -352,6 +352,10 @@
             <masterLabel>Pending Results</masterLabel>
             <translation><!-- Pending Results --></translation>
         </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- Marketing Activity PoC: Email --></label>
@@ -618,6 +622,10 @@
     <fields>
         <label><!-- Total Leads Generated --></label>
         <name>Total_Leads_Generated__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of People --></label>
+        <name>Total_Number_of_People__c</name>
     </fields>
     <fields>
         <label><!-- Total Qualified Leads --></label>

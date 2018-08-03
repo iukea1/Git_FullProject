@@ -28,14 +28,19 @@ public class OrderTriggerHandler implements ITriggerHandler {
                 quoteIds.add(o.SBQQ__Quote__c);
             }
             
-            Map<Id, SBQQ__Quote__c> parentQuotes = new Map<Id, SBQQ__Quote__c>([SELECT Id, SBQQ__StartDate__c FROM SBQQ__Quote__c WHERE Id = :quoteIds]);
-            
+            Map<Id, SBQQ__Quote__c> parentQuotes = new Map<Id, SBQQ__Quote__c>([SELECT Id, SBQQ__StartDate__c, End_Date__c FROM SBQQ__Quote__c WHERE Id = :quoteIds]);
+            insert new TEST_LOG__c(Counter__c= 'newItems', Body__c=newItems+'');
+            insert new TEST_LOG__c(Counter__c= 'oldItems', Body__c=oldItems+'');
             for(Order o : newItems) {
                 if(o.SBQQ__Quote__c != null && oldItems.get(o.Id).SBQQ__Quote__c == null) {
-                    //System.assertEquals(parentQuotes+'', o+' ');
                     if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c) {
                         o.TemporaryStartDateHolder__c = o.EffectiveDate;
                         o.EffectiveDate = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c;
+                        
+                        Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
+                        
+                        o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                        o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
                         orderIds.add(o.Id);
                     }
                 }

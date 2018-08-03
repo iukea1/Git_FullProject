@@ -843,6 +843,10 @@ INCLUDES(Owner:User.Contact.Account.GEO_Supported__c, &quot;APAC&quot;),
                 <fullName>Denied</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Planned</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -932,12 +936,13 @@ INCLUDES(Owner:User.Contact.Account.GEO_Supported__c, &quot;APAC&quot;),
         <fullName>Others__c</fullName>
         <externalId>false</externalId>
         <label>Others</label>
-        <length>10</length>
+        <precision>10</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -1270,12 +1275,13 @@ BR() &amp;
         <fullName>Sales_People__c</fullName>
         <externalId>false</externalId>
         <label>Sales People</label>
-        <length>10</length>
+        <precision>10</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -1456,12 +1462,13 @@ BR() &amp;
         <fullName>System_Engineers__c</fullName>
         <externalId>false</externalId>
         <label>System Engineers</label>
-        <length>10</length>
+        <precision>10</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -1522,6 +1529,19 @@ BR() &amp;
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Number_of_People__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Sales_People__c,0) + BLANKVALUE(System_Engineers__c,0) + BLANKVALUE(Others__c,0)</formula>
+        <label>Total Number of People</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -4544,31 +4564,11 @@ BR() &amp;
         <picklistValues>
             <picklist>MDF_Status__c</picklist>
             <values>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Completed</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Denied</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Past Due</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pending Results</fullName>
+                <fullName>Planned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

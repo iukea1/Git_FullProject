@@ -290,15 +290,7 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
-            <field>CustomerSignedId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices_2__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices__c</field>
+            <field>POC_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderAddress>notifications@silver-peak.com</senderAddress>
@@ -330,15 +322,7 @@
             <type>accountTeam</type>
         </recipients>
         <recipients>
-            <field>CustomerSignedId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices_2__c</field>
-            <type>contactLookup</type>
-        </recipients>
-        <recipients>
-            <field>Customer_Addl_Notices__c</field>
+            <field>POC_Contact__c</field>
             <type>contactLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>

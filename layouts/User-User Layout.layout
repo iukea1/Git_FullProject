@@ -70,6 +70,13 @@
                 <behavior>Edit</behavior>
                 <field>Role_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <height>200</height>
+                <page>absorblms__userTranscript</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
