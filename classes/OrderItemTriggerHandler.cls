@@ -71,6 +71,7 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
                 );
             }
         }
+        
         if(!parentOrderUpdate.isEmpty()) update parentOrderUpdate.values();
         if(!parentOrderIds.isEmpty()) setParentDate(parentOrderIds);
     }
