@@ -5,6 +5,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
     }
     public void BeforeInsert(List<SObject> newItems) {
         setInitialRecalc((List<Order>)newItems);
+        setDefaultDates((List<Order>)newItems, new Map<Id, Order>());
     }
     public void AfterInsert(Map<Id, SObject> newItems) {}
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
@@ -29,19 +30,27 @@ public class OrderTriggerHandler implements ITriggerHandler {
             }
             
             Map<Id, SBQQ__Quote__c> parentQuotes = new Map<Id, SBQQ__Quote__c>([SELECT Id, SBQQ__StartDate__c, End_Date__c FROM SBQQ__Quote__c WHERE Id = :quoteIds]);
-            insert new TEST_LOG__c(Counter__c= 'newItems', Body__c=newItems+'');
-            insert new TEST_LOG__c(Counter__c= 'oldItems', Body__c=oldItems+'');
+            
             for(Order o : newItems) {
-                if(o.SBQQ__Quote__c != null && oldItems.get(o.Id).SBQQ__Quote__c == null) {
+                Boolean proceed = (Trigger.isInsert ? o.SBQQ__Quote__c != null : o.TemporaryStartDateHolder__c != null);
+                
+                if(proceed) {
                     if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c) {
-                        o.TemporaryStartDateHolder__c = o.EffectiveDate;
-                        o.EffectiveDate = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c;
-                        
-                        Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
-                        
-                        o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
-                        o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
-                        orderIds.add(o.Id);
+                        if(o.TemporaryStartDateHolder__c == null) { // on insert
+                            o.TemporaryStartDateHolder__c = o.EffectiveDate;
+                            //o.EffectiveDate = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c;
+                            
+                            Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
+                            
+                            o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                            o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                        } else { //on update
+                            //o.EffectiveDate = o.TemporaryStartDateHolder__c;
+                            o.TemporaryStartDateHolder__c = null;
+                        }
+                    } else {
+                        o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
+                        o.End_Date__c = o.EndDate;
                     }
                 }
             }

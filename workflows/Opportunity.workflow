@@ -42,6 +42,27 @@
         <template>Sales/LatestGreater_Than_100_k_Opportunity</template>
     </alerts>
     <alerts>
+        <fullName>Closed_Won_New_and_FO_EMEA</fullName>
+        <ccEmails>SFDCAllHands@silver-peak.com</ccEmails>
+        <description>Closed Won New and FO- EMEA</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>ddalponte@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ewhite@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rbooth@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>silverpeakinfo@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Sales/LatestGreater_Than_50K_Oppty_Won_EMEA</template>
+    </alerts>
+    <alerts>
         <fullName>Commit_Changed</fullName>
         <description>Commit Changed</description>
         <protected>false</protected>
@@ -1358,6 +1379,54 @@ ISBLANK(Signed_By__c)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Morethan50KOpportunity Closed Won%28FO%29-EMEA</fullName>
+        <actions>
+            <name>Closed_Won_New_and_FO_EMEA</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Won</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>Follow on Business,Support Renewal,Subscription Renewal,EC Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Win_Description__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Number_of_branches__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.primary_competitor__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.GEO_Region__c</field>
+            <operation>equals</operation>
+            <value>EMEA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Amount</field>
+            <operation>greaterThan</operation>
+            <value>50000</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Amount</field>
+            <operation>lessThan</operation>
+            <value>100000</value>
+        </criteriaItems>
+        <description>Sends an email when a follow on opportunity is closed/won with Amount &gt;50000 for EMEA Opportunities</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>NewMarketplaceOppOpened</fullName>
         <actions>
             <name>New_Opp_Opened_from_Marketplace_inquiry</name>
@@ -1554,7 +1623,7 @@ ISBLANK(Signed_By__c)
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND ((2 AND 3)  OR (4 AND 5)) AND 6</booleanFilter>
+        <booleanFilter>1 AND ((2 AND 3)  OR (4 AND 5) OR (6 AND 7 AND 8 AND 9)) AND 10</booleanFilter>
         <criteriaItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>
@@ -1578,6 +1647,26 @@ ISBLANK(Signed_By__c)
         <criteriaItems>
             <field>Opportunity.Amount</field>
             <operation>greaterThan</operation>
+            <value>100000</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Type</field>
+            <operation>equals</operation>
+            <value>Follow on Business,Support Renewal,Subscription Renewal,EC Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.GEO_Region__c</field>
+            <operation>equals</operation>
+            <value>EMEA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Amount</field>
+            <operation>greaterThan</operation>
+            <value>50000</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Amount</field>
+            <operation>lessThan</operation>
             <value>100000</value>
         </criteriaItems>
         <criteriaItems>
