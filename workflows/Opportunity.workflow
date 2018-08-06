@@ -964,6 +964,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Dead_Reason_As_Won_As_Metered</fullName>
+        <field>Dead_Reason__c</field>
+        <literalValue>Won as Metered</literalValue>
+        <name>Update Dead Reason As Won As Metered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Last_Modified_Date</fullName>
         <field>Owner_Last_Activity_Date__c</field>
         <formula>LastModifiedDate</formula>
@@ -1858,6 +1867,25 @@ ISPICKVAL(StageName,&quot;Closed Won&quot;),
 NOT(ISBLANK(Tier1_Partner__c)),
 Tier1_Partner__c==&quot;0013000000ARVVc&quot;
 )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Dead Reason As Won As Metered</fullName>
+        <actions>
+            <name>Update_Dead_Reason_As_Won_As_Metered</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Metered_Claimed_as_Enterprise__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Dead</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
