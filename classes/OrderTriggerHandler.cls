@@ -38,18 +38,21 @@ public class OrderTriggerHandler implements ITriggerHandler {
                     if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c) {
                         if(o.TemporaryStartDateHolder__c == null) { // on insert
                             o.TemporaryStartDateHolder__c = o.EffectiveDate;
-                            //o.EffectiveDate = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c;
-                            
                             Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
-                            
                             o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
                             o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
-                        } else { //on update
-                            //o.EffectiveDate = o.TemporaryStartDateHolder__c;
+                        } else {
                             o.TemporaryStartDateHolder__c = null;
                         }
                     } else {
                         o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
+                        o.End_Date__c = o.EndDate;
+                    }
+                }
+                if(Trigger.isUpdate) {
+                    if(o.Type == 'Amendment' && oldItems.get(o.Id).Type != 'Amendment') {
+                        Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
+                        o.EndDate = o.EffectiveDate.addDays(daysBetween);
                         o.End_Date__c = o.EndDate;
                     }
                 }

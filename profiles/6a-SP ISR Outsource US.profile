@@ -1755,7 +1755,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RHX_TEST_Asset</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RHX_TEST_Attachment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RHX_TEST_Contract</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
