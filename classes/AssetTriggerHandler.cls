@@ -662,7 +662,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Order_Product_Item__c> opiQuery = 
             [SELECT Id, Existing_Asset__c, Serial_Number__c, Part_Number__c, Order_Product__r.OrderId, 
                 Order_Product__r.SBQQ__QuoteLine__c, Order_Product__r.SBQQ__QuoteLine__r.SBQQ__Quote__c, 
-                Status__c, Order__c, Order__r.TemporaryStartDateHolder__c
+                Status__c, Order__c, Order__r.TemporaryStartDateHolder__c, Order__r.SBCF_Shipping_Address__c
                 FROM Order_Product_Item__c 
                 WHERE Order__c IN :orderCollect AND (Asset__c = NULL OR Asset__c IN :newAssets)];
         
@@ -675,7 +675,8 @@ public class AssetTriggerHandler implements ITriggerHandler {
         }
         
         List<Order_Product_Item__c> opiIdDone = new List<Order_Product_Item__c>();
-        List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, SBQQ__OrderProduct__r.OrderId, SBQQ__OrderProduct__r.Order.Tracking_Information__c
+        List<Asset> updateAssets = [SELECT Id, Name, SerialNumber, Part_Number__c, SBQQ__QuoteLine__c, SBQQ__OrderProduct__c, 
+        SBQQ__OrderProduct__r.Order.SBCF_Shipping_Address__c, SBQQ__OrderProduct__r.OrderId, SBQQ__OrderProduct__r.Order.Tracking_Information__c
              FROM Asset WHERE Id IN :newAssets]; 
         
 
@@ -692,7 +693,9 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 a.Part_Number__c = opiUp.Part_Number__c;
                 a.Status = opiUp.Status__c;
                 a.Tracking_Information__c = a.SBQQ__OrderProduct__r.Order.Tracking_Information__c;
+                a.Ship_To_Location__c = a.SBQQ__OrderProduct__r.Order.SBCF_Shipping_Address__c;
                 if(a.Status == null) a.Status = 'Customer Owned';
+                
                 if(a.Ship_Date__c != opiUp.Order__r.TemporaryStartDateHolder__c) {
                     a.Ship_Date__c = opiUp.Order__r.TemporaryStartDateHolder__c;
                     a.Warranty_Start_Date__c = opiUp.Order__r.TemporaryStartDateHolder__c;

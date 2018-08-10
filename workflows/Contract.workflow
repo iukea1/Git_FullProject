@@ -820,6 +820,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Trigger_Account_Sync</fullName>
+        <field>Trigger_Account_Sync__c</field>
+        <literalValue>1</literalValue>
+        <name>Trigger Account Sync</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>contract_expiry</fullName>
         <field>Status</field>
         <literalValue>Expired</literalValue>
@@ -854,10 +864,6 @@
     </rules>
     <rules>
         <fullName>EdgeConnect After Expiration</fullName>
-        <actions>
-            <name>Change_the_status_to_Expired</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
@@ -868,11 +874,6 @@
             <field>Contract.Evaluation_Quote__c</field>
             <operation>equals</operation>
             <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.EndDate</field>
-            <operation>lessThan</operation>
-            <value>TODAY</value>
         </criteriaItems>
         <criteriaItems>
             <field>Contract.Status</field>
@@ -894,8 +895,13 @@
                 <name>Send_Contract_expiration_a_day_after</name>
                 <type>Alert</type>
             </actions>
+            <actions>
+                <name>Change_the_status_to_Expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -1042,6 +1048,30 @@ NOT(ISNULL(SBQQ__Order__c)),
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Trigger Active Sub Count</fullName>
+        <actions>
+            <name>Trigger_Account_Sync</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contract.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX,EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contract.Evaluation_Quote__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Trigger Virtual Sub Sync</fullName>
         <active>false</active>
         <criteriaItems>
@@ -1057,10 +1087,6 @@ NOT(ISNULL(SBQQ__Order__c)),
     </rules>
     <rules>
         <fullName>Unity Cloud Orchestrator After Expiration</fullName>
-        <actions>
-            <name>Change_the_status_to_Expired</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Contract.Unity_Cloud_Orchestrator_Count__c</field>
@@ -1073,11 +1099,6 @@ NOT(ISNULL(SBQQ__Order__c)),
             <value>False</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Contract.EndDate</field>
-            <operation>lessThan</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
             <field>Contract.Status</field>
             <operation>equals</operation>
             <value>Activated</value>
@@ -1088,8 +1109,13 @@ NOT(ISNULL(SBQQ__Order__c)),
                 <name>Unity_Cloud_Orch_1_Day_After</name>
                 <type>Alert</type>
             </actions>
+            <actions>
+                <name>Change_the_status_to_Expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -1141,10 +1167,6 @@ NOT(ISNULL(SBQQ__Order__c)),
     </rules>
     <rules>
         <fullName>VX Subscription After Expiration</fullName>
-        <actions>
-            <name>Change_the_status_to_Expired</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Contract.Product_Type__c</field>
@@ -1166,19 +1188,19 @@ NOT(ISNULL(SBQQ__Order__c)),
             <operation>equals</operation>
             <value>Activated</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Contract.EndDate</field>
-            <operation>lessThan</operation>
-            <value>TODAY</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
                 <name>VX_Sub_Day_After</name>
                 <type>Alert</type>
             </actions>
+            <actions>
+                <name>Change_the_status_to_Expired</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Contract.EndDate</offsetFromField>
             <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>

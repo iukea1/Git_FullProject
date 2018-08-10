@@ -6,7 +6,7 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
     
     public void execute(Database.BatchableContext BC, List<SObject> scope)
     {
-        Date targetDate=Date.today();
+        DateTime targetDate=Date.today();
         
         System.debug('New Batch');
         List<AccountShare> accShares= new List<AccountShare>();
@@ -17,10 +17,13 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         List<SBQQ__Subscription__Share> lstDeleteSubShareIds= new List<SBQQ__Subscription__Share>();
         if(lstJobs!=null&& lstJobs.size()>0)
         {
-            targetDate=Date.valueOf(lstJobs[0].CompletedDate)   ;
-             System.debug('targetDate.time()'+lstJobs[0].CompletedDate);
+            //targetDate=Date.valueOf(lstJobs[0].CompletedDate);
+        	Integer offset = UserInfo.getTimezone().getOffset(lstJobs[0].CompletedDate);
+			Datetime local = lstJobs[0].CompletedDate.addSeconds(offset/1000);
+            targetDate=local;
+            System.debug('targetDate.time()'+targetDate);
         }
-        System.debug('targetDate'+targetDate.format());
+      
         // Find Account Shares For Account
         if(targetDate!=null)
             accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE Account.Type in('Customer','Partner')and LastModifiedDate >=:targetDate AND isDeleted = false];
@@ -37,91 +40,13 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
             Map<Id,Set<Id>> mapAccountRoleIds=SubscriptionHelper.GetAccountRoleIds(setAccIds);
              // Get list of accounts and userIds
             Map<Id,Set<Id>> mapAccountUserIds=SubscriptionHelper.GetAccountUserIds(setAccIds);
-            for(Id acctId: setAccIds)
-            {
-                Set<Id> setShareRoles=new Set<Id>();
-                Set<Id> setShareUsers=new Set<Id>();
-                Set<Id> roleIds= new Set<Id>();
-                Set<Id> userIds= new Set<Id>();
-                // Extract roleIds for each account from the map values
-                if(mapAccountRoleIds!=null && mapAccountRoleIds.size()>0)
-                    roleIds=mapAccountRoleIds.get(acctId);
-                if(mapAccountUserIds!=null && mapAccountUserIds.size()>0)
-                    userIds=mapAccountUserIds.get(acctId);
-                // Extract userIds for each account from the map values
-                System.debug('acc roleIds'+roleIds);
-                System.debug('acc userIds'+userIds);
-                //for each account get sub share and usergroup Ids
-                Map<Id,Id> mapSubRoleIds=SubscriptionHelper.GetSubRoleIds(acctId);
-                System.debug('mapSubRoleIds' +mapSubRoleIds);
-                Map<Id,Id> mapSubUserIds=SubscriptionHelper.GetSubUserIds(acctId);
-                System.debug('mapSubUserIds' +mapSubUserIds);
-                //loop for each roles and check whether exists. If not delete.
-                if(mapSubRoleIds!=null && mapSubRoleIds.size()>0)
-                {
-                    for(Id subId:mapSubRoleIds.keyset())
-                    {
-                        Id roleId=mapSubRoleIds.get(subId);
-                        if(!roleIds.contains(roleId) || roleIds.size()==0)
-                        {
-                            lstDeleteSubShareIds.add(new SBQQ__Subscription__Share(Id=subId));
-                        }
-                    }
-                    List<Id> lstShareRoles=mapSubRoleIds.values();
-                    setShareRoles.addAll(lstShareRoles);                        
-                }
-                System.debug('userIds '+userIds);
-                //loop for each users and check whether exists. If not delete.
-                if(mapSubUserIds!=null && mapSubUserIds.size()>0)
-                {
-                    for(Id subId:mapSubUserIds.keyset())
-                    {
-                        Id userId=mapSubUserIds.get(subId);
-                        System.debug('userId '+userId);
-                        if(!userIds.contains(userId) || userIds.size()==0)
-                        {
-                            lstDeleteSubShareIds.add(new SBQQ__Subscription__Share(Id=subId));
-                        }
-                    }
-                    List<Id> lstShareUsers=mapSubUserIds.values();
-                    setShareUsers.addAll(lstShareUsers);  
-                }
-                if(roleIds!=null &&roleIds.size()>0)
-                {
-                    for(Id item:roleIds)
-                    {
-                        if(!setShareRoles.contains(item))
-                        {
-                            setAddUserGroupIds.add(item);
-                        }
-                    }
-                }
-                if(userIds!=null &&userIds.size()>0)
-                {
-                    for(Id item:userIds)
-                    {
-                        if(!setShareUsers.contains(item))
-                        {
-                            setAddUserGroupIds.add(item);
-                        }
-                    }
-                }
-                
-                if(setAddUserGroupIds.size()>0)
-                {
-                    List<SBQQ__Subscription__c> lstSubToInsert=SubscriptionHelper.RetreiveExistingSubs(acctId);
-                    for(Id counter:setAddUserGroupIds)
-                    {
-                        if(lstSubToInsert!=null && lstSubToInsert.size()>0)
-                        {
-                            for(SBQQ__Subscription__c item:lstSubToInsert)
-                            {
-                                lstAddSubscriptionShare.add(new SBQQ__Subscription__Share(ParentId=item.Id,AccessLevel='Read',UserOrGroupId=counter));
-                            }
-                        }
-                    }
-                }
-            }
+            Map<Id,List<SubscriptionHelper.SubscriptionWrapper>> mapSubData=new Map<Id,List<SubscriptionHelper.SubscriptionWrapper>>();
+            List<SBQQ__Subscription__c> lstSubs=[select Id,SBQQ__Account__c from SBQQ__subscription__c where SBQQ__Account__c in:setAccIds];
+            List<SBQQ__Subscription__Share> lstSubShares=[SELECT Id,ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c in:setAccIds)];
+            mapSubData=SubscriptionHelper.GetSubscriptionByAcctIds(setAccIds,lstSubs,lstSubShares);
+            
+            //List<SubscriptionHelper.SubscriptionWrapper> lstAllSubWrapper= mapSubData.getValues();
+          
             System.Savepoint sp= Database.setSavepoint();
             try
             {
@@ -148,7 +73,7 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         if(!Test.isRunningTest())
         {
             SubscriptionSharingJob obj= new SubscriptionSharingJob();
-            System.scheduleBatch(obj, 'SubscriptionSharing', 15);        
+            System.scheduleBatch(obj, 'SubscriptionSharing', 15,1);        
         }
     }
     

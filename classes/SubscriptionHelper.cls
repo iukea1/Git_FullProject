@@ -134,7 +134,7 @@ public class SubscriptionHelper {
         Set<Id> setSubShare= new Set<Id>();
         Map<Id,Id> mapRoleGroupIds= new Map<Id,Id>();// ShareId and UserOrGroupId
         Map<Id,Id> setResultIds= new Map<Id,Id>();// ShareId and UserOrGroupId
-         Set<Id> setPortalGroupIds= new Set<Id>();
+        Set<Id> setPortalGroupIds= new Set<Id>();
         List<SBQQ__Subscription__Share> lstSubShares=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c =:AccountID)];
         if(lstSubShares!=null && lstSubShares.size()>0)
         {
@@ -203,6 +203,183 @@ public class SubscriptionHelper {
         return mapResult;
     }
     
+    
+    public static Set<Id> GetPortalRoleIds(Set<Id> setUserGroupIds)
+    {
+        Map<ID, Group> shareGroups;
+        List<User> shareUsers;
+        List<UserRole> roles;
+        Map<ID,Id> roleIDs;              
+        
+        Set<Id> setPortalGroupIds= new Set<Id>();
+        if(setUserGroupIds!=null && setUserGroupIds.size()>0)
+        {
+            shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN:setUserGroupIds]);
+            // Get Role IDs
+            roleIDs = new Map<ID,Id>();
+            for (Group shareGroup1 : shareGroups.values()) {
+                roleIDs.put(shareGroup1.Id,shareGroup1.RelatedId);
+            }
+            
+            System.debug('roleIDs'+ roleIDs);
+            Map<Id,UserRole>mapRoles = new Map<Id,UserRole>([SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.values() and PortalType in('CustomerPortal','Partner')]);
+            Set<Id> setRoleIds=mapRoles.keyset();
+            System.debug('setRoleIds' + setRoleIds);
+            
+            Set<Id> setGroupIds= new Set<Id>();
+            for(Id groupId:roleIds.keyset())
+            {
+                Id roleId=roleIds.get(groupId);
+                if(setRoleIds.contains(roleId))
+                {
+                    setPortalGroupIds.add(groupId);
+                }
+            }
+        }
+        return setPortalGroupIds;
+    }
+    
+    public static Set<Id> GetPortalUserIds(Set<Id> setUserGroupIds)
+    {
+        Set<Id> setPartnerUsers= new Set<Id>();
+        List<User> shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner','PowerCustomerSuccess')and IsActive=true and Id IN:setUserGroupIds];
+        if(shareUsers!=null && shareUsers.size()>0)
+        {
+            for (User user : shareUsers) {
+                setPartnerUsers.add(user.Id);
+            }
+        }
+        return setPartnerUsers;
+    }
+    
+    
+    
+    public static List<SubscriptionWrapper> GetSubscriptionByRoleIds(List<SubscriptionWrapper> lstSubWrapper)
+    {
+        		Map<Id,List<SubscriptionWrapper>> mapResult= new Map<Id,List<SubscriptionWrapper>>();// ShareId and UserOrGroupId
+                Map<ID, Group> shareGroups;
+                List<User> shareUsers;
+                List<UserRole> roles;
+                Map<ID,Id> roleIDs;
+                Set<Id> setSubShare= new Set<Id>();
+                Map<Id,Id> mapRoleGroupIds= new Map<Id,Id>();// ShareId and UserOrGroupId
+                Set<Id> setPortalGroupIds= new Set<Id>();
+                List<SubscriptionWrapper> lstFinalSub= new List<SubscriptionWrapper>();
+                
+                if(lstSubWrapper!=null && lstSubWrapper.size()>0)
+                {
+                    for (SubscriptionWrapper subShare : lstSubWrapper) {
+                        setSubShare.add(subShare.UserOrGroupId);
+                    }
+                    shareGroups = new Map<ID, Group>([SELECT Id, Name, RelatedId, Type FROM Group WHEre Id IN:setSubShare]);
+                    
+                    // Get Role IDs
+                    roleIDs = new Map<ID,Id>();
+                    for (Group shareGroup1 : shareGroups.values()) {
+                        roleIDs.put(shareGroup1.Id,shareGroup1.RelatedId);
+                    }
+                    
+                    System.debug('roleIDs'+ roleIDs);
+                    Map<Id,UserRole>mapRoles = new Map<Id,UserRole>([SELECT Id,Name,ParentRoleId,PortalAccountId,PortalAccountOwnerId,PortalRole,PortalType FROM UserRole WHERE id IN :roleIDs.values() and PortalType in('CustomerPortal','Partner')]);
+                    Set<Id> setRoleIds=mapRoles.keyset();
+                    System.debug('setRoleIds' + setRoleIds);
+                    
+                    Set<Id> setGroupIds= new Set<Id>();
+                    for(Id groupId:roleIds.keyset())
+                    {
+                        Id roleId=roleIds.get(groupId);
+                        if(setRoleIds.contains(roleId))
+                        {
+                            setPortalGroupIds.add(groupId);
+                        }
+                    }
+                    for (SubscriptionWrapper subShare : lstSubWrapper) {
+                        if(setPortalGroupIds.contains(subshare.UserOrGroupId))
+                            lstFinalSub.add(subShare);
+                    }
+                }
+        
+        return lstFinalSub;
+    }
+    
+    public static Map<Id,List<SubscriptionWrapper>> GetSubscriptionByUserIds(Map<Id,List<SubscriptionWrapper>> mapSubIds){
+        Map<Id,List<SubscriptionWrapper>> mapResult= new Map<Id,List<SubscriptionWrapper>>();// ShareId and UserOrGroupId
+        if(mapSubIds!=null && mapSubIds.size()>0)
+        {
+            for(Id accId: mapSubIds.keySet())
+            {
+                Set<Id> setSubShare= new Set<Id>();
+                Set<Id> setPartnerUsers= new Set<Id>();
+                List<SubscriptionWrapper> lstFinalSub= new List<SubscriptionWrapper>();
+                List<SubscriptionWrapper> lstSubWrapper= mapSubIds.get(accId);
+                if(lstSubWrapper!=null && lstSubWrapper.size()>0)
+                {
+                    for (SubscriptionWrapper subShare : lstSubWrapper) {
+                        setSubShare.add(subShare.UserOrGroupId);
+                    }
+                    System.debug('setSubShare'+setSubShare.size());
+                    List<User> shareUsers= [SELECT Id,Contact.AccountId FROM User Where UserType in('PowerPartner','PowerCustomerSuccess')and IsActive=true and Id IN:setSubShare ];
+                    if(shareUsers!=null && shareUsers.size()>0)
+                    {
+                        for (User user : shareUsers) {
+                            setPartnerUsers.add(user.Id);
+                        }
+                    }
+                    for (SubscriptionWrapper subShare : lstSubWrapper) {
+                        if(setPartnerUsers.contains(subshare.UserOrGroupId))
+                            lstFinalSub.add(subShare);
+                    }
+                }
+                mapResult.put(accId,lstFinalSub);
+            }
+            
+            
+        }
+        
+        return mapResult;
+    }
+    
+    public static Map<Id,List<SubscriptionWrapper>> GetSubscriptionByAcctIds(Set<Id> setAcctIds,List<SBQQ__Subscription__c> lstSub,List<SBQQ__Subscription__Share> lstSubShare)
+    {
+        List<SubscriptionWrapper> lstSubWrapper= new List<SubscriptionWrapper>();
+        Map<Id,Id> mapSubAccId= new Map<Id,Id>();
+        Map<Id,List<SubscriptionWrapper>> mapResult= new Map<Id,List<SubscriptionWrapper>>();
+        if(lstSub!=null && lstSub.size()>0)
+        {
+            for(SBQQ__Subscription__c sub:lstSub)
+            {
+                mapSubAccId.put(sub.Id,sub.SBQQ__Account__c);
+            }
+            
+        }
+        if(lstSubShare!=null && lstSubShare.size()>0)
+        {
+            for(SBQQ__Subscription__Share subShare:lstSubShare)
+            {
+                if(mapSubAccId.containskey(subShare.ParentId))
+                {
+                    Id accId=mapSubAccId.get(subShare.ParentId);
+                    lstSubWrapper.add(new SubscriptionWrapper(subShare.ParentId,subShare.Id,subShare.UserOrGroupId,accId));
+                }
+            } 
+        }
+        
+        if(setAcctIds!=null && setAcctIds.size()>0)
+        {
+            for(Id accId:setAcctIds)
+            {
+                List<SubscriptionWrapper> lstSubData= new List<SubscriptionWrapper>();
+                for(SubscriptionWrapper subWrapper:lstSubWrapper)
+                {
+                    if(accId==subWrapper.AccountId)
+                        lstSubData.add(subWrapper);
+                }
+                mapResult.put(accId,lstSubData);
+            }
+        }
+        return mapResult;
+    }
+    
     public static void DeleteSubscriptionsShareRecords(List<SBQQ__Subscription__Share> lstSubShares)
     {
         if(lstSubShares!=null&& lstSubShares.size()>0)
@@ -221,4 +398,22 @@ public class SubscriptionHelper {
     {
         return [Select Id from SBQQ__Subscription__c where SBQQ__Account__c=:acctId];
     }
+    
+    public class SubscriptionWrapper
+    {
+        public Id AccountId{get;set;}
+        public Id SubId{get;set;}
+        public Id SubShareId{get;set;}
+        public Id UserOrGroupId{get;set;}
+        
+        public SubscriptionWrapper(Id subscriptionId,Id subscriptionShareId,Id userOrRoleId, Id acctId)
+        {
+            AccountId=acctId;
+            SubId=subscriptionId;
+            SubShareId=subscriptionShareId;
+            UserOrGroupId=userOrRoleId;
+        }
+        
+    }
+    
 }
