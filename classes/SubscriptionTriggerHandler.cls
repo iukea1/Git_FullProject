@@ -609,6 +609,7 @@ OpportunityIds.add(ord.OpportunityId);
     private static Void ShareSubscriptionRecordsWithPortalAccounts(List<SBQQ__Subscription__c> lstSubs)
     {
         Set<Id> setAcctIds= new Set<Id>();
+         Set<Id> UserOrGroupIds= new Set<Id>();
         List<SBQQ__Subscription__Share> lstSubShares= new List<SBQQ__Subscription__Share>();
         if(lstSubs!=null && lstSubs.size()>0)
         {
@@ -617,9 +618,16 @@ OpportunityIds.add(ord.OpportunityId);
                 setAcctIds.add(sub.SBQQ__Account__c);
             }
             Map<Id,Set<Id>> mapActSubs= new  Map<Id,Set<Id>>();
-            Map<Id,Set<Id>> mapPortalRoles=SubscriptionHelper.GetAccountRoleIds(setAcctIds);
-            Map<Id,Set<Id>> mapPortalUsers=SubscriptionHelper.GetAccountUserIds(setAcctIds);
-            
+            List<AccountShare> lstAccountShare=[SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE AccountId in:setAcctIds  AND isDeleted = false];
+            if(lstAccountShare!=null && lstAccountShare.size()>0)
+            {
+                for(AccountShare accShare:lstAccountShare)
+                {
+                    UserOrGroupIds.add(accShare.UserOrGroupId);
+                }
+            }
+            Set<Id> portalIds=SubscriptionHelper.GetPortalIds(UserOrGroupIds);
+            Map<Id,Set<Id>> mapPortalRoles=SubscriptionHelper.GetPortalIdsByAccount(setAcctIds,lstAccountShare,portalIds);
             for(Id accId:setAcctIds)
             {
                 Set<Id> setShareIds= new Set<Id>();
@@ -633,7 +641,6 @@ OpportunityIds.add(ord.OpportunityId);
             for(Id accId:setAcctIds)
             {
                 Set<Id> setRoles=mapPortalRoles.get(accId);
-                Set<Id>setUsers=mapPortalUsers.get(accId);
                 Set<Id> setShareIds=mapActSubs.get(accId);
                 for(Id subId:setShareIds)
                 {
@@ -645,19 +652,12 @@ OpportunityIds.add(ord.OpportunityId);
                             lstSubShares.add(subShare);
                         }
                     }
-                    if(setUsers!=null && setUsers.size()>0)
-                    {
-                        for(Id userId:setUsers)
-                        {
-                            SBQQ__Subscription__Share subShare= new SBQQ__Subscription__Share(ParentId=subId,UserOrGroupId=userId,AccessLevel='Read');
-                            lstSubShares.add(subShare);
-                        }
-                    }
+                    
                 }
             }
             if(lstSubShares!=null && lstSubShares.size()>0)
             {
-                SubscriptionHelper.AddSubscriptionShare(lstSubShares);
+                insert lstSubShares;
             }
             
         }

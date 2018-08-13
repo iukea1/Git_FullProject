@@ -230,6 +230,14 @@
             <section>Address Information</section>
         </sections>
         <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
@@ -238,8 +246,8 @@
             <section>Discount Info</section>
         </sections>
         <sections>
-            <label><!-- Discount Information --></label>
-            <section>Discount Information</section>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
         </sections>
         <sections>
             <label><!-- Quote Options --></label>

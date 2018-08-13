@@ -39,11 +39,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Prepared_For__c</field>
+                <field>Reseller_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Distributor_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Prepared_For__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

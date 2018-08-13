@@ -655,11 +655,11 @@
     <relatedLists>
         <fields>SplitOwner</fields>
         <fields>Role_Type__c</fields>
-        <fields>Rate_1_Split__c</fields>
+        <fields>SplitPercentage</fields>
         <fields>rate_1_amount__c</fields>
-        <fields>Rate_2_Split__c</fields>
         <fields>Rate_2_Split_Amount__c</fields>
         <fields>SplitNote</fields>
+        <fields>SplitAmount</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>
@@ -773,7 +773,6 @@
         <relatedList>Request__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>AddProduct</excludeButtons>
         <excludeButtons>EditAllProduct</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>

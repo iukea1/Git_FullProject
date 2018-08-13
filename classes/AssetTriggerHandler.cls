@@ -578,11 +578,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Order orderlst = queryForOrder(assetQuoteIds);
         System.debug('order list ' + orderlst);
       
-        if(orderlst != null && orderlst.ActivatedDate != null){
+        if(orderlst != null && orderlst.EffectiveDate != null){
             for(Asset asset: assetlst){
-                DateTime dt = orderlst.ActivatedDate;
+                DateTime dt = orderlst.EffectiveDate;
                 Date shipDate = dt.date();
-                asset.Ship_Date__c = shipDate;
+                asset.Ship_Date__c = orderlst.EffectiveDate;
                 updateAsset.add(asset);
             }
         }
@@ -597,7 +597,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Order parentOrder = new Order();
         
         try{
-            parentOrder = [SELECT Id, ActivatedDate, SBQQ__Contracted__c, SBQQ__Quote__c FROM Order WHERE SBQQ__Quote__c IN: assetQuoteIds AND SBQQ__Contracted__c =TRUE LIMIT 1];
+            parentOrder = [SELECT Id, ActivatedDate, EffectiveDate, SBQQ__Contracted__c, SBQQ__Quote__c FROM Order WHERE SBQQ__Quote__c IN: assetQuoteIds AND SBQQ__Contracted__c =TRUE LIMIT 1];
         }
         catch(QueryException qe){
             System.debug(qe.getMessage());

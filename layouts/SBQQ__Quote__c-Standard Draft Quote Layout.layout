@@ -179,6 +179,10 @@
                 <behavior>Readonly</behavior>
                 <field>Prepared_For_Account_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reseller_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -526,7 +530,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Subscription_End_Date__c</field>
+                <field>SBQQ__EndDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

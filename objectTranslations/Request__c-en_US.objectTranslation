@@ -1093,6 +1093,10 @@
         <name>POC_cant_be_created_without_prim_quotes</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- POC Contact is not a valid contact for this account. Please select valid contact. --></errorMessage>
+        <name>POc_Contact_part_of_Opp_Account</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- Only the oportunity owner can approve this request --></errorMessage>
         <name>RSM_of_Oppty_Approves</name>
     </validationRules>

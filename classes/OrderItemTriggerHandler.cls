@@ -55,10 +55,10 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
                     Integer daysBetween = ql.SBQQ__StartDate__c.daysBetween(ql.End_Date__c);
                     
                     oi.EndDate = oi.ServiceDate.addDays(daysBetween);
-                    oi.End_Date__c = oi.EndDate; 
+                    //oi.End_Date__c = oi.EndDate; 
                 } else if(oi.ServiceDate == ql.SBQQ__StartDate__c && ql.End_Date__c != null) {
                     oi.EndDate = ql.End_Date__c;
-                    oi.End_Date__c = oi.EndDate; 
+                    //oi.End_Date__c = oi.EndDate; 
                 }
             }
             

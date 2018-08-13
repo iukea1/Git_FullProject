@@ -40,20 +40,20 @@ public class OrderTriggerHandler implements ITriggerHandler {
                             o.TemporaryStartDateHolder__c = o.EffectiveDate;
                             Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
                             o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
-                            o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                            //o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
                         } else {
                             o.TemporaryStartDateHolder__c = null;
                         }
                     } else {
                         o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
-                        o.End_Date__c = o.EndDate;
+                        //o.End_Date__c = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
                     }
                 }
                 if(Trigger.isUpdate) {
                     if(o.Type == 'Amendment' && oldItems.get(o.Id).Type != 'Amendment') {
                         Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
                         o.EndDate = o.EffectiveDate.addDays(daysBetween);
-                        o.End_Date__c = o.EndDate;
+                        //o.End_Date__c = o.EffectiveDate.addDays(daysBetween);
                     }
                 }
             }
@@ -88,7 +88,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
     private static void recalculateEcAddOnValues(List<Order> newItems, Map<Id, Order> oldItems) {
         Set<Id> orderIds = new Set<Id>();
         Set<Id> quoteIds = new Set<Id>();
-        //System.assertEquals(123, 234);
+        
         Map<Id, List<OrderItem>> quoteLinesOriginal = new Map<Id, List<OrderItem>>();
         Map<Id, List<OrderItem>> quoteLinesAddOn = new Map<Id, List<OrderItem>>();
         
@@ -97,9 +97,11 @@ public class OrderTriggerHandler implements ITriggerHandler {
             quoteIds.add(o.SBQQ__Quote__c);
         }
         
-        Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>([SELECT Id FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']);
+        Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>(
+            [SELECT Id, Daily_Rate_Original__c, Daily_Rate_Add_on__c, Cumulative_Daily_Value__c, Days_to_Credit__c, Days_of_Value__c, Credit_Value__c, License_End_Date__c FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']
+        );
         
-        for(OrderItem oi : [SELECT Id, TotalPrice, EndDate, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
+        for(OrderItem oi : [SELECT Id, TotalPrice, EndDate, End_Date__c, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
             if(!quoteLinesOriginal.containsKey(oi.OrderId)) quoteLinesOriginal.put(oi.OrderId, new List<OrderItem>());
             if(!quoteLinesAddOn.containsKey(oi.OrderId)) quoteLinesAddOn.put(oi.OrderId, new List<OrderItem>());
             
@@ -111,8 +113,8 @@ public class OrderTriggerHandler implements ITriggerHandler {
         }
         
         for(Order o : newItems) {
-            Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c!= oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
-            
+            Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
+            SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
             if(runCode && o.Type == 'Amendment') {
                 Decimal totalPriceOriginal = 0.0;
                 Decimal totalPriceAddOn = 0.0;
@@ -127,13 +129,13 @@ public class OrderTriggerHandler implements ITriggerHandler {
                 if(quoteLinesAddOn.containsKey(o.Id)) {
                     for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {
                         totalPriceAddOn  += oi.TotalPrice;
-                        if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
+                        if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.End_Date__c;
                     }
                 }
                 if(o.Product_Type__c == 'EDGECONNECT') {
-                    o.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
-                    o.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
-                    o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;
+                    o.Daily_Rate_Original__c = pq.Daily_Rate_Original__c; //totalPriceOriginal / (term * 365);
+                    o.Daily_Rate_Add_on__c = pq.Daily_Rate_Add_on__c; //totalPriceAddOn / (term * 365);
+                    o.Cumulative_Daily_Value__c = o.Cumulative_Daily_Value__c; //o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;
                     try { o.Days_to_Credit__c = lastEndDateAddOn.daysBetween(o.License_End_Date__c); } catch(Exception e) {}
                     o.Credit_Value__c = o.Daily_Rate_Add_on__c * 1;// o.Days_to_Credit__c;
                     o.Days_of_Value__c = o.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);

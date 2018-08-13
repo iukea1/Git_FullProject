@@ -16,14 +16,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Rate_1_Split__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Rate_2_Split__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>SplitPercentage</field>
             </layoutItems>
             <layoutItems>
@@ -60,12 +52,8 @@
         <fields>SplitOwnerId</fields>
         <fields>SplitPercentage</fields>
         <fields>SplitAmount</fields>
-        <fields>Rate_1_Split__c</fields>
-        <fields>Rate_2_Split__c</fields>
     </miniLayout>
     <multilineLayoutFields>SplitOwnerId</multilineLayoutFields>
-    <multilineLayoutFields>Rate_1_Split__c</multilineLayoutFields>
-    <multilineLayoutFields>Rate_2_Split__c</multilineLayoutFields>
     <multilineLayoutFields>SplitPercentage</multilineLayoutFields>
     <multilineLayoutFields>SplitAmount</multilineLayoutFields>
     <showEmailCheckbox>false</showEmailCheckbox>
