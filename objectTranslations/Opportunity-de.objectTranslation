@@ -1211,6 +1211,10 @@
             <section>Opportunity</section>
         </sections>
         <sections>
+            <label><!-- Opportunity Splits Check --></label>
+            <section>Opportunity Splits Check</section>
+        </sections>
+        <sections>
             <label><!-- Partner Resource Center Information --></label>
             <section>Partner Resource Center Information</section>
         </sections>

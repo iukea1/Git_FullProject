@@ -22,24 +22,24 @@ public class SNAP_OppSplitCheckExt
     {
         Map<String, Map<String, Decimal>> splitPercentageMap = new Map<String, Map<String, Decimal>>();
         Decimal totalPercentage;
-        for(OpportunitySplit split : [select SplitPercentage, Role_Type__c, SplitType.MasterLabel 
+        for(OpportunitySplit split : [select SplitPercentage, Role_Type2__c, SplitType.MasterLabel 
                                       from OpportunitySplit 
                                       where OpportunityId = :oppId and SplitType.IsActive = true
-                                      order by SplitType.MasterLabel, Role_Type__c])
+                                      order by SplitType.MasterLabel, Role_Type2__c])
         {
             if(!splitPercentageMap.containsKey(split.SplitType.MasterLabel))
             {
                 splitPercentageMap.put(split.SplitType.MasterLabel, new Map<String, Decimal>());
             }
-            if(!splitPercentageMap.get(split.SplitType.MasterLabel).containsKey(split.Role_Type__c))
+            if(!splitPercentageMap.get(split.SplitType.MasterLabel).containsKey(split.Role_Type2__c))
             {
-                splitPercentageMap.get(split.SplitType.MasterLabel).put(split.Role_Type__c, split.SplitPercentage);
+                splitPercentageMap.get(split.SplitType.MasterLabel).put(split.Role_Type2__c, split.SplitPercentage);
             }
             else
             {
-                totalPercentage = splitPercentageMap.get(split.SplitType.MasterLabel).get(split.Role_Type__c);
+                totalPercentage = splitPercentageMap.get(split.SplitType.MasterLabel).get(split.Role_Type2__c);
                 totalPercentage += split.SplitPercentage;
-                splitPercentageMap.get(split.SplitType.MasterLabel).put(split.Role_Type__c, totalPercentage);
+                splitPercentageMap.get(split.SplitType.MasterLabel).put(split.Role_Type2__c, totalPercentage);
             }
         }
 

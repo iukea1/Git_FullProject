@@ -101,9 +101,9 @@ public class SubscriptionHelper {
     }      
     
        //This method returns the list of AccountId and GroupID.
-    public static Map<Id,Id> GetSubSharesToAdd(Id acctId,List<SBQQ__Subscription__c> lstSubs,List<SubscriptionWrapper> lstSubData,Set<Id> setPortalAcctIds)
+    public static List<SBQQ__Subscription__Share> GetSubSharesToAdd(Id acctId,List<SBQQ__Subscription__c> lstSubs,List<SubscriptionWrapper> lstSubData,Set<Id> setPortalAcctIds)
     {
-        Map<Id,Id> lstOutputSub= new Map<Id,Id>();
+        List<SBQQ__Subscription__Share> lstOutputSub= new List<SBQQ__Subscription__Share>();
         Map<Id,Set<Id>> mapPortalIdsBySubId= new Map<Id,Set<Id>>();
         
         Set<Id> lstSubIds= new Set<Id>();
@@ -136,16 +136,17 @@ public class SubscriptionHelper {
                 }
             }
         }
-        System.debug('setPortalAcctIds'+setPortalAcctIds);
+       
         for(Id accPortalId:setPortalAcctIds)
         {
             for(Id counter:lstSubIds)
             {
                 Set<Id> setPortalIdsBySub=mapPortalIdsBySubId.get(counter);
                 if(setPortalIdsBySub==null || setPortalIdsBySub.size()==0 ||!setPortalIdsBySub.contains(accPortalId))
-                    lstOutputSub.put(counter,accPortalId);
+                    lstOutputSub.add(new SBQQ__Subscription__Share(ParentId=counter,AccessLevel='Read',UserOrGroupId=accPortalId));
             }
         }
+        System.debug('For each acct '+acctId+ ' no of subsc to add '+ lstOutputSub.size());
         return lstOutputSub; 
     }       
     
@@ -206,7 +207,6 @@ public class SubscriptionHelper {
             SubShareId=subscriptionShareId;
             UserOrGroupId=userOrRoleId;
         }
-        
     }
     
 }

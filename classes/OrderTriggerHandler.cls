@@ -35,7 +35,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
                 Boolean proceed = (Trigger.isInsert ? o.SBQQ__Quote__c != null : o.TemporaryStartDateHolder__c != null);
                 
                 if(proceed) {
-                    if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c) {
+                    if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c && parentQuotes.containsKey(o.SBQQ__Quote__c) && parentQuotes.get(o.SBQQ__Quote__c).End_Date__c != null) {
                         if(o.TemporaryStartDateHolder__c == null) { // on insert
                             o.TemporaryStartDateHolder__c = o.EffectiveDate;
                             Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
@@ -116,30 +116,21 @@ public class OrderTriggerHandler implements ITriggerHandler {
             Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
             SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
             if(runCode && o.Type == 'Amendment') {
-                Decimal totalPriceOriginal = 0.0;
-                Decimal totalPriceAddOn = 0.0;
+            
                 Date lastEndDateAddOn = System.today();
-                Integer term = 12; //Integer.valueOf(q.Term__c != null ? q.Term__c : '1');      
-                
-                if(quoteLinesOriginal.containsKey(o.Id)) {
-                    for(OrderItem oi : quoteLinesOriginal.get(o.Id)) {
-                        totalPriceOriginal += oi.TotalPrice;
-                    }
-                }
                 if(quoteLinesAddOn.containsKey(o.Id)) {
                     for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {
-                        totalPriceAddOn  += oi.TotalPrice;
-                        if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.End_Date__c;
+                        if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
                     }
                 }
                 if(o.Product_Type__c == 'EDGECONNECT') {
-                    o.Daily_Rate_Original__c = pq.Daily_Rate_Original__c; //totalPriceOriginal / (term * 365);
-                    o.Daily_Rate_Add_on__c = pq.Daily_Rate_Add_on__c; //totalPriceAddOn / (term * 365);
-                    o.Cumulative_Daily_Value__c = o.Cumulative_Daily_Value__c; //o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;
-                    try { o.Days_to_Credit__c = lastEndDateAddOn.daysBetween(o.License_End_Date__c); } catch(Exception e) {}
-                    o.Credit_Value__c = o.Daily_Rate_Add_on__c * 1;// o.Days_to_Credit__c;
-                    o.Days_of_Value__c = o.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);
-                    try { o.License_End_Date__c = o.License_End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c)); } catch(Exception e) {}
+                    o.Daily_Rate_Original__c = pq.Daily_Rate_Original__c; 
+                    o.Daily_Rate_Add_on__c = pq.Daily_Rate_Add_on__c; 
+                    o.Cumulative_Daily_Value__c = pq.Cumulative_Daily_Value__c; 
+                    o.Days_to_Credit__c = pq.Days_to_Credit__c; //lastEndDateAddOn.daysBetween(pq.License_End_Date__c);
+                    o.Credit_Value__c = pq.Credit_Value__c; //o.Daily_Rate_Add_on__c * o.Days_to_Credit__c;
+                    o.Days_of_Value__c = pq.Days_of_Value__c; //pq.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);
+                    o.License_End_Date__c = lastEndDateAddOn; //o.EndDate; //pq.License_End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c));
                 }
             }
         }

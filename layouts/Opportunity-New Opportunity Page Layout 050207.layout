@@ -163,6 +163,10 @@
                 <behavior>Edit</behavior>
                 <field>Metered_Service_Provider__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Comp_Rate_2_2019_Plan__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

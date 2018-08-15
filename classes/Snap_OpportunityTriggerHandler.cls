@@ -106,7 +106,7 @@ public class Snap_OpportunityTriggerHandler extends Snap_TriggerHandler
             Set<Id> oppIds = oppIdMap.get(roleType);
             if(!oppIds.isEmpty())
             {
-                delete [select Id from OpportunitySplit where SplitType.IsActive = true and OpportunityId in :oppIds and Role_Type__c = :roleType];
+                delete [select Id from OpportunitySplit where SplitType.IsActive = true and OpportunityId in :oppIds and Role_Type2__c = :roleType];
             }
         }
     }

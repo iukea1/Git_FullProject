@@ -143,6 +143,10 @@
                 <behavior>Edit</behavior>
                 <field>Metered_Service_Provider__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Comp_Rate_2_2019_Plan__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -794,8 +798,6 @@
         <fields>SplitPercentage</fields>
         <fields>rate_1_amount__c</fields>
         <fields>Rate_2_Split_Amount__c</fields>
-        <fields>SplitNote</fields>
-        <fields>SplitAmount</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>
