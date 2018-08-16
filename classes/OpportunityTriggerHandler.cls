@@ -105,6 +105,8 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
                 } 
             }
             populateOpportunityRecordTypes(listOpps);
+            
+            deleteOppSplits(newItems, oldItems);
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -167,6 +169,8 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
             ResetPrimaryCampaignSource(lstOpps);
             AddTRToOpportunityTeam(mapOppTR);
             //SetContactRole(newItems.keyset());
+            
+            createOppSplits(newItems, null);
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
@@ -241,6 +245,8 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
             SycnOpportunityToQuoteHandler.sycnOpportunityDateToQuoteDateOnUpdate((Map<Id,Opportunity>)oldItems,(Map<Id,Opportunity>)newItems);
             UpdateFirstOpportunityWinCheckBox(setAccIds);
             AddTRToOpportunityTeam(mapOppTR);
+            
+            createOppSplits(newItems, oldItems);
         }
         
     }
@@ -601,6 +607,116 @@ update lstContactRole;
                     update listShares;      
                 }
             }
+        }
+    }
+    
+    // Add by SNAP
+    private void createOppSplits(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
+    {
+        List<OpportunitySplitType> splitTypes = [select Id from OpportunitySplitType where IsActive = true];
+        if(!splitTypes.isEmpty())
+        {
+            List<OpportunitySplit> newSplits = new List<OpportunitySplit>();
+            Opportunity newOpp, oldOpp;
+            for(Id oppId : newItems.keySet())
+            {
+                newOpp = (Opportunity)newItems.get(oppId);
+                if(oldItems == null)
+                {
+                    // add Opportunity owner to the split
+                    addSplits(newSplits, newOpp, newOpp.OwnerId, splitTypes);
+                    // add Technical_Responsible__c to the split
+                    if(newOpp.Technical_Responsible__c != null)
+                    {
+                        addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                    }
+                }
+                else
+                {
+                    oldOpp = (Opportunity)oldItems.get(newOpp.Id);
+                    // add new Opportunity owner to the split                    
+                    if(isFieldValueChanged(newOpp.OwnerId, oldOpp.OwnerId, OpportunityTriggerController.oppOwnerInAfterUpdate))
+                    {                        
+                        addSplits(newSplits, newOpp, newOpp.OwnerId, splitTypes);
+                        OpportunityTriggerController.oppOwnerInAfterUpdate = newOpp.OwnerId;
+                    }
+
+                    // add new Technical_Responsible__c to the split
+                    if(isFieldValueChanged(newOpp.Technical_Responsible__c, oldOpp.Technical_Responsible__c, OpportunityTriggerController.oppTRInAfterUpdate))
+                    {
+                        OpportunityTriggerController.oppTRInAfterUpdate = newOpp.Technical_Responsible__c;
+                        if(newOpp.Technical_Responsible__c != null)
+                        {
+                            addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                        }
+                    }
+                }
+            }   
+            if(!newSplits.isEmpty())
+            {
+                // In case duplicate splits are added, this DML allows the splits to be partially created.
+                Database.insert(newSplits, false);
+            }
+        }
+    }
+    
+    // Add by SNAP
+    private void addSplits(List<OpportunitySplit> newSplits, Opportunity opp, Id ownerId, List<OpportunitySplitType> splitTypes)
+    {
+        for(OpportunitySplitType sType : splitTypes)
+        {
+            newSplits.add(new OpportunitySplit(SplitOwnerId = ownerId, OpportunityId = opp.Id, SplitTypeId = sType.Id, SplitPercentage = 100));
+        }
+    }
+    
+    // Add by SNAP
+    private void deleteOppSplits(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
+    {
+        Opportunity newOpp, oldOpp;
+        Map<String, Set<Id>> oppIdMap = new Map<String, Set<Id>>{
+            'RSM' => new Set<Id>(), 
+            'SE' => new Set<Id>()
+        };
+            
+        for(Id oppId : newItems.keyset())
+        {
+            newOpp = (Opportunity)newItems.get(oppId);
+            oldOpp = (Opportunity)oldItems.get(oppId);
+
+            // delete all old RSM splits when the Opportunity owner is changed.
+            if(isFieldValueChanged(newOpp.OwnerId, oldOpp.OwnerId, OpportunityTriggerController.oppOwnerInBeforeUpdate))
+            {
+                oppIdMap.get('RSM').add(newOpp.Id);
+                OpportunityTriggerController.oppOwnerInBeforeUpdate = newOpp.OwnerId;
+            }            
+
+            // delete all old SE splits when the Technical_Responsible__c is changed.
+            if(isFieldValueChanged(newOpp.Technical_Responsible__c, oldOpp.Technical_Responsible__c, OpportunityTriggerController.oppTRInBeforeUpdate))
+            {
+                oppIdMap.get('SE').add(newOpp.Id);
+                OpportunityTriggerController.oppTRInBeforeUpdate = newOpp.Technical_Responsible__c;
+            }
+        }
+        for(String roleType : oppIdMap.keySet())
+        {
+            Set<Id> oppIds = oppIdMap.get(roleType);
+            if(!oppIds.isEmpty())
+            {
+                delete [select Id from OpportunitySplit where SplitType.IsActive = true and OpportunityId in :oppIds and Role_Type2__c = :roleType];
+            }
+        }
+    }
+
+    //Add by SNAP
+    private Boolean isFieldValueChanged(String newFieldValue, String oldFieldValue, String auditFieldValue)
+    {
+        if(auditFieldValue == '')
+        {
+            return newFieldValue != oldFieldValue;
+        }
+        else
+        {
+            return newFieldValue != auditFieldValue;
         }
     }
 }

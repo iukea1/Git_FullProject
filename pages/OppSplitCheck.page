@@ -1,0 +1,22 @@
+<apex:page showHeader="false" sidebar="false" standardController="Opportunity" extensions="OppSplitCheckExt">
+    <style>
+        .warning-div {
+            padding: 5px;
+            color: #c7a72e;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error-div {
+            padding: 5px;
+            color: #ed143d;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+    <apex:outputPanel layout="block" styleClass="warning-div">
+        <apex:outputText value="{!warningMsg}" escape="false" />        
+    </apex:outputPanel>
+    <apex:outputPanel layout="block" styleClass="error-div">
+        <apex:outputText value="{!errorMsg}" escape="false" />        
+    </apex:outputPanel>
+</apex:page>

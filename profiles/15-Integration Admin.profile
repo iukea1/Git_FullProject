@@ -1175,6 +1175,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>OppSplitCheckExt</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>OppoQuoteController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1232,6 +1236,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityStageSetupControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OpportunityTriggerController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1859,26 +1867,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SNAP_OppSplitCheckExt</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SNAP_OppSplitCheckTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SNAP_OpportunityTriggerController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SNAP_OpportunityTriggerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SNAP_TestDataFactory</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>SPQuoteTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1992,18 +1980,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SiteRegisterController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Snap_OpportunityTriggerHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Snap_TriggerHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Snap_TriggerHandlerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2223,6 +2199,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestDataFactory</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestDefineChannelQuoteController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2360,6 +2340,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestOpenAssetSubsController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestOppSplitCheck</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10935,6 +10919,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>OppSplitCheck</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>Opportunity</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -11272,10 +11260,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>RevenueRecognitionChecklist</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>SNAP_OppSplitCheck</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
