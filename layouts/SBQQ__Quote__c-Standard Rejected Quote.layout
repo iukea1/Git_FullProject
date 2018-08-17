@@ -423,8 +423,8 @@
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
-        <fields>SBQQ__NetPrice__c</fields>
-        <fields>SBQQ__NetTotal__c</fields>
+        <fields>Net_Unit_Price__c</fields>
+        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>

@@ -39,7 +39,7 @@ public class CalculateActiveSubCountBatch implements Database.Batchable<sObject>
                 if(outputAcc.EC_Customer_Date__c!= null)
                     acc.EC_Customer_Date__c=outputAcc.EC_Customer_Date__c;   
             }
-            
+            System.debug('output acc'+ acc);
             lstAccountToUpdate.add(acc);
         }
         System.Savepoint sp= Database.setSavepoint();
@@ -48,6 +48,7 @@ public class CalculateActiveSubCountBatch implements Database.Batchable<sObject>
            if(lstAccountToUpdate.size()>0)
             {
                 update lstAccountToUpdate;
+               System.debug('accts are updated');
             }
             for(Contract item: lstContract)
             {
@@ -61,7 +62,7 @@ public class CalculateActiveSubCountBatch implements Database.Batchable<sObject>
         catch(Exception ex)
         {
             Database.Rollback(sp);
-            System.debug(ex);
+            System.debug('Error in log'+ ex);
             SilverPeakUtils.logException(ex);
         }
         
@@ -72,7 +73,7 @@ public class CalculateActiveSubCountBatch implements Database.Batchable<sObject>
         if(!Test.isRunningTest())
         {
             CalculateActiveSubCountBatch obj= new CalculateActiveSubCountBatch();
-            System.scheduleBatch(obj, 'Trigger Sub Count and Customer Date', 60, 1);
+            System.scheduleBatch(obj, 'Trigger Sub Count and Customer Date', 60);
         }
         
     }
@@ -84,6 +85,7 @@ public class CalculateActiveSubCountBatch implements Database.Batchable<sObject>
         Map<Id,integer> mapVirtualAssets= new Map<Id,integer>();
         Map<Id,integer> mapVirtualOwnedAssets= new Map<Id,integer>();
         Map<Id,Account> mapAccountToUpdate= new Map<Id,Account>();
+        System.debug('lstNXVXCount'+ lstNXVXCount);
         if(lstNXVXCount!=null && lstNXVXCount.size()>0)
         {
             mapVirtualAssets=GetCountfromList(lstNXVXCount);

@@ -811,6 +811,46 @@
         <name>TR_Approved__c</name>
     </fields>
     <fields>
+        <label><!-- TR EC-SFP-LR1 --></label>
+        <name>TR_EC_SFP_LR1__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-LR2 --></label>
+        <name>TR_EC_SFP_LR2__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-LR3 --></label>
+        <name>TR_EC_SFP_LR3__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-LR4 --></label>
+        <name>TR_EC_SFP_LR4__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-LR5 --></label>
+        <name>TR_EC_SFP_LR5__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-SR1 --></label>
+        <name>TR_EC_SFP_SR1__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-SR2 --></label>
+        <name>TR_EC_SFP_SR2__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-SR3 --></label>
+        <name>TR_EC_SFP_SR3__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-SR4 --></label>
+        <name>TR_EC_SFP_SR4__c</name>
+    </fields>
+    <fields>
+        <label><!-- TR EC-SFP-SR5 --></label>
+        <name>TR_EC_SFP_SR5__c</name>
+    </fields>
+    <fields>
         <label><!-- SE Email --></label>
         <name>TR_Email__c</name>
     </fields>

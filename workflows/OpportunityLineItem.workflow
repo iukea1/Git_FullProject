@@ -23,6 +23,15 @@
         <template>Support/WANstart_order_closed</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Override_Sales_Price</fullName>
+        <field>Net_Unit_Price__c</field>
+        <formula>Net_Unit_Price__c</formula>
+        <name>Override Sales Price</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SetLineDesciptiontoProductName</fullName>
         <field>Description</field>
         <formula>PricebookEntry.Product2.ProductCode</formula>
@@ -44,6 +53,17 @@
             <value>1/1/2000</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Override Sales Price</fullName>
+        <actions>
+            <name>Override_Sales_Price</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used to override the sales price with the custom net unit price.</description>
+        <formula>Net_Unit_Price__c &gt; 0</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>training_order</fullName>

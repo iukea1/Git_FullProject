@@ -502,11 +502,10 @@
     </relatedContent>
     <relatedLists>
         <fields>SplitOwner</fields>
+        <fields>SplitType</fields>
         <fields>Role_Type__c</fields>
-        <fields>Role_Type2__c</fields>
         <fields>SplitPercentage</fields>
-        <fields>rate_1_amount__c</fields>
-        <fields>Rate_2_Split_Amount__c</fields>
+        <fields>SplitAmount</fields>
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>
