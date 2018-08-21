@@ -1109,6 +1109,10 @@
             <section>Closed Disposition</section>
         </sections>
         <sections>
+            <label><!-- Compensation --></label>
+            <section>Compensation</section>
+        </sections>
+        <sections>
             <label><!-- Marketing Data --></label>
             <section>Marketing Data</section>
         </sections>

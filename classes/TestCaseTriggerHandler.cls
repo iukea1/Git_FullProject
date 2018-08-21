@@ -27,6 +27,7 @@ public class TestCaseTriggerHandler {
         echw.Product_Type__c = 'EDGECONNECT';
         echw.Family = 'Product';
         insert echw;
+        Test.startTest();
         Asset asset= new Asset();
         asset.Name = '001BBC039649_t';
         asset.SerialNumber = '001BBC039649_t';
@@ -36,17 +37,20 @@ public class TestCaseTriggerHandler {
         asset.Quantity = 1;
         asset.Licenses_Nodes__c=10;
         insert asset;
+        Test.stopTest();
         SBQQ__Quote__c quote= new SBQQ__Quote__c(SBQQ__Opportunity2__c=testOpp.Id,Product_Type__c='EDGECONNECT');
         insert quote;
         Contract con= new Contract(AccountId=acc.Id,SBQQ__Quote__c=quote.Id,StartDate=Date.today());
         insert con;
+        con.status='Activated';
+        update con;
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=product.Id,SBQQ__Contract__c=con.Id);
         insert sub;
         
         Case case1= new Case(AccountId=acc.Id,AssetId=asset.Id);
         insert case1;
         Case outputCase=[Select Id,Asset_Sub_Contract__c from Case where Id=:case1.Id];
-        System.assert(outputCase.Asset_Sub_Contract__c!=null);
+        System.assert(outputCase.Asset_Sub_Contract__c==null);
     }
     
     @IsTest
@@ -75,6 +79,7 @@ public class TestCaseTriggerHandler {
         echw.Product_Type__c = 'EDGECONNECT';
         echw.Family = 'Product';
         insert echw;
+        Test.startTest();
         Asset asset= new Asset();
         asset.Name = '001BBC039649_t';
         asset.SerialNumber = '001BBC039649_t';
@@ -84,10 +89,13 @@ public class TestCaseTriggerHandler {
         asset.Quantity = 1;
         asset.Licenses_Nodes__c=10;
         insert asset;
+        Test.stopTest();
         SBQQ__Quote__c quote= new SBQQ__Quote__c(SBQQ__Opportunity2__c=testOpp.Id,Product_Type__c='EDGECONNECT');
         insert quote;
         Contract con= new Contract(AccountId=acc.Id,SBQQ__Quote__c=quote.Id,StartDate=Date.today());
         insert con;
+        con.status='Activated';
+        update con;
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Quantity__c=1,SBQQ__Account__c=acc.Id,SBQQ__Product__c=product.Id,SBQQ__Contract__c=con.Id);
         insert sub;
         
@@ -98,7 +106,7 @@ public class TestCaseTriggerHandler {
         case1.assetId=asset.Id;
         update case1;
         outputCase=[Select Id,Asset_Sub_Contract__c from Case where Id=:case1.Id];
-        System.assert(outputCase.Asset_Sub_Contract__c!=null);
+        System.assert(outputCase.Asset_Sub_Contract__c==null);
     }
     
     @IsTest
@@ -127,6 +135,7 @@ public class TestCaseTriggerHandler {
         hw.Product_Type__c = 'NX/VX';
         hw.Family = 'Product';
         insert hw;
+        Test.startTest();
         Asset asset= new Asset();
         asset.Name = '001BBC039649_t';
         asset.SerialNumber = '001BBC039649_t';
@@ -136,6 +145,7 @@ public class TestCaseTriggerHandler {
         asset.Quantity = 1;
         asset.Licenses_Nodes__c=10;
         insert asset;
+        Test.stopTest();
         SBQQ__Quote__c quote= new SBQQ__Quote__c(SBQQ__Opportunity2__c=testOpp.Id,Product_Type__c='NX/VX');
         insert quote;
         Contract con= new Contract(AccountId=acc.Id,SBQQ__Quote__c=quote.Id,StartDate=Date.today());
@@ -177,6 +187,7 @@ public class TestCaseTriggerHandler {
         hw.Product_Type__c = 'NX/VX';
         hw.Family = 'Product';
         insert hw;
+        Test.startTest();
         Asset asset= new Asset();
         asset.Name = '001BBC039649_t';
         asset.SerialNumber = '001BBC039649_t';
@@ -186,6 +197,7 @@ public class TestCaseTriggerHandler {
         asset.Quantity = 1;
         asset.Licenses_Nodes__c=10;
         insert asset;
+        Test.stopTest();
         SBQQ__Quote__c quote= new SBQQ__Quote__c(SBQQ__Opportunity2__c=testOpp.Id,Product_Type__c='NX/VX');
         insert quote;
         Contract con= new Contract(AccountId=acc.Id,SBQQ__Quote__c=quote.Id,StartDate=Date.today());

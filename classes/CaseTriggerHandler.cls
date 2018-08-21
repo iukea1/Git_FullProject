@@ -22,53 +22,52 @@ public class CaseTriggerHandler implements ITriggerHandler {
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
-        Map<Id,Id> mapCaseEC= new Map<Id,Id>();
-        Map<Id,Id> mapCaseNonEC= new Map<Id,Id>();
+        Map<Id,Id> mapAssets= new Map<Id,Id>();
+        Map<Id,Id> mapSubs= new Map<Id,Id>();
         Map<Id,Id> mapCaseAcc = new map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id caseId : newItems.keyset())
             {
                 Case newCase= (Case)newItems.get(caseId);
-                if(newCase.AssetId!=null && newCase.AccountId!=null && newCase.Product_Family__c=='EDGECONNECT')
+                if(newCase.AssetId!=null)
                 {
-                    mapCaseEC.put(newCase.Id,newCase.AccountId);
+                    mapAssets.put(newCase.Id,newCase.AssetId);
                 }
-                if(newCase.AssetId!=null && newCase.Product_Family__c!='EDGECONNECT')
+                if(newCase.Subscription__c!=null)
                 {
-                    mapCaseNonEC.put(newCase.Id,newCase.AssetId);
+                    mapSubs.put(newCase.Id,newCase.Subscription__c);
                 }
                 if(newCase.RecordTypeId =='012500000005AuO' || newCase.RecordTypeId == '012500000005Aui')
                 {
                     mapCaseAcc.put(newcase.Id, newCase.AccountId);
                 }
             }
-            PopulateMainContract(mapCaseNonEC);
-            PopulateECBaseContract(mapCaseEC);
+           	PopulateContractInfo(mapAssets,mapSubs);
             CreateDECaseNotes(mapCaseAcc);
         }
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-        Map<Id,Id> mapCaseEC= new Map<Id,Id>();
-        Map<Id,Id> mapCaseNonEC= new Map<Id,Id>();
+        Map<Id,Id> mapAssets= new Map<Id,Id>();
+        Map<Id,Id> mapSubs= new Map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id caseId : newItems.keyset())
             {
                 Case newCase= (Case)newItems.get(caseId);
                 Case oldCase= (Case)oldItems.get(caseId);
-                if(newCase.AssetId!=null && newCase.AssetId!=oldCase.AssetId && newCase.AccountId!=null && newCase.Product_Family__c=='EDGECONNECT')
+                if(newCase.AssetId!=null && newCase.AssetId!=oldCase.AssetId)
                 {
-                    mapCaseEC.put(newCase.Id,newCase.AccountId);
+                    mapAssets.put(newCase.Id,newCase.AssetId);
                 }
-                if(newCase.AssetId!=null && newCase.AssetId!=oldCase.AssetId  && newCase.Product_Family__c!='EDGECONNECT')
+                if(newCase.Subscription__c!=null && newCase.Subscription__c!=oldCase.Subscription__c)
                 {
-                    mapCaseNonEC.put(newCase.Id,newCase.AssetId);
+                    mapSubs.put(newCase.Id,newCase.Subscription__c);
                 }
             }
-            PopulateMainContract(mapCaseNonEC);
-            PopulateECBaseContract(mapCaseEC);
+            PopulateContractInfo(mapAssets,mapSubs);
+            
         }
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
@@ -80,13 +79,14 @@ public class CaseTriggerHandler implements ITriggerHandler {
         
     }
     
-    private static void PopulateMainContract(Map<Id,Id> mapCaseAssets)
+    
+    
+    private static void PopulateContractInfo(Map<Id,Id> mapCaseAssets,Map<Id,Id> mapCaseSubs)
     {
+        List<Case> lstCases= new List<Case>();
         if(mapCaseAssets!=null && mapCaseAssets.size()>0)
         {
-            List<Case> lstCases= new List<Case>();
             List<Asset> lstAssets=[Select Id,Status,Product2.Product_Type__c,SBQQ__CurrentSubscription__r.SBQQ__Contract__c from Asset where Id in:mapCaseAssets.values()];
-            
             for(Id caseId:mapCaseAssets.keySet())
             {
                 Id assetId= mapCaseAssets.get(caseId);
@@ -100,34 +100,31 @@ public class CaseTriggerHandler implements ITriggerHandler {
                     }
                 }
             }
-            if(lstCases.size()>0)
-                update lstCases;
+           
         }
-    }
-    private static void PopulateECBaseContract(Map<Id,Id> mapCaseAccounts)
-    {
-        if(mapCaseAccounts!=null && mapCaseAccounts.size()>0)
+        if(mapCaseSubs!=null && mapCaseSubs.size()>0)
         {
-            List<Case> lstCases= new List<Case>();
-            List<Contract> lstContract=[Select Id,AccountId from Contract where status='Activated' and Evaluation_Quote__c=false and Product_Type__c='EDGECONNECT' and AccountId in:mapCaseAccounts.values() and Id in(Select SBQQ__Contract__c from SBQQ__Subscription__c where SBQQ__Product__r.Name like 'EC-BASE%' and SBQQ__Product__r.Product_Type__c='EDGECONNECT')];
-            
-            for(Id caseId:mapCaseAccounts.keySet())
+            List<SBQQ__Subscription__c> lstSubs=[Select Id,SBQQ__Contract__c,SBCF_Subscription_Status__c from SBQQ__Subscription__c where Id in:mapCaseSubs.values()];
+            for(Id caseId:mapCaseSubs.keySet())
             {
-                Id accountId= mapCaseAccounts.get(caseId);
-                for(Contract item:lstContract)
+                Id subId= mapCaseSubs.get(caseId);
+                for(SBQQ__Subscription__c item:lstSubs)
                 {
-                    if(item.AccountId==accountId )
+                    if(item.Id==subId )
                     {
-                        Case caseData= new Case(Id=caseId,Asset_Sub_Contract__c=item.Id);
+                        Case caseData= new Case(Id=caseId,Asset_Sub_Contract__c=item.SBQQ__Contract__c);
                         lstCases.add(caseData);
                         break;
                     }
                 }
             }
-            if(lstCases.size()>0)
-                update lstCases;
+         
         }
+        if(lstCases!=null && lstCases.size()>0)
+         	update lstCases; 
+        
     }
+  
     private void CreateDECaseNotes(Map<Id,Id> mapCaseAccounts)
     {
         if(mapCaseAccounts != null && mapCaseAccounts.size()>0)

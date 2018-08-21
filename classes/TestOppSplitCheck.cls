@@ -21,7 +21,7 @@ private class TestOppSplitCheck
         insert newOpp;
         Test.startTest();
 
-        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true];
+        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true and SplitType.IsTotalValidated = false];
         if(!splits.isEmpty())
         {
             for(OpportunitySplit split : splits)

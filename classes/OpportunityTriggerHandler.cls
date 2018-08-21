@@ -638,6 +638,12 @@ update lstContactRole;
                     if(isFieldValueChanged(newOpp.OwnerId, oldOpp.OwnerId, OpportunityTriggerController.oppOwnerInAfterUpdate))
                     {                        
                         addSplits(newSplits, newOpp, newOpp.OwnerId, splitTypes);
+                        // add the TR user back to the Opportunity Splits after the Opportunity ower changes, because all
+                        // Opportunity Splits will be auto-removed after the owner is changed. 
+                        if(newOpp.Technical_Responsible__c != null)
+                        {
+                            addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                        }
                         OpportunityTriggerController.oppOwnerInAfterUpdate = newOpp.OwnerId;
                     }
 
