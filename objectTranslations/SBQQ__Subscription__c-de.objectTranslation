@@ -41,5 +41,16 @@
         <value><!-- Abonnements --></value>
     </caseValues>
     <gender>Neuter</gender>
+    <layouts>
+        <layout>Portal View</layout>
+        <sections>
+            <label>Benutzerdefinierte Links</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>Abonnementnummer</nameFieldLabel>
 </CustomObjectTranslation>

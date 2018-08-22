@@ -9,6 +9,17 @@
         <value>Abonnements</value>
     </caseValues>
     <gender>Masculine</gender>
+    <layouts>
+        <layout>Portal View</layout>
+        <sections>
+            <label>Liens personnalisés</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>N° d&apos;abonnement</nameFieldLabel>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

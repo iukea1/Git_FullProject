@@ -790,6 +790,15 @@ System.assertEquals(null, [select Id,SBQQ__StartDate__c from SBQQ__Quote__c wher
         Opportunity oppToUpdate = new Opportunity(Id = newOpp.Id, Technical_Responsible__c = UserInfo.getUserId());
         update oppToUpdate;
 
+        Id splitOwnerId = UserInfo.getUserId();
+
+        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where SplitOwnerId = :splitOwnerId and SplitType.IsActive = true];
+        System.assert(splits.size() > 0);
+
+        for(OpportunitySplit split : splits)
+        {
+            System.assertEquals(100, split.SplitPercentage);
+        }    
         Test.stopTest();
     }
 }

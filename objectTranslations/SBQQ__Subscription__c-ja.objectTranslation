@@ -4,5 +4,16 @@
         <plural>false</plural>
         <value>サブスクリプション</value>
     </caseValues>
+    <layouts>
+        <layout>Portal View</layout>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>サブスクリプション番号</nameFieldLabel>
 </CustomObjectTranslation>

@@ -211,6 +211,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssetTriggerHandlerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AssetUtilities</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -508,6 +512,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ContractExpiryManagerSched</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ContractTestClassHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1228,6 +1236,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OpportunityQueryAction</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OpportunitySplitTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -4952,6 +4964,46 @@
         <editable>false</editable>
         <field>MultiLinkContact_del__c.Contact__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Opportunity_Split_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Opportunity_Split_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.SplitPercent_New__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.SplitPercent_Old__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Split_Amount_New__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Split_Amount_Old__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Team_Member_New__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Team_Member_Old__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9613,6 +9665,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunitySplit-Opportunity Split Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunitySplitLog__c-Opportunity Split Log Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityTeamMember-Opportunity Team Member Layout</layout>

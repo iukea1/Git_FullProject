@@ -42,7 +42,7 @@
         <apex:repeat value="{!lstOrderAssetView}" var="cx" rendered="{!OrderType=='GMS'}">
             <tr >
                 <td>
-                    GMS-{!cx.GMSNodes}
+                    GMS-{!cx.GmsQuantity}
                 </td>
                 <td>
                     {!cx.SerialNumber}
@@ -51,7 +51,7 @@
                     <b>{!IF(ISBLANK(cx.LicenseEndDate),'Perpetual','')} <apex:outputText rendered="{! !ISBLANK(cx.LicenseEndDate)}" value="{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.LicenseEndDate}" /> </apex:outputText></b>
                 </td>
                 <td>
-                    {!cx.ProdDesc}
+                    {!cx.ProdDesc} <b><apex:outputText rendered="{! cx.ProdDesc!='N/A' && !ISBLANK(cx.ConEndDate)}" value="ending{0, date, MMMM d','  yyyy}"><apex:param value="{!cx.ConEndDate}" /> </apex:outputText></b>
                 </td>
             </tr>
         </apex:repeat>
