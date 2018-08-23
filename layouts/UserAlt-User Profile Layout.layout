@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>Role_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>User_Type_form__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -2371,6 +2371,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestOpportunitySplitTrigger</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestOpportunityTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -4963,6 +4967,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MultiLinkContact_del__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OpportunitySplitLog__c.Event__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

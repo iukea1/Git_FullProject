@@ -681,6 +681,19 @@
         <relatedList>RelatedOpportunitySplits</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Opportunity_Split_Type__c</fields>
+        <fields>Team_Member_New__c</fields>
+        <fields>Team_Member_Old__c</fields>
+        <fields>SplitPercent_New__c</fields>
+        <fields>SplitPercent_Old__c</fields>
+        <fields>Split_Amount_New__c</fields>
+        <fields>Split_Amount_Old__c</fields>
+        <fields>Event__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <relatedList>OpportunitySplitLog__c.OpportunityId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>SP_Contract_Number__c</fields>
         <fields>SALES.ACCOUNT.NAME</fields>

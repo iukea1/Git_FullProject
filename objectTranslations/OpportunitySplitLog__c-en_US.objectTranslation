@@ -9,6 +9,10 @@
         <value>Opportunity Split Logs</value>
     </caseValues>
     <fields>
+        <label><!-- Event --></label>
+        <name>Event__c</name>
+    </fields>
+    <fields>
         <label><!-- Opportunity Name --></label>
         <name>OpportunityId__c</name>
         <relationshipLabel><!-- Opportunity Split Logs --></relationshipLabel>

@@ -23,7 +23,6 @@ private class TestOppSplitCheck
         insert newOpp;
     }
 
-    /*
     @isTest
     static void testSplitLessAllocated()
     {
@@ -45,7 +44,7 @@ private class TestOppSplitCheck
         System.assertEquals(ext.WarningMsg, '');
         System.assertNotEquals(ext.ErrorMsg, '');
         Test.stopTest();
-    }*/
+    }
 
     @isTest 
     static void testSplitOverAllocated() 

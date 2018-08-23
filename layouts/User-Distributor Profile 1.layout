@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>Third_Level_Approver_Id__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>User_Type_form__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
