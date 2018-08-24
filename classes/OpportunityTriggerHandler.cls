@@ -106,6 +106,8 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
             }
             populateOpportunityRecordTypes(listOpps);
             
+            sendEmailAlertForSplitUpdate(newItems, oldItems);
+
             deleteOppSplits(newItems, oldItems);
         }
     }
@@ -608,6 +610,60 @@ update lstContactRole;
                 }
             }
         }
+    }
+    
+    private void sendEmailAlertForSplitUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
+    {
+        Map<Id, Opportunity> oldOppMap = new Map<Id, Opportunity>();
+        Opportunity newOpp, oldOpp;
+        for(Id oppId : newItems.keyset())
+        {
+            newOpp = (Opportunity)newItems.get(oppId);
+            oldOpp = (Opportunity)oldItems.get(oppId);
+
+            // only when the Opportunity Owner is changed, and use the static variable to avoid recurring trigger
+            if(isFieldValueChanged(newOpp.OwnerId, oldOpp.OwnerId, OpportunityTriggerController.oppOwnerInAfterUpdate))
+            {
+                oldOppMap.put(oppId, oldOpp);
+            }
+        }
+
+        if(!oldOppMap.isEmpty())
+        {
+            Set<Id> oppIds = new Set<Id>();
+            for(OpportunitySplit split : [select Id, OpportunityId, SplitOwnerId from OpportunitySplit 
+                                          where OpportunityId in :oldOppMap.keySet() and SplitType.IsActive = true
+                                          order by OpportunityId, SplitOwnerId])
+            {
+                oldOpp = oldOppMap.get(split.OpportunityId);                
+                if(split.SplitOwnerId != oldOpp.OwnerId && split.SplitOwnerId != oldOpp.Technical_Responsible__c)
+                {
+                    oppIds.add(split.OpportunityId);
+                }
+            }
+
+            if(!oppIds.isEmpty())
+            {
+                sendEmailMessage(oppIds);
+            }
+        }
+    }
+
+    private void sendEmailMessage(Set<Id> oppIds)
+    {
+        Id templateId = [select Id from EmailTemplate where DeveloperName = 'Opportunity_Split_Update_Notification'].Id;
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        for(Id oppId : oppIds)
+        {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setTargetObjectId(UserInfo.getUserId());
+            mail.setTemplateId(templateId);
+            mail.setWhatId(oppId);
+            mail.setToAddresses(new String[] {'silverpeak@snapbi.com'});
+            mail.setTreatTargetObjectAsRecipient(false);
+            mails.add(mail);
+        }
+        Messaging.sendEmail(mails);
     }
     
     // Add by SNAP

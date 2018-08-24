@@ -58,6 +58,10 @@
                 <behavior>Readonly</behavior>
                 <field>Product_Quote_Type_Formula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_EC_V__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

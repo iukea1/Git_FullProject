@@ -51,6 +51,7 @@ public class CaseTriggerHandler implements ITriggerHandler {
     {
         Map<Id,Id> mapAssets= new Map<Id,Id>();
         Map<Id,Id> mapSubs= new Map<Id,Id>();
+        Map<Id,Id> lstCase= new  Map<Id,Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id caseId : newItems.keyset())
@@ -65,9 +66,11 @@ public class CaseTriggerHandler implements ITriggerHandler {
                 {
                     mapSubs.put(newCase.Id,newCase.Subscription__c);
                 }
+                if(newCase.Is_EC_V__c && newCase.AssetId==null && newCase.Subscription__c==null)
+                    lstCase.put(newCase.Id,newCase.AccountId);
             }
             PopulateContractInfo(mapAssets,mapSubs);
-            
+            PopulateBaseContract(lstCase);
         }
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
@@ -79,7 +82,14 @@ public class CaseTriggerHandler implements ITriggerHandler {
         
     }
     
-    
+     private static void PopulateBaseContract(Map<Id,Id> mapCases)
+     {
+         Set<Id> acctId= new Set<ID>();
+        if(mapCases!=null && mapCases.size()>0)
+        {
+             List<SBQQ__Subscription__c> lstSub=[Select Id,SBQQ__Account__c from SBQQ__Subscription__c where SBQQ__Contract__r.Status='Activated' and SBQQ__Contract__r.Evaluation_Quote__c=false and SBQQ__Account__c in:mapCases.values()];
+        }
+     }
     
     private static void PopulateContractInfo(Map<Id,Id> mapCaseAssets,Map<Id,Id> mapCaseSubs)
     {

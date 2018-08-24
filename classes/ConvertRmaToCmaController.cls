@@ -94,6 +94,7 @@ public without sharing class ConvertRmaToCmaController
             rmaItems.add(rmaItem);
 
             // Executes the creation of the VX with perpetual license
+            System.debug('NX ASSET ----> ' + nxasset);
             Asset vxAsset = createVirtualAsset(NxAsset);
 
             // Adds the new VX to the CMA record as well
@@ -104,40 +105,59 @@ public without sharing class ConvertRmaToCmaController
             insert rmaItems;
 
             Asset createdVxAsset = [select Id, AccountId, SerialNumber, Contract_Type__c, Contract_End__c, Model__c from Asset where Id = :vxAsset.Id];
+            Id initialContractId = NxAsset.Contract_Number__c;
             update new Asset(Id = NxAsset.Id, Contract_Number__c = null, Status='Pending Return – Conversion'); //sends email CmaRequestProcessedResult
+            
             System.debug('createdVxAsset: ' + createdVxAsset.Model__c);
             if(isRecycling(NxAsset))
             {
                 update new RMA__c(Id = cma.Id, IsRecycling__c = true); // sends email NXApplianceRecyclingInstructions
             }
-          
-            //Deactivate NX subscribed asset
-            List<SBQQ__SubscribedAsset__c> nxSubscribeAsset = [SELECT Id FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
-            if(!nxSubscribeAsset.isEmpty()) {
-                nxSubscribeAsset[0].SBQQ__Active__c = false;
-                update nxSubscribeAsset;
-            } 
+            System.debug('-------->> ' + 1);
+            List<SBQQ__SubscribedAsset__c> sbActive = [SELECT Id, SBQQ__ContractId__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Active__c = true AND SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
+            if(!sbActive.isEmpty()) initialContractId = sbActive[0].SBQQ__ContractId__c;
+
+            
             
             //TODO
             
             //2. Find the contract associated to the NX asset and add a subscription record for VX maintenance in the same contract.
             
+            System.debug('-------->> ' + 6 + '  ' + initialContractId
+                + [SELECT Id, SBQQ__RenewalOpportunity__c FROM Contract WHERE Id = :initialContractId]
+                + [SELECT Id FROM SBQQ__QuoteLine__c WHERE Id = :NxAsset.SBQQ__QuoteLine__c]
+                + [SELECT Id FROM Account WHERE Id = :createdVxAsset.AccountId]
+            );
             SBQQ__Subscription__c sub = new SBQQ__Subscription__c(
-                SBQQ__Contract__c = NxAsset.Contract_Number__c,
+                SBQQ__Contract__c = initialContractId,
                 SBQQ__QuoteLine__c = NxAsset.SBQQ__QuoteLine__c,
                 SBQQ__Account__c = createdVxAsset.AccountId,
                 SBQQ__Quantity__c = NxAsset.Quantity,
                 SBQQ__Product__c = NxAsset.Product2Id
             );
+            System.debug('-------->> ' + 7);
             insert sub;
+            System.debug('-------->> ' + 8);
             insert new SBQQ__SubscribedAsset__c(
                 SBQQ__Active__c = true,
                 SBQQ__Asset__c = createdVxAsset.Id,
                 SBQQ__Subscription__c = sub.Id
             );
+            System.debug('-------->> ' + 9);
             
             //3. Deactivate the active flag for NX asset and subscription in the Subscribed Asset object
+              
+            //Deactivate NX subscribed asset
+            List<SBQQ__SubscribedAsset__c> nxSubscribeAsset = [SELECT Id FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
+            System.debug('-------->> ' + 2);
             
+            if(!nxSubscribeAsset.isEmpty()) {
+                System.debug('-------->> ' + 3);
+                nxSubscribeAsset[0].SBQQ__Active__c = false;
+                System.debug('-------->> ' + 4);
+                update nxSubscribeAsset;
+                System.debug('-------->> ' + 5);
+            } 
             
             //4. Add and activate the flag for VX asset and its subscription in the Subscribed asset object
           

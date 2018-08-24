@@ -772,9 +772,57 @@ System.assertEquals(null, [select Id,SBQQ__StartDate__c from SBQQ__Quote__c wher
             system.assertEquals('Edit', listOTM[0].OpportunityAccessLevel);
         }
     }
+
+    @isTest
+    private static void testOpportunitySplitUpdateAlert()
+    {
+        Account newAccount = TestDataFactory.createAccount();
+        insert newAccount;
+
+        Contact newContact = TestDataFactory.createContact(newAccount.Id);
+        insert newContact;     
+
+        Opportunity newOpp = TestDataFactory.createOpportunity(newAccount.Id);      
+        insert newOpp;
+
+        // create SE users
+        Profile adminProfile = [select Id from Profile where Name = 'System Administrator'];
+        List<User> users = new List<User>();
+        for(Integer i = 1; i <= 2; i++)
+        {
+            users.add(new User(
+                Alias = 'admin' + i, 
+                Email = 'admin' + i + '@testorg.com',
+                EmailEncodingKey = 'UTF-8', 
+                LastName = 'Testing' + i, 
+                LanguageLocaleKey = 'en_US',
+                LocaleSidKey = 'en_US', 
+                ProfileId = adminProfile.Id,
+                TimeZoneSidKey = 'America/Los_Angeles',
+                UserName = 'admin' + i + DateTime.now().getTime() + '@testorg.com',
+                Role_Type__c = 'SE')
+            );
+        }
+        insert users;
+
+        // add the second SE user to the split, which makes the total split percentage over-allocated.
+        List<OpportunitySplit> newSplits = new List<OpportunitySplit>();
+        for(OpportunitySplitType splitType : [select Id from OpportunitySplitType where IsActive = true and IsTotalValidated = false])
+        {
+            newSplits.add(new OpportunitySplit(OpportunityId = newOpp.Id, SplitTypeId = splitType.Id, SplitOwnerId = users[0].Id, SplitPercentage = 100));
+        }
+        insert newSplits;
+
+        Test.startTest();
+
+        newOpp.OwnerId = users[1].Id;
+        update newOpp;
+
+        Test.stopTest();                
+    }
     
     @isTest
-    public static void testOppSplitsAutomation() 
+    private static void testOppSplitsAutomation() 
     {
         Account newAccount = TestDataFactory.createAccount();
         insert newAccount;

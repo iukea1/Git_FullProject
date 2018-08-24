@@ -28,4 +28,5 @@
     <tab>DE_Note__c</tab>
     <tab>DE_Case_Note__c</tab>
     <tab>SBQQ__LookupData__c</tab>
+    <tab>OpportunitySplitLog__c</tab>
 </CustomApplication>

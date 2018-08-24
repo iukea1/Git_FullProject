@@ -304,7 +304,7 @@ generator.writeStringField('password', 'Yesadmin4u');
               } 
                if(prodName.contains('BOOST')&& item.SBQQ__Quantity__c!=null)
               {
-                  cp.BoostNode=((integer.valueOf(item.SBQQ__Quantity__c)*1000)*100);
+                  cp.BoostNode=((integer.valueOf(item.Boost_Bandwidth_Qty__c)*1000)*100);
               } 
               if(item.SBQQ__Contract__r.StartDate!=null && item.SBQQ__Contract__r.Status=='Activated')
               {

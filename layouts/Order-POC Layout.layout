@@ -150,7 +150,7 @@
                 <field>SBCF_Shipping_Address__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Sales_Order_Number__c</field>
             </layoutItems>
         </layoutColumns>

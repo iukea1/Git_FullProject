@@ -138,6 +138,7 @@
     <tab>DE_Note__c</tab>
     <tab>DE_Case_Note__c</tab>
     <tab>SBQQ__LookupData__c</tab>
+    <tab>OpportunitySplitLog__c</tab>
     <workspaceMappings>
         <mapping>
             <tab>Cap_Case__c</tab>
@@ -147,6 +148,9 @@
         </mapping>
         <mapping>
             <tab>DE_Note__c</tab>
+        </mapping>
+        <mapping>
+            <tab>OpportunitySplitLog__c</tab>
         </mapping>
         <mapping>
             <tab>Partner_Discount_Lookup__c</tab>

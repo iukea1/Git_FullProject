@@ -434,9 +434,11 @@ insert lstCapCase;
     }
     private boolean CheckOrchVersion(string inputData)
     {
-        pattern myPattern = pattern.compile('^([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{5,})$'); 
+        pattern myPattern = pattern.compile('^([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{5,})?([0-9]{5,})$'); 
+        pattern myPattern1 = pattern.compile('^([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{5,})?([0-9]{1,2}+[.])?([0-9]{5,})$'); 
 		matcher myMatcher = myPattern.matcher(inputData);
-		return (myMatcher.matches() && myMatcher.hitEnd());
+        matcher myMatcher1 = myPattern1.matcher(inputData);
+		return ((myMatcher.matches() && myMatcher.hitEnd()) ||(myMatcher1.matches() && myMatcher1.hitEnd())) ;
     }
     private void PopulateOrchestratorVersion()
     {

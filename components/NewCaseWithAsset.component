@@ -11,20 +11,20 @@
     </style>
     <apex:pageBlock >
         <div class="msg-red-bold">
-            <apex:pageMessage severity="INFO" strength="3" escape="false" summary="To open a case, input or find you Serial Number (SN is required to open a case)."></apex:pageMessage>
+            <apex:pageMessage severity="INFO" strength="3" escape="false" summary="To open a case, input or find you Serial Number/Subscription (SN is required to open a case)."></apex:pageMessage>
         </div>
-        <apex:pageBlockSection title="Enter Serial Number and open case anyway" collapsible="false">
+        <apex:pageBlockSection title="Enter Serial Number/Subscription and open case anyway" collapsible="false">
             <apex:pageBlockSectionItem >
-                <apex:outputLabel value="Serial Number" />
+                <apex:outputLabel value="Serial Number/Subscription" />
                 <apex:outputPanel >
                     <apex:inputText value="{!SerialNo}" />
                     <apex:commandButton value=" Go! " action="{!searchAsset}" oncomplete="setCaseAssetIdNew('{!AssetId}','{!AssetType}');  return false;" />
                 </apex:outputPanel>
             </apex:pageBlockSectionItem>
         </apex:pageBlockSection>
-        <apex:pageBlockSection title="If you don't know your serial number, you can list them below and select the appropriate one for this case" collapsible="false" columns="1">
+        <apex:pageBlockSection title="If you don't know your serial number/subscription, you can list them below and select the appropriate one for this case" collapsible="false" columns="1">
             <apex:pageBlockSectionItem labelStyle="border: none;" dataStyle="border: none;">
-                <apex:outputLabel value="Show me my Serial Numbers" />
+                <apex:outputLabel value="Show me my Serial Numbers/Subscriptions" />
                 <apex:outputPanel layout="block">
                     <apex:commandButton value=" Go! " action="{!showAssets}" reRender="assetsList" onclick="jQuery('.loading-assets-icon').show();"  oncomplete="if(jQuery) { jQuery('.loading-assets-icon').hide(); }" />
                     <img src="/img/loading.gif" alt="Loading" class="loading-assets-icon" />

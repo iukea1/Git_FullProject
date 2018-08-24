@@ -19,6 +19,10 @@
                 <behavior>Required</behavior>
                 <field>SBQQ__Quantity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Boost_Bandwidth_Qty__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

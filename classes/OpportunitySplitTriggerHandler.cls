@@ -77,8 +77,10 @@ public class OpportunitySplitTriggerHandler implements ITriggerHandler
             oldSplit = (OpportunitySplit)oldItems.get(splitId);
             if(newSplit.IsActive__c)
             {
-                // track the history when split percent or split owner changes
-                if(newSplit.SplitPercentage != oldSplit.SplitPercentage || newSplit.SplitOwnerId != oldSplit.SplitOwnerId)
+                // track the history when split percent or split owner or note changes
+                if(newSplit.SplitPercentage != oldSplit.SplitPercentage 
+                || newSplit.SplitOwnerId != oldSplit.SplitOwnerId
+                || newSplit.SplitNote != oldSplit.SplitNote)
                 {
                     newSplits.add(newSplit);
                     oldSplits.add(oldSplit);
@@ -121,6 +123,8 @@ public class OpportunitySplitTriggerHandler implements ITriggerHandler
             SplitPercent_Old__c = oldSplit != null ? oldSplit.SplitPercentage : null,
             Split_Amount_New__c = newSplit != null ? newSplit.SplitAmount : null,
             Split_Amount_Old__c = oldSplit != null ? oldSplit.SplitAmount : null,
+            Note_New__c = newSplit != null ? newSplit.SplitNote : null,
+            Note_Old__c = oldSplit != null ? oldSplit.SplitNote : null,
             Event__c = event
         );
     }

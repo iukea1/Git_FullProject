@@ -286,10 +286,6 @@
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
         </sections>
-        <sections>
-            <label><!-- Quote Options --></label>
-            <section>Quote Options</section>
-        </sections>
     </layouts>
     <layouts>
         <layout>Standard Draft Quote Layout</layout>

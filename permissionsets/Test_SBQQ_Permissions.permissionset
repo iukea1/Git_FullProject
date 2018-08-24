@@ -4952,12 +4952,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunitySplitLog__c.Note_New__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunitySplitLog__c.Note_Old__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OpportunitySplitLog__c.Opportunity_Split_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>OpportunitySplitLog__c.Opportunity_Split_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunitySplitLog__c.Role_Type_New__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunitySplitLog__c.Role_Type_Old__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9381,6 +9401,15 @@
         <readable>false</readable>
     </fieldPermissions>
     <label>Test - SBQQ Permissions</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AssetContract__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <pageAccesses>
         <apexPage>AccountCampaigns</apexPage>
         <enabled>false</enabled>
@@ -10619,6 +10648,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Opportunities_Partner</tab>
+        <visibility>None</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>OpportunitySplitLog__c</tab>
         <visibility>None</visibility>
     </tabSettings>
     <tabSettings>

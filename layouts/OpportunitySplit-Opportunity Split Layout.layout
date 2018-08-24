@@ -56,6 +56,7 @@
     <multilineLayoutFields>SplitOwnerId</multilineLayoutFields>
     <multilineLayoutFields>SplitPercentage</multilineLayoutFields>
     <multilineLayoutFields>SplitAmount</multilineLayoutFields>
+    <multilineLayoutFields>SplitNote</multilineLayoutFields>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>

@@ -64,6 +64,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Note_New__c</fullName>
+        <externalId>false</externalId>
+        <label>Note (New)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Note_Old__c</fullName>
+        <externalId>false</externalId>
+        <label>Note (Old)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>OpportunityId__c</fullName>
         <externalId>false</externalId>
         <label>Opportunity Name</label>
@@ -91,6 +111,26 @@
         <externalId>false</externalId>
         <label>Opportunity Split Type</label>
         <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role_Type_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>Team_Member_New__r.Role_Type__c</formula>
+        <label>Role Type (New)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role_Type_Old__c</fullName>
+        <externalId>false</externalId>
+        <formula>Team_Member_Old__r.Role_Type__c</formula>
+        <label>Role Type (Old)</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -161,6 +201,21 @@
         <type>Lookup</type>
     </fields>
     <label>Opportunity Split Log</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>OpportunityId__c</columns>
+        <columns>Opportunity_Split_ID__c</columns>
+        <columns>Opportunity_Split_Type__c</columns>
+        <columns>Team_Member_Old__c</columns>
+        <columns>Team_Member_New__c</columns>
+        <columns>SplitPercent_Old__c</columns>
+        <columns>SplitPercent_New__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>Log-{YYYY}{MM}-{000}</displayFormat>
         <label>Opportunity Split Log #</label>
