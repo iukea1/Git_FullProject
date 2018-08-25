@@ -66,7 +66,7 @@ public class CaseTriggerHandler implements ITriggerHandler {
                 {
                     mapSubs.put(newCase.Id,newCase.Subscription__c);
                 }
-                if(newCase.Is_EC_V__c && newCase.AssetId==null && newCase.Subscription__c==null)
+                if(newCase.Is_EC_V__c && newCase.Is_EC_V__c!=oldCase.Is_EC_V__c && newCase.AssetId==null && newCase.Subscription__c==null)
                     lstCase.put(newCase.Id,newCase.AccountId);
             }
             PopulateContractInfo(mapAssets,mapSubs);
@@ -84,11 +84,29 @@ public class CaseTriggerHandler implements ITriggerHandler {
     
      private static void PopulateBaseContract(Map<Id,Id> mapCases)
      {
-         Set<Id> acctId= new Set<ID>();
-        if(mapCases!=null && mapCases.size()>0)
-        {
-             List<SBQQ__Subscription__c> lstSub=[Select Id,SBQQ__Account__c from SBQQ__Subscription__c where SBQQ__Contract__r.Status='Activated' and SBQQ__Contract__r.Evaluation_Quote__c=false and SBQQ__Account__c in:mapCases.values()];
-        }
+         
+         List<Case> lstCases= new List<Case>();
+         if(mapCases!=null && mapCases.size()>0)
+         {
+             List<SBQQ__Subscription__c> lstSub=[Select Id,SBQQ__Account__c from SBQQ__Subscription__c where SBQQ__Product__r.Name like 'EC-BASE%' and SBQQ__Contract__r.Status='Activated' and SBQQ__Contract__r.Evaluation_Quote__c=false and SBQQ__Account__c in:mapCases.values()];
+             if(lstSub!=null && lstSub.size()>0)
+             {
+                 for(Id caseId: mapCases.keyset())
+                 {
+                     Id acctId= mapCases.get(caseId);
+                     for(SBQQ__Subscription__c sub: lstSub)
+                     {
+                         if(acctId==sub.SBQQ__Account__c)
+                             lstCases.add(new Case(ID=caseId,Subscription__c=sub.Id));
+                     }
+                 }
+                 
+             }
+         }
+         if(lstCases!=null && lstCases.size()>0)
+         {
+             update lstCases;
+         }
      }
     
     private static void PopulateContractInfo(Map<Id,Id> mapCaseAssets,Map<Id,Id> mapCaseSubs)

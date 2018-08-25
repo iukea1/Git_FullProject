@@ -34,20 +34,12 @@
     <layouts>
         <layout>Contract Layout - Ops</layout>
         <sections>
-            <label><!-- Address Information --></label>
-            <section>Address Information</section>
-        </sections>
-        <sections>
             <label><!-- Contract Information --></label>
             <section>Contract Information</section>
         </sections>
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Description Information --></label>
-            <section>Description Information</section>
         </sections>
         <sections>
             <label><!-- Navision Contract Id&apos;s --></label>
