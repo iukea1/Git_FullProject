@@ -129,14 +129,7 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
 
         }
         
-        try {
-            
-            upsert rmas;
-            
-        }
-        catch(Exception qe){
-            System.debug(qe.getMessage());
-        }
+        upsert rmas;
         
         List<RMA_Item__c> rmaItems = new List<RMA_Item__c>();
         
@@ -159,25 +152,14 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         if(!quotesToUpdate.isEmpty()){
             update quotesToUpdate;    
         }
-        
-        try {
-            upsert rmaItems;
-        }
-        catch(Exception qe){
-            System.debug(qe.getMessage());
-        }
+        upsert rmaItems;
         
         for(Asset a: assets){
             if(a.Status == 'Customer Subscription Active') a.Status = 'Customer Subscription Expired';
-            else a.Status = 'Pending Return – Eval';
+            else if(a.Status != 'Customer Subscription Expired') a.Status = 'Pending Return – Eval';
         }
         
-        try {
-            update assets;
-        }
-        catch(Exception qe){
-            System.debug(qe.getMessage());
-        }
+        update assets;
     }
     
     

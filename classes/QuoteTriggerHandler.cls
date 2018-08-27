@@ -84,30 +84,48 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     }
     
     public static void runShippedExtendedLogic(Map<Id, SBQQ__Quote__c> oldItems, List<SBQQ__Quote__c> quotes) {
-        Set<Id> opsList = new Set<Id>();
+        Set<Id> qId = new Set<Id>();
         for(SBQQ__Quote__c qRec : quotes) {
-            opsList.add(qRec.SBQQ__Opportunity2__c);
+            qId.add(qRec.Id);
         }
-        Map<Id, Opportunity> opsMap = new Map<Id, Opportunity>([SELECT Id, ContractId, SBQQ__AmendedContract__c, SBQQ__RenewedContract__c, (SELECT Id FROM Contracts__r) FROM Opportunity WHERE Id IN :opsList]);
-
-
+        Map<Id, Set<Id>> conMap = new Map<Id, Set<Id>>();
+        
+        for(Contract c : [SELECT Id, SBQQ__Quote__c FROM Contract WHERE SBQQ__Quote__c IN :qId]) {
+            if(!conMap.containsKey(c.SBQQ__Quote__c)) conMap.put(c.SBQQ__Quote__c, new Set<Id>());
+            conMap.get(c.SBQQ__Quote__c).add(c.Id);
+        }
+        
+        Map<Id, Set<Id>> astMap = new Map<Id, Set<Id>>();
+        for(Asset a : [SELECT Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE SBQQ__QuoteLine__r.SBQQ__Quote__c IN :qId]) {
+            if(!astMap.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)) astMap.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Set<Id>());
+            astMap.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c).add(a.Id);
+        }
 
         List<Contract> contUpdate = new List<Contract>();
+        List<Asset> astUpdate = new List<Asset>();
         for(SBQQ__Quote__c qRec : quotes) {
-            if(qRec.POC_Status__c == 'Shipped - Extended' && oldItems.get(qRec.Id).POC_Status__c != 'Shipped - Extended') {
-                qRec.SBQQ__EndDate__c = qRec.Requested_Extension_Date__c;
-                qRec.SBQQ__ExpirationDate__c = qRec.Requested_Extension_Date__c;
-                if(opsMap.containsKey(qRec.SBQQ__Opportunity2__c) && opsMap.get(qRec.SBQQ__Opportunity2__c).ContractId != null) {
+            if(qRec.POC_Status__c == 'Shipped - Extended' && oldItems.get(qRec.Id).POC_Status__c != 'Shipped - Extended' && conMap.containsKey(qRec.Id)) {
+                //qRec.SBQQ__EndDate__c = qRec.Requested_Extension_Date__c;
+                //qRec.SBQQ__ExpirationDate__c = qRec.Requested_Extension_Date__c;
+                for(Id i : conMap.get(qRec.Id)) {
                     contUpdate.add(
                         new Contract(
-                            Id = opsMap.get(qRec.SBQQ__Opportunity2__c).ContractId,
+                            Id = i,
                             EndDate = qRec.Requested_Extension_Date__c
+                        )
+                    );
+                }
+                for(Id i : astMap.get(qRec.Id)) {
+                    astUpdate.add(
+                        new Asset(
+                            Id = i
                         )
                     );
                 }
             }
         }
         update contUpdate;
+        //update astUpdate;
     }
     
     public static void populateThePocIDinRelatedRecords(List<SBQQ__Quote__c> quotes){
@@ -239,16 +257,38 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         //POC_Quote__c
         List<RMA__c> rmaInsert = new List<RMA__c>();
         RecordType rt = [SELECT Id FROM RecordType WHERE DeveloperName = 'Eval_RMA' AND sObjectType = 'RMA__c' LIMIT 1];
+        Map<Integer, List<RMA_Item__c>> rmaIdxToRmaItem = new Map<Integer, List<RMA_Item__c>>();
+        
+        Map<Id, List<Asset>> quoteAssets = new Map<Id, List<Asset>>();
+        for(Asset a : [SELECT Id, Product2Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quotes]) {
+            if(!quoteAssets.isEmpty()) quoteAssets.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new List<Asset>());
+            quoteAssets.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c).add(a);
+        }
+        
         for(SBQQ__Quote__c q : quotes) {
             if(oldQuotes.get(q.Id).POC_Status__c != 'Pending Return' && q.POC_Status__c == 'Pending Return' && q.SBCF_Evaluation_Quote__c) {
                 rmaInsert.add(new RMA__c(
                     POC_Quote__c = q.Id,
                     RecordTypeId = rt.Id,
                     Type__c = 'Eval Return',
-                    Status__c = 'Initiated'
+                    Status__c = 'Initiated',
+                    Contact_LOC_1__c = q.POC_Contact__c
                 ));
+                
             }
         }
         if(!rmaInsert.isEmpty()) insert rmaInsert;
+        
+        
+    }
+    private static RMA_Item__c createFromAsset(Id rmaId, Asset a, String recType, String type, String stat) {
+        return new RMA_Item__c(
+            Rma__c = rmaId,
+            Asset__c = a.Id, 
+            Product2__c = a.Product2Id, 
+            RecordTypeId = recType, 
+            Type__c = type,//'Return - Refurbish and Stock', 
+            Status__c = stat//'Not Dispatched'
+        );
     }
 }
