@@ -111,7 +111,7 @@ public class TestSubscriptionSharing {
         Contract con= new Contract(AccountId=acc.Id);
         insert con;
         
-        
+        Test.startTest();
         con.status='Activated';
         update con;
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=vxSub.Id);
@@ -120,7 +120,7 @@ public class TestSubscriptionSharing {
         List<SBQQ__Subscription__Share> lstSubShare=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId=:sub.Id];
    		System.debug('lstSubShare1'+lstSubShare.size());
         System.assert(lstSubShare.size()>0);
-        Test.startTest();
+      
         System.debug('portalUser1.Id'+ portalUser1.Id);
         AccountShare accShare1= new AccountShare(AccountId=acc.Id,UserOrGroupId=portalUser1.Id);
         accShare1.AccountAccessLevel='Read';
@@ -204,7 +204,7 @@ public class TestSubscriptionSharing {
         Contract con= new Contract(AccountId=acc.Id);
         insert con;
         
-        
+        Test.startTest();
         con.status='Activated';
         update con;
         SBQQ__Subscription__c sub= new SBQQ__Subscription__c(SBQQ__Account__c=acc.Id,SBQQ__Contract__c=con.Id,SBQQ__Quantity__c=1,SBQQ__Product__c=vxSub.Id);
@@ -213,7 +213,7 @@ public class TestSubscriptionSharing {
         List<SBQQ__Subscription__Share> lstSubShare=[SELECT ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId=:sub.Id];
    		System.debug('lstSubShare1'+lstSubShare.size());
         System.assert(lstSubShare.size()>0);
-        Test.startTest();
+        
         System.debug('portalUser1.Id'+ portalUser1.Id);
         AccountShare accShare1= new AccountShare(AccountId=acc.Id,UserOrGroupId=portalUser1.Id);
         accShare1.AccountAccessLevel='Read';

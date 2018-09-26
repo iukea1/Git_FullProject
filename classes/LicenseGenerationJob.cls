@@ -3,7 +3,7 @@ public class LicenseGenerationJob implements  Database.Batchable<sObject>
     
     public Database.QueryLocator start(Database.BatchableContext BC)
     {
-        return Database.getQueryLocator([Select Id, SerialNumber,Model__c,Product_Quote_Type__c,Product_Category__c, GMS_Nodes__c,Status,Ship_Date__c,SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate  from Asset where Create_License__c=true]);
+        return Database.getQueryLocator([Select Id, SerialNumber,Model__c,Product_Quote_Type__c,Product_Category__c, GMS_Nodes__c,Status,Ship_Date__c,SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate  from Asset where Create_License__c=true And Product2.Family='Virtual Image']);
     }
     
     public void execute(Database.BatchableContext BC, List<SObject> scope)
@@ -58,9 +58,7 @@ public class LicenseGenerationJob implements  Database.Batchable<sObject>
                 System.debug('after insert licenses'+setLicIds);
                 if(setLicIds.size()>0)
                 {
-                    LicenseEncryptionJob job = new LicenseEncryptionJob();
-                    job.LicenseIds = new List<Id>(setLicIds);
-                    System.enqueueJob(job);
+                   encryptLicenses_Batch(setLicIds);
                 }
                 // update CreateAsset flag= false;
                 for(Asset asset: lstAssets)
@@ -87,7 +85,24 @@ public class LicenseGenerationJob implements  Database.Batchable<sObject>
        if(!Test.isRunningTest())
         {
             LicenseGenerationJob obj= new LicenseGenerationJob();
-            System.scheduleBatch(obj, 'LicenseGeneration', 5);        
+            System.scheduleBatch(obj, 'LicenseGeneration',5, 1);        
         }
     }
+    
+    public static void encryptLicenses_Batch(Set<Id> licenseIds)
+    {
+        
+        Set<Id> generateLicenseIds = new Set<Id>();
+        for(License__c item : [select Id from License__c where Id in :licenseIds])
+        {
+            generateLicenseIds.add(item.Id);
+        }
+        if(generateLicenseIds.size() > 0)
+        {
+            LicenseEncryptionJob job = new LicenseEncryptionJob();
+            job.LicenseIds = new List<Id>(generateLicenseIds);
+            System.enqueueJob(job);
+        }
+    }
+    
 }

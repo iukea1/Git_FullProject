@@ -830,6 +830,16 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Recalc_EndDate</fullName>
+        <field>RecalcEndDate__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Recalc EndDate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>contract_expiry</fullName>
         <field>Status</field>
         <literalValue>Expired</literalValue>
@@ -957,43 +967,6 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Eval Contract Expiration</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contract.Evaluation_Quote__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contract.Status</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Eval_Contract_On_Day</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Change_the_status_to_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Eval_Contract_5_Days_before_expire</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Contract.EndDate</offsetFromField>
-            <timeLength>-5</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Non EC Renewal Contract</fullName>
         <active>true</active>
         <formula>AND(
@@ -1045,6 +1018,16 @@ NOT(ISNULL(SBQQ__Order__c)),
             <operation>equals</operation>
             <value>Draft</value>
         </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Initial Recalculate EndDate</fullName>
+        <actions>
+            <name>Update_Recalc_EndDate</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>Evaluation_Quote__c</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

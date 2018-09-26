@@ -60,6 +60,11 @@
         <relationshipLabel><!-- Patches (ISR) --></relationshipLabel>
     </fields>
     <fields>
+        <help><!-- Indicates patch will use Sales Team setting to assign team member instead of patch user settings. --></help>
+        <label><!-- Sales Team --></label>
+        <name>IsSalesTeam__c</name>
+    </fields>
+    <fields>
         <label><!-- Overlay 1 Email --></label>
         <name>Overlay_1_Email__c</name>
     </fields>
@@ -94,6 +99,14 @@
         <label><!-- Patch Owner --></label>
         <name>Owner__c</name>
         <relationshipLabel><!-- Patches (Patch Owner) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Patch Region --></label>
+        <name>PatchRegion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Patch Theatre --></label>
+        <name>PatchTheatre__c</name>
     </fields>
     <fields>
         <label><!-- Patch Name --></label>

@@ -3318,7 +3318,7 @@ ISPICKVAL(Opportunity__r.Product_Type__c,&quot;&quot;))</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>POc_Contact_part_of_Opp_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>POC_Contact__r.AccountId != Opportunity__r.AccountId</errorConditionFormula>
         <errorDisplayField>POC_Contact__c</errorDisplayField>
         <errorMessage>POC Contact is not a valid contact for this account. Please select valid contact.</errorMessage>

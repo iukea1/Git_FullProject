@@ -596,11 +596,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RV_Member__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Primary_District__c</field>
             <table>Contact</table>
         </columns>
@@ -817,16 +812,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Partner_Role__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Account__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Owner__c</field>
             <table>Contact</table>
         </columns>
         <columns>
@@ -1830,11 +1815,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PO_Number__c</field>
-            <table>Contact.CampaignMembers</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner__c</field>
             <table>Contact.CampaignMembers</table>
         </columns>
         <columns>

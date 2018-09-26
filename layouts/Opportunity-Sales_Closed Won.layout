@@ -3,11 +3,29 @@
     <customButtons>Custom_Clone</customButtons>
     <customButtons>Merge</customButtons>
     <customButtons>refedge__Find_References</customButtons>
+    <customButtons>SBQQ__Amend_Contract</customButtons>
+    <customButtons>Create_Renewal_Quote</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>New Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>70</height>
+                <page>OppSplitCheck</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -101,6 +119,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Comp_Rate_2_2019_Plan__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_Ownership__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -566,6 +588,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>

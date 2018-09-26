@@ -7,6 +7,8 @@
     <customButtons>Forward_Lead</customButtons>
     <customButtons>Renewal</customButtons>
     <customButtons>Merge</customButtons>
+    <customButtons>SBQQ__Amend_Contract</customButtons>
+    <customButtons>Create_Renewal_Quote</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -138,6 +140,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Comp_Rate_2_2019_Plan__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_Ownership__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -403,31 +409,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>rvpe__RVAccount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>rvpe__RVMember__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Deal_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Deal_Reg__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>rvpe__IsDealRegistration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>rvpe__NotifyRVMember__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>rvpe__PartnerLastModifiedDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -490,14 +476,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Registered_Distributor_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Secondary_RV_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Secondary_RV_Member__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -770,6 +748,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>

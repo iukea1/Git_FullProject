@@ -35,6 +35,65 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Assignment</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Patch__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SegmentationType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SalesTeamMatched__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Patch_Locked__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Trigger_Assignment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_Ownership__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Patch_Owner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatre__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchRegion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTerritory__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchSegmentRegion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Opportunity</label>
         <layoutColumns>
             <layoutItems>
@@ -220,10 +279,6 @@
                 <field>Channel_Manager__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Patch_Owner__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>I_brought_this_deal_to_Silver_Peak__c</field>
             </layoutItems>
@@ -270,40 +325,18 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OtherEnv__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Assignment</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Patch__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Patch_Locked__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Transactional_Opportunity__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Trigger_Assignment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Bypassing_Validation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OtherEnv__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Marketplace_Fulfillment__c</field>
@@ -486,7 +519,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Tier1_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Tier2_Partner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tier2_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -705,6 +746,7 @@
     </relatedLists>
     <relatedLists>
         <customButtons>New_SP_Quote</customButtons>
+        <customButtons>CreateSPQuote2</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ApprovalStatus__c</fields>
@@ -811,6 +853,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>

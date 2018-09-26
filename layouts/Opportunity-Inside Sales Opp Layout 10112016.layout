@@ -91,6 +91,10 @@
                 <behavior>Readonly</behavior>
                 <field>Comp_Rate_2_2019_Plan__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_Ownership__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -356,6 +360,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>

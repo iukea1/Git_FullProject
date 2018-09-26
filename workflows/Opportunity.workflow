@@ -526,6 +526,17 @@
         <template>Support/oppty_closed_stage</template>
     </alerts>
     <alerts>
+        <fullName>Opportunity_Owner_not_same_as_Account_Owner</fullName>
+        <description>Opportunity Owner not same as Account Owner</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>pmusunuru@silver-peak.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Opportunity_Owner_not_same_as_Account_Owner</template>
+    </alerts>
+    <alerts>
         <fullName>Opportunity_Registration_Approved</fullName>
         <description>Opportunity Registration Approved</description>
         <protected>false</protected>
@@ -764,6 +775,24 @@
         <field>StageName</field>
         <literalValue>Discovery</literalValue>
         <name>Deal reg Update Stage to Discovery</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Default_ISI_to_SD_WAN</fullName>
+        <field>Deal_Type__c</field>
+        <literalValue>SD WAN</literalValue>
+        <name>Default ISI to SD WAN</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Default_Type_to_New_Business</fullName>
+        <field>Type</field>
+        <literalValue>New Business</literalValue>
+        <name>Default Type to New Business</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -1016,15 +1045,6 @@
         <name>Upodate event date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>rvee__NotifyRVMemberReset</fullName>
-        <field>rvpe__NotifyRVMember__c</field>
-        <literalValue>0</literalValue>
-        <name>Notify RV Member Reset</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <outboundMessages>
@@ -1510,6 +1530,40 @@ ISBLANK(Signed_By__c)
             <value>Follow on Business,New Business</value>
         </criteriaItems>
         <description>Sends an email when a new and follow on  opportunity is closed/won</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Created by Lead Conversion</fullName>
+        <actions>
+            <name>Default_ISI_to_SD_WAN</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Default_Type_to_New_Business</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.Lead_Conversion_Check__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Opportunity Owner not same as Account Owner</fullName>
+        <actions>
+            <name>Opportunity_Owner_not_same_as_Account_Owner</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula>AND(Owner.Id  &lt;&gt;  Account.OwnerId,
+    TEXT(StageName) &lt;&gt; &quot;Closed Deleted&quot;,
+    OR(Owner.UserRole.Name  &lt;&gt; &quot;Grade 2 BDR&quot;,
+       Owner.UserRole.Name  &lt;&gt; &quot;Grade 1 Inside Sales&quot;),
+    OR(TEXT(Type)  = &quot;New Business&quot;,
+       TEXT(Type)  = &quot;Follow on Business&quot;)
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -2115,30 +2169,6 @@ IF(ISPICKVAL (LeadSource, &quot;Customer Referral.&quot;), 1,0), &quot;Used&quot
         <formula>AND( ISCHANGED( StageName ) , OR( ISPICKVAL( StageName , &apos;Closed Lost&apos;) , ISPICKVAL( StageName , &apos;Closed Dead&apos;), 
 OR(ISPICKVAL( StageName , &apos;Closed Deleted&apos;),OR(ISPICKVAL( StageName , &apos;Closed Won&apos;)))))</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>rvee__Deal Registration Approved</fullName>
-        <actions>
-            <name>Deal_Registration_Approved</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>false</active>
-        <formula>(rvpe__IsDealRegistration__c == true)</formula>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>rvee__Notify RV Member</fullName>
-        <actions>
-            <name>rvee__NotifyRVMemberReset</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Notify_RV_Member</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>true</active>
-        <formula>(rvpe__NotifyRVMember__c == true)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>update event date</fullName>

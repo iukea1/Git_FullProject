@@ -83,11 +83,12 @@ public class LeadTriggerHandler implements ITriggerHandler {
                             }
                         }
                     }
+                    Boolean isSegmentChanged = oldLead.SegmentationType__c != newLead.SegmentationType__c && newLead.IsSalesTeamPatch__c;
                     if(!newLead.IsConverted)
                     {
                         PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newLead);
                         PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldLead);
-                        if(newLead.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget)|| newLead.ECSP__c!=oldLead.ECSP__c)
+                        if(newLead.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget)|| newLead.ECSP__c!=oldLead.ECSP__c || isSegmentChanged)
                         {
                             leadsNeedAssignment.add(newLead);
                             PatchRuleHelper.leadsNeedAssignment.add(newLead.Id);

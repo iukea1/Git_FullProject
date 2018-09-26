@@ -30,12 +30,12 @@
                 <field>Service_Provider_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Renewal_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Payment_Terms__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -84,6 +84,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>D_B_Data_Update__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

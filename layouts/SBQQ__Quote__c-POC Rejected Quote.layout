@@ -29,6 +29,18 @@
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Custom_End_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>End_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__EndDate__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reseller_Partner__c</field>
             </layoutItems>
@@ -41,7 +53,7 @@
                 <field>Tier_3_Partner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Prepared_For__c</field>
             </layoutItems>
             <layoutItems>
@@ -262,6 +274,10 @@
                 <behavior>Edit</behavior>
                 <field>Discount_Justification__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>POC_Duration__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -328,30 +344,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Sales_Director_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_VP_Sales_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Manager_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Director_Approver__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>POC_Status__c</field>
@@ -494,7 +486,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
@@ -504,6 +495,16 @@
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>
         <relatedList>SBQQ__QuoteLine__c.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>Contract.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>sbaa__Actions__c</fields>

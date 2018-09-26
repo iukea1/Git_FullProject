@@ -330,30 +330,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Sales_Director_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_VP_Sales_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Manager_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Director_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>POC_Status__c</field>
             </layoutItems>
@@ -495,7 +471,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>

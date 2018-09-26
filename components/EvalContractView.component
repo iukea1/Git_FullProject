@@ -1,6 +1,6 @@
 <apex:component controller="SBQQSubscriptionDataController" access="global" layout="none">
-    <apex:attribute name="contract_Id" type="Id" description="Id of the Contract" assignTo="{!ContractId}"></apex:attribute>
-    <apex:repeat value="{!lstAssetWrapper}" var="asset">
+    <apex:attribute name="quote_Id" type="Id" description="Id of the Contract" assignTo="{!QuoteId}"></apex:attribute>
+    <apex:repeat value="{!lstAssetWrapperQuote}" var="asset">
             {!asset.ProductName}, S/N {!asset.SerialNumber} <br />
         </apex:repeat>
 </apex:component>

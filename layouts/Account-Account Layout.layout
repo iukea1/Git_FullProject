@@ -156,6 +156,10 @@
                 <behavior>Edit</behavior>
                 <field>D_B_Data_Update__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -548,6 +552,22 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Account Hierarchy</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>TRIMAO__AccountHierarchy</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
@@ -817,6 +837,16 @@
         <fields>Primary_Partner__c</fields>
         <fields>Registered_Partner__c</fields>
         <relatedList>Opportunity.Metered_Service_Provider__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ASSET.QUANTITY</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>ASSET.IS_COMPETITOR_PRODUCT</fields>
+        <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

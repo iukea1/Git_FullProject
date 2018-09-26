@@ -26,6 +26,89 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Account Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ParentId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cumulative_Bookings__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cumulative_Opp_Value__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Active_Asset_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Site</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Global_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Key_Acct__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Phone</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fax</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_Market__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>of_Enterprise_Locations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>First_Asset_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EC_Customer_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Customer_Size_Potential__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Assignment</label>
@@ -37,18 +120,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Patch_Locked__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Target_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Partner_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Service_Provider_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -72,6 +143,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Partner_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Provider_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Is_this_a_foreign_government_entity__c</field>
             </layoutItems>
             <layoutItems>
@@ -85,22 +164,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SP_MKTG__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Has_Open_Opportunity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Contract_Pricing__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Deployment_Engineer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Patch_Matched_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -122,89 +185,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Deployment_Engineer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Deployment_Engineering__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_Open_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Payment_Terms__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Target_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_Pricing__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Patch_Matched_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Account Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Site</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ParentId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Type</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Global_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Key_Acct__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Phone</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Fax</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>of_Enterprise_Locations__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Size_Potential__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Cumulative_Bookings__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Cumulative_Opp_Value__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>First_Asset_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Primary_Market__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Active_Asset_Count__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -552,6 +560,22 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
+        <label>Account Organizer</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>400</height>
+                <page>TRIMAO__AccountHierarchy</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
         <label>Opportunities (includes all child account opportunities)</label>
         <layoutColumns>
             <layoutItems>
@@ -582,10 +606,12 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
-        <fields>FULL_NAME</fields>
-        <fields>LEAD.COMPANY</fields>
-        <fields>LEAD.PHONE</fields>
-        <relatedList>Lead.Matched_Account__c</relatedList>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.TYPE</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>FULL_NAME</fields>
@@ -594,7 +620,13 @@
         <relatedList>Lead.Existing_Opportunity_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
+        <fields>FULL_NAME</fields>
+        <fields>LEAD.COMPANY</fields>
+        <fields>LEAD.PHONE</fields>
+        <relatedList>Lead.Matched_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>FULL_NAME</fields>
@@ -619,12 +651,17 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>OPPORTUNITY.NAME</fields>
-        <fields>OPPORTUNITY.TYPE</fields>
-        <fields>OPPORTUNITY.STAGE_NAME</fields>
-        <fields>OPPORTUNITY.AMOUNT</fields>
-        <fields>OPPORTUNITY.CLOSE_DATE</fields>
-        <relatedList>RelatedOpportunityList</relatedList>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>TASK.WHAT_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -692,16 +729,6 @@
         <relatedList>AuthCode__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>TASK.WHAT_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -724,9 +751,6 @@
         <fields>Product__c</fields>
         <fields>SO_Reference__c</fields>
         <relatedList>SW_Only_Asset__c.Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -768,6 +792,16 @@
         <fields>Primary_Partner__c</fields>
         <fields>Registered_Partner__c</fields>
         <relatedList>Opportunity.Metered_Service_Provider__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ASSET.QUANTITY</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>ASSET.IS_COMPETITOR_PRODUCT</fields>
+        <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -76,7 +76,7 @@
         </apex:facet>
     </apex:actionStatus>
     <a class="btn btn-large" href="" onclick="checkConvert();" >Convert</a>
-    <a class="btn btn-large" href="{!$Page.AssetListView_NXToVX}" >Cancel</a>&nbsp;
+    <a class="btn btn-large" href="{!$Page.PortalViewNXVX}" >Cancel</a>&nbsp;
     <a style="text-decoration:underline" href="http://marketplace.silver-peak.com/" target="_blank">Try VX/GMS Appliance </a>&nbsp;
     <a style="text-decoration:underline" href="{!$Page.CmaConversionFaq}" target="_blank">Read FAQ</a>    </apex:form>
     <script>

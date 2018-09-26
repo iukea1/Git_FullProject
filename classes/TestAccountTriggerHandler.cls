@@ -304,7 +304,7 @@ public class TestAccountTriggerHandler {
     @IsTest
     public static void TestSendEmailToDevOpsforMTO()
     {
-        Account acc= new Account(Name='Test Data',ECSP__c=true,Service_Provider_Account_Type__c='Perpetual-Orchestrator SP',Service_Provider_Admin_User__c='abc@abc.com',Service_Provider_Domain__c='test',Service_Provider_Location__c='EU (London)');
+        Account acc= new Account(Name='Test Data',ECSP__c=true,Unity_Orch_Admin_User__c=null,Unity_Orch_Domain__c =null,Unity_Orch_Location__c=null,Service_Provider_Account_Type__c='Perpetual-Orchestrator SP',Service_Provider_Admin_User__c='abc@abc.com',Service_Provider_Domain__c='test',Service_Provider_Location__c='EU (London)');
         insert acc;
         acc.Cloud_Portal_Account_Id__c='test';
         acc.Cloud_Portal_Account_Key__c='test';
@@ -314,7 +314,7 @@ public class TestAccountTriggerHandler {
     @IsTest
     public static void ECSPFlag_AccountSyncedinCP()
     {
-        Account acc=new Account(Name='Test',Cloud_Portal_Account_Name__c='Test',ECSP__c=true,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
+        Account acc=new Account(Name='Test',Cloud_Portal_Account_Name__c='Test',ECSP__c=true,Unity_Orch_Admin_User__c=null,Unity_Orch_Domain__c =null,Unity_Orch_Location__c=null,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
         insert acc;
         acc.ECSP__c=false;
         Profile p = [SELECT Id FROM Profile WHERE Name='9-Operations Manager']; 
@@ -344,7 +344,7 @@ public class TestAccountTriggerHandler {
     @IsTest
     public static void ECSPFlag_AccountAssetsCreated()
     {
-        Account acc=new Account(Name='Test',ECSP__c=true,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
+        Account acc=new Account(Name='Test',ECSP__c=true,Unity_Orch_Admin_User__c=null,Unity_Orch_Domain__c =null,Unity_Orch_Location__c=null,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
         insert acc;
         Account spacc=new Account(Name='Silver Peak Systems');
         insert spacc;
@@ -385,7 +385,7 @@ public class TestAccountTriggerHandler {
     @IsTest
     public static void AllowECSPFlagChange()
     {
-        Account acc=new Account(Name='Test',ECSP__c=true,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
+        Account acc=new Account(Name='Test',ECSP__c=true,Unity_Orch_Admin_User__c=null,Unity_Orch_Domain__c =null,Unity_Orch_Location__c=null,Service_Provider_Account_type__c='Perpetual',Service_Provider_Admin_User__c='abc@abc.com');
         insert acc;
         Profile p = [SELECT Id FROM Profile WHERE Name='9-Operations Manager']; 
         User u = new User(Alias = 'standt', Email='testUser@uniquetest.com', 

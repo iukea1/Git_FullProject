@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Custom_Clone</customButtons>
     <customButtons>Add_Revenue_Recognition</customButtons>
-    <customButtons>Patch_Lock_Unlock</customButtons>
-    <customButtons>Patch_Override_Opp</customButtons>
-    <customButtons>Forward_Lead</customButtons>
-    <customButtons>Renewal</customButtons>
-    <customButtons>Merge</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
-    <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -79,6 +73,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Metered_Claimed_as_Enterprise__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Metered_Service_Provider__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>POC_Opportunity__c</field>
             </layoutItems>
             <layoutItems>
@@ -92,14 +94,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Renewal_Specialist__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Metered_Claimed_as_Enterprise__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Metered_Service_Provider__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -486,6 +480,10 @@
                 <field>Finance_Review_Notes__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ARRID__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -506,10 +504,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Shipped_Complete_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Exclude_from_Xactly__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -548,6 +542,14 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <fields>SplitOwner</fields>
+        <fields>SplitType</fields>
+        <fields>SplitPercentage</fields>
+        <fields>SplitAmount</fields>
+        <fields>SplitNote</fields>
+        <relatedList>RelatedOpportunitySplits</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.CREATED_DATE</fields>
         <fields>TASK.WHO_NAME</fields>
@@ -565,6 +567,17 @@
         <fields>Tracking_Information__c</fields>
         <fields>Email_Contact__c</fields>
         <relatedList>Purchase_Order__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>New_SP_Quote</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ApprovalStatus__c</fields>
+        <fields>SBQQ__NetAmount__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>SBQQ__Primary__c</fields>
+        <fields>Product_Type__c</fields>
+        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>NewQuoteFromOpportunity</customButtons>
@@ -590,6 +603,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -614,15 +630,12 @@
         <relatedList>RelatedOpportunityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>New_SP_Quote</customButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>ApprovalStatus__c</fields>
-        <fields>SBQQ__NetAmount__c</fields>
-        <fields>CREATEDBY_USER</fields>
-        <fields>SBQQ__Primary__c</fields>
-        <fields>Product_Type__c</fields>
-        <relatedList>SBQQ__Quote__c.SBQQ__Opportunity2__c</relatedList>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>

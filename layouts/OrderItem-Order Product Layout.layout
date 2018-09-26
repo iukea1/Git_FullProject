@@ -27,6 +27,14 @@
                 <field>ListPrice</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Net_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Net_Unit_Price__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>UnitPrice</field>
             </layoutItems>
@@ -80,10 +88,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>TotalPrice</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ServiceDate</field>

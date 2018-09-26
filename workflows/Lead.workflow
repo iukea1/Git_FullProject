@@ -348,32 +348,6 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Assigned_to_Partner_Modified</fullName>
-        <field>rvpe__PartnerLastModifiedDate__c</field>
-        <name>Assigned to Partner Modified</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Assigned_to_Partner_Pending</fullName>
-        <field>rvpe__PartnerLeadAcceptance__c</field>
-        <literalValue>Pending</literalValue>
-        <name>Assigned to Partner Pending</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Assigned_to_Partner_Timestamp</fullName>
-        <field>rvpe__DateAssignedToPartner__c</field>
-        <formula>NOW()</formula>
-        <name>Assigned to Partner Timestamp</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ChangeRTToTeleLead</fullName>
         <field>RecordTypeId</field>
         <lookupValue>Tele_Lead</lookupValue>
@@ -673,15 +647,6 @@ Sales_Rejected_Comments__c</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SetLeadStatus2PartnerAccept</fullName>
-        <field>Status</field>
-        <literalValue>Partner Accepted</literalValue>
-        <name>SetLeadStatus2PartnerAccept</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SetOptOut</fullName>
         <field>HasOptedOutOfEmail</field>
         <literalValue>1</literalValue>
@@ -773,16 +738,6 @@ Sales_Rejected_Comments__c</formula>
         <name>SetTeleCodeStatusOptOut</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SetToDealRegComment</fullName>
-        <field>OwnerId</field>
-        <lookupValue>DealRegistration</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>SetToDealRegComment</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -912,15 +867,6 @@ Sales_Rejected_Comments__c</formula>
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>rvee__NotifyRVMemberReset</fullName>
-        <field>rvpe__NotifyRVMember__c</field>
-        <literalValue>0</literalValue>
-        <name>Notify RV Member Reset</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
     <outboundMessages>
         <fullName>Deal_Registration_Denied</fullName>
         <apiVersion>23.0</apiVersion>
@@ -962,38 +908,6 @@ Sales_Rejected_Comments__c</formula>
         <active>true</active>
         <criteriaItems>
             <field>Lead.ECSP__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Assigned to Partner</fullName>
-        <actions>
-            <name>Assigned_to_Partner_Modified</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Assigned_to_Partner_Pending</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Assigned_to_Partner_Timestamp</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <formula>( rvpe__IsDealRegistration__c == false ) &amp;&amp; ( ISNEW()  ||  ISCHANGED( rvpe__RVMember__c ) ) &amp;&amp; ( rvpe__RVMember__c != null )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Change2DealRegQueue</fullName>
-        <actions>
-            <name>SetToDealRegComment</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.rvpe__IsDealRegistration__c</field>
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
@@ -1320,21 +1234,6 @@ NOT(ISPICKVAL(Status,&quot;Draft&quot;))
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>PartnerAcceptedUpdate</fullName>
-        <actions>
-            <name>SetLeadStatus2PartnerAccept</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Lead.rvpe__PartnerLeadAcceptance__c</field>
-            <operation>equals</operation>
-            <value>Accepted</value>
-        </criteriaItems>
-        <description>Change the Lead Status to Partner Accepted when the lead is updated from the partner portal</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -1716,30 +1615,6 @@ NOT(ISPICKVAL(Status,&quot;Draft&quot;))
         <active>false</active>
         <description>When a lead is transferred to Pipeline</description>
         <formula>OwnerId =&apos;00550000001DH8p&apos;</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>rvee__Deal Registration Denied</fullName>
-        <actions>
-            <name>Deal_Registration_Denied</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>false</active>
-        <formula>(rvpe__IsDealRegistration__c == true) &amp;&amp; (rvpe__DealRegistrationDenied__c == true)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>rvee__Notify RV Member</fullName>
-        <actions>
-            <name>rvee__NotifyRVMemberReset</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Notify_RV_Member</name>
-            <type>OutboundMessage</type>
-        </actions>
-        <active>true</active>
-        <formula>(rvpe__NotifyRVMember__c == true)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>

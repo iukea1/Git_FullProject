@@ -1,0 +1,13 @@
+<apex:component controller="POCExtensionEmailController" access="global" layout="none">
+    <apex:attribute name="quoteId" description="Id of the POC request" type="Id" assignTo="{!quoteId}" />
+    <apex:attribute name="display" description="Id of the POC request" type="String" assignTo="{!display}" />
+    
+    {!display}-{!quoteId}
+    <apex:repeat value="{!assets}" var="asset" rendered="{!display == 'asset'}">
+        {!asset.Model__c}, S/N {!asset.SerialNumber}
+    </apex:repeat>
+    
+    <apex:repeat value="{!RMAs}" var="rma" rendered="{!display == 'rma'}">
+        {!rma.Name}
+    </apex:repeat>
+</apex:component>

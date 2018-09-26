@@ -114,10 +114,6 @@
                 <field>Print_EC_Add_On_Order_Language__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_VP_Sales_Approver__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Quote_Name__c</field>
             </layoutItems>
@@ -419,7 +415,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>

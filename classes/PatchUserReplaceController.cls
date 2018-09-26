@@ -44,30 +44,46 @@ public class PatchUserReplaceController
             return null;
         }
         List<Patch__c> patches = new List<Patch__c>();
+        List<SalesTeamMember__c> teamMembers = new List<SalesTeamMember__c>();
         if(String.isNotBlank(SelectedPatch))
         {
-            patches.addAll([select Id, Owner__c, RSM__c, ISR__c, CSM__c, SE__c from Patch__c where Id=:SelectedPatch limit 1]);
+            patches.addAll([select Id, Owner__c, IsSalesTeam__c, RSM__c, ISR__c, CSM__c, SE__c from Patch__c where Id=:SelectedPatch limit 1]);
+            teamMembers = [select Id, User__c, SalesTeam__r.Patch__c from SalesTeamMember__c where SalesTeam__r.Patch__c = :SelectedPatch and User__c = :Temp.RSM__c];
         }
         else
         {
-            patches.addAll([select Id, Owner__c, RSM__c, ISR__c, CSM__c, SE__c from Patch__c]);
+            patches.addAll([select Id, Owner__c, IsSalesTeam__c, RSM__c, ISR__c, CSM__c, SE__c from Patch__c]);
+            teamMembers = [select Id, User__c, SalesTeam__r.Patch__c from SalesTeamMember__c where User__c = :Temp.RSM__c];
         }
-        List<Id> updatedPatchIds = new List<Id>();
+        
+        Set<Id> updatedPatchIds = new Set<Id>();
         for(Patch__c patch : patches)
         {
             Boolean replaced = replaceUser(patch, Temp.RSM__c, Temp.ISR__c);
-            if(replaced)
-            {
-                updatedPatchIds.add(patch.Id);
-            }
+            if(replaced) updatedPatchIds.add(patch.Id);
         }
+
+        teamMembers = replaceTeamMembers(teamMembers, Temp.ISR__c);
+        for(SalesTeamMember__c member : teamMembers)
+        {
+            updatedPatchIds.add(member.SalesTeam__r.Patch__c);
+        }
+
         try
         {
             update patches;
+            update teamMembers;
+            
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'User has been replaced.'));
             if(Realign)
             {
-                return new PageReference('/apex/PatchRealign?id=' + String.join(updatedPatchIds, ',') + '&start=1');
+                List<Id> patchIds = new List<Id>();
+                for(Id patchId : updatedPatchIds)
+                {
+                    patchIds.add(patchId);
+                }
+
+                return new PageReference('/apex/PatchRealign?id=' + String.join(patchIds, ',') + '&start=1');
             }
         }
         catch(Exception ex)
@@ -106,5 +122,14 @@ public class PatchUserReplaceController
             replaced = true;
         }
         return replaced;
+    }
+
+    private List<SalesTeamMember__c> replaceTeamMembers(List<SalesTeamMember__c> members, Id toUser)
+    {
+        for(SalesTeamMember__c member : members)
+        {
+            member.User__c = toUser;
+        }
+        return members;
     }
 }

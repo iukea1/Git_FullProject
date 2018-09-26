@@ -29,7 +29,7 @@ private class TestOppSplitCheck
         Opportunity newOpp = [select Id from Opportunity where Name = 'Opp with Splits'];
         Test.startTest();
 
-        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true and SplitType.IsTotalValidated = false];
+        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true and SplitType.DeveloperName != 'Revenue'];
 
         for(OpportunitySplit split : splits)
         {
@@ -77,7 +77,7 @@ private class TestOppSplitCheck
 
         // add the second SE user to the split, which makes the total split percentage over-allocated.
         List<OpportunitySplit> newSplits = new List<OpportunitySplit>();
-        for(OpportunitySplitType splitType : [select Id from OpportunitySplitType where IsActive = true and IsTotalValidated = false])
+        for(OpportunitySplitType splitType : [select Id from OpportunitySplitType where IsActive = true and DeveloperName != 'Revenue'])
         {
             newSplits.add(new OpportunitySplit(OpportunityId = newOpp.Id, SplitTypeId = splitType.Id, SplitOwnerId = users[1].Id, SplitPercentage = 100));
         }

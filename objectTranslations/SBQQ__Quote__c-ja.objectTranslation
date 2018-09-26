@@ -28,6 +28,831 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>CPQ - Finance - Evaluation Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - POC Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug --></label>
+            <section>Debug</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - POC Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
+            <label><!-- Contact and comments --></label>
+            <section>Contact and comments</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Poc Approvers --></label>
+            <section>Poc Approvers</section>
+        </sections>
+        <sections>
+            <label><!-- Success Criteria --></label>
+            <section>Success Criteria</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - POC Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Quote Layout</layout>
+        <sections>
+            <label>追加テキスト</label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label>住所情報</label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Approvers --></label>
+            <section>Approvers</section>
+        </sections>
+        <sections>
+            <label>契約情報</label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>見積オプション</label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Standard Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Standard Draft Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Standard Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Standard Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Evaluation Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - POC Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug --></label>
+            <section>Debug</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - POC Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
+            <label><!-- Contact and comments --></label>
+            <section>Contact and comments</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Poc Approvers --></label>
+            <section>Poc Approvers</section>
+        </sections>
+        <sections>
+            <label><!-- Success Criteria --></label>
+            <section>Success Criteria</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - POC Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Quote Layout</layout>
+        <sections>
+            <label>追加テキスト</label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label>住所情報</label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Approvers --></label>
+            <section>Approvers</section>
+        </sections>
+        <sections>
+            <label>契約情報</label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>見積オプション</label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Standard Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Standard Draft Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Standard Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Standard Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Evaluation Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - POC Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug --></label>
+            <section>Debug</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - POC Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- CC List --></label>
+            <section>CC List</section>
+        </sections>
+        <sections>
+            <label><!-- Contact and comments --></label>
+            <section>Contact and comments</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Poc Approvers --></label>
+            <section>Poc Approvers</section>
+        </sections>
+        <sections>
+            <label><!-- Success Criteria --></label>
+            <section>Success Criteria</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - POC Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- POC Fields --></label>
+            <section>POC Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Quote Layout</layout>
+        <sections>
+            <label>追加テキスト</label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label>住所情報</label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Approvers --></label>
+            <section>Approvers</section>
+        </sections>
+        <sections>
+            <label>契約情報</label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>見積オプション</label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Standard Approved Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Standard Draft Quote Layout</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Calculation --></label>
+            <section>Calculation</section>
+        </sections>
+        <sections>
+            <label><!-- Contract Information --></label>
+            <section>Contract Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Debug for Testing - To Be Removed --></label>
+            <section>Debug for Testing - To Be Removed</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Pricing Information --></label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Standard Rejected Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Standard Submitted Quote</layout>
+        <sections>
+            <label><!-- Additional Text --></label>
+            <section>Additional Text</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Info --></label>
+            <section>Discount Info</section>
+        </sections>
+        <sections>
+            <label><!-- Discount Information --></label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Quote Options --></label>
+            <section>Quote Options</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Evaluation Submitted Quote</layout>
         <sections>
             <label><!-- Additional Text --></label>

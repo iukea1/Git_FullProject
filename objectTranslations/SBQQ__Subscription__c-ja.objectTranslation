@@ -5,6 +5,51 @@
         <value>サブスクリプション</value>
     </caseValues>
     <layouts>
+        <layout>CPQ - Finance - Subscription Layout</layout>
+        <sections>
+            <label><!-- CPQ Fields --></label>
+            <section>CPQ Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Subscription Layout</layout>
+        <sections>
+            <label><!-- CPQ Fields --></label>
+            <section>CPQ Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Subscription Layout</layout>
+        <sections>
+            <label><!-- CPQ Fields --></label>
+            <section>CPQ Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Portal View</layout>
         <sections>
             <label>カスタムリンク</label>

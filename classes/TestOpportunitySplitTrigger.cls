@@ -15,7 +15,7 @@ private class TestOpportunitySplitTrigger
         // Opportunity owner is auto-added to the Opportunity Split and Opportunity Split logs are created in the trigger.
         insert newOpp;        
 
-        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true and SplitType.IsTotalValidated = false];
+        List<OpportunitySplit> splits = [select Id, SplitPercentage from OpportunitySplit where OpportunityId = :newOpp.Id and SplitType.IsActive = true and SplitType.DeveloperName != 'Revenue'];
 
         Integer logsForInsert = [select count() from OpportunitySplitLog__c where Event__c = 'Insert'];
         System.assert(logsForInsert > 0);

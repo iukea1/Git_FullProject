@@ -287,11 +287,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RV_Owner__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>LastCUUpdateDate</field>
             <table>Contact</table>
         </columns>
@@ -368,11 +363,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>MrktCampHist__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Account__c</field>
             <table>Contact</table>
         </columns>
         <columns>
@@ -588,11 +578,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>RTP_Zip__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Member__c</field>
             <table>Contact</table>
         </columns>
         <columns>

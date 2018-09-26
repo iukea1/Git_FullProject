@@ -83,7 +83,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>TotalAmount</field>
+                <field>Order_Net_Total__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -317,7 +317,7 @@
         <fields>Product2</fields>
         <fields>ProductCode</fields>
         <fields>SBQQ__QuotedListPrice__c</fields>
-        <fields>TotalPrice</fields>
+        <fields>Net_Total__c</fields>
         <fields>SBQQ__OrderedQuantity__c</fields>
         <fields>Renewed_Original_Quantity__c</fields>
         <fields>SBQQ__QuotedQuantity__c</fields>

@@ -3,6 +3,8 @@ public class OrderTriggerHandler implements ITriggerHandler {
     public Boolean IsDisabled() {
         return false;
     }
+    public static Boolean runRecalc = true;
+    
     public void BeforeInsert(List<SObject> newItems) {
         setInitialRecalc((List<Order>)newItems);
         setDefaultDates((List<Order>)newItems, new Map<Id, Order>());
@@ -10,7 +12,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
     public void AfterInsert(Map<Id, SObject> newItems) {}
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         setDefaultDates((List<Order>)newItems.values(), (Map<Id, Order>)oldItems);
-        recalculateEcAddOnValues((List<Order>)newItems.values(), (Map<Id, Order>) oldItems);
+        if(runRecalc) recalculateEcAddOnValues((List<Order>)newItems.values(), (Map<Id, Order>) oldItems);
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
         rolldownShipDate((List<Order>)newItems.values(), (Map<Id, Order>) oldItems);
@@ -91,51 +93,67 @@ public class OrderTriggerHandler implements ITriggerHandler {
         
         Map<Id, List<OrderItem>> quoteLinesOriginal = new Map<Id, List<OrderItem>>();
         Map<Id, List<OrderItem>> quoteLinesAddOn = new Map<Id, List<OrderItem>>();
-        
-        for(Order o : newItems) {
-            orderIds.add(o.Id);
-            quoteIds.add(o.SBQQ__Quote__c);
-        }
-        
-        Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>(
-            [SELECT Id, Daily_Rate_Original__c, Daily_Rate_Add_on__c, Cumulative_Daily_Value__c, Days_to_Credit__c, Days_of_Value__c, Credit_Value__c, License_End_Date__c FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']
-        );
-        
-        for(OrderItem oi : [SELECT Id, TotalPrice, EndDate, End_Date__c, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
-            if(!quoteLinesOriginal.containsKey(oi.OrderId)) quoteLinesOriginal.put(oi.OrderId, new List<OrderItem>());
-            if(!quoteLinesAddOn.containsKey(oi.OrderId)) quoteLinesAddOn.put(oi.OrderId, new List<OrderItem>());
-            
-            if(oi.SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c <= 0) {
-                quoteLinesOriginal.get(oi.OrderId).add(oi);
-            } else {
-                quoteLinesAddOn.get(oi.OrderId).add(oi);
-            }
-        }
-        
+        Boolean runLogic = false;
         for(Order o : newItems) {
             Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
-            SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
-            if(runCode && o.Type == 'Amendment') {
-            
-                Date lastEndDateAddOn = System.today();
-                if(quoteLinesAddOn.containsKey(o.Id)) {
-                    for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {
-                        if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
-                    }
-                }
-                if(o.Product_Type__c == 'EDGECONNECT') {
-                    o.Daily_Rate_Original__c = pq.Daily_Rate_Original__c; 
-                    o.Daily_Rate_Add_on__c = pq.Daily_Rate_Add_on__c; 
-                    o.Cumulative_Daily_Value__c = pq.Cumulative_Daily_Value__c; 
-                    o.Days_to_Credit__c = pq.Days_to_Credit__c; //lastEndDateAddOn.daysBetween(pq.License_End_Date__c);
-                    o.Credit_Value__c = pq.Credit_Value__c; //o.Daily_Rate_Add_on__c * o.Days_to_Credit__c;
-                    o.Days_of_Value__c = pq.Days_of_Value__c; //pq.Credit_Value__c / (o.Cumulative_Daily_Value__c == 0 ? 1 : o.Cumulative_Daily_Value__c);
-                    o.License_End_Date__c = lastEndDateAddOn; //o.EndDate; //pq.License_End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c));
-                }
+            if(o.Type == 'Amendment' && runCode) {
+                runLogic = true;
+                orderIds.add(o.Id);
+                quoteIds.add(o.SBQQ__Quote__c);
             }
         }
+        if(runLogic) {
+            Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>(
+                [SELECT Id, Daily_Rate_Original__c, End_Date__c, Daily_Rate_Add_on__c, Cumulative_Daily_Value__c, Days_to_Credit__c, Days_of_Value__c, Credit_Value__c, License_End_Date__c, Length_In_Years__c, 
+                (SELECT Id FROM SBQQ__Orders__r),
+                (SELECT Id, SBQQ__UpgradedSubscription__r.Net_Total__c FROM SBQQ__LineItems__r WHERE SBQQ__EffectiveQuantity__c = 0)
+                FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']
+            );
+            
+            for(OrderItem oi : [SELECT Id, TotalPrice, Net_Total__c, SBQQ__OrderedQuantity__c, EndDate, End_Date__c, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
+                if(!quoteLinesOriginal.containsKey(oi.OrderId)) quoteLinesOriginal.put(oi.OrderId, new List<OrderItem>());
+                if(!quoteLinesAddOn.containsKey(oi.OrderId)) quoteLinesAddOn.put(oi.OrderId, new List<OrderItem>());
+                
+                if(oi.SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c <= 0) {
+                    quoteLinesOriginal.get(oi.OrderId).add(oi);
+                } else {
+                    quoteLinesAddOn.get(oi.OrderId).add(oi);
+                }
+            }
+            
+            for(Order o : newItems) {
+                Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
+                SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
+                if(runCode && o.Type == 'Amendment') {
+                    Integer orderCount = pq.SBQQ__Orders__r.size();
+                    Date lastEndDateAddOn = System.today();
+                    Decimal orgnalDailyPricing = 0;
+                    Decimal quotedQtyPricing;
+                    
+                    if(quoteLinesAddOn.containsKey(o.Id)) {
+                        for(SBQQ__QuoteLine__c ql : pq.SBQQ__LineItems__r) {
+                            orgnalDailyPricing += ql.SBQQ__UpgradedSubscription__r.Net_Total__c;
+                        }
+                        if(orgnalDailyPricing != 0) orgnalDailyPricing  /= (365 * Integer.valueOf(pq.Length_In_Years__c));
+                        for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {
+                            if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
+                            //quotedQuantity.put(oi.Id, oi.SBQQ__OrderedQuantity__c / oi.SBQQ__QuotedQuantity__c)
+                            quotedQtyPricing = oi.Net_Total__c / (365 * Integer.valueOf(pq.Length_In_Years__c));
+                        }
+                        if(o.Product_Type__c == 'EDGECONNECT') {
+                            try { o.Daily_Rate_Original__c = orgnalDailyPricing;                              } catch(Exception e) {}
+                            try { o.Daily_Rate_Add_on__c = quotedQtyPricing ;                                        } catch(Exception e) {}//pq.Daily_Rate_Add_on__c;   
+                            try { o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;                 } catch(Exception e) {}//pq.Cumulative_Daily_Value__c;
+                            try { o.Days_to_Credit__c = pq.End_Date__c.daysBetween(lastEndDateAddOn);                } catch(Exception e) {}
+                            try { o.Credit_Value__c = o.Daily_Rate_Add_on__c * o.Days_to_Credit__c;                  } catch(Exception e) {}
+                            try { o.Days_of_Value__c = o.Credit_Value__c / o.Cumulative_Daily_Value__c;              } catch(Exception e) {}
+                            try { o.License_End_Date__c = pq.End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c ));                           } catch(Exception e) {}
+                        }
+                    }
+                }
+            }
         
-        
-        
+        }
     }
+    
 }

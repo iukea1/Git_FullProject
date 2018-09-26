@@ -38,18 +38,19 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     }
     public void AfterInsert(Map<Id, SObject> newItems) 
     {
+        List<Id> subIds= new List<Id>();
         if(newItems!=null && newItems.size()>0)
         {
             for (Id subId : newItems.keyset())
             {
-                
+                subIds.add(subId);
             }
             
         }
         
         populateRelatedAssetSubscriptionLookups(newItems.values());
         UpdateGMS_Nodes(newItems.values());
-        ShareSubscriptionRecordsWithPortalAccounts(newItems.values());
+        ShareSubscriptionRecordsWithPortalAccounts_Future(subIds);
     }
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
@@ -70,6 +71,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
         }
     }
     
+  
     
     public static void populateRelatedAssetSubscriptionLookups(List<SBQQ__Subscription__c> incomingSubscriptions){
         
@@ -606,11 +608,15 @@ OpportunityIds.add(ord.OpportunityId);
         return subscriptionQuoteLineMap;
     }
     
-    private static Void ShareSubscriptionRecordsWithPortalAccounts(List<SBQQ__Subscription__c> lstSubs)
+  
+    
+    @Future
+    private static Void ShareSubscriptionRecordsWithPortalAccounts_Future(List<Id> lstSubIds)
     {
         Set<Id> setAcctIds= new Set<Id>();
          Set<Id> UserOrGroupIds= new Set<Id>();
         List<SBQQ__Subscription__Share> lstSubShares= new List<SBQQ__Subscription__Share>();
+        List<SBQQ__Subscription__c> lstSubs=[Select Id, SBQQ__Account__c from SBQQ__Subscription__c where Id in:lstSubIds];
         if(lstSubs!=null && lstSubs.size()>0)
         {
             for(SBQQ__Subscription__c sub:lstSubs)

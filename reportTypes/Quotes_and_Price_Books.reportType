@@ -348,11 +348,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Add_Days_End_Dt__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ApprovalStatus__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
@@ -394,11 +389,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Length_In_Years__c</field>
-            <table>SBQQ__Quote__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>New_End_Date__c</field>
             <table>SBQQ__Quote__c</table>
         </columns>
         <columns>

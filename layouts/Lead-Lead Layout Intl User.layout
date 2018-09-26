@@ -351,10 +351,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sponsoring_Partner__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Contact_Registered_By__c</field>
             </layoutItems>
             <layoutItems>

@@ -29,4 +29,91 @@ I acknowledge to abide by the terms and conditions as provided. I understand tha
         <shortDescription>Partner Portal Profile Incomplete</shortDescription>
         <value>Your profile is incomplete. Please click &lt;a href=&quot;/my_profile&quot;&gt;here&lt;/a&gt; to complete your profile.</value>
     </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_CAM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_CAM</shortDescription>
+        <value>CAM</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_FCMM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_FCMM</shortDescription>
+        <value>FCMM</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_ISR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_ISR</shortDescription>
+        <value>ISR</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_RSM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_RSM</shortDescription>
+        <value>RSM</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_RSS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_RSS</shortDescription>
+        <value>RSS</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_SE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_SE</shortDescription>
+        <value>SE</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_SEM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_SEM</shortDescription>
+        <value>SEM</value>
+    </labels>
+    <labels>
+        <fullName>SalesTeamMemberRole_TeamOwner</fullName>
+        <categories>SalesTeamMember Role</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesTeamMemberRole_TeamOwner</shortDescription>
+        <value>Team Owner</value>
+    </labels>
+    <labels>
+        <fullName>SegmentationType_Default</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SegmentationType_Default</shortDescription>
+        <value>Enterprise</value>
+    </labels>
+    <labels>
+        <fullName>SegmentationType_Enterprise</fullName>
+        <categories>Segmentation Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SegmentationType_Enterprise</shortDescription>
+        <value>Enterprise</value>
+    </labels>
+    <labels>
+        <fullName>SegmentationType_Majors</fullName>
+        <categories>Segmentation Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SegmentationType_Majors</shortDescription>
+        <value>Majors</value>
+    </labels>
+    <labels>
+        <fullName>SegmentationType_ServiceProvider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SegmentationType_ServiceProvider</shortDescription>
+        <value>Service Provider</value>
+    </labels>
 </CustomLabels>

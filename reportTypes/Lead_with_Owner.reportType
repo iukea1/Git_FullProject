@@ -378,11 +378,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DateAssignedToPartner__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Do_Not_Tele_Qualify_Date__c</field>
             <table>Lead</table>
         </columns>
@@ -433,17 +428,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DealRegistrationDenied__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Deal_ID__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DealRegistrationStatus__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -794,11 +779,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>IQL_Tracking__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__IsDealRegistration__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -1218,11 +1198,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__NotifyRVMember__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Not_Interested_Reason__c</field>
             <table>Lead</table>
         </columns>
@@ -1319,21 +1294,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Partner_Instructions4Leads__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLastModifiedDate__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLeadAcceptance__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Partner_Lead_Age__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -1753,16 +1713,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Sabrina__c</field>
             <table>Lead</table>
         </columns>
@@ -1819,16 +1769,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SE__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -1899,16 +1839,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Source_Program_Name__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner_Name__c</field>
             <table>Lead</table>
         </columns>
         <columns>

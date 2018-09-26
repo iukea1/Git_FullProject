@@ -4,5 +4,98 @@
         <plural>false</plural>
         <value>見積品目</value>
     </caseValues>
+    <layouts>
+        <layout>CPQ - Finance - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>詳細情報</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>価格設定情報</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>サブスクリプション情報</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>詳細情報</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>価格設定情報</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>サブスクリプション情報</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>カスタムリンク</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>詳細情報</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>割引情報</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>価格設定情報</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>サブスクリプション情報</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>品目名</nameFieldLabel>
 </CustomObjectTranslation>

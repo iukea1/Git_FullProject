@@ -1439,31 +1439,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__IsDealRegistration__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__NotifyRVMember__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLastModifiedDate__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ParnterLoseTo__c</field>
             <table>User.Opportunities2CSM__r</table>
         </columns>
@@ -1510,16 +1485,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Additional_Registered_Account__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>User.Opportunities2CSM__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
             <table>User.Opportunities2CSM__r</table>
         </columns>
         <columns>

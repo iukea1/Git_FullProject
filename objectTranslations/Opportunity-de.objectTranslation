@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <layouts>
+        <layout>CPQ - Finance - Opportunity Layout</layout>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Marketing Data --></label>
+            <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Revenue Recognition Checklist --></label>
+            <section>Revenue Recognition Checklist</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team/Channel Information --></label>
+            <section>Sales Team/Channel Information</section>
+        </sections>
+        <sections>
+            <label><!-- Technical/POC --></label>
+            <section>Technical/POC</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+        <sections>
+            <label><!-- Win / Loss Detail --></label>
+            <section>Win / Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Opportunity Layout</layout>
+        <sections>
+            <label><!-- Channel --></label>
+            <section>Channel</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description and Notes --></label>
+            <section>Description and Notes</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunity Information --></label>
+            <section>Opportunity Information</section>
+        </sections>
+        <sections>
+            <label><!-- Partner Resource Center Information --></label>
+            <section>Partner Resource Center Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Team Information --></label>
+            <section>Sales Team Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Win/ Loss Detail --></label>
+            <section>Win/ Loss Detail</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>CPQ RSM Opp Layout 031816</layout>
         <sections>
             <label><!-- Assignment --></label>
@@ -618,32 +692,12 @@
             <section>Description and Notes</section>
         </sections>
         <sections>
-            <label><!-- Marketing Data --></label>
-            <section>Marketing Data</section>
-        </sections>
-        <sections>
-            <label><!-- NON PRM- Deal Reg Info --></label>
-            <section>NON PRM- Deal Reg Info</section>
-        </sections>
-        <sections>
             <label><!-- Opportunity Information --></label>
             <section>Opportunity Information</section>
         </sections>
         <sections>
-            <label><!-- Opportunity Registration Information- Imported from Deal Registration Conversion --></label>
-            <section>Opportunity Registration Information- Imported from Deal Registration Conversion</section>
-        </sections>
-        <sections>
             <label><!-- Partner Resource Center Information --></label>
             <section>Partner Resource Center Information</section>
-        </sections>
-        <sections>
-            <label><!-- Qualification Information --></label>
-            <section>Qualification Information</section>
-        </sections>
-        <sections>
-            <label><!-- Revenue Recognition Checklist --></label>
-            <section>Revenue Recognition Checklist</section>
         </sections>
         <sections>
             <label><!-- Sales Team Information --></label>
@@ -1066,6 +1120,10 @@
             <section>Marketing Data</section>
         </sections>
         <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
             <label><!-- Opportunity Information --></label>
             <section>Opportunity Information</section>
         </sections>
@@ -1115,6 +1173,10 @@
         <sections>
             <label><!-- Marketing Data --></label>
             <section>Marketing Data</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
         </sections>
         <sections>
             <label><!-- Opportunity Information --></label>

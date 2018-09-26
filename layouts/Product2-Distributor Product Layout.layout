@@ -39,6 +39,14 @@
                 <behavior>Edit</behavior>
                 <field>Promotional_Product__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Display_Filter_Priority__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Adjustable_Product__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

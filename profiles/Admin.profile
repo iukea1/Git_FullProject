@@ -239,6 +239,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AsyncOppSplitsJob</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1275,6 +1279,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>POCExtensionEmailController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>POCLegacyDataConversion</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>POCRenewalAssetsController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2124,6 +2136,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestAssignSBPermissionSet</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAsyncOppSplitsJob</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4984,6 +5000,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>OpportunitySplitLog__c.Opportunity_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>OpportunitySplitLog__c.Opportunity_Split_ID__c</field>
         <readable>true</readable>
@@ -6489,6 +6510,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Patch__c.IsSalesTeam__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Patch__c.Overlay_1_Email__c</field>
         <readable>false</readable>
@@ -6527,6 +6553,16 @@
         <editable>false</editable>
         <field>Patch__c.Owner__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch__c.PatchRegion__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch__c.PatchTheatre__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7750,6 +7786,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RMA_Item__c.Ship_To_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>RMA_Item__c.Ship_to_address__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8086,6 +8127,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>RMA__c.Ship_To_Account_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RMA__c.Source_Contract__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9055,6 +9101,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SalesTeamMember__c.User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SalesTeam__c.Patch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SalesTeam__c.TempMembers__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sales_Funnel__c.Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9537,6 +9598,15 @@
         <layout>CollaborationGroup-Group Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CommunityMemberLayout-Community Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ConsumptionRate-Consumption Rate Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ConsumptionSchedule-Consumption Schedule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Contact-Contact Layout External Button</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -9767,6 +9837,9 @@
         <layout>PricebookEntry-Price Book Entry Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ProductConsumptionSchedule-Product Consumption Schedule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Purchase_Order__c-Purchase Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -9851,6 +9924,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SW_Only_Asset__c-SW Only Asset Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesTeamMember__c-Sales Team Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesTeam__c-Sales Team Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Sales_Funnel__c-Sales Funnel Layout</layout>
@@ -10585,6 +10664,24 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>SW_Only_Asset__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>SalesTeamMember__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>SalesTeam__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -12332,6 +12429,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>GiveRecognitionBadge</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ImportCustomObjects</name>
     </userPermissions>
     <userPermissions>
@@ -12401,10 +12502,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageContentTypes</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ManageCssUsers</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

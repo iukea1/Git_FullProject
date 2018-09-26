@@ -6,12 +6,14 @@ public class PatchRuleHelper
     public static List<Id> leadsNeedAssignment;
     public static Patch__c SPCatchAllPatch;
     public static Map<Id, List<Id>> overlayHolder; //this map temporarily holds the result after patch match. because assignPatch and assignTeamMember are in different method call. assignPatch puts result to the map so that assignTeamMember will read it
-    
+    public static String OverrideSegmentationType;
+
     static
     {
         leadsNeedAssignment = new List<Id>();
         overlayHolder = new Map<Id, List<Id>>();
-        SPCatchAllPatch=new Patch__c();
+        SPCatchAllPatch =new Patch__c();
+        OverrideSegmentationType = null;
     }
     
     @future
@@ -38,8 +40,11 @@ public class PatchRuleHelper
     public static void assignPatches(List<sObject> objs)
     {
         Map<Id, Patch__c> patches = new Map<Id, Patch__c>();
-        for(Patch__c patch : [select Id, Name,Patch_Name__c, Catchall__c, Type__c, Owner__c, Owner__r.GEO__c, RSM__c,RSS__c, CSM__c, SE__c, ISR__c, Overlay_1__c, Overlay_2__c, Active__c, Overlay__c, FCMM__c from Patch__c])
+        //Add patchIds To Match team members. Lei
+        List<Id> patchIds = new List<Id>();
+        for(Patch__c patch : [select Id, Name,Patch_Name__c, Catchall__c, Type__c, IsSalesTeam__c, Owner__c, Owner__r.GEO__c, RSM__c, RSS__c, CSM__c, SE__c, ISR__c, Overlay_1__c, Overlay_2__c, Active__c, Overlay__c, FCMM__c from Patch__c])
         {
+            patchIds.add(Patch.Id);
             patches.put(patch.Id, patch);
             if(patch.Name=='P-603')
             {
@@ -47,7 +52,9 @@ public class PatchRuleHelper
                 System.debug('SPCatchAllPatch'+SPCatchAllPatch);
             }
         }
+        Map<Id, Map<String, List<SalesTeamMember__c>>> patchId2Type2Members = getSalesTeamMembers(patchIds);
         Map<Id, String> ownerGEO = new Map<Id, String>();
+
         for(sObject obj : objs)
         {
             Id patchId = null;
@@ -62,7 +69,6 @@ public class PatchRuleHelper
                 PatchRuleEngineBase.Target target = getTarget(obj);
                 PatchRuleEngine engine = new PatchRuleEngine();
                 PatchRuleEngineBase.Match match = engine.match(target);
-                System.debug(match);
                 if(match != null)
                 {
                     patchId = match.PatchId;
@@ -70,8 +76,17 @@ public class PatchRuleHelper
                     overlayHolder.put(obj.Id, match.OverlayMatches);
                 }
             }
+
             Patch__c patch = patches.get(patchId);
-            assignPatch(obj, patch, geoPatchId);
+            if(patch == null || patch.IsSalesTeam__c == false)
+            {
+                assignPatch(obj, patch, geoPatchId);    
+            }
+            else
+            {
+                Map<String, List<SalesTeamMember__c>> type2Members = patchId2Type2Members.containsKey(patchId) ? patchId2Type2Members.get(patchId) : new Map<String, List<SalesTeamMember__c>>();
+                assignPatchBySalesTeams(obj, patch, geoPatchId, type2Members);
+            }
             ownerGEO.put((Id)obj.get('OwnerId'), null);
         }
         for(User usr : [select Id, GEO_Region__c from User where Id in :ownerGEO.keyset()])
@@ -99,6 +114,7 @@ public class PatchRuleHelper
     public static void assignPatch(sObject obj, Patch__c patch, Id additionalPatch)
     {
         Boolean locked = (Boolean)obj.get('Patch_Locked__c');
+
         if(patch != null)
         {
             if(obj instanceOf Lead)
@@ -112,12 +128,13 @@ public class PatchRuleHelper
                     }
                 }
                 ld.Patch__c = patch.Id;
-                ld.GEO_Patch__c = additionalPatch;
-                ld.CSM__c = patch.CSM__c;
-                ld.ISR__c = patch.ISR__c;
+                ld.Geo_Patch__c = additionalPatch;
                 ld.Patch_Owner__c = patch.Owner__c;
                 ld.RSM__c = patch.RSM__c;
                 ld.SE__c = patch.SE__c;
+                ld.CSM__c = patch.CSM__c;
+                ld.ISR__c = patch.ISR__c;
+                ld.SalesTeamMatched__c = ld.ENT_CAM__c = ld.ENT_RSM__c = ld.ENT_ISR__c = ld.MAJ_CAM__c = ld.MAJ_RSM__c = ld.MAJ_ISR__c = ld.SP_CAM__c = ld.SP_RSM__c = ld.SP_ISR__c = null;
                 
                 if(patch.ISR__c != null)
                 {
@@ -155,19 +172,9 @@ public class PatchRuleHelper
                         patch=SPCatchAllPatch;
                     }
                 }
-                obj.put('Patch__c', patch.Id);
-                obj.put('GEO_Patch__c', additionalPatch);
-                /*
-                if(patch.RSM__c != null)
-                {
-                obj.put('OwnerId', patch.RSM__c);
-                }
-                String geo = obj.get('GEO_Supported__c') == null ? '' : (String)obj.get('GEO_Supported__c');
-                if(patch.CSM__c != null && obj.get('Type') == 'Partner' && !geo.contains('APAC') && !geo.contains('EMEA'))
-                {
-                obj.put('OwnerId', patch.CSM__c);
-                }
-                */
+                acc.Patch__c = patch.Id;
+                acc.Geo_Patch__c = additionalPatch;
+                acc.SalesTeamMatched__c = null;
             }
             else if(obj instanceOf Opportunity)
             {
@@ -183,13 +190,7 @@ public class PatchRuleHelper
                 opportunity.Patch__c = patch.Id;
                 opportunity.Bypassing_Validation__c = true;
                 opportunity.Patch_Locked__c = opportunity.Account.Patch_Locked__c;
-                /*
-                if(patch.RSM__c != null && !opportunity.IsClosed)
-                {
-                opportunity.OwnerId = patch.RSM__c;
-                opportunity.Technical_Responsible__c = patch.SE__c;
-                }
-                */
+                opportunity.SalesTeamMatched__c = null;
             }
         }
         else
@@ -198,13 +199,180 @@ public class PatchRuleHelper
             {
                 Lead ld = (Lead)obj;
                 ld.Patch__c = ld.CSM__c = ld.ISR__c = ld.Patch_Owner__c = ld.RSM__c = ld.SE__c = null;
+                ld.SalesTeamMatched__c = ld.ENT_CAM__c = ld.ENT_RSM__c = ld.ENT_ISR__c = ld.MAJ_CAM__c = ld.MAJ_RSM__c = ld.MAJ_ISR__c = ld.SP_CAM__c = ld.SP_RSM__c = ld.SP_ISR__c = null;
             }
             else if(obj instanceOf Account || obj instanceOf Opportunity)
             {
                 obj.put('Patch__c', null);
+                obj.put('SalesTeamMatched__c', null);
             }
         }
+
         obj.put('Trigger_Assignment__c', false);
+    }
+
+    public static void assignPatchBySalesTeams(sObject obj, Patch__c patch, Id additionalPatch, Map<String, List<SalesTeamMember__c>> type2members)
+    {
+        Boolean locked = (Boolean)obj.get('Patch_Locked__c');
+
+        if(patch != null)
+        {
+            String segmentType = (OverrideSegmentationType != null ? OverrideSegmentationType : (String)obj.get('SegmentationType__c'));
+            Id matchedSalesTeamId = type2Members.containsKey(segmentType) ? type2Members.get(segmentType)[0].SalesTeam__c : null;
+
+            if(obj instanceOf Lead) 
+            {
+                Lead ld = (Lead)obj;
+                if(ld.ECSP__c)
+                {
+                    if(patch.Type__c!='Named Accounts')
+                    {
+                        patch = SPCatchAllPatch;
+                    }
+                }
+
+                ld.Patch__c = patch.Id;
+                ld.Patch_Owner__c = patch.Owner__c;
+                ld.Geo_Patch__c = additionalPatch;
+                ld.SalesTeamMatched__c = matchedSalesTeamId;
+                ld.CSM__c = ld.ISR__c = ld.RSM__c = ld.SE__c = null;
+                ld.ENT_CAM__c = ld.ENT_RSM__c = ld.ENT_ISR__c = ld.MAJ_CAM__c = ld.MAJ_RSM__c = ld.MAJ_ISR__c = ld.SP_CAM__c = ld.SP_RSM__c = ld.SP_ISR__c = null;
+
+                Map<String, Map<String, Id>> type2Role2MemberId = new Map<String, Map<String, Id>>();
+                for(String salesTeamType : type2members.keySet())
+                {
+                    type2Role2MemberId.put(salesTeamType, new Map<String, Id>());
+                    for(SalesTeamMember__c member : type2Members.get(salesTeamType))
+                    {
+                        type2Role2MemberId.get(salesTeamType).put(member.Role__c, member.User__c);
+                    }
+                }
+
+                if(segmentType == Label.SegmentationType_Enterprise || segmentType == null)
+                {
+                    Map<String, Id> role2MemberId = type2Role2MemberId.containsKey(Label.SegmentationType_Enterprise) ? type2Role2MemberId.get(Label.SegmentationType_Enterprise) : new Map<String, Id>();
+                    ld.ENT_CAM__c = role2MemberId.get(Label.SalesTeamMemberRole_CAM);
+                    ld.ENT_RSM__c = role2MemberId.get(Label.SalesTeamMemberRole_RSM);
+                    ld.ENT_ISR__c = role2MemberId.get(Label.SalesTeamMemberRole_ISR);
+                }
+                if (segmentType == Label.SegmentationType_Majors || segmentType == null) 
+                {
+                    Map<String, Id> role2MemberId = type2Role2MemberId.containsKey(Label.SegmentationType_Majors) ? type2Role2MemberId.get(Label.SegmentationType_Majors) : new Map<String, Id>();
+                    ld.MAJ_CAM__c = role2MemberId.get(Label.SalesTeamMemberRole_CAM);
+                    ld.MAJ_RSM__c = role2MemberId.get(Label.SalesTeamMemberRole_RSM);
+                    ld.MAJ_ISR__c = role2MemberId.get(Label.SalesTeamMemberRole_ISR);
+                }
+                if(segmentType == Label.SegmentationType_ServiceProvider || segmentType == null)
+                {
+                    Map<String, Id> role2MemberId = type2Role2MemberId.containsKey(Label.SegmentationType_ServiceProvider) ? type2Role2MemberId.get(Label.SegmentationType_ServiceProvider) : new Map<String, Id>();
+                    ld.SP_CAM__c = role2MemberId.get(Label.SalesTeamMemberRole_CAM);
+                    ld.SP_RSM__c = role2MemberId.get(Label.SalesTeamMemberRole_RSM);
+                    ld.SP_ISR__c = role2MemberId.get(Label.SalesTeamMemberRole_ISR);
+                }
+
+                Map<String, Id> role2MemberId = type2Role2MemberId.containsKey(segmentType) ? type2Role2MemberId.get(segmentType) : new Map<String, Id>();
+                if(role2MemberId.containsKey(Label.SalesTeamMemberRole_ISR))
+                {
+                    ld.OwnerId = role2MemberId.get(Label.SalesTeamMemberRole_ISR);    
+                }
+
+                if(ld.LeadSource == 'Deal Registration')
+                {
+                    Id dealRegRecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Deal Registration').getRecordTypeId();
+                    if(dealRegRecordTypeId == ld.RecordTypeId)
+                    {
+                        //for the deal registration process, NAM goes to CSM, non-NAM goes to RSM
+                        if(role2MemberId.containsKey(Label.SalesTeamMemberRole_ISR) && (patch.Owner__r.GEO__c == null || patch.Owner__r.GEO__c.contains('NAM') || patch.Owner__r.GEO__c.contains('GAM')))
+                        {
+                            ld.OwnerId = role2MemberId.get(Label.SalesTeamMemberRole_ISR);
+                        }
+                        else if(role2MemberId.containsKey(Label.SalesTeamMemberRole_RSM))
+                        {
+                            ld.OwnerId = role2MemberId.get(Label.SalesTeamMemberRole_RSM);
+                        }
+                    }
+                }
+            }
+            else if(obj instanceOf Account)
+            {
+                if(locked == true)
+                {
+                    throw new SilverPeakException('Patch is locked, and cannot be reassigned.');
+                }
+                Account acc = (Account)obj;
+                if(acc.ECSP__c)
+                {
+                    if(patch.Type__c!='Named Accounts')
+                    {
+                        patch=SPCatchAllPatch;
+                    }
+                }
+                acc.Patch__c = patch.Id;
+                acc.Geo_Patch__c = additionalPatch;
+                acc.SalesTeamMatched__c = matchedSalesTeamId;
+            }
+            else if(obj instanceOf Opportunity)
+            {
+                if(locked == true)
+                {
+                    throw new SilverPeakException('Patch is locked, and cannot be reassigned.');
+                }
+                Opportunity opportunity = (Opportunity)obj;
+                if(opportunity.Account.ECSP__c && patch.Type__c!='Named Accounts')
+                {
+                    patch=SPCatchAllPatch;
+                }
+                opportunity.Patch__c = patch.Id;
+                opportunity.Bypassing_Validation__c = true;
+                opportunity.Patch_Locked__c = opportunity.Account.Patch_Locked__c;
+                opportunity.SalesTeamMatched__c = matchedSalesTeamId;
+            }
+        }
+        else
+        {
+            if(obj instanceOf Lead)
+            {
+                Lead ld = (Lead)obj;
+                ld.Patch__c = ld.Patch_Owner__c = null;
+                ld.CSM__c = ld.ISR__c = ld.RSM__c = ld.SE__c = null;
+                ld.SalesTeamMatched__c = ld.ENT_CAM__c = ld.ENT_RSM__c = ld.ENT_ISR__c = ld.MAJ_CAM__c = ld.MAJ_RSM__c = ld.MAJ_ISR__c = ld.SP_CAM__c = ld.SP_RSM__c = ld.SP_ISR__c = null;
+            }
+            else if(obj instanceOf Account || obj instanceOf Opportunity)
+            {
+                obj.put('Patch__c', null);
+                obj.put('SalesTeamMatched__c', null);
+            }
+        }
+
+        obj.put('Trigger_Assignment__c', false);
+    }
+
+    public static Map<Id, Map<String, List<SalesTeamMember__c>>> getSalesTeamMembers(List<Id> patchIds)
+    {
+        Map<Id, Map<String, List<SalesTeamMember__c>>> patchId2Type2Members = new Map<Id, Map<String, List<SalesTeamMember__c>>>();
+        for(SalesTeamMember__c member : [select Id, User__c, Role__c, SalesTeam__r.Type__c, SalesTeam__r.Patch__c 
+                                            from SalesTeamMember__c 
+                                            where SalesTeam__r.Patch__r.IsSalesTeam__c = TRUE and SalesTeam__r.Patch__c in :patchIds])
+        {
+            Id patchId = member.SalesTeam__r.Patch__c;
+            Map<String, List<SalesTeamMember__c>> type2Members = new Map<String, List<SalesTeamMember__c>>();
+            if(patchId2Type2Members.containsKey(patchId))
+            {
+                type2Members = patchId2Type2Members.get(patchId);
+            }
+            
+            if(type2Members.containsKey(member.SalesTeam__r.Type__c))
+            {
+                type2Members.get(member.SalesTeam__r.Type__c).add(member);
+            }
+            else
+            {
+                type2Members.put(member.SalesTeam__r.Type__c, new List<SalesTeamMember__c>{ member } );   
+            }
+            patchId2Type2Members.put(patchId, type2Members);
+        }
+
+        return patchId2Type2Members;
     }
     
     public static List<sObject> getPatchSharings(List<sObject> objs)
@@ -219,8 +387,9 @@ public class PatchRuleHelper
             List<Id> overlayPatches = OverlayHolder.get(tempId);
             patchIds.addAll(overlayPatches);
         }
-        
-         Map<Id, Patch__c> patchMap = new Map<Id, Patch__c>([select Id, CSM__c, SE__c, ISR__c, RSS__c,RSM__c, Overlay_1__c, Overlay_2__c, Owner__c, Overlay__c, FCMM__c from Patch__c where Id in :patchIds]);
+        List<Id> patchIdList = new List<Id>(patchIds);
+        Map<Id, Patch__c> patchMap = new Map<Id, Patch__c>([select Id, IsSalesTeam__c, CSM__c, SE__c, ISR__c, RSS__c,RSM__c, Overlay_1__c, Overlay_2__c, Owner__c, Overlay__c, FCMM__c from Patch__c where Id in :patchIds]);
+        Map<Id, Map<String, List<SalesTeamMember__c>>> patchId2Type2Members = getSalesTeamMembers(patchIdList);
         
         List<sObject> result = new List<sObject>();
         for(sObject obj : objs)
@@ -228,14 +397,31 @@ public class PatchRuleHelper
             Id patchId = (Id)obj.get('Patch__c');
             if(patchId != null && patchMap.containsKey(patchId))
             {
-                result.addAll(getPatchSharing(obj, patchMap.get(patchId)));
+                Patch__c patch = patchMap.get(patchId);
+                if(patch != null && patch.IsSalesTeam__c)
+                {
+                    String segmentType = OverrideSegmentationType;
+                    if(segmentType == null)
+                    {
+                        segmentType = obj.get('SegmentationType__c') != null ? (String)obj.get('SegmentationType__c') : Label.SegmentationType_Default;
+                    }
+                    Map<String, List<SalesTeamMember__c>> type2Members = patchId2Type2Members.containsKey(patchId) ? patchId2Type2Members.get(patchId) : new Map<String, List<SalesTeamMember__c>>();
+                    List<SalesTeamMember__c> salesTeamMembers = type2Members.containsKey(segmentType) ? type2Members.get(segmentType) : new List<SalesTeamMember__c>();
+                    result.addAll(getPatchSharingBySalesTeams(obj, patch, salesTeamMembers));
+                }
+                else
+                {
+                    result.addAll(getPatchSharing(obj, patch));
+                }
             }
+
             List<Id> overlayPatches = OverlayHolder.get(obj.Id);
             if(overlayPatches != null && overlayPatches.size() > 0)
             {
                 for(Id overlayPatchId : overlayPatches)
                 {
-                    result.addAll(getPatchSharing(obj, patchMap.get(overlayPatchId)));
+                    Patch__c patch = patchMap.get(overlayPatchId);
+                    result.addAll(getPatchSharing(obj, patch));
                 }
             }
         }
@@ -243,12 +429,13 @@ public class PatchRuleHelper
     }
     
     /*@future
-public static void willAssignTeamMembers(List<Id> objIds)
-{
-assignTeamMembers(objIds);
-}*/
+    public static void willAssignTeamMembers(List<Id> objIds)
+    {
+        assignTeamMembers(objIds);
+    }*/
     
     public static void assignTeamMembers(List<Id> objIds)
+
     {
         if(objIds == null || objIds.size() == 0)
         {
@@ -297,16 +484,20 @@ assignTeamMembers(objIds);
                     }
                     if(effectiveOpps.size() > 0)
                     {
-                        List<sObject> teamMembers = getPatchSharings(effectiveOpps);
-                        List<OpportunityTeamMember> oldOppMembers = [select Id from OpportunityTeamMember where OpportunityId in :effectiveOpps];
+                        List<OpportunityTeamMember> oldOppMembers = [select Id from OpportunityTeamMember where OpportunityId in :effectiveOpps and IsAddedByPatch__c = True];
                         if(oldOppMembers.size() > 0)
                         {
                             Database.DeleteResult[] result = Database.delete(oldOppMembers, false);
                             //SilverPeakUtils.logDatabaseError(oldOppMembers, result);
                         }
+
+                        List<sObject> teamMembers = getPatchSharings(effectiveOpps);
+                        System.debug('Opportunity Team: '  + teamMembers);
                         Database.SaveResult[] result = Database.insert(teamMembers, false);
+                        System.debug('result: '  + result);
                         //SilverPeakUtils.logDatabaseError(teamMembers, result);
                         //ShareLeadAndOpportunityToPartnerHelper.willShareOpportunities(oppIds);
+                        
                         for(sObject obj: teamMembers)
                         {
                             String oppTeamMemberRole = (String)obj.get('TeamMemberRole');
@@ -318,25 +509,53 @@ assignTeamMembers(objIds);
                                 oppUserIdsForOpportunityShare.add(oppUserIdForShare);
                             }
                         }  
+                        System.debug('before');
                         EditAccessToOppTeam(oppIdsForOpportunityShare, OppUserIdsForOpportunityShare);
+                        System.debug('after');
                     }
                 }
                 else if(objs[0] instanceOf Account)
                 {
-                    List<sObject> teamMembers = getPatchSharings(objs);
-                    List<AccountTeamMember> oldAccMembers = [select Id from AccountTeamMember where AccountId in :objs];
+                    //Remove old account team members
+                    List<String> oldMemberIdsFromPatch = new List<String>();
+                    for(sObject sObj : objs)
+                    {
+                        Account acct = (Account)sObj;
+                        if(String.isNotEmpty(acct.TeamMemberIdFromPatch__c))
+                        {
+                            oldMemberIdsFromPatch.addAll(acct.TeamMemberIdFromPatch__c.split(','));
+                        }
+                    }
+                    List<AccountTeamMember> oldAccMembers = [select Id from AccountTeamMember where AccountId in: objs and Id in :oldMemberIdsFromPatch];
                     if(oldAccMembers.size() > 0)
                     {
-                        Database.DeleteResult[] result = Database.delete(oldAccMembers, false);
-                        SilverPeakUtils.logDatabaseError(oldAccMembers, result);
+                        Database.DeleteResult[] deletionResults = Database.delete(oldAccMembers, false);
+                        SilverPeakUtils.logDatabaseError(oldAccMembers, deletionResults);
                     }
-                    Database.SaveResult[] result = Database.insert(teamMembers, false);
-                    SilverPeakUtils.logDatabaseError(teamMembers, result);
+
+                    //Add new account team members
+                    List<AccountTeamMember> teamMembers = (List<AccountTeamMember>)getPatchSharings(objs);
+                    Database.SaveResult[] insertResults = Database.insert(teamMembers, false);
+                    SilverPeakUtils.logDatabaseError(teamMembers, insertResults);
+
+                    //Update new account team member Id on account
+                    Map<Id, Account> id2Account = new Map<Id, Account>();
+                    for(AccountTeamMember teamMember : teamMembers)
+                    {
+                        if(teamMember.Id != null)
+                        {
+                            Account acct = id2Account.containsKey(teamMember.AccountId) ? id2Account.get(teamMember.AccountId) : new Account(Id=teamMember.AccountId, TeamMemberIdFromPatch__c='');
+                            acct.TeamMemberIdFromPatch__c += teamMember.Id + ',';
+                            id2Account.put(acct.Id, acct);
+                        }
+                    }
+                    if(id2Account.size() > 0) update id2Account.values();
                 }
             }
         }
         catch(Exception ex)
         {
+            throw ex;
             Database.rollback(sp);
             SilverPeakUtils.logException('Failed to assign team members, record id: ' + objIds);
             SilverPeakUtils.logException(ex);
@@ -408,15 +627,15 @@ assignTeamMembers(objIds);
         }
         if(accIds.size() > 0)
         {
-            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, BillingCountry, BillingPostalCode, BillingState, Industry, Type, Patch_Locked__c, GEO_Supported__c,ECSP__c from Account where Id in :accIds]);
+            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, SegmentationType__c, TeamMemberIdFromPatch__c, BillingCountry, BillingPostalCode, BillingState, Industry, Type, Patch_Locked__c, GEO_Supported__c,ECSP__c from Account where Id in :accIds]);
         }
         if(leadIds.size() > 0)
         {
-            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, IsConverted, Company, Email, Country, State, PostalCode, Industry, Ownership_Routing__c, Patch_Locked__c, Trial_Request_from_Marketplace__c, LeadSource, RecordTypeId, GEO__c,ECSP__c from Lead where Id in :leadIds]);
+            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, SegmentationType__c, IsConverted, Company, Email, Country, State, PostalCode, Industry, Ownership_Routing__c, Patch_Locked__c, Trial_Request_from_Marketplace__c, LeadSource, RecordTypeId, GEO__c,ECSP__c from Lead where Id in :leadIds]);
         }
         if(oppIds.size() > 0)
         {
-            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, Technical_Responsible__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c from Opportunity where Id in :oppIds]);
+            result.addAll((List<sObject>)[select Id, Name, OwnerId, Patch__c, SegmentationType__c, Type, IsClosed, IsWon, StageName, Transactional_Opportunity__c, Technical_Responsible__c, AccountId, Account.Name, Account.BillingCountry, Account.BillingPostalCode, Account.BillingState, Account.Industry, Account.Patch__c, Account.Patch__r.Id, Account.Patch__r.RSM__c, Account.Patch_Locked__c, Patch_Locked__c,Account.ECSP__c from Opportunity where Id in :oppIds]);
         }
         return result;
     }
@@ -614,43 +833,173 @@ assignTeamMembers(objIds);
                 Opportunity opp = (Opportunity)obj;
                 if(patch.CSM__c != null)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.CSM__c, TeamMemberRole='Channel Manager'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.CSM__c, IsAddedByPatch__c=True, TeamMemberRole='Channel Manager'));
                 }
                 if(patch.ISR__c != null)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.ISR__c, TeamMemberRole='Inside Sale Representative'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.ISR__c, IsAddedByPatch__c=True, TeamMemberRole='Inside Sale Representative'));
                 }
                 if(patch.RSM__c != null)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.RSM__c, TeamMemberRole='Account Manager'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.RSM__c, IsAddedByPatch__c=True, TeamMemberRole='Account Manager'));
                 }
                 if(patch.SE__c != null)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.SE__c, TeamMemberRole='Systems Engineer'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.SE__c, IsAddedByPatch__c=True, TeamMemberRole='Systems Engineer'));
                 }
                 if(patch.FCMM__c != null && !IsPartOfCoreTeam(patch,patch.FCMM__c))
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.FCMM__c, TeamMemberRole='Field and Channel Marketing Manager'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.FCMM__c, IsAddedByPatch__c=True, TeamMemberRole='Field and Channel Marketing Manager'));
                 }
                 if(patch.Owner__c != null && !IsPartOfCoreTeam(patch,patch.Owner__c))
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Owner__c, TeamMemberRole='Team Owner'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Owner__c, IsAddedByPatch__c=True, TeamMemberRole='Team Owner'));
                 }
                 if(patch.Overlay_1__c != null && !IsPartOfCoreTeam(patch,patch.Overlay_1__c))
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_1__c, TeamMemberRole='Team Member'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_1__c, IsAddedByPatch__c=True, TeamMemberRole='Team Member'));
                 }
                 if(patch.Overlay_2__c != null && !IsPartOfCoreTeam(patch,patch.Overlay_2__c))
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, IsAddedByPatch__c=True, TeamMemberRole='Team Member'));
                 }
                 if(patch.SE__c != null && opp.Technical_Responsible__c!= null && patch.SE__c != opp.Technical_Responsible__c)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, TeamMemberRole='Systems Engineer'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, IsAddedByPatch__c=True, TeamMemberRole='Systems Engineer'));
                 }
                 if(patch.RSS__c != null)
                 {
-                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.RSS__c, TeamMemberRole='Renewal Specialist'));
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.RSS__c, IsAddedByPatch__c=True, TeamMemberRole='Renewal Specialist'));
+                }
+            }
+        }
+        return result;
+    }
+
+    @testvisible
+    private static List<sObject> getPatchSharingBySalesTeams(sObject obj, Patch__c patch, List<SalesTeamMember__c> members)
+    {
+        List<sObject> result = new List<sObject>();
+        if(patch != null)
+        {
+            if(obj instanceOf Lead)
+            {
+                Lead ld = (Lead)obj;
+                for(SalesTeamMember__c member : members)
+                {
+                    if(member.User__c != ld.OwnerId)
+                    {
+                        result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=member.User__c, LeadAccessLevel='Edit'));
+                    }
+                }
+
+                if(patch.Overlay_1__c != null && patch.Overlay_1__c != ld.OwnerId)
+                {
+                    result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=patch.Overlay_1__c, LeadAccessLevel='Edit'));
+                }
+                if(patch.Overlay_2__c != null && patch.Overlay_2__c != ld.OwnerId)
+                {
+                    result.add(new LeadShare(LeadId=ld.Id, UserOrGroupId=patch.Overlay_2__c, LeadAccessLevel='Edit'));
+                }
+            }
+            else if(obj instanceOf Account)
+            {
+                Account acc = (Account)obj;
+                for(SalesTeamMember__c member : members)
+                {
+                    if(member.Role__c == Label.SalesTeamMemberRole_CAM)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Channel Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_ISR)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Inside Sale Representative'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_RSM)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Account Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_SE)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Systems Engineer'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_FCMM)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Field and Channel Marketing Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_RSS)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Renewal Specialist'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_SEM)
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='SEM'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_TeamOwner && !IsPartOfCoreSalesTeam(member.User__c, members))
+                    {
+                        result.add(new AccountTeamMember(AccountId=acc.Id, UserId=member.User__c, TeamMemberRole='Team Owner'));
+                    }
+                }
+
+                if(patch.Overlay_1__c != null && patch.Overlay__c == true && !IsPartOfCoreSalesTeam(patch.Overlay_1__c, members))
+                {
+                    result.add(new AccountTeamMember(AccountId=acc.Id, UserId=patch.Overlay_1__c, TeamMemberRole='Team Member'));
+                }
+                if(patch.Overlay_2__c != null && patch.Overlay__c == true && !IsPartOfCoreSalesTeam(patch.Overlay_2__c, members))
+                {
+                    result.add(new AccountTeamMember(AccountId=acc.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
+                }
+            }
+            else if(obj instanceOf Opportunity)
+            {
+                Opportunity opp = (Opportunity)obj;
+                for(SalesTeamMember__c member : members)
+                {
+                    if(member.Role__c == Label.SalesTeamMemberRole_CAM)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Channel Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_ISR)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Inside Sale Representative'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_RSM)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Account Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_SE)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Systems Engineer'));
+                        if(opp.Technical_Responsible__c!= null && member.User__c != opp.Technical_Responsible__c)
+                        {
+                           result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=opp.Technical_Responsible__c, TeamMemberRole='Systems Engineer')); 
+                        }
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_RSS)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Renewal Specialist'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_SEM)
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='SEM'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_FCMM && !IsPartOfCoreSalesTeam(member.User__c, members))
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Field and Channel Marketing Manager'));
+                    }
+                    else if(member.Role__c == Label.SalesTeamMemberRole_TeamOwner && !IsPartOfCoreSalesTeam(member.User__c, members))
+                    {
+                        result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=member.User__c, TeamMemberRole='Team Owner'));
+                    }
+                }
+
+                if(patch.Overlay_1__c != null && !IsPartOfCoreSalesTeam(patch.Overlay_1__c, members))
+                {
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_1__c, TeamMemberRole='Team Member'));
+                }
+                if(patch.Overlay_2__c != null && !IsPartOfCoreSalesTeam(patch.Overlay_2__c, members))
+                {
+                    result.add(new OpportunityTeamMember(OpportunityId=opp.Id, UserId=patch.Overlay_2__c, TeamMemberRole='Team Member'));
                 }
             }
         }
@@ -679,6 +1028,29 @@ assignTeamMembers(objIds);
         {return true;}
         if(userId== patch.SE__c)
         {return true;}
+        return false;
+    }
+    private static boolean IsPartOfCoreSalesTeam(Id userId, List<SalesTeamMember__c> members)
+    {
+        for(SalesTeamMember__c member : members)
+        {
+            if(member.Role__c == Label.SalesTeamMemberRole_RSM && member.User__c == UserId)
+            {
+                return true;
+            }
+            if(member.Role__c == Label.SalesTeamMemberRole_CAM && member.User__c == UserId)
+            {
+                return true;
+            }
+            if(member.Role__c == Label.SalesTeamMemberRole_ISR && member.User__c == UserId)
+            {
+                return true;
+            }
+            if(member.Role__c == Label.SalesTeamMemberRole_SE && member.User__c == UserId)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

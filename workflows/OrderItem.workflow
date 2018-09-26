@@ -92,17 +92,12 @@ CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Product2.Name</field>
             <operation>startsWith</operation>
             <value>EC-ORCH-AAS</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Product2.Name</field>
-            <operation>startsWith</operation>
-            <value>SMRT-HND</value>
-        </criteriaItems>
+        <description>removing product name starts with SMRT-HND 9.25.2018</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

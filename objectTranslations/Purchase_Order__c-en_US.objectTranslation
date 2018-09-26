@@ -131,6 +131,39 @@
         <name>Waiting_for_Prepayment__c</name>
     </fields>
     <layouts>
+        <layout>CPQ - Finance - Purchase Order Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Outstanding Items --></label>
+            <section>Outstanding Items</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Purchase Order Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Outstanding Items --></label>
+            <section>Outstanding Items</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Purchase Order Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Outstanding Items --></label>
+            <section>Outstanding Items</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Purchase Order Layout</layout>
         <sections>
             <label><!-- Custom Links --></label>

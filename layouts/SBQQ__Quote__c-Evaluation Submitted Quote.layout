@@ -42,7 +42,7 @@
                 <field>Tier_3_Partner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Prepared_For__c</field>
             </layoutItems>
             <layoutItems>
@@ -108,10 +108,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Print_EC_Add_On_Order_Language__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_VP_Sales_Approver__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -206,6 +202,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ApprovalStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -400,7 +400,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>

@@ -71,10 +71,6 @@
                 <field>Skype4SF__skype_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RV_Account__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BANT_Qualified__c</field>
             </layoutItems>
@@ -101,6 +97,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Country_Picklist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_GDPR_Country__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -497,6 +497,28 @@
         <fields>SBQQ__Primary__c</fields>
         <fields>Product_Type__c</fields>
         <relatedList>SBQQ__Quote__c.CC_List_5__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>ACCOUNT.SITE</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.FORECAST_CATEGORY</fields>
+        <fields>Primary_Partner__c</fields>
+        <fields>Registered_Partner__c</fields>
+        <relatedList>Opportunity.Tier2_Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>ACCOUNT.SITE</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.FORECAST_CATEGORY</fields>
+        <fields>Primary_Partner__c</fields>
+        <fields>Registered_Partner__c</fields>
+        <relatedList>Opportunity.Tier1_Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

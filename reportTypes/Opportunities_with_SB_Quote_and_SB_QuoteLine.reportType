@@ -936,31 +936,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__IsDealRegistration__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__NotifyRVMember__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLastModifiedDate__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ParnterLoseTo__c</field>
             <table>Opportunity</table>
         </columns>
@@ -1007,16 +982,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Additional_Registered_Account__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
             <table>Opportunity</table>
         </columns>
         <columns>
@@ -1849,11 +1814,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Add_Days_End_Dt__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ApprovalStatus__c</field>
             <table>Opportunity.SBQQ__Quotes2__r</table>
         </columns>
@@ -1895,11 +1855,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Length_In_Years__c</field>
-            <table>Opportunity.SBQQ__Quotes2__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>New_End_Date__c</field>
             <table>Opportunity.SBQQ__Quotes2__r</table>
         </columns>
         <columns>

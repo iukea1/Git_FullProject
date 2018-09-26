@@ -1094,7 +1094,9 @@ ISPICKVAL(Product2.Product_Type__c ,&quot;Service Provider&quot;),  ISPICKVAL(Pr
         <active>true</active>
         <formula>AND(
 OR(ISNEW(),ISCHANGED(SBQQ__CurrentSubscription__c)),
-ISPICKVAL(Status,&quot;Customer Subscription Active&quot;),
+OR(ISPICKVAL(Status,&quot;Customer Subscription Active&quot;),
+ISPICKVAL(Status,&quot;Customer Evaluation&quot;)
+),
 Product_Family__c == &quot;Virtual Image&quot;,
 NOT(ISNULL(SBQQ__CurrentSubscription__c))
 

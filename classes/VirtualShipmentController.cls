@@ -56,7 +56,7 @@ public with sharing class VirtualShipmentController {
             //stdController.addFields(OrderShipmentHelper.getAllOrderFieldsAPINames());
         }
 
-        this.order = [SELECT Id, SBQQ__Quote__c, Status, Type, OrderNumber FROM Order WHERE Id = :stdController.getRecord().Id LIMIT 1];
+        this.order = [SELECT Id, SBQQ__Quote__c, Status, Type, OrderNumber, SerialNumberApplied__c  FROM Order WHERE Id = :stdController.getRecord().Id LIMIT 1];
 
         SBQQ__Quote__c parentQuote = [SELECT Id, Serial_Number_Notes__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__C];
 

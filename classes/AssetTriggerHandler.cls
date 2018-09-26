@@ -5,7 +5,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
     Set<Id> lstSWCPAccount {get;set;} //Provision Decommission Account
    
     public AssetTriggerHandler() {
-        if(!SilverPeakUtils.IsProduction())
+        /*if(!SilverPeakUtils.IsProduction())
         {
             List<Account> spAccount=[select Id from Account where Name='Silver Peak Systems'];
             System.debug('SilverPeakId'+ spAccount );
@@ -13,7 +13,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             {
                 silverpeakSystemsId=spAccount[0].Id;
             }
-        }
+        }*/
         System.debug('silverpeakSystemsId'+silverpeakSystemsId);
         lstHWCPAccount= new Set<Id>();
         lstSWCPAccount= new Set<Id>();

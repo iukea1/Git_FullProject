@@ -31,7 +31,7 @@ public without sharing class ContactConvertToOpportunityController
         ExistingOpps=CheckDuplicateOpportunity();
         Opportunity = new Opportunity();
         Opportunity.AccountId = contact.AccountId;
-        Opportunity.OwnerId = contact.Account.OwnerId;
+       // Opportunity.OwnerId = contact.Account.OwnerId;
         Opportunity.Name = contact.Account.Name;
         OCR = new OpportunityContactRole(ContactId = contact.Id,Role='');
     }

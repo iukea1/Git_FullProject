@@ -286,6 +286,10 @@
         <label>Silver Peak Sales Team</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SegmentationType__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>OwnerId</field>
             </layoutItems>
@@ -303,6 +307,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SalesTeamMatched__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Channel_Manager__c</field>
             </layoutItems>
@@ -317,6 +325,26 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Patch__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatre__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchRegion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTerritory__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchSegmentRegion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

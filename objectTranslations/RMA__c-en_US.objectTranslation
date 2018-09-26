@@ -460,6 +460,11 @@
         <name>Ship_To_Account_Name__c</name>
     </fields>
     <fields>
+        <label><!-- Source Contract --></label>
+        <name>Source_Contract__c</name>
+        <relationshipLabel><!-- RMA&apos;s --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Status --></label>
         <name>Status__c</name>
         <picklistValues>

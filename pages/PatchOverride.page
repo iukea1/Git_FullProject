@@ -29,6 +29,10 @@
                 <apex:outputLabel >Zip/Postal Code</apex:outputLabel>
                 <apex:inputText value="{!ZipCode}" />
             </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Segmentation Type</apex:outputLabel>
+                <apex:inputField value="{!SegmentationTypeAccount.SegmentationType__c}" />
+            </apex:pageBlockSectionItem>
         </apex:pageblocksection>
     </apex:pageBlock>
     </apex:form>

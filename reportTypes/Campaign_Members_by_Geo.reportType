@@ -242,11 +242,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner__c</field>
-            <table>Campaign</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Actual_Attendees__c</field>
             <table>Campaign</table>
         </columns>

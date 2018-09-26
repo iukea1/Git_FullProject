@@ -149,6 +149,10 @@
                 <behavior>Edit</behavior>
                 <field>D_B_Data_Update__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PatchTheatreSegment__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -860,6 +864,7 @@
         <relatedList>RelatedAssetList</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>SBQQ__RenewContracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>

@@ -1653,21 +1653,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RV_Account__c</field>
-            <table>User.Contact$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Member__c</field>
-            <table>User.Contact$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>RV_Owner__c</field>
-            <table>User.Contact$OwnerId</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>mkto_si__Sales_Insight__c</field>
             <table>User.Contact$OwnerId</table>
         </columns>

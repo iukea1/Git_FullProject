@@ -34,6 +34,7 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
     
     
     private static void setDates(List<OrderItem> newList) {
+        System.debug('setDates ----->> enter');
         Set<Id> orderIds = new Set<Id>();
         Set<Id> quoteLineIds = new Set<Id>();
         for(OrderItem oi : newList) {
@@ -62,39 +63,8 @@ public class OrderItemTriggerHandler implements ITriggerHandler {
                 }
             }
             
-            /*if(parentOrders.containsKey(oi.OrderId) && /*oi.ServiceDate < parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c && parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c != null) {
-                if(parentQls.containsKey(oi.SBQQ__QuoteLine__c) && parentQls.get(oi.SBQQ__QuoteLine__c).End_Date__c != null) {
-                    Integer daysBetween = parentQls.get(oi.SBQQ__QuoteLine__c).SBQQ__StartDate__c.daysBetween(parentQls.get(oi.SBQQ__QuoteLine__c).End_Date__c);
-                    
-                    oi.EndDate = oi.ServiceDate.addDays(daysBetween);
-                    oi.End_Date__c = oi.ServiceDate.addDays(daysBetween);
-                    parentOrderIds.add(oi.OrderId);
-                }
-                
-            } else if(parentOrders.containsKey(oi.OrderId) && (parentOrders.get(oi.OrderId).End_Date__c == null || parentOrders.get(oi.OrderId).EndDate == null) && !parentOrderUpdate.containsKey(oi.OrderId) &&  parentOrders.get(oi.OrderId).TemporaryStartDateHolder__c != null) {
-                parentOrderUpdate.put(oi.OrderId, 
-                    new Order(
-                        Id=oi.OrderId, 
-                        End_Date__c=parentQls.get(oi.SBQQ__QuoteLine__c).SBQQ__Quote__r.End_Date__c,
-                        EndDate=parentQls.get(oi.SBQQ__QuoteLine__c).SBQQ__Quote__r.End_Date__c
-                    )
-                );
-            }*/
         }
         
-        //if(!parentOrderUpdate.isEmpty()) update parentOrderUpdate.values();
-        //if(!parentOrderIds.isEmpty()) setParentDate(parentOrderIds);
     }
     
-    /*@future
-    private static void setParentDate(Set<Id> parentOrderId) {
-        List<Order> parentOrders = [SELECT Id, TemporaryStartDateHolder__c, Ship_Date__c, EffectiveDate, SBQQ__Quote__c, SBQQ__Quote__r.End_Date__c FROM Order WHERE Id IN :parentOrderId AND TemporaryStartDateHolder__c != null];
-        for(Order o : parentOrders) {
-            o.EffectiveDate = o.TemporaryStartDateHolder__c;
-            o.End_Date__c = o.SBQQ__Quote__r.End_Date__c;
-            o.EndDate = o.SBQQ__Quote__r.End_Date__c;
-            o.TemporaryStartDateHolder__c = null;
-        }
-        update parentOrders;
-    }*/
 }

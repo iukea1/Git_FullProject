@@ -6,6 +6,7 @@
     <customButtons>SBQQ__ImportLines</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
+    <customButtons>Refresh_Approvers</customButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -73,6 +74,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Prepared_For_Account_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Refresh_Approvers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>POC_Duration__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -198,30 +207,30 @@
         <label>Poc Approvers</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>RSM_Approver_LK__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_Sales_Director_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>RSM_Sales_Director_Approver_LK__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RSM_VP_Sales_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>RSM_VP_Sales_Approver_LK__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>SE_Approver_LK__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Manager_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>SE_Manager_Approver_LK__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SE_Director_Approver__c</field>
+                <behavior>Edit</behavior>
+                <field>SE_Director_Approver_LK__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -423,6 +432,18 @@
                 <behavior>Edit</behavior>
                 <field>Customer_Will_Buy__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__PricebookId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Active_EC_POC_Bundle__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_EC_POC_Bundles__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -435,6 +456,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Search_Filter_Display_Priority__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -458,7 +483,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
@@ -479,8 +503,8 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>sbaa__Actions__c</fields>
         <fields>NAME</fields>
-        <fields>sbaa__ApprovalChain__c</fields>
         <fields>sbaa__ApprovalStep__c</fields>
         <fields>sbaa__Approver__c</fields>
         <fields>sbaa__AssignedTo__c</fields>

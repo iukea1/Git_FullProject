@@ -1,9 +1,10 @@
 public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     
-    public static final String EvalRmaRecordTypeId = '012500000005H0o';
-    public static final String EvalRMAItemRecordTypeId = '012500000005H0y';
+    //public static final String EvalRmaRecordTypeId = '012500000005H0o';
+    //public static final String EvalRMAItemRecordTypeId = '012500000005H0y';
     Id rmaRecordTypeId = Schema.SObjectType.RMA__c.getRecordTypeInfosByName().get('Eval RMA').getRecordTypeId();
     Id itemRecordTypeId = Schema.SObjectType.RMA_Item__c.getRecordTypeInfosByName().get('Eval Return').getRecordTypeId();
+    public static Set<Id> pendingReturnQuoteIds = new Set<Id>();
     
     public QuoteTriggerHandler(){
         
@@ -17,9 +18,7 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     }
     public void BeforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
-       runShippedExtendedLogic((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
-        System.debug('----------------> recalculateEcAddOnValues trig');
-       recalculateEcAddOnValues((List<SBQQ__Quote__c>)newItems.values(), (Map<Id, SBQQ__Quote__c>)oldItems);
+    
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
     {
@@ -31,10 +30,11 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
     }
     
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems){
-        if(CheckRecursive.runOnce()){
-           populateRequestedEndDateToQuoteEndDate(newItems.values()); 
+       if(CheckRecursive.runOnce()){
+           //populateRequestedEndDateToQuoteEndDate(newItems.values());
            createRmaForEvals(newItems.values(), (Map<Id, SBQQ__Quote__c>)oldItems);
-        }  
+       }   
+       runShippedExtendedLogic((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
        pocDataDeletion((Map<Id, SBQQ__Quote__c>)oldItems, (List<SBQQ__Quote__c>)newItems.values());
         
     }
@@ -100,32 +100,76 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
             if(!astMap.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)) astMap.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Set<Id>());
             astMap.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c).add(a.Id);
         }
+        
+        Map<Id, Set<Id>> subMap = new Map<Id, Set<Id>>();
+        Map<Id, Set<Id>> subAMap = new Map<Id, Set<Id>>();
+        for(SBQQ__Subscription__c a : [SELECT Id, SBQQ__QuoteLine__r.SBQQ__Quote__c, (SELECT Id FROM SBQQ__SubscribedAssets__r) FROM SBQQ__Subscription__c WHERE SBQQ__QuoteLine__r.SBQQ__Quote__c IN :qId]) {
+            if(!subMap.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)) subMap.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new Set<Id>());
+            subMap.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c).add(a.Id);
+            
+            if(!subAMap.containsKey(a.Id)) subAMap.put(a.Id, new Set<Id>());
+            for(SBQQ__SubscribedAsset__c sa : a.SBQQ__SubscribedAssets__r) subAMap.get(a.Id).add(sa.Id);
+        }
 
         List<Contract> contUpdate = new List<Contract>();
         List<Asset> astUpdate = new List<Asset>();
+        List<SBQQ__Subscription__c> subUpdate = new List<SBQQ__Subscription__c>();
+        List<SBQQ__SubscribedAsset__c> subAUpdate = new List<SBQQ__SubscribedAsset__c>();
+        Set<Id> shippedQuotes = new Set<Id>();
         for(SBQQ__Quote__c qRec : quotes) {
             if(qRec.POC_Status__c == 'Shipped - Extended' && oldItems.get(qRec.Id).POC_Status__c != 'Shipped - Extended' && conMap.containsKey(qRec.Id)) {
                 //qRec.SBQQ__EndDate__c = qRec.Requested_Extension_Date__c;
                 //qRec.SBQQ__ExpirationDate__c = qRec.Requested_Extension_Date__c;
+                shippedQuotes.add(qRec.Id);
                 for(Id i : conMap.get(qRec.Id)) {
                     contUpdate.add(
                         new Contract(
                             Id = i,
-                            EndDate = qRec.Requested_Extension_Date__c
+                            EndDate = qRec.Requested_Extension_Date__c,
+                            Status = 'Activated'
                         )
                     );
                 }
                 for(Id i : astMap.get(qRec.Id)) {
                     astUpdate.add(
                         new Asset(
-                            Id = i
+                            Id = i,
+                            Evaluation_End_Date__c = qRec.Requested_Extension_Date__c,
+                            Create_License__c = true,
+                            Status = 'Customer Evaluation'
                         )
                     );
                 }
+                for(Id i : subMap.get(qRec.Id)) {
+                    subUpdate.add(
+                        new SBQQ__Subscription__c(
+                            Id = i,
+                            End_Date__c = qRec.Requested_Extension_Date__c
+                        )
+                    );
+                    if(subAMap.containsKey(i)) {
+                        for(Id sa : subAMap.get(i)) {
+                            subAUpdate.add(
+                                new SBQQ__SubscribedAsset__c(Id=sa, SBQQ__Active__c = true)  
+                            );
+                        }
+                    }
+                }
             }
         }
-        update contUpdate;
-        //update astUpdate;
+        if(!contUpdate.isEmpty()) update contUpdate;
+        if(!astUpdate.isEmpty()) update astUpdate;
+        if(!subUpdate.isEmpty()) update subUpdate;
+        if(!subAUpdate.isEmpty()) update subAUpdate;
+        if(!shippedQuotes.isEmpty()) {
+            deleteRMA(shippedQuotes);
+        }
+    }
+    
+    @future
+    public static void deleteRMA(Set<Id> shippedQuotes) {
+        delete [SELECT Id FROM Rma_Item__c WHERE Rma__r.POC_Quote__c IN :shippedQuotes];
+        delete [SELECT Id FROM Rma__c WHERE POC_Quote__c IN :shippedQuotes];
     }
     
     public static void populateThePocIDinRelatedRecords(List<SBQQ__Quote__c> quotes){
@@ -202,56 +246,6 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         } catch(Exception e) {}
     }
 
-    private static void recalculateEcAddOnValues(List<SBQQ__Quote__c> quotes, Map<Id, SBQQ__Quote__c> oldQuotes) {
-        System.debug('----------------> recalculateEcAddOnValues');
-        Map<Id, List<SBQQ__QuoteLine__c>> quoteLinesOriginal = new Map<Id, List<SBQQ__QuoteLine__c>>();
-        Map<Id, List<SBQQ__QuoteLine__c>> quoteLinesAddOn = new Map<Id, List<SBQQ__QuoteLine__c>>();
-
-        for(SBQQ__QuoteLine__c ql : [SELECT Id, SBQQ__NetTotal__c, SBQQ__EffectiveEndDate__c, SBQQ__Quote__c, SBQQ__EffectiveQuantity__c, Term__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c IN :quotes AND SBQQ__Quote__r.Calculate_EC_End_Date__c = TRUE]) {
-            if(!quoteLinesOriginal.containsKey(ql.SBQQ__Quote__c)) quoteLinesOriginal.put(ql.SBQQ__Quote__c, new List<SBQQ__QuoteLine__c>());
-            if(!quoteLinesAddOn.containsKey(ql.SBQQ__Quote__c)) quoteLinesAddOn.put(ql.SBQQ__Quote__c, new List<SBQQ__QuoteLine__c>());
-
-            if(ql.SBQQ__EffectiveQuantity__c <= 0) {
-                quoteLinesOriginal.get(ql.SBQQ__Quote__c).add(ql);
-            } else {
-                quoteLinesAddOn.get(ql.SBQQ__Quote__c).add(ql);
-            }
-        }   
-
-        for(SBQQ__Quote__c q : quotes) {
-            if(q.SBQQ__Type__c == 'Amendment') {
-                if(q.Calculate_EC_End_Date__c == true && oldQuotes.get(q.Id).Calculate_EC_End_Date__c != true) {
-                    Decimal totalPriceOriginal = 0.0;
-                    Decimal totalPriceAddOn = 0.0;
-                    Date lastEndDateAddOn = System.today();
-                    Integer term = Integer.valueOf(q.Term__c != null ? q.Term__c : '1');
-                    //collect totals
-                    if(quoteLinesOriginal.containsKey(q.Id)) {
-                        for(SBQQ__QuoteLine__c ql : quoteLinesOriginal.get(q.Id)) {
-                            totalPriceOriginal += ql.SBQQ__NetTotal__c;
-                        }
-                    }
-                    if(quoteLinesAddOn.containsKey(q.Id)) {
-                        for(SBQQ__QuoteLine__c ql : quoteLinesAddOn.get(q.Id)) {
-                            totalPriceAddOn += ql.SBQQ__NetTotal__c;
-                            if(lastEndDateAddOn < ql.SBQQ__EffectiveEndDate__c) lastEndDateAddOn = ql.SBQQ__EffectiveEndDate__c;
-                        }
-                    }
-
-
-                    //do calcs
-                    q.Daily_Rate_Original__c = totalPriceOriginal / (term * 365);
-                    q.Daily_Rate_Add_on__c = totalPriceAddOn / (term * 365);
-                    q.Cumulative_Daily_Value__c = q.Daily_Rate_Original__c + q.Daily_Rate_Add_on__c;
-                    q.Days_to_Credit__c = lastEndDateAddOn.daysBetween(q.License_End_Date__c);
-                    q.Credit_Value__c = q.Daily_Rate_Add_on__c * q.Days_to_Credit__c;
-                    q.Days_of_Value__c = q.Credit_Value__c / q.Cumulative_Daily_Value__c;
-                    q.License_End_Date__c = q.License_End_Date__c.addDays(Integer.valueOf(q.Days_of_Value__c));
-                    
-                }
-            }
-        }
-    }
     
     private static void createRmaForEvals(List<SBQQ__Quote__c> quotes, Map<Id, SBQQ__Quote__c> oldQuotes) {
         //POC_Quote__c
@@ -261,34 +255,22 @@ public without sharing class QuoteTriggerHandler implements ITriggerHandler{
         
         Map<Id, List<Asset>> quoteAssets = new Map<Id, List<Asset>>();
         for(Asset a : [SELECT Id, Product2Id, SBQQ__QuoteLine__r.SBQQ__Quote__c FROM Asset WHERE SBQQ__QuoteLine__r.SBQQ__Quote__c IN :quotes]) {
-            if(!quoteAssets.isEmpty()) quoteAssets.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new List<Asset>());
+            if(!quoteAssets.containsKey(a.SBQQ__QuoteLine__r.SBQQ__Quote__c)) quoteAssets.put(a.SBQQ__QuoteLine__r.SBQQ__Quote__c, new List<Asset>());
             quoteAssets.get(a.SBQQ__QuoteLine__r.SBQQ__Quote__c).add(a);
         }
         
+        List<Contract> expireList = new List<Contract>();
         for(SBQQ__Quote__c q : quotes) {
             if(oldQuotes.get(q.Id).POC_Status__c != 'Pending Return' && q.POC_Status__c == 'Pending Return' && q.SBCF_Evaluation_Quote__c) {
-                rmaInsert.add(new RMA__c(
-                    POC_Quote__c = q.Id,
-                    RecordTypeId = rt.Id,
-                    Type__c = 'Eval Return',
-                    Status__c = 'Initiated',
-                    Contact_LOC_1__c = q.POC_Contact__c
-                ));
-                
+                pendingReturnQuoteIds.add(q.Id);
             }
         }
-        if(!rmaInsert.isEmpty()) insert rmaInsert;
+        for(Contract c : [SELECT Id FROM Contract WHERE SBQQ__Quote__c IN :pendingReturnQuoteIds AND Status != 'Expired']) {
+            c.Status = 'Expired';
+            expireList.add(c);
+        }
+        if(!expireList.isEmpty()) update expireList;
         
         
-    }
-    private static RMA_Item__c createFromAsset(Id rmaId, Asset a, String recType, String type, String stat) {
-        return new RMA_Item__c(
-            Rma__c = rmaId,
-            Asset__c = a.Id, 
-            Product2__c = a.Product2Id, 
-            RecordTypeId = recType, 
-            Type__c = type,//'Return - Refurbish and Stock', 
-            Status__c = stat//'Not Dispatched'
-        );
     }
 }

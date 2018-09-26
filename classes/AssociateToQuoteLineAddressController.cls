@@ -20,7 +20,7 @@ public class AssociateToQuoteLineAddressController {
         {
             quoteId=quoteAddInfo.Quote__c;
             quoteStatus=quoteAddInfo.Quote__r.ApprovalStatus__c;
-            List<SBQQ__QuoteLine__c> lstQuoteLines=[Select Id,Name,SBQQ__Quote__c, SBQQ__Product__r.Name, SBQQ__Quantity__c from SBQQ__QuoteLine__c where SBQQ__Product__r.Family='Product' and SBQQ__Bundle__c=false and SBQQ__Quote__c=:quoteAddInfo.Quote__c];
+            List<SBQQ__QuoteLine__c> lstQuoteLines=[Select Id,Name,SBQQ__Quote__c, SBQQ__Product__r.Name, SBQQ__Quantity__c from SBQQ__QuoteLine__c where SBQQ__Product__r.Family='Product' and SBQQ__Bundle__c=true and SBQQ__Quote__c=:quoteAddInfo.Quote__c];
             List<Quote_Line_Address__c> lstQLAData= quoteAddInfo.Quote_Line_Addresses1__r;
             Map<Id,integer> mapQLAOrdered= new Map<Id,integer>();
             List<AggregateResult> aggr= [Select Quote_Line__c, SUM(Shipping_Quantity__c)total from Quote_Line_Address__c where Quote__c=:quoteId and Quote_Address__c!=:quoteAddressId GROUP BY Quote_Line__c];
@@ -80,7 +80,7 @@ public class AssociateToQuoteLineAddressController {
             System.debug('quoteInfo.ApprovalStatus__c '+quoteInfo.ApprovalStatus__c);
             if(Validatedata())
             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'You have ordered quantity in another address record.'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, 'Remaining quantity exceeds the total quantity.'));
                 shouldRedirect=false;
                 return null;
             }

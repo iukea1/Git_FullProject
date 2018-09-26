@@ -24,7 +24,7 @@ public class OppSplitCheckExt
         Decimal totalPercentage;
         for(OpportunitySplit split : [select SplitPercentage, Role_Type2__c, SplitType.MasterLabel 
                                       from OpportunitySplit 
-                                      where OpportunityId = :oppId and SplitType.IsActive = true and SplitType.IsTotalValidated = false
+                                      where OpportunityId = :oppId and SplitType.IsActive = true and SplitType.DeveloperName != 'Revenue'
                                       order by SplitType.MasterLabel, Role_Type2__c])
         {
             if(!splitPercentageMap.containsKey(split.SplitType.MasterLabel))

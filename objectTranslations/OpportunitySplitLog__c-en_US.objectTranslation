@@ -26,6 +26,10 @@
         <relationshipLabel><!-- Opportunity Split Logs --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Opportunity Id --></label>
+        <name>Opportunity_Id__c</name>
+    </fields>
+    <fields>
         <label><!-- Opportunity Split ID --></label>
         <name>Opportunity_Split_ID__c</name>
     </fields>

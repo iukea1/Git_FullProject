@@ -40,6 +40,16 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SFDC_Sales_Price</fullName>
+        <description>Updates the SFDC Standard Sales Price field (unit price) with the custom CPQ Net unit price ( Net_Unit_Price__c )</description>
+        <field>UnitPrice</field>
+        <formula>Net_Unit_Price__c</formula>
+        <name>Update SFDC Sales Price</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <rules>
         <fullName>FU%3A SetLineDescriptionEqualToProduct</fullName>
         <actions>
@@ -57,13 +67,13 @@
     <rules>
         <fullName>Override Sales Price</fullName>
         <actions>
-            <name>Override_Sales_Price</name>
+            <name>Update_SFDC_Sales_Price</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
         <description>Used to override the sales price with the custom net unit price.</description>
         <formula>Net_Unit_Price__c &gt; 0</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>training_order</fullName>

@@ -217,6 +217,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AsyncOppSplitsJob</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AttachmentCheckOnMDFTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1253,6 +1257,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>POCExtensionEmailController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>POCLegacyDataConversion</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>POCRenewalAssetsController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2102,6 +2114,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestAssignSBPermissionSet</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestAsyncOppSplitsJob</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -4962,6 +4978,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunitySplitLog__c.Opportunity_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OpportunitySplitLog__c.Opportunity_Split_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6447,6 +6468,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Patch__c.IsSalesTeam__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Patch__c.Overlay_1_Email__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6484,6 +6510,16 @@
         <editable>false</editable>
         <field>Patch__c.Owner__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch__c.PatchRegion__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Patch__c.PatchTheatre__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7707,6 +7743,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>RMA_Item__c.Ship_To_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>RMA_Item__c.Ship_to_address__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8043,6 +8084,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>RMA__c.Ship_To_Account_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>RMA__c.Source_Contract__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9008,6 +9054,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SW_Only_Asset__c.SO_Reference__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesTeamMember__c.User__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesTeam__c.Patch__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesTeam__c.TempMembers__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

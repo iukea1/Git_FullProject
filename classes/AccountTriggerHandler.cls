@@ -4,7 +4,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
     List<String> directorEmails = new List<String>();
     Map<Id, String> user2TREmail = new Map<Id, String>();
     Set<string> ValidBuildNumber= new Set<string>();
-   
+    
     public AccountTriggerHandler()
     {
         
@@ -62,7 +62,7 @@ public class AccountTriggerHandler implements ITriggerHandler {
                     {
                         newAccInfo.Unity_Orch_Version__c.addError('This field can only accept in **.**.**.***** format. For ex 8.1.14.33650.' );
                     }
-                   else if(!ValidBuildNumber.contains(newAccInfo.Unity_Orch_Version__c) )
+                    else if(!ValidBuildNumber.contains(newAccInfo.Unity_Orch_Version__c) )
                     {
                         newAccInfo.Unity_Orch_Version__c.addError('Invalid version number. Please enter valid version.' );
                     }
@@ -152,14 +152,14 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 Account newAccInfo= (Account)newItems.get(accId);
                 if(newAccInfo.Type != 'In Review')
                 {
-                if(newAccInfo.Patch__c == null)
-                {
-                    accNeedsPatchAssign.add(newAccInfo.Id);
-                }
-                else
-                {
-                    accNeedsTeamAssign.add(newAccInfo.Id);
-                }
+                    if(newAccInfo.Patch__c == null)
+                    {
+                        accNeedsPatchAssign.add(newAccInfo.Id);
+                    }
+                    else
+                    {
+                        accNeedsTeamAssign.add(newAccInfo.Id);
+                    }
                 }
             }
             LinkAccountToPatch(accNeedsPatchAssign, accNeedsTeamAssign, null);
@@ -203,19 +203,23 @@ public class AccountTriggerHandler implements ITriggerHandler {
                 {
                     oppTypeAccIds.put(newAccInfo.Id,newAccInfo.First_Asset_Quarter__c);
                 }
-                if(newAccInfo.Patch_Locked__c == false & newAccInfo.Type != 'In Review')
+
+                Boolean isSegmentChanged = oldAccinfo.SegmentationType__c != newAccInfo.SegmentationType__c && newAccInfo.IsSalesTeamPatch__c;
+                if(newAccInfo.Patch_Locked__c == false && newAccInfo.Type != 'In Review')
                 {
                     PatchRuleEngineBase.Target target = PatchRuleHelper.getTarget(newAccInfo);
                     PatchRuleEngineBase.Target oldTarget = PatchRuleHelper.getTarget(oldAccInfo);
-                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget))
+                    if(newAccInfo.Trigger_Assignment__c || !PatchRuleHelper.isSameTarget(target, oldTarget) || isSegmentChanged)
                     {
                         accNeedsPatchAssign.add(newAccInfo.Id);
                     }
                 }
-                if(newAccInfo.Type != 'In Review' && (newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c))
+
+                if(newAccInfo.Type != 'In Review' && (newAccInfo.Patch__c != oldAccInfo.Patch__c || newAccInfo.Trigger_Assignment__c || (!newAccInfo.Patch_Locked__c && isSegmentChanged)))
                 {
                     accNeedsTeamAssign.add(newAccInfo.Id);
                 }
+
                 if(newAccInfo.ECSP__c && (newAccInfo.Service_Provider_Account_Type__c=='Perpetual-Orchestrator SP' || newAccInfo.Service_Provider_Account_Type__c=='EC-SP-Metered +Orch-SP' || newAccInfo.Service_Provider_Account_Type__c=='EC-SP-Term +Orch-SP'))
                 {
                     if(oldAccInfo.Cloud_Portal_Account_Key__c==null && newAccInfo.Cloud_Portal_Account_Key__c!=null && oldAccInfo.Cloud_Portal_Account_Name__c==null && newAccInfo.Cloud_Portal_Account_Name__c!=null)
@@ -256,7 +260,7 @@ capCreationAcctId.add(newAccInfo.Id);
     {
         List<Account> lstAccount= null;
         if(acctId!=null)
-        	lstAccount=[Select Id from Account where (NOT Id=:acctId) and ECSP__c=false and Unity_Orch_Domain__c=:inputDomain];
+            lstAccount=[Select Id from Account where (NOT Id=:acctId) and ECSP__c=false and Unity_Orch_Domain__c=:inputDomain];
         else
             lstAccount=[Select Id from Account where ECSP__c=false and Unity_Orch_Domain__c=:inputDomain];
         
@@ -264,7 +268,7 @@ capCreationAcctId.add(newAccInfo.Id);
         if(lstAccount!=null && lstAccount.size()>0)
         {
             
-            	return true;
+            return true;
         }
         return false;
     }
@@ -436,14 +440,14 @@ insert lstCapCase;
     {
         pattern myPattern = pattern.compile('^([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{5,})?([0-9]{5,})$'); 
         pattern myPattern1 = pattern.compile('^([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{1,2}+[.])?([0-9]{5,})?([0-9]{1,2}+[.])?([0-9]{5,})$'); 
-		matcher myMatcher = myPattern.matcher(inputData);
+        matcher myMatcher = myPattern.matcher(inputData);
         matcher myMatcher1 = myPattern1.matcher(inputData);
-		return ((myMatcher.matches() && myMatcher.hitEnd()) ||(myMatcher1.matches() && myMatcher1.hitEnd())) ;
+        return ((myMatcher.matches() && myMatcher.hitEnd()) ||(myMatcher1.matches() && myMatcher1.hitEnd())) ;
     }
     private void PopulateOrchestratorVersion()
     {
        List<Builds__c> lstBuildData=[Select Build_Number__c from Builds__c where Release__r.Type__c='GMS' and Inactive__c=false and Release__r.Name like 'GMS 8%' and (NOT Release__r.Name = 'GMS 8.0')];
-	          
+              
        if(lstBuildData!=null && lstBuildData.size()>0)
        {
            for(Builds__c data:lstBuildData)

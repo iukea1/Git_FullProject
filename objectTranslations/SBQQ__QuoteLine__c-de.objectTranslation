@@ -41,5 +41,98 @@
         <value><!-- Angebotsbelegposten --></value>
     </caseValues>
     <gender>Masculine</gender>
+    <layouts>
+        <layout>CPQ - Finance - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>Benutzerdefinierte Links</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>Beschreibungsinformationen</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>Rabattinformationen</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>Preisinformationen</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>Abonnementinformationen</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>Benutzerdefinierte Links</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>Beschreibungsinformationen</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>Rabattinformationen</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>Preisinformationen</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>Abonnementinformationen</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Quote Line Layout</layout>
+        <sections>
+            <label><!-- Approval Fields --></label>
+            <section>Approval Fields</section>
+        </sections>
+        <sections>
+            <label>Benutzerdefinierte Links</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DEBUG --></label>
+            <section>DEBUG</section>
+        </sections>
+        <sections>
+            <label>Beschreibungsinformationen</label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label>Rabattinformationen</label>
+            <section>Discount Information</section>
+        </sections>
+        <sections>
+            <label>Preisinformationen</label>
+            <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label>Abonnementinformationen</label>
+            <section>Subscription Information</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>Name des Belegpostens</nameFieldLabel>
 </CustomObjectTranslation>

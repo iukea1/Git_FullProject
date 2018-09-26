@@ -3,6 +3,10 @@
     <layouts>
         <layout>Account Layout</layout>
         <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
         </sections>
@@ -107,7 +111,101 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Account Layout Contractor-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Account Layout w/Clean</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account Layout w/Clean-Reviewed</layout>
         <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
@@ -273,6 +371,10 @@
         <sections>
             <label><!-- Description Information --></label>
             <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Patch Assignment --></label>
+            <section>Patch Assignment</section>
         </sections>
         <sections>
             <label><!-- RainKing Buttons --></label>
@@ -513,6 +615,684 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>CPQ - Finance - Account Layout</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Course Completion --></label>
+            <section>Course Completion</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation Data --></label>
+            <section>Segmentation Data</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Customer and Prospects</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation --></label>
+            <section>Segmentation</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sync Information --></label>
+            <section>Sync Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Finance - Partners and Resellers</layout>
+        <sections>
+            <label><!-- Account Details --></label>
+            <section>Account Details</section>
+        </sections>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sync Information --></label>
+            <section>Sync Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Account Layout</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Customers and Prospects</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Operations - Partners and Resellers</layout>
+        <sections>
+            <label><!-- Account Details --></label>
+            <section>Account Details</section>
+        </sections>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Account Layout</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Course Completion --></label>
+            <section>Course Completion</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com Description --></label>
+            <section>Data.com Description</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Customers and Prospects</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Organizer --></label>
+            <section>Account Organizer</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CPQ - Renewal Specialist - Partners and Resellers</layout>
+        <sections>
+            <label><!-- Account Details --></label>
+            <section>Account Details</section>
+        </sections>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer and Prospects with LeanData Info-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Organizer --></label>
+            <section>Account Organizer</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- LeanData --></label>
+            <section>LeanData</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation Information --></label>
+            <section>Segmentation Information</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Customer and Prospects-CAM</layout>
         <sections>
             <label><!-- Account Information --></label>
@@ -588,10 +1368,172 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Customer and Prospects-CAM-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer and Prospects-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Organizer --></label>
+            <section>Account Organizer</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Segmentation Data --></label>
+            <section>Segmentation Data</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Customers and Prospects</layout>
         <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Organizer --></label>
+            <section>Account Organizer</section>
         </sections>
         <sections>
             <label><!-- Additional Information --></label>
@@ -753,6 +1695,33 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Distributor Portal Layout-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>HR Layout</layout>
         <sections>
             <label><!-- Account Information --></label>
@@ -791,7 +1760,175 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Help Requests Account Layout-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Inside Sales Manager Account Layout</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>OutSource Support Layout-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- D&amp;B Description --></label>
+            <section>D&amp;B Description</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>OutSource Support US Layout</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>OutSource Support US Layout-Reviewed</layout>
         <sections>
             <label><!-- Account Information --></label>
             <section>Account Information</section>
@@ -975,6 +2112,77 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Partner Portal Layout (New) with LeanData Info-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deal Registrations --></label>
+            <section>Deal Registrations</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- LeanData --></label>
+            <section>LeanData</section>
+        </sections>
+        <sections>
+            <label><!-- Open Opportunities --></label>
+            <section>Open Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Program Information --></label>
+            <section>Program Information</section>
+        </sections>
+        <sections>
+            <label><!-- Renewal Opportunities --></label>
+            <section>Renewal Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- Silver Peak Sales Team --></label>
+            <section>Silver Peak Sales Team</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Partner Portal Layout (New)-CAM</layout>
         <sections>
             <label><!-- Account Hierarchy --></label>
@@ -1035,6 +2243,167 @@
         <sections>
             <label><!-- Silver Peak Sales Team --></label>
             <section>Silver Peak Sales Team</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partner Portal Layout (New)-CAM-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deal Registrations --></label>
+            <section>Deal Registrations</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Open Opportunities --></label>
+            <section>Open Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Program Information --></label>
+            <section>Program Information</section>
+        </sections>
+        <sections>
+            <label><!-- Renewal Opportunities --></label>
+            <section>Renewal Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- Silver Peak Sales Team --></label>
+            <section>Silver Peak Sales Team</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partner Portal Layout (New)-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deal Registrations --></label>
+            <section>Deal Registrations</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Open Opportunities --></label>
+            <section>Open Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Program Information --></label>
+            <section>Program Information</section>
+        </sections>
+        <sections>
+            <label><!-- Renewal Opportunities --></label>
+            <section>Renewal Opportunities</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
+        </sections>
+        <sections>
+            <label><!-- Silver Peak Sales Team --></label>
+            <section>Silver Peak Sales Team</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partner Portal Layout-Reviewed</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
         </sections>
         <sections>
             <label><!-- System Information --></label>
@@ -1172,6 +2541,175 @@
         <sections>
             <label><!-- Sales Team --></label>
             <section>Sales Team</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partners and Resellers-Reviewed</layout>
+        <sections>
+            <label><!-- Account Details --></label>
+            <section>Account Details</section>
+        </sections>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Partners and Resellersd with LeanData Info-Reviewed</layout>
+        <sections>
+            <label><!-- Account Details --></label>
+            <section>Account Details</section>
+        </sections>
+        <sections>
+            <label><!-- Account Summary --></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Partner Information --></label>
+            <section>Additional Partner Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Section --></label>
+            <section>Cloud Portal Section</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- EverString Fields --></label>
+            <section>EverString Fields</section>
+        </sections>
+        <sections>
+            <label><!-- LeanData --></label>
+            <section>LeanData</section>
+        </sections>
+        <sections>
+            <label><!-- Reseller Discount Information --></label>
+            <section>Reseller Discount Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales Manager Customer Account Layout</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Additional Information --></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Assignment --></label>
+            <section>Assignment</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Orchestrator Information --></label>
+            <section>Cloud Orchestrator Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cloud Portal Information --></label>
+            <section>Cloud Portal Information</section>
+        </sections>
+        <sections>
+            <label><!-- Data.com --></label>
+            <section>Data.com</section>
+        </sections>
+        <sections>
+            <label><!-- Deployment Engineering --></label>
+            <section>Deployment Engineering</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Opportunities (includes all child account opportunities) --></label>
+            <section>Opportunities (includes all child account opportunities)</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Buttons --></label>
+            <section>RainKing Buttons</section>
+        </sections>
+        <sections>
+            <label><!-- RainKing Data --></label>
+            <section>RainKing Data</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Info --></label>
+            <section>Reference Info</section>
+        </sections>
+        <sections>
+            <label><!-- Reference Profile --></label>
+            <section>Reference Profile</section>
+        </sections>
+        <sections>
+            <label><!-- Service Provider Information --></label>
+            <section>Service Provider Information</section>
         </sections>
         <sections>
             <label><!-- System Information --></label>

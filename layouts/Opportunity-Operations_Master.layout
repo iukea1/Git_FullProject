@@ -11,51 +11,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Channel</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>200</height>
-                <page>PartnerList</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>POC_Opportunity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Owner_ManagerId__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CloseDate_Formatted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Renewal_Specialist__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Metered_Claimed_as_Enterprise__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Metered_Service_Provider__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Comp_Rate_2_2019_Plan__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Opportunity Information</label>
         <layoutColumns>
             <layoutItems>
@@ -101,6 +56,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SP_OpEx_Opportunity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_Ownership__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -155,6 +114,31 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Channel</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>PartnerList</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Opportunity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Renewal_Specialist__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Sales Team Information</label>
         <layoutColumns>
             <layoutItems>
@@ -190,33 +174,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Tech_Recommendation__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Qualification Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PlanCheck__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PowerCheck__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Why_buy_Wan_Opp__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Why_buy_Silver_Peak__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -266,33 +223,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Revenue Recognition Checklist</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Invoice_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Invoice_Date__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Comp_Hold_Release__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Shipped_Complete_Date__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Partner Resource Center Information</label>
         <layoutColumns>
             <layoutItems>
@@ -326,89 +256,6 @@
                 <field>Additional_Registered_Account__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Opportunity Registration Information- Imported from Deal Registration Conversion</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Deal_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Deal_Approved_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Intial_Estimated_Close_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Registration_Expiration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Days_Left_Until_Expire__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Description__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Deal_Source__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Budget__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Project_Budgeted__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>NON PRM- Deal Reg Info</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>View_Forwarded_Lead__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Marketing Data</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeadSource</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Source_Campaign__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -488,12 +335,6 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Quote_Date__c</fields>
-        <fields>Quote_Valid_Until__c</fields>
-        <relatedList>Quote__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>ORDERS.EFFECTIVE_DATE</fields>
@@ -510,10 +351,6 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>SE_Activity__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>New_SP_Quote</customButtons>
@@ -550,6 +387,9 @@
         <fields>DiscountPercent__c</fields>
         <fields>Discount</fields>
         <fields>TotalPrice</fields>
+        <fields>Comp_Rate1__c</fields>
+        <fields>Comp_Rate2__c</fields>
+        <fields>Total_Comp_Rate__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -560,12 +400,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContactRoleList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedRecordConnectionList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedCompetitorList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedOpportunityHistoryList</relatedList>
@@ -599,14 +433,6 @@
         <relatedList>Purchase_Order__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>CAMPAIGN.NAME</fields>
-        <fields>CONTACT.FULL_NAME</fields>
-        <fields>OCR.ROLE</fields>
-        <fields>CM.RESPONDED</fields>
-        <fields>PRIMARY</fields>
-        <relatedList>RelatedCampaignInfluenceList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -619,10 +445,6 @@
         <fields>Primary_Partner__c</fields>
         <fields>Registered_Partner__c</fields>
         <relatedList>Opportunity.Related_Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>T3chAccelerator__Instance__c.T3chAccelerator__opportunity_id__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

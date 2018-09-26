@@ -4,6 +4,7 @@
     <customButtons>SBQQ__EditLines</customButtons>
     <customButtons>SBQQ__RefreshPrices</customButtons>
     <customButtons>SBQQ__ImportLines</customButtons>
+    <customButtons>SBQQ__GenerateDocument</customButtons>
     <customButtons>Submit_for_Approval</customButtons>
     <customButtons>Preview_Approvals</customButtons>
     <customButtons>SBQQ__PreviewDocument</customButtons>
@@ -68,6 +69,10 @@
                 <field>SBQQ__Primary__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ApprovalStatus__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Estimated_Ship_Date__c</field>
             </layoutItems>
@@ -83,6 +88,10 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBCF_Evaluation_Quote__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -96,8 +105,16 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__EndDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
@@ -118,7 +135,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
@@ -153,6 +169,10 @@
         <fields>SBQQ__CustomerAmount__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>SBQQ__QuoteDocument__c.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>sbaa__Approval__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

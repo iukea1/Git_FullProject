@@ -261,10 +261,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>pgilbreath@silver-peak.com</name>
-                <type>user</type>
+                <type>userHierarchyField</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>

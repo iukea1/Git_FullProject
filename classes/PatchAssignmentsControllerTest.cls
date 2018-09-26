@@ -25,9 +25,9 @@ public class PatchAssignmentsControllerTest
     @isTest
     static void testCatchall()
     {
-        Patch__c patch = new Patch__c(Patch_Name__c='acme', RSM__c=UserInfo.getUserId(), Active__c=true, Catchall__c=true);
+        Patch__c patch = new Patch__c(Patch_Name__c='acme', RSM__c=UserInfo.getUserId(), IsSalesTeam__c=false, Active__c=true, Catchall__c=true);
         insert patch;
-        Lead ld = new Lead(LastName='acme', Company='acme', Status='Marketing Nurturing', Patch__c=patch.Id);
+        Lead ld = new Lead(LastName='acme', Company='acme', Status='Marketing Nurturing', SegmentationType__c='Enterprise', Patch__c=patch.Id);
         insert ld;
         ld.RSM__c = UserInfo.getUserId();
         update ld;

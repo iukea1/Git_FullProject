@@ -109,6 +109,7 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
             sendEmailAlertForSplitUpdate(newItems, oldItems);
 
             deleteOppSplits(newItems, oldItems);
+
         }
     }
     public void BeforeDelete(Map<Id,SObject> oldItems) 
@@ -205,9 +206,10 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
                 }
                 if(newOpp.Type != 'Marketplace' && newOpp.IsClosed == false)
                 {
+                    Boolean isSegmentChanged = oldOpp.SegmentationType__c != newOpp.SegmentationType__c && newOpp.IsSalesTeamPatch__c;
                     if(newOpp.Patch_Locked__c == false)
                     {
-                        if(newOpp.Trigger_Assignment__c || newOpp.AccountId != oldOpp.AccountId)
+                        if(newOpp.Trigger_Assignment__c || newOpp.AccountId != oldOpp.AccountId || isSegmentChanged)
                         {
                             oppNeedsPatchAssign.add(newOpp.Id);
                             oppNeedsTeamAssign.add(newOpp.Id);
@@ -244,7 +246,7 @@ public class OpportunityTriggerHandler implements ITriggerHandler {
             CalculateFirstCustomerDate(setAccIds);
             //SetContactRole(newItems.keyset());
             CreateWANStartCase(wanStartOpps);
-            SycnOpportunityToQuoteHandler.sycnOpportunityDateToQuoteDateOnUpdate((Map<Id,Opportunity>)oldItems,(Map<Id,Opportunity>)newItems);
+            //SycnOpportunityToQuoteHandler.sycnOpportunityDateToQuoteDateOnUpdate((Map<Id,Opportunity>)oldItems,(Map<Id,Opportunity>)newItems);
             UpdateFirstOpportunityWinCheckBox(setAccIds);
             AddTRToOpportunityTeam(mapOppTR);
             
@@ -659,17 +661,17 @@ update lstContactRole;
             mail.setTargetObjectId(UserInfo.getUserId());
             mail.setTemplateId(templateId);
             mail.setWhatId(oppId);
-            mail.setToAddresses(new String[] {'silverpeak@snapbi.com'});
+            mail.setToAddresses(new String[] {'rmarqueling@silver-peak.com'});
             mail.setTreatTargetObjectAsRecipient(false);
             mails.add(mail);
         }
         Messaging.sendEmail(mails);
     }
-    
+
     // Add by SNAP
-    private void createOppSplits(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
+    private  void createOppSplits(Map<Id, SObject> newItems, Map<Id, SObject> oldItems)
     {
-        List<OpportunitySplitType> splitTypes = [select Id from OpportunitySplitType where IsActive = true];
+        List<OpportunitySplitType> splitTypes = [select Id from OpportunitySplitType where IsActive = true and DeveloperName != 'Revenue'];
         if(!splitTypes.isEmpty())
         {
             List<OpportunitySplit> newSplits = new List<OpportunitySplit>();
@@ -680,11 +682,11 @@ update lstContactRole;
                 if(oldItems == null)
                 {
                     // add Opportunity owner to the split
-                    addSplits(newSplits, newOpp, newOpp.OwnerId, splitTypes);
+                    newSplits.addAll(getNewSplits(newOpp, newOpp.OwnerId, splitTypes));
                     // add Technical_Responsible__c to the split
                     if(newOpp.Technical_Responsible__c != null)
                     {
-                        addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                        newSplits.addAll(getNewSplits(newOpp, newOpp.Technical_Responsible__c, splitTypes));
                     }
                 }
                 else
@@ -693,12 +695,12 @@ update lstContactRole;
                     // add new Opportunity owner to the split                    
                     if(isFieldValueChanged(newOpp.OwnerId, oldOpp.OwnerId, OpportunityTriggerController.oppOwnerInAfterUpdate))
                     {                        
-                        addSplits(newSplits, newOpp, newOpp.OwnerId, splitTypes);
+                        newSplits.addAll(getNewSplits(newOpp, newOpp.OwnerId, splitTypes));
                         // add the TR user back to the Opportunity Splits after the Opportunity ower changes, because all
                         // Opportunity Splits will be auto-removed after the owner is changed. 
                         if(newOpp.Technical_Responsible__c != null)
                         {
-                            addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                            newSplits.addAll(getNewSplits(newOpp, newOpp.Technical_Responsible__c, splitTypes));
                         }
                         OpportunityTriggerController.oppOwnerInAfterUpdate = newOpp.OwnerId;
                     }
@@ -709,26 +711,33 @@ update lstContactRole;
                         OpportunityTriggerController.oppTRInAfterUpdate = newOpp.Technical_Responsible__c;
                         if(newOpp.Technical_Responsible__c != null)
                         {
-                            addSplits(newSplits, newOpp, newOpp.Technical_Responsible__c, splitTypes);
+                            newSplits.addAll(getNewSplits(newOpp, newOpp.Technical_Responsible__c, splitTypes));
                         }
                     }
                 }
             }   
             if(!newSplits.isEmpty())
             {
-                // In case duplicate splits are added, this DML allows the splits to be partially created.
-                Database.insert(newSplits, false);
+                System.debug('$$' + newSplits);
+                // Somehow, we get insufficient privileges issue, so we move the DML operations to a Queuable job.
+                if(!Test.isRunningTest())
+                {
+                    System.enqueueJob(new AsyncOppSplitsJob(newSplits));
+                }                
             }
         }
     }
+
     
     // Add by SNAP
-    private void addSplits(List<OpportunitySplit> newSplits, Opportunity opp, Id ownerId, List<OpportunitySplitType> splitTypes)
+    private List<OpportunitySplit> getNewSplits(Opportunity opp, Id ownerId, List<OpportunitySplitType> splitTypes)
     {
+        List<OpportunitySplit> splits = new List<OpportunitySplit>();
         for(OpportunitySplitType sType : splitTypes)
         {
-            newSplits.add(new OpportunitySplit(SplitOwnerId = ownerId, OpportunityId = opp.Id, SplitTypeId = sType.Id, SplitPercentage = 100));
+            splits.add(new OpportunitySplit(SplitOwnerId = ownerId, OpportunityId = opp.Id, SplitTypeId = sType.Id, SplitPercentage = 100));
         }
+        return splits;
     }
     
     // Add by SNAP
@@ -764,7 +773,7 @@ update lstContactRole;
             Set<Id> oppIds = oppIdMap.get(roleType);
             if(!oppIds.isEmpty())
             {
-                delete [select Id from OpportunitySplit where SplitType.IsActive = true and OpportunityId in :oppIds and Role_Type2__c = :roleType];
+                delete [select Id from OpportunitySplit where SplitType.IsActive = true and SplitType.DeveloperName != 'Revenue' and OpportunityId in :oppIds and Role_Type2__c = :roleType];
             }
         }
     }

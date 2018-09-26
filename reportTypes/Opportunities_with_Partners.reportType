@@ -307,26 +307,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>Opportunity</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Account.Partner_Level__c</field>
             <table>Opportunity</table>
         </columns>

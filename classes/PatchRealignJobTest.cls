@@ -72,28 +72,4 @@ public class PatchRealignJobTest
         Patch__c p= [Select Id from Patch__c where Name='P-480'];
         system.assertEquals(p.Id, o.Patch__c);
     }
-    
-    @isTest
-    static void TestNotInReviewAccount()
-    {
-        Patch__c patch = new Patch__c(Patch_Name__c='acme', Active__c=true, ProcessingSequence__c=5000);
-        insert patch;
-        PatchCriteriaRule__c rule1 = new PatchCriteriaRule__c(Patch__c=patch.Id, Type__c='State', Operation__c='equals', Value__c='MLKTest', ProcessingSequence__c=1);
-        insert rule1;
-        Patch__c patch1 = new Patch__c(Patch_Name__c='acme1', Active__c=true, ProcessingSequence__c=6000);
-        insert patch1;
-        PatchCriteriaRule__c rule2 = new PatchCriteriaRule__c(Patch__c=patch1.Id, Type__c='Company', Operation__c='not equal to', Value__c='', ProcessingSequence__c=1);
-        insert rule2;
-        Account acc = new Account(Name='Test InReview Account', Type='Customer', Patch__c=patch.Id);
-        insert acc;
-        
-        Test.startTest();
-        PatchRealignJob job = new PatchRealignJob(new List<Id> {patch.Id,patch1.Id });
-        Database.executeBatch(job, 2);
-        Test.stopTest();
-        Account acc1= [Select Trigger_Assignment__c, Patch__c from Account where Id =:acc.Id];
-        Patch__c p= [Select Id from Patch__c where Id=:patch1.Id];
-        system.assertEquals(False, acc1.Trigger_Assignment__c); 
-        system.assertEquals(p.Id, acc1.Patch__c);
-    }
 }

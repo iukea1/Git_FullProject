@@ -836,51 +836,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DateAssignedToPartner__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DealRegistrationDenied__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__DealRegistrationStatus__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__IsDealRegistration__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__NotifyRVMember__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLastModifiedDate__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLeadAcceptance__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>PartnerComments__c</field>
             <table>Lead</table>
         </columns>
@@ -906,16 +861,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Model_for_Trial__c</field>
             <table>Lead</table>
         </columns>
@@ -932,11 +877,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Trial_Request_from_Marketplace__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Partner_Lead_Age__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -1141,11 +1081,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Deferral_Date__c</field>
             <table>Lead</table>
         </columns>
@@ -1187,11 +1122,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Contact_Registered_By__c</field>
-            <table>Lead</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner_Name__c</field>
             <table>Lead</table>
         </columns>
         <columns>
@@ -2390,11 +2320,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PO_Number__c</field>
-            <table>Lead.CampaignMembers</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Sponsoring_Partner__c</field>
             <table>Lead.CampaignMembers</table>
         </columns>
         <columns>

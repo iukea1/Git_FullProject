@@ -128,18 +128,6 @@
                 <field>Actual_Ship_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Approver_1_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Approver_2_Id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Approver_3_Id__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Requested_Extension_Date__c</field>
             </layoutItems>
@@ -174,14 +162,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reduction_Quote__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Reseller_Account_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Prepared_For_Account_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -260,6 +240,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SBQQ__OriginalQuote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Credit_Hold__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Account_Terms__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -474,7 +462,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Length_In_Years__c</field>
+                <field>Override_Renewal_End_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -498,22 +486,6 @@
                 <behavior>Readonly</behavior>
                 <field>Sale_Type__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Output_Bill_To_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Output_Bill_To_City__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Output_Bill_To_Country__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Output_Bill_To_State__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -527,10 +499,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Original_Contract_End_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBQQ__EndDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -575,7 +543,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>SBQQ__ProductCode__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
@@ -619,8 +586,8 @@
         <relatedList>SBQQ__QuoteDocument__c.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>sbaa__Actions__c</fields>
         <fields>NAME</fields>
-        <fields>sbaa__ApprovalChain__c</fields>
         <fields>sbaa__ApprovalStep__c</fields>
         <fields>sbaa__Approver__c</fields>
         <fields>sbaa__AssignedTo__c</fields>

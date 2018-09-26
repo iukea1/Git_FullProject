@@ -1,5 +1,6 @@
 public class SBQQSubscriptionDataController {
     public ID ContractId{get;set;}
+    public ID QuoteId{get;set;}
     public ID OrderId{get;set;}
     public string OrderType{get;set;}
     public List<Asset> lstVXSubAssets{
@@ -67,6 +68,40 @@ public List<AssetWrapper> lstAssetWrapper{
         {
             System.debug('ContractId'+ ContractId);
             List<SBQQ__Subscription__c> lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.GMS_Nodes__c,SBQQ__Asset__r.License_End_Date__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__Contract__c=:ContractId ];
+            if(lstSubsData!=null && lstSubsData.size()>0)
+            {
+                for(SBQQ__Subscription__c item: lstSubsData)
+                {
+                    if(item.SBQQ__Contract__r.Product_Type__c=='EDGECONNECT')
+                        lstData.add(new AssetWrapper(item.SBQQ__Product__r.Name,null,null,null));
+                    else
+                    {
+                        if(item.SBQQ__SubscribedAssets__r!=null && item.SBQQ__SubscribedAssets__r.size()>0)
+                        {
+                            for(SBQQ__SubscribedAsset__c subAssetData: item.SBQQ__SubscribedAssets__r)
+                            {
+                                lstData.add(new AssetWrapper(subAssetData.SBQQ__Asset__r.Product2.Name,subAssetData.SBQQ__Asset__r.SerialNumber,subAssetData.SBQQ__Asset__r.License_End_Date__c,subAssetData.SBQQ__Asset__r.GMS_Nodes__c));
+                                
+                            }
+                        } 
+                    }
+                }
+            }
+            
+        }
+        System.debug(lstData);
+        return lstData ;
+    }
+}
+    
+    public List<AssetWrapper> lstAssetWrapperQuote{
+    get
+    {
+        List<AssetWrapper> lstData=new List<AssetWrapper>();
+        if(QuoteId!=null)
+        {
+            System.debug('QuoteId'+ QuoteId);
+            List<SBQQ__Subscription__c> lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.GMS_Nodes__c,SBQQ__Asset__r.License_End_Date__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__Contract__c in(Select Id from Contract where SBQQ__Quote__c =:QuoteId) ];
             if(lstSubsData!=null && lstSubsData.size()>0)
             {
                 for(SBQQ__Subscription__c item: lstSubsData)

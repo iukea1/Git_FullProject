@@ -317,11 +317,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>RV_Member__c</field>
-            <table>Contact</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Salutation</field>
             <table>Contact</table>
         </columns>
@@ -820,11 +815,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__IsDealRegistration__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>ISR_Credit__c</field>
             <table>Contact.Opportunities__r</table>
         </columns>
@@ -930,11 +920,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__NotifyRVMember__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Number_of_branches__c</field>
             <table>Contact.Opportunities__r</table>
         </columns>
@@ -1021,11 +1006,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Partner_Drag_Amount__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__PartnerLastModifiedDate__c</field>
             <table>Contact.Opportunities__r</table>
         </columns>
         <columns>
@@ -1190,16 +1170,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVAccount__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>rvpe__RVMember__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Sales_Region__c</field>
             <table>Contact.Opportunities__r</table>
         </columns>
@@ -1211,16 +1181,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>SE_Comp_2__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Account__c</field>
-            <table>Contact.Opportunities__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Secondary_RV_Member__c</field>
             <table>Contact.Opportunities__r</table>
         </columns>
         <columns>

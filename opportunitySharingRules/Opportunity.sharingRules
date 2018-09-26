@@ -38,6 +38,17 @@
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
     </ownerRules>
     <ownerRules>
+        <fullName>Grade_3_COMM_NAM_West_with_other_Grade_3_COMM_NAM</fullName>
+        <sharedTo>
+            <group>Grade_3_COMM_NAM_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_3_COMM_NAM_West</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Grade 3 COMM NAM West with other Grade 3 COMM NAM</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
         <fullName>Share_APAC_opps_with_Service_Provider_team</fullName>
         <sharedTo>
             <roleAndSubordinatesInternal>Grade_2_Sales_SP</roleAndSubordinatesInternal>
@@ -48,6 +59,61 @@
         <description>Share APAC Opps, which are owned by Tricia Png with SP team</description>
         <name>Share APAC opps with Service Provider team</name>
         <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_2_COMM_APAC_with_other_Grade_2</fullName>
+        <sharedTo>
+            <group>Grade_2_Sales_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_COMM_APAC</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 2 COMM APAC with other Grade 2</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_2_COMM_EMEA_with_other_Grade_2</fullName>
+        <sharedTo>
+            <group>Grade_2_Sales_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_COMM_EMEA</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 2 COMM EMEA with other Grade 2</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_2_COMM_LATAM_with_other_Grade_2</fullName>
+        <sharedTo>
+            <group>Grade_2_Sales_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_COMM_LATAM</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 2 COMM LATAM with other Grade 2</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_2_COMM_NAM_with_other_Grade_2</fullName>
+        <sharedTo>
+            <group>Grade_2_Sales_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_COMM_NAM</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 2 COMM NAM with other Grade 2</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_2_COMM_SP_with_other_Grade_2</fullName>
+        <sharedTo>
+            <group>Grade_2_Sales_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_COMM_SP</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 2 COMM SP with other Grade 2</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
     </ownerRules>
     <ownerRules>
         <fullName>Share_Grade_2_Sales_APAC_with_Other_Grade_2_Sales</fullName>
@@ -124,6 +190,39 @@
             <roleAndSubordinatesInternal>Grade_3_Sales_APAC_ASEAN</roleAndSubordinatesInternal>
         </sharedFrom>
         <name>Share Grade 3 APAC ASEAN with Other APAC Regions</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_3_COMM_NAM_Central_with_other_Grade_3_COMM_NAM</fullName>
+        <sharedTo>
+            <group>Grade_3_COMM_NAM_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_3_COMM_NAM_Central</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 3 COMM NAM Central with other Grade 3 COMM NAM</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_3_COMM_NAM_East_with_other_Grade_3_COMM_NAM</fullName>
+        <sharedTo>
+            <group>Grade_3_COMM_NAM_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_3_COMM_NAM_East</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 3 COMM NAM East with other Grade 3 COMM NAM</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
+        <fullName>Share_Grade_3_COMM_NAM_South_with_other_Grade_3_COMM_NAM</fullName>
+        <sharedTo>
+            <group>Grade_3_COMM_NAM_Team</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_3_COMM_NAM_South</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share Grade 3 COMM NAM South with other Grade 3 COMM NAM</name>
         <opportunityAccessLevel>Read</opportunityAccessLevel>
     </ownerRules>
     <ownerRules>
