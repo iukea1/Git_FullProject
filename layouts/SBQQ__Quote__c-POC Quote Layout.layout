@@ -79,10 +79,6 @@
                 <behavior>Edit</behavior>
                 <field>Refresh_Approvers__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>POC_Duration__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -444,6 +440,14 @@
                 <behavior>Edit</behavior>
                 <field>Number_of_EC_POC_Bundles__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Active_EC_ORCH_Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_EC_ORCH_Products__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -487,7 +491,6 @@
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>Net_Unit_Price__c</fields>
-        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>

@@ -74,6 +74,10 @@
                 <behavior>Readonly</behavior>
                 <field>Prepared_For_Account_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NX_VX_to_EC_Conversion__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -452,7 +456,6 @@
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>Net_Unit_Price__c</fields>
-        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>

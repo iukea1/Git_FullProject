@@ -3,6 +3,7 @@
     <customButtons>Apply_Serial_Numbers</customButtons>
     <customButtons>Virtual_Shipment_Details</customButtons>
     <customButtons>SBQQ__EditOrderProducts</customButtons>
+    <customButtons>Send_Fulfillment_Email</customButtons>
     <excludeButtons>ReduceOrder</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -78,6 +79,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VX_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Send_Fulfillment_Email__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

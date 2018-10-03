@@ -906,6 +906,17 @@
         <template>unfiled$public/Support_Case_Notification_to_Csr_Team</template>
     </alerts>
     <alerts>
+        <fullName>Send_email_to_Operations_team_for_conversion</fullName>
+        <description>Send email to Operations team for conversion</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Operations_Only</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Steelbrick_Email_Templates/NXVX_Conversion_Request</template>
+    </alerts>
+    <alerts>
         <fullName>notify_customer_wanstart_activated</fullName>
         <description>notify_customer_wanstart_activated</description>
         <protected>false</protected>
@@ -1220,6 +1231,15 @@
         <field>Entitlement_Type__c</field>
         <literalValue>Contract</literalValue>
         <name>Update Entitlement Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_to_In_Process</fullName>
+        <field>Status</field>
+        <literalValue>In Process</literalValue>
+        <name>Update Status to In Process</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -2102,6 +2122,25 @@ NOT( Contact.Testing__c )
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Send CMA Conversion to Operations</fullName>
+        <actions>
+            <name>Send_email_to_Operations_team_for_conversion</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Conversion</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>CMA</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Setup Google CC</fullName>

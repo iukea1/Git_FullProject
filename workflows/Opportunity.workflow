@@ -818,7 +818,7 @@
     <fieldUpdates>
         <fullName>SBCF_Set_Renewal_Opportunity_Close_Date</fullName>
         <field>CloseDate</field>
-        <formula>SBQQ__RenewedContract__r.EndDate + 14</formula>
+        <formula>SBQQ__RenewedContract__r.EndDate - 14</formula>
         <name>SBCF Set Renewal Opportunity Close Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

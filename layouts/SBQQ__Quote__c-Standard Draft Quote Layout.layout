@@ -36,6 +36,18 @@
                 <field>SBQQ__ExpirationDate__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approver_1_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approver_2_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Approver_3_Id__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reseller_Partner__c</field>
             </layoutItems>
@@ -162,6 +174,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reduction_Quote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NX_VX_to_EC_Conversion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -486,6 +502,14 @@
                 <behavior>Readonly</behavior>
                 <field>Sale_Type__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__EndDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__ContractingMethod__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -547,7 +571,6 @@
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>Net_Unit_Price__c</fields>
-        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>

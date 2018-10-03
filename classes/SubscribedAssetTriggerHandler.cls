@@ -27,7 +27,7 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
         
-       //displayIncomingSubscribedAsset(newItems.values());
+       displayIncomingSubscribedAsset(newItems.values());
         
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 

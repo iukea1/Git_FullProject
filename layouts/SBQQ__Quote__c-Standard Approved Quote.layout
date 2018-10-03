@@ -194,6 +194,10 @@
                 <behavior>Edit</behavior>
                 <field>Reseller_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NX_VX_to_EC_Conversion__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -466,6 +470,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__EndDate__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
@@ -497,7 +505,6 @@
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>Net_Unit_Price__c</fields>
-        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>
@@ -530,13 +537,23 @@
         <relatedList>SBQQ__Subscription__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Open_RMA_on_Account</customButtons>
+        <customButtons>Open_RMA_POC</customButtons>
         <fields>ASSET.NAME</fields>
         <fields>ASSET.SERIAL_NUMBER</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>CONTACT.NAME</fields>
         <fields>PRODUCT2.NAME</fields>
+        <fields>ASSET.STATUS</fields>
         <relatedList>Asset.Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Account__c</fields>
+        <fields>Type__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>RMA__c.POC_Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
@@ -606,13 +623,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Account__c</fields>
-        <fields>Type__c</fields>
-        <fields>Status__c</fields>
-        <relatedList>RMA__c.POC_Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

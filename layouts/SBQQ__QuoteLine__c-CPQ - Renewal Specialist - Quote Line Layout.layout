@@ -100,11 +100,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Net_Total__c</field>
+                <field>Quote_Link__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Quote_Link__c</field>
+                <behavior>Readonly</behavior>
+                <field>Net_Total__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

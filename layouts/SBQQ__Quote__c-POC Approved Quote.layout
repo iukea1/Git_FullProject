@@ -222,6 +222,14 @@
                 <behavior>Readonly</behavior>
                 <field>Prepared_For_Account_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NX_VX_to_EC_Conversion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Add_POC_Days__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -271,18 +279,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Discount_Justification__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Number_of_EC_POC_Bundles__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Active_EC_POC_Bundle__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>POC_Duration__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -486,7 +482,24 @@
                 <field>Original_Contract_End_Date__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Active_EC_POC_Bundle__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_EC_POC_Bundles__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Active_EC_ORCH_Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Number_of_EC_ORCH_Products__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -525,7 +538,6 @@
         <fields>SBQQ__ProductName__c</fields>
         <fields>SBQQ__Quantity__c</fields>
         <fields>Net_Unit_Price__c</fields>
-        <fields>Net_Total__c</fields>
         <fields>Total_Discount__c</fields>
         <fields>SBQQ__StartDate__c</fields>
         <fields>End_Date__c</fields>
@@ -540,6 +552,22 @@
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <relatedList>Contract.SBQQ__Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>SBQQ__Subscription__c.Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>Open_RMA_POC</customButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>PRODUCT2.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <relatedList>Asset.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>sbaa__Actions__c</fields>

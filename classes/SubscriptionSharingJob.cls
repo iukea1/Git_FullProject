@@ -30,7 +30,7 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
         System.debug('setAccIds'+ setAccIds.size());
         if(setAccIds.size()>0)
         {
-            accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE AccountId in:setAccIds.keyset() AND isDeleted = false];
+            accShares = [SELECT Id, AccountId, UserOrGroupId, AccountAccessLevel, RowCause FROM AccountShare WHERE AccountId in:setAccIds.keyset() AND isDeleted = false LIMIT 20000];
             for(AccountShare accShare: accShares)
             {
                 setAllUserOrGroupIds.add(accShare.UserOrGroupId);
@@ -42,7 +42,7 @@ public class SubscriptionSharingJob implements  Database.Batchable<sObject> {
          	List<SBQQ__Subscription__Share> lstDelSubs= new List<SBQQ__Subscription__Share>();
             Map<Id,List<SubscriptionHelper.SubscriptionWrapper>> mapSubData=new Map<Id,List<SubscriptionHelper.SubscriptionWrapper>>();
             List<SBQQ__Subscription__c> lstSubs=[select Id,SBQQ__Account__c from SBQQ__subscription__c where SBQQ__Account__c in:setAccIds.keyset()];
-            List<SBQQ__Subscription__Share> lstSubShares=[SELECT Id,ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c in:setAccIds.keyset())];
+            List<SBQQ__Subscription__Share> lstSubShares=[SELECT Id,ParentId,UserOrGroupId FROM SBQQ__Subscription__Share WHERE IsDeleted=false and ParentId in(select Id from SBQQ__subscription__c where SBQQ__Account__c in:setAccIds.keyset()) LIMIT 50000];
             if(lstSubShares!=null && lstSubShares.size()>0)
             {
                 for(SBQQ__Subscription__Share subShare: lstSubShares)

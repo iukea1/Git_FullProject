@@ -4,6 +4,8 @@
 public without sharing class ConvertRmaToCmaController
 {
     private String assetId;
+    private String contactId;
+	private String caseId;
     private String virtualProductId;
      private String gmsNodes;
     private Map<String, String> nxToVxMap;
@@ -12,8 +14,13 @@ public without sharing class ConvertRmaToCmaController
     public ConvertRmaToCmaController()
     {
         assetId = ApexPages.CurrentPage().getParameters().get('id');
+        contactId = ApexPages.CurrentPage().getParameters().get('contactId');
+        caseId = ApexPages.CurrentPage().getParameters().get('caseId');
         IsConverted = false;
-        currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where Id = :UserInfo.getUserId() and IsActive = true];
+        if(contactId==null)
+        	currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where Id = :UserInfo.getUserId() and IsActive = true];
+        else
+            currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where ContactId = :contactId and IsActive = true];
         mapCMA();
         buildData();
     }
@@ -156,9 +163,15 @@ public without sharing class ConvertRmaToCmaController
             } 
             
             //4. Add and activate the flag for VX asset and its subscription in the Subscribed asset object
+            //
+            if(caseId!=null)
+            {
+                Case updateCase= new Case(Id=caseId, Status='Closed');
+                update updateCase;
+            }
           
           
-          
+		          
           
           
             result = true;

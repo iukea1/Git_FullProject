@@ -412,6 +412,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>SBCF_Set_Shipment_Contact_to_PO_Contact</fullName>
@@ -452,6 +453,10 @@
     </fieldUpdates>
     <rules>
         <fullName>EC Addon</fullName>
+        <actions>
+            <name>Add_On_Email</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -478,19 +483,19 @@
             <operation>greaterThan</operation>
             <value>0</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Add_On_Email</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>EC Fulfillment</fullName>
+        <actions>
+            <name>EC_Fulfillment_Email</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -517,19 +522,19 @@
             <operation>greaterThan</operation>
             <value>0</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>EC_Fulfillment_Email</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>GMS Fulfillment Email</fullName>
+        <actions>
+            <name>GMS_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -551,19 +556,19 @@
             <operation>equals</operation>
             <value>NX/VX</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>GMS_Fulfillment</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Renewal EC Non Reduction</fullName>
+        <actions>
+            <name>Send_Non_Reduction_Order</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Type</field>
@@ -590,19 +595,19 @@
             <operation>equals</operation>
             <value>Activated</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Send_Non_Reduction_Order</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Renewal EC Reduction</fullName>
+        <actions>
+            <name>Send_Reduction_Email</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Type</field>
@@ -629,16 +634,12 @@
             <operation>equals</operation>
             <value>Reduction Renewal</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Send_Reduction_Email</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Renewal EC Reduction For Future Date</fullName>
@@ -682,7 +683,7 @@
             </actions>
             <offsetFromField>Order.EffectiveDate</offsetFromField>
             <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -705,9 +706,23 @@
             <name>SBCF_Set_Contracting_Method</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
-        <formula>ISPICKVAL( SBQQ__Quote__r.Product_Type__c , &quot;EDGECONNECT&quot;)</formula>
+        <active>false</active>
+        <formula>AND(Product_Type__c == &quot;EDGECONNECT&quot;, NOT(ISBLANK( SBQQ__Quote__c )))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SBCF Set Contracting Method 2</fullName>
+        <actions>
+            <name>SBCF_Set_Contracting_Method</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Set Order End Date</fullName>
@@ -741,6 +756,10 @@
     </rules>
     <rules>
         <fullName>Unity Cloud Fulfillment Email</fullName>
+        <actions>
+            <name>Unity_Cloud_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -762,19 +781,19 @@
             <operation>equals</operation>
             <value>NX/VX</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Unity_Cloud_Fulfillment</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Unity Cloud Orchestrator as a Service Fulfillment Email</fullName>
+        <actions>
+            <name>Send_a_notification_to_Unity_Cloud_Orchestrator</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -796,19 +815,19 @@
             <operation>equals</operation>
             <value>EDGECONNECT</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Send_a_notification_to_Unity_Cloud_Orchestrator</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>VRX Fulfillment Email</fullName>
+        <actions>
+            <name>VRX_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -830,19 +849,19 @@
             <operation>equals</operation>
             <value>NX/VX</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>VRX_Fulfillment</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>VX Fulfillment Email</fullName>
+        <actions>
+            <name>VX_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
         <active>true</active>
         <criteriaItems>
             <field>Order.Status</field>
@@ -864,15 +883,11 @@
             <operation>equals</operation>
             <value>NX/VX</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>VX_Fulfillment</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Order.ActivatedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
 </Workflow>

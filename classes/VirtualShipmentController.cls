@@ -181,6 +181,7 @@ public with sharing class VirtualShipmentController {
         orderItemAmendmentNameMap = new Map<Id, String>();
         updateAmendedSubscription = new List<SBQQ__Subscription__c>();
         Set<Id> amendmentUpdates = new Set<Id>();
+        
         if(this.order.Type == 'Renewal'){
             
             List<Order> renewalOrders = [SELECT Id, Opportunity.SBQQ__RenewedContract__c FROM Order WHERE Id =: this.order.Id AND Opportunity.SBQQ__RenewedContract__c NOT IN ('', NULL) LIMIT 1];
@@ -203,17 +204,18 @@ public with sharing class VirtualShipmentController {
                 (SELECT Id, SBQQ__Asset__r.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Asset__r.Is_Selected_For_Renewal__c, SBQQ__Subscription__r.SBQQ__Product__r.Name, SBQQ__Subscription__r.SBQQ__Quantity__c FROM SBQQ__SubscribedAssets__r) 
                 FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN: renewalContractIds];
             
-        
-            List<SBQQ__Subscription__c> subList = new List<SBQQ__Subscription__c>();
+            subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
+            Map<Id, SBQQ__Subscription__c> subList = new Map<Id, SBQQ__Subscription__c>();
             
             for(SBQQ__Subscription__c sub: existingSubscription){
+                subscriptionToSubscribedAsset.put(sub.Id, sub.SBQQ__SubscribedAssets__r);
                 for(SBQQ__SubscribedAsset__c sa : sub.SBQQ__SubscribedAssets__r) {
                     sa.SBQQ__Asset__r.Is_Selected_For_Renewal__c = true;
                 }
                 for(OrderItem oiRec: orderProducts){
                    if(orderItemNameMap.get(oiRec.Id).substring(0,7) == sub.SBQQ__ProductName__c.substring(0,7)){          
                         sub.Quoted_Quantity__c = oiRec.Quantity;                 
-                        subList.add(sub);
+                        subList.put(sub.Id, sub);
                    }
                 } 
             }
@@ -225,7 +227,7 @@ public with sharing class VirtualShipmentController {
             }
             
             if(subList.size()>0){
-                update subList;
+                update subList.values();
             
             }
     
@@ -362,10 +364,11 @@ public with sharing class VirtualShipmentController {
             }
         }    
         */    
-        for(SBQQ__Subscription__c existingSubs: displaySubscription){
+            for(SBQQ__Subscription__c existingSubs: displaySubscription){
             
                 oldSubscriptionAndAsset = new List<SBQQ__SubscribedAsset__c>();
                 subscriptionToSubscribedAsset = new Map<Id, List<SBQQ__SubscribedAsset__c>>();
+                
                 for(SBQQ__SubscribedAsset__c subsAsset: existingSubs.SBQQ__SubscribedAssets__r){
                     if(subsAsset.SBQQ__Asset__r.Is_Selected_For_Renewal__c){
                         if(subscriptionToSubscribedAsset.containsKey(existingSubs.Id)){
@@ -381,6 +384,7 @@ public with sharing class VirtualShipmentController {
                                         
                     List<SBQQ__SubscribedAsset__c> selectedAsset = subscriptionToSubscribedAsset.get(existingSubs.Id);
                     if(selectedAsset == null) selectedAsset = new List<SBQQ__SubscribedAsset__c>();
+                    
                     assetToUpdate = new List<Asset>();
                     //loop order item
                     for(SBQQ__SubscribedAsset__c asset: selectedAsset){
@@ -401,6 +405,7 @@ public with sharing class VirtualShipmentController {
                     else if(existingSubs.Quoted_Quantity__c == selectedAsset.size()){
                         orderProductQuantityIsNotEqual = false;
                     }
+                    update assetToUpdate;
                 }
              }
          

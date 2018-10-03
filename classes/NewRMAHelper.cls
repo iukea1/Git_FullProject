@@ -31,7 +31,7 @@ global class NewRMAHelper
     
     public static Boolean createRmaWithAssetStatus(Set<String> assetIds, String contactId, String assetStatus)
     {
-        List<Asset> assets = [select Id, Product2Id, Contact.Email, POCRequest__r.Name, POCRequest__r.POC_Contact__c, POCRequest__r.Evaluation_Product_1__c, POCRequest__r.Ship_To_Location_1__c, AccountId from Asset where Id in :assetIds];
+        List<Asset> assets = [select Id, Product2Id, Contact.Email, Quote__c,POCRequest__r.Name, POCRequest__r.POC_Contact__c, POCRequest__r.Evaluation_Product_1__c, POCRequest__r.Ship_To_Location_1__c, AccountId from Asset where Id in :assetIds];
         if(!assets.isEmpty())
         {
             RMA__c rma = getNewRMA(assets[0], contactId);
@@ -44,7 +44,7 @@ global class NewRMAHelper
             {
                 throw(ex);
             }
-            
+         
             List<RMA_Item__c> rmaItems = new List<RMA_Item__c>();
             Id rmaItemRecordTypeId = [select Id from RecordType where Name = 'Eval Return' and SobjectType = 'RMA_Item__c' limit 1].Id;
             for(Asset asset : assets)
@@ -105,6 +105,7 @@ global class NewRMAHelper
         rma.Type__c = 'Eval Return';
         rma.Status__c = 'Initiated';
         rma.Request__c = asset.POCRequest__r.Id;
+       	rma.POC_Quote__c=asset.Quote__c;
         rma.Account__c = asset.AccountId;
         rma.Contact__c = contactId;
         rma.Contact_Email_Loc_2__c = asset.Contact.Email;

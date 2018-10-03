@@ -14,6 +14,7 @@ public with sharing class PortalViewController_NXVX extends PortalViewBase{
         loadData();
         if(lstResults!=null && lstResults.size()>0)
             lstResults.sort();
+        
     }  
     protected override string BuildAssetSearch()
     {
@@ -42,8 +43,22 @@ public with sharing class PortalViewController_NXVX extends PortalViewBase{
     }
     public PageReference goToCma()
     {
-        String assetId = ApexPages.CurrentPage().getParameters().get('aid');
-        return new PageReference('/apex/ConvertRmaToCma?id=' + assetId);
+        string assetId = ApexPages.CurrentPage().getParameters().get('aid');
+        if(SilverPeakUtils.IsPortalUser())
+        {
+            User currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where Id = :UserInfo.getUserId() and IsActive = true];
+            Id cmaRecId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('CMA').getRecordTypeId();
+            Case caseInfo= new Case(AssetId=assetId,Priority='High',Status='In Process', Subject='The serial number has been requested for conversion.',Type='Conversion',ContactId=currentUser.ContactId,RecordTypeid=cmaRecId,OwnerId='00G0x0000019PB6');
+            insert caseInfo;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, 'A conversion request has been initiated and delivered to operations team. You will receive confirmation email after the conversion process is complete.'));
+            return null;
+        }
+       else
+       {
+            return new PageReference('/apex/ConvertRmaToCma?id=' + assetId);
+       }
+        
+       
     }
     protected override string BuildSubSearch()
     {

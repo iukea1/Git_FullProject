@@ -336,6 +336,17 @@
         <opportunityAccessLevel>Read</opportunityAccessLevel>
     </ownerRules>
     <ownerRules>
+        <fullName>Share_NAM_Opps_with_NAM_CAM_s</fullName>
+        <sharedTo>
+            <group>ChannelSalesNam</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Grade_2_Sales_NAM</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <name>Share NAM Opps with NAM CAM&apos;s</name>
+        <opportunityAccessLevel>Read</opportunityAccessLevel>
+    </ownerRules>
+    <ownerRules>
         <fullName>Share_Opps_with_BDR_Team</fullName>
         <sharedTo>
             <role>Grade_2_BDR</role>

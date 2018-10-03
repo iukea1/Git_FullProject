@@ -214,7 +214,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
                 
                 if(newAsset.Product_Family__c=='Virtual Image')
                 {
-                    if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
+                    //if(newAsset.Is_Selected_For_Renewal__c && !oldAsset.Is_Selected_For_Renewal__c) virtualAssets.add(newAsset);
                 }
                     
                 if(oldAsset.AccountId!=newAsset.AccountId || oldAsset.Status!=newAsset.Status)
@@ -234,7 +234,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             }
             AddActiveECBaseLicense(hardwareECAssetIds,softwareECBaseAssetIds,setAccIds); //Prajakta this is not required as in CPQ there will be subscription record for EC
             MakeFinalUpdateToAccount();
-            generateVirtualSerialNumber(virtualAssets);
+            //generateVirtualSerialNumber(virtualAssets);
             //populateAssetFields(newItems.values());
         }
         

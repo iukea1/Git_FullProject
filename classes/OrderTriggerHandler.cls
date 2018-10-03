@@ -42,20 +42,17 @@ public class OrderTriggerHandler implements ITriggerHandler {
                             o.TemporaryStartDateHolder__c = o.EffectiveDate;
                             Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
                             o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
-                            //o.End_Date__c = o.TemporaryStartDateHolder__c.addDays(daysBetween);
                         } else {
                             o.TemporaryStartDateHolder__c = null;
                         }
                     } else {
                         o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
-                        //o.End_Date__c = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
                     }
                 }
                 if(Trigger.isUpdate) {
                     if(o.Type == 'Amendment' && oldItems.get(o.Id).Type != 'Amendment') {
                         Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
                         o.EndDate = o.EffectiveDate.addDays(daysBetween);
-                        //o.End_Date__c = o.EffectiveDate.addDays(daysBetween);
                     }
                 }
             }
@@ -104,13 +101,14 @@ public class OrderTriggerHandler implements ITriggerHandler {
         }
         if(runLogic) {
             Map<Id, SBQQ__Quote__c> parentQuote = new Map<Id, SBQQ__Quote__c>(
-                [SELECT Id, Daily_Rate_Original__c, End_Date__c, Daily_Rate_Add_on__c, Cumulative_Daily_Value__c, Days_to_Credit__c, Days_of_Value__c, Credit_Value__c, License_End_Date__c, Length_In_Years__c, 
+                [SELECT Id, Daily_Rate_Original__c, SBQQ__StartDate__c, End_Date__c, Daily_Rate_Add_on__c, Cumulative_Daily_Value__c, Days_to_Credit__c, Days_of_Value__c, Credit_Value__c, License_End_Date__c, Length_In_Years__c, 
+                    SBQQ__MasterContract__r.StartDate, SBQQ__MasterContract__r.EndDate, SBQQ__MasterContract__r.ContractTerm, SBQQ__MasterContract__r.SBQQ__Quote__r.SBQQ__StartDate__c, Calculate_EC_End_Date__c,
                 (SELECT Id FROM SBQQ__Orders__r),
                 (SELECT Id, SBQQ__UpgradedSubscription__r.Net_Total__c FROM SBQQ__LineItems__r WHERE SBQQ__EffectiveQuantity__c = 0)
                 FROM SBQQ__Quote__c WHERE SBQQ__Type__c = 'Amendment']
             );
             
-            for(OrderItem oi : [SELECT Id, TotalPrice, Net_Total__c, SBQQ__OrderedQuantity__c, EndDate, End_Date__c, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
+            for(OrderItem oi : [SELECT Id, TotalPrice, SBQQ__ProrateMultiplier__c, Net_Total__c, SBQQ__OrderedQuantity__c, EndDate, End_Date__c, ServiceDate, SBQQ__SubscriptionTerm__c, Quantity, OrderId, SBQQ__QuoteLine__r.SBQQ__EffectiveQuantity__c FROM OrderItem WHERE OrderId IN :orderIds]) {
                 if(!quoteLinesOriginal.containsKey(oi.OrderId)) quoteLinesOriginal.put(oi.OrderId, new List<OrderItem>());
                 if(!quoteLinesAddOn.containsKey(oi.OrderId)) quoteLinesAddOn.put(oi.OrderId, new List<OrderItem>());
                 
@@ -124,30 +122,33 @@ public class OrderTriggerHandler implements ITriggerHandler {
             for(Order o : newItems) {
                 Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
                 SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
-                if(runCode && o.Type == 'Amendment') {
+                if(runCode && o.Type == 'Amendment' && o.Status != 'Activated') {
                     Integer orderCount = pq.SBQQ__Orders__r.size();
                     Date lastEndDateAddOn = System.today();
                     Decimal orgnalDailyPricing = 0;
                     Decimal quotedQtyPricing;
+                    Integer contTerm = (pq.SBQQ__MasterContract__r.ContractTerm/12);
                     
                     if(quoteLinesAddOn.containsKey(o.Id)) {
                         for(SBQQ__QuoteLine__c ql : pq.SBQQ__LineItems__r) {
                             orgnalDailyPricing += ql.SBQQ__UpgradedSubscription__r.Net_Total__c;
                         }
-                        if(orgnalDailyPricing != 0) orgnalDailyPricing  /= (365 * Integer.valueOf(pq.Length_In_Years__c));
+                        if(orgnalDailyPricing != 0) orgnalDailyPricing  /= (365 * contTerm);
                         for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {
-                            if(lastEndDateAddOn < oi.EndDate) lastEndDateAddOn = oi.EndDate;
+                            lastEndDateAddOn = (pq.Calculate_EC_End_Date__c ? oi.ServiceDate.addDays(365 * contTerm) : oi.EndDate);
                             //quotedQuantity.put(oi.Id, oi.SBQQ__OrderedQuantity__c / oi.SBQQ__QuotedQuantity__c)
-                            quotedQtyPricing = oi.Net_Total__c / (365 * Integer.valueOf(pq.Length_In_Years__c));
+                            quotedQtyPricing = oi.Net_Total__c / (pq.Calculate_EC_End_Date__c ? (365 * contTerm) : (365 * oi.SBQQ__ProrateMultiplier__c));
                         }
                         if(o.Product_Type__c == 'EDGECONNECT') {
-                            try { o.Daily_Rate_Original__c = orgnalDailyPricing;                              } catch(Exception e) {}
-                            try { o.Daily_Rate_Add_on__c = quotedQtyPricing ;                                        } catch(Exception e) {}//pq.Daily_Rate_Add_on__c;   
-                            try { o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;                 } catch(Exception e) {}//pq.Cumulative_Daily_Value__c;
-                            try { o.Days_to_Credit__c = pq.End_Date__c.daysBetween(lastEndDateAddOn);                } catch(Exception e) {}
-                            try { o.Credit_Value__c = o.Daily_Rate_Add_on__c * o.Days_to_Credit__c;                  } catch(Exception e) {}
-                            try { o.Days_of_Value__c = o.Credit_Value__c / o.Cumulative_Daily_Value__c;              } catch(Exception e) {}
-                            try { o.License_End_Date__c = pq.End_Date__c.addDays(Integer.valueOf(o.Days_of_Value__c ));                           } catch(Exception e) {}
+                            try { o.Daily_Rate_Original__c = orgnalDailyPricing;                                                                                  } catch(Exception e) {}
+                            try { o.Daily_Rate_Add_on__c = quotedQtyPricing ;                                                                                     } catch(Exception e) {}//pq.Daily_Rate_Add_on__c;   
+                            try { o.Cumulative_Daily_Value__c = o.Daily_Rate_Original__c + o.Daily_Rate_Add_on__c;                                                } catch(Exception e) {}//pq.Cumulative_Daily_Value__c;
+                            try { o.Days_to_Credit__c = pq.SBQQ__MasterContract__r.EndDate.daysBetween(lastEndDateAddOn);                                       } catch(Exception e) {}
+                            try { o.Credit_Value__c = o.Daily_Rate_Add_on__c * o.Days_to_Credit__c;                                                               } catch(Exception e) {}
+                            try { o.Days_of_Value__c = o.Credit_Value__c / o.Cumulative_Daily_Value__c;                                                           } catch(Exception e) {}
+                            try { 
+                                o.License_End_Date__c = pq.SBQQ__MasterContract__r.EndDate.addDays(Integer.valueOf(o.Days_of_Value__c) + 1);   
+                            } catch(Exception e) {}
                         }
                     }
                 }

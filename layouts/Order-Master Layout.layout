@@ -26,6 +26,10 @@
                 <behavior>Required</behavior>
                 <field>EffectiveDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Send_Fulfillment_Email__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

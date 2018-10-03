@@ -48,13 +48,13 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
                 pOrders.add(c.SBQQ__Order__c);
             }
         }
-        Map<Id, Order> pOrderMap = new Map<Id, Order>([SELECT Id, License_End_Date__c, Type FROM Order WHERE Id IN :pOrders]);
+        Map<Id, Order> pOrderMap = new Map<Id, Order>([SELECT Id, License_End_Date__c, Type FROM Order WHERE Id IN :pOrders AND Type='Amendment']);
         for(Contract c : contracts) {
             if(c.SBQQ__Order__c != oldContracts.get(c.Id).SBQQ__Order__c && c.Product_Type__c == 'EDGECONNECT' && pOrderMap.containsKey(c.SBQQ__Order__c)) {
                 Order ord = pOrderMap.get(c.SBQQ__Order__c);
-                if(ord.License_End_Date__c > c.EndDate) {
+                //if(ord.License_End_Date__c > c.EndDate) {
                     c.EndDate = ord.License_End_Date__c ;
-                }
+                //}
             }
         }
     }
@@ -90,11 +90,11 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
             }
         }
         
-        Map<Id, SBQQ__Quote__c> parentQuotes = new Map<Id, SBQQ__Quote__c>([SELECT Id, POC_Duration__c,SBQQ__ExpirationDate__c, (SELECT Id FROM SBQQ__Contracts__r WHERE NOT ID IN :contracts) FROM SBQQ__Quote__c WHERE Id IN :quoteId]);
+        Map<Id, SBQQ__Quote__c> parentQuotes = new Map<Id, SBQQ__Quote__c>([SELECT Id, Add_POC_Days__c,SBQQ__ExpirationDate__c, (SELECT Id FROM SBQQ__Contracts__r WHERE NOT ID IN :contracts) FROM SBQQ__Quote__c WHERE Id IN :quoteId]);
         for(Contract cont: contracts) {
             SBQQ__Quote__c pQuote = parentQuotes.get(cont.SBQQ__Quote__c);
             if(cont.Evaluation_Quote__c && pQuote != null) {
-                Integer i = Integer.valueOf(pQuote.POC_Duration__c);
+                Integer i = Integer.valueOf(pQuote.Add_POC_Days__c);
                 if(pQuote.SBQQ__Contracts__r.isEmpty()) {
                     cont.EndDate = cont.StartDate.addDays(i);
                     cont.RecalcEndDate__c = true;

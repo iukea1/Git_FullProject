@@ -3,6 +3,7 @@
     <customButtons>Apply_Serial_Numbers</customButtons>
     <customButtons>Virtual_Shipment_Details</customButtons>
     <customButtons>SBQQ__EditOrderProducts</customButtons>
+    <customButtons>Send_Fulfillment_Email</customButtons>
     <excludeButtons>ReduceOrder</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
