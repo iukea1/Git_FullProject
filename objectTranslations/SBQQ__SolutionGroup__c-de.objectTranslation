@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Lösungsgruppe --></value>
+        <value>Lösungsgruppe</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Lösungsgruppen --></value>
+        <value>Lösungsgruppen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Lösungsgruppe --></value>
+        <value>Lösungsgruppe</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Lösungsgruppen --></value>
+        <value>Lösungsgruppen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Lösungsgruppe --></value>
+        <value>Lösungsgruppe</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Lösungsgruppen --></value>
+        <value>Lösungsgruppen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Gruppenname</nameFieldLabel>

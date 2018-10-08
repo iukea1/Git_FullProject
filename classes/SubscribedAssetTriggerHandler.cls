@@ -1,7 +1,7 @@
 public without sharing class SubscribedAssetTriggerHandler implements ITriggerHandler{
     
     public static final String PRODUCT_NAME_PREFIX_RENEWAL = 'RENEWAL';
-    
+    public static Boolean dontRunUpdate = false;
     
     public SubscribedAssetTriggerHandler(){
         
@@ -27,7 +27,7 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
     public void AfterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) 
     {
         
-       displayIncomingSubscribedAsset(newItems.values());
+       if(!dontRunUpdate) displayIncomingSubscribedAsset(newItems.values());
         
     }
     public void AfterDelete(Map<Id, SObject> oldItems) 
@@ -67,13 +67,9 @@ public without sharing class SubscribedAssetTriggerHandler implements ITriggerHa
         List<SBQQ__SubscribedAsset__c> subscribedAssetToDelete = new List<SBQQ__SubscribedAsset__c>();
                 
         for(SBQQ__SubscribedAsset__c sa: incomingSubAsset){
-            
-            System.debug('@@---------- Subscription Id for Renewed Subscribed Asset : ' + sa.SBQQ__Subscription__c);
-            
             if(sa.SBQQ__Subscription__c != null){
                 saIds.add(sa.Id);  
             }
-            
         }
         
         Map<Id, Asset> assetMap = new Map<Id, Asset>([SELECT ID, Is_Selected_For_Renewal__c FROM Asset WHERE ID IN (SELECT SBQQ__Asset__c FROM SBQQ__SubscribedAsset__c WHERE ID IN :saIds)]);

@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Abonnierter Vermögenswert --></value>
+        <value>Abonnierten Vermögenswert</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Abonnierte Vermögenswerte --></value>
+        <value>Abonnierte Vermögenswerte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Abonnierter Vermögenswert --></value>
+        <value>Abonnierten Vermögenswerts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Abonnierte Vermögenswerte --></value>
+        <value>Abonnierter Vermögenswerte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Abonnierter Vermögenswert --></value>
+        <value>Abonniertem Vermögenswert</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Abonnierte Vermögenswerte --></value>
+        <value>Abonnierten Vermögenswerten</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nummer des abonnierten Vermögenswerts</nameFieldLabel>

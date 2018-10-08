@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Zusätzliches Dokument --></value>
+        <value>Zusätzliches Dokument</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Zusätzliche Dokumente --></value>
+        <value>Zusätzliche Dokumente</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Zusätzliches Dokument --></value>
+        <value>Zusätzlichen Dokuments</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Zusätzliche Dokumente --></value>
+        <value>Zusätzlicher Dokumente</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Zusätzliches Dokument --></value>
+        <value>Zusätzlichem Dokument</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Zusätzliche Dokumente --></value>
+        <value>Zusätzlichen Dokumenten</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Zusätzliches Dokument</nameFieldLabel>

@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Ações dos produtos</value>
+        <value>Ações do produto</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nº de ação do produto</nameFieldLabel>

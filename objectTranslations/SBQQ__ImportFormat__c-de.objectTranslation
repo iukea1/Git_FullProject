@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Importformat --></value>
+        <value>Importformat</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Importformate --></value>
+        <value>Importformate</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Importformat --></value>
+        <value>Importformats</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Importformate --></value>
+        <value>Importformate</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Importformat --></value>
+        <value>Importformat</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Importformate --></value>
+        <value>Importformaten</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Anzahl Importformate</nameFieldLabel>

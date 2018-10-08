@@ -2,11 +2,11 @@
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <plural>false</plural>
-        <value>Instalar registro do processador</value>
+        <value>Registro do processador de instalação</value>
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Instalar registros dos processadores</value>
+        <value>Registros do processador de instalação</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome do log do processador de instalação</nameFieldLabel>

@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Vorlagenabschnitt --></value>
+        <value>Vorlagenabschnitt</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Vorlagenabschnitte --></value>
+        <value>Vorlagenabschnitte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Vorlagenabschnitt --></value>
+        <value>Vorlagenabschnitts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Vorlagenabschnitte --></value>
+        <value>Vorlagenabschnitte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Vorlagenabschnitt --></value>
+        <value>Vorlagenabschnitt</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Vorlagenabschnitte --></value>
+        <value>Vorlagenabschnitten</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Abschnittsname</nameFieldLabel>

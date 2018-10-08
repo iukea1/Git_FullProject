@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Webangebot --></value>
+        <value>Webangebot</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Webangebote --></value>
+        <value>Webangebote</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Webangebot --></value>
+        <value>Webangebots</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Webangebote --></value>
+        <value>Webangebote</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Webangebot --></value>
+        <value>Webangebot</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Webangebote --></value>
+        <value>Webangeboten</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Angebotsnummer</nameFieldLabel>

@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Produktfunktion --></value>
+        <value>Produktfunktion</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Produktfunktionen --></value>
+        <value>Produktfunktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Produktfunktion --></value>
+        <value>Produktfunktion</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Produktfunktionen --></value>
+        <value>Produktfunktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Produktfunktion --></value>
+        <value>Produktfunktion</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Produktfunktionen --></value>
+        <value>Produktfunktionen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Name der Funktion</nameFieldLabel>

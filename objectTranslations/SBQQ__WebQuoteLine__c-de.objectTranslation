@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegposten</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegposten</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegpostens</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegposten</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegposten</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Webangebots-Belegposten --></value>
+        <value>Webangebots-Belegposten</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nummer des Angebotsbelegpostens</nameFieldLabel>

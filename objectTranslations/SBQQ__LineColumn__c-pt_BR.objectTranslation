@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Colunas de linhas</value>
+        <value>Colunas de linha</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Cabeçalho da coluna</nameFieldLabel>

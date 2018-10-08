@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Vertragspreis --></value>
+        <value>Vertragspreis</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Vertragspreise --></value>
+        <value>Vertragspreise</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Vertragspreis --></value>
+        <value>Vertragspreises</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Vertragspreise --></value>
+        <value>Vertragspreise</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Vertragspreis --></value>
+        <value>Vertragspreis</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Vertragspreise --></value>
+        <value>Vertragspreisen</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Vertragspreisnummer</nameFieldLabel>

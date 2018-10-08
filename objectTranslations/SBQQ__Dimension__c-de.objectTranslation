@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Preisdimension --></value>
+        <value>Preisdimension</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Preisdimensionen --></value>
+        <value>Preisdimensionen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Preisdimension --></value>
+        <value>Preisdimension</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Preisdimensionen --></value>
+        <value>Preisdimensionen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Preisdimension --></value>
+        <value>Preisdimension</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Preisdimensionen --></value>
+        <value>Preisdimensionen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Dimensionsname</nameFieldLabel>

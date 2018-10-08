@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Fehlerbedingung --></value>
+        <value>Fehlerbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Fehlerbedingungen --></value>
+        <value>Fehlerbedingungen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Fehlerbedingung --></value>
+        <value>Fehlerbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Fehlerbedingungen --></value>
+        <value>Fehlerbedingungen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Fehlerbedingung --></value>
+        <value>Fehlerbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Fehlerbedingungen --></value>
+        <value>Fehlerbedingungen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Bedingungsnummer</nameFieldLabel>

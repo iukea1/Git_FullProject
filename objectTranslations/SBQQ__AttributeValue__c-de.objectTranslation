@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Attributwert --></value>
+        <value>Attributwert</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Attributwerte --></value>
+        <value>Attributwerte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Attributwert --></value>
+        <value>Attributwerts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Attributwerte --></value>
+        <value>Attributwerte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Attributwert --></value>
+        <value>Attributwert</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Attributwerte --></value>
+        <value>Attributwerten</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Name</nameFieldLabel>

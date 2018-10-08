@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Preisbedingung --></value>
+        <value>Preisbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Preisbedingungen --></value>
+        <value>Preisbedingungen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Preisbedingung --></value>
+        <value>Preisbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Preisbedingungen --></value>
+        <value>Preisbedingungen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Preisbedingung --></value>
+        <value>Preisbedingung</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Preisbedingungen --></value>
+        <value>Preisbedingungen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Bedingungsnummer</nameFieldLabel>

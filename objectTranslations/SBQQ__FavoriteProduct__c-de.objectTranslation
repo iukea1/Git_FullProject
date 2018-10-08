@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Favorisiertes Produkt --></value>
+        <value>Favorisiertes Produkt</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Favorisierte Produkte --></value>
+        <value>Favorisierte Produkte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Favorisiertes Produkt --></value>
+        <value>Favorisierten Produkts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Favorisierte Produkte --></value>
+        <value>Favorisierter Produkte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Favorisiertes Produkt --></value>
+        <value>Favorisiertem Produkt</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Favorisierte Produkte --></value>
+        <value>Favorisierten Produkten</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Name des favorisierten Produkts</nameFieldLabel>

@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefinierte Aktion --></value>
+        <value>Benutzerdefinierte Aktion</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Aktionen --></value>
+        <value>Benutzerdefinierte Aktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefinierte Aktion --></value>
+        <value>Benutzerdefinierten Aktion</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Aktionen --></value>
+        <value>Benutzerdefinierter Aktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefinierte Aktion --></value>
+        <value>Benutzerdefinierter Aktion</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Aktionen --></value>
+        <value>Benutzerdefinierten Aktionen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Name</nameFieldLabel>

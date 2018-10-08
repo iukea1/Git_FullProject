@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Zusammenfassungsvariable --></value>
+        <value>Zusammenfassungsvariable</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Zusammenfassungsvariablen --></value>
+        <value>Zusammenfassungsvariablen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Zusammenfassungsvariable --></value>
+        <value>Zusammenfassungsvariablen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Zusammenfassungsvariablen --></value>
+        <value>Zusammenfassungsvariablen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Zusammenfassungsvariable --></value>
+        <value>Zusammenfassungsvariablen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Zusammenfassungsvariablen --></value>
+        <value>Zusammenfassungsvariablen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Variablenname</nameFieldLabel>

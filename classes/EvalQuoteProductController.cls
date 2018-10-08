@@ -22,7 +22,7 @@ global class EvalQuoteProductController {
         {
             if(QuoteId != null)
             {
-                return [Select Id,SBQQ__Product__r.Name,SBQQ__Quantity__c from SBQQ__QuoteLine__c where SBQQ__Product__r.Family='Virtual Image' and SBQQ__Quote__c=:QuoteId];
+                return [Select Id,SBQQ__Product__r.Name,SBQQ__Quantity__c from SBQQ__QuoteLine__c where SBQQ__Product__r.Family='Virtual Image' and SBQQ__Quote__c=:QuoteId and SBQQ__Bundle__c=true];
             }
             else
             {

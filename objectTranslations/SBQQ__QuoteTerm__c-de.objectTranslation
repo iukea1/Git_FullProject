@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Angebotsklausel --></value>
+        <value>Angebotsklausel</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Angebotsklauseln --></value>
+        <value>Angebotsklauseln</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Angebotsklausel --></value>
+        <value>Angebotsklausel</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Angebotsklauseln --></value>
+        <value>Angebotsklauseln</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Angebotsklausel --></value>
+        <value>Angebotsklausel</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Angebotsklauseln --></value>
+        <value>Angebotsklauseln</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Klauselnummer</nameFieldLabel>

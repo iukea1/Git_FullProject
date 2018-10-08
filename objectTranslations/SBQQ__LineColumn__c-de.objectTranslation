@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Belegpostenspalte --></value>
+        <value>Belegpostenspalte</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Belegpostenspalten --></value>
+        <value>Belegpostenspalten</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Belegpostenspalte --></value>
+        <value>Belegpostenspalte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Belegpostenspalten --></value>
+        <value>Belegpostenspalten</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Belegpostenspalte --></value>
+        <value>Belegpostenspalte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Belegpostenspalten --></value>
+        <value>Belegpostenspalten</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Spaltenüberschrift</nameFieldLabel>

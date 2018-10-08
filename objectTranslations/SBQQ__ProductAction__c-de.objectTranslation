@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Produktaktion --></value>
+        <value>Produktaktion</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Produktaktionen --></value>
+        <value>Produktaktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Produktaktion --></value>
+        <value>Produktaktion</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Produktaktionen --></value>
+        <value>Produktaktionen</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Produktaktion --></value>
+        <value>Produktaktion</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Produktaktionen --></value>
+        <value>Produktaktionen</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Produktaktionsnummer</nameFieldLabel>

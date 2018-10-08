@@ -99,6 +99,10 @@
                 <behavior>Readonly</behavior>
                 <field>Comp_Rate_2_2019_Plan__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

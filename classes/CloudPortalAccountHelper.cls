@@ -256,7 +256,7 @@ generator.writeStringField('password', 'Yesadmin4u');
               string prodType=counter.SBQQ__Product__r.Product_Type__c;
               if(subType=='UNITYORCH'&& prodName.startsWith('EC-ORCH-AAS') && prodType=='EDGECONNECT')
               {filterSub.add(counter);}
-              if(subType=='EC'&& prodName.startsWith('EC')&& !prodName.contains('EC-SAAS')&& !prodName.contains('EC-SP') && prodType=='EDGECONNECT')
+              if(subType=='EC'&& prodName.startsWith('EC')&& !prodName.startsWith('EC-ORCH-AAS') && !prodName.contains('EC-SAAS')&& !prodName.contains('EC-SP') && prodType=='EDGECONNECT')
               {filterSub.add(counter);}
               if(subType=='SAAS' && prodName.contains('EC-SAAS'))
               {filterSub.add(counter);}

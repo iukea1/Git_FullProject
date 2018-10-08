@@ -5,7 +5,7 @@ public without sharing class ConvertRmaToCmaController
 {
     private String assetId;
     private String contactId;
-	private String caseId;
+    private String caseId;
     private String virtualProductId;
      private String gmsNodes;
     private Map<String, String> nxToVxMap;
@@ -18,7 +18,7 @@ public without sharing class ConvertRmaToCmaController
         caseId = ApexPages.CurrentPage().getParameters().get('caseId');
         IsConverted = false;
         if(contactId==null)
-        	currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where Id = :UserInfo.getUserId() and IsActive = true];
+            currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where Id = :UserInfo.getUserId() and IsActive = true];
         else
             currentUser = [select ContactId, Contact.AccountId, Contact.Account.Name from User where ContactId = :contactId and IsActive = true];
         mapCMA();
@@ -122,7 +122,7 @@ public without sharing class ConvertRmaToCmaController
             List<SBQQ__SubscribedAsset__c> sbActive = [SELECT Id, SBQQ__ContractId__c FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Active__c = true AND SBQQ__Asset__c = :NxAsset.Id LIMIT 1];
             if(!sbActive.isEmpty()) initialContractId = sbActive[0].SBQQ__ContractId__c;
 
-            
+            SubscribedAssetTriggerHandler.dontRunUpdate = true;
             
             //TODO
             
@@ -171,7 +171,7 @@ public without sharing class ConvertRmaToCmaController
             }
           
           
-		          
+                  
           
           
             result = true;

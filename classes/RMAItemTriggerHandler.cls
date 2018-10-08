@@ -115,6 +115,7 @@ public class RMAItemTriggerHandler implements ITriggerHandler {
                     asset.End_of_Software_Support__c = null;
                     asset.GMS_Nodes__c = null;
                     asset.POCRequest__c = null;
+                    asset.Quote__c=null;
                     asset.Customer_Notes__c= null;
                     asset.AccountId = silverpeakSystemsId;
                     lstAsset.add(asset);

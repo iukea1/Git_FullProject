@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefiniertes Skript --></value>
+        <value>Benutzerdefiniertes Skript</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Skripts --></value>
+        <value>Benutzerdefinierte Skripts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefiniertes Skript --></value>
+        <value>Benutzerdefinierten Skripts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Skripts --></value>
+        <value>Benutzerdefinierter Skripts</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Benutzerdefiniertes Skript --></value>
+        <value>Benutzerdefiniertem Skript</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Benutzerdefinierte Skripts --></value>
+        <value>Benutzerdefinierten Skripts</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Skriptname</nameFieldLabel>

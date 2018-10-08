@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>Reason_for_Ownership__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -661,6 +665,10 @@
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary_Quote_Sales_Rep__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

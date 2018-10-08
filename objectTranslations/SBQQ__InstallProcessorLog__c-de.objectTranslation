@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Protokoll des Installationsverarbeitungsprogramms --></value>
+        <value>Protokoll des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Protokolle des Installationsverarbeitungsprogramms --></value>
+        <value>Protokolle des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Protokoll des Installationsverarbeitungsprogramms --></value>
+        <value>Protokolls des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Protokolle des Installationsverarbeitungsprogramms --></value>
+        <value>Protokolle des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Protokoll des Installationsverarbeitungsprogramms --></value>
+        <value>Protokoll des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Protokolle des Installationsverarbeitungsprogramms --></value>
+        <value>Protokollen des Installationsverarbeitungsprogramms</value>
     </caseValues>
     <gender>Neuter</gender>
     <nameFieldLabel>Name des Protokolls des Installationsver</nameFieldLabel>

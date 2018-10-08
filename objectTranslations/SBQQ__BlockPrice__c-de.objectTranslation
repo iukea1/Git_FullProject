@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Zonenpreis --></value>
+        <value>Zonenpreis</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Zonenpreise --></value>
+        <value>Zonenpreise</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Zonenpreis --></value>
+        <value>Zonenpreises</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Zonenpreise --></value>
+        <value>Zonenpreise</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Zonenpreis --></value>
+        <value>Zonenpreis</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Zonenpreise --></value>
+        <value>Zonenpreisen</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Name des Preises</nameFieldLabel>

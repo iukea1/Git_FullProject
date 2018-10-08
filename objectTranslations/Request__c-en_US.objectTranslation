@@ -87,6 +87,14 @@
         <relationshipLabel><!-- POC Requests --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Convert to CPQ --></label>
+        <name>Convert_to_CPQ__c</name>
+    </fields>
+    <fields>
+        <label><!-- Converted --></label>
+        <name>Converted__c</name>
+    </fields>
+    <fields>
         <label><!-- Days Remaining to Expire --></label>
         <name>Days_Remaining_to_Expire__c</name>
     </fields>

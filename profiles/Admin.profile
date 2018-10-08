@@ -2275,6 +2275,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestEvalQuoteProductController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestFixtures</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -8272,6 +8276,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Request__c.Contract_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Request__c.Convert_to_CPQ__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Request__c.Converted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

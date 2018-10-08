@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Certificados de isenções fiscais</value>
+        <value>Certificados de isenção fiscal</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome do certificado de isenção de impost</nameFieldLabel>

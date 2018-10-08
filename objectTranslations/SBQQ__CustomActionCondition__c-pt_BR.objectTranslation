@@ -6,7 +6,7 @@
     </caseValues>
     <caseValues>
         <plural>true</plural>
-        <value>Condições de ações personalizadas</value>
+        <value>Condições de ação personalizada</value>
     </caseValues>
     <gender>Feminine</gender>
     <nameFieldLabel>Nome da condição da ação personalizada</nameFieldLabel>

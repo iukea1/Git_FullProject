@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Vorlageninhalt --></value>
+        <value>Vorlageninhalt</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Vorlageninhalte --></value>
+        <value>Vorlageninhalte</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Vorlageninhalt --></value>
+        <value>Vorlageninhalts</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Vorlageninhalte --></value>
+        <value>Vorlageninhalte</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Vorlageninhalt --></value>
+        <value>Vorlageninhalt</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Vorlageninhalte --></value>
+        <value>Vorlageninhalten</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Inhaltsname</nameFieldLabel>

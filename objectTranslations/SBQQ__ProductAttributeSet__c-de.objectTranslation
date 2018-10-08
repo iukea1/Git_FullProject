@@ -13,32 +13,32 @@
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>false</plural>
-        <value><!-- Produktattributsatz --></value>
+        <value>Produktattributsatz</value>
     </caseValues>
     <caseValues>
         <caseType>Accusative</caseType>
         <plural>true</plural>
-        <value><!-- Produktattributsätze --></value>
+        <value>Produktattributsätze</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>false</plural>
-        <value><!-- Produktattributsatz --></value>
+        <value>Produktattributsatzes</value>
     </caseValues>
     <caseValues>
         <caseType>Genitive</caseType>
         <plural>true</plural>
-        <value><!-- Produktattributsätze --></value>
+        <value>Produktattributsätze</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>false</plural>
-        <value><!-- Produktattributsatz --></value>
+        <value>Produktattributsatz</value>
     </caseValues>
     <caseValues>
         <caseType>Dative</caseType>
         <plural>true</plural>
-        <value><!-- Produktattributsätze --></value>
+        <value>Produktattributsätzen</value>
     </caseValues>
     <gender>Masculine</gender>
     <nameFieldLabel>Produktattributsatz</nameFieldLabel>

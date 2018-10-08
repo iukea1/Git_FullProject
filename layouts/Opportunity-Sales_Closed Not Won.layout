@@ -108,6 +108,10 @@
                 <behavior>Edit</behavior>
                 <field>Reason_for_Ownership__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
