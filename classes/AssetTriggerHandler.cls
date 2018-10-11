@@ -469,6 +469,24 @@ public class AssetTriggerHandler implements ITriggerHandler {
         Map<Id, Asset> toUpdateExistingAssetMap = new Map<Id, Asset>();
         Map<Id, Asset> ToDeleteAssetsMap = new Map<Id, Asset>();
         
+        Map<Id, Id> qlToAsset = new Map<Id, Id>();
+        Map<Id, Asset> assetMap = new Map<Id, Asset>();
+        
+        /*for(Asset a : AssetList) {
+            AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
+            qlToAsset.put(a.SBQQ__QuoteLine__c, a.Id);
+            assetMap.put(a.Id, a);
+        }
+        
+        for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c, Quantity FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
+            OrderItemIds.add(oi.id);
+        }
+        
+        for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c, Existing_Asset__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__c  =: AssetQuoteLineIds]){
+            if(op.Existing_Asset__c != NULL){
+            
+            }
+        }*/
         
         
         //Loop through the Assets

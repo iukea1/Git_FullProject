@@ -204,6 +204,10 @@
                 <behavior>Edit</behavior>
                 <field>NX_VX_to_EC_Conversion__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request_Ref__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -367,6 +371,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Serial_Number_Notes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Define_Problem__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Success_Criteria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Testing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>

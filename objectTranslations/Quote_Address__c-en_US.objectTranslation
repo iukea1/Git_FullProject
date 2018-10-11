@@ -1945,6 +1945,10 @@
         <name>Postal_Code__c</name>
     </fields>
     <fields>
+        <label><!-- Quote Addr Ext Id --></label>
+        <name>Quote_Addr_Ext_Id__c</name>
+    </fields>
+    <fields>
         <label><!-- Quote --></label>
         <name>Quote__c</name>
         <relationshipLabel><!-- Quote Addresses --></relationshipLabel>

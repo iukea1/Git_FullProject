@@ -67,6 +67,10 @@
                 <behavior>Readonly</behavior>
                 <field>Count_Hardware_Quote_Line__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quote_Addr_Ext_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

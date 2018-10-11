@@ -30,16 +30,16 @@ public class QuoteSubscribedAssetsExtension {
                 if(item.IsChecked)
                 {
                     if(saveAssets==null)
-                        saveAssets=item.SerialNumber+',';
+                        saveAssets=item.SerialNumber+', ';
                     else
-                        saveAssets+=item.SerialNumber+',';
+                        saveAssets+=item.SerialNumber+', ';
                 }
                 
                 
             }
             if(saveAssets!=null)
             {
-                saveAssets=saveAssets.removeEnd(',');
+                saveAssets=saveAssets.removeEnd(', ');
                 SBQQ__Quote__c obj= new SBQQ__Quote__c(Id=QuoteId, Serial_Number_Notes__c=saveAssets);
                 update obj;
                 if(ApexPages.currentPage() != null)

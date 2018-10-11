@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>Refresh_Approvers__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request_Ref__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -137,15 +141,15 @@
         <label>Success Criteria</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Define_Problem__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Testing_Criteria__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Success_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
@@ -522,6 +526,16 @@
         <fields>Type__c</fields>
         <fields>Status__c</fields>
         <relatedList>RMA__c.POC_Quote__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>SP_Contract_Number__c</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>Contract_Type__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <relatedList>Contract.SBQQ__Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

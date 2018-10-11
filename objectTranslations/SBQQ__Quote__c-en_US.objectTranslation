@@ -1070,6 +1070,10 @@
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
         </sections>
+        <sections>
+            <label><!-- Serial Number --></label>
+            <section>Serial Number</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Standard Draft Quote Layout</layout>

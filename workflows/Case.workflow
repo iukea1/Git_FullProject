@@ -969,6 +969,26 @@
         <template>Support/WANstart_Activation</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Add_Vaibhav_to_new_Cap_Case_CC11_field</fullName>
+        <field>CC11__c</field>
+        <formula>IF(AND(CC1__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;, 
+       CC2__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC3__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC4__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC5__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC6__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC7__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC8__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC9__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC10__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC11__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;,
+       CC12__c &lt;&gt; &apos;vdubey@silver-peak.com&apos;),&apos;vdubey@silver-peak.com&apos;, &apos;&apos;)</formula>
+        <name>Add Vaibhav to new Cap Case CC11 field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Case_Notification_TimeStamp</fullName>
         <field>Case_Notification_TimeStamp__c</field>
         <formula>NOW()- 0.02073</formula>
@@ -1286,6 +1306,26 @@
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Add Vaibhav to new Cap case</fullName>
+        <actions>
+            <name>Add_Vaibhav_to_new_Cap_Case_CC11_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.IsCap__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Incoming Email,Technical Support,WANstart</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>AutoDispatchPhoneCases</fullName>

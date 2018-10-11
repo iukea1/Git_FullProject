@@ -230,6 +230,10 @@
                 <behavior>Edit</behavior>
                 <field>Add_POC_Days__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request_Ref__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -319,18 +323,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>POC_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Define_Problem__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Testing_Criteria__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Success_Criteria__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -460,6 +452,18 @@
                 <behavior>Edit</behavior>
                 <field>Serial_Number_Notes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Define_Problem__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Success_Criteria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Testing_Criteria__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -555,6 +559,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__Quantity__c</fields>
         <relatedList>SBQQ__Subscription__c.Quote__c</relatedList>
     </relatedLists>
     <relatedLists>

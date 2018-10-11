@@ -7026,6 +7026,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Quote_Address__c.Quote_Addr_Ext_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Quote_Address__c.State__c</field>
         <readable>true</readable>
     </fieldPermissions>
