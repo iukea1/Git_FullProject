@@ -30,7 +30,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EndDate</field>
+                <field>End_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -84,6 +84,14 @@
                 <behavior>Edit</behavior>
                 <field>Send_Fulfillment_Email__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Physical_Product_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Perpetual_Product_Count__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -125,6 +133,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TemporaryStartDateHolder__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quote_Address__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -238,7 +250,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>End_Date__c</field>
+                <field>EndDate</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -327,7 +339,7 @@
         <fields>Renewed_Original_Quantity__c</fields>
         <fields>SBQQ__QuotedQuantity__c</fields>
         <fields>ODER_ITEM.START_DATE</fields>
-        <fields>ODER_ITEM.END_DATE</fields>
+        <fields>End_Date__c</fields>
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>

@@ -61,6 +61,7 @@ public class UserTriggerHandler implements ITriggerHandler {
             profileIds.add('00e50000000vvBM');
             profileIds.add('00e50000000vMPT');
             profileIds.add('00e38000001Buca');
+            profileIds.add('00e0x000000Dkxs');
             
             for (Id userId : newItems.keyset()) {
                 User newUser= (User)newItems.get(userId);

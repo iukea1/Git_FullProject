@@ -746,7 +746,7 @@ System.assertEquals(null, [select Id,SBQQ__StartDate__c from SBQQ__Quote__c wher
         User usr1= new User(LastName = 'Bell',FirstName = 'Rodney',Email = 'rbell@silver-peak.com',Username = 'rbell@silver-peak.com',
                             UserRoleId = r.id,TimeZoneSidKey  = 'America/Los_Angeles',EmailEncodingKey = 'UTF-8',
                             LanguageLocaleKey = 'en_US',LocaleSidKey = 'en_US',Alias = 'rbell',
-                            ProfileId = [Select Id from Profile where name = '1.6- Sales Engineer Team'].Id);
+                            ProfileId = [Select Id from Profile where name = '1.6- Sales Engineer Managers'].Id);
         insert usr1;
         
         User usr2= new User(LastName = 'Lever',FirstName = 'Todd',Email ='tlever@silver-peak.com',Username = 'tlever@silver-peak.com',

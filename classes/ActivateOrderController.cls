@@ -7,45 +7,36 @@ public class ActivateOrderController {
     
     public ActivateOrderController(ApexPages.StandardController controller) {
         this.order = (Order)controller.getRecord();
-        this.order = [SELECT Id, Status, Product_Type__c, SBQQ__Quote__c, SerialNumberApplied__c, SBCF_Shipping_Address__c, PurchaseOrder__c FROM Order WHERE Id = :this.order.Id LIMIT 1];
-        this.orderIsActivated = order.Status == 'Activated';
+        this.order = [SELECT Status, SBQQ__Quote__r.SBCF_Evaluation_Quote__c, Quote_Address__c, SBCF_Shipping_Address__c, SBCF_Shipping_Country__c, Tracking_Information__c, PurchaseOrder__c, Physical_Product_Count__c, SerialNumberApplied__c FROM Order WHERE Id = :this.order.Id LIMIT 1];
         this.runUpdate = false;
-        
-        //check if hardware or software
-        this.quote = [SELECT Id, SBCF_Evaluation_Quote__c, POC_Status__c FROM SBQQ__Quote__c WHERE Id = :order.SBQQ__Quote__c];
             
-        if(this.orderIsActivated){
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'This order is already Active');
+        if(this.order.Status == 'Activated'){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'This order is already Active.');
             ApexPages.addMessage(myMsg);
             return;
-        } else if ((this.order.SBCF_Shipping_Address__c == null || this.order.PurchaseOrder__c == null) && !this.quote.SBCF_Evaluation_Quote__c) {
-            String msg = 'Some required fields are missing!';
-            if(this.order.SBCF_Shipping_Address__c== null && this.order.PurchaseOrder__c == null) msg = 'Shipping Address and Purchase Order are required to activate an order';
-            else if(this.order.SBCF_Shipping_Address__c== null) msg = 'Shipping Address is required to activate an order';
-            else if(this.order.PurchaseOrder__c == null) msg = 'Purchase Order is required to activate an order';
-        
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,msg);
+        } else if (this.order.SBQQ__Quote__r.SBCF_Evaluation_Quote__c && this.order.Physical_Product_Count__c > 0 && this.order.Quote_Address__c == null){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Quote Address is required for EVAL Orders with physical products -- please select a Quote Address from the available list in the Shipping Info section of this Order.');
+            ApexPages.addMessage(myMsg);
+            return;
+        } else if (!this.order.SBQQ__Quote__r.SBCF_Evaluation_Quote__c && this.order.Physical_Product_Count__c > 0 && (this.order.SBCF_Shipping_Address__c == null || this.order.SBCF_Shipping_Country__c == null || this.order.Tracking_Information__c == null)){
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Shipping Address, Shipping Country, and Tracking Information are required to activate an Order with physical products.');
             ApexPages.addMessage(myMsg);
             return;
         } else {
-            //List<SBQQ__QuoteLine__c> qLineItems = [SELECT Id, SBQQ__ProductFamily__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quote.Id AND SBQQ__ProductFamily__c = 'Product'];
-            
-            List<OrderItem> oiList = [SELECT Id, Product2.Product_Family_Clean__c FROM OrderItem WHERE OrderId = :order.Id AND (Product2.Family = 'Physical' OR Product2.Family = 'Product')];
-            
-            if(!oiList.isEmpty() && !order.SerialNumberApplied__c) {
+            if(this.order.Physical_Product_Count__c > 0 && !order.SerialNumberApplied__c) {
                 needSerial = true;
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING, 'Serial Numbers are required when Hardware products are quoted.');
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Serial Numbers are required when Hardware products are quoted.');
                 ApexPages.addMessage(myMsg);
                 return;
             } else {
-                runUpdate  = true;
+                runUpdate = true;
             }
         }
     }
+     
     public PageReference checkUpdate() {
         if(runUpdate) {
             try {
-            
                 update new Order(
                     Id = this.order.Id,
                     Status = 'Activated',
@@ -53,12 +44,10 @@ public class ActivateOrderController {
                     ActivatedById = Userinfo.getUserId()
                 );
                 
-                
                 if(this.quote.SBCF_Evaluation_Quote__c) {
                     this.quote.POC_Status__c = 'Shipped';
                     update this.quote;
                 }
-                
                 
                 update new Order(
                     Id = this.order.Id,
@@ -69,7 +58,6 @@ public class ActivateOrderController {
                     Id = this.order.Id,
                     SBQQ__Contracted__c = true
                 );
-                
                 
                 PageReference page = new PageReference('/' + order.Id);
                 page.setRedirect(true);
@@ -98,5 +86,4 @@ public class ActivateOrderController {
         system.debug('this page is ' +  page);
         return page;
     }
-
 }

@@ -79,11 +79,10 @@ CONTAINS(Product2.Name ,&quot;EC-ORCH-AAS&quot;)
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Product2.Family</field>
-            <operation>equals</operation>
-            <value>Virtual Image</value>
+            <field>OrderItem.CreatedDate</field>
+            <operation>notEqual</operation>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SBCF Set Contracting Method for ORCH-AAS %26 Smart Hands</fullName>

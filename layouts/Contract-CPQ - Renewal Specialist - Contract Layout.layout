@@ -77,6 +77,10 @@
                 <behavior>Readonly</behavior>
                 <field>Is_Base_License_Active__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>LegacyContractType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -299,7 +303,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>SerialNumber__c</fields>
         <fields>SBQQ__CustomerPrice__c</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__Quantity__c</fields>

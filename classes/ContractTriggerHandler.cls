@@ -44,19 +44,38 @@ public without sharing class ContractTriggerHandler implements ITriggerHandler{
         Map<Id, Contract> oldContracts = (Map<Id, Contract>)oldMap;
         Set<Id> pOrders = new Set<Id>();
         for(Contract c : contracts) {
-            if(c.SBQQ__Order__c != oldContracts.get(c.Id).SBQQ__Order__c && c.Product_Type__c == 'EDGECONNECT') {
+            if(c.SBQQ__Order__c != oldContracts.get(c.Id).SBQQ__Order__c && (c.Product_Type__c == 'EDGECONNECT' || c.Product_Type__c == 'NX/VX')) {
                 pOrders.add(c.SBQQ__Order__c);
             }
         }
-        Map<Id, Order> pOrderMap = new Map<Id, Order>([SELECT Id, License_End_Date__c, Type FROM Order WHERE Id IN :pOrders AND Type='Amendment']);
+        Set<Id> contId = new Set<Id>();
+        Map<Id, Order> pOrderMap = new Map<Id, Order>([SELECT Id, License_End_Date__c, End_Date__c, Type, EndDate FROM Order WHERE Id IN :pOrders AND Type='Amendment']);
         for(Contract c : contracts) {
-            if(c.SBQQ__Order__c != oldContracts.get(c.Id).SBQQ__Order__c && c.Product_Type__c == 'EDGECONNECT' && pOrderMap.containsKey(c.SBQQ__Order__c)) {
+            if(c.SBQQ__Order__c != oldContracts.get(c.Id).SBQQ__Order__c && pOrderMap.containsKey(c.SBQQ__Order__c)) {
                 Order ord = pOrderMap.get(c.SBQQ__Order__c);
-                //if(ord.License_End_Date__c > c.EndDate) {
-                    c.EndDate = ord.License_End_Date__c ;
-                //}
+                if(c.Product_Type__c == 'EDGECONNECT') {
+                    c.EndDate = ord.License_End_Date__c;
+                    contId.add(c.Id);
+                } else if(c.Product_Type__c == 'NX/VX') {
+                    c.EndDate = ord.End_Date__c;//ord.EndDate; - KAI : Order CPQ end date should not be used
+                    contId.add(c.Id);
+                }
             }
         }
+        if(!contId.isEmpty()) updateSubscriptionEndDates(contId);
+    }
+    @future
+    public static void updateSubscriptionEndDates(Set<Id> contractIds) {
+        contractIds.remove(null);
+        List<SBQQ__Subscription__c> subsUpdate = new List<SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c s : [SELECT Id, End_Date__c,SBQQ__SubscriptionEndDate__c, SBQQ__Contract__r.EndDate FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN :contractIds]) {
+            if(s.SBQQ__SubscriptionEndDate__c != s.SBQQ__Contract__r.EndDate) {
+                s.SBQQ__SubscriptionEndDate__c = s.SBQQ__Contract__r.EndDate;
+                subsUpdate.add(s);
+            }
+        }
+        update subsUpdate;
+        
     }
     
     public static void rollupContractEndDate(List<Contract> contracts) {

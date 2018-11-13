@@ -122,7 +122,8 @@
             <recipient>prane@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_30days</template>
     </alerts>
     <alerts>
@@ -176,7 +177,8 @@
             <recipient>prane@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_60days</template>
     </alerts>
     <alerts>
@@ -219,7 +221,8 @@
             <recipient>prane@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Expiration_Notice_90days</template>
     </alerts>
     <alerts>
@@ -262,7 +265,8 @@
             <recipient>prane@silver-peak.com</recipient>
             <type>user</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Expirat_Notice_30days_after</template>
     </alerts>
     <alerts>
@@ -400,7 +404,8 @@
             <field>Customer_Addl_Notices__c</field>
             <type>contactLookup</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/EC_Contract_Exp_Notice_expired_day_after</template>
     </alerts>
     <alerts>
@@ -479,7 +484,8 @@
             <field>Customer_Addl_Notices__c</field>
             <type>contactLookup</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_30_days</template>
     </alerts>
     <alerts>
@@ -557,7 +563,8 @@
             <field>Customer_Addl_Notices__c</field>
             <type>contactLookup</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Steelbrick_Email_Templates/Cloud_Orch_Contract_Expiration_90_days</template>
     </alerts>
     <alerts>
@@ -820,6 +827,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_Record_ID</fullName>
+        <field>SBQQ__RenewalOpportunityRecordTypeId__c</field>
+        <formula>&quot;0120x0000000CDK&quot;</formula>
+        <name>Set Record ID</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Renewal_Opportunity_Stage</fullName>
+        <field>SBQQ__RenewalOpportunityStage__c</field>
+        <formula>&quot;Renewal&quot;</formula>
+        <name>Set Renewal Opportunity Stage</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Trigger_Account_Sync</fullName>
         <field>Trigger_Account_Sync__c</field>
         <literalValue>1</literalValue>
@@ -838,6 +863,15 @@
         <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_the_Type_to_Evaluation</fullName>
+        <field>Contract_Type__c</field>
+        <literalValue>Evaluation</literalValue>
+        <name>Update the Type to Evaluation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>contract_expiry</fullName>
@@ -967,8 +1001,21 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Non EC Renewal Contract</fullName>
+        <fullName>Eval Contract Set Type to Evaluation</fullName>
+        <actions>
+            <name>Update_the_Type_to_Evaluation</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
+        <formula>AND(
+NOT(ISBLANK( SBQQ__Opportunity__c )),
+SBQQ__Opportunity__r.POC_Opportunity__c 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Non EC Renewal Contract</fullName>
+        <active>false</active>
         <formula>AND(
 NOT( Product_Type__c==&quot;EDGECONNECT&quot;),
 NOT(ISNULL(SBQQ__Order__c)),
@@ -1018,6 +1065,21 @@ NOT(ISNULL(SBQQ__Order__c)),
             <operation>equals</operation>
             <value>Draft</value>
         </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Contract Fields</fullName>
+        <actions>
+            <name>Set_Record_ID</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Set_Renewal_Opportunity_Stage</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used to set contract fields for renewals information</description>
+        <formula>true</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

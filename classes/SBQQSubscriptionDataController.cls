@@ -27,11 +27,15 @@ public List<AssetWrapper> lstOrderAssetView
             List<AssetWrapper> lstData=new List<AssetWrapper>();
             if(OrderId!=null)
             {
+                System.debug('OrderType'+OrderType);
                 Map<Id,Contract> lstContract= new Map<Id,Contract>([Select Id from Contract where SBQQ__Order__c=:OrderId]);
                 if(lstContract!=null && lstContract.size()>0)
                 {
-                    
-                    List<SBQQ__Subscription__c> lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate,SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description,SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.License_End_Date__c,SBQQ__Asset__r.GMS_Nodes__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__ProductName__c like : OrderType +'%' and  SBQQ__Contract__c in:lstContract.keySet() ];
+                    List<SBQQ__Subscription__c> lstSubsData=null;
+                    if(OrderType!='')
+                    	lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate,SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description,SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.License_End_Date__c,SBQQ__Asset__r.GMS_Nodes__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__ProductName__c like : OrderType +'%' and  SBQQ__Contract__c in:lstContract.keySet() ];
+                    else
+                        lstSubsData=[Select Id,SBQQ__Product__r.Name,SerialNumber__c,SBQQ__Contract__r.Product_Type__c,SBQQ__Product__r.Family,(Select SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Contract__r.EndDate,SBQQ__Asset__r.SBQQ__CurrentSubscription__r.SBQQ__Product__r.Description,SBQQ__Asset__r.Product2.Name,SBQQ__Asset__r.SerialNumber,SBQQ__Asset__r.License_End_Date__c,SBQQ__Asset__r.GMS_Nodes__c from SBQQ__SubscribedAssets__r where SBQQ__Active__c=true) from SBQQ__Subscription__c where SBQQ__Contract__c in:lstContract.keySet() ];
                     if(lstSubsData!=null && lstSubsData.size()>0)
                     {
                         for(SBQQ__Subscription__c item: lstSubsData)
@@ -73,7 +77,7 @@ public List<AssetWrapper> lstAssetWrapper{
                 for(SBQQ__Subscription__c item: lstSubsData)
                 {
                     if(item.SBQQ__Contract__r.Product_Type__c=='EDGECONNECT')
-                        lstData.add(new AssetWrapper(item.SBQQ__Product__r.Name,null,null,null));
+                        lstData.add(new AssetWrapper(item.SBQQ__Product__r.Name,item.SerialNumber__c,null,null));
                     else
                     {
                         if(item.SBQQ__SubscribedAssets__r!=null && item.SBQQ__SubscribedAssets__r.size()>0)
@@ -107,7 +111,7 @@ public List<AssetWrapper> lstAssetWrapper{
                 for(SBQQ__Subscription__c item: lstSubsData)
                 {
                     if(item.SBQQ__Contract__r.Product_Type__c=='EDGECONNECT')
-                        lstData.add(new AssetWrapper(item.SBQQ__Product__r.Name,null,null,null));
+                        lstData.add(new AssetWrapper(item.SBQQ__Product__r.Name,item.SerialNumber__c,null,null));
                     else
                     {
                         if(item.SBQQ__SubscribedAssets__r!=null && item.SBQQ__SubscribedAssets__r.size()>0)

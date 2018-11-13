@@ -616,6 +616,14 @@
                 <behavior>Edit</behavior>
                 <field>Distributor_Margin__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_Active_POCs__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_Request_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -837,6 +845,7 @@
         <fields>CONTRACT.STATUS</fields>
         <fields>SP_Contract_Number__c</fields>
         <fields>Product_Type__c</fields>
+        <fields>SBQQ__Opportunity__c</fields>
         <relatedList>RelatedContractList</relatedList>
     </relatedLists>
     <relatedLists>

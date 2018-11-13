@@ -1,5 +1,6 @@
 @isTest
 public class AssetTriggerHandlerTest {
+    
     @testsetup
     public static void setupTestData() {
         ContractTestClassHelper.createTestProducts();
@@ -47,18 +48,29 @@ public class AssetTriggerHandlerTest {
     }
     
     public testmethod static void testEc() {
+        System.debug('BEFORE TEST SETUP LOAD >>> ' + Limits.getQueries()+' >> ' + Limits.getLimitQueries() + '');
         ContractTestClassHelper.load();
-        SBQQ__Quote__c quoteRec = ContractTestClassHelper.createQuote('EDGECONNECT', ContractTestClassHelper.opportunities[1].Id, true);
-        List<SBQQ__QuoteLIne__c> qlins = ContractTestClassHelper.setQuoteLines(quoteRec.Id, new Map<String, Integer>{
-           'EC-BASE-PROMO-1MO'=>3,
-           'EC-BASE-PROMO-3MO'=>3
-        });
-        
-        quoteRec.ApprovalStatus__c = 'Approved'; 
-        quoteRec.SBQQ__Status__c = 'Approved';
-        update quoteRec;
+        System.debug('AFTER TEST SETUP LOAD >>> ' + Limits.getQueries()+' '+Limits.getLimitQueries() + '');
         
         Test.startTest();
+            System.debug('BEFORE QUOTE INSERT >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            SBQQ__Quote__c quoteRec = ContractTestClassHelper.createQuote('EDGECONNECT', ContractTestClassHelper.opportunities[1].Id, true);
+            System.debug('AFTER QUOTE INSERT >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            System.debug('BEFORE QUOTE LINE INSERT >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            List<SBQQ__QuoteLIne__c> qlins = ContractTestClassHelper.setQuoteLines(quoteRec.Id, new Map<String, Integer>{
+               'EC-BASE-PROMO-1MO'=>3,
+               'EC-BASE-PROMO-3MO'=>3
+            });
+            System.debug('AFTER QUOTE LINE INSERT >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            
+            quoteRec.ApprovalStatus__c = 'Approved'; 
+            quoteRec.SBQQ__Status__c = 'Approved';
+            System.debug('BEFORE QUOTE UPDATE >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            update quoteRec;
+            QuoteTriggerHandler.preventRecursion = true;
+            
+            System.debug('AFTER QUOTE UPDATE >>> ' + Limits.getQueries()+' ' + Limits.getLimitQueries() + '');
+            
             OrderTriggerHandler.runRecalc = false;
             Order o = ContractTestClassHelper.createOrder(ContractTestClassHelper.accounts[1].Id, quoteRec.Id, Date.today(), qlins, true);
             ContractTestClassHelper.activateOrderSimple(o.Id, ContractTestClassHelper.opportunities[1].Id, ContractTestClassHelper.contacts[1].Id);

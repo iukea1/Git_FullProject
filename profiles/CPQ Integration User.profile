@@ -527,6 +527,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Conversion_CustomerQuotesGeneration</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Conversion_POC</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ConvertRmaToCmaController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1280,10 +1288,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>POCExtensionEmailController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>POCLegacyDataConversion</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2452,6 +2456,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestQuoteSubscribedAssets</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestQuoteTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -7327,6 +7335,16 @@
         <editable>false</editable>
         <field>Quote__c.ConsultingDiscountMax__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote__c.Convert_to_CPQ__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote__c.Converted__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

@@ -350,6 +350,26 @@ Tier_1_Partner__r.Assigned_Distributor__c +&quot;|&quot; + Tier_1_Partner__r.Ass
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>Convert_to_CPQ__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Convert to CPQ</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Converted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Converted</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Discount_Justification__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Note to send to approvers to communicate reason for requesting the discount</inlineHelpText>

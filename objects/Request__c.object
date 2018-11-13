@@ -2063,10 +2063,10 @@ ISPICKVAL( Opportunity__r.Account.Partner_Type__c,&quot;Service Provider&quot;)
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
-            <value>Approved to Ship</value>
+            <value>Shipped</value>
         </filters>
         <filters>
-            <field>Partial_Ship__c</field>
+            <field>Allow_Fulfillment__c</field>
             <operation>equals</operation>
             <value>1</value>
         </filters>

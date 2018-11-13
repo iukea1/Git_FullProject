@@ -2,14 +2,15 @@ public class QuoteSubscribedAssetsExtension {
     
     public List<AssetWrapper> lstAssets{get;set;}
     private Id QuoteId{get;set;}
+    
     public QuoteSubscribedAssetsExtension(ApexPages.StandardController stdController)
     {
-        QuoteId= stdController.getId();
-        lstAssets= new List<AssetWrapper>();
-        if(quoteId!=null)
+        QuoteId = stdController.getId();
+        lstAssets = new List<AssetWrapper>();
+        if(quoteId != null)
         {
-                List<SBQQ__SubscribedAsset__c> lstSubAsset=[Select Id,SBQQ__Asset__r.Product2.Name, SBQQ__Asset__r.SerialNumber,SBQQ__Subscription__r.SBQQ__Contract__r.EndDate from SBQQ__SubscribedAsset__c where SBQQ__Active__c=true and SBQQ__Subscription__c in(Select SBQQ__RenewedSubscription__c from SBQQ__QuoteLine__c where SBQQ__Quote__c=:quoteId)];
-                if(lstSubAsset!=null && lstSubAsset.size()>0)
+                List<SBQQ__SubscribedAsset__c> lstSubAsset = [SELECT Id, SBQQ__Asset__r.Product2.Name, SBQQ__Asset__r.SerialNumber, SBQQ__Subscription__r.SBQQ__Contract__r.EndDate FROM SBQQ__SubscribedAsset__c WHERE SBQQ__Active__c = TRUE AND SBQQ__Subscription__c IN(SELECT SBQQ__RenewedSubscription__c FROM SBQQ__QuoteLine__c WHERE SBQQ__Quote__c = :quoteId)];
+                if(lstSubAsset != null && lstSubAsset.size() > 0)
                 {
                     for(SBQQ__SubscribedAsset__c item: lstSubAsset)
                     {
@@ -17,49 +18,41 @@ public class QuoteSubscribedAssetsExtension {
                     }
                 }
             }
-            
-            
         }
     public PageReference save()
     {
         string saveAssets;
-        if(lstAssets!=null && lstAssets.size()>0)
+        if(lstAssets != null && lstAssets.size() > 0)
         {
-            for(AssetWrapper item: lstAssets)
+            for(AssetWrapper item : lstAssets)
             {
                 if(item.IsChecked)
                 {
-                    if(saveAssets==null)
-                        saveAssets=item.SerialNumber+', ';
+                    if(saveAssets == null)
+                        saveAssets = item.SerialNumber + ', ';
                     else
-                        saveAssets+=item.SerialNumber+', ';
+                        saveAssets += item.SerialNumber + ', ';
                 }
-                
-                
             }
-            if(saveAssets!=null)
+            if(saveAssets != null)
             {
-                saveAssets=saveAssets.removeEnd(', ');
-                SBQQ__Quote__c obj= new SBQQ__Quote__c(Id=QuoteId, Serial_Number_Notes__c=saveAssets);
+                saveAssets = saveAssets.removeEnd(', ');
+                SBQQ__Quote__c obj = new SBQQ__Quote__c(Id = QuoteId, Serial_Number_Notes__c = saveAssets);
                 update obj;
                 if(ApexPages.currentPage() != null)
                 {
-                    
                     ApexPages.Message pageMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM, 'Succeeded. <script type="text/javascript">top.opener.location="/' + QuoteId + '";window.setTimeout("top.close();", 2000);</script>');
                     ApexPages.addMessage(pageMsg);
-                    
                 }
             }
             else
             {
-                 ApexPages.Message pageMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select atleast one serial number.');
-                    ApexPages.addMessage(pageMsg);
+                 ApexPages.Message pageMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select at least one serial number.');
+                 ApexPages.addMessage(pageMsg);
             }
-            
         }
         return null;
     }
-    
     
     public class AssetWrapper
     {
@@ -70,11 +63,10 @@ public class QuoteSubscribedAssetsExtension {
        
         public AssetWrapper(boolean isChecked, SBQQ__SubscribedAsset__c sub)
         {
-            IsChecked=isChecked;
-            SerialNumber=sub.SBQQ__Asset__r.SerialNumber;
-            ProductName=sub.SBQQ__Asset__r.Product2.Name;
-            LicenseEndDate=sub.SBQQ__Subscription__r.SBQQ__Contract__r.EndDate;
+            IsChecked = isChecked;
+            SerialNumber = sub.SBQQ__Asset__r.SerialNumber;
+            ProductName = sub.SBQQ__Asset__r.Product2.Name;
+            LicenseEndDate = sub.SBQQ__Subscription__r.SBQQ__Contract__r.EndDate;
         }
-    }        
-    
+    }
 }

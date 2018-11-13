@@ -110,6 +110,14 @@ if( Service_Discount_Max__c &gt; RegPartServDisc__c ,3,0)
         <name>ConsultingDiscountMax__c</name>
     </fields>
     <fields>
+        <label><!-- Convert to CPQ --></label>
+        <name>Convert_to_CPQ__c</name>
+    </fields>
+    <fields>
+        <label><!-- Converted --></label>
+        <name>Converted__c</name>
+    </fields>
+    <fields>
         <help><!-- Note to send to approvers to communicate reason for requesting the discount --></help>
         <label><!-- Discount Justification --></label>
         <name>Discount_Justification__c</name>

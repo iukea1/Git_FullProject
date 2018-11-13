@@ -156,7 +156,7 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
                 System.debug('assetRec.Id   : ' + assetRec.Id);
                 
                 if(!isRenewal){
-                    subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = assetRec.SBCF_Subscription__c, SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
+                    subscriptionAndAssetList.add(new SBQQ__SubscribedAsset__c(SBQQ__Subscription__c = (assetRec.SBCF_Subscription__c == null ? assetRec.Smart_Hands_Subscription__c : assetRec.SBCF_Subscription__c), SBQQ__Asset__c = assetRec.Id, SBQQ__Active__c = true));
                     System.debug(' subscriptionAndAssetList : ' + subscriptionAndAssetList);
                 }
                 
@@ -236,71 +236,70 @@ public without sharing class SubscriptionTriggerHandler implements ITriggerHandl
     
     // Action
     private static List<Asset> updateAssetsWithSubscriptionLookups(List<Asset> assetsRelatedToSubscriptions, Map<Id, Set<Id>> subscriptionRequiredByIdToSubscriptionQuoteLineIds,
-                                                                   Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions){
-                                                                       
-                                                                       System.debug('Update Assets With Subscription Lookups Method.');
-                                                                       List<Asset> assetsToUpdate = new List<Asset>();
-                                                                       
-                                                                       for(Asset asset: assetsRelatedToSubscriptions){
-                                                                           Set<Id> subscriptionQuoteLineIds = subscriptionRequiredByIdToSubscriptionQuoteLineIds.get(asset.SBQQ__QuoteLine__c);
-                                                                           
-                                                                           if(subscriptionQuoteLineIds == null){
-                                                                               System.debug('No subscription quote line Ids related to Assets for Asset: ' + asset);
-                                                                               continue;
-                                                                           }
-                                                                           
-                                                                           List<SBQQ__Subscription__c> subscriptionsRelatedToAsset = new List<SBQQ__Subscription__c>();
-                                                                           for(Id subscriptionQuoteLineId: subscriptionQuoteLineIds){
-                                                                               List<SBQQ__Subscription__c> subscriptions = quoteLineIdsToSubscriptions.get(subscriptionQuoteLineId);
-                                                                               if(subscriptions == null){
-                                                                                   System.debug('No subscription in quoteLineIdsToSubscriptions map with id: ' + subscriptionQuoteLineId);
-                                                                                   continue;
-                                                                               }
-                                                                               subscriptionsRelatedToAsset.addAll(subscriptions);
-                                                                           }
-                                                                           
-                                                                           if(subscriptionsRelatedToAsset.size() == 0){
-                                                                               System.debug('There were no subscriptions related to asset with Id: ' + asset.Id);
-                                                                           }
-                                                                           else{
-                                                                               System.debug('Subscriptions found related to asset.');
-                                                                               System.debug('Updating asset with Id: ' + asset.Id + ' with subscription lookups with the following subscriptions: ' + subscriptionsRelatedToAsset);
-                                                                               
-                                                                               SBQQ__Subscription__c subscription;
-                                                                               SBQQ__Subscription__c smartHandsSubscription;
-                                                                               
-                                                                               for(SBQQ__Subscription__c relatedSubscription: subscriptionsRelatedToAsset){
-                                                                                   if(!String.isEmpty(relatedSubscription.SBQQ__ProductName__c) && relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
-                                                                                       System.debug('Smart hand Subscription found: ' + relatedSubscription.Id);
-                                                                                       smartHandsSubscription = relatedSubscription;
-                                                                                   }else{
-                                                                                       System.debug('Non smart hand subscription found: ' + relatedSubscription.Id);
-                                                                                       subscription = relatedSubscription;
-                                                                                   }
-                                                                               }
-                                                                               
-                                                                               // Should not be the case since the trigger is on subscription
-                                                                               if(subscription == null){
-                                                                                   System.debug('No Subscription or Smart Hand Subscription Found for Asset with Id: ' + asset.Id);
-                                                                                   continue;
-                                                                               }
-                                                                               else{
-                                                                                   if(subscription != null){
-                                                                                       asset.SBCF_Subscription__c = subscription.Id;
-                                                                                   }
-                                                                                   //if(smartHandsSubscription != null){
-                                                                                   //    asset.Smart_Hands_Subscription__c = smartHandsSubscription.Id;
-                                                                                   //}
-                                                                                   
-                                                                                   assetsToUpdate.add(asset);
-                                                                               }
-                                                                               
-                                                                           }
-                                                                           
-                                                                       }
-                                                                       
-                                                                       return assetsToUpdate;
-                                                                   }
+           Map<Id, List<SBQQ__Subscription__c>> quoteLineIdsToSubscriptions){
+           
+           System.debug('Update Assets With Subscription Lookups Method.');
+           List<Asset> assetsToUpdate = new List<Asset>();
+           
+           
+           for(Asset asset: assetsRelatedToSubscriptions){
+               Set<Id> subscriptionQuoteLineIds = subscriptionRequiredByIdToSubscriptionQuoteLineIds.get(asset.SBQQ__QuoteLine__c);
+               
+               if(subscriptionQuoteLineIds == null){
+                   System.debug('No subscription quote line Ids related to Assets for Asset: ' + asset);
+                   continue;
+               }
+               List<SBQQ__Subscription__c> subscriptionsRelatedToAsset = new List<SBQQ__Subscription__c>();
+               for(Id subscriptionQuoteLineId: subscriptionQuoteLineIds){
+                   List<SBQQ__Subscription__c> subscriptions = quoteLineIdsToSubscriptions.get(subscriptionQuoteLineId);
+                   if(subscriptions == null){
+                       System.debug('No subscription in quoteLineIdsToSubscriptions map with id: ' + subscriptionQuoteLineId);
+                       continue;
+                   }
+                   subscriptionsRelatedToAsset.addAll(subscriptions);
+               }
+               
+               
+               if(subscriptionsRelatedToAsset.size() == 0){
+                   System.debug('There were no subscriptions related to asset with Id: ' + asset.Id);
+               } else {
+                   System.debug('Subscriptions found related to asset.');
+                   System.debug('Updating asset with Id: ' + asset.Id + ' with subscription lookups with the following subscriptions: ' + subscriptionsRelatedToAsset);
+                   
+                   SBQQ__Subscription__c subscription;
+                   SBQQ__Subscription__c smartHandsSubscription;
+                   
+                   for(SBQQ__Subscription__c relatedSubscription: subscriptionsRelatedToAsset){
+                       if(!String.isEmpty(relatedSubscription.SBQQ__ProductName__c) && relatedSubscription.SBQQ__ProductName__c.Contains(PRODUCT_NAME_PREFIX_SMART_HANDS)){
+                           System.debug('Smart hand Subscription found: ' + relatedSubscription.Id);
+                           smartHandsSubscription = relatedSubscription;
+                       }else{
+                           System.debug('Non smart hand subscription found: ' + relatedSubscription.Id);
+                           subscription = relatedSubscription;
+                       }
+                   }
+                   // Should not be the case since the trigger is on subscription
+                   if(subscription == null && smartHandsSubscription == null){
+                       System.debug('No Subscription or Smart Hand Subscription Found for Asset with Id: ' + asset.Id);
+                       continue;
+                   }
+                   else{
+                       if(subscription != null){
+                           asset.SBCF_Subscription__c = subscription.Id;
+                       }
+                       if(smartHandsSubscription != null){
+                           asset.Smart_Hands_Subscription__c = smartHandsSubscription.Id;
+                       }
+                       
+                       assetsToUpdate.add(asset);
+                   }
+                   
+               }
+               
+           }
+           
+           return assetsToUpdate;
+       }
     
     /*
 Method to update the Asset's GMS Nodes field if the Subscription's Product is Upgraded

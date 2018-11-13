@@ -15,14 +15,17 @@ public class ContractTestClassHelper {
     
     public static Map<String, RecordType> rType = new Map<String, RecordType>();
     
+    public static final Set<String> prodNames = new Set<String>{'VX-1000', 'EC-BASE-PROMO-1MO', 'EC-BASE-PROMO-3MO'};
     public static void load() {
         if(!isLoaded) {
+        
+            System.debug(Limits.getQueries()+' >> ' + Limits.getLimitQueries() + '');
             accounts = [SELECT Id, Name FROM Account WHERE Name != 'Silver Peak Systems'];
             contacts = [SELECT Id, FirstName, LastName, AccountId FROM Contact];
             opportunities = [SELECT Id, Name, POC_Type__c, POC_Start_Date__c, POC_Opportunity__c, AccountId FROM Opportunity];
             
             //Pricebook2 pb = [SELECT Id FROM Pricebook2 WHERE isStandard=true LIMIT 1];
-            for(Product2 p : [SELECT Id, Name FROM Product2 LIMIT 3000]) {
+            for(Product2 p : [SELECT Id, Name FROM Product2 WHERE Name IN :prodNames LIMIT 200]) {
                 productsByName.put(p.Name, p);
                 productPbE.put(p.Id, new PriceBookEntry(
                     Product2Id = p.Id,

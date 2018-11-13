@@ -124,6 +124,10 @@
                 <behavior>Edit</behavior>
                 <field>POC_Request__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__AmendedContract__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -202,6 +206,14 @@
                 <behavior>Edit</behavior>
                 <field>SBQQ__PrimaryQuote__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBQQ__RenewedContract__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -252,6 +264,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>POC_Request_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POC_History__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

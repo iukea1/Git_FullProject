@@ -1,6 +1,6 @@
 /*
- * Controller of page Sales Development
- */
+* Controller of page Sales Development
+*/
 public with sharing class NewSalesDevelopmentController
 {
     public NewSalesDevelopmentController()
@@ -10,26 +10,26 @@ public with sharing class NewSalesDevelopmentController
         SDCampaignId = SalesDevelopmentHelper.getSDcampaign();
         for(Campaign c : [select Id, Name from Campaign where Sales_Targeting__c=true])
         {
-          if(c.Id != SDCampaignId)
-          {
-            CampaignList.add(new SelectOption(c.Id, c.Name));
-          }
-          else
-          {
-            sdCampaign = c;
-          }
+            if(c.Id != SDCampaignId)
+            {
+                CampaignList.add(new SelectOption(c.Id, c.Name));
+            }
+            else
+            {
+                sdCampaign = c;
+            }
         }
         if(sdCampaign != null)
         {
-          //makes sure SD campaign populates first in list
-          if(CampaignList.size() > 0)
-          {
-              CampaignList.add(0, new SelectOption(sdCampaign.Id, sdCampaign.Name));
-          }
-          else
-          {
-              CampaignList.add(new SelectOption(sdCampaign.Id, sdCampaign.Name));
-          }
+            //makes sure SD campaign populates first in list
+            if(CampaignList.size() > 0)
+            {
+                CampaignList.add(0, new SelectOption(sdCampaign.Id, sdCampaign.Name));
+            }
+            else
+            {
+                CampaignList.add(new SelectOption(sdCampaign.Id, sdCampaign.Name));
+            }
         }
         if(CampaignList.size() > 0)
         {
@@ -52,7 +52,7 @@ public with sharing class NewSalesDevelopmentController
             refresh();
         }
     }
-
+    
     public List<SelectOption> CampaignList { get; set; }
     public List<SelectOption> ListViewOptions { get; set; }
     public String ListView { get; set; }
@@ -67,50 +67,50 @@ public with sharing class NewSalesDevelopmentController
     public Integer PageIndex { get; set; }
     public Integer PageSize { get; set; }
     public Integer PageCount { get; set; }
-
+    
     public List<SelectOption> PageOptions
     {
-      get
-      {
-        List<SelectOption> result = new List<SelectOption>();
-        for(Integer i = 0; i < PageCount; i++)
+        get
         {
-          result.add(new SelectOption(String.valueOf(i), String.valueOf(i + 1)));
+            List<SelectOption> result = new List<SelectOption>();
+            for(Integer i = 0; i < PageCount; i++)
+            {
+                result.add(new SelectOption(String.valueOf(i), String.valueOf(i + 1)));
+            }
+            if(result.size() == 0)
+            {
+                result.add(new SelectOption('0', '1'));  
+            }
+            return result;
         }
-        if(result.size() == 0)
-        {
-          result.add(new SelectOption('0', '1'));  
-        }
-        return result;
-      }
     }
-
+    
     public PageReference refresh()
     {
-      retrieve();
-      return null;
+        retrieve();
+        return null;
     }
-
+    
     public PageReference refreshZero()
     {
-      PageIndex = 0;
-      return refresh();
+        PageIndex = 0;
+        return refresh();
     }
     
     public PageReference previousPage()
     {
-      PageIndex = Math.max(0, PageIndex - 1);
-      retrieve();
-      return null;
+        PageIndex = Math.max(0, PageIndex - 1);
+        retrieve();
+        return null;
     }
-
+    
     public PageReference nextPage()
     {
-      PageIndex = Math.min(PageCount, PageIndex + 1);
-      retrieve();
-      return null;
+        PageIndex = Math.min(PageCount, PageIndex + 1);
+        retrieve();
+        return null;
     }
-
+    
     public PageReference updateStatus()
     {
         if(String.isBlank(SelectedIds))
@@ -151,7 +151,7 @@ public with sharing class NewSalesDevelopmentController
         refresh();
         return null;
     }
-
+    
     public PageReference updateOwner()
     {
         if(String.isBlank(SelectedIds))
@@ -192,7 +192,7 @@ public with sharing class NewSalesDevelopmentController
         refresh();
         return null;
     }
-
+    
     public PageReference removeFromCampaign()
     {
         if(String.isBlank(SelectedIds))
@@ -230,9 +230,9 @@ public with sharing class NewSalesDevelopmentController
     private void retrieve()
     {
         String leadSoql = '', contactSoql = '';
-
-        leadSoql = 'select Id, Name, Title, State,Country, Email, Phone, OwnerId, Owner.Name, Company, Status, Lead_Sub_Status__c, Lifecycle_Stage__c, Last_Mkt_Campaign__c, Last_Campaign_Type__c, Current_AQL_Stage_Date__c from Lead where IsConverted = false and Id in (select LeadId from CampaignMember where CampaignId = :CampaignId)';
-        contactSoql = 'select Id, Name, Title, MailingState, MailingCountry,Email, Phone, OwnerId, Owner.Name, AccountId, Account.Name, Account.Type, Lead_Status__c, Lead_Sub_Status__c, Lifecycle_Stage__c, Last_Marketing_Campaign__c, Last_Campaign_Type__c, Current_AQL_Stage_Date__c from Contact where Id in (select ContactId from CampaignMember where CampaignId = :CampaignId)';
+        
+        leadSoql = 'select Id, Name, Title, State,Country, Email, Phone, OwnerId, Owner.Name, Company, Status, Lead_Sub_Status__c, Lifecycle_Stage__c, Last_Mkt_Campaign__c, Last_Campaign_Type__c, Current_AQL_Stage_Date__c, SFDC_Member_Status__c, Marketing_Notes__c from Lead where IsConverted = false and Id in (select LeadId from CampaignMember where CampaignId = :CampaignId)';
+        contactSoql = 'select Id, Name, Title, MailingState, MailingCountry,Email, Phone, OwnerId, Owner.Name, AccountId, Account.Name, Account.Type, Lead_Status__c, Lead_Sub_Status__c, Lifecycle_Stage__c, Last_Marketing_Campaign__c, Last_Campaign_Type__c, Current_AQL_Stage_Date__c, SFDC_Member_Status__c from Contact where Id in (select ContactId from CampaignMember where CampaignId = :CampaignId)';
         
         List<Id> patchIds = new List<Id>();
         Id userId = UserInfo.getUserId();
@@ -242,7 +242,7 @@ public with sharing class NewSalesDevelopmentController
             leadSoql += ' and (OwnerId=:userId or Patch__c in :patchIds)';
             contactSoql += ' and (OwnerId=:userId or Account.Patch__c in :patchIds)';
         }
-
+        
         if(String.isNotEmpty(LifeCycleStage)&& LifeCycleStage!='AQL')
         {
             leadSoql += ' and Lifecycle_Stage__c like \'%' + LifeCycleStage + '%\'';
@@ -253,10 +253,10 @@ public with sharing class NewSalesDevelopmentController
             leadSoql += ' and (Lifecycle_Stage__c like \'%' + LifeCycleStage + '%\''+' or Lifecycle_Stage__c like \'%' + 'AQL' + '%\')';
             contactSoql += ' and (Lifecycle_Stage__c like \'%' + LifeCycleStage + '%\''+' or Lifecycle_Stage__c like \'%' + 'AQL' + '%\')';
         }
-
+        
         leadSoql += ' limit 10000';
         contactSoql += ' limit 10000';
- 		System.debug(leadSoql);
+        System.debug(leadSoql);
         System.debug(contactSoql);
         List<Lead> leads = Database.query(leadSoql);
         List<Contact> contacts = Database.query(contactSoql);
@@ -264,11 +264,11 @@ public with sharing class NewSalesDevelopmentController
         Records = new List<CampaignmemberInfo>();
         for(Lead l : leads)
         {
-          fullset.add(new CampaignMemberInfo(l, SortingField, SortingAsc));
+            fullset.add(new CampaignMemberInfo(l, SortingField, SortingAsc));
         }
         for(Contact c : contacts)
         {
-          fullset.add(new CampaignMemberInfo(c, SortingField, SortingAsc));
+            fullset.add(new CampaignMemberInfo(c, SortingField, SortingAsc));
         }
         fullset.sort();
         for(Integer i = PageIndex * PageSize; i < fullset.size()  && i < (PageIndex + 1)* PageSize; i++)
@@ -276,10 +276,10 @@ public with sharing class NewSalesDevelopmentController
             Records.add(fullset[i]);
         }
         PageCount = (fullset.size() == 0) ? 0 : fullset.size() / PageSize + 1;
-
+        
         fillContactOppInfo();
     }
-
+    
     private List<Id> getMyPatches()
     {
         List<Id> result = new List<Id>();
@@ -290,7 +290,7 @@ public with sharing class NewSalesDevelopmentController
         }
         return result;
     }
-
+    
     private List<Id> getMyTeamPatches()
     {
         List<Id> result = new List<Id>();
@@ -301,7 +301,7 @@ public with sharing class NewSalesDevelopmentController
         }
         return result;
     }
-
+    
     //Search open opportunities and contact roles.
     private void fillContactOppInfo()
     {
@@ -332,12 +332,12 @@ public with sharing class NewSalesDevelopmentController
             }
         }
     }
-
+    
     public class CampaignMemberInfo implements Comparable
     {
         private String sortingField;
         private Boolean sortAsc;
-
+        
         public CampaignMemberInfo(Contact ct, String sortField, Boolean sortAsc)
         {
             this.selected = false;
@@ -360,9 +360,10 @@ public with sharing class NewSalesDevelopmentController
             this.lastMktCampaign = ct.Last_Marketing_Campaign__c;
             this.lastCampaignType = ct.Last_Campaign_Type__c;
             this.aqlDate = ct.Current_AQL_Stage_Date__c;
+            this.SFDCMemberStatus = ct.SFDC_Member_Status__c;
             setSortingField(sortField, sortAsc);
         }
-
+        
         public CampaignMemberInfo(Lead lead, String sortField, Boolean sortAsc)
         {
             this.selected = false;
@@ -383,11 +384,13 @@ public with sharing class NewSalesDevelopmentController
             this.lastMktCampaign = lead.Last_Mkt_Campaign__c;
             this.lastCampaignType = lead.Last_Campaign_Type__c;
             this.aqlDate = lead.Current_AQL_Stage_Date__c;
+            this.SFDCMemberStatus = lead.SFDC_Member_Status__c;
+            this.marketingNotes = lead.Marketing_Notes__c;
             this.hasOpenOpps = false;
             this.isContactRole = false;
             setSortingField(sortField, sortAsc);
         }
-
+        
         public Boolean selected { get; set; }
         public Id recordId { get; set; }
         public String name { get; set; }
@@ -409,6 +412,8 @@ public with sharing class NewSalesDevelopmentController
         public String lastCampaignType { get; set; }
         public DateTime createdDate { get; set; }
         public DateTime aqlDate { get; set; }
+        public String SFDCMemberStatus { get; set; }
+        public String marketingNotes { get; set; }
         public Boolean hasOpenOpps { get; set; }
         public Boolean isContactRole { get; set; }
         
@@ -466,13 +471,21 @@ public with sharing class NewSalesDevelopmentController
             {
                 sortingField = Country;
             }
+            else if(fieldName == 'SFDCMemberStatus')
+            {
+                sortingField = SFDCMemberStatus;
+            }
+            else if(fieldName == 'marketingNotes')
+            {
+                sortingField = marketingNotes;
+            }
             else if(fieldName == 'aqlDate')
             {
                 sortingField = (aqlDate == null) ? null : aqlDate.format('yyyy-MM-dd');
             }
             this.sortAsc = sortAsc;
         }
-
+        
         public Integer compareTo(Object compareTo)
         {
             CampaignMemberInfo other = (CampaignMemberInfo)compareTo;

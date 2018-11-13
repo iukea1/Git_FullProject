@@ -191,6 +191,21 @@
         </sections>
     </layouts>
     <layouts>
+        <layout>Evaluation</layout>
+        <sections>
+            <label><!-- Opportunity --></label>
+            <section>Opportunity</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Useful Links --></label>
+            <section>Useful Links</section>
+        </sections>
+    </layouts>
+    <layouts>
         <layout>Finance_Master</layout>
         <sections>
             <label><!-- Assignment --></label>

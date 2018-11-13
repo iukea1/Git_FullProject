@@ -84,10 +84,6 @@
                 <field>First_Order__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SBCF_Shipping_Country__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Ec_Orch_Aas_Count__c</field>
             </layoutItems>
@@ -98,6 +94,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Send_Fulfillment_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Physical_Product_Count__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Perpetual_Product_Count__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -153,6 +157,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sales_Order_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SBCF_Shipping_Country__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -301,7 +309,7 @@
         <fields>Renewed_Original_Quantity__c</fields>
         <fields>SBQQ__QuotedQuantity__c</fields>
         <fields>ODER_ITEM.START_DATE</fields>
-        <fields>ODER_ITEM.END_DATE</fields>
+        <fields>End_Date__c</fields>
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>

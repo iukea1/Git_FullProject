@@ -225,6 +225,118 @@
         <template>Steelbrick_Email_Templates/Renewal_EC_Reduction</template>
     </alerts>
     <alerts>
+        <fullName>Send_Renewal_Email</fullName>
+        <ccEmails>notifications@silver-peak.com,</ccEmails>
+        <ccEmails>RenewalsTeam@silver-peak.com</ccEmails>
+        <description>Send Renewal Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/NonECRenewed</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Renewal_Email_for_Perpetual_Order</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>Send Renewal Email for Perpetual Order</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Renewal_Contract_Fulfillment</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Renewal_email_for_Subscriptions</fullName>
+        <ccEmails>notifications@silver-peak.com</ccEmails>
+        <description>Send Renewal email for Subscriptions</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Account Manager</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <recipient>Systems Engineer</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <field>End_User_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Shipment_Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Secondary_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Third_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>notifications@silver-peak.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Steelbrick_Email_Templates/Renewal_Subscription_Fulfillment</template>
+    </alerts>
+    <alerts>
         <fullName>Send_a_notification_to_Unity_Cloud_Orchestrator</fullName>
         <ccEmails>notifications@silver-peak.com</ccEmails>
         <description>Send a notification to Unity Cloud Orchestrator</description>
@@ -452,7 +564,7 @@
         <protected>false</protected>
     </fieldUpdates>
     <rules>
-        <fullName>EC Addon</fullName>
+        <fullName>Fulfillment EC Addon</fullName>
         <actions>
             <name>Add_On_Email</name>
             <type>Alert</type>
@@ -491,7 +603,7 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>EC Fulfillment</fullName>
+        <fullName>Fulfillment EC New</fullName>
         <actions>
             <name>EC_Fulfillment_Email</name>
             <type>Alert</type>
@@ -530,12 +642,52 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>GMS Fulfillment Email</fullName>
+        <fullName>Fulfillment EC ORCH AAS</fullName>
+        <actions>
+            <name>Send_a_notification_to_Unity_Cloud_Orchestrator</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Ec_Orch_Aas_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fulfillment GMS</fullName>
         <actions>
             <name>GMS_Fulfillment</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
             <field>Order.Status</field>
             <operation>equals</operation>
@@ -560,6 +712,131 @@
             <field>Order.Send_Fulfillment_Email__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fulfillment Unity Cloud</fullName>
+        <actions>
+            <name>Unity_Cloud_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Unity_Cloud_Orch_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fulfillment VRX</fullName>
+        <actions>
+            <name>VRX_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.VRX_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fulfillment VX</fullName>
+        <actions>
+            <name>VX_Fulfillment</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.VX_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SBQQ__Contracted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>equals</operation>
+            <value>NX/VX</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>New</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -687,6 +964,74 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
+        <fullName>Renewal Email for Maintenance Order</fullName>
+        <actions>
+            <name>Send_Renewal_Email_for_Perpetual_Order</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Perpetual_Product_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Standard Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>notEqual</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Renewal Email for Subscription Order</fullName>
+        <actions>
+            <name>Send_Renewal_email_for_Subscriptions</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.Status</field>
+            <operation>equals</operation>
+            <value>Activated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Virtual_Product_Count__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Fulfillment_Type__c</field>
+            <operation>equals</operation>
+            <value>Standard Renewal</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Product_Type__c</field>
+            <operation>notEqual</operation>
+            <value>EDGECONNECT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Send_Fulfillment_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>SBCF Set Contracted to True</fullName>
         <actions>
             <name>SBCF_Set_Contracted_to_True</name>
@@ -752,142 +1097,6 @@
         </actions>
         <active>true</active>
         <formula>NOT(SBQQ__Quote__r.SBCF_Evaluation_Quote__c)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Unity Cloud Fulfillment Email</fullName>
-        <actions>
-            <name>Unity_Cloud_Fulfillment</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Order.Status</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Unity_Cloud_Orch_Count__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.SBQQ__Contracted__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Send_Fulfillment_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Unity Cloud Orchestrator as a Service Fulfillment Email</fullName>
-        <actions>
-            <name>Send_a_notification_to_Unity_Cloud_Orchestrator</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Order.Status</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Ec_Orch_Aas_Count__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.SBQQ__Contracted__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>EDGECONNECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Send_Fulfillment_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>VRX Fulfillment Email</fullName>
-        <actions>
-            <name>VRX_Fulfillment</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Order.Status</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.VRX_Count__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.SBQQ__Contracted__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Send_Fulfillment_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>VX Fulfillment Email</fullName>
-        <actions>
-            <name>VX_Fulfillment</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Order.Status</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.VX_Count__c</field>
-            <operation>greaterThan</operation>
-            <value>0</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.SBQQ__Contracted__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Product_Type__c</field>
-            <operation>equals</operation>
-            <value>NX/VX</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Order.Send_Fulfillment_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

@@ -35,24 +35,25 @@ public class OrderTriggerHandler implements ITriggerHandler {
             
             for(Order o : newItems) {
                 Boolean proceed = (Trigger.isInsert ? o.SBQQ__Quote__c != null : o.TemporaryStartDateHolder__c != null);
-                
-                if(proceed) {
-                    if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c && parentQuotes.containsKey(o.SBQQ__Quote__c) && parentQuotes.get(o.SBQQ__Quote__c).End_Date__c != null) {
-                        if(o.TemporaryStartDateHolder__c == null) { // on insert
-                            o.TemporaryStartDateHolder__c = o.EffectiveDate;
-                            Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
-                            o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                if(parentQuotes.containsKey(o.SBQQ__Quote__c)) {
+                    if(proceed && parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c != null) {
+                        if(o.EffectiveDate != parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c && parentQuotes.containsKey(o.SBQQ__Quote__c) && parentQuotes.get(o.SBQQ__Quote__c).End_Date__c != null) {
+                            if(o.TemporaryStartDateHolder__c == null) { // on insert
+                                o.TemporaryStartDateHolder__c = o.EffectiveDate;
+                                Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
+                                o.EndDate = o.TemporaryStartDateHolder__c.addDays(daysBetween);
+                            } else {
+                                o.TemporaryStartDateHolder__c = null;
+                            }
                         } else {
-                            o.TemporaryStartDateHolder__c = null;
+                            o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
                         }
-                    } else {
-                        o.EndDate = parentQuotes.get(o.SBQQ__Quote__c).End_Date__c;
                     }
-                }
-                if(Trigger.isUpdate) {
-                    if(o.Type == 'Amendment' && oldItems.get(o.Id).Type != 'Amendment') {
-                        Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
-                        o.EndDate = o.EffectiveDate.addDays(daysBetween);
+                    if(Trigger.isUpdate) {
+                        if(o.Type == 'Amendment' && oldItems.get(o.Id).Type != 'Amendment') {
+                            Integer daysBetween = parentQuotes.get(o.SBQQ__Quote__c).SBQQ__StartDate__c.daysBetween(parentQuotes.get(o.SBQQ__Quote__c).End_Date__c);
+                            o.EndDate = o.EffectiveDate.addDays(daysBetween);
+                        }
                     }
                 }
             }
@@ -122,7 +123,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
             for(Order o : newItems) {
                 Boolean runCode = (o.EffectiveDate != oldItems.get(o.Id).EffectiveDate) || (o.Ship_Date__c != oldItems.get(o.Id).Ship_Date__c) || o.RecalculateFields__c;
                 SBQQ__Quote__c pq = parentQuote.get(o.SBQQ__Quote__c);
-                if(runCode && o.Type == 'Amendment' && o.Status != 'Activated') {
+                if(runCode && o.Type == 'Amendment' && o.Status != 'Activated' && o.Product_Type__c == 'EDGECONNECT') {
                     Integer orderCount = pq.SBQQ__Orders__r.size();
                     Date lastEndDateAddOn = System.today();
                     Decimal orgnalDailyPricing = 0;
@@ -131,7 +132,7 @@ public class OrderTriggerHandler implements ITriggerHandler {
                     
                     if(quoteLinesAddOn.containsKey(o.Id)) {
                         for(SBQQ__QuoteLine__c ql : pq.SBQQ__LineItems__r) {
-                            orgnalDailyPricing += ql.SBQQ__UpgradedSubscription__r.Net_Total__c;
+                            try { orgnalDailyPricing += ql.SBQQ__UpgradedSubscription__r.Net_Total__c; } catch(Exception e) {}
                         }
                         if(orgnalDailyPricing != 0) orgnalDailyPricing  /= (365 * contTerm);
                         for(OrderItem oi : quoteLinesAddOn.get(o.Id)) {

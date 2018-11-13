@@ -22,6 +22,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Finance - Evaluation Submitted Quote</layout>
@@ -44,6 +48,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -75,6 +83,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -108,6 +120,10 @@
             <section>Poc Approvers</section>
         </sections>
         <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
+        <sections>
             <label><!-- Success Criteria --></label>
             <section>Success Criteria</section>
         </sections>
@@ -137,6 +153,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -173,6 +193,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Finance - Standard Approved Quote</layout>
@@ -203,6 +227,10 @@
         <sections>
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -243,6 +271,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Finance - Standard Rejected Quote</layout>
@@ -269,6 +301,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -297,6 +333,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Operations - Evaluation Submitted Quote</layout>
@@ -319,6 +359,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -350,6 +394,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -383,6 +431,10 @@
             <section>Poc Approvers</section>
         </sections>
         <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
+        <sections>
             <label><!-- Success Criteria --></label>
             <section>Success Criteria</section>
         </sections>
@@ -412,6 +464,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -448,6 +504,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Operations - Standard Approved Quote</layout>
@@ -478,6 +538,10 @@
         <sections>
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -518,6 +582,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Operations - Standard Rejected Quote</layout>
@@ -544,6 +612,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -572,6 +644,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Renewal Specialist - Evaluation Submitted Quote</layout>
@@ -594,6 +670,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -625,6 +705,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -658,6 +742,10 @@
             <section>Poc Approvers</section>
         </sections>
         <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
+        <sections>
             <label><!-- Success Criteria --></label>
             <section>Success Criteria</section>
         </sections>
@@ -687,6 +775,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -723,6 +815,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Renewal Specialist - Standard Approved Quote</layout>
@@ -753,6 +849,10 @@
         <sections>
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -793,6 +893,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>CPQ - Renewal Specialist - Standard Rejected Quote</layout>
@@ -819,6 +923,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -847,6 +955,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Evaluation Submitted Quote</layout>
@@ -870,6 +982,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Finance Layout</layout>
@@ -889,12 +1005,20 @@
             <label><!-- Discount Information --></label>
             <section>Discount Information</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Master Layout</layout>
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -926,6 +1050,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -959,6 +1087,10 @@
             <section>Poc Approvers</section>
         </sections>
         <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
+        <sections>
             <label><!-- Success Criteria --></label>
             <section>Success Criteria</section>
         </sections>
@@ -989,6 +1121,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>POC Submitted Quote</layout>
@@ -1016,6 +1152,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Pending Approval Layout</layout>
@@ -1038,6 +1178,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
     <layouts>
@@ -1069,6 +1213,10 @@
         <sections>
             <label><!-- Pricing Information --></label>
             <section>Pricing Information</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
         <sections>
             <label><!-- Serial Number --></label>
@@ -1113,6 +1261,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Standard Rejected Quote</layout>
@@ -1140,6 +1292,10 @@
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
         </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
+        </sections>
     </layouts>
     <layouts>
         <layout>Standard Submitted Quote</layout>
@@ -1166,6 +1322,10 @@
         <sections>
             <label><!-- Quote Options --></label>
             <section>Quote Options</section>
+        </sections>
+        <sections>
+            <label><!-- Recalculating --></label>
+            <section>Recalculating</section>
         </sections>
     </layouts>
 </CustomObjectTranslation>

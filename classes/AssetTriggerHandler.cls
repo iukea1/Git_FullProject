@@ -375,7 +375,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
         
     }
     
-    private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
+    /*private static Map<Id, List<Asset>> groupAssetsByOrderProduct(List<Asset> assetProductEqualToPhysical){
          Map<Id, List<Asset>> orderProductToAssets = new Map<Id, List<Asset>>();
          //Map<Id, Asset> QuoteLinetoAssetMap = new Map<Id, Asset>();
          Map<Integer, Order_Product_Item__c> NumtoOrderProductItemMap = new Map<Integer, Order_Product_Item__c>();
@@ -430,11 +430,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
             if(!NumtoOrderProductItemMap.isEmpty()){
                 
                 if(counter2 <= OrderQuantity){
-                a.Status = NumtoOrderProductItemMap.get(counter2).Status__c;
-                a.Part_Number__c = NumtoOrderProductItemMap.get(counter2).Part_Number__c;
-                a.SerialNumber = NumtoOrderProductItemMap.get(counter2).Serial_Number__c;
-                assetRelatedToOrderProducts.add(a);
-                counter2++;
+                    a.Status = NumtoOrderProductItemMap.get(counter2).Status__c;
+                    a.Part_Number__c = NumtoOrderProductItemMap.get(counter2).Part_Number__c;
+                    a.SerialNumber = NumtoOrderProductItemMap.get(counter2).Serial_Number__c;
+                    assetRelatedToOrderProducts.add(a);
+                    counter2++;
                 }
             }
 
@@ -448,6 +448,20 @@ public class AssetTriggerHandler implements ITriggerHandler {
         System.debug('assetRelatedToOrderProducts values = ' + assetRelatedToOrderProducts);
         
         return orderProductToAssets;
+    }*/
+    public static void handleOpisOnAssetGenerate(List<Order_Product_Item__c> opiList, Map<Id,Order_Product_Item__c> oldMap) {
+        Set<Id> assetId = new Set<Id>();
+        for(Order_Product_Item__c opi : opiList) {
+            //evaluate changes only
+            if(opi.Asset__c != null && opi.Existing_Asset__c != null && opi.Asset__c != null && oldMap.get(opi.Id).Asset__c != null) {
+                assetId.add(opi.Existing_Asset__c); 
+            }
+        }
+        List<Asset> astListDel = new List<Asset>();
+        for(Id id : assetId) {
+            astListDel.add(new Asset(Id=id));
+        }
+        Database.delete(astListDel, false);
     }
     
     private static void DeleteGeneratedAsset (List<Asset> AssetList){
@@ -457,22 +471,11 @@ public class AssetTriggerHandler implements ITriggerHandler {
         List<Asset> ToDeleteAssets = new List<Asset>();
         Set<Id> AssetQuoteLineIds = new Set<Id>();
         Set<Id> OrderItemIds = new Set<Id>();
-        Set<Id> OrderProductItemIds = new Set<Id>();
-        Set<Id> ExistingAssetIds = new Set<Id>();
-        Set<Id> toDeleteAssetIds = new Set<Id>();
-        Map<Id, Order_Product_Item__c> ExistingAssetOrderProductMap = new Map<Id, Order_Product_Item__c>();
-        List<Asset> toUpdateExistingAsset = new List<Asset>();
-        List<Order_Product_Item__c> OrderProductItemstoUpdate = new List<Order_Product_Item__c>();
-        Set<Order_Product_Item__c> OrderProductItemstoUpdateSet = new Set<Order_Product_Item__c>();
-        Map<Id, Order_Product_Item__c> ToUpdateOrderProductsMap = new Map<Id, Order_Product_Item__c>();
-        Map<Id, Order_Product_Item__c> ToExistingUpdateOrderProductsMap = new Map<Id, Order_Product_Item__c>();
-        Map<Id, Asset> toUpdateExistingAssetMap = new Map<Id, Asset>();
-        Map<Id, Asset> ToDeleteAssetsMap = new Map<Id, Asset>();
         
         Map<Id, Id> qlToAsset = new Map<Id, Id>();
         Map<Id, Asset> assetMap = new Map<Id, Asset>();
         
-        /*for(Asset a : AssetList) {
+        for(Asset a : AssetList) {
             AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
             qlToAsset.put(a.SBQQ__QuoteLine__c, a.Id);
             assetMap.put(a.Id, a);
@@ -481,92 +484,14 @@ public class AssetTriggerHandler implements ITriggerHandler {
         for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c, Quantity FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
             OrderItemIds.add(oi.id);
         }
-        
-        for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c, Existing_Asset__c FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__c  =: AssetQuoteLineIds]){
-            if(op.Existing_Asset__c != NULL){
-            
+        List<Asset> assetToDel = new List<Asset>();
+        for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c, Existing_Asset__c,Existing_Asset__r.Id, Existing_Asset__r.SerialNumber FROM Order_Product_Item__c WHERE Order_Product__r.SBQQ__QuoteLine__c  =: AssetQuoteLineIds]){
+            if(op.Existing_Asset__c != NULL && op.Asset__c != null){
+                assetToDel.add(op.Existing_Asset__r);
             }
-        }*/
-        
-        
-        //Loop through the Assets
-        for(Asset a: AssetList){
-            
-            //Get Quote Line Ids
-            if(a.SBQQ__QuoteLine__c != NULL){
-                AssetQuoteLineIds.add(a.SBQQ__QuoteLine__c);
-            }
-            
-            //Query Order Products where Quote Line Ids
-            for(OrderItem oi: [SELECT Id, SBQQ__QuoteLine__c, Quantity FROM OrderItem WHERE SBQQ__QuoteLine__c =: AssetQuoteLineIds]){
-                OrderItemIds.add(oi.id);
-            }
-            
-            for(Order_Product_Item__c op: [SELECT Id, Status__c, Part_Number__c, Serial_Number__c, Asset__c, Existing_Asset__c FROM Order_Product_Item__c WHERE Order_Product__c =: OrderItemIds]){
-                
-                if(op.Existing_Asset__c != NULL){
-                        
-                    //Get the Existing Assets and Map with the Order Product Item
-                    ExistingAssetOrderProductMap.put(op.Existing_Asset__c, op);
-                    toDeleteAssetIds.add(op.Asset__c);
-                    op.Asset__c = NULL;
-                    ToExistingUpdateOrderProductsMap.put(op.id, op);
-                }
-                
-                if(op.Asset__c == NULL && op.Existing_Asset__c == NULL){
-                    op.Asset__c = a.id;
-                    //OrderProductItemstoUpdateSet.add(op);
-                    ToUpdateOrderProductsMap.put(op.id, op);
-                }
-            }
-            
-            //Query for the Existing Assets and update the Part Number, Serial Number and Status fields with values from Order Product Item
-            for(Asset AssetEx: [SELECT Id, Part_Number__c, SerialNumber, Status FROM Asset WHERE Id =: ExistingAssetOrderProductMap.keySet()]){
-                
-                //Populate the Part Number, Serial Number and Status fields
-                AssetEx.Status = ExistingAssetOrderProductMap.get(AssetEx.id).Status__c;
-                AssetEx.Part_Number__c = ExistingAssetOrderProductMap.get(AssetEx.id).Part_Number__c;
-                AssetEx.SerialNumber = ExistingAssetOrderProductMap.get(AssetEx.id).Serial_Number__c;
-                //toUpdateExistingAsset.add(AssetEx);
-                toUpdateExistingAssetMap.put(AssetEx.id, AssetEx);
-            }
-            
-            for(Asset AssetDel : [SELECT Id, Part_Number__c, SerialNumber, Status FROM Asset WHERE Id =: toDeleteAssetIds]){
-                
-                //Add to List for Deletion
-                //ToDeleteAssets.add(AssetDel);
-                ToDeleteAssetsMap.put(AssetDel.id, AssetDel);
-            }
-            
-            System.debug('ToUpdateOrderProductsMap List = ' + ToUpdateOrderProductsMap);
-            System.debug('toUpdateExistingAssetMap List = ' + toUpdateExistingAssetMap);
-            System.debug('ToDeleteAssetsMap List = ' + ToDeleteAssetsMap);
-            
-            /*
-            if(!OrderProductItemstoUpdateSet.isEmpty()){
-                update new List<Order_Product_Item__c>(OrderProductItemstoUpdateSet);
-            }
-            */
-            
-            if(!ToUpdateOrderProductsMap.isEmpty()){
-                update ToUpdateOrderProductsMap.values();
-            }
-            
-            if(!ToExistingUpdateOrderProductsMap.isEmpty()){
-                update ToExistingUpdateOrderProductsMap.values();
-            }
-            
-            if(!toUpdateExistingAssetMap.isEmpty()){
-                update toUpdateExistingAssetMap.values();
-            }
-            
-            if(!ToDeleteAssetsMap.isEmpty()){
-                //delete ToDeleteAssetsMap.values();
-                Database.delete(ToDeleteAssetsMap.values(), false);
-            }
-            
-            
         }
+        delete assetTODel;
+        
     }
     
     private static void updateShipmentDateOfAsset(List<Asset> incomingAsset){
@@ -798,7 +723,7 @@ public class AssetTriggerHandler implements ITriggerHandler {
             if(productAssetMap.containsKey(a.Product2Id)) {
                 assetIdToUpdate.add(a.Id);
             }
-        }   
+        }
         if(!assetIdToUpdate.isEmpty()) nonSubscriptionSerialRetrieve(assetIdToUpdate);
     }
 
